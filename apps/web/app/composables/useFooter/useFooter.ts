@@ -1,4 +1,9 @@
-import type { FooterSettings, FooterSwitchDefinition, AddFooterBlock } from '~/components/blocks/Footer/types';
+import type {
+  FooterContent,
+  FooterSwitchDefinition,
+  AddFooterBlock,
+  FooterBlock,
+} from '~/components/blocks/Footer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
@@ -62,7 +67,7 @@ const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   },
 ];
 
-const createDefaultFooterContent = (): FooterSettings => {
+const createDefaultFooterContent = (): FooterContent => {
   const runtimeConfig = useRuntimeConfig();
 
   return {
@@ -94,7 +99,10 @@ const createDefaultFooterContent = (): FooterSettings => {
   };
 };
 
-const createFooterBlock = (content: FooterSettings, meta?: { uuid?: string; isGlobalTemplate?: boolean }): Block => {
+const createFooterBlock = (
+  content: FooterContent,
+  meta?: { uuid?: string; isGlobalTemplate?: boolean },
+): FooterBlock => {
   return {
     name: 'Footer',
     type: 'content',
@@ -106,11 +114,11 @@ const createFooterBlock = (content: FooterSettings, meta?: { uuid?: string; isGl
   };
 };
 
-const createDefaultFooterBlock = (): Block => {
+const createDefaultFooterBlock = (): FooterBlock => {
   return createFooterBlock(createDefaultFooterContent());
 };
 
-const extractFooterContentFromBlocks = (content: string): FooterSettings | null => {
+const extractFooterContentFromBlocks = (content: string): FooterContent | null => {
   try {
     const blocks = JSON.parse(content);
     const footerBlock = Array.isArray(blocks)
@@ -138,13 +146,13 @@ const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
   }
 };
 
-const mapFooterData = (data: Block | null): Block => {
+const mapFooterData = (data: Block | null): FooterBlock => {
   if (!data) {
     return createDefaultFooterBlock();
   }
 
   const defaultContent = createDefaultFooterContent();
-  const dataContent = data.content as FooterSettings | undefined;
+  const dataContent = data.content as FooterContent | undefined;
 
   return createFooterBlock(
     {
@@ -184,21 +192,21 @@ const mapFooterData = (data: Block | null): Block => {
  */
 export const useFooter = () => {
   const nuxtApp = useNuxtApp();
-  const footerCache = useState<Block | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
+  const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   const clearFooterCache = () => {
     footerCache.value = null;
   };
 
-  const updateFooterCache = (newFooterBlock: Block) => {
+  const updateFooterCache = (newFooterBlock: FooterBlock) => {
     footerCache.value = newFooterBlock;
   };
 
-  const getFooterBlock = (): Block => {
+  const getFooterBlock = (): FooterBlock => {
     return footerCache.value || createDefaultFooterBlock();
   };
 
-  const fetchFooterBlock = async (): Promise<Block> => {
+  const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) {
       return footerCache.value;
     }
@@ -216,7 +224,7 @@ export const useFooter = () => {
         const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
 
         if (footerBlock) {
-          footerCache.value = footerBlock as Block;
+          footerCache.value = footerBlock as FooterBlock;
           return footerCache.value;
         }
       } catch (error) {

@@ -345,7 +345,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
-import type { FooterSettings } from './types';
+import type { FooterContent, FooterBlock } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -370,8 +370,8 @@ const getSourceBlock = (): Block | null => {
 };
 
 const sourceBlock = getSourceBlock();
-const footerBlock = ref<Block>(mapFooterData(sourceBlock || null));
-const footerContent = computed(() => footerBlock.value.content as FooterSettings);
+const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
+const footerContent = computed(() => footerBlock.value.content as FooterContent);
 
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
   (switchConfig) => ({
@@ -380,7 +380,7 @@ const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
     model: computed({
       get: () => footerContent.value.column1[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterSettings;
+        const content = footerBlock.value.content as FooterContent;
         content.column1[switchConfig.key] = value;
       },
     }),
@@ -394,7 +394,7 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
     model: computed({
       get: () => footerContent.value.column2[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterSettings;
+        const content = footerBlock.value.content as FooterContent;
         content.column2[switchConfig.key] = value;
       },
     }),

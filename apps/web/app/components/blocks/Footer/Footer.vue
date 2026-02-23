@@ -89,22 +89,22 @@
 
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
-import type { FooterProps, FooterSettings, FooterSettingsColumn } from './types';
+import type { FooterProps, FooterContent, FooterColumn } from './types';
 
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const { getFooterBlock, footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useFooter();
-const resolvedContent = ref<FooterSettings | null>(null);
+const resolvedContent = ref<FooterContent | null>(null);
 let stopWatch: (() => void) | null = null;
 
 onMounted(() => {
   stopWatch = watch(
     [() => props.content, () => props.meta, footerCache],
     () => {
-      const block = props.content && props.meta ? createFooterBlock(props.content, props.meta) : getFooterBlock();
+      const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
       const mappedBlock = mapFooterData(block);
-      resolvedContent.value = mappedBlock.content as FooterSettings;
+      resolvedContent.value = mappedBlock.content as FooterContent;
     },
     { immediate: true, deep: true },
   );
@@ -114,7 +114,7 @@ onBeforeUnmount(() => {
   stopWatch?.();
 });
 
-const getColumnSwitches = (column: FooterSettingsColumn) => {
+const getColumnSwitches = (column: FooterColumn) => {
   return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: t(switchConfig.shopTranslationKey),

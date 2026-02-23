@@ -1,10 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useFooter } from '../useFooter';
-import type { FooterSettings } from '~/components/blocks/Footer/types';
-import type { Block } from '@plentymarkets/shop-api';
+import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
 
-const mockFooterBlock: Block = {
+const mockFooterBlock: FooterBlock = {
   name: 'Footer',
   type: 'content',
   meta: {
@@ -24,7 +23,7 @@ const mockFooterBlock: Block = {
       footnoteBackground: '#f5f5f5',
       footnoteText: '#666666',
     },
-  } as FooterSettings,
+  } as FooterContent,
 };
 
 const { useSdk } = vi.hoisted(() => {
@@ -92,7 +91,7 @@ const setupConsoleSpy = () => {
 };
 
 describe('useFooter', () => {
-  let mockStateRef: { value: Block | null };
+  let mockStateRef: { value: FooterBlock | null };
   let mockGetBlocks: ReturnType<typeof vi.fn>;
   let mockAsyncData: ReturnType<typeof vi.fn>;
 
@@ -232,7 +231,7 @@ describe('useFooter', () => {
 
         const result = await fetchFooterBlock();
 
-        const content = result.content as FooterSettings;
+        const content = result.content as FooterContent;
         expect(content.column1.title).toBe('Legal');
         expect(content.column2.title).toBe('Services');
         expect(mockStateRef.value).toEqual(result);
@@ -245,7 +244,7 @@ describe('useFooter', () => {
 
         const result = await fetchFooterBlock();
 
-        const content = result.content as FooterSettings;
+        const content = result.content as FooterContent;
         expect(content.column1.title).toBe('Legal');
         expect(content.column2.title).toBe('Services');
         expect(mockStateRef.value).toEqual(result);
@@ -260,7 +259,7 @@ describe('useFooter', () => {
 
         const result = await fetchFooterBlock();
 
-        const content = result.content as FooterSettings;
+        const content = result.content as FooterContent;
         expect(content.column1.title).toBe('Legal');
         expect(content.column2.title).toBe('Services');
         expect(mockStateRef.value).toEqual(result);
@@ -286,7 +285,7 @@ describe('useFooter', () => {
 
         const result = getFooterBlock();
 
-        const content = result.content as FooterSettings;
+        const content = result.content as FooterContent;
         expect(content.column1.title).toBe('Legal');
         expect(content.column2.title).toBe('Services');
       });
@@ -305,10 +304,10 @@ describe('useFooter', () => {
 
     describe('updateFooterCache', () => {
       it('should update the cached footer block', () => {
-        const newBlock: Block = {
+        const newBlock: FooterBlock = {
           ...mockFooterBlock,
           content: {
-            ...(mockFooterBlock.content as FooterSettings),
+            ...(mockFooterBlock.content as FooterContent),
             footnote: '© Updated Company 2024',
           },
         };
