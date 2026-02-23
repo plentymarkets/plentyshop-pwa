@@ -135,13 +135,15 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     try {
       state.value.loading = true;
 
-      await useSdk().plentysystems.doSaveBlocks({
+      const response = await useSdk().plentysystems.doSaveBlocks({
         identifier,
         entityType: type,
         blocks: content,
       });
 
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+      const data = response?.data ?? state.value.data;
+
+      setupBlocks(data);
 
       if (typeof content === 'string' && content.includes('"name":"Footer"')) {
         const {
