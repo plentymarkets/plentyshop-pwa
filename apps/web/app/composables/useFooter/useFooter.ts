@@ -186,7 +186,8 @@ const mapFooterData = (data: Block | null): Block => {
  * Handles fetching and caching of footer configuration
  */
 export const useFooter = () => {
-  const footerCache = useState<Block | null>('footer-block-cache', () => null);
+  const nuxtApp = useNuxtApp();
+  const footerCache = useState<Block | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   const clearFooterCache = () => {
     footerCache.value = null;
@@ -205,11 +206,9 @@ export const useFooter = () => {
       return footerCache.value;
     }
 
-    const nuxtApp = useNuxtApp();
-
     return callWithNuxt(nuxtApp, async () => {
       try {
-        const { data } = await useAsyncData(`footer-block-${nuxtApp.$i18n.locale}`, () =>
+        const { data } = await useAsyncData(`footer-block-${nuxtApp.$i18n.locale.value}`, () =>
           useSdk().plentysystems.getBlocks({
             identifier: 'index',
             type: 'immutable',

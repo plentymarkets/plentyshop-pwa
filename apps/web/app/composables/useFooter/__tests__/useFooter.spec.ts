@@ -199,7 +199,7 @@ describe('use Footer', () => {
 
         const result = await fetchFooterBlock();
 
-        expect(useAsyncData).toHaveBeenCalledWith(`footer-block-${$i18n.locale}`, expect.any(Function));
+        expect(useAsyncData).toHaveBeenCalledWith(`footer-block-${$i18n.locale.value}`, expect.any(Function));
         expect(result).toEqual(mockFooterBlock);
         expect(mockStateRef.value).toBe(mockFooterBlock);
       });
