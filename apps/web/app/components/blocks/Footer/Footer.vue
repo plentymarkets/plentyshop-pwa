@@ -100,7 +100,7 @@ let stopWatch: (() => void) | null = null;
 
 onMounted(() => {
   stopWatch = watch(
-    [() => props.content, () => props.meta, footerCache],
+    [() => props.content, footerCache],
     () => {
       const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
       const mappedBlock = mapFooterData(block);
