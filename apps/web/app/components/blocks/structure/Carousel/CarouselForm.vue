@@ -5,6 +5,7 @@
       v-model="elementsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      content-padding-class="py-4"
     >
       <template #summary>
         <h2>{{ getEditorTranslation('elements-group-label') }}</h2>
@@ -22,74 +23,81 @@
           <template #item="{ element: slide, index }">
             <div
               :key="slide.meta.uuid"
-              class="mb-3 flex items-center justify-between bg-white rounded-lg transition-colors"
+              class="mb-3 flex items-center justify-between transition-colors"
+              :style="
+                currentActiveSlideIndex === index
+                  ? { backgroundColor: 'rgba(83, 138, 234, 0.1)', borderLeft: '4px solid #538AEA' }
+                  : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
+              "
             >
-              <div class="flex items-center gap-3 flex-1 min-w-0">
-                <button
-                  class="drag-slides-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
-                  :aria-label="getEditorTranslation('drag-reorder-aria')"
-                  :data-testid="`actions-drag-slide-handle-${index}`"
-                >
-                  <NuxtImg width="18" height="18" :src="dragIcon" />
-                </button>
-
-                <span
-                  class="text-sm font-medium truncate"
-                  :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
-                >
-                  {{ getEditorTranslation('slide-label') }} {{ index + 1 }}
-                </span>
-              </div>
-
-              <button
-                :data-testid="`actions-edit-slide-${index}`"
-                class="text-gray-500 rounded-full no-drag"
-                :aria-label="getEditorTranslation('edit-slide-aria')"
-                @click="editSlide(index)"
-              >
-                <SfIconBase size="xs" viewBox="0 0 18 18">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path :d="editPath" fill="currentColor" />
-                  </svg>
-                </SfIconBase>
-              </button>
-
-              <div :key="`menu-${index}`" class="relative">
-                <button
-                  :data-testid="`actions-menu-slide-${index}`"
-                  class="text-gray-500 rounded-full no-drag"
-                  @click="toggleSlideMenu(index)"
-                >
-                  <SfIconMoreVert />
-                </button>
-
-                <div
-                  v-if="openSlideMenuIndex === index"
-                  class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
-                  @click.stop
-                >
-                  <div class="px-4 py-3 border-b">
-                    <div class="flex items-center justify-between">
-                      <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
-                      <SfSwitch
-                        :model-value="slides[index]?.configuration?.visible !== false"
-                        :data-testid="`actions-toggle-visibility-slide-${index}`"
-                        :aria-label="getEditorTranslation('toggle-visibility-aria')"
-                        class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-                        @update:model-value="toggleSlideVisibility(index)"
-                      />
-                    </div>
-                  </div>
-
+              <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4">
+                <div class="flex items-center gap-3 flex-1 min-w-0">
                   <button
-                    :data-testid="`actions-delete-slide-${index}`"
-                    class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
-                    :disabled="slides.length === 1"
-                    @click="deleteSlide(index)"
+                    class="drag-slides-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
+                    :aria-label="getEditorTranslation('drag-reorder-aria')"
+                    :data-testid="`actions-drag-slide-handle-${index}`"
                   >
-                    <SfIconDelete size="sm" />
-                    {{ getEditorTranslation('delete-slide-label') }}
+                    <NuxtImg width="18" height="18" :src="dragIcon" />
                   </button>
+
+                  <span
+                    class="text-sm font-medium truncate"
+                    :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
+                  >
+                    {{ getEditorTranslation('slide-label') }} {{ index + 1 }}
+                  </span>
+                </div>
+
+                <button
+                  :data-testid="`actions-edit-slide-${index}`"
+                  class="text-gray-500 rounded-full no-drag"
+                  :aria-label="getEditorTranslation('edit-slide-aria')"
+                  @click="editSlide(index)"
+                >
+                  <SfIconBase size="xs" viewBox="0 0 18 18">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path :d="editPath" fill="currentColor" />
+                    </svg>
+                  </SfIconBase>
+                </button>
+
+                <div :key="`menu-${index}`" class="relative">
+                  <button
+                    :data-testid="`actions-menu-slide-${index}`"
+                    class="text-gray-500 rounded-full no-drag"
+                    @click="toggleSlideMenu(index)"
+                  >
+                    <SfIconMoreVert />
+                  </button>
+
+                  <div
+                    v-if="openSlideMenuIndex === index"
+                    class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+                    @click.stop
+                  >
+                    <div class="px-4 py-3 border-b">
+                      <div class="flex items-center justify-between">
+                        <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
+                        <SfSwitch
+                          :model-value="slides[index]?.configuration?.visible !== false"
+                          :data-testid="`actions-toggle-visibility-slide-${index}`"
+                          :aria-label="getEditorTranslation('toggle-visibility-aria')"
+                          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+                          @update:model-value="toggleSlideVisibility(index)"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      :data-testid="`actions-delete-slide-${index}`"
+                      class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                      :disabled="slides.length === 1"
+                      @click="deleteSlide(index)"
+                    >
+                      <SfIconDelete size="sm" />
+                      {{ getEditorTranslation('delete-slide-label') }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -170,7 +178,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
-const { updateBannerItems, setIndex } = useCarousel();
+const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
@@ -200,6 +208,8 @@ const { isFullWidth } = useFullWidthToggleForConfig(
   { fullWidth: true },
 );
 const controls = computed(() => carouselStructure.value.configuration.controls);
+
+const currentActiveSlideIndex = computed(() => activeSlideIndex.value[blockUuid.value]);
 
 const slides = computed({
   get: () => {

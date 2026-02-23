@@ -77,6 +77,33 @@ const visibleContent = computed(() => {
   return (content as BannerProps[]).filter((slide) => slide.configuration?.visible !== false);
 });
 
+const getActualIndex = (visibleIndex: number): number => {
+  const contentArray = content as BannerProps[];
+  let visibleCount = 0;
+  for (let i = 0; i < contentArray.length; i++) {
+    const slide = contentArray[i];
+    if (slide && slide.configuration?.visible !== false) {
+      if (visibleCount === visibleIndex) {
+        return i;
+      }
+      visibleCount++;
+    }
+  }
+  return visibleIndex;
+};
+
+const getVisibleIndex = (actualIndex: number): number => {
+  const contentArray = content as BannerProps[];
+  let visibleIndex = 0;
+  for (let i = 0; i < actualIndex && i < contentArray.length; i++) {
+    const slide = contentArray[i];
+    if (slide && slide.configuration?.visible !== false) {
+      visibleIndex++;
+    }
+  }
+  return visibleIndex;
+};
+
 const handleArrows = () => {
   const viewport = useViewport();
   return !viewport.isLessThan('md');
@@ -139,14 +166,17 @@ const reinitializeSwiper = async () => {
   }
 };
 const onSlideChange = async (swiper: SwiperType) => {
-  const realIndex = swiper.realIndex;
+  const visibleIndex = swiper.realIndex;
   if (isInternalChange.value) {
     isInternalChange.value = false;
     return;
   }
 
-  if (realIndex !== activeSlideIndex.value[meta.uuid]) {
-    setIndex(meta.uuid, realIndex);
+  // Convert visible index to actual content index
+  const actualIndex = getActualIndex(visibleIndex);
+
+  if (actualIndex !== activeSlideIndex.value[meta.uuid]) {
+    setIndex(meta.uuid, actualIndex);
   }
 };
 
@@ -159,12 +189,15 @@ watch(
   (newIndex) => {
     if (!slider || slider.destroyed) return;
 
-    if (slider.realIndex !== newIndex) {
+    // Convert actual content index to visible slide index
+    const visibleIndex = getVisibleIndex(newIndex ?? 0);
+
+    if (slider.realIndex !== visibleIndex) {
       isInternalChange.value = true;
       if (slider.params.loop) {
-        slider.slideToLoop(newIndex ?? 0);
+        slider.slideToLoop(visibleIndex);
       } else {
-        slider.slideTo(newIndex ?? 0);
+        slider.slideTo(visibleIndex);
       }
     }
   },
