@@ -94,15 +94,15 @@ import type { FooterProps, FooterSettings, FooterSettingsColumn } from './types'
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useFooter();
+const { getFooterBlock, footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useFooter();
 const resolvedContent = ref<FooterSettings | null>(null);
 let stopWatch: (() => void) | null = null;
 
 onMounted(() => {
   stopWatch = watch(
-    [() => props.block, footerCache],
+    [() => props.content, () => props.meta, footerCache],
     () => {
-      const block = props.block || getFooterBlock();
+      const block = props.content && props.meta ? createFooterBlock(props.content, props.meta) : getFooterBlock();
       const mappedBlock = mapFooterData(block);
       resolvedContent.value = mappedBlock.content as FooterSettings;
     },

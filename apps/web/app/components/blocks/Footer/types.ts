@@ -1,7 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 
-export type FooterProps = {
-  block?: Block;
+export type FooterProps = Partial<Omit<Block, 'content'>> & {
+  content?: FooterSettings;
 };
 
 export interface FooterSwitchDefinition {

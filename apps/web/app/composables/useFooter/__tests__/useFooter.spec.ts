@@ -122,13 +122,13 @@ describe('useFooter', () => {
       const { extractFooterContentFromBlocks } = useFooter();
       const blocksJson = JSON.stringify([
         { name: 'Header', content: { title: 'Header' } },
-        { name: 'Footer', content: mockFooterBlock },
+        { name: 'Footer', content: mockFooterBlock.content },
         { name: 'Content', content: { body: 'Content' } },
       ]);
 
       const result = extractFooterContentFromBlocks(blocksJson);
 
-      expect(result).toEqual(mockFooterBlock);
+      expect(result).toEqual(mockFooterBlock.content);
     });
 
     it('should return null if no footer block is found', () => {
@@ -145,7 +145,7 @@ describe('useFooter', () => {
 
     it('should return null if blocks is not an array', () => {
       const { extractFooterContentFromBlocks } = useFooter();
-      const blocksJson = JSON.stringify({ name: 'Footer', content: mockFooterBlock });
+      const blocksJson = JSON.stringify({ name: 'Footer', content: mockFooterBlock.content });
 
       const result = extractFooterContentFromBlocks(blocksJson);
 
