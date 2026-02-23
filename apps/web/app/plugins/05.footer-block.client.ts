@@ -5,7 +5,7 @@ export default defineNuxtPlugin({
   name: 'footer-block',
   parallel: false,
   async setup() {
-    const { fetchFooterBlock } = useFooter();
+    const { fetchFooterBlock } = useCategoryTemplate();
 
     try {
       await fetchFooterBlock();
