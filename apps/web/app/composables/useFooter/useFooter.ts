@@ -1,4 +1,10 @@
-import type { FooterSettings, FooterSwitchDefinition, AddFooterBlock } from '~/components/blocks/Footer/types';
+import type {
+  FooterContent,
+  FooterSwitchDefinition,
+  AddFooterBlock,
+  FooterBlock,
+} from '~/components/blocks/Footer/types';
+import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
 
@@ -61,14 +67,10 @@ const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   },
 ];
 
-const createDefaultFooterSettings = (): FooterSettings => {
+const createDefaultFooterContent = (): FooterContent => {
   const runtimeConfig = useRuntimeConfig();
 
   return {
-    meta: {
-      uuid: uuid(),
-      isGlobalTemplate: true,
-    },
     column1: {
       title: t('footer.legal.label'),
       showTermsAndConditions: true,
@@ -97,7 +99,26 @@ const createDefaultFooterSettings = (): FooterSettings => {
   };
 };
 
-const extractFooterFromBlocks = (content: string): FooterSettings | null => {
+const createFooterBlock = (
+  content: FooterContent,
+  meta?: { uuid?: string; isGlobalTemplate?: boolean },
+): FooterBlock => {
+  return {
+    name: 'Footer',
+    type: 'content',
+    meta: {
+      uuid: meta?.uuid || uuid(),
+      isGlobalTemplate: meta?.isGlobalTemplate ?? true,
+    },
+    content,
+  };
+};
+
+const createDefaultFooterBlock = (): FooterBlock => {
+  return createFooterBlock(createDefaultFooterContent());
+};
+
+const extractFooterContentFromBlocks = (content: string): FooterContent | null => {
   try {
     const blocks = JSON.parse(content);
     const footerBlock = Array.isArray(blocks)
@@ -115,21 +136,8 @@ const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
   const footerExists = data.value.some((block) => block.name === 'Footer');
 
   if (!footerExists) {
-    const footerBlock = {
-      name: 'Footer',
-      type: 'content',
-      meta: {
-        uuid: uuid(),
-        isGlobalTemplate: true,
-      },
-      content: cachedFooter.value || {
-        ...createDefaultFooterSettings(),
-        meta: {
-          uuid: uuid(),
-          isGlobalTemplate: true,
-        },
-      },
-    };
+    const footerBlock = cachedFooter.value || createDefaultFooterBlock();
+
     data.value.push(footerBlock);
 
     if (cleanData) {
@@ -138,68 +146,74 @@ const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
   }
 };
 
-const mapFooterData = (data: FooterSettings | null): FooterSettings => {
-  const defaults = createDefaultFooterSettings();
+const mapFooterData = (data: Block | null): FooterBlock => {
+  if (!data) {
+    return createDefaultFooterBlock();
+  }
 
-  return {
-    ...defaults,
-    ...data,
-    meta: {
-      ...defaults.meta,
-      ...data?.meta,
+  const defaultContent = createDefaultFooterContent();
+  const dataContent = data.content as FooterContent | undefined;
+
+  return createFooterBlock(
+    {
+      ...defaultContent,
+      ...dataContent,
+      column1: {
+        ...defaultContent.column1,
+        ...dataContent?.column1,
+      },
+      column2: {
+        ...defaultContent.column2,
+        ...dataContent?.column2,
+      },
+      column3: {
+        ...defaultContent.column3,
+        ...dataContent?.column3,
+      },
+      column4: {
+        ...defaultContent.column4,
+        ...dataContent?.column4,
+      },
+      colors: {
+        ...defaultContent.colors,
+        ...dataContent?.colors,
+      },
     },
-    column1: {
-      ...defaults.column1,
-      ...data?.column1,
+    {
+      uuid: data.meta?.uuid,
+      isGlobalTemplate: data.meta?.isGlobalTemplate,
     },
-    column2: {
-      ...defaults.column2,
-      ...data?.column2,
-    },
-    column3: {
-      ...defaults.column3,
-      ...data?.column3,
-    },
-    column4: {
-      ...defaults.column4,
-      ...data?.column4,
-    },
-    colors: {
-      ...defaults.colors,
-      ...data?.colors,
-    },
-  };
+  );
 };
 
 /**
- * Composable for accessing global footer settings
+ * Composable for accessing global footer block
  * Handles fetching and caching of footer configuration
  */
 export const useFooter = () => {
-  const footerCache = useState<FooterSettings | null>('footer-settings-cache', () => null);
+  const nuxtApp = useNuxtApp();
+  const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   const clearFooterCache = () => {
     footerCache.value = null;
   };
 
-  const updateFooterCache = (newFooterSettings: FooterSettings) => {
-    footerCache.value = newFooterSettings;
+  const updateFooterCache = (newFooterBlock: FooterBlock) => {
+    footerCache.value = newFooterBlock;
   };
 
-  const getFooterSettings = (): FooterSettings => {
-    return footerCache.value || createDefaultFooterSettings();
+  const getFooterBlock = (): FooterBlock => {
+    return footerCache.value || createDefaultFooterBlock();
   };
 
-  const fetchFooterSettings = async (): Promise<FooterSettings> => {
+  const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) {
       return footerCache.value;
     }
 
-    const nuxtApp = useNuxtApp();
-
     return callWithNuxt(nuxtApp, async () => {
       try {
-        const { data } = await useAsyncData(`footer-settings-${nuxtApp.$i18n.locale}`, () =>
+        const { data } = await useAsyncData(`footer-block-${nuxtApp.$i18n.locale.value}`, () =>
           useSdk().plentysystems.getBlocks({
             identifier: 'index',
             type: 'immutable',
@@ -209,27 +223,28 @@ export const useFooter = () => {
 
         const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
 
-        if (footerBlock?.content) {
-          footerCache.value = footerBlock.content as FooterSettings;
+        if (footerBlock) {
+          footerCache.value = footerBlock as FooterBlock;
           return footerCache.value;
         }
       } catch (error) {
-        console.warn('Failed to fetch footer settings, using defaults:', error);
+        console.warn('Failed to fetch footer block, using defaults:', error);
       }
 
-      footerCache.value = getFooterSettings();
+      footerCache.value = getFooterBlock();
       return footerCache.value;
     });
   };
 
   return {
     footerCache: readonly(footerCache),
-    fetchFooterSettings,
-    getFooterSettings,
-    createDefaultFooterSettings,
+    fetchFooterBlock,
+    getFooterBlock,
+    createDefaultFooterBlock,
+    createFooterBlock,
     clearFooterCache,
     updateFooterCache,
-    extractFooterFromBlocks,
+    extractFooterContentFromBlocks,
     addFooterBlock,
     mapFooterData,
     FOOTER_SWITCH_DEFINITIONS,
