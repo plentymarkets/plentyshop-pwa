@@ -91,7 +91,7 @@ const setupConsoleSpy = () => {
   return vi.spyOn(console, 'warn').mockImplementation(() => {});
 };
 
-describe('use Footer', () => {
+describe('useFooter', () => {
   let mockStateRef: { value: Block | null };
   let mockGetBlocks: ReturnType<typeof vi.fn>;
   let mockAsyncData: ReturnType<typeof vi.fn>;

@@ -3,7 +3,7 @@
  */
 export default defineNuxtPlugin({
   name: 'footer-block',
-  parallel: true,
+  parallel: false,
   async setup() {
     const { fetchFooterBlock } = useFooter();
 

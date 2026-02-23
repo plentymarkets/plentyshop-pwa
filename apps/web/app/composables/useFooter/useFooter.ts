@@ -94,9 +94,6 @@ const createDefaultFooterContent = (): FooterSettings => {
   };
 };
 
-/**
- * Helper to create a footer Block from content and optional meta
- */
 const createFooterBlock = (content: FooterSettings, meta?: { uuid?: string; isGlobalTemplate?: boolean }): Block => {
   return {
     name: 'Footer',
