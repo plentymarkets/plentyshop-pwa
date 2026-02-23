@@ -18,6 +18,7 @@
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
           v-if="shouldShowBlock(block, enabledActions)"
+          :data-sticky="index === 1 ? 'true' : 'false'"
         >
           <PageBlock
             :index="index"
@@ -43,6 +44,7 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditablePageProps } from './types';
 
+useStickyStack();
 const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
