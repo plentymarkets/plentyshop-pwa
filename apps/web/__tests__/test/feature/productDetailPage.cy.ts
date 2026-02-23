@@ -11,6 +11,8 @@ const productListPage = new ProductListPageObject();
 describe('Smoke: Product Detail Page', () => {
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ useAvif: true, useWebp: true, enableCallistoUrlScheme: true });
   });
 
   it('[smoke] Open product page and check displayed data', () => {
@@ -77,18 +79,15 @@ describe('Smoke: Product Detail Page', () => {
       });
     });
 
-    beforeEach(() => {
-      cy.clearCookies();
-      cy.clearConfig();
-      cy.setConfig({ enableCallistoUrlSchema: true });
+    it('should succeed to validate callisto product url params with one valid param', () => {
+      cy.request({ url: '/backpack-gaia/a-164', failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(200);
+      });
     });
 
-    it('should succeed to validate callisto product url params with one valid param', () => {
-      cy.request({
-        url: '/a-164',
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(200);
+    it('should fail to validate callisto product url params with 2 valid params', () => {
+      cy.request({ url: '/backpack-gaia/a-164-1107', failOnStatusCode: false }).then((response) => {
+        expect(response.status).to.eq(404);
       });
     });
   });
