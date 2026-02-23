@@ -202,37 +202,27 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
+  /** Clears the cached footer block, forcing a fresh fetch on next access */
   const clearFooterCache = () => {
     footerCache.value = null;
   };
 
+  /** Updates the cached footer block with a new footer configuration */
   const updateFooterCache = (newFooterBlock: FooterBlock) => {
     footerCache.value = newFooterBlock;
   };
 
+  /** Returns the cached footer block or creates a default one if cache is empty */
   const getFooterBlock = (): FooterBlock => {
     return footerCache.value || createDefaultFooterBlockHelper();
   };
 
-  const createFooterBlock = (
-    content: FooterContent,
-    meta?: { uuid?: string; isGlobalTemplate?: boolean },
-  ): FooterBlock => {
-    return createFooterBlockHelper(content, meta);
-  };
+  const createFooterBlock = createFooterBlockHelper;
+  const createDefaultFooterBlock = createDefaultFooterBlockHelper;
+  const extractFooterContentFromBlocks = extractFooterContentFromBlocksHelper;
+  const mapFooterData = mapFooterDataHelper;
 
-  const createDefaultFooterBlock = (): FooterBlock => {
-    return createDefaultFooterBlockHelper();
-  };
-
-  const extractFooterContentFromBlocks = (content: string): FooterContent | null => {
-    return extractFooterContentFromBlocksHelper(content);
-  };
-
-  const mapFooterData = (data: Block | null): FooterBlock => {
-    return mapFooterDataHelper(data);
-  };
-
+  /** Adds a footer block to the blocks array if one doesn't already exist */
   const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
     const footerExists = data.value.some((block) => block.name === 'Footer');
 
@@ -247,6 +237,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
+  /** Fetches the footer block from the server or returns cached version */
   const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) {
       return footerCache.value;
@@ -307,6 +298,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
+  /** Fetches blocks from server using useAsyncData and ensures footer block is loaded */
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -329,6 +321,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     await ensureFooterBlock();
   };
 
+  /** Fetches blocks directly from SDK without caching */
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -340,6 +333,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     setupBlocks(data ?? []);
   };
 
+  /** Sets up blocks in state, applying migrations and falling back to default template if empty */
   const setupBlocks = (fetchedBlocks: Block[]) => {
     const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
 
@@ -353,10 +347,12 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
   };
 
+  /** Updates the blocks in state with new block data */
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
   };
 
+  /** Sets the default template data used when no blocks are fetched */
   const setDefaultTemplate = (blocks: Block[]) => {
     state.value.defaultTemplateData = blocks;
   };
@@ -380,6 +376,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
+  /** Saves blocks to the server and updates footer cache if footer block is included */
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
       state.value.loading = true;
