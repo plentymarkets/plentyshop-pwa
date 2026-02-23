@@ -8,6 +8,7 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
 import type { UseRichTextEditorArgs, RteCommand } from '~/composables/useRichTextEditor/types';
+import { decodeHtmlEntities } from '~/utils/decodeHtmlEntities';
 import { setupRichTextEditorExpansion } from './helpers/expansion';
 import { setupRichTextEditorBlocks } from './helpers/blocks';
 import { setupRichTextEditorColors } from './helpers/colors';
@@ -44,7 +45,11 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     if (!editor.value) return;
     const wanted = next ?? '';
     const current = editor.value.getHTML();
-    if (current !== wanted) {
+
+    const normalizedWanted = decodeHtmlEntities(wanted);
+    const normalizedCurrent = decodeHtmlEntities(current);
+
+    if (normalizedCurrent !== normalizedWanted) {
       editor.value.commands.setContent(wanted, { emitUpdate: false });
     }
   });
