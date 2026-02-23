@@ -27,10 +27,9 @@ const { attributes, setAttribute } = useProductAttributes();
 const props = defineProps<ProductAttributesProps>();
 const product = computed(() => props.product);
 const route = useRoute();
-const config = useRuntimeConfig().public;
 
 const lastSegment = route.path.split('/').pop() ?? '';
-const selectAttributes = ref(lastSegment.split('_').length > 2 || config.enableCallistoUrlScheme);
+const selectAttributes = ref(lastSegment.split('_').length > 2);
 
 watch(
   selectAttributes,
@@ -39,7 +38,6 @@ watch(
   },
   { immediate: true },
 );
-
 watch(
   product,
   (newProduct) => {

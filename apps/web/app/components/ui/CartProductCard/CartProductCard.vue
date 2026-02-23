@@ -151,7 +151,6 @@ const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { format } = usePriceFormatter();
-const config = useRuntimeConfig();
 const localePath = useLocalePath();
 
 const imageLoaded = ref(false);
@@ -247,9 +246,7 @@ const basePriceSingleValue = computed(
     productGetters.getDefaultBasePrice(cartItem.variation ?? ({} as Product)),
 );
 
-const path = computed(() => {
-  return localePath('/' + cartGetters.getProductPath(cartItem, config.public.enableCallistoUrlScheme));
-});
+const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem)));
 
 const imageAlt = computed(() => {
   const image = cartItem?.variation?.images?.all[0];

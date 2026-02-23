@@ -62,19 +62,17 @@ const { isZoomed, imageStyle, onTouchStart, onTouchMove, onTouchEnd } = useImage
 const viewport = useViewport();
 const route = useRoute();
 
-const image = computed(() => props.image);
-const index = computed(() => props.index);
-const activeIndex = computed(() => props.activeIndex);
-const isFirstImage = computed(() => props.isFirstImage);
+const image = props.image;
+const index = props.index;
+const activeIndex = props.activeIndex;
+const isFirstImage = props.isFirstImage;
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
 const showZoomHint = ref(false);
 
-const imageUrl = productImageGetters.getImageUrl(image.value);
-const imageAlt =
-  productImageGetters.getImageAlternate(image.value) || productImageGetters.getCleanImageName(image.value) || '';
-const imageTitle =
-  productImageGetters.getImageName(image.value) || productImageGetters.getCleanImageName(image.value) || '';
+const imageUrl = productImageGetters.getImageUrl(image);
+const imageAlt = productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || '';
+const imageTitle = productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || '';
 
 const getSourceSet = (image: ImagesData) => {
   const dpr = 1;
@@ -92,31 +90,31 @@ const getSourceSet = (image: ImagesData) => {
 };
 
 const computedWidth = computed(() => {
-  const imageWidth = productImageGetters.getImageWidth(image.value) || 600;
+  const imageWidth = productImageGetters.getImageWidth(image) || 600;
   return imageUrl.includes(defaults.IMAGE_LINK_SUFIX) ? imageWidth : '';
 });
 
 const computedHeight = computed(() => {
-  const imageHeight = productImageGetters.getImageHeight(image.value) || 600;
+  const imageHeight = productImageGetters.getImageHeight(image) || 600;
   return imageUrl.includes(defaults.IMAGE_LINK_SUFIX) ? imageHeight : '';
 });
 
 const nuxtImgProps = computed<Record<string, unknown>>(() => ({
-  id: `gallery-img-${index.value}`,
+  id: `gallery-img-${index}`,
   alt: imageAlt,
   title: imageTitle,
-  'aria-hidden': activeIndex.value !== index.value,
+  'aria-hidden': activeIndex !== index,
   fit: 'fill',
   class: isMobile.value
     ? { 'object-contain h-full w-full': true, zoomed: isZoomed.value }
-    : { 'object-contain h-full w-full': true, [`demo-trigger-${index.value}`]: true },
+    : { 'object-contain h-full w-full': true, [`demo-trigger-${index}`]: true },
   'data-zoom': imageUrl,
   quality: 80,
-  srcset: getSourceSet(image.value),
+  srcset: getSourceSet(image),
   sizes: '2xs:370px xs:720px sm:740px md:1400px',
   draggable: 'false',
-  loading: isFirstImage.value ? 'eager' : 'lazy',
-  fetchpriority: isFirstImage.value ? 'high' : 'auto',
+  loading: isFirstImage ? 'eager' : 'lazy',
+  fetchpriority: isFirstImage ? 'high' : 'auto',
   width: computedWidth.value,
   height: computedHeight.value,
   style: isMobile.value ? imageStyle.value : '',

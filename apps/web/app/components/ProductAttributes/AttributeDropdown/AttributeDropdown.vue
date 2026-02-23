@@ -14,7 +14,7 @@
       :invalid="Boolean(errors['selectedValue'])"
       @update:model-value="(event) => doUpdateValue(Number(event))"
     >
-      <option :value="-1">{{ t('form.selectPlaceholder') }}</option>
+      <option :value="undefined">{{ t('form.selectPlaceholder') }}</option>
       <option
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
@@ -46,7 +46,7 @@ const value = ref<string | undefined>(
 watch(
   () => getValue(productAttributeGetters.getAttributeId(attribute)),
   () => {
-    value.value = getValue(productAttributeGetters.getAttributeId(attribute))?.toString() ?? '-1';
+    value.value = getValue(productAttributeGetters.getAttributeId(attribute))?.toString() ?? undefined;
   },
 );
 
@@ -65,10 +65,8 @@ registerValidator(validate);
 const [selectedValue] = defineField('selectedValue');
 
 const doUpdateValue = (value: number) => {
-  if (value > -1) {
-    updateValue(attribute.attributeId, value);
-    selectedValue.value = getValue(attribute.attributeId);
-  }
+  updateValue(attribute.attributeId, value);
+  selectedValue.value = getValue(attribute.attributeId);
 };
 
 const setValue = (value: string | undefined) => {
