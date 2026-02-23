@@ -76,5 +76,20 @@ describe('Smoke: Product Detail Page', () => {
         expect(response.status).to.eq(404);
       });
     });
+
+    beforeEach(() => {
+      cy.clearCookies();
+      cy.clearConfig();
+      cy.setConfig({ enableCallistoUrlSchema: true });
+    });
+
+    it('should succeed to validate callisto product url params with one valid param', () => {
+      cy.request({
+        url: '/a-164',
+        failOnStatusCode: false,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+      });
+    });
   });
 });
