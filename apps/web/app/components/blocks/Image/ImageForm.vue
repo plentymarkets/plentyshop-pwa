@@ -428,9 +428,9 @@ const clampBrightness = (event: Event, type: string) => {
 
 const textOverlayAlignXOptions = computed(
   (): Array<{ value: AlignX; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('text-overlay-align-x-left'), testId: 'align-x-left' },
-    { value: 'center', label: getEditorTranslation('text-overlay-align-x-center'), testId: 'align-x-center' },
-    { value: 'right', label: getEditorTranslation('text-overlay-align-x-right'), testId: 'align-x-right' },
+    { value: 'left', label: getEditorTranslation('text-overlay-align-x-left'), testId: 'text-overlay-align-x-left' },
+    { value: 'center', label: getEditorTranslation('text-overlay-align-x-center'), testId: 'text-overlay-align-x-center' },
+    { value: 'right', label: getEditorTranslation('text-overlay-align-x-right'), testId: 'text-overlay-align-x-right' },
   ],
 );
 
