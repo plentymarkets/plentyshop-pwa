@@ -17,6 +17,8 @@ import type {
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
 
+const FOOTER_BLOCK_NAME = 'Footer' as const;
+
 const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   {
     columnGroup: 'legal',
@@ -108,12 +110,16 @@ const createDefaultFooterContent = (): FooterContent => {
   };
 };
 
+const isFooterBlock = (block: Block | null | undefined): block is FooterBlock => {
+  return block?.name === FOOTER_BLOCK_NAME;
+};
+
 const createFooterBlockHelper = (
   content: FooterContent,
   meta?: { uuid?: string; isGlobalTemplate?: boolean },
 ): FooterBlock => {
   return {
-    name: 'Footer',
+    name: FOOTER_BLOCK_NAME,
     type: 'content',
     meta: {
       uuid: meta?.uuid || uuid(),
@@ -128,9 +134,7 @@ const createDefaultFooterBlockHelper = (): FooterBlock => createFooterBlockHelpe
 const extractFooterContentFromBlocksHelper = (content: string): FooterContent | null => {
   try {
     const blocks = JSON.parse(content);
-    const footerBlock = Array.isArray(blocks)
-      ? blocks.find((block: { name?: string }) => block.name === 'Footer')
-      : null;
+    const footerBlock = Array.isArray(blocks) ? blocks.find((block: Block) => isFooterBlock(block)) : null;
 
     return footerBlock?.content || null;
   } catch (error) {
@@ -214,7 +218,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
   /** Adds a footer block to the blocks array if one doesn't already exist */
   const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
-    const footerExists = data.value.some((block) => block.name === 'Footer');
+    const footerExists = data.value.some((block) => isFooterBlock(block));
 
     if (!footerExists) {
       const footerBlock = cachedFooter.value || createDefaultFooterBlockHelper();
@@ -233,11 +237,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
           useSdk().plentysystems.getBlocks({
             identifier: 'index',
             type: 'immutable',
-            blocks: 'Footer',
+            blocks: FOOTER_BLOCK_NAME,
           }),
         );
 
-        const footerBlock = data.value?.data?.find((block) => block.name === 'Footer');
+        const footerBlock = data.value?.data?.find((block) => isFooterBlock(block));
 
         if (footerBlock) {
           footerCache.value = footerBlock as FooterBlock;
@@ -375,7 +379,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
       setupBlocks(data);
 
-      if (typeof content === 'string' && content.includes('"name":"Footer"')) {
+      if (typeof content === 'string' && content.includes(`"name":"${FOOTER_BLOCK_NAME}"`)) {
         const footerSettings = extractFooterContentFromBlocks(content);
         if (footerSettings) {
           const footerBlock = createFooterBlock(footerSettings);
@@ -416,6 +420,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     extractFooterContentFromBlocks,
     addFooterBlock,
     mapFooterData,
+    isFooterBlock,
+    FOOTER_BLOCK_NAME,
     FOOTER_SWITCH_DEFINITIONS,
     footerCache: readonly(footerCache),
     data: computed(() => state.value.data),
