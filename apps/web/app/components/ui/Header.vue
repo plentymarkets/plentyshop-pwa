@@ -1,27 +1,169 @@
 <template>
   <div
     data-sticky="true"
-    class="w-full py-2 text-center text-white text-sm z-30"
-    style="background-color: #e63946;"
+    class="w-full py-2 text-sm bg-yellow-500 text-center z-30"
   >
-    🎉 Block 1 – sticky
+    🎉 Announcement Bar – Free shipping on orders over €50!
   </div>
 
   <div
     data-sticky="false"
-    class="w-full py-3 text-center text-white text-sm z-30"
-    style="background-color: #457b9d;"
+    class="w-full py-3 bg-green-500 text-center text-sm z-30"
   >
-    📣 Block 2 – nicht sticky
+    📣 Promo Banner – Sale ends Sunday!
   </div>
+  <MegaMenu :categories="categoryTree" data-sticky="true">
+    <template v-if="viewport.isGreaterOrEquals('md')">
+      <UiSearch class="hidden md:block flex-1" />
+      <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
+        <template v-if="localeCodes.length > 1">
+          <UiButton
+            v-if="!isLanguageSelectOpen"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            variant="tertiary"
+            :style="{ color: iconColor }"
+            square
+            data-testid="open-languageselect-button"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </UiButton>
+          <UiButton
+            v-else
+            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            :style="{ color: isActive ? iconColor : '' }"
+            variant="tertiary"
+            square
+            data-testid="open-languageselect-button"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </UiButton>
+        </template>
+        <UiButton
+          class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :to="localePath(paths.wishlist)"
+          :style="{ color: iconColor }"
+          :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
+          variant="tertiary"
+          square
+          data-testid="wishlist-page-navigation"
+        >
+          <template #prefix>
+            <SfIconFavorite />
+            <SfBadge
+              :content="wishlistItemIds.length"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              data-testid="wishlist-badge"
+              placement="top-right"
+              :max="99"
+            />
+          </template>
+        </UiButton>
+        <UiButton
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :style="{ color: iconColor }"
+          :to="localePath(paths.cart)"
+          :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
+          variant="tertiary"
+          square
+        >
+          <template #prefix>
+            <SfIconShoppingCart />
+            <SfBadge
+              :content="cartItemsCount"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              data-testid="cart-badge"
+              placement="top-right"
+              :max="99"
+            />
+          </template>
+        </UiButton>
+        <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+          <template #trigger>
+            <UiButton
+              variant="tertiary"
+              class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
+              :style="{ color: iconColor }"
+              :class="{ 'bg-primary-700': isAccountDropdownOpen }"
+              data-testid="account-dropdown-button"
+              @click="accountDropdownToggle()"
+            >
+              <template #prefix>
+                <SfIconPerson />
+              </template>
+              {{ user?.firstName }}
+            </UiButton>
+          </template>
+          <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
+            <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
+              <template v-if="label === t('account.logout')">
+                <UiDivider class="my-2" />
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
+                  {{ label }}
+                </SfListItem>
+              </template>
+              <SfListItem
+                v-else
+                :tag="NuxtLink"
+                :to="link"
+                :class="{ 'bg-neutral-200': route.path === link }"
+                data-testid="account-dropdown-list-item"
+              >
+                {{ label }}
+              </SfListItem>
+            </li>
+          </ul>
+        </SfDropdown>
+        <UiButton
+          v-else
+          :style="{ color: iconColor }"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+          variant="tertiary"
+          :aria-label="t('authentication.login.openLoginForm')"
+          square
+          @click="navigateToLogin"
+        >
+          <SfIconPerson />
+        </UiButton>
+      </nav>
+    </template>
 
-  <div
-    data-sticky="true"
-    class="w-full py-2 text-center text-white text-sm z-30"
-    style="background-color: #2a9d8f;"
-  >
-    🟢 Block 3 – sticky, soll unter Block 1 kleben
-  </div>
+    <div v-if="viewport.isLessThan('lg')">
+      <UiButton
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+        square
+        data-testid="open-languageselect-button"
+        :style="{ color: iconColor }"
+        :aria-label="t('common.navigation.languageSelector')"
+        :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+        @click="toggleLanguageSelect()"
+      >
+        <SfIconLanguage />
+      </UiButton>
+      <UiButton
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+        square
+        :style="{ color: iconColor }"
+        :aria-label="t('common.navigation.openSearchModal')"
+        @click="searchModalOpen"
+      >
+        <SfIconSearch />
+      </UiButton>
+    </div>
+  </MegaMenu>
   <LanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
@@ -78,21 +220,49 @@
 
 <script setup lang="ts">
 import {
+  SfBadge,
+  SfDropdown,
   SfIconClose,
+  SfIconLanguage,
+  SfIconPerson,
+  SfIconSearch,
+  SfIconShoppingCart,
+  SfListItem,
   SfModal,
+  SfIconFavorite,
   useDisclosure,
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
+import { paths } from '~/utils/paths';
+import { handleLogout } from '~/utils/logout';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();
+const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
-useStickyStack();
+const { getSetting: getIconColor } = useSiteSettings('iconColor');
+const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 
-const { isOpen: isAuthenticationOpen, close: closeAuthentication } = useDisclosure();
-const { isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
+const iconColor = computed(() => getIconColor());
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
+
+const NuxtLink = resolveComponent('NuxtLink');
+const { localeCodes } = useI18n();
+const route = useRoute();
+const localePath = useLocalePath();
+const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
+const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
+const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
+const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree, getCategoryTree } = useCategoryTree();
+const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
+const runtimeConfig = useRuntimeConfig();
+const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
+const { isEditing, disableActions } = useEditor();
+const isActive = computed(() => isLanguageSelectOpen);
+
+useStickyStack();
 
 onNuxtReady(async () => {
   if (categoryTree.value.length === 0) await getCategoryTree();
@@ -119,4 +289,29 @@ watch(
   () => isAuthenticationOpen.value,
   () => (isLogin.value = true),
 );
+
+const logOut = () => handleLogout({ logout, toggle: accountDropdownToggle });
+
+const accountDropdown = computed(() => [
+  {
+    label: t('account.heading'),
+    link: localePath(paths.account),
+  },
+  {
+    label: t('account.ordersAndReturns.section.myOrders'),
+    link: localePath(paths.accountMyOrders),
+  },
+  {
+    label: t('account.ordersAndReturns.section.returns'),
+    link: localePath(paths.accountReturns),
+  },
+  {
+    label: t('account.logout'),
+  },
+]);
+const navigateToLogin = () => {
+  if (route.path !== localePath(paths.authLogin)) {
+    openAuthentication();
+  }
+};
 </script>
