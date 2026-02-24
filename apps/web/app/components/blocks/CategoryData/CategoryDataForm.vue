@@ -77,12 +77,12 @@
       </template>
 
       <div class="py-2">
-      <EditorOptionsTabs
-        v-model="displayCategoryImageModel"
-        :legend="getEditorTranslation('display-category-image-label')"
-        test-id-prefix="display-category-image"
-        :options="displayCategoryImageOptions"
-      />
+        <EditorOptionsTabs
+          v-model="displayCategoryImageModel"
+          :legend="getEditorTranslation('display-category-image-label')"
+          test-id-prefix="display-category-image"
+          :options="displayCategoryImageOptions"
+        />
       </div>
       <div
         v-if="showImageSlotHint"
@@ -100,12 +100,12 @@
         </span>
       </div>
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
-       <EditorOptionsTabs
-        v-model="fillModeModel"
-        :legend="getEditorTranslation('image-scalling-label')"
-        test-id-prefix="image-scaling"
-        :options="fillModeOptions"
-      />
+        <EditorOptionsTabs
+          v-model="fillModeModel"
+          :legend="getEditorTranslation('image-scalling-label')"
+          test-id-prefix="image-scaling"
+          :options="fillModeOptions"
+        />
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
@@ -365,23 +365,43 @@ const fillModeOptions = computed(
 const textboxAlignXOptions = computed(
   (): Array<{ value: TextAlignX; label: string; testId: string }> => [
     { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-y-align-left' },
-    { value: 'center', label: getEditorTranslation('textbox-align-x-center-label'), testId: 'slider-textbox-y-align-center' },
-    { value: 'right', label: getEditorTranslation('textbox-align-x-right-label'), testId: 'slider-textbox-y-align-right' },
+    {
+      value: 'center',
+      label: getEditorTranslation('textbox-align-x-center-label'),
+      testId: 'slider-textbox-y-align-center',
+    },
+    {
+      value: 'right',
+      label: getEditorTranslation('textbox-align-x-right-label'),
+      testId: 'slider-textbox-y-align-right',
+    },
   ],
 );
 
 const textboxAlignYOptions = computed(
   (): Array<{ value: TextAlignY; label: string; testId: string }> => [
     { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-top' },
-    { value: 'center', label: getEditorTranslation('textbox-align-y-center-label'), testId: 'slider-textbox-align-center' },
-    { value: 'bottom', label: getEditorTranslation('textbox-align-y-bottom-label'), testId: 'slider-textbox-align-bottom' },
+    {
+      value: 'center',
+      label: getEditorTranslation('textbox-align-y-center-label'),
+      testId: 'slider-textbox-align-center',
+    },
+    {
+      value: 'bottom',
+      label: getEditorTranslation('textbox-align-y-bottom-label'),
+      testId: 'slider-textbox-align-bottom',
+    },
   ],
 );
 
 const textAlignOptions = computed(
   (): Array<{ value: TextAlignX; label: string; testId: string }> => [
     { value: 'left', label: getEditorTranslation('text-align-option-left-label'), testId: 'slider-text-align-left' },
-    { value: 'center', label: getEditorTranslation('text-align-option-center-label'), testId: 'slider-text-align-center' },
+    {
+      value: 'center',
+      label: getEditorTranslation('text-align-option-center-label'),
+      testId: 'slider-text-align-center',
+    },
     { value: 'right', label: getEditorTranslation('text-align-option-right-label'), testId: 'slider-text-align-right' },
   ],
 );
@@ -417,7 +437,6 @@ const textAlignModel = computed<TextAlignX>({
     categoryDataBlock.value.text.textAlignment = v;
   },
 });
-
 </script>
 
 <i18n lang="json">

@@ -33,5 +33,5 @@ export type ProductRecommendedProductsContent = {
     fullWidth?: boolean;
   };
 };
- export type TextAlign = 'left' | 'center' | 'right';
+export type TextAlign = 'left' | 'center' | 'right';
 export type SourceType = 'cross_selling' | 'category';

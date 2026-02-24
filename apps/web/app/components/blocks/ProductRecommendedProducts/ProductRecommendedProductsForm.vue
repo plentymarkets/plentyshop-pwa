@@ -156,7 +156,8 @@
 import type {
   CrossSellingRelationType,
   ProductRecommendedProductsContent,
-  SourceType, TextAlign,
+  SourceType,
+  TextAlign,
 } from '../ProductRecommendedProducts/types';
 import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';

@@ -57,4 +57,3 @@ type AddFooterBlockOptions = {
 
 export type AddFooterBlock = (options: AddFooterBlockOptions) => void;
 export type FootnoteAlign = 'left' | 'center' | 'right';
-

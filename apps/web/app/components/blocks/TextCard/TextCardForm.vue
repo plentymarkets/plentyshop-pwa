@@ -219,7 +219,6 @@
         :options="buttonVariantOptions"
       />
     </div>
-
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -418,7 +417,6 @@ const handleSwitchToWysiwygFromModal = async () => {
   contentRichTextEditor.value?.openModal();
 };
 
-
 const textAlignOptions = computed(
   (): Array<{ value: TextAlign; label: string; testId: string }> => [
     { value: 'left', label: getEditorTranslation('text-align-option-left-label'), testId: 'text-align-left' },
@@ -437,7 +435,11 @@ const textAlignModel = computed<TextAlign>({
 const buttonVariantOptions = computed(
   (): Array<{ value: ButtonVariant; label: string; testId: string }> => [
     { value: 'primary', label: getEditorTranslation('button-variant-primary-label'), testId: 'button-outline-primary' },
-    { value: 'secondary', label: getEditorTranslation('button-variant-secondary-label'), testId: 'button-outline-secondary' },
+    {
+      value: 'secondary',
+      label: getEditorTranslation('button-variant-secondary-label'),
+      testId: 'button-outline-secondary',
+    },
   ],
 );
 
@@ -447,7 +449,6 @@ const buttonVariantModel = computed<ButtonVariant>({
     textCardBlock.value.button.variant = v;
   },
 });
-
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 

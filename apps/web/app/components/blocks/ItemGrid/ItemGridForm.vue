@@ -176,7 +176,8 @@ import type {
   ItemGridContent,
   ItemGridFieldKey,
   ItemCountPosition,
-  ContentAlignment, AddToCartStyle,
+  ContentAlignment,
+  AddToCartStyle,
 } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';

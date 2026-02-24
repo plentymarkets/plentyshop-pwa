@@ -161,7 +161,6 @@
         :options="textOverlayAlignYOptions"
       />
     </div>
-
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -203,7 +202,7 @@
           test-id-prefix="slider-button-variant"
           :options="buttonVariantOptions"
         />
-    </div>
+      </div>
     </div>
   </UiAccordionItem>
   <UiAccordionItem
@@ -371,7 +370,6 @@ const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
 const backgroundColor = ref(isTransparent.value ? '' : backgroundColorInit);
 
-
 const fillModeOptions = computed(
   (): Array<{ value: FillMode; label: string; testId: string }> => [
     { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'align-y-center' },
@@ -399,7 +397,6 @@ watch(fillModeModel, (newMode) => {
   }
 });
 
-
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
 const buttonOpen = ref(false);
@@ -424,7 +421,6 @@ const clampBrightness = (event: Event, type: string) => {
     uiImageTextBlock.value.image.brightness = clamp(nextValue, 0, 1);
   }
 };
-
 
 const textOverlayAlignXOptions = computed(
   (): Array<{ value: AlignX; label: string; testId: string }> => [
@@ -459,7 +455,11 @@ const textOverlayAlignYModel = computed<AlignY>({
 const buttonVariantOptions = computed(
   (): Array<{ value: ButtonVariant; label: string; testId: string }> => [
     { value: 'primary', label: getEditorTranslation('button-variant-primary-label'), testId: 'slider-button-primary' },
-    { value: 'secondary', label: getEditorTranslation('button-variant-secondary-label'), testId: 'slider-button-secondary' },
+    {
+      value: 'secondary',
+      label: getEditorTranslation('button-variant-secondary-label'),
+      testId: 'slider-button-secondary',
+    },
   ],
 );
 
@@ -469,7 +469,6 @@ const buttonVariantModel = computed<ButtonVariant>({
     uiImageTextBlock.value.button.variant = v;
   },
 });
-
 </script>
 
 <i18n lang="json">

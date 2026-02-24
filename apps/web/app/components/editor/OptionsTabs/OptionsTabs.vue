@@ -62,8 +62,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: T): void;
 }>();
 
-const { modelValue, options, legend, ariaLabel, testIdPrefix } =
-  toRefs(props);
+const { modelValue, options, legend, ariaLabel, testIdPrefix } = toRefs(props);
 const legendId = `options-tabs-legend-${useId()}`;
 
 const ariaLabelledBy = computed<string | undefined>(() => (legend.value ? legendId : undefined));
