@@ -316,7 +316,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { FooterContent, FooterBlock, FootnoteAlign, FooterSettings } from './types';
+import type { FooterContent, FooterBlock, FootnoteAlign } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();
 const { data } = useCategoryTemplate(
