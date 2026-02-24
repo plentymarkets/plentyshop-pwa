@@ -393,9 +393,9 @@ const footnoteAlignOptions = computed(
 );
 
 const footnoteAlignModel = computed<FootnoteAlign>({
-  get: () => (footerBlock.value.footnoteAlign as FootnoteAlign | undefined) ?? 'left',
+  get: () => (footerBlock.value.content.footnoteAlign as FootnoteAlign | undefined) ?? 'left',
   set: (v) => {
-    footerBlock.value.footnoteAlign = v;
+    footerBlock.value.content.footnoteAlign = v;
   },
 });
 
