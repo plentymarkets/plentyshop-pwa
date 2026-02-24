@@ -351,9 +351,9 @@ const { blockUuid } = useSiteConfiguration();
 const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 const displayCategoryImageOptions = computed(
   (): Array<{ value: DisplayCategoryImage; label: string; testId: string }> => [
-    { value: 'off', label: getEditorTranslation('off'), testId: 'image-scaling-off' },
-    { value: 'image-1', label: getEditorTranslation('image-1'), testId: 'image-one' },
-    { value: 'image-2', label: getEditorTranslation('image-2'), testId: 'image-two' },
+    { value: 'off', label: getEditorTranslation('off'), testId: 'display-category-image-off' },
+    { value: 'image-1', label: getEditorTranslation('image-1'), testId: 'display-category-image-1' },
+    { value: 'image-2', label: getEditorTranslation('image-2'), testId: 'display-category-image-2' },
   ],
 );
 const fillModeOptions = computed(
