@@ -436,9 +436,9 @@ const textOverlayAlignXOptions = computed(
 
 const textOverlayAlignYOptions = computed(
   (): Array<{ value: AlignY; label: string; testId: string }> => [
-    { value: 'top', label: getEditorTranslation('text-overlay-align-y-top'), testId: 'align-y-top' },
-    { value: 'center', label: getEditorTranslation('text-overlay-align-y-center'), testId: 'align-y-center' },
-    { value: 'bottom', label: getEditorTranslation('text-overlay-align-y-bottom'), testId: 'align-y-bottom' },
+    { value: 'top', label: getEditorTranslation('text-overlay-align-y-top'), testId: 'text-overlay-align-y-top' },
+    { value: 'center', label: getEditorTranslation('text-overlay-align-y-center'), testId: 'text-overlay-align-y-center' },
+    { value: 'bottom', label: getEditorTranslation('text-overlay-align-y-bottom'), testId: 'text-overlay-align-y-bottom' },
   ],
 );
 
