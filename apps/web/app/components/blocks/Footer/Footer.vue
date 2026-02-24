@@ -97,27 +97,12 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useCategoryTemplate();
 
-/**
- * Determines if Footer should render:
- * - If content props provided: render (called from EditablePage with block data)
- * - If page is blockified and no props: don't render (Footer is in EditablePage blocks)
- * - Otherwise: render (non-blockified page, fetch from cache)
- */
 const shouldRender = computed(() => {
-  // Has content props = render (from EditablePage)
   if (props.content) return true;
-
-  // Blockified page without props = don't render (avoid duplicate)
   if (route.meta.isBlockified) return false;
-
-  // Non-blockified page = render from cache
   return true;
 });
 
-/**
- * Resolved footer content - reactively computed from props or cache
- * Server plugin pre-fetches footer data, ensuring SSR-safe rendering
- */
 const resolvedContent = computed(() => {
   const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
   const mappedBlock = mapFooterData(block);
