@@ -31,6 +31,7 @@ export type ClearFooterCache = () => void;
 export type UpdateFooterCache = (newFooterBlock: FooterBlock) => void;
 export type ExtractFooterContentFromBlocks = (content: string) => FooterContent | null;
 export type MapFooterData = (data: Block | null) => FooterBlock;
+export type IsFooterBlock = (block: Block | null | undefined) => block is FooterBlock;
 
 export interface UseCategoryTemplate {
   data: Readonly<Ref<UseCategoryTemplateState['data']>>;
@@ -54,6 +55,8 @@ export interface UseCategoryTemplate {
   extractFooterContentFromBlocks: ExtractFooterContentFromBlocks;
   addFooterBlock: AddFooterBlock;
   mapFooterData: MapFooterData;
+  isFooterBlock: IsFooterBlock;
+  FOOTER_BLOCK_NAME: 'Footer';
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
 }
 

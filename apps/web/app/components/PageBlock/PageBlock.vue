@@ -248,8 +248,10 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
+const { isFooterBlock } = useCategoryTemplate();
+
 const getBlockActions = (block: Block) => {
-  if (block.name === 'Footer') {
+  if (isFooterBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,
