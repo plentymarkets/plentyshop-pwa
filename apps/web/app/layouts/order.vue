@@ -5,8 +5,6 @@
       <slot />
     </NarrowContainer>
   </main>
-  <FooterBlock />
+  <EditablePage v-if="!$route.meta.isBlockified" :render-only="['Footer']" minimal />
 </template>
-<script setup lang="ts">
-import FooterBlock from '~/components/blocks/Footer/Footer.vue';
-</script>
+<script setup lang="ts"></script>

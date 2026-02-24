@@ -10,14 +10,13 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <FooterBlock />
+    <EditablePage v-if="!$route.meta.isBlockified" :render-only="['Footer']" minimal />
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
-import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 
 defineProps<DefaultLayoutProps>();
 

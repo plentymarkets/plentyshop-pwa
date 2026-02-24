@@ -1,6 +1,6 @@
 <template>
   <footer
-    v-if="shouldRender && resolvedContent"
+    v-if="resolvedContent"
     class="pt-10"
     :style="{
       backgroundColor: resolvedContent.colors?.background,
@@ -104,6 +104,8 @@ const shouldRender = computed(() => {
 });
 
 const resolvedContent = computed(() => {
+  if (!shouldRender.value) return null;
+
   const block = props.content
     ? createFooterBlock(props.content, props.meta)
     : footerCache.value || createDefaultFooterBlock();

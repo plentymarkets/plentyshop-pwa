@@ -16,12 +16,11 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <FooterBlock />
+    <EditablePage v-if="!$route.meta.isBlockified" :render-only="['Footer']" minimal />
   </div>
 </template>
 
 <script setup lang="ts">
-import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 defineProps<{
   heading: string;
 }>();

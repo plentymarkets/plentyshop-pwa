@@ -1,7 +1,7 @@
 <template>
   <div>
-    <EmptyBlock v-if="isContentEmptyInEditor" />
-    <CategoryEmptyState v-else-if="isContentEmptyInLive" />
+    <EmptyBlock v-if="!minimal && isContentEmptyInEditor" />
+    <CategoryEmptyState v-else-if="!minimal && isContentEmptyInLive" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -17,7 +17,7 @@
       <template #item="{ element: block, index }">
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
-          v-if="shouldShowBlock(block, enabledActions)"
+          v-if="shouldShowBlock(block, enabledActions) && (!renderOnly?.length || renderOnly.includes(block.name))"
         >
           <PageBlock
             :index="index"
@@ -47,8 +47,12 @@ const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditablePageProps>(), {
+  identifier: 'index',
+  type: 'immutable',
   hasEnabledActions: true,
   preventBlocksRequest: false,
+  minimal: false,
+  renderOnly: () => [],
 });
 
 const { data, getBlocksServer, cleanData } = useCategoryTemplate(
@@ -57,17 +61,27 @@ const { data, getBlocksServer, cleanData } = useCategoryTemplate(
   useNuxtApp().$i18n.locale.value,
 );
 const { isFooterBlock } = useCategoryTemplate();
-const dataIsEmpty = computed(() => data.value.length === 0);
+
+// Filter blocks based on renderOnly prop
+const filteredData = computed(() => {
+  if (props.renderOnly && props.renderOnly.length > 0) {
+    return data.value.filter((block) => props.renderOnly!.includes(block.name));
+  }
+  return data.value;
+});
+
+const dataIsEmpty = computed(() => filteredData.value.length === 0);
 
 const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0]) && isInEditor.value),
+  () =>
+    dataIsEmpty.value || (filteredData.value.length === 1 && isFooterBlock(filteredData.value[0]) && isInEditor.value),
 );
 
 const isContentEmptyInLive = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
+  () => dataIsEmpty.value || (filteredData.value.length === 1 && isFooterBlock(filteredData.value[0])),
 );
 
-if (!props.preventBlocksRequest) {
+if (!props.preventBlocksRequest && !props.minimal) {
   await getBlocksServer(props.identifier, props.type);
 }
 
@@ -117,14 +131,16 @@ const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const enabledActions = computed(
-  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
+  () => !props.minimal && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 
 onMounted(async () => {
-  isEditingEnabled.value = false;
-  window.addEventListener('beforeunload', handleBeforeUnload);
+  if (!props.minimal) {
+    isEditingEnabled.value = false;
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  }
 
-  if (isInEditor.value) {
+  if (isInEditor.value && !props.minimal) {
     await import('./draggable.css');
   }
 
@@ -133,7 +149,9 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearRegistry();
-  window.removeEventListener('beforeunload', handleBeforeUnload);
+  if (!props.minimal) {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  }
 });
 
 const hasUnsavedChanges = () => {
@@ -145,17 +163,19 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   event.preventDefault();
 };
 
-onBeforeRouteLeave((to, from, next) => {
-  if (isEditingEnabled.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
+if (!props.minimal) {
+  onBeforeRouteLeave((to, from, next) => {
+    if (isEditingEnabled.value) {
+      const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+      if (confirmation) {
+        closeDrawer();
+        next();
+      } else {
+        next(false);
+      }
     } else {
-      next(false);
+      next();
     }
-  } else {
-    next();
-  }
-});
+  });
+}
 </script>
