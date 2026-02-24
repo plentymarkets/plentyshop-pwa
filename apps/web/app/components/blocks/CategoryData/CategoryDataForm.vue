@@ -358,8 +358,8 @@ const displayCategoryImageOptions = computed(
 );
 const fillModeOptions = computed(
   (): Array<{ value: FillMode; label: string; testId: string }> => [
-    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scalling-fill' },
-    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'mage-scalling-fit' },
+    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scaling-fill' },
+    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'image-scaling-fit' },
   ],
 );
 const textboxAlignXOptions = computed(
