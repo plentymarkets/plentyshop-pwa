@@ -364,9 +364,9 @@ const fillModeOptions = computed(
 );
 const textboxAlignXOptions = computed(
   (): Array<{ value: TextAlignX; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-y-align-left' },
-    { value: 'center', label: getEditorTranslation('textbox-align-x-center-label'), testId: 'slider-textbox-y-align-center' },
-    { value: 'right', label: getEditorTranslation('textbox-align-x-right-label'), testId: 'slider-textbox-y-align-right' },
+    { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-align-x-left' },
+    { value: 'center', label: getEditorTranslation('textbox-align-x-center-label'), testId: 'slider-textbox-align-x-center' },
+    { value: 'right', label: getEditorTranslation('textbox-align-x-right-label'), testId: 'slider-textbox-align-x-right' },
   ],
 );
 
