@@ -36,3 +36,6 @@ export type TextCardContent = {
 export type TextCardFormProps = {
   uuid?: string;
 };
+
+export type ButtonVariant = 'primary' | 'secondary';
+export type TextAlign = 'left' | 'center' | 'right';

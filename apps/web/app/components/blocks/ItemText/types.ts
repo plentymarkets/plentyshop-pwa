@@ -27,3 +27,7 @@ export type ItemTextContent = {
 export type ItemTextFormProps = {
   uuid?: string;
 };
+export type TextAlignX = 'left' | 'center' | 'right';
+export type TextAlignY = 'top' | 'center' | 'bottom';
+export type ButtonVariant = 'primary' | 'secondary';
+

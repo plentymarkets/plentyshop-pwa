@@ -70,39 +70,12 @@
         </EditorColorPicker>
       </div>
       <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
-        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="text-align-left"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('left') }"
-            data-testid="recommended-form-text-align-left"
-            @click="recommendedBlock.text.textAlignment = 'left'"
-          >
-            <SfIconCheck :class="{ invisible: !isTextAlignSelected('left') }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-left-label') }}
-          </div>
-          <div
-            for="text-align-center"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('center') }"
-            data-testid="recommended-form-text-align-center"
-            @click="recommendedBlock.text.textAlignment = 'center'"
-          >
-            <SfIconCheck :class="{ invisible: !isTextAlignSelected('center') }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-center-label') }}
-          </div>
-          <div
-            for="text-align-right"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('right') }"
-            data-testid="recommended-form-text-align-right"
-            @click="recommendedBlock.text.textAlignment = 'right'"
-          >
-            <SfIconCheck :class="{ invisible: !isTextAlignSelected('right') }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-right-label') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-model="textAlignModel"
+          :legend="getEditorTranslation('text-align-label')"
+          test-id-prefix="recommended-form-text-align"
+          :options="textAlignOptions"
+        />
       </div>
     </UiAccordionItem>
 
@@ -116,36 +89,14 @@
         <h2>{{ getEditorTranslation('source-label') }}</h2>
       </template>
 
-      <fieldset class="py-2">
-        <legend class="text-sm font-medium text-black">
-          {{ getEditorTranslation('source-type-label') }}
-        </legend>
-
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.source.type === 'cross_selling' }"
-            data-testid="recommended-form-source-product"
-            @click="recommendedBlock.source.type = 'cross_selling'"
-          >
-            <SfIconCheck
-              :class="{ invisible: recommendedBlock.source.type !== 'cross_selling' }"
-              class="mr-1 w-[1.1rem]"
-            />
-            {{ getEditorTranslation('source-type-product') }}
-          </div>
-
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.source.type === 'category' }"
-            data-testid="recommended-form-source-category"
-            @click="selectCategoryTab()"
-          >
-            <SfIconCheck :class="{ invisible: recommendedBlock.source.type !== 'category' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('source-type-category') }}
-          </div>
-        </div>
-      </fieldset>
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="sourceTypeModel"
+          :legend="getEditorTranslation('source-type-label')"
+          test-id-prefix="recommended-form-source"
+          :options="sourceTypeOptions"
+        />
+      </div>
 
       <div v-if="recommendedBlock.source.type === 'cross_selling'" class="py-4">
         <UiFormLabel>{{ getEditorTranslation('product-id-label') }}</UiFormLabel>
@@ -202,8 +153,12 @@
 </template>
 
 <script setup lang="ts">
-import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
-import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import type {
+  CrossSellingRelationType,
+  ProductRecommendedProductsContent,
+  SourceType, TextAlign,
+} from '../ProductRecommendedProducts/types';
+import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
@@ -249,10 +204,6 @@ const debouncedFn = useDebounceFn((event: Event) => {
   recommendedBlock.value.source.itemId = target.value.toString();
 }, 1000);
 
-const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
-  return (recommendedBlock.value.text.textAlignment || 'left') === align;
-};
-
 const sourceOpen = ref(false);
 const textsOpen = ref(false);
 const crossSellingOptions = [
@@ -294,9 +245,51 @@ const recommendedBlockRef = ref(recommendedBlock.value);
 
 const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
 
-const selectCategoryTab = async () => {
-  recommendedBlock.value.source.type = 'category';
-};
+const textAlignOptions = computed(() => [
+  {
+    value: 'left' as const,
+    label: getEditorTranslation('text-align-option-left-label'),
+    testId: 'recommended-form-text-align-left',
+  },
+  {
+    value: 'center' as const,
+    label: getEditorTranslation('text-align-option-center-label'),
+    testId: 'recommended-form-text-align-center',
+  },
+  {
+    value: 'right' as const,
+    label: getEditorTranslation('text-align-option-right-label'),
+    testId: 'recommended-form-text-align-right',
+  },
+]);
+
+const textAlignModel = computed<TextAlign>({
+  get: () => (recommendedBlock.value.text?.textAlignment as TextAlign | undefined) ?? 'left',
+  set: (v) => {
+    if (!recommendedBlock.value.text) return;
+    recommendedBlock.value.text.textAlignment = v;
+  },
+});
+
+const sourceTypeOptions = computed(() => [
+  {
+    value: 'cross_selling' as const,
+    label: getEditorTranslation('source-type-product'),
+    testId: 'recommended-form-source-product',
+  },
+  {
+    value: 'category' as const,
+    label: getEditorTranslation('source-type-category'),
+    testId: 'recommended-form-source-category',
+  },
+]);
+
+const sourceTypeModel = computed<SourceType>({
+  get: () => recommendedBlock.value.source?.type ?? 'category',
+  set: (v) => {
+    recommendedBlock.value.source.type = v;
+  },
+});
 </script>
 
 <i18n lang="json">

@@ -160,47 +160,14 @@
         </EditorColorPicker>
       </div>
 
-      <fieldset class="py-2">
-        <legend class="text-sm font-medium text-black">{{ getEditorTranslation('text-align-label') }}</legend>
-
-        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="text-align-left"
-            data-testid="text-align-left"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'left' }"
-            @click="textCardBlock.text.textAlignment = 'left'"
-          >
-            <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-left-label') }}
-          </div>
-
-          <div
-            for="text-align-center"
-            data-testid="text-align-center"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'center' }"
-            @click="textCardBlock.text.textAlignment = 'center'"
-          >
-            <SfIconCheck
-              :class="{ invisible: textCardBlock.text.textAlignment !== 'center' }"
-              class="mr-1 w-[1.1rem]"
-            />
-            {{ getEditorTranslation('text-align-option-center-label') }}
-          </div>
-
-          <div
-            for="text-align-right"
-            data-testid="text-align-right"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'right' }"
-            @click="textCardBlock.text.textAlignment = 'right'"
-          >
-            <SfIconCheck :class="{ invisible: textCardBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-right-label') }}
-          </div>
-        </div>
-      </fieldset>
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="textAlignModel"
+          :legend="getEditorTranslation('text-align-label')"
+          test-id-prefix="text-align"
+          :options="textAlignOptions"
+        />
+      </div>
     </div>
   </UiAccordionItem>
 
@@ -244,31 +211,15 @@
       </label>
     </div>
 
-    <fieldset class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('outline-label') }}</UiFormLabel>
+    <div class="py-2">
+      <EditorOptionsTabs
+        v-model="buttonVariantModel"
+        :legend="getEditorTranslation('outline-label')"
+        test-id-prefix="button-variant"
+        :options="buttonVariantOptions"
+      />
+    </div>
 
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          data-testid="button-outline-primary"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'primary' }"
-          @click="textCardBlock.button.variant = 'primary'"
-        >
-          <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'primary' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('button-variant-primary-label') }}
-        </div>
-
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          data-testid="button-outline-secondary"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'secondary' }"
-          @click="textCardBlock.button.variant = 'secondary'"
-        >
-          <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'secondary' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('button-variant-secondary-label') }}
-        </div>
-      </div>
-    </fieldset>
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -373,13 +324,12 @@ import {
   SfInput,
   SfTextarea,
   SfSwitch,
-  SfIconCheck,
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import type { TextCardFormProps, TextCardContent } from './types';
+import type { TextCardFormProps, TextCardContent, TextAlign, ButtonVariant } from './types';
 const props = defineProps<TextCardFormProps>();
 
 const runtimeConfig = useRuntimeConfig().public;
@@ -467,6 +417,37 @@ const handleSwitchToWysiwygFromModal = async () => {
   await nextTick();
   contentRichTextEditor.value?.openModal();
 };
+
+
+const textAlignOptions = computed(
+  (): Array<{ value: TextAlign; label: string; testId: string }> => [
+    { value: 'left', label: getEditorTranslation('text-align-option-left-label'), testId: 'text-align-left' },
+    { value: 'center', label: getEditorTranslation('text-align-option-center-label'), testId: 'text-align-center' },
+    { value: 'right', label: getEditorTranslation('text-align-option-right-label'), testId: 'text-align-right' },
+  ],
+);
+
+const textAlignModel = computed<TextAlign>({
+  get: () => (textCardBlock.value.text.textAlignment as TextAlign | undefined) ?? 'left',
+  set: (v) => {
+    textCardBlock.value.text.textAlignment = v;
+  },
+});
+
+const buttonVariantOptions = computed(
+  (): Array<{ value: ButtonVariant; label: string; testId: string }> => [
+    { value: 'primary', label: getEditorTranslation('button-variant-primary-label'), testId: 'button-outline-primary' },
+    { value: 'secondary', label: getEditorTranslation('button-variant-secondary-label'), testId: 'button-outline-secondary' },
+  ],
+);
+
+const buttonVariantModel = computed<ButtonVariant>({
+  get: () => (textCardBlock.value.button.variant as ButtonVariant | undefined) ?? 'primary',
+  set: (v) => {
+    textCardBlock.value.button.variant = v;
+  },
+});
+
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
