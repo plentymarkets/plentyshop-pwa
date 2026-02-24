@@ -10,7 +10,7 @@ export default defineNuxtPlugin({
     try {
       await fetchFooterBlock();
     } catch (error) {
-      console.warn('Failed to preload footer block:', error);
+      console.warn('[FOOTER DEBUG] Failed to preload footer block:', error);
     }
   },
 });
