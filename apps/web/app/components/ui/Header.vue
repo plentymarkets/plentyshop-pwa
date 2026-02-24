@@ -1,18 +1,5 @@
 <template>
-  <div
-    class="w-full py-2 text-center text-white text-sm"
-    style="background-color: #e63946; position: sticky; top: 0; z-index: 30;"
-  >
-    🎉 Announcement Bar – Free shipping on orders over €50!
-  </div>
-
-  <div
-    class="w-full py-3 text-center text-white text-sm"
-    style="background-color: #457b9d; position: sticky; top: 36px; z-index: 29;"
-  >
-    📣 Promo Banner – Sale ends Sunday!
-  </div>
-  <MegaMenu :categories="categoryTree" class="sticky top-0">
+  <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <UiSearch class="hidden md:block flex-1" />
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
