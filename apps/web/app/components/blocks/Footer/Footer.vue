@@ -1,6 +1,6 @@
 <template>
   <footer
-    v-if="resolvedContent"
+    v-if="shouldRender && resolvedContent"
     class="pt-10"
     :style="{
       backgroundColor: resolvedContent.colors?.background,
@@ -92,26 +92,23 @@ import { SfLink, SfListItem } from '@storefront-ui/vue';
 import type { FooterProps, FooterContent, FooterColumn } from './types';
 
 const props = defineProps<FooterProps>();
+const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useFooter();
-const resolvedContent = ref<FooterContent | null>(null);
-let stopWatch: (() => void) | null = null;
+const { footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock, createDefaultFooterBlock } =
+  useCategoryTemplate();
 
-onMounted(() => {
-  stopWatch = watch(
-    [() => props.content, footerCache],
-    () => {
-      const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
-      const mappedBlock = mapFooterData(block);
-      resolvedContent.value = mappedBlock.content as FooterContent;
-    },
-    { immediate: true, deep: true },
-  );
+const shouldRender = computed(() => {
+  if (route.meta.isBlockified) return !!props.content;
+  return true;
 });
 
-onBeforeUnmount(() => {
-  stopWatch?.();
+const resolvedContent = computed(() => {
+  const block = props.content
+    ? createFooterBlock(props.content, props.meta)
+    : footerCache.value || createDefaultFooterBlock();
+
+  return mapFooterData(block).content as FooterContent;
 });
 
 const getColumnSwitches = (column: FooterColumn) => {

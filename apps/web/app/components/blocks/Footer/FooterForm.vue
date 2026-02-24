@@ -355,7 +355,7 @@ const { data } = useCategoryTemplate(
 );
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useFooter();
+const { mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useCategoryTemplate();
 const props = defineProps<{ uuid?: string }>();
 
 const firstColumnOpen = ref(false);
