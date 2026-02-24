@@ -372,9 +372,9 @@ const textboxAlignXOptions = computed(
 
 const textboxAlignYOptions = computed(
   (): Array<{ value: TextAlignY; label: string; testId: string }> => [
-    { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-top' },
-    { value: 'center', label: getEditorTranslation('textbox-align-y-center-label'), testId: 'slider-textbox-align-center' },
-    { value: 'bottom', label: getEditorTranslation('textbox-align-y-bottom-label'), testId: 'slider-textbox-align-bottom' },
+    { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-y-top' },
+    { value: 'center', label: getEditorTranslation('textbox-align-y-center-label'), testId: 'slider-textbox-align-y-center' },
+    { value: 'bottom', label: getEditorTranslation('textbox-align-y-bottom-label'), testId: 'slider-textbox-align-y-bottom' },
   ],
 );
 
