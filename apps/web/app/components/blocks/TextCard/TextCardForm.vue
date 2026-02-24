@@ -385,8 +385,8 @@ const textCardBlock = computed<TextCardContent>(() => {
 });
 
 const contentModel = computed<string>({
-  get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (val) => {
+  get: () => decodeHtmlEntities(textCardBlock.value.text.htmlDescription ?? ''),
+  set: (val: string) => {
     textCardBlock.value.text.htmlDescription = val ?? '';
   },
 });

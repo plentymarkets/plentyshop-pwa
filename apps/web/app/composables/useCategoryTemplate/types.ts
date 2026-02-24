@@ -1,4 +1,10 @@
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
+import type {
+  FooterBlock,
+  FooterContent,
+  FooterSwitchDefinition,
+  AddFooterBlock,
+} from '~/components/blocks/Footer/types';
 
 export interface UseCategoryTemplateState {
   data: Block[];
@@ -14,12 +20,24 @@ export type GetBlocks = (identifier: number | string, type: string, block?: stri
 export type UpdateBlocks = (blocks: Block[]) => void;
 export type SetupBlocks = (blocks: Block[]) => void;
 export type SetDefaultTemplate = (blocks: Block[]) => void;
+export type FetchFooterBlock = () => Promise<FooterBlock>;
+export type GetFooterBlock = () => FooterBlock;
+export type CreateFooterBlock = (
+  content: FooterContent,
+  meta?: { uuid?: string; isGlobalTemplate?: boolean },
+) => FooterBlock;
+export type CreateDefaultFooterBlock = () => FooterBlock;
+export type ClearFooterCache = () => void;
+export type UpdateFooterCache = (newFooterBlock: FooterBlock) => void;
+export type ExtractFooterContentFromBlocks = (content: string) => FooterContent | null;
+export type MapFooterData = (data: Block | null) => FooterBlock;
 
 export interface UseCategoryTemplate {
   data: Readonly<Ref<UseCategoryTemplateState['data']>>;
   cleanData: Readonly<Ref<UseCategoryTemplateState['cleanData']>>;
   categoryTemplateData: Readonly<Ref<UseCategoryTemplateState['categoryTemplateData']>>;
   loading: Readonly<Ref<boolean>>;
+  footerCache: Readonly<Ref<FooterBlock | null>>;
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
@@ -27,6 +45,16 @@ export interface UseCategoryTemplate {
   updateBlocks: UpdateBlocks;
   setupBlocks: SetupBlocks;
   setDefaultTemplate: SetDefaultTemplate;
+  fetchFooterBlock: FetchFooterBlock;
+  getFooterBlock: GetFooterBlock;
+  createDefaultFooterBlock: CreateDefaultFooterBlock;
+  createFooterBlock: CreateFooterBlock;
+  clearFooterCache: ClearFooterCache;
+  updateFooterCache: UpdateFooterCache;
+  extractFooterContentFromBlocks: ExtractFooterContentFromBlocks;
+  addFooterBlock: AddFooterBlock;
+  mapFooterData: MapFooterData;
+  FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
 }
 
 export type UseCategoryTemplateReturn = (

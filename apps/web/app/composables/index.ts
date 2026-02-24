@@ -87,7 +87,6 @@ export * from './useRobots';
 export * from './useTranslations';
 export * from './usePayUponInvoice';
 export * from './useSiteSettings';
-export * from './useFooter';
 export * from './usePickerHelper';
 export * from './useItemTable';
 export * from './useImageMetadata';
