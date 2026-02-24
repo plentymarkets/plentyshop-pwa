@@ -351,45 +351,45 @@ const { blockUuid } = useSiteConfiguration();
 const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
 const displayCategoryImageOptions = computed(
   (): Array<{ value: DisplayCategoryImage; label: string; testId: string }> => [
-    { value: 'off', label: getEditorTranslation('off'), testId: 'image-scaling-off' },
-    { value: 'image-1', label: getEditorTranslation('image-1'), testId: 'image-one' },
-    { value: 'image-2', label: getEditorTranslation('image-2'), testId: 'image-two' },
+    { value: 'off', label: getEditorTranslation('off'), testId: 'display-category-image-off' },
+    { value: 'image-1', label: getEditorTranslation('image-1'), testId: 'display-category-image-1' },
+    { value: 'image-2', label: getEditorTranslation('image-2'), testId: 'display-category-image-2' },
   ],
 );
 const fillModeOptions = computed(
   (): Array<{ value: FillMode; label: string; testId: string }> => [
-    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scalling-fill' },
-    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'mage-scalling-fit' },
+    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scaling-fill' },
+    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'image-scaling-fit' },
   ],
 );
 const textboxAlignXOptions = computed(
   (): Array<{ value: TextAlignX; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-y-align-left' },
+    { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-align-x-left' },
     {
       value: 'center',
       label: getEditorTranslation('textbox-align-x-center-label'),
-      testId: 'slider-textbox-y-align-center',
+      testId: 'slider-textbox-align-x-center',
     },
     {
       value: 'right',
       label: getEditorTranslation('textbox-align-x-right-label'),
-      testId: 'slider-textbox-y-align-right',
+      testId: 'slider-textbox-align-x-right',
     },
   ],
 );
 
 const textboxAlignYOptions = computed(
   (): Array<{ value: TextAlignY; label: string; testId: string }> => [
-    { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-top' },
+    { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-y-top' },
     {
       value: 'center',
       label: getEditorTranslation('textbox-align-y-center-label'),
-      testId: 'slider-textbox-align-center',
+      testId: 'slider-textbox-align-y-center',
     },
     {
       value: 'bottom',
       label: getEditorTranslation('textbox-align-y-bottom-label'),
-      testId: 'slider-textbox-align-bottom',
+      testId: 'slider-textbox-align-y-bottom',
     },
   ],
 );
