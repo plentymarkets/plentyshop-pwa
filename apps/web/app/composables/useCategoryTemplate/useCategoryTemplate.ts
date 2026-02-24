@@ -110,7 +110,6 @@ const createDefaultFooterContent = (): FooterContent => {
   };
 };
 
-/** Type guard to check if a block is a Footer block */
 const isFooterBlock = (block: Block | null | undefined): block is FooterBlock => {
   return block?.name === FOOTER_BLOCK_NAME;
 };
