@@ -1,58 +1,31 @@
 <template>
-  <footer
-    v-if="resolvedContent"
-    class="pt-10"
-    :style="{
-      backgroundColor: resolvedContent.colors?.background,
-      color: resolvedContent.colors?.text,
-    }"
-    data-testid="footer"
-  >
-    <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
-          <div class="ml-4 text-lg font-medium leading-7">
-            {{ resolvedContent.column1?.title }}
-          </div>
-          <ul>
-            <SfListItem
-              v-for="switchConfig in getColumnSwitches(resolvedContent.column1)"
-              :key="switchConfig.id"
-              class="py-2 !bg-transparent typography-text-sm"
-            >
-              <SfLink
-                :tag="NuxtLink"
-                :style="{ color: resolvedContent.colors?.text || undefined }"
-                class="no-underline text-neutral-600 hover:underline active:underline"
-                variant="secondary"
-                :to="localePath(switchConfig.link)"
-              >
-                {{ switchConfig.translationKey }}
-              </SfLink>
-            </SfListItem>
-          </ul>
-        </div>
-
-        <div
-          v-for="(column, i) in [resolvedContent.column2, resolvedContent.column3, resolvedContent.column4]"
-          :key="i"
-          class="max-w-[280px] break-words"
-        >
-          <div class="ml-4 text-lg font-medium leading-7">
-            {{ column?.title }}
-          </div>
-          <div v-if="getColumnSwitches(column).length" class="text-sm">
+  <ClientOnly>
+    <footer
+      v-if="shouldRender && resolvedContent"
+      class="pt-10"
+      :style="{
+        backgroundColor: resolvedContent.colors?.background,
+        color: resolvedContent.colors?.text,
+      }"
+      data-testid="footer"
+    >
+      <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
+            <div class="ml-4 text-lg font-medium leading-7">
+              {{ resolvedContent.column1?.title }}
+            </div>
             <ul>
               <SfListItem
-                v-for="switchConfig in getColumnSwitches(column)"
+                v-for="switchConfig in getColumnSwitches(resolvedContent.column1)"
                 :key="switchConfig.id"
-                class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
+                class="py-2 !bg-transparent typography-text-sm"
               >
                 <SfLink
                   :tag="NuxtLink"
+                  :style="{ color: resolvedContent.colors?.text || undefined }"
+                  class="no-underline text-neutral-600 hover:underline active:underline"
                   variant="secondary"
-                  class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
-                  :style="{ color: resolvedContent.colors?.text }"
                   :to="localePath(switchConfig.link)"
                 >
                   {{ switchConfig.translationKey }}
@@ -60,31 +33,60 @@
               </SfListItem>
             </ul>
           </div>
+
           <div
-            v-if="column?.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
-            v-html="column.description"
-          />
+            v-for="(column, i) in [resolvedContent.column2, resolvedContent.column3, resolvedContent.column4]"
+            :key="i"
+            class="max-w-[280px] break-words"
+          >
+            <div class="ml-4 text-lg font-medium leading-7">
+              {{ column?.title }}
+            </div>
+            <div v-if="getColumnSwitches(column).length" class="text-sm">
+              <ul>
+                <SfListItem
+                  v-for="switchConfig in getColumnSwitches(column)"
+                  :key="switchConfig.id"
+                  class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
+                >
+                  <SfLink
+                    :tag="NuxtLink"
+                    variant="secondary"
+                    class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
+                    :style="{ color: resolvedContent.colors?.text }"
+                    :to="localePath(switchConfig.link)"
+                  >
+                    {{ switchConfig.translationKey }}
+                  </SfLink>
+                </SfListItem>
+              </ul>
+            </div>
+            <div
+              v-if="column?.description"
+              class="custom-html ml-4 text-sm hover:cursor-pointer"
+              v-html="column.description"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div
-        v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
-        class="text-sm py-10 md:py-6 px-10"
-        :class="{
-          'text-left': resolvedContent.footnoteAlign === 'left',
-          'text-center': resolvedContent.footnoteAlign === 'center',
-          'text-right': resolvedContent.footnoteAlign === 'right',
-        }"
-        :style="{
-          color: resolvedContent.colors?.footnoteText,
-          backgroundColor: resolvedContent.colors?.footnoteBackground,
-        }"
-        v-html="resolvedContent.footnote"
-      />
-    </div>
-  </footer>
+      <div>
+        <div
+          v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
+          class="text-sm py-10 md:py-6 px-10"
+          :class="{
+            'text-left': resolvedContent.footnoteAlign === 'left',
+            'text-center': resolvedContent.footnoteAlign === 'center',
+            'text-right': resolvedContent.footnoteAlign === 'right',
+          }"
+          :style="{
+            color: resolvedContent.colors?.footnoteText,
+            backgroundColor: resolvedContent.colors?.footnoteBackground,
+          }"
+          v-html="resolvedContent.footnote"
+        />
+      </div>
+    </footer>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -92,27 +94,36 @@ import { SfLink, SfListItem } from '@storefront-ui/vue';
 import type { FooterProps, FooterContent, FooterColumn } from './types';
 
 const props = defineProps<FooterProps>();
+const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } =
-  useCategoryTemplate();
-const resolvedContent = ref<FooterContent | null>(null);
-let stopWatch: (() => void) | null = null;
+const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useCategoryTemplate();
 
-onMounted(() => {
-  stopWatch = watch(
-    [() => props.content, footerCache],
-    () => {
-      const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
-      const mappedBlock = mapFooterData(block);
-      resolvedContent.value = mappedBlock.content as FooterContent;
-    },
-    { immediate: true, deep: true },
-  );
+/**
+ * Determines if Footer should render:
+ * - If content props provided: render (called from EditablePage with block data)
+ * - If page is blockified and no props: don't render (Footer is in EditablePage blocks)
+ * - Otherwise: render (non-blockified page, fetch from cache)
+ */
+const shouldRender = computed(() => {
+  // Has content props = render (from EditablePage)
+  if (props.content) return true;
+
+  // Blockified page without props = don't render (avoid duplicate)
+  if (route.meta.isBlockified) return false;
+
+  // Non-blockified page = render from cache
+  return true;
 });
 
-onBeforeUnmount(() => {
-  stopWatch?.();
+/**
+ * Resolved footer content - reactively computed from props or cache
+ * This runs on both server and client, avoiding hydration mismatches
+ */
+const resolvedContent = computed(() => {
+  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
+  const mappedBlock = mapFooterData(block);
+  return mappedBlock.content as FooterContent;
 });
 
 const getColumnSwitches = (column: FooterColumn) => {
