@@ -9,7 +9,7 @@
 
   <div
     data-sticky="false"
-    class="w-full py-3 text-center text-white text-sm"
+    class="w-full py-3 text-center text-white text-sm z-30"
     style="background-color: #457b9d;"
   >
     📣 Block 2 – nicht sticky
