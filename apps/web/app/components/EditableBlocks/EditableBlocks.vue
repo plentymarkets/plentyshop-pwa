@@ -41,12 +41,12 @@
 
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
-import type { DragEvent, EditablePageProps } from './types';
+import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
-const props = withDefaults(defineProps<EditablePageProps>(), {
+const props = withDefaults(defineProps<EditableBlocksProps>(), {
   identifier: 'index',
   type: 'immutable',
   hasEnabledActions: true,

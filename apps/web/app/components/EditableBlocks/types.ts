@@ -16,7 +16,7 @@ export interface DragEvent<T = Block> {
   };
 }
 
-export type EditablePageProps = {
+export type EditableBlocksProps = {
   identifier?: string | number;
   type?: string;
   hasEnabledActions?: boolean;
