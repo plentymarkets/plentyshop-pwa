@@ -99,8 +99,7 @@ const { footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock
   useCategoryTemplate();
 
 const shouldRender = computed(() => {
-  if (props.content) return true;
-  if (route.meta.isBlockified) return false;
+  if (route.meta.isBlockified) return !!props.content;
   return true;
 });
 
