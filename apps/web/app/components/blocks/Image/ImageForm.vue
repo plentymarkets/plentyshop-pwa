@@ -425,7 +425,11 @@ const clampBrightness = (event: Event, type: string) => {
 const textOverlayAlignXOptions = computed(
   (): Array<{ value: AlignX; label: string; testId: string }> => [
     { value: 'left', label: getEditorTranslation('text-overlay-align-x-left'), testId: 'text-overlay-align-x-left' },
-    { value: 'center', label: getEditorTranslation('text-overlay-align-x-center'), testId: 'text-overlay-align-x-center' },
+    {
+      value: 'center',
+      label: getEditorTranslation('text-overlay-align-x-center'),
+      testId: 'text-overlay-align-x-center',
+    },
     { value: 'right', label: getEditorTranslation('text-overlay-align-x-right'), testId: 'text-overlay-align-x-right' },
   ],
 );
@@ -433,8 +437,16 @@ const textOverlayAlignXOptions = computed(
 const textOverlayAlignYOptions = computed(
   (): Array<{ value: AlignY; label: string; testId: string }> => [
     { value: 'top', label: getEditorTranslation('text-overlay-align-y-top'), testId: 'text-overlay-align-y-top' },
-    { value: 'center', label: getEditorTranslation('text-overlay-align-y-center'), testId: 'text-overlay-align-y-center' },
-    { value: 'bottom', label: getEditorTranslation('text-overlay-align-y-bottom'), testId: 'text-overlay-align-y-bottom' },
+    {
+      value: 'center',
+      label: getEditorTranslation('text-overlay-align-y-center'),
+      testId: 'text-overlay-align-y-center',
+    },
+    {
+      value: 'bottom',
+      label: getEditorTranslation('text-overlay-align-y-bottom'),
+      testId: 'text-overlay-align-y-bottom',
+    },
   ],
 );
 
