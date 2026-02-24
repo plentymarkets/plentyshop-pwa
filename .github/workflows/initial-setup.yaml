@@ -29,6 +29,7 @@ jobs:
           rm -f .github/CODEOWNERS
           rm -f .dockerignore
           rm -f .github/workflows/initial-setup.yaml
+          rm -f .github/workflows/sonar-qube-weekly.yaml
 
       - name: Commit changed files
         uses: stefanzweifel/git-auto-commit-action@v7

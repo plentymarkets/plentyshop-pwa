@@ -253,6 +253,9 @@ const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
     return paths.globalItemDetails;
   }
+  if (config.public.enableCallistoUrlScheme) {
+    return localePath(`/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`);
+  }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
   const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product.value);
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
