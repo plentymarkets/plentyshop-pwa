@@ -1,5 +1,5 @@
 <template>
-  <MegaMenu :categories="categoryTree">
+  <MegaMenu :categories="categoryTree" class="sticky top-0 z-50">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <UiSearch class="hidden md:block flex-1" />
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
