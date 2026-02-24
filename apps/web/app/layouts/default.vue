@@ -1,6 +1,13 @@
 <template>
   <div>
-    <EditableHeader :is-all-sticked="false" :is-sticked-top="false" :is-sticked-bottom="true" />
+    <EditableHeader
+      :is-all-sticked="isAllSticked"
+      :is-sticked-top="isStickedTop"
+      :is-sticked-bottom="isStickedBottom"
+      @toggle-all="toggleAll"
+      @toggle-top="toggleTop"
+      @toggle-bottom="toggleBottom"
+    />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
@@ -27,6 +34,28 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 const route = useRoute();
+
+const isAllSticked = ref(false);
+const isStickedTop = ref(false);
+const isStickedBottom = ref(true);
+
+const toggleAll = () => {
+  isAllSticked.value = !isAllSticked.value;
+  isStickedTop.value = false;
+  isStickedBottom.value = false;
+};
+
+const toggleTop = () => {
+  isStickedTop.value = !isStickedTop.value;
+  isStickedBottom.value = false;
+  isAllSticked.value = false;
+};
+
+const toggleBottom = () => {
+  isStickedBottom.value = !isStickedBottom.value;
+  isStickedTop.value = false;
+  isAllSticked.value = false;
+};
 
 setLogoMeta();
 </script>
