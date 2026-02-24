@@ -374,8 +374,8 @@ const backgroundColor = ref(isTransparent.value ? '' : backgroundColorInit);
 
 const fillModeOptions = computed(
   (): Array<{ value: FillMode; label: string; testId: string }> => [
-    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'align-y-center' },
-    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'align-y-top' },
+    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scaling-fill' },
+    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'image-scaling-fit' },
   ],
 );
 
