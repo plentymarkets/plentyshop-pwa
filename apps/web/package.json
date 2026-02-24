@@ -76,7 +76,7 @@
     "tsx": "^4.21.0",
     "vitepress": "^1.6.4",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.1",
+    "vue-tsc": "^3.2.5",
     "vuepress": "^2.0.0-rc.24",
     "vuetify-nuxt-module": "^0.19.4"
   },

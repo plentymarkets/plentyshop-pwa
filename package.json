@@ -71,7 +71,7 @@
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.4.0",
     "vue-tel-input": "^9.7.1",
-    "vue-tsc": "^3.0.6",
+    "vue-tsc": "^3.2.5",
     "vuedraggable": "^4.1.0",
     "yup": "^1.7.1"
   },
