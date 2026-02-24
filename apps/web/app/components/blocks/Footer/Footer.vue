@@ -95,7 +95,8 @@ const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useCategoryTemplate();
+const { footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock, createDefaultFooterBlock } =
+  useCategoryTemplate();
 
 const shouldRender = computed(() => {
   if (props.content) return true;
@@ -104,9 +105,11 @@ const shouldRender = computed(() => {
 });
 
 const resolvedContent = computed(() => {
-  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
-  const mappedBlock = mapFooterData(block);
-  return mappedBlock.content as FooterContent;
+  const block = props.content
+    ? createFooterBlock(props.content, props.meta)
+    : footerCache.value || createDefaultFooterBlock();
+
+  return mapFooterData(block).content as FooterContent;
 });
 
 const getColumnSwitches = (column: FooterColumn) => {
