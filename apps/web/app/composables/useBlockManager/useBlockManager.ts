@@ -37,7 +37,7 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { globalBlocksCache } = useGlobalBlocks();
+  const { isFooterBlock } = useCategoryTemplate();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -59,9 +59,9 @@ export const useBlockManager = () => {
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    const nonFooterBlocks = data.value.filter((block: Block) => block.name !== 'Footer');
+    const nonFooterBlocks = data.value.filter((block: Block) => !isFooterBlock(block));
     if (nonFooterBlocks.length === 0) {
-      updateBlocks([newBlock, ...data.value.filter((block: Block) => block.name === 'Footer')]);
+      updateBlocks([newBlock, ...data.value.filter((block: Block) => isFooterBlock(block))]);
       openDrawerWithView('blocksSettings', newBlock);
       return;
     }
@@ -153,6 +153,13 @@ export const useBlockManager = () => {
     );
 
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+  };
+
+  const isLastNonFooterBlock = (index: number) => {
+    if (!data.value || data.value.length === 0) return false;
+    const hasFooter = data.value.length > 0 && isFooterBlock(data.value[data.value.length - 1]);
+    const lastNonFooterIndex = hasFooter ? data.value.length - 2 : data.value.length - 1;
+    return index === lastNonFooterIndex;
   };
 
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
@@ -271,18 +278,7 @@ export const useBlockManager = () => {
       }
       return -1;
     };
-
-    if (Array.isArray(data.value)) {
-      const found = search(data.value, uuid, 0);
-      if (found !== -1) return found;
-    }
-
-    if (Array.isArray(globalBlocksCache.value)) {
-      const found = search(globalBlocksCache.value, uuid, 0);
-      if (found !== -1) return found;
-    }
-
-    return -1;
+    return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
   };
 
   const shouldLazyLoad = (blockName: string): boolean => {
@@ -343,6 +339,7 @@ export const useBlockManager = () => {
     deleteBlock,
     updateBlock,
     changeBlockPosition,
+    isLastNonFooterBlock,
     addNewBlock,
     handleEdit,
     visiblePlaceholder,

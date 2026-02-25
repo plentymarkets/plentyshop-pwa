@@ -37,10 +37,14 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
   const changeVariationId = (variationId: number): void => {
     if (state.value.variationId === variationId) return;
 
+    const config = useRuntimeConfig().public;
     const route = useRoute();
-    const path = updateProductURLPathForVariation(route.path, state.value.itemId, variationId);
 
-    navigateTo(path);
+    if (!config.enableCallistoUrlScheme) {
+      const path = updateProductURLPathForVariation(route.path, state.value.itemId, variationId);
+      navigateTo(path);
+    }
+
     state.value.variationId = variationId;
   };
 
@@ -147,26 +151,26 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
     const value = item?.values.find((value) => value.attributeValueId === valueId) || undefined;
 
     if (!value || !valueId) {
-      delete state.value.attributeValues.attributeId;
+      const { [attributeId]: _, ...rest } = state.value.attributeValues;
+      state.value.attributeValues = rest;
       disableAttributes();
       return;
     }
 
     if (value.disabled) {
-      delete state.value.attributeValues.attributeId;
       const oldValues = { ...state.value.attributeValues };
-      state.value.attributeValues = {};
-      state.value.attributeValues[attributeId] = valueId;
+      state.value.attributeValues = { [attributeId]: valueId };
       disableAttributes();
 
-      Object.values(oldValues).forEach((oldValueId) => {
-        const oldKey = Object.keys(oldValues).find((key) => oldValues[key] === oldValueId);
+      Object.entries(oldValues).forEach(([oldAttributeId, oldValueId]) => {
+        if (Number(oldAttributeId) === attributeId) return;
+
         const oldValue = state.value.attributes
-          .find((attribute) => attribute.attributeId === Number(oldKey ?? 0))
+          .find((attribute) => attribute.attributeId === Number(oldAttributeId))
           ?.values.find((value) => value.attributeValueId === oldValueId);
 
-        if (oldKey && oldValue && !oldValue.disabled) {
-          state.value.attributeValues[oldKey] = oldValueId;
+        if (oldValue && !oldValue.disabled) {
+          state.value.attributeValues[Number(oldAttributeId)] = oldValueId;
           disableAttributes();
         }
       });

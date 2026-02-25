@@ -16,14 +16,14 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <UiFooterBlocks />
+    <FooterBlock />
   </div>
 </template>
 
 <script setup lang="ts">
+import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 defineProps<{
   heading: string;
 }>();
-
 const viewport = useViewport();
 </script>

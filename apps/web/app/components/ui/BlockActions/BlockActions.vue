@@ -69,8 +69,8 @@
           class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
           data-testid="move-down-button"
           aria-label="move down button"
-          :disabled="props.isLastBlock"
-          :class="{ 'opacity-40 cursor-not-allowed': props.isLastBlock }"
+          :disabled="isLastNonFooterBlock(index)"
+          :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
           @click="changePosition(1)"
         >
           <SfIconExpandMore />
@@ -114,7 +114,6 @@ const positionLabel = 'Change block position.';
 const deleteLabel = 'Delete this block.';
 
 const props = withDefaults(defineProps<BlockActionsProps>(), {
-  isLastBlock: false,
   actions: () => ({
     isEditable: true,
     isMovable: true,
@@ -126,7 +125,7 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
-const { deleteBlock } = useBlockManager();
+const { deleteBlock, isLastNonFooterBlock } = useBlockManager();
 
 const triggerEdit = () => {
   openDrawerWithView('blocksSettings', props.block);
