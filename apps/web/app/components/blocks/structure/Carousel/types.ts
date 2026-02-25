@@ -1,21 +1,8 @@
-export type CarouselContentItem = {
-  name: string;
-  type: string;
-  meta: {
-    uuid: string;
-  };
-  configuration?: {
-    visible?: boolean;
-    [key: string]: unknown;
-  };
-  content?: unknown;
-  [key: string]: unknown;
-};
-
+import type { Block } from '@plentymarkets/shop-api';
 export type CarouselStructureProps = {
   name: string;
   type: string;
-  content: CarouselContentItem[];
+  content: (Block & { configuration: { visible: boolean } })[];
   configuration: {
     controls: {
       color: string;
