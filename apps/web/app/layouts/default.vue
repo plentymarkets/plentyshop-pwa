@@ -10,9 +10,7 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <ClientOnly>
-      <FooterBlock v-if="!route.meta.isBlockified" />
-    </ClientOnly>
+    <FooterBlock />
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
@@ -26,7 +24,6 @@ defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-const route = useRoute();
 
 setLogoMeta();
 </script>
