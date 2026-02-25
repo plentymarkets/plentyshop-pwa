@@ -17,7 +17,6 @@ export type AnnouncementBarProps = {
   };
   content: {
     text: string;
-    visible: boolean;
   };
 };
 
