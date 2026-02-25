@@ -118,7 +118,8 @@
     </UiAccordionItem>
 
     <div v-else-if="slides[editingSlideIndex]" class="space-y-0">
-      <BlocksBannerCarouselBannerForm :uuid="slides[editingSlideIndex]!.meta.uuid" />
+      <!-- <BlocksBannerCarouselBannerForm :uuid="slides[editingSlideIndex]!.meta.uuid" /> -->
+      <BlocksAnnouncementBarForm :uuid="slides[editingSlideIndex]!.meta.uuid" />
     </div>
 
     <template v-if="editingSlideIndex === undefined">
