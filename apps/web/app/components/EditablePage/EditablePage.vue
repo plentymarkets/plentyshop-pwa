@@ -56,21 +56,22 @@ const { data, getBlocksServer, cleanData } = useCategoryTemplate(
   props.type.toString(),
   useNuxtApp().$i18n.locale.value,
 );
+const { isFooterBlock } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && isInEditor.value),
+  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0]) && isInEditor.value),
 );
 
 const isContentEmptyInLive = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer'),
+  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
 );
 
 if (!props.preventBlocksRequest) {
   await getBlocksServer(props.identifier, props.type);
 }
 
-const { footerCache } = useFooter();
+const { footerCache, addFooterBlock } = useCategoryTemplate();
 addFooterBlock({
   data,
   cachedFooter: footerCache,
@@ -89,7 +90,7 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
+  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = data.value.splice(footerIndex, 1)[0];
