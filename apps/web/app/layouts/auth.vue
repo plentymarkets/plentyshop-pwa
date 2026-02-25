@@ -16,7 +16,7 @@
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <EditableBlocks v-if="!$route.meta.isBlockified" :render-only="['Footer']" minimal />
+    <UiFooterBlocks />
   </div>
 </template>
 

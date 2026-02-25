@@ -10,7 +10,7 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <EditableBlocks v-if="!$route.meta.isBlockified" :render-only="['Footer']" minimal />
+    <UiFooterBlocks />
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
