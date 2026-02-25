@@ -15,7 +15,7 @@ concurrency:
 jobs:
   syntax-check:
     name: Scan Code
-    runs-on: eks-large
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
@@ -32,5 +32,6 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.branch.name=${{ env.base_branch }}
+            -Dsonar.exclusions=**/node_modules/**,**/.nuxt/**,**/.output/**
             -Dsonar.sources=.
             -Dsonar.scanner.socketTimeout=1800
