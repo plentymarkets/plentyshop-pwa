@@ -85,7 +85,6 @@ export const useProduct: UseProductReturn = (slug) => {
 
       setupBlocks(blocks);
 
-      // Ensure Footer exists in product blocks for editing
       addFooterBlock({
         data: blockData,
         cachedFooter: footerCache,
