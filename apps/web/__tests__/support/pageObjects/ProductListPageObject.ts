@@ -21,6 +21,23 @@ export class ProductListPageObject extends PageObject {
     return cy.getByTestId('category-layout').find('h1');
   }
 
+  get productLink() {
+    return this.products.first().find('[data-testid="product-card-link"]');
+  }
+
+  assertProductCardPath(expectedPathContent?: string) {
+    const link = this.productLink;
+
+    if (expectedPathContent) {
+      link.should('have.attr', 'href').and('contain', expectedPathContent);
+    } else {
+      // 'be.not.empty' prüft hier direkt das href-Attribut
+      link.should('have.attr', 'href').and('not.be.empty');
+    }
+
+    return this;
+  }
+
   assertProductListElements() {
     this.products.each((product) => {
       cy.wrap(product).as('product');
