@@ -58,10 +58,7 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
 const {
   data: templateData,
   getBlocksServer,
-  cleanData,
   isFooterBlock,
-  footerCache,
-  addFooterBlock,
 } = useCategoryTemplate(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
 const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
@@ -78,14 +75,6 @@ const isContentEmptyInLive = computed(
 
 if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
   await getBlocksServer(props.identifier, props.type);
-}
-
-if (!props.blocks || props.blocks.length === 0) {
-  addFooterBlock({
-    data: templateData,
-    cachedFooter: footerCache,
-    cleanData,
-  });
 }
 
 const {

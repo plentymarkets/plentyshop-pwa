@@ -75,6 +75,19 @@ const handleQueryUpdate = async () => {
 await handleQueryUpdate().then(() => {
   setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
   setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
+
+  const {
+    data: templateData,
+    footerCache,
+    addFooterBlock,
+    cleanData,
+  } = useCategoryTemplate(identifier.value.toString(), 'category', useNuxtApp().$i18n.locale.value);
+
+  addFooterBlock({
+    data: templateData,
+    cachedFooter: footerCache,
+    cleanData,
+  });
 });
 
 const { setPageMeta } = usePageMeta();
