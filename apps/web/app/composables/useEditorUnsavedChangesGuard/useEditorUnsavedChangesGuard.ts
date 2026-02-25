@@ -15,10 +15,10 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const { closeDrawer } = useSiteConfiguration();
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
-  const hasUnsavedChanges = customHasUnsavedChanges || (() => !isEditingEnabled.value && !settingsIsDirty.value);
+  const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
 
   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-    if (hasUnsavedChanges()) return;
+    if (!hasUnsavedChanges()) return;
     event.preventDefault();
   };
 
@@ -39,7 +39,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   });
 
   onBeforeRouteLeave((to, from, next) => {
-    if (isEditingEnabled.value) {
+    if (hasUnsavedChanges()) {
       const confirmation = window.confirm(confirmMessage);
       if (confirmation) {
         handleConfirmLeave();
