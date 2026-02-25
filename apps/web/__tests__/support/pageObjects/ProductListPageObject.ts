@@ -22,7 +22,7 @@ export class ProductListPageObject extends PageObject {
   }
 
   get productLink() {
-    return this.products.first().find('[data-testid="product-card-link"]');
+    return this.products.first().getByTestId('product-card-link');
   }
 
   assertProductCardPath(expectedPathContent?: string) {
@@ -31,7 +31,6 @@ export class ProductListPageObject extends PageObject {
     if (expectedPathContent) {
       link.should('have.attr', 'href').and('contain', expectedPathContent);
     } else {
-      // 'be.not.empty' prüft hier direkt das href-Attribut
       link.should('have.attr', 'href').and('not.be.empty');
     }
 
