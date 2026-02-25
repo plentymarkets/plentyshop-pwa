@@ -1049,6 +1049,74 @@
                 "content": {
                   "text": "This is an example announcement."
                 }
+              },
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "configuration": {
+                  "layout": {
+                    "fullWidth": true,
+                    "paddingTop": 0,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "backgroundColor": "#EDFF6C"
+                  },
+                  "visible": true
+                },
+                "content": {
+                  "text": "This is another example announcement."
+                }
+              }
+            ]
+          },
+          "de": {
+            "name": "Carousel",
+            "type": "structure",
+            "meta": { "uuid": "57e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "configuration": {
+              "controls": { "color": "#000000" },
+              "visible": true
+            },
+            "content": [
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "configuration": {
+                  "layout": {
+                    "fullWidth": true,
+                    "paddingTop": 0,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "backgroundColor": "#EDFF6C"
+                  },
+                  "visible": true
+                },
+                "content": {
+                  "text": "Dies ist eine Beispielankündigung."
+                }
+              },
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "configuration": {
+                  "layout": {
+                    "fullWidth": true,
+                    "paddingTop": 0,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "backgroundColor": "#EDFF6C"
+                  },
+                  "visible": true
+                },
+                "content": {
+                  "text": "Dies ist eine weitere Beispielankündigung."
+                }
               }
             ]
           }
