@@ -46,9 +46,7 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: T): void;
-}>();
+const emit = defineEmits<(e: 'update:modelValue', value: T) => void>();
 
 const { modelValue, options, legend, ariaLabel, testIdPrefix } = toRefs(props);
 
@@ -68,7 +66,7 @@ const onSelect = (value: T) => {
 
 const resolveLabel = (opt: Option<T>) => opt.label ?? String(opt.value);
 
-const itemClass = (value: T, idx: number) => {
+const itemClass = (value: T, idx: OptionValue) => {
   const isActive = modelValue.value === value;
   const isLast = idx === options.value.length - 1;
 
