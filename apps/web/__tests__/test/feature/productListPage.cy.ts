@@ -7,6 +7,9 @@ const productListPage = new ProductListPageObject();
 
 describe('Smoke: Product List Page', function () {
   beforeEach(() => {
+    cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ enableCallistoUrlScheme: false });
     cy.visitAndHydrate(paths.home);
   });
   it('[smoke] User should be able to see the products as list and grid', () => {

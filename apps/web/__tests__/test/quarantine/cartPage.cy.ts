@@ -6,6 +6,8 @@ describe('Smoke: Cart Page', () => {
   beforeEach(() => {
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ enableCallistoUrlScheme: false });
 
     cy.visitSmoke();
   });
