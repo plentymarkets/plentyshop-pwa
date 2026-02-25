@@ -328,11 +328,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     if (Array.isArray(blocks)) {
       migrateAllBlocks(blocks);
 
-      // Cache footer block if present in fetched blocks
       const footerBlock = blocks.find((block) => isFooterBlock(block));
-      if (footerBlock) {
-        footerCache.value = footerBlock as FooterBlock;
-      }
+      if (footerBlock) footerCache.value = footerBlock as FooterBlock;
     }
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {

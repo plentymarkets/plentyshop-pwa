@@ -95,8 +95,7 @@ const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock, createDefaultFooterBlock } =
-  useCategoryTemplate();
+const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useCategoryTemplate();
 
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
@@ -106,9 +105,7 @@ const shouldRender = computed(() => {
 const resolvedContent = computed(() => {
   if (!shouldRender.value) return null;
 
-  const block = props.content
-    ? createFooterBlock(props.content, props.meta)
-    : footerCache.value || createDefaultFooterBlock();
+  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
 
   return mapFooterData(block).content as FooterContent;
 });

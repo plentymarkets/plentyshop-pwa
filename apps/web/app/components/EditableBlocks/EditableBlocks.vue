@@ -1,7 +1,7 @@
 <template>
   <div>
-    <EmptyBlock v-if="!minimal && isContentEmptyInEditor" />
-    <CategoryEmptyState v-else-if="!minimal && isContentEmptyInLive" />
+    <EmptyBlock v-if="!readOnly && isContentEmptyInEditor" />
+    <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   type: 'immutable',
   hasEnabledActions: true,
   preventBlocksRequest: false,
-  minimal: false,
+  readOnly: false,
   blocks: () => [],
 });
 
@@ -64,7 +64,6 @@ const {
   addFooterBlock,
 } = useCategoryTemplate(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
-// Use blocks prop if provided, otherwise use templateData
 const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
 
 const dataIsEmpty = computed(() => data.value.length === 0);
@@ -77,7 +76,7 @@ const isContentEmptyInLive = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
 );
 
-if (!props.preventBlocksRequest && !props.minimal && (!props.blocks || props.blocks.length === 0)) {
+if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
   await getBlocksServer(props.identifier, props.type);
 }
 
@@ -122,22 +121,25 @@ const scrollToBlock = (evt: DragEvent) => {
 };
 
 const { closeDrawer } = useSiteConfiguration();
-const { settingsIsDirty } = useSiteSettings();
-const { isEditingEnabled } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const enabledActions = computed(
-  () => !props.minimal && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
+  () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 
+useEditorUnsavedChangesGuard({
+  enabled: !props.readOnly,
+  onConfirmLeave: () => closeDrawer(),
+});
+
 onMounted(async () => {
-  if (!props.minimal) {
+  if (!props.readOnly) {
+    const { isEditingEnabled } = useEditor();
     isEditingEnabled.value = false;
-    window.addEventListener('beforeunload', handleBeforeUnload);
   }
 
-  if (isInEditor.value && !props.minimal) {
+  if (isInEditor.value && !props.readOnly) {
     await import('./draggable.css');
   }
 
@@ -146,33 +148,5 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearRegistry();
-  if (!props.minimal) {
-    window.removeEventListener('beforeunload', handleBeforeUnload);
-  }
 });
-
-const hasUnsavedChanges = () => {
-  return !isEditingEnabled.value && !settingsIsDirty.value;
-};
-
-const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  if (hasUnsavedChanges()) return;
-  event.preventDefault();
-};
-
-if (!props.minimal) {
-  onBeforeRouteLeave((to, from, next) => {
-    if (isEditingEnabled.value) {
-      const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-      if (confirmation) {
-        closeDrawer();
-        next();
-      } else {
-        next(false);
-      }
-    } else {
-      next();
-    }
-  });
-}
 </script>

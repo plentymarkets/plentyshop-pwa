@@ -21,6 +21,6 @@ export type EditableBlocksProps = {
   type?: string;
   hasEnabledActions?: boolean;
   preventBlocksRequest?: boolean;
-  minimal?: boolean;
+  readOnly?: boolean;
   blocks?: Block[];
 };
