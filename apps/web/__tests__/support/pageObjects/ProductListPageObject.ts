@@ -22,7 +22,7 @@ export class ProductListPageObject extends PageObject {
   }
 
   get productLink() {
-    return this.products.first().getByTestId('product-card-link');
+    return cy.getByTestId('product-card-link').first();
   }
 
   assertProductCardPath(expectedPathContent?: string) {

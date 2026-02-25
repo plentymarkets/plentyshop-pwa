@@ -66,6 +66,22 @@ export class CartPageObject extends PageObject {
     return cy.get('.paypal-buttons-context-iframe').first();
   }
 
+  get cartProductLink() {
+    return cy.getByTestId('cart-product-card-link').first();
+  }
+
+  assertCartProductPath(expectedPathContent?: string) {
+    const link = this.cartProductLink;
+
+    if (expectedPathContent) {
+      link.should('have.attr', 'href').and('contain', expectedPathContent);
+    } else {
+      link.should('have.attr', 'href').and('not.be.empty');
+    }
+
+    return this;
+  }
+
   compareItemAndFullPriceNyQuantity(quantity: number) {
     this.cartItemPrice.invoke('text').then((itemPriceText: string) => {
       const itemPrice = parseFloat(itemPriceText.replace(/[^\d.-]/g, ''));

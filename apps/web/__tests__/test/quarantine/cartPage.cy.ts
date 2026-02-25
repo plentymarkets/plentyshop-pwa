@@ -68,6 +68,26 @@ describe('Smoke: Cart Page', () => {
 
     cart.openCart().compareItemAndFullPriceNyQuantity(quantity).checkSurcharge(Expected_Surcharge);
   });
-});
 
-//TODO: check the path on CartProductCard with and wothout callisto url enabled
+  it('should have the right link in the cart product card', () => {
+    cy.addToCart();
+
+    cart.openCart().assertCartProductPath('/coupon_141_1072');
+  });
+
+  describe('Callisto Url', () => {
+    beforeEach(() => {
+      cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
+      cy.clearCookies();
+      cy.clearConfig();
+      cy.setConfig({ enableCallistoUrlScheme: true });
+      cy.visitSmoke();
+    });
+
+    it('should have the right link in the cart product card with callisto url scheme enabled', () => {
+      cy.addToCart();
+
+      cart.openCart().assertCartProductPath('/coupon/a-141');
+    });
+  });
+});
