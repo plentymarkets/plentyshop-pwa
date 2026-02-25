@@ -27,10 +27,11 @@
       </template>
       <template #bottom>
         <div class="w-full bg-green-600 text-center py-2">
-          test 3
+          Test 3 with Menu
           <button class="ml-4 px-2 py-0.5 bg-white/30 rounded text-sm" @click="toggleBottom">
             toggle bottom
           </button>
+          <UiHeader />
         </div>
       </template>
     </EditableHeader>
