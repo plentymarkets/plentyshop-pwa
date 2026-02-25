@@ -24,9 +24,16 @@ const { getEditorUITranslation } = vi.hoisted(() => ({
   getEditorUITranslation: vi.fn((key: string) => `Translated: ${key}`),
 }));
 
+const { useCategoryTemplate } = vi.hoisted(() => ({
+  useCategoryTemplate: vi.fn(() => ({
+    resetFooterToSaved: vi.fn().mockResolvedValue(undefined),
+  })),
+}));
+
 mockNuxtImport('useEditor', () => useEditor);
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
 mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
+mockNuxtImport('useCategoryTemplate', () => useCategoryTemplate);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
 
 let mockOnBeforeRouteLeave:
@@ -45,6 +52,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   let isEditingEnabled: Ref<boolean>;
   let settingsIsDirty: Ref<boolean>;
   let closeDrawer: ReturnType<typeof vi.fn>;
+  let resetFooterToSaved: ReturnType<typeof vi.fn>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
   let routeLeaveCallback: ((to: unknown, from: unknown, next: (value?: unknown) => void) => void) | null = null;
 
@@ -54,6 +62,7 @@ describe('useEditorUnsavedChangesGuard', () => {
     isEditingEnabled = ref<boolean>(false);
     settingsIsDirty = ref<boolean>(false);
     closeDrawer = vi.fn();
+    resetFooterToSaved = vi.fn().mockResolvedValue(undefined);
 
     useEditor.mockReturnValue({
       isEditingEnabled,
@@ -65,6 +74,10 @@ describe('useEditorUnsavedChangesGuard', () => {
 
     useSiteConfiguration.mockReturnValue({
       closeDrawer,
+    });
+
+    useCategoryTemplate.mockReturnValue({
+      resetFooterToSaved,
     });
 
     vi.spyOn(window, 'addEventListener').mockImplementation(
@@ -242,7 +255,7 @@ describe('useEditorUnsavedChangesGuard', () => {
       expect(next).not.toHaveBeenCalledWith(false);
     });
 
-    it('should show confirmation and allow navigation when user confirms', () => {
+    it('should show confirmation and allow navigation when user confirms', async () => {
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
       const TestComponent = {
@@ -258,9 +271,10 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       isEditingEnabled.value = true;
 
-      routeLeaveCallback?.({}, {}, next);
+      await routeLeaveCallback?.({}, {}, next);
 
       expect(confirmSpy).toHaveBeenCalledWith('Translated: unsaved-changes-confirm');
+      expect(resetFooterToSaved).toHaveBeenCalled();
       expect(next).toHaveBeenCalledWith();
       expect(closeDrawer).toHaveBeenCalled();
     });
@@ -336,7 +350,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   });
 
   describe('custom onConfirmLeave callback', () => {
-    it('should call custom onConfirmLeave instead of closeDrawer', () => {
+    it('should call custom onConfirmLeave instead of closeDrawer', async () => {
       const customOnConfirmLeave = vi.fn();
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
@@ -353,9 +367,10 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       isEditingEnabled.value = true;
 
-      routeLeaveCallback?.({}, {}, next);
+      await routeLeaveCallback?.({}, {}, next);
 
       expect(confirmSpy).toHaveBeenCalled();
+      expect(resetFooterToSaved).toHaveBeenCalled();
       expect(customOnConfirmLeave).toHaveBeenCalled();
       expect(closeDrawer).not.toHaveBeenCalled();
     });

@@ -106,8 +106,15 @@ const resolvedContent = computed(() => {
   if (!shouldRender.value) return null;
 
   const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
+  const mappedBlock = mapFooterData(block);
 
-  return mapFooterData(block).content as FooterContent;
+  console.log('[Footer.vue] Rendering footer with content:', {
+    hasPropsContent: !!props.content,
+    blockUuid: block?.meta?.uuid,
+    content: JSON.stringify(mappedBlock.content, null, 2),
+  });
+
+  return mappedBlock.content as FooterContent;
 });
 
 const getColumnSwitches = (column: FooterColumn) => {
