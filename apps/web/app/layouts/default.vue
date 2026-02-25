@@ -1,5 +1,6 @@
 <template>
   <div>
+    <EditableHeader />
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -18,6 +19,7 @@
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
 import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+import EditableHeader from '~/components/blocks/EditableHeader/EditableHeader.vue';
 
 defineProps<DefaultLayoutProps>();
 
