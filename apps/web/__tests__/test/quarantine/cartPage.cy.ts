@@ -46,8 +46,6 @@ describe('Smoke: Cart Page', () => {
     cy.addToCart();
     cart.openCart().increaseCartItemQuantity();
 
-    cy.wait(1000);
-
     cart.increaseCartItemQuantity().increaseCartItemQuantity().summaryItems('Items: 4');
   });
 
@@ -71,3 +69,5 @@ describe('Smoke: Cart Page', () => {
     cart.openCart().compareItemAndFullPriceNyQuantity(quantity).checkSurcharge(Expected_Surcharge);
   });
 });
+
+//TODO: check the path on CartProductCard with and wothout callisto url enabled

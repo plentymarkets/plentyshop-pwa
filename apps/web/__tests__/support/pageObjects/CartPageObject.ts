@@ -99,7 +99,12 @@ export class CartPageObject extends PageObject {
   }
 
   openCart() {
+    cy.intercept('POST', '/plentysystems/getSession').as('getSession');
+
     this.cartIcon.click();
+
+    cy.wait('@getSession');
+
     return this;
   }
 
