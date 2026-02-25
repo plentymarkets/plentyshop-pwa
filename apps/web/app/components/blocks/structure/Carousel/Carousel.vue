@@ -16,7 +16,7 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide
-        v-for="(banner, slideIndex) in visibleContent"
+        v-for="(block, slideIndex) in visibleContent"
         :key="slideIndex"
         :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
         :aria-label="
@@ -29,7 +29,7 @@
       >
         <slot
           name="content"
-          :content-block="banner"
+          :content-block="block"
           :index="getSlideAdjustedIndex(slideIndex)"
           :slide-index="slideIndex"
           :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
@@ -66,7 +66,6 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
@@ -74,18 +73,15 @@ const { content, index, configuration, meta } = defineProps<CarouselStructurePro
 const isInternalChange = ref(false);
 
 const visibleContent = computed(() => {
-  return (content as BannerProps[]).filter((slide) => slide.configuration?.visible !== false);
+  return content.filter((slide) => slide.configuration?.visible !== false);
 });
 
 const getActualIndex = (visibleIndex: number): number => {
-  const contentArray = content as BannerProps[];
   let visibleCount = 0;
-  for (let i = 0; i < contentArray.length; i++) {
-    const slide = contentArray[i];
+  for (let i = 0; i < content.length; i++) {
+    const slide = content[i];
     if (slide && slide.configuration?.visible !== false) {
-      if (visibleCount === visibleIndex) {
-        return i;
-      }
+      if (visibleCount === visibleIndex) return i;
       visibleCount++;
     }
   }
@@ -93,10 +89,9 @@ const getActualIndex = (visibleIndex: number): number => {
 };
 
 const getVisibleIndex = (actualIndex: number): number => {
-  const contentArray = content as BannerProps[];
   let visibleIndex = 0;
-  for (let i = 0; i < actualIndex && i < contentArray.length; i++) {
-    const slide = contentArray[i];
+  for (let i = 0; i < actualIndex && i < content.length; i++) {
+    const slide = content[i];
     if (slide && slide.configuration?.visible !== false) {
       visibleIndex++;
     }

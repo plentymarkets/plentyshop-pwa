@@ -5,26 +5,15 @@ export type AnnouncementBarProps = {
     uuid: string;
   };
   configuration: {
-    controls: {
-      color: string;
+    layout?: {
+      fullWidth?: boolean;
+      paddingTop?: number;
+      paddingBottom?: number;
+      paddingLeft?: number;
+      paddingRight?: number;
+      backgroundColor?: string;
     };
-    layout: {
-      paddingTop: number;
-      paddingBottom: number;
-      paddingLeft: number;
-      paddingRight: number;
-      fullWidth: boolean;
-      backgroundColor: string;
-    };
-  };
-  content: AnnouncementItem[];
-};
-
-export type AnnouncementItem = {
-  name: string;
-  type: string;
-  meta: {
-    uuid: string;
+    visible?: boolean;
   };
   content: {
     text: string;

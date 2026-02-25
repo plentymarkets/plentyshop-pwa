@@ -1,13 +1,25 @@
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+export type CarouselContentItem = {
+  name: string;
+  type: string;
+  meta: {
+    uuid: string;
+  };
+  configuration?: {
+    visible?: boolean;
+    [key: string]: unknown;
+  };
+  content?: unknown;
+  [key: string]: unknown;
+};
 
 export type CarouselStructureProps = {
   name: string;
   type: string;
-  content: BannerProps[];
+  content: CarouselContentItem[];
   configuration: {
     controls: {
       color: string;
-      displayArrows: boolean;
+      displayArrows?: boolean;
     };
     layout?: {
       fullWidth?: boolean;
