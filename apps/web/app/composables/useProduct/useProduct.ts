@@ -61,9 +61,6 @@ export const useProduct: UseProductReturn = (slug) => {
       data: blockData,
       setupBlocks,
       getBlocksServer,
-      footerCache,
-      addFooterBlock,
-      cleanData,
     } = useCategoryTemplate(
       route?.meta?.identifier as string,
       route.meta.type as string,
@@ -85,12 +82,6 @@ export const useProduct: UseProductReturn = (slug) => {
 
       setupBlocks(blocks);
 
-      addFooterBlock({
-        data: blockData,
-        cachedFooter: footerCache,
-        cleanData,
-      });
-
       handlePreviewProduct(state, $i18n.locale.value, false);
 
       state.value.loading = false;
@@ -105,12 +96,6 @@ export const useProduct: UseProductReturn = (slug) => {
 
     const fetchedBlocks = data.value?.data.blocks;
     setupBlocks(fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData());
-
-    addFooterBlock({
-      data: blockData,
-      cachedFooter: footerCache,
-      cleanData,
-    });
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);

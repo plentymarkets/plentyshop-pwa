@@ -348,6 +348,11 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
       if (footerBlock) footerCache.value = footerBlock as FooterBlock;
     }
 
+    if (!blocks.some((block) => isFooterBlock(block))) {
+      const footerBlock = footerCache.value || createDefaultFooterBlockHelper();
+      blocks.push(footerBlock);
+    }
+
     if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
       state.value.data.splice(0, state.value.data.length, ...blocks);
     }
