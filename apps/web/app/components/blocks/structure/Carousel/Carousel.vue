@@ -74,6 +74,7 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
@@ -89,15 +90,18 @@ const navigationSize = computed(() => {
 });
 
 const visibleContent = computed(() => {
-  return content.filter((slide) => slide.configuration?.visible !== false);
+  return (content as BannerProps[]).filter((slide) => slide.configuration?.visible !== false);
 });
 
 const getActualIndex = (visibleIndex: number): number => {
+  const contentArray = content as BannerProps[];
   let visibleCount = 0;
-  for (let i = 0; i < content.length; i++) {
-    const slide = content[i];
+  for (let i = 0; i < contentArray.length; i++) {
+    const slide = contentArray[i];
     if (slide && slide.configuration?.visible !== false) {
-      if (visibleCount === visibleIndex) return i;
+      if (visibleCount === visibleIndex) {
+        return i;
+      }
       visibleCount++;
     }
   }
@@ -105,9 +109,10 @@ const getActualIndex = (visibleIndex: number): number => {
 };
 
 const getVisibleIndex = (actualIndex: number): number => {
+  const contentArray = content as BannerProps[];
   let visibleIndex = 0;
-  for (let i = 0; i < actualIndex && i < content.length; i++) {
-    const slide = content[i];
+  for (let i = 0; i < actualIndex && i < contentArray.length; i++) {
+    const slide = contentArray[i];
     if (slide && slide.configuration?.visible !== false) {
       visibleIndex++;
     }
