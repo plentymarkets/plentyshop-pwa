@@ -13,7 +13,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const { isEditingEnabled } = useEditor();
   const { settingsIsDirty } = useSiteSettings();
   const { closeDrawer } = useSiteConfiguration();
-  const { resetFooterToSaved } = useCategoryTemplate();
+  const { resetFooterToSaved } = useBlockTemplates();
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);

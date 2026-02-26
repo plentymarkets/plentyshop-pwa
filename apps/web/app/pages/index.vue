@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getHomepageTemplate } from '~/composables/useCategoryTemplate/homepage';
+import { getHomepageTemplate } from '~/composables/useBlockTemplates/homepage';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -24,7 +24,7 @@ const { $i18n } = useNuxtApp();
 
 const { setPageMeta } = usePageMeta();
 const route = useRoute();
-const { setDefaultTemplate } = useCategoryTemplate(
+const { setDefaultTemplate } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,

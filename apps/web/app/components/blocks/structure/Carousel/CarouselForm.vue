@@ -180,7 +180,7 @@ import { editPath } from '~/assets/icons/paths/edit';
 const { blockUuid } = useSiteConfiguration();
 const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,

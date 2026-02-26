@@ -24,8 +24,8 @@ const { getEditorUITranslation } = vi.hoisted(() => ({
   getEditorUITranslation: vi.fn((key: string) => `Translated: ${key}`),
 }));
 
-const { useCategoryTemplate } = vi.hoisted(() => ({
-  useCategoryTemplate: vi.fn(() => ({
+const { useBlockTemplates } = vi.hoisted(() => ({
+  useBlockTemplates: vi.fn(() => ({
     resetFooterToSaved: vi.fn().mockResolvedValue(undefined),
   })),
 }));
@@ -33,7 +33,7 @@ const { useCategoryTemplate } = vi.hoisted(() => ({
 mockNuxtImport('useEditor', () => useEditor);
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
 mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
-mockNuxtImport('useCategoryTemplate', () => useCategoryTemplate);
+mockNuxtImport('useBlockTemplates', () => useBlockTemplates);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
 
 let mockOnBeforeRouteLeave:
@@ -76,7 +76,7 @@ describe('useEditorUnsavedChangesGuard', () => {
       closeDrawer,
     });
 
-    useCategoryTemplate.mockReturnValue({
+    useBlockTemplates.mockReturnValue({
       resetFooterToSaved,
     });
 

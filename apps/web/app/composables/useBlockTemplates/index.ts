@@ -1,4 +1,4 @@
-export * from './useCategoryTemplate';
+export * from './useBlockTemplates';
 export * from './types';
 export * from './homepage';
 export * from './templateLoader';

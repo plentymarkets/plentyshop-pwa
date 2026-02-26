@@ -4,7 +4,7 @@ import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
-import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
+import productTemplateData from '~/composables/useBlockTemplates/productTemplateData.json';
 
 const useProductTemplateData = () => productTemplateData as Block[];
 
@@ -61,7 +61,7 @@ export const useProduct: UseProductReturn = (slug) => {
       data: blockData,
       setupBlocks,
       getBlocksServer,
-    } = useCategoryTemplate(
+    } = useBlockTemplates(
       route?.meta?.identifier as string,
       route.meta.type as string,
       useNuxtApp().$i18n.locale.value,

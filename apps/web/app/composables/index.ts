@@ -28,7 +28,7 @@ export * from './useCartTotalChange';
 export * from './useCategoryDetails';
 export * from './useCategoryFilter';
 export * from './useCategoryIdHelper';
-export * from './useCategoryTemplate';
+export * from './useBlockTemplates';
 export * from './useCategoryTree';
 export * from './useCheckout';
 export * from './useCheckoutPagePaymentAndShipping';

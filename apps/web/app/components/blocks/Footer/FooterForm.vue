@@ -348,14 +348,13 @@ import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
 );
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useCategoryTemplate();
 const props = defineProps<{ uuid?: string }>();
 
 const firstColumnOpen = ref(false);
