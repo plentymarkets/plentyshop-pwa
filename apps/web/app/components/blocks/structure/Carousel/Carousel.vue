@@ -52,6 +52,7 @@
         :style="{
           color: configuration.controls.color + ' !important',
           '--swiper-navigation-size': navigationSize,
+          visibility: containerHeight === 0 ? 'hidden' : 'visible'
         }"
       />
       <button
@@ -64,6 +65,7 @@
         :style="{
           color: configuration.controls.color + ' !important',
           '--swiper-navigation-size': navigationSize,
+          visibility: containerHeight === 0 ? 'hidden' : 'visible'
         }"
       />
     </div>
