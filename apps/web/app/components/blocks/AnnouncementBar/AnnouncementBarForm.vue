@@ -28,7 +28,7 @@
     </template>
     <div class="py-2 px-2">
       <UIFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UIFormLabel>
-      <EditorColorPicker v-model="editingBackgroundColor" class="w-full h-32">
+      <EditorColorPicker v-model="editingBackgroundColor" class="w-full">
         <template #trigger="{ color, toggle }">
           <SfInput v-model="editingBackgroundColor" type="text">
             <template #suffix>
