@@ -267,7 +267,7 @@
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
 import { SfTextarea, SfInput, SfSwitch } from '@storefront-ui/vue';
-import type { BannerFormProps, BannerProps, ButtonVariant, TextAlignX, TextAlignY } from './types';
+import type { BannerFormProps, BannerProps } from './types';
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
@@ -307,103 +307,18 @@ const handleImageAddBanner = ({ image, type }: { image: string; type: string }) 
   const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
   handleImageAdd({ image, type });
 };
-const textboxAlignXOptions = computed(
-  (): Array<{ value: TextAlignX; label: string; testId: string }> => [
-    {
-      value: 'left',
-      label: getEditorTranslation('textbox-align-x-left-label'),
-      testId: 'slider-textbox-align-x-left',
-    },
-    {
-      value: 'center',
-      label: getEditorTranslation('textbox-align-x-center-label'),
-      testId: 'slider-textbox-align-x-center',
-    },
-    {
-      value: 'right',
-      label: getEditorTranslation('textbox-align-x-right-label'),
-      testId: 'slider-textbox-align-x-right',
-    },
-  ],
-);
-const textboxAlignYOptions = computed(
-  (): Array<{ value: TextAlignY; label: string; testId: string }> => [
-    {
-      value: 'top',
-      label: getEditorTranslation('textbox-align-y-top-label'),
-      testId: 'slider-textbox-align-y-top',
-    },
-    {
-      value: 'center',
-      label: getEditorTranslation('textbox-align-y-center-label'),
-      testId: 'slider-textbox-align-y-center',
-    },
-    {
-      value: 'bottom',
-      label: getEditorTranslation('textbox-align-y-bottom-label'),
-      testId: 'slider-textbox-align-y-bottom',
-    },
-  ],
-);
-const textAlignOptions = computed(
-  (): Array<{ value: TextAlignX; label: string; testId: string }> => [
-    {
-      value: 'left',
-      label: getEditorTranslation('text-align-option-left-label'),
-      testId: 'slider-text-align-left',
-    },
-    {
-      value: 'center',
-      label: getEditorTranslation('text-align-option-center-label'),
-      testId: 'slider-text-align-center',
-    },
-    {
-      value: 'right',
-      label: getEditorTranslation('text-align-option-right-label'),
-      testId: 'slider-text-align-right',
-    },
-  ],
-);
-const buttonVariantOptions = computed(
-  (): Array<{ value: ButtonVariant; label: string; testId: string }> => [
-    {
-      value: 'primary',
-      label: getEditorTranslation('button-variant-primary-label'),
-      testId: 'slider-button-primary',
-    },
-    {
-      value: 'secondary',
-      label: getEditorTranslation('button-variant-secondary-label'),
-      testId: 'slider-button-secondary',
-    },
-  ],
-);
-const buttonVariantModel = computed<ButtonVariant>({
-  get: () => (banner.value.content.button.variant as ButtonVariant | undefined) ?? 'primary',
-  set: (v) => {
-    banner.value.content.button.variant = v;
-  },
-});
-
-const textboxAlignXModel = computed<TextAlignX>({
-  get: () => (banner.value.content.text.align as TextAlignX | undefined) ?? 'left',
-  set: (v) => {
-    banner.value.content.text.align = v;
-  },
-});
-
-const textboxAlignYModel = computed<TextAlignY>({
-  get: () => (banner.value.content.text.justify as TextAlignY | undefined) ?? 'top',
-  set: (v) => {
-    banner.value.content.text.justify = v;
-  },
-});
-
-const textAlignModel = computed<TextAlignX>({
-  get: () => (banner.value.content.text.textAlignment as TextAlignX | undefined) ?? 'left',
-  set: (v) => {
-    banner.value.content.text.textAlignment = v;
-  },
+const {
+  textboxAlignXModel,
+  textboxAlignXOptions,
+  textboxAlignYModel,
+  textboxAlignYOptions,
+  textAlignModel,
+  textAlignOptions,
+  buttonVariantModel,
+  buttonVariantOptions,
+} = useTextOverlayTabs({
+  t: getEditorTranslation,
+  getTarget: () => banner.value.content,
 });
 </script>
 
