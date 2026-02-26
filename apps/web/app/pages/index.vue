@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getHomepageTemplate } from '~/composables/useBlockTemplates/homepage';
+import { getHomepageTemplate } from '~/utils/blockTemplates/homepage';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({

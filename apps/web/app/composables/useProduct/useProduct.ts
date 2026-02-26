@@ -4,7 +4,7 @@ import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
-import { getProductTemplate } from '~/composables/useBlockTemplates/product';
+import { getProductTemplate } from '~/utils/blockTemplates/product';
 
 const useProductTemplateData = async (locale: string) => await getProductTemplate(locale);
 
