@@ -8,8 +8,8 @@ import type { AnnouncementBarProps } from './types';
 const props = defineProps<AnnouncementBarProps>();
 
 const inlineStyle = computed(() => {
-  const layout = props.configuration.layout || {};
+  const layout = props.configuration?.layout || {};
 
-  return { backgroundColor: layout.backgroundColor || 'transparent' };
+  return { backgroundColor: layout.backgroundColor || '#FFFFFF' };
 });
 </script>

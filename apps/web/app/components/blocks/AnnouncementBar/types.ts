@@ -6,7 +6,7 @@ export type AnnouncementBarProps = {
   };
   configuration: {
     layout: { backgroundColor: string };
-    visible: boolean;
+    visible?: boolean;
   };
   content: {
     text: string;
