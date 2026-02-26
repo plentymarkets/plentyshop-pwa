@@ -64,9 +64,4 @@ const content: HomepageContent = {
   },
 };
 
-console.warn('🇬🇧 Loading HOMEPAGE template [EN]:', {
-  banner1Title: content.carousel.banner1.title,
-  newsletter: content.newsletter.title,
-});
-
 export default content;

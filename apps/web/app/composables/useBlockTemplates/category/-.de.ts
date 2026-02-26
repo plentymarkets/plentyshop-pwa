@@ -91,9 +91,4 @@ const content: CategoryContent = {
   },
 };
 
-console.warn('🇩🇪 Loading CATEGORY template [DE]:', {
-  categoryName: content.categoryData.name,
-  sortFilterEnabled: content.sortFilter.fields.sortBy,
-});
-
 export default content;
