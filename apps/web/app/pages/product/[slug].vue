@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <EditableBlocks :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
