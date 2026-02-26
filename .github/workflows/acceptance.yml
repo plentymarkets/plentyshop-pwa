@@ -48,7 +48,6 @@ jobs:
           install: false
           command: npm run test:cypress-feature
         env:
-          NUXT_PUBLIC_SHOW_NOTIFY_ME: 'true'
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
           MOLLIE_TEST_MODE: true
 
@@ -58,7 +57,6 @@ jobs:
           install: false
           command: npm run test:cypress-editor
         env:
-          NUXT_PUBLIC_IS_PREVIEW: true
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
       - name: E2E External
