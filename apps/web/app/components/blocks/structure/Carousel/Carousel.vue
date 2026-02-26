@@ -46,20 +46,18 @@
       :key="`prev-${index}`"
       type="button"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
-      :style="{
-        color: configuration.controls.color + ' !important',
-        '--swiper-navigation-size': configuration.controls.size ? `${configuration.controls.size}px` : undefined
-      }"
+      :aria-controls="`carousel-${index}`"
+      :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
+      :style="{ color: configuration.controls.color + ' !important' }"
     />
     <button
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       type="button"
       :class="`swiper-button-next swiper-button-next-${index}`"
-      :style="{
-        color: configuration.controls.color + ' !important',
-        '--swiper-navigation-size': configuration.controls.size ? `${configuration.controls.size}px` : undefined
-      }"
+      :aria-controls="`carousel-${index}`"
+      :aria-label="t('homepage.banner.ariaLabelNextSlide')"
+      :style="{ color: configuration.controls.color + ' !important' }"
     />
   </NuxtErrorBoundary>
 </template>
@@ -110,7 +108,7 @@ const enableModules = computed(() => visibleContent.value.length > 1);
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
-  return enableModules.value && configuration.controls.color && configuration.controls.showIndicators !== false
+  return enableModules.value && configuration.controls.color
     ? {
         el: `.swiper-pagination-${index}`,
         clickable: true,

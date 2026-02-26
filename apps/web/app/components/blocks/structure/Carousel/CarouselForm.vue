@@ -151,16 +151,6 @@
               </template>
             </EditorColorPicker>
           </div>
-
-          <div>
-            <input v-model.number="controls.size" type="number" min="0" max="1" step="0.1" class="w-full border rounded-md px-3 py-2" />
-            <SfSwitch
-              v-model="controls.showIndicators"
-              :label="getEditorTranslation('visibility-label')"
-              :aria-label="getEditorTranslation('toggle-visibility-aria')"
-              class="mt-4"
-            />
-          </div>
         </div>
       </UiAccordionItem>
 

@@ -1027,11 +1027,7 @@
             "type": "structure",
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
             "configuration": {
-              "controls": {
-                "color": "#000000",
-                "size": 12,
-                "showIndicators": false
-              },
+              "controls": { "color": "#000000" },
               "layout": { "fullWidth": true },
               "visible": true
             },
@@ -1067,11 +1063,7 @@
             "type": "structure",
             "meta": { "uuid": "57e5b671-f9b5-47ee-9271-066575d8e4e7" },
             "configuration": {
-              "controls": {
-                "color": "#000000",
-                "size": 12,
-                "showIndicators": false
-              },
+              "controls": { "color": "#000000" },
               "layout": { "fullWidth": true },
               "visible": true
             },

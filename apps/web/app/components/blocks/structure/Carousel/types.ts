@@ -6,8 +6,6 @@ export type CarouselStructureProps = {
   configuration: {
     controls: {
       color: string;
-      size?: number;
-      showIndicators?: boolean;
       displayArrows?: boolean;
     };
     layout?: {
