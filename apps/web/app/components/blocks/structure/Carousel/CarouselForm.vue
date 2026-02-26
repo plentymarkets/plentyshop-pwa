@@ -206,7 +206,9 @@ const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Re
 >;
 
 const blockForm = computed(() => {
-  const slide = slides.value[editingSlideIndex.value!];
+  if (editingSlideIndex.value === undefined) return null;
+
+  const slide = slides.value[editingSlideIndex.value];
   if (!slide) return null;
 
   const key = Object.keys(blockForms).find((path) => path.endsWith(`/${slide.name}Form.vue`));
