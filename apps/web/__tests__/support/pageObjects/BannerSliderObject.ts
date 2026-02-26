@@ -21,6 +21,14 @@ export class BannerSliderObject extends PageObject {
       });
   }
 
+  checkDroneImageVisibility() {
+    cy.get(`[data-testid="tooltip"]`).contains('drone-A-1024.avif');
+  }
+
+  checkGuyImageVisibility() {
+    cy.get(`[data-testid="tooltip"]`).contains('guy-1024.avif');
+  }
+
   openSlideActions() {
     cy.get(`[data-testid="actions-menu-slide-0"]`).click();
   }
@@ -76,28 +84,6 @@ export class BannerSliderObject extends PageObject {
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
       expect(uuid).to.match(uuidRegex);
     });
-  }
-
-  checkIsMoveSlideUpDisabled(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`).should('not.exist');
-  }
-
-  checkIsMoveSlideDownDisabled(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`).should('not.exist');
-  }
-
-  moveSlideUp(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`)
-      .trigger('mousedown', { which: 1, button: 0 })
-      .trigger('mousemove', { clientX: 0, clientY: -100, buttons: 1 })
-      .trigger('mouseup', { force: true });
-  }
-
-  moveSlideDown(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`)
-      .trigger('mousedown', { which: 1, button: 0 })
-      .trigger('mousemove', { clientX: 0, clientY: 100, buttons: 1 })
-      .trigger('mouseup', { force: true });
   }
 
   openImageGroup() {

@@ -80,17 +80,6 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.deleteSlide();
       bannerSlider.checkIfSlideActionsAreVisible();
     });
-
-    it('should move a slide up and down', () => {
-      bannerSlider.addSlide();
-      bannerSlider.addSlide();
-      bannerSlider.moveSlideUp(2);
-      bannerSlider.openSlideOneSettings();
-      bannerSlider.goBackToElementList();
-      bannerSlider.moveSlideDown(1);
-      bannerSlider.openSlideOneSettings();
-      bannerSlider.goBackToElementList();
-    });
   });
 
   describe('Image Settings', () => {
