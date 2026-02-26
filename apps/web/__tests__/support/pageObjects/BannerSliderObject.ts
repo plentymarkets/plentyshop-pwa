@@ -2,17 +2,23 @@ import { PageObject } from './PageObject';
 
 export class BannerSliderObject extends PageObject {
   getFirstBannerBlockUuid(): Cypress.Chainable<string> {
-    return cy.get('[data-testid^="banner-image-"]').first().then(($el) => {
-      const testId = $el.attr('data-testid') || '';
-      return testId.replace('banner-image-', '');
-    });
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .first()
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
   }
 
   getSecondBannerBlockUuid(): Cypress.Chainable<string> {
-    return cy.get('[data-testid^="banner-image-"]').eq(1).then(($el) => {
-      const testId = $el.attr('data-testid') || '';
-      return testId.replace('banner-image-', '');
-    });
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .eq(1)
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
   }
 
   openSlideActions() {
@@ -121,7 +127,11 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkBannerAltText(uuid: string) {
-    cy.get('[data-testid="slide-alt-text"]').scrollIntoView().should('be.visible').clear().type('New Alt Text', { delay: 0 });
+    cy.get('[data-testid="slide-alt-text"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Alt Text', { delay: 0 });
     cy.get(`[data-testid="banner-image-${uuid}"]`).should('have.attr', 'alt', 'New Alt Text');
   }
 
@@ -134,10 +144,26 @@ export class BannerSliderObject extends PageObject {
   }
 
   changeTexts() {
-    cy.get('[data-testid="banner-input-pre-title"]').scrollIntoView().should('be.visible').clear().type('New Pre-Title', { delay: 0 });
-    cy.get('[data-testid="banner-input-title"]').scrollIntoView().should('be.visible').clear().type('New Title', { delay: 0 });
-    cy.get('[data-testid="banner-input-sub-title"]').scrollIntoView().should('be.visible').clear().type('New Subtitle', { delay: 0 });
-    cy.get('[data-testid="banner-text-content"]').scrollIntoView().should('be.visible').clear().type('New Text Content', { delay: 0 });
+    cy.get('[data-testid="banner-input-pre-title"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Pre-Title', { delay: 0 });
+    cy.get('[data-testid="banner-input-title"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Title', { delay: 0 });
+    cy.get('[data-testid="banner-input-sub-title"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Subtitle', { delay: 0 });
+    cy.get('[data-testid="banner-text-content"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Text Content', { delay: 0 });
   }
 
   checkNewTexts(uuid: string) {
@@ -163,11 +189,7 @@ export class BannerSliderObject extends PageObject {
 
   alignBoxTopX(uuid: string) {
     cy.get('[data-testid="slider-textbox-align-top"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should(
-      'have.css',
-      'justify-content',
-      'flex-start',
-    );
+    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'justify-content', 'flex-start');
   }
 
   alignBoxCenterY(uuid: string) {
@@ -209,7 +231,11 @@ export class BannerSliderObject extends PageObject {
   }
 
   changeButtonLabelAndLink() {
-    cy.get('[data-testid="slider-button-label"]').scrollIntoView().should('be.visible').clear().type('New Button Label', { delay: 0 });
+    cy.get('[data-testid="slider-button-label"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Button Label', { delay: 0 });
     cy.get('[data-testid="slider-button-link"]')
       .scrollIntoView()
       .should('be.visible')
