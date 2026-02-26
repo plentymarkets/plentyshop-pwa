@@ -67,7 +67,7 @@ const isContentEmptyInLive = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
 );
 
-if (!props.preventBlocksRequest) {
+if (!props.preventBlocksRequest && import.meta.client) {
   await getBlocksServer(props.identifier, props.type);
 }
 

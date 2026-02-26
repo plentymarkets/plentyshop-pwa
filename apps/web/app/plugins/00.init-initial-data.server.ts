@@ -2,7 +2,6 @@ export default defineNuxtPlugin({
   name: 'init-initial-data',
   async setup() {
     const { setInitialDataSSR } = useInitialSetup();
-    const { fetchFooterBlock } = useCategoryTemplate();
     const route = useRoute();
 
     await callOnce(async () => {
@@ -16,8 +15,6 @@ export default defineNuxtPlugin({
         const { getBlocksServer } = useCategoryTemplate(identifier, type, $i18n.locale.value);
 
         promises.push(getBlocksServer(identifier, type));
-      } else {
-        promises.push(fetchFooterBlock());
       }
 
       await Promise.all(promises);
