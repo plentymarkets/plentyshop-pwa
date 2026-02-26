@@ -1028,16 +1028,16 @@
             "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
             "configuration": {
               "controls": { "color": "#000000" },
+              "layout": { "fullWidth": true },
               "visible": true
             },
             "content": [
               {
                 "name": "AnnouncementBar",
                 "type": "content",
-                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "meta": { "uuid": "cf7a2410-3173-1434-9bc8-4588e904fcbe" },
                 "configuration": {
                   "layout": {
-                    "fullWidth": true,
                     "paddingTop": 0,
                     "paddingBottom": 0,
                     "paddingLeft": 0,
@@ -1056,7 +1056,6 @@
                 "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "configuration": {
                   "layout": {
-                    "fullWidth": true,
                     "paddingTop": 0,
                     "paddingBottom": 0,
                     "paddingLeft": 0,
@@ -1077,6 +1076,7 @@
             "meta": { "uuid": "57e5b671-f9b5-47ee-9271-066575d8e4e7" },
             "configuration": {
               "controls": { "color": "#000000" },
+              "layout": { "fullWidth": true },
               "visible": true
             },
             "content": [
@@ -1086,7 +1086,6 @@
                 "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "configuration": {
                   "layout": {
-                    "fullWidth": true,
                     "paddingTop": 0,
                     "paddingBottom": 0,
                     "paddingLeft": 0,
@@ -1105,7 +1104,6 @@
                 "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "configuration": {
                   "layout": {
-                    "fullWidth": true,
                     "paddingTop": 0,
                     "paddingBottom": 0,
                     "paddingLeft": 0,
