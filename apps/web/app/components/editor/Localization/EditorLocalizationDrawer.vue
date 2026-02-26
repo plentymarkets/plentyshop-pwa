@@ -62,7 +62,7 @@
           <div class="flex-1 flex overflow-hidden">
             <div
               v-if="emptyStateMessage"
-              class="w-full h-full flex justify-center text-red-500 font-medium text-lg pt-24"
+              class="w-full h-full flex justify-center text-black-500 font-medium text-lg pt-24"
             >
               {{ emptyStateMessage}}
             </div>
