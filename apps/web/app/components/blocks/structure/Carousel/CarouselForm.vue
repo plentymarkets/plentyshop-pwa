@@ -118,7 +118,7 @@
     </UiAccordionItem>
 
     <div v-else-if="slides[editingSlideIndex]" class="space-y-0">
-      <BlocksBannerCarouselBannerForm :uuid="slides[editingSlideIndex]!.meta.uuid" />
+      <component :is="blockForm" :uuid="slides[editingSlideIndex]!.meta.uuid" />
     </div>
 
     <template v-if="editingSlideIndex === undefined">
@@ -200,6 +200,19 @@ const controlsOpen = ref(true);
 
 setIndex(blockUuid.value, 0);
 
+const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
+
+const blockForm = computed(() => {
+  const slide = slides.value[editingSlideIndex.value!];
+  if (!slide) return null;
+
+  const key = Object.keys(blockForms).find((path) => path.includes(`${slide.name}Form.vue`));
+  const loader = key ? blockForms[key] : undefined;
+  return loader ? defineAsyncComponent(loader) : null;
+});
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
