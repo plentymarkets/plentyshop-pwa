@@ -5,10 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { Block } from '@plentymarkets/shop-api';
-import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTemplateDataDe.json';
-import homepageTemplateDataEn from '~/composables/useCategoryTemplate/homepageTemplateDataEn.json';
+import { getHomepageTemplate } from '~/composables/useCategoryTemplate/homepage';
 import type { Locale } from '#i18n';
+
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
@@ -20,9 +19,6 @@ definePageMeta({
   identifier: 'index',
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
 });
-
-const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
 
 const { $i18n } = useNuxtApp();
 
@@ -37,7 +33,8 @@ const { setDefaultTemplate } = useCategoryTemplate(
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
 
-setDefaultTemplate(useLocaleSpecificHomepageTemplate($i18n.locale.value));
+const homepageTemplate = await getHomepageTemplate($i18n.locale.value);
+setDefaultTemplate(homepageTemplate);
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
