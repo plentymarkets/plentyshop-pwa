@@ -209,7 +209,7 @@ const blockForm = computed(() => {
   const slide = slides.value[editingSlideIndex.value!];
   if (!slide) return null;
 
-  const key = Object.keys(blockForms).find((path) => path.includes(`${slide.name}Form.vue`));
+  const key = Object.keys(blockForms).find((path) => path.endsWith(`/${slide.name}Form.vue`));
   const loader = key ? blockForms[key] : undefined;
   return loader ? defineAsyncComponent(loader) : null;
 });
