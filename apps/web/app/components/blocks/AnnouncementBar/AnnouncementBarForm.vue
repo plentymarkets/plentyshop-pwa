@@ -86,30 +86,14 @@ const editingBackgroundColor = computed({
 <i18n lang="json">
 {
   "en": {
-    "elements-label": "Elements",
     "text-label": "Text",
     "layout-label": "Layout settings",
-    "controls-label": "Controls",
-    "add-label": "Add element",
-    "empty-label": "(empty)",
-    "background-color-label": "Background color",
-    "controls-color-label": "Controls color",
-    "padding-label": "Padding (px)",
-    "visibility-label": "Visibility",
-    "delete-label": "Delete"
+    "background-color-label": "Background color"
   },
   "de": {
-    "elements-label": "Elemente",
     "text-label": "Text",
     "layout-label": "Layout-Einstellungen",
-    "controls-label": "Steuerelemente",
-    "add-label": "Element hinzufügen",
-    "empty-label": "(leer)",
-    "background-color-label": "Hintergrundfarbe",
-    "controls-color-label": "Steuerelementfarbe",
-    "padding-label": "Innenabstand (px)",
-    "visibility-label": "Sichtbarkeit",
-    "delete-label": "Löschen"
+    "background-color-label": "Hintergrundfarbe"
   }
 }
 </i18n>
