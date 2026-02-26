@@ -1,64 +1,72 @@
 <template>
   <NuxtErrorBoundary>
-    <Swiper
-      :id="`carousel-${index}`"
-      :key="visibleContent.length"
-      :modules="enableModules ? [Pagination, Navigation] : []"
-      :slides-per-view="1"
-      v-bind="carouselProps"
-      :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
-      :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
-      :loop="true"
-      :pagination="paginationConfig"
-      :navigation="navigationConfig"
-      class="!z-0 !w-full !max-h-[85vh]"
-      @swiper="onSwiperInit"
-      @slide-change="onSlideChange"
-    >
-      <SwiperSlide
-        v-for="(block, slideIndex) in visibleContent"
-        :key="slideIndex"
-        :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
-        :aria-label="
-          visibleContent.length > 1
-            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: visibleContent.length })
-            : null
-        "
+    <div ref="contentRef">
+      <Swiper
+        :id="`carousel-${index}`"
+        :key="visibleContent.length"
+        :modules="enableModules ? [Pagination, Navigation] : []"
+        :slides-per-view="1"
         v-bind="carouselProps"
-        :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
+        :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
+        :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
+        :loop="true"
+        :pagination="paginationConfig"
+        :navigation="navigationConfig"
+        class="!z-0 !w-full !max-h-[85vh]"
+        @swiper="onSwiperInit"
+        @slide-change="onSlideChange"
       >
-        <slot
-          name="content"
-          :content-block="block"
-          :index="getSlideAdjustedIndex(slideIndex)"
-          :slide-index="slideIndex"
-          :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
+        <SwiperSlide
+          v-for="(block, slideIndex) in visibleContent"
+          :key="slideIndex"
+          :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
+          :aria-label="
+            visibleContent.length > 1
+              ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: visibleContent.length })
+              : null
+          "
+          v-bind="carouselProps"
+          :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
+        >
+          <slot
+            name="content"
+            :content-block="block"
+            :index="getSlideAdjustedIndex(slideIndex)"
+            :slide-index="slideIndex"
+            :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
+          />
+        </SwiperSlide>
+        <div
+          v-if="enableModules"
+          :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
         />
-      </SwiperSlide>
-      <div
-        v-if="enableModules"
-        :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
-      />
-    </Swiper>
+      </Swiper>
 
-    <button
-      v-if="enableModules && handleArrows()"
-      :key="`prev-${index}`"
-      type="button"
-      :class="`swiper-button-prev swiper-button-prev-${index}`"
-      :aria-controls="`carousel-${index}`"
-      :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
-      :style="{ color: configuration.controls.color + ' !important' }"
-    />
-    <button
-      v-if="enableModules && handleArrows()"
-      :key="`next-${index}`"
-      type="button"
-      :class="`swiper-button-next swiper-button-next-${index}`"
-      :aria-controls="`carousel-${index}`"
-      :aria-label="t('homepage.banner.ariaLabelNextSlide')"
-      :style="{ color: configuration.controls.color + ' !important' }"
-    />
+      <button
+        v-if="enableModules && handleArrows()"
+        :key="`prev-${index}`"
+        type="button"
+        :class="`swiper-button-prev swiper-button-prev-${index}`"
+        :aria-controls="`carousel-${index}`"
+        :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
+        :style="{
+          color: configuration.controls.color + ' !important',
+          '--swiper-navigation-size': navigationSize,
+        }"
+      />
+      <button
+        v-if="enableModules && handleArrows()"
+        :key="`next-${index}`"
+        type="button"
+        :class="`swiper-button-next swiper-button-next-${index}`"
+        :aria-controls="`carousel-${index}`"
+        :aria-label="t('homepage.banner.ariaLabelNextSlide')"
+        :style="{
+          color: configuration.controls.color + ' !important',
+          '--swiper-navigation-size': navigationSize,
+        }"
+      />
+    </div>
   </NuxtErrorBoundary>
 </template>
 
@@ -71,6 +79,14 @@ import type { Swiper as SwiperType } from 'swiper';
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
+
+const contentRef = ref<HTMLElement | null>(null);
+const containerHeight = ref(0);
+
+const navigationSize = computed(() => {
+  const size = Math.min(containerHeight.value * 0.6, 44);
+  return `${Math.max(size, 10)}px`;
+});
 
 const visibleContent = computed(() => {
   return content.filter((slide) => slide.configuration?.visible !== false);
@@ -178,6 +194,19 @@ const onSlideChange = async (swiper: SwiperType) => {
 const getSlideAdjustedIndex = (slideIndex: number) => {
   return activeSlideIndex.value[meta.uuid] === slideIndex ? index : index + slideIndex;
 };
+
+onMounted(() => {
+  if (!contentRef.value) return;
+
+  const observer = new ResizeObserver((entries) => {
+    const entry = entries[0];
+    if (entry) containerHeight.value = entry.contentRect.height;
+  });
+
+  observer.observe(contentRef.value);
+
+  onBeforeUnmount(() => observer.disconnect());
+});
 
 watch(
   () => activeSlideIndex.value[meta.uuid],
