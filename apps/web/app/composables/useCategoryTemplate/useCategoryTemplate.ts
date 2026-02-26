@@ -310,8 +310,6 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
 
     setupBlocks(data?.value?.data ?? []);
-
-    await ensureFooterBlock();
   };
 
   /** Fetches blocks directly from SDK without caching */
