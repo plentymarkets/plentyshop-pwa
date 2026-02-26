@@ -102,7 +102,7 @@
         "color": "#000"
       },
       "button": {
-        "buttonText": "Jetzt zuschlagen",
+        "label": "Jetzt zuschlagen",
         "link": "",
         "variant": "primary"
       }
@@ -245,6 +245,7 @@
         "title": "",
         "htmlDescription": ""
       },
+      "footnote": "",
       "footnoteAlign": "right",
       "colors": {
         "background": "#cfe4ec",
