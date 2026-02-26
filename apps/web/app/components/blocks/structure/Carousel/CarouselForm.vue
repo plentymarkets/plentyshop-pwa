@@ -171,6 +171,7 @@
 <script setup lang="ts">
 import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
+import slideTemplates from './slideTemplates.json';
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -296,48 +297,17 @@ onMounted(() => {
 });
 
 const addSlide = async () => {
-  const newSlide: BannerProps = {
-    name: 'Banner',
-    type: 'content',
-    configuration: {
-      visible: true,
-    },
-    content: {
-      image: {
-        wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        brightness: 0.5,
-        alt: '',
-      },
-      text: {
-        pretitle: 'PreTitle',
-        title: 'Title',
-        subtitle: 'SubTitle',
-        htmlDescription: 'Text that supports HTML formatting',
-        color: '#000',
-        bgcolor: '#fff',
-        bgopacity: 1,
-        textAlignment: 'left',
-        justify: 'center',
-        align: 'left',
-        background: false,
-      },
-      button: {
-        label: 'Button',
-        link: '/',
-        variant: 'primary',
-      },
-    },
-    meta: {
-      uuid: uuid(),
-    },
-    lazyLoading: 'eager',
-    index: slides.value.length,
-  };
+  const slideType = slides.value[0]?.name ?? 'Banner';
+  const template = slideTemplates[slideType as keyof typeof slideTemplates];
+  if (!template) return;
 
-  slides.value = [...slides.value, newSlide] as BannerProps[];
+  const newSlide = {
+    ...template,
+    meta: { uuid: uuid() },
+    index: slides.value.length,
+  } as BannerProps;
+
+  slides.value = [...slides.value, newSlide];
 
   await nextTick();
 
