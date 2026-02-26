@@ -14,12 +14,6 @@ const props = defineProps<AnnouncementBarProps>();
 const inlineStyle = computed(() => {
   const layout = props.configuration.layout || {};
 
-  return {
-    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
-    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
-    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
-    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
-    backgroundColor: layout.backgroundColor || 'transparent',
-  };
+  return { backgroundColor: layout.backgroundColor || 'transparent' };
 });
 </script>

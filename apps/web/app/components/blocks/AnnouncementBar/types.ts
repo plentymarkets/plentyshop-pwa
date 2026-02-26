@@ -5,15 +5,8 @@ export type AnnouncementBarProps = {
     uuid: string;
   };
   configuration: {
-    layout?: {
-      fullWidth?: boolean;
-      paddingTop?: number;
-      paddingBottom?: number;
-      paddingLeft?: number;
-      paddingRight?: number;
-      backgroundColor?: string;
-    };
-    visible?: boolean;
+    layout: { backgroundColor: string };
+    visible: boolean;
   };
   content: {
     text: string;

@@ -1037,13 +1037,7 @@
                 "type": "content",
                 "meta": { "uuid": "cf7a2410-3173-1434-9bc8-4588e904fcbe" },
                 "configuration": {
-                  "layout": {
-                    "paddingTop": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "paddingRight": 0,
-                    "backgroundColor": "#EDFF6C"
-                  },
+                  "layout": { "backgroundColor": "#EDFF6C" },
                   "visible": true
                 },
                 "content": {
@@ -1055,13 +1049,7 @@
                 "type": "content",
                 "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "configuration": {
-                  "layout": {
-                    "paddingTop": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "paddingRight": 0,
-                    "backgroundColor": "#EDFF6C"
-                  },
+                  "layout": { "backgroundColor": "#EDFF6C" },
                   "visible": true
                 },
                 "content": {
@@ -1085,13 +1073,7 @@
                 "type": "content",
                 "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "configuration": {
-                  "layout": {
-                    "paddingTop": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "paddingRight": 0,
-                    "backgroundColor": "#EDFF6C"
-                  },
+                  "layout": { "backgroundColor": "#EDFF6C" },
                   "visible": true
                 },
                 "content": {
@@ -1103,13 +1085,7 @@
                 "type": "content",
                 "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
                 "configuration": {
-                  "layout": {
-                    "paddingTop": 0,
-                    "paddingBottom": 0,
-                    "paddingLeft": 0,
-                    "paddingRight": 0,
-                    "backgroundColor": "#EDFF6C"
-                  },
+                  "layout": { "backgroundColor": "#EDFF6C" },
                   "visible": true
                 },
                 "content": {

@@ -1,6 +1,5 @@
 @ -1,312 +0,0 @@
 <template>
-  <div class="sticky top-[52px] h-[80vh] overflow-y-auto">
     <UiAccordionItem
         :model-value="true"
         summary-active-class="bg-neutral-100"
@@ -19,12 +18,38 @@
         </div>
       </UiAccordionItem>
 
-      <!-- TODO: add padding toggles and background color settings here -->
-  </div>
+      <UiAccordionItem
+        v-model="expandedSettings"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2>{{ getEditorTranslation('layout-label') }}</h2>
+        </template>
+        <div class="py-2 px-2">
+          <UIFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UIFormLabel>
+          <EditorColorPicker v-model="editingBackgroundColor" class="w-full h-32">
+              <template #trigger="{ color, toggle }">
+                <SfInput v-model="editingBackgroundColor" type="text">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </template>
+            </EditorColorPicker>
+        </div>
+      </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
 import type { AnnouncementBarProps, AnnouncementBarFormProps } from './types';
+import { SfInput } from '@storefront-ui/vue';
 
 const props = defineProps<AnnouncementBarFormProps>();
 
@@ -37,18 +62,21 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const expandedToolbar = ref(true);
+const expandedSettings = ref(true);
 
-const block = computed({
-  get: () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as AnnouncementBarProps,
-  set: (val) => {
-    const found = findOrDeleteBlockByUuid(data.value, blockUuid.value);
-    if (found) Object.assign(found, val);
-  },
-});
+const block = computed(
+  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as AnnouncementBarProps,
+);
 
 const editingText = computed({
   get: () => (block.value.content.text ?? ''),
   set: (val) => { block.value.content.text = val;
+  },
+});
+
+const editingBackgroundColor = computed({
+  get: () => block.value.configuration.layout.backgroundColor,
+  set: (val) => { block.value.configuration.layout.backgroundColor = val;
   },
 });
 </script>
