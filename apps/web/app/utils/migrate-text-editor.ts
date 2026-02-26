@@ -27,6 +27,7 @@ const escapeHtml = (text: string): string => {
 export const migrateTextCardContent = (
   content: Partial<TextCardContent>,
   enableRichTextEditorV2: boolean,
+  isFirstBlock: boolean,
 ): Partial<TextCardContent> => {
   if (!enableRichTextEditorV2) return content;
   if (!hasOldStructure(content)) return content;
@@ -42,11 +43,12 @@ export const migrateTextCardContent = (
   const parts: string[] = [];
 
   if (pretitle?.trim()) {
-    parts.push(`<h2>${escapeHtml(pretitle.trim())}</h2>`);
+    parts.push(`<p>${escapeHtml(pretitle.trim())}</p>`);
   }
 
   if (title?.trim()) {
-    parts.push(`<h1>${escapeHtml(title.trim())}</h1>`);
+    const titleTag = isFirstBlock ? 'h1' : 'h2';
+    parts.push(`<${titleTag}>${escapeHtml(title.trim())}</${titleTag}>`);
   }
 
   if (subtitle?.trim()) {

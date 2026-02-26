@@ -18,6 +18,7 @@
         :to="productPath"
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
+        data-testid="product-card-link"
       >
         <NuxtImg
           :src="imageUrl"

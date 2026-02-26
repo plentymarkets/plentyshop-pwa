@@ -2,7 +2,7 @@
   <NuxtErrorBoundary>
     <Swiper
       :id="`carousel-${index}`"
-      :key="content.length"
+      :key="visibleContent.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       v-bind="carouselProps"
@@ -16,12 +16,12 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide
-        v-for="(banner, slideIndex) in content"
+        v-for="(banner, slideIndex) in visibleContent"
         :key="slideIndex"
-        :aria-labelledby="content.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
+        :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
         :aria-label="
-          content.length > 1
-            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: content.length })
+          visibleContent.length > 1
+            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: visibleContent.length })
             : null
         "
         v-bind="carouselProps"
@@ -66,18 +66,50 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
+import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
 
+const visibleContent = computed(() => {
+  return (content as BannerProps[]).filter((slide) => slide.configuration?.visible !== false);
+});
+
+const getActualIndex = (visibleIndex: number): number => {
+  const contentArray = content as BannerProps[];
+  let visibleCount = 0;
+  for (let i = 0; i < contentArray.length; i++) {
+    const slide = contentArray[i];
+    if (slide && slide.configuration?.visible !== false) {
+      if (visibleCount === visibleIndex) {
+        return i;
+      }
+      visibleCount++;
+    }
+  }
+  return visibleIndex;
+};
+
+const getVisibleIndex = (actualIndex: number): number => {
+  const contentArray = content as BannerProps[];
+  let visibleIndex = 0;
+  for (let i = 0; i < actualIndex && i < contentArray.length; i++) {
+    const slide = contentArray[i];
+    if (slide && slide.configuration?.visible !== false) {
+      visibleIndex++;
+    }
+  }
+  return visibleIndex;
+};
+
 const handleArrows = () => {
   const viewport = useViewport();
   return !viewport.isLessThan('md');
 };
 
-const enableModules = computed(() => content.length > 1);
+const enableModules = computed(() => visibleContent.value.length > 1);
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
@@ -134,14 +166,17 @@ const reinitializeSwiper = async () => {
   }
 };
 const onSlideChange = async (swiper: SwiperType) => {
-  const realIndex = swiper.realIndex;
+  const visibleIndex = swiper.realIndex;
   if (isInternalChange.value) {
     isInternalChange.value = false;
     return;
   }
 
-  if (realIndex !== activeSlideIndex.value[meta.uuid]) {
-    setIndex(meta.uuid, realIndex);
+  // Convert visible index to actual content index
+  const actualIndex = getActualIndex(visibleIndex);
+
+  if (actualIndex !== activeSlideIndex.value[meta.uuid]) {
+    setIndex(meta.uuid, actualIndex);
   }
 };
 
@@ -154,19 +189,22 @@ watch(
   (newIndex) => {
     if (!slider || slider.destroyed) return;
 
-    if (slider.realIndex !== newIndex) {
+    // Convert actual content index to visible slide index
+    const visibleIndex = getVisibleIndex(newIndex ?? 0);
+
+    if (slider.realIndex !== visibleIndex) {
       isInternalChange.value = true;
       if (slider.params.loop) {
-        slider.slideToLoop(newIndex ?? 0);
+        slider.slideToLoop(visibleIndex);
       } else {
-        slider.slideTo(newIndex ?? 0);
+        slider.slideTo(visibleIndex);
       }
     }
   },
   { flush: 'post' },
 );
 watch(
-  () => content.length,
+  () => visibleContent.value.length,
   async (newLength, oldLength) => {
     if (oldLength <= 1 && newLength > 1) {
       await reinitializeSwiper();
