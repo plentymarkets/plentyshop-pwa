@@ -1,7 +1,7 @@
 <template>
   <div>
-    <EmptyBlock v-if="isContentEmptyInEditor" />
-    <CategoryEmptyState v-else-if="isContentEmptyInLive" />
+    <EmptyBlock v-if="!readOnly && isContentEmptyInEditor" />
+    <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -41,22 +41,28 @@
 
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
-import type { DragEvent, EditablePageProps } from './types';
+import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
 const { isInEditor, shouldShowEditorUI } = useEditorState();
-const props = withDefaults(defineProps<EditablePageProps>(), {
+const props = withDefaults(defineProps<EditableBlocksProps>(), {
+  identifier: 'index',
+  type: 'immutable',
   hasEnabledActions: true,
   preventBlocksRequest: false,
+  readOnly: false,
+  blocks: () => [],
 });
 
-const { data, getBlocksServer, cleanData } = useCategoryTemplate(
-  props.identifier.toString(),
-  props.type.toString(),
-  useNuxtApp().$i18n.locale.value,
-);
-const { isFooterBlock } = useCategoryTemplate();
+const {
+  data: templateData,
+  getBlocksServer,
+  isFooterBlock,
+} = useCategoryTemplate(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
+
+const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
+
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
@@ -67,16 +73,9 @@ const isContentEmptyInLive = computed(
   () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
 );
 
-if (!props.preventBlocksRequest) {
+if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
   await getBlocksServer(props.identifier, props.type);
 }
-
-const { footerCache, addFooterBlock } = useCategoryTemplate();
-addFooterBlock({
-  data,
-  cachedFooter: footerCache,
-  cleanData,
-});
 
 const {
   isClicked,
@@ -111,20 +110,25 @@ const scrollToBlock = (evt: DragEvent) => {
 };
 
 const { closeDrawer } = useSiteConfiguration();
-const { settingsIsDirty } = useSiteSettings();
-const { isEditingEnabled } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const enabledActions = computed(
-  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
+  () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 
-onMounted(async () => {
-  isEditingEnabled.value = false;
-  window.addEventListener('beforeunload', handleBeforeUnload);
+useEditorUnsavedChangesGuard({
+  enabled: !props.readOnly,
+  onConfirmLeave: () => closeDrawer(),
+});
 
-  if (isInEditor.value) {
+onMounted(async () => {
+  if (!props.readOnly) {
+    const { isEditingEnabled } = useEditor();
+    isEditingEnabled.value = false;
+  }
+
+  if (isInEditor.value && !props.readOnly) {
     await import('./draggable.css');
   }
 
@@ -133,29 +137,5 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearRegistry();
-  window.removeEventListener('beforeunload', handleBeforeUnload);
-});
-
-const hasUnsavedChanges = () => {
-  return !isEditingEnabled.value && !settingsIsDirty.value;
-};
-
-const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  if (hasUnsavedChanges()) return;
-  event.preventDefault();
-};
-
-onBeforeRouteLeave((to, from, next) => {
-  if (isEditingEnabled.value) {
-    const confirmation = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-    if (confirmation) {
-      closeDrawer();
-      next();
-    } else {
-      next(false);
-    }
-  } else {
-    next();
-  }
 });
 </script>

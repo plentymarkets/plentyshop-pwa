@@ -12,7 +12,7 @@ import type { BlockVisibilityRegistry, UseBlocksVisibilityReturn } from './types
  * // In a block component that needs runtime visibility:
  * registerBlockVisibility(block.meta.uuid, hasRealData);
  *
- * // In EditablePage.vue:
+ * // In EditableBlocks.vue:
  * v-if="shouldShowBlock(block, enableActions)"
  *
  * onBeforeUnmount(() => {

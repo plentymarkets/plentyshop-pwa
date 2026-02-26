@@ -227,6 +227,17 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
+  /** Resets the footer block in data to the saved/cached state, discarding unsaved changes */
+  const resetFooterToSaved = async () => {
+    footerCache.value = null;
+    await fetchFooterBlock();
+
+    const footerIndex = state.value.data.findIndex((block) => isFooterBlock(block));
+    if (footerIndex !== -1 && footerCache.value) {
+      state.value.data[footerIndex] = JSON.parse(JSON.stringify(footerCache.value));
+    }
+  };
+
   /** Fetches the footer block from the server or returns cached version */
   const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) return footerCache.value;
@@ -332,6 +343,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 
     if (Array.isArray(blocks)) {
       migrateAllBlocks(blocks);
+
+      const footerBlock = blocks.find((block) => isFooterBlock(block));
+      if (footerBlock) footerCache.value = footerBlock as FooterBlock;
+    }
+
+    if (!blocks.some((block) => isFooterBlock(block))) {
+      const footerBlock = footerCache.value || createDefaultFooterBlockHelper();
+      blocks.push(footerBlock);
     }
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
@@ -417,6 +436,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     setupBlocks,
     setDefaultTemplate,
     fetchFooterBlock,
+    resetFooterToSaved,
     getFooterBlock,
     createDefaultFooterBlock,
     createFooterBlock,
