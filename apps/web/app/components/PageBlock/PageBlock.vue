@@ -48,7 +48,7 @@
         />
       </ClientOnly>
 
-      <component :is="getBlockComponent" v-bind="contentProps" :index="index">
+      <component :is="getBlockComponent" v-if="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
             :index="index"
