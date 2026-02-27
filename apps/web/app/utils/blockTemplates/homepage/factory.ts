@@ -1,9 +1,42 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { HomepageContent } from './interface';
 import { createFooter } from '../footer/factory';
-import type { FooterContent } from '../footer/interface';
 
-export function createHomepage(content: HomepageContent, footerContent: FooterContent): Block[] {
+export function createHomepage(): Block[] {
+  const banner1Pretitle = t('defaultTemplate.homepage.carousel.banner1.pretitle');
+  const banner1Title = t('defaultTemplate.homepage.carousel.banner1.title');
+  const banner1Subtitle = t('defaultTemplate.homepage.carousel.banner1.subtitle');
+  const banner1Description = t('defaultTemplate.homepage.carousel.banner1.description');
+  const banner1ButtonLabel = t('defaultTemplate.homepage.carousel.banner1.buttonLabel');
+  const banner2Pretitle = t('defaultTemplate.homepage.carousel.banner2.pretitle');
+  const banner2Title = t('defaultTemplate.homepage.carousel.banner2.title');
+  const banner2Description = t('defaultTemplate.homepage.carousel.banner2.description');
+  const banner2ButtonLabel = t('defaultTemplate.homepage.carousel.banner2.buttonLabel');
+  const welcomePretitle = t('defaultTemplate.homepage.textcard.welcome.pretitle');
+  const welcomeTitle = t('defaultTemplate.homepage.textcard.welcome.title');
+  const welcomeSubtitle = t('defaultTemplate.homepage.textcard.welcome.subtitle');
+  const welcomeParagraph1 = t('defaultTemplate.homepage.textcard.welcome.paragraph1');
+  const welcomeParagraph2 = t('defaultTemplate.homepage.textcard.welcome.paragraph2');
+  const welcomeButtonLabel = t('defaultTemplate.homepage.textcard.welcome.buttonLabel');
+  const welcomeDescription = `<p>${welcomeParagraph1}</p><p>${welcomeParagraph2}</p>`;
+  const multigridPretitle = t('defaultTemplate.homepage.multigrid.textcard.pretitle');
+  const multigridTitle = t('defaultTemplate.homepage.multigrid.textcard.title');
+  const multigridSubtitle = t('defaultTemplate.homepage.multigrid.textcard.subtitle');
+  const multigridParagraph = t('defaultTemplate.homepage.multigrid.textcard.paragraph');
+  const multigridFeatures = useNuxtApp().$i18n.tm('defaultTemplate.homepage.multigrid.textcard.features') as string[];
+  const multigridButtonLabel = t('defaultTemplate.homepage.multigrid.textcard.buttonLabel');
+  const multigridImageAlt = t('defaultTemplate.homepage.multigrid.image.alt');
+  const multigridFeaturesList = multigridFeatures.map((feature) => `<li>${feature}</li>`).join('');
+  const multigridDescription = `<p>${multigridParagraph}</p><ul class='list-disc pl-4 mt-4 space-y-1'>${multigridFeaturesList}</ul>`;
+  const fashionPretitle = t('defaultTemplate.homepage.productRecommended.fashion.pretitle');
+  const fashionTitle = t('defaultTemplate.homepage.productRecommended.fashion.title');
+  const fashionSubtitle = t('defaultTemplate.homepage.productRecommended.fashion.subtitle');
+  const fashionLinkText = t('defaultTemplate.homepage.productRecommended.fashion.linkText');
+  const fashionLinkUrl = t('defaultTemplate.homepage.productRecommended.fashion.linkUrl');
+  const fashionDescription = `<a class='underline' href='${fashionLinkUrl}'>${fashionLinkText}</a>`;
+  const newsletterTitle = t('defaultTemplate.homepage.newsletter.title');
+  const newsletterDescription = t('defaultTemplate.homepage.newsletter.description');
+  const newsletterButtonLabel = t('defaultTemplate.homepage.newsletter.buttonLabel');
+
   return [
     {
       name: 'Carousel',
@@ -38,17 +71,17 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
               color: '#000',
               bgcolor: '#fff',
               bgopacity: 0.9,
-              pretitle: content.carousel.banner1.pretitle,
-              title: content.carousel.banner1.title,
-              subtitle: content.carousel.banner1.subtitle,
-              htmlDescription: content.carousel.banner1.description,
+              pretitle: banner1Pretitle,
+              title: banner1Title,
+              subtitle: banner1Subtitle,
+              htmlDescription: banner1Description,
               textAlignment: 'left',
               justify: 'top',
               align: 'left',
               background: true,
             },
             button: {
-              label: content.carousel.banner1.buttonLabel,
+              label: banner1ButtonLabel,
               link: '/gear/headphones-capybara_157',
               variant: 'primary',
             },
@@ -74,16 +107,16 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
               color: '#000',
               bgcolor: '#fff',
               bgopacity: 1,
-              pretitle: content.carousel.banner2.pretitle,
-              title: content.carousel.banner2.title,
-              htmlDescription: content.carousel.banner2.description,
+              pretitle: banner2Pretitle,
+              title: banner2Title,
+              htmlDescription: banner2Description,
               textAlignment: 'left',
               justify: 'top',
               align: 'left',
               background: true,
             },
             button: {
-              label: content.carousel.banner2.buttonLabel,
+              label: banner2ButtonLabel,
               link: '/gear/drone-omega_154',
               variant: 'primary',
             },
@@ -100,15 +133,15 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
       },
       content: {
         text: {
-          htmlDescription: content.textcard.welcome.description,
-          pretitle: content.textcard.welcome.pretitle,
-          title: content.textcard.welcome.title,
-          subtitle: content.textcard.welcome.subtitle,
+          htmlDescription: welcomeDescription,
+          pretitle: welcomePretitle,
+          title: welcomeTitle,
+          subtitle: welcomeSubtitle,
           textAlignment: 'center',
           color: '#000',
         },
         button: {
-          label: content.textcard.welcome.buttonLabel,
+          label: welcomeButtonLabel,
           link: '',
           variant: 'primary',
         },
@@ -147,15 +180,15 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
           type: 'content',
           content: {
             text: {
-              htmlDescription: content.multigrid.textcard.description,
-              title: content.multigrid.textcard.title,
-              pretitle: content.multigrid.textcard.pretitle,
-              subtitle: content.multigrid.textcard.subtitle,
+              htmlDescription: multigridDescription,
+              title: multigridTitle,
+              pretitle: multigridPretitle,
+              subtitle: multigridSubtitle,
               textAlignment: 'left',
               color: '#000',
             },
             button: {
-              label: content.multigrid.textcard.buttonLabel,
+              label: multigridButtonLabel,
               link: '/gear/headphones-capybara_157',
               variant: 'primary',
             },
@@ -172,7 +205,7 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
             desktop: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
             tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
             mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            alt: content.multigrid.image.alt,
+            alt: multigridImageAlt,
             imageAlignment: 'left',
           },
           meta: {
@@ -190,10 +223,10 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
       },
       content: {
         text: {
-          pretitle: content.productRecommended.fashion.pretitle,
-          title: content.productRecommended.fashion.title,
-          subtitle: content.productRecommended.fashion.subtitle,
-          htmlDescription: content.productRecommended.fashion.description,
+          pretitle: fashionPretitle,
+          title: fashionTitle,
+          subtitle: fashionSubtitle,
+          htmlDescription: fashionDescription,
         },
         source: {
           type: 'category',
@@ -212,21 +245,21 @@ export function createHomepage(content: HomepageContent, footerContent: FooterCo
       content: {
         text: {
           bgColor: '#f5f5f5',
-          title: content.newsletter.title,
-          htmlDescription: content.newsletter.description,
+          title: newsletterTitle,
+          htmlDescription: newsletterDescription,
         },
         input: {
           displayNameInput: true,
           nameIsRequired: false,
         },
         button: {
-          label: content.newsletter.buttonLabel,
+          label: newsletterButtonLabel,
         },
         settings: {
           emailFolderId: 1,
         },
       },
     },
-    createFooter(footerContent),
+    createFooter(),
   ];
 }

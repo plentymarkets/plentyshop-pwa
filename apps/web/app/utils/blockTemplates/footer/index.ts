@@ -10,13 +10,11 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
   const cached = cache.get(locale);
   if (useCache && cached) return cached;
 
-  const module = locale === 'de' ? await import('./-.de') : await import('./-.en');
-  const block = createFooter(module.default);
+  const block = createFooter();
 
   if (useCache) cache.set(locale, block);
 
   return block;
 };
 
-export * from './interface';
 export * from './factory';

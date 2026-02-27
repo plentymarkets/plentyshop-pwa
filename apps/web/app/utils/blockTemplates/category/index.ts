@@ -10,17 +10,11 @@ export const getCategoryTemplate = async (locale: string): Promise<Block[]> => {
   const cached = cache.get(locale);
   if (useCache && cached) return cached;
 
-  const [categoryModule, footerModule] = await Promise.all([
-    locale === 'de' ? import('./-.de') : import('./-.en'),
-    locale === 'de' ? import('../footer/-.de') : import('../footer/-.en'),
-  ]);
-
-  const blocks = createCategory(categoryModule.default, footerModule.default);
+  const blocks = createCategory();
 
   if (useCache) cache.set(locale, blocks);
 
   return blocks;
 };
 
-export * from './interface';
 export * from './factory';

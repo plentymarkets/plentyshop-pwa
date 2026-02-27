@@ -1,7 +1,9 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { FooterContent } from './interface';
 
-export function createFooter(content: FooterContent): Block {
+export function createFooter(): Block {
+  const column1Title = t('defaultTemplate.footer.column1.title');
+  const column2Title = t('defaultTemplate.footer.column2.title');
+
   return {
     name: 'Footer',
     type: 'content',
@@ -11,10 +13,10 @@ export function createFooter(content: FooterContent): Block {
     },
     content: {
       column1: {
-        title: content.column1.title,
+        title: column1Title,
       },
       column2: {
-        title: content.column2.title,
+        title: column2Title,
         showContactLink: true,
         htmlDescription: "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>",
       },

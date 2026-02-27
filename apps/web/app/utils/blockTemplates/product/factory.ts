@@ -1,9 +1,13 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { ProductContent } from './interface';
 import { createFooter } from '../footer/factory';
-import type { FooterContent } from '../footer/interface';
 
-export const createProduct = (content: ProductContent, footerContent: FooterContent): Block[] => {
+export const createProduct = (): Block[] => {
+  const itemTextTitle = t('defaultTemplate.product.itemText.title');
+  const technicalDataTitle = t('defaultTemplate.product.technicalData.title');
+  const customerReviewTitle = t('defaultTemplate.product.customerReview.title');
+  const legalInfoTitle = t('defaultTemplate.product.productLegalInformation.title');
+  const legalInfoLinkText = t('defaultTemplate.product.productLegalInformation.linkText');
+
   return [
     {
       name: 'MultiGrid',
@@ -108,7 +112,7 @@ export const createProduct = (content: ProductContent, footerContent: FooterCont
       },
       content: {
         text: {
-          title: content.itemText.title,
+          title: itemTextTitle,
         },
         layout: {
           displayAsCollapsable: true,
@@ -129,7 +133,7 @@ export const createProduct = (content: ProductContent, footerContent: FooterCont
       },
       content: {
         text: {
-          title: content.technicalData.title,
+          title: technicalDataTitle,
         },
         layout: {
           displayAsCollapsable: true,
@@ -150,7 +154,7 @@ export const createProduct = (content: ProductContent, footerContent: FooterCont
       },
       content: {
         text: {
-          title: content.customerReview.title,
+          title: customerReviewTitle,
         },
         layout: {
           collapsible: true,
@@ -167,8 +171,8 @@ export const createProduct = (content: ProductContent, footerContent: FooterCont
       },
       content: {
         text: {
-          title: content.productLegalInformation.title,
-          linkText: content.productLegalInformation.linkText,
+          title: legalInfoTitle,
+          linkText: legalInfoLinkText,
           paddingTop: 0,
           paddingBottom: 0,
           paddingLeft: 15,
@@ -192,6 +196,6 @@ export const createProduct = (content: ProductContent, footerContent: FooterCont
         },
       },
     },
-    createFooter(footerContent),
+    createFooter(),
   ] as Block[];
 };
