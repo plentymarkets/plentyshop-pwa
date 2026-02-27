@@ -112,7 +112,7 @@ const enableModules = computed(() => visibleContent.value.length > 1);
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
-  return enableModules.value && configuration.controls.color
+  return enableModules.value && configuration.controls.color && configuration.controls.displayIndicators !== false
     ? {
         el: `.swiper-pagination-${index}`,
         clickable: true,
