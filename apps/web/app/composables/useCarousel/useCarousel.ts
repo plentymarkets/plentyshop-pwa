@@ -1,8 +1,5 @@
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { UseCarouselState } from '~/composables/useCarousel/types';
-import slideTemplates from './slideTemplates.json';
-import { v4 as uuid } from 'uuid';
-
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({
     data: [],
@@ -18,15 +15,9 @@ export const useCarousel: UseCarouselReturn = () => {
     useNuxtApp().$i18n.locale.value,
   );
 
-  const createSlide = (type: string, index: number): BannerProps => {
-    const template = slideTemplates[type as keyof typeof slideTemplates];
-    if (!template) throw new Error(`No template found for slide type: ${type}`);
-
-    return {
-      ...template,
-      meta: { uuid: uuid() },
-      index,
-    } as BannerProps;
+  const createSlide = async (type: string, index: number): Promise<BannerProps> => {
+    const module = await import(`~/components/blocks/${type}/defaults.ts`);
+    return module.createDefaultSlide(index);
   };
 
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {

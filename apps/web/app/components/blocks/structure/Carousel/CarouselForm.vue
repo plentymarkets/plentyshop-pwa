@@ -296,7 +296,7 @@ onMounted(() => {
 
 const addSlide = async () => {
   const slideType = slides.value[0]?.name ?? 'Banner';
-  const newSlide = createSlide(slideType, slides.value.length);
+  const newSlide = await createSlide(slideType, slides.value.length);
 
   slides.value = [...slides.value, newSlide];
 
