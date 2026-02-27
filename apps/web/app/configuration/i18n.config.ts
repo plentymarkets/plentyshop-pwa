@@ -105,6 +105,8 @@ export const nuxtI18nOptions: NuxtI18nOptions = {
     'set-new-password': disabledLocalesRules(),
     'shipping': disabledLocalesRules(),
     'tag-slug': disabledLocalesRules(),
-    'terms-and-conditions': disabledLocalesRules()
+    'terms-and-conditions': disabledLocalesRules(),
+    'slug': disabledLocalesRules(),
+    'wishlist': disabledLocalesRules()
   }
 };
