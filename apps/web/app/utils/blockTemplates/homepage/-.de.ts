@@ -56,14 +56,6 @@ const content: HomepageContent = {
       'Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!',
     buttonLabel: 'Newsletter abonnieren',
   },
-  footer: {
-    column1: {
-      title: 'Rechtliches',
-    },
-    column2: {
-      title: 'Services',
-    },
-  },
 };
 
 export default content;

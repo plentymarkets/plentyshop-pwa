@@ -1,7 +1,9 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { CategoryContent } from './interface';
+import { createFooter } from '../footer/factory';
+import type { FooterContent } from '../footer/interface';
 
-export function createCategory(content: CategoryContent): Block[] {
+export function createCategory(content: CategoryContent, footerContent: FooterContent): Block[] {
   return [
     {
       name: 'CategoryData',
@@ -116,5 +118,6 @@ export function createCategory(content: CategoryContent): Block[] {
         },
       ],
     },
+    createFooter(footerContent),
   ];
 }

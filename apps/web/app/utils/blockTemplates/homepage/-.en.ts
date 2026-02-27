@@ -54,14 +54,6 @@ const content: HomepageContent = {
     description: 'Be aware of upcoming sales and events. Receive gifts and special offers!',
     buttonLabel: 'Subscribe',
   },
-  footer: {
-    column1: {
-      title: 'Legal',
-    },
-    column2: {
-      title: 'Services',
-    },
-  },
 };
 
 export default content;

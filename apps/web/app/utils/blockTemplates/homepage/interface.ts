@@ -48,12 +48,4 @@ export interface HomepageContent {
     description: string;
     buttonLabel: string;
   };
-  footer: {
-    column1: {
-      title: string;
-    };
-    column2: {
-      title: string;
-    };
-  };
 }

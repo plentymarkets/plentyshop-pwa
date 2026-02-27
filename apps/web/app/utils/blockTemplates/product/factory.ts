@@ -1,7 +1,9 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { ProductContent } from './interface';
+import { createFooter } from '../footer/factory';
+import type { FooterContent } from '../footer/interface';
 
-export const createProduct = (content: ProductContent): Block[] => {
+export const createProduct = (content: ProductContent, footerContent: FooterContent): Block[] => {
   return [
     {
       name: 'MultiGrid',
@@ -190,5 +192,6 @@ export const createProduct = (content: ProductContent): Block[] => {
         },
       },
     },
+    createFooter(footerContent),
   ] as Block[];
 };
