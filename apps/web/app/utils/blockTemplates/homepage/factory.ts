@@ -4,7 +4,6 @@ import { createFooter } from '../footer/factory';
 export function createHomepage(): Block[] {
   const banner1Pretitle = t('defaultTemplate.homepage.carousel.banner1.pretitle');
   const banner1Title = t('defaultTemplate.homepage.carousel.banner1.title');
-  const banner1Subtitle = t('defaultTemplate.homepage.carousel.banner1.subtitle');
   const banner1Description = t('defaultTemplate.homepage.carousel.banner1.description');
   const banner1ButtonLabel = t('defaultTemplate.homepage.carousel.banner1.buttonLabel');
   const banner2Pretitle = t('defaultTemplate.homepage.carousel.banner2.pretitle');
@@ -18,14 +17,18 @@ export function createHomepage(): Block[] {
   const welcomeParagraph2 = t('defaultTemplate.homepage.textcard.welcome.paragraph2');
   const welcomeButtonLabel = t('defaultTemplate.homepage.textcard.welcome.buttonLabel');
   const welcomeDescription = `<p>${welcomeParagraph1}</p><p>${welcomeParagraph2}</p>`;
-  const multigridPretitle = t('defaultTemplate.homepage.multigrid.textcard.pretitle');
   const multigridTitle = t('defaultTemplate.homepage.multigrid.textcard.title');
   const multigridSubtitle = t('defaultTemplate.homepage.multigrid.textcard.subtitle');
   const multigridParagraph = t('defaultTemplate.homepage.multigrid.textcard.paragraph');
-  const multigridFeatures = useNuxtApp().$i18n.tm('defaultTemplate.homepage.multigrid.textcard.features') as string[];
+  const multigridFeature1 = t('defaultTemplate.homepage.multigrid.textcard.feature1');
+  const multigridFeature2 = t('defaultTemplate.homepage.multigrid.textcard.feature2');
+  const multigridFeature3 = t('defaultTemplate.homepage.multigrid.textcard.feature3');
+  const multigridFeature4 = t('defaultTemplate.homepage.multigrid.textcard.feature4');
   const multigridButtonLabel = t('defaultTemplate.homepage.multigrid.textcard.buttonLabel');
   const multigridImageAlt = t('defaultTemplate.homepage.multigrid.image.alt');
-  const multigridFeaturesList = multigridFeatures.map((feature) => `<li>${feature}</li>`).join('');
+  const multigridFeaturesList = [multigridFeature1, multigridFeature2, multigridFeature3, multigridFeature4]
+    .map((feature) => `<li>${feature}</li>`)
+    .join('');
   const multigridDescription = `<p>${multigridParagraph}</p><ul class='list-disc pl-4 mt-4 space-y-1'>${multigridFeaturesList}</ul>`;
   const fashionPretitle = t('defaultTemplate.homepage.productRecommended.fashion.pretitle');
   const fashionTitle = t('defaultTemplate.homepage.productRecommended.fashion.title');
@@ -73,7 +76,6 @@ export function createHomepage(): Block[] {
               bgopacity: 0.9,
               pretitle: banner1Pretitle,
               title: banner1Title,
-              subtitle: banner1Subtitle,
               htmlDescription: banner1Description,
               textAlignment: 'left',
               justify: 'top',
@@ -200,7 +202,6 @@ export function createHomepage(): Block[] {
             text: {
               htmlDescription: multigridDescription,
               title: multigridTitle,
-              pretitle: multigridPretitle,
               subtitle: multigridSubtitle,
               textAlignment: 'left',
               color: '#000',

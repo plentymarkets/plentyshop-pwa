@@ -1301,8 +1301,7 @@
       "carousel": {
         "banner1": {
           "pretitle": "Kristalklare Klänge Genießen",
-          "title": "Ihr Sound",
-          "subtitle": "Auf höchstem Niveau",
+          "title": "Ihr Sound auf höchstem Niveau",
           "description": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
           "buttonLabel": "Capybara entdecken"
         },
@@ -1325,16 +1324,13 @@
       },
       "multigrid": {
         "textcard": {
-          "pretitle": "",
           "title": "Entdecken Sie Technik und Stil",
           "subtitle": "Innovative Technologie trifft moderne Fashion",
           "paragraph": "Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.",
-          "features": [
-            "Premium-Sound in Studioqualität",
-            "Elegant und formschön",
-            "Lange Akkulaufzeit",
-            "Kabellose Verbindung via Bluetooth"
-          ],
+          "feature1": "Premium-Sound in Studioqualität",
+          "feature2": "Bequeme Passform für längeres Hören",
+          "feature3": "Lange Akkulaufzeit",
+          "feature4": "Nahtlose kabellose Verbindung",
           "buttonLabel": "Zu unseren Kopfhörern"
         },
         "image": {

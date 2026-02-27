@@ -1302,7 +1302,7 @@
         "banner1": {
           "pretitle": "Feel the music",
           "title": "Your Sound, Elevated",
-          "subtitle": "",
+          "description": "Immserse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
           "description": "Immserse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
           "buttonLabel": "Discover Capybara"
         },
@@ -1325,16 +1325,13 @@
       },
       "multigrid": {
         "textcard": {
-          "pretitle": "",
           "title": "A New Listening Experience",
           "subtitle": "Innovative technology meets modern fashion",
           "paragraph": "Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.",
-          "features": [
-            "Premium, studio-quality sound",
-            "Comfortable fit for extended listening",
-            "Long-lasting battery life",
-            "Seamless wireless connectivity"
-          ],
+          "feature1": "Premium, studio-quality sound",
+          "feature2": "Comfortable fit for extended listening",
+          "feature3": "Long-lasting battery life",
+          "feature4": "Seamless wireless connectivity",
           "buttonLabel": "To our headphones"
         },
         "image": {
