@@ -1,4 +1,4 @@
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 
 export type CarouselStructureProps = {
   name: string;

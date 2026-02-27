@@ -171,7 +171,7 @@
 <script setup lang="ts">
 import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
