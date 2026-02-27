@@ -176,8 +176,26 @@ export function createHomepage(): Block[] {
       },
       content: [
         {
+          name: 'Image',
+          type: 'content',
+          meta: {
+            uuid: '1c2d3e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f',
+          },
+          content: {
+            wideScreen: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+            desktop: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+            tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+            mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+            alt: multigridImageAlt,
+            imageAlignment: 'left',
+          },
+        },
+        {
           name: 'TextCard',
           type: 'content',
+          meta: {
+            uuid: '6f5e4d3c-2b1a-4f8e-9d7c-0b1a2c3d4e5f',
+          },
           content: {
             text: {
               htmlDescription: multigridDescription,
@@ -192,24 +210,6 @@ export function createHomepage(): Block[] {
               link: '/gear/headphones-capybara_157',
               variant: 'primary',
             },
-          },
-          meta: {
-            uuid: '64f8c6ce-1503-4f29-b271-1d5c6a9a0adf',
-          },
-        },
-        {
-          name: 'Image',
-          type: 'content',
-          content: {
-            wideScreen: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            desktop: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            alt: multigridImageAlt,
-            imageAlignment: 'left',
-          },
-          meta: {
-            uuid: 'ddbb44fc-3af6-49b1-9f2a-2e0a9e2f6a15',
           },
         },
       ],

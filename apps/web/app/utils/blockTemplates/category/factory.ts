@@ -54,10 +54,10 @@ export function createCategory(): Block[] {
       },
       configuration: {
         columnWidths: [3, 9],
-        layout: {
-          gap: 'XL',
-          narrowContainer: true,
-        },
+      },
+      layout: {
+        gap: 'XL',
+        narrowContainer: true,
       },
       content: [
         {
@@ -128,5 +128,5 @@ export function createCategory(): Block[] {
       ],
     },
     createFooter(),
-  ];
+  ] as Block[];
 }
