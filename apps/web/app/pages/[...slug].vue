@@ -66,8 +66,8 @@ const handleQueryUpdate = async () => {
 
   if (!productsCatalog.value.category) {
     throw createError({
-      statusCode: 404,
-      statusMessage: 'Page not found',
+      status: 404,
+      statusText: 'Page not found',
     });
   }
 };

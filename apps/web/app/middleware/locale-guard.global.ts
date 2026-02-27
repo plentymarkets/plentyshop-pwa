@@ -39,8 +39,8 @@ export default defineNuxtRouteMiddleware((to) => {
     if (to.name === 'error' || path.includes('/404')) return;
 
     throw createError({
-      statusCode: 404,
-      statusMessage: 'Page Not Found',
+      status: 404,
+      statusText: 'Page Not Found',
       message: `The locale '${pathLocale}' is not available. Available locales: ${Array.from(cachedActiveLanguages).join(', ')}`,
     });
   }

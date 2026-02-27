@@ -60,8 +60,8 @@ if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
 
   throw createError({
-    statusCode: 404,
-    statusMessage: 'Product not found',
+    status: 404,
+    statusText: 'Product not found',
   });
 }
 
