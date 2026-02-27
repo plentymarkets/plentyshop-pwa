@@ -1,4 +1,4 @@
-import type { BannerProps } from '~/components/blocks/Banner/types';
+import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 import type { UseCarouselState } from '~/composables/useCarousel/types';
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({
@@ -15,12 +15,12 @@ export const useCarousel: UseCarouselReturn = () => {
     useNuxtApp().$i18n.locale.value,
   );
 
-  const createSlide = async (type: string, index: number): Promise<BannerProps> => {
+  const createSlide = async (type: string, index: number): Promise<SlideBlock> => {
     const module = await import(`~/components/blocks/${type}/defaults.ts`);
     return module.createDefaultSlide(index);
   };
 
-  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => {
+  const updateCarouselItems: UpdateCarouselItems = (newBannerItems: SlideBlock[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
     if (carouselBlock) {
@@ -48,7 +48,7 @@ export const useCarousel: UseCarouselReturn = () => {
   });
   return {
     createSlide,
-    updateBannerItems,
+    updateCarouselItems,
     setIndex,
     ...toRefs(state.value),
   };

@@ -65,8 +65,7 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import type { CarouselStructureProps } from './types';
-import type { BannerProps } from '~/components/blocks/Banner/types';
+import type { CarouselStructureProps, SlideBlock } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
@@ -74,11 +73,11 @@ const { content, index, configuration, meta } = defineProps<CarouselStructurePro
 const isInternalChange = ref(false);
 
 const visibleContent = computed(() => {
-  return (content as BannerProps[]).filter((slide) => slide.configuration?.visible !== false);
+  return (content as SlideBlock[]).filter((slide) => slide.configuration?.visible !== false);
 });
 
 const getActualIndex = (visibleIndex: number): number => {
-  const contentArray = content as BannerProps[];
+  const contentArray = content as SlideBlock[];
   let visibleCount = 0;
   for (let i = 0; i < contentArray.length; i++) {
     const slide = contentArray[i];
@@ -93,7 +92,7 @@ const getActualIndex = (visibleIndex: number): number => {
 };
 
 const getVisibleIndex = (actualIndex: number): number => {
-  const contentArray = content as BannerProps[];
+  const contentArray = content as SlideBlock[];
   let visibleIndex = 0;
   for (let i = 0; i < actualIndex && i < contentArray.length; i++) {
     const slide = contentArray[i];

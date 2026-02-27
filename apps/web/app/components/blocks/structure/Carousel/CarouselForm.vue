@@ -170,14 +170,13 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
-import type { CarouselStructureProps } from './types';
-import type { BannerProps } from '~/components/blocks/Banner/types';
+import type { CarouselStructureProps, SlideBlock } from './types';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
-const { updateBannerItems, setIndex, activeSlideIndex, createSlide } = useCarousel();
+const { updateCarouselItems, setIndex, activeSlideIndex, createSlide } = useCarousel();
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
@@ -227,7 +226,7 @@ const currentActiveSlideIndex = computed(() => activeSlideIndex.value[blockUuid.
 
 const slides = computed({
   get: () => {
-    const content = (carouselStructure.value?.content || []) as BannerProps[];
+    const content = (carouselStructure.value?.content || []) as SlideBlock[];
 
     return content.map((slide) => ({
       ...slide,
@@ -237,7 +236,7 @@ const slides = computed({
       },
     }));
   },
-  set: (value: BannerProps[]) => updateBannerItems(value, blockUuid.value),
+  set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
 });
 
 const editSlide = (index: number) => {
@@ -308,7 +307,7 @@ const addSlide = async () => {
 
 const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
-  slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
+  slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
   setIndex(blockUuid.value, 0);
   await nextTick();
   openSlideMenuIndex.value = undefined;
