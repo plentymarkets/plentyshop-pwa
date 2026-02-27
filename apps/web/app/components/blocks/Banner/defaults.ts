@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from './types';
 
-export const createDefaultSlide = (index: number): BannerProps => ({
+export const createDefault = (index: number): BannerProps => ({
   name: 'Banner',
   type: 'content',
   configuration: {

@@ -17,7 +17,7 @@ export const useCarousel: UseCarouselReturn = () => {
 
   const createSlide = async (type: string, index: number): Promise<SlideBlock> => {
     const module = await import(`~/components/blocks/${type}/defaults.ts`);
-    return module.createDefaultSlide(index);
+    return module.createDefault(index);
   };
 
   const updateCarouselItems: UpdateCarouselItems = (newBannerItems: SlideBlock[], blockUuid: string) => {
