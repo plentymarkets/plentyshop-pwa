@@ -77,45 +77,12 @@
       </template>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('display-category-image-label') }}</UiFormLabel>
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.displayCategoryImage === 'off' }"
-            data-testid="content-align-left"
-            @click="categoryDataBlock.displayCategoryImage = 'off'"
-          >
-            <SfIconCheck
-              :class="{ invisible: categoryDataBlock.displayCategoryImage !== 'off' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('off') }}
-          </div>
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.displayCategoryImage === 'image-1' }"
-            data-testid="content-align-center"
-            @click="categoryDataBlock.displayCategoryImage = 'image-1'"
-          >
-            <SfIconCheck
-              :class="{ invisible: categoryDataBlock.displayCategoryImage !== 'image-1' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('image-1') }}
-          </div>
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.displayCategoryImage === 'image-2' }"
-            data-testid="content-align-right"
-            @click="categoryDataBlock.displayCategoryImage = 'image-2'"
-          >
-            <SfIconCheck
-              :class="{ invisible: categoryDataBlock.displayCategoryImage !== 'image-2' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('image-2') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-model="displayCategoryImageModel"
+          :legend="getEditorTranslation('display-category-image-label')"
+          test-id-prefix="display-category-image"
+          :options="displayCategoryImageOptions"
+        />
       </div>
       <div
         v-if="showImageSlotHint"
@@ -133,41 +100,12 @@
         </span>
       </div>
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
-        <div class="flex items-center gap-2">
-          <legend class="text-sm font-medium text-black m-0">
-            {{ getEditorTranslation('image-scalling-label') }}
-          </legend>
-          <SfTooltip :label="getEditorTranslation('image-scalling-tooltip')" placement="top">
-            <SfIconInfo size="sm" />
-          </SfTooltip>
-        </div>
-        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
-          <div
-            data-testid="align-y-center"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.image.fillMode === 'fill' }"
-            @click="categoryDataBlock.image.fillMode = 'fill'"
-          >
-            <SfIconCheck
-              :class="{ invisible: categoryDataBlock.image.fillMode !== 'fill' }"
-              class="w-[1.1rem] shrink-0 mr-1"
-            />
-            {{ getEditorTranslation('image-scalling-fill-label') }}
-          </div>
-
-          <div
-            data-testid="align-y-top"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.image.fillMode === 'fit' }"
-            @click="categoryDataBlock.image.fillMode = 'fit'"
-          >
-            <SfIconCheck
-              :class="{ invisible: categoryDataBlock.image.fillMode !== 'fit' }"
-              class="w-[1.1rem] shrink-0 mr-1"
-            />
-            {{ getEditorTranslation('image-scalling-fit-label') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-model="fillModeModel"
+          :legend="getEditorTranslation('image-scalling-label')"
+          test-id-prefix="image-scaling"
+          :options="fillModeOptions"
+        />
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
@@ -287,146 +225,33 @@
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-x-label') }}</UiFormLabel>
-
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="textbox-align-left"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.align === 'left',
-            }"
-            data-testid="slider-textbox-y-align-left"
-            @click="categoryDataBlock.text.align = 'left'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: categoryDataBlock.text.align !== 'left' }" />
-            {{ getEditorTranslation('textbox-align-x-left-label') }}
-          </div>
-
-          <div
-            for="textbox-align-center"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.align === 'center',
-            }"
-            data-testid="slider-textbox-y-align-center"
-            @click="categoryDataBlock.text.align = 'center'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: categoryDataBlock.text.align !== 'center' }" />
-            {{ getEditorTranslation('textbox-align-x-center-label') }}
-          </div>
-
-          <div
-            for="textbox-align-right"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.align === 'right',
-            }"
-            data-testid="slider-textbox-y-align-right"
-            @click="categoryDataBlock.text.align = 'right'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: categoryDataBlock.text.align !== 'right' }" />
-            {{ getEditorTranslation('textbox-align-x-right-label') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-if="categoryDataBlock.displayCategoryImage !== 'off'"
+          v-model="textboxAlignXModel"
+          :legend="getEditorTranslation('textbox-align-x-label')"
+          test-id-prefix="slider-textbox-align-x"
+          :options="textboxAlignXOptions"
+        />
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
-
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="align-top"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.justify === 'top',
-            }"
-            data-testid="slider-textbox-align-top"
-            @click="categoryDataBlock.text.justify = 'top'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: categoryDataBlock.text.justify !== 'top' }" />
-            {{ getEditorTranslation('textbox-align-y-top-label') }}
-          </div>
-
-          <div
-            for="align-center"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.justify === 'center',
-            }"
-            data-testid="slider-textbox-align-center"
-            @click="categoryDataBlock.text.justify = 'center'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: categoryDataBlock.text.justify !== 'center' }" />
-            {{ getEditorTranslation('textbox-align-y-center-label') }}
-          </div>
-
-          <div
-            for="align-bottom"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.justify === 'bottom',
-            }"
-            data-testid="slider-textbox-align-bottom"
-            @click="categoryDataBlock.text.justify = 'bottom'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: categoryDataBlock.text.justify !== 'bottom' }" />
-            {{ getEditorTranslation('textbox-align-y-bottom-label') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-if="categoryDataBlock.displayCategoryImage !== 'off'"
+          v-model="textboxAlignYModel"
+          :legend="getEditorTranslation('textbox-align-y-label')"
+          test-id-prefix="slider-textbox-align-y"
+          :options="textboxAlignYOptions"
+        />
       </div>
 
       <div v-if="categoryDataBlock.displayCategoryImage !== 'off'" class="py-2">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="text-align-left"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.textAlignment === 'left',
-            }"
-            data-testid="slider-text-align-left"
-            @click="categoryDataBlock.text.textAlignment = 'left'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: categoryDataBlock.text.textAlignment !== 'left' }"
-            />
-            {{ getEditorTranslation('text-align-option-left-label') }}
-          </div>
-
-          <div
-            for="text-align-center"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.textAlignment === 'center',
-            }"
-            data-testid="slider-text-align-center"
-            @click="categoryDataBlock.text.textAlignment = 'center'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: categoryDataBlock.text.textAlignment !== 'center' }"
-            />
-            {{ getEditorTranslation('text-align-option-center-label') }}
-          </div>
-
-          <div
-            for="text-align-right"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': categoryDataBlock.text.textAlignment === 'right',
-            }"
-            data-testid="slider-text-align-right"
-            @click="categoryDataBlock.text.textAlignment = 'right'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: categoryDataBlock.text.textAlignment !== 'right' }"
-            />
-            {{ getEditorTranslation('text-align-option-right-label') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-if="categoryDataBlock.displayCategoryImage !== 'off'"
+          v-model="textAlignModel"
+          :legend="getEditorTranslation('text-align-label')"
+          test-id-prefix="slider-text-align"
+          :options="textAlignOptions"
+        />
       </div>
     </UiAccordionItem>
     <UiAccordionItem
@@ -492,14 +317,13 @@
 </template>
 
 <script setup lang="ts">
-import type { CategoryDataFieldKey } from './types';
+import type { CategoryDataFieldKey, DisplayCategoryImage, FillMode, TextAlignX, TextAlignY } from './types';
 import {
   SfIconArrowBack,
   SfIconArrowDownward,
   SfIconArrowForward,
   SfIconArrowUpward,
   SfSwitch,
-  SfIconCheck,
   SfInput,
   SfTooltip,
   SfIconInfo,
@@ -525,6 +349,94 @@ const {
 
 const { blockUuid } = useSiteConfiguration();
 const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
+const displayCategoryImageOptions = computed(
+  (): Array<{ value: DisplayCategoryImage; label: string; testId: string }> => [
+    { value: 'off', label: getEditorTranslation('off'), testId: 'display-category-image-off' },
+    { value: 'image-1', label: getEditorTranslation('image-1'), testId: 'display-category-image-1' },
+    { value: 'image-2', label: getEditorTranslation('image-2'), testId: 'display-category-image-2' },
+  ],
+);
+const fillModeOptions = computed(
+  (): Array<{ value: FillMode; label: string; testId: string }> => [
+    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scaling-fill' },
+    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'image-scaling-fit' },
+  ],
+);
+const textboxAlignXOptions = computed(
+  (): Array<{ value: TextAlignX; label: string; testId: string }> => [
+    { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-align-x-left' },
+    {
+      value: 'center',
+      label: getEditorTranslation('textbox-align-x-center-label'),
+      testId: 'slider-textbox-align-x-center',
+    },
+    {
+      value: 'right',
+      label: getEditorTranslation('textbox-align-x-right-label'),
+      testId: 'slider-textbox-align-x-right',
+    },
+  ],
+);
+
+const textboxAlignYOptions = computed(
+  (): Array<{ value: TextAlignY; label: string; testId: string }> => [
+    { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-y-top' },
+    {
+      value: 'center',
+      label: getEditorTranslation('textbox-align-y-center-label'),
+      testId: 'slider-textbox-align-y-center',
+    },
+    {
+      value: 'bottom',
+      label: getEditorTranslation('textbox-align-y-bottom-label'),
+      testId: 'slider-textbox-align-y-bottom',
+    },
+  ],
+);
+
+const textAlignOptions = computed(
+  (): Array<{ value: TextAlignX; label: string; testId: string }> => [
+    { value: 'left', label: getEditorTranslation('text-align-option-left-label'), testId: 'slider-text-align-left' },
+    {
+      value: 'center',
+      label: getEditorTranslation('text-align-option-center-label'),
+      testId: 'slider-text-align-center',
+    },
+    { value: 'right', label: getEditorTranslation('text-align-option-right-label'), testId: 'slider-text-align-right' },
+  ],
+);
+const displayCategoryImageModel = computed<DisplayCategoryImage>({
+  get: () => (categoryDataBlock.value.displayCategoryImage as DisplayCategoryImage | undefined) ?? 'off',
+  set: (v) => {
+    categoryDataBlock.value.displayCategoryImage = v;
+  },
+});
+const fillModeModel = computed<FillMode>({
+  get: () => (categoryDataBlock.value.image.fillMode as FillMode | undefined) ?? 'fit',
+  set: (v) => {
+    categoryDataBlock.value.image.fillMode = v;
+  },
+});
+const textboxAlignXModel = computed<TextAlignX>({
+  get: () => (categoryDataBlock.value.text.align as TextAlignX | undefined) ?? 'left',
+  set: (v) => {
+    categoryDataBlock.value.text.align = v;
+  },
+});
+
+const textboxAlignYModel = computed<TextAlignY>({
+  get: () => (categoryDataBlock.value.text.justify as TextAlignY | undefined) ?? 'top',
+  set: (v) => {
+    categoryDataBlock.value.text.justify = v;
+  },
+});
+
+const textAlignModel = computed<TextAlignX>({
+  get: () => (categoryDataBlock.value.text.textAlignment as TextAlignX | undefined) ?? 'left',
+  set: (v) => {
+    categoryDataBlock.value.text.textAlignment = v;
+  },
+});
 </script>
 
 <i18n lang="json">

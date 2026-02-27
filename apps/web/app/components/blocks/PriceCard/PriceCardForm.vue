@@ -57,36 +57,12 @@
     <hr class="my-4" />
 
     <div class="py-4">
-      <UiFormLabel class="block mb-2">{{ getEditorTranslation('wishlist-size-label') }}</UiFormLabel>
-
-      <div
-        class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-        data-testid="wishlist-size-toggle"
-      >
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': priceCardBlock.wishlistSize === 'small',
-          }"
-          data-testid="wishlist-size-small"
-          @click="priceCardBlock.wishlistSize = 'small'"
-        >
-          <SfIconCheck :class="{ invisible: priceCardBlock.wishlistSize !== 'small' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('wishlist-size-small') }}
-        </div>
-
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': priceCardBlock.wishlistSize === 'large',
-          }"
-          data-testid="wishlist-size-large"
-          @click="priceCardBlock.wishlistSize = 'large'"
-        >
-          <SfIconCheck :class="{ invisible: priceCardBlock.wishlistSize !== 'large' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('wishlist-size-large') }}
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="wishlistSizeModel"
+        :legend="getEditorTranslation('wishlist-size-label')"
+        test-id-prefix="wishlist-size"
+        :options="wishlistSizeOptions"
+      />
     </div>
   </UiAccordionItem>
 
@@ -182,7 +158,6 @@ import draggable from 'vuedraggable';
 import {
   SfSwitch,
   SfInput,
-  SfIconCheck,
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfIconArrowForward,
@@ -192,7 +167,7 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
-import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
+import type { PriceCardFormProps, WishlistSize } from '~/components/blocks/PriceCard/types';
 
 const route = useRoute();
 const { data } = useCategoryTemplate(
@@ -235,6 +210,20 @@ const fieldLabels = {
 
 const cardOpen = ref(true);
 const layoutOpen = ref(false);
+
+const wishlistSizeOptions = computed(
+  (): Array<{ value: WishlistSize; label: string; testId: string }> => [
+    { value: 'small', label: getEditorTranslation('wishlist-size-small'), testId: 'wishlist-size-small' },
+    { value: 'large', label: getEditorTranslation('wishlist-size-large'), testId: 'wishlist-size-large' },
+  ],
+);
+
+const wishlistSizeModel = computed<WishlistSize>({
+  get: () => (priceCardBlock.value.wishlistSize as WishlistSize | undefined) ?? 'small',
+  set: (v) => {
+    priceCardBlock.value.wishlistSize = v;
+  },
+});
 </script>
 
 <i18n lang="json">

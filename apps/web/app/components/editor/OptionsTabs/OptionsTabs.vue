@@ -1,7 +1,13 @@
 <template>
   <fieldset class="py-2">
-    <legend v-if="legend" :id="legendId" class="text-sm font-medium text-black">
-      {{ legend }}
+    <legend v-if="legend" :id="legendId" class="text-sm font-medium text-black m-0">
+      <span class="inline-flex items-center gap-2">
+        <span>{{ legend }}</span>
+
+        <SfTooltip v-if="tooltip" :label="tooltip" :placement="tooltipPlacement">
+          <SfIconInfo size="sm" :data-testid="tooltipTestId" />
+        </SfTooltip>
+      </span>
     </legend>
 
     <div
@@ -29,8 +35,8 @@
 </template>
 
 <script setup lang="ts" generic="T extends OptionValue">
-import { SfIconCheck } from '@storefront-ui/vue';
-import type { Option, OptionValue } from './types';
+import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import type { Option, OptionValue, TooltipPlacement } from './types';
 
 const props = withDefaults(
   defineProps<{
@@ -39,10 +45,16 @@ const props = withDefaults(
     legend?: string;
     ariaLabel?: string;
     testIdPrefix: string;
+    tooltip?: string;
+    tooltipPlacement?: TooltipPlacement;
+    tooltipTestId?: string;
   }>(),
   {
     legend: undefined,
     ariaLabel: undefined,
+    tooltip: undefined,
+    tooltipPlacement: 'top',
+    tooltipTestId: undefined,
   },
 );
 
@@ -51,7 +63,6 @@ const emit = defineEmits<{
 }>();
 
 const { modelValue, options, legend, ariaLabel, testIdPrefix } = toRefs(props);
-
 const legendId = `options-tabs-legend-${useId()}`;
 
 const ariaLabelledBy = computed<string | undefined>(() => (legend.value ? legendId : undefined));

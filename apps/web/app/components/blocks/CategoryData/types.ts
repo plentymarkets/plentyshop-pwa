@@ -55,3 +55,7 @@ export interface CategoryData {
   description2: string;
   shortDescription: string;
 }
+export type DisplayCategoryImage = 'off' | 'image-1' | 'image-2';
+export type FillMode = 'fill' | 'fit';
+export type TextAlignX = 'left' | 'center' | 'right';
+export type TextAlignY = 'top' | 'center' | 'bottom';
