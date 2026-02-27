@@ -13,6 +13,7 @@ export interface UseCarouselState {
 
 export type UpdateBannerItems = (newBannerItems: BannerProps[], blockUuid: string) => void;
 export type SetIndex = (blockUuid: string, slideIndex: number) => void;
+export type CreateSlide = (type: string, index: number) => BannerProps;
 
 export interface UseCarousel {
   data: Readonly<Ref<UseCarouselState['data']>>;
@@ -20,6 +21,7 @@ export interface UseCarousel {
   loading: Readonly<Ref<boolean>>;
   updateBannerItems: UpdateBannerItems;
   setIndex: SetIndex;
+  createSlide: CreateSlide;
 }
 
 export type UseCarouselReturn = () => UseCarousel;

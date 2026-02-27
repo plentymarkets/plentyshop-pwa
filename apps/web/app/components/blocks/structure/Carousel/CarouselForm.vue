@@ -171,7 +171,6 @@
 <script setup lang="ts">
 import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
 import type { CarouselStructureProps } from './types';
-import slideTemplates from './slideTemplates.json';
 import { v4 as uuid } from 'uuid';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -179,7 +178,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
-const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
+const { updateBannerItems, setIndex, activeSlideIndex, createSlide } = useCarousel();
 const route = useRoute();
 const { data } = useCategoryTemplate(
   route?.meta?.identifier as string,
@@ -298,14 +297,7 @@ onMounted(() => {
 
 const addSlide = async () => {
   const slideType = slides.value[0]?.name ?? 'Banner';
-  const template = slideTemplates[slideType as keyof typeof slideTemplates];
-  if (!template) return;
-
-  const newSlide = {
-    ...template,
-    meta: { uuid: uuid() },
-    index: slides.value.length,
-  } as BannerProps;
+  const newSlide = createSlide(slideType, slides.value.length);
 
   slides.value = [...slides.value, newSlide];
 
