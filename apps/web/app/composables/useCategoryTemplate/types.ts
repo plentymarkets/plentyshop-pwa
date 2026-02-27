@@ -29,6 +29,7 @@ export type CreateFooterBlock = (
 export type CreateDefaultFooterBlock = () => FooterBlock;
 export type ClearFooterCache = () => void;
 export type UpdateFooterCache = (newFooterBlock: FooterBlock) => void;
+export type ResetFooterToSaved = () => Promise<void>;
 export type ExtractFooterContentFromBlocks = (content: string) => FooterContent | null;
 export type MapFooterData = (data: Block | null) => FooterBlock;
 export type IsFooterBlock = (block: Block | null | undefined) => block is FooterBlock;
@@ -47,6 +48,7 @@ export interface UseCategoryTemplate {
   setupBlocks: SetupBlocks;
   setDefaultTemplate: SetDefaultTemplate;
   fetchFooterBlock: FetchFooterBlock;
+  resetFooterToSaved: ResetFooterToSaved;
   getFooterBlock: GetFooterBlock;
   createDefaultFooterBlock: CreateDefaultFooterBlock;
   createFooterBlock: CreateFooterBlock;

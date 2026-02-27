@@ -1199,7 +1199,7 @@
       "vatServerFallback": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Der Auftrag wird erneut geprüft."
     },
     "blocks": {
-      "base64NotAllowed": "Das Bild wurde nicht korrekt hochgeladen. Bitte versuchen Sie es erneut."
+      "base64NotAllowed": "The image was not uploaded correctly. Try uploading it again."
     },
     "cart": {
       "addToBasket": {

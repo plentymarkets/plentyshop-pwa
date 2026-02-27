@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <EditableBlocks :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
@@ -30,7 +30,6 @@ const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
-const config = useRuntimeConfig().public;
 const { variationId } = useProductAttributes();
 let variationWatchHandler: WatchStopHandle | undefined;
 
@@ -164,7 +163,7 @@ onBeforeRouteLeave(() => {
 onNuxtReady(() => {
   observeRecommendedSection();
 
-  if (import.meta.client && config.enableCallistoUrlScheme) {
+  if (import.meta.client && useCallisto().isEnabled) {
     variationWatchHandler = watch(variationId, async () => {
       if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
         productParams.variationId = variationId.value;

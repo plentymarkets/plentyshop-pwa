@@ -18,6 +18,7 @@
         :to="productPath"
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
+        data-testid="product-card-link"
       >
         <NuxtImg
           :src="imageUrl"
@@ -253,7 +254,7 @@ const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
     return paths.globalItemDetails;
   }
-  if (config.public.enableCallistoUrlScheme) {
+  if (useCallisto().isEnabled) {
     return localePath(`/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`);
   }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
