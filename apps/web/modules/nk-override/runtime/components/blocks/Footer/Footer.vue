@@ -162,39 +162,32 @@
 
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
-import type { FooterProps, FooterSettingsColumn } from './types';
-// NK imports
-import type { ExtendedFooterSettings } from './../../../composables/useExtendedFooterSettings';
-import { mapExtendedFooterData } from './../../../composables/useExtendedFooterSettings';
-
+import type { FooterProps, NkFooterContent, FooterColumn } from './types';  // NK FooterContent not used anyymore.
 
 const props = defineProps<FooterProps>();
+const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterSettings, footerCache, FOOTER_SWITCH_DEFINITIONS } = useFooter();
-const resolvedContent = ref<ExtendedFooterSettings | null>(null);
-let stopWatch: (() => void) | null = null;
+const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useCategoryTemplate();
+
+const shouldRender = computed(() => {
+  if (route.meta.isBlockified) return !!props.content;
+  return true;
+});
+
+const resolvedContent = computed(() => {
+  if (!shouldRender.value) return null;
+
+  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
+
+  return mapFooterData(block).content as NkFooterContent;  // NK cast to our own type with footnote description
+});
 
 // NK const
 const runtimeConfig = useRuntimeConfig();
 const copyrightText = `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`;
 
-onMounted(() => {
-  stopWatch = watch(
-    [() => props.content, footerCache],
-    () => {
-      const content = props.content ?? getFooterSettings();
-      resolvedContent.value = mapExtendedFooterData(content);
-    },
-    { immediate: true, deep: true },
-  );
-});
-
-onBeforeUnmount(() => {
-  stopWatch?.();
-});
-
-const getColumnSwitches = (column: FooterSettingsColumn) => {
+const getColumnSwitches = (column: FooterColumn) => {
   return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: t(switchConfig.shopTranslationKey),

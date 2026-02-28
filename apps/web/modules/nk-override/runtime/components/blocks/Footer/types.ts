@@ -1,7 +1,18 @@
+import type {FooterContent} from '~/components/blocks/Footer/types'; // 
 import type { Block } from '@plentymarkets/shop-api';
 
-export type FooterProps = {
-  content?: FooterSettings;
+export interface NkFooterContent extends FooterContent {
+  footnoteDescription?: string;   // NK add footnote description
+}
+
+export type FooterProps = Partial<Omit<Block, 'content'>> & {
+  content?: NkFooterContent;
+};
+
+export type FooterBlock = Block & {
+  name: 'Footer';
+  type: 'content';
+  content: NkFooterContent;
 };
 
 export interface FooterSwitchDefinition {
@@ -12,7 +23,7 @@ export interface FooterSwitchDefinition {
   link: string;
 }
 
-export interface FooterSettingsColumn {
+export interface FooterColumn {
   title: string;
   description?: string;
   showContactLink?: boolean;
@@ -25,32 +36,3 @@ export interface FooterSettingsColumn {
   showDeclarationOfAccessibility?: boolean;
   [key: string]: string | boolean | undefined;
 }
-
-export interface FooterSettingsColors {
-  background: string;
-  text: string;
-  footnoteBackground: string;
-  footnoteText: string;
-}
-
-export interface FooterSettings {
-  meta: {
-    uuid: string;
-    isGlobalTemplate?: boolean;
-  };
-  column1: FooterSettingsColumn;
-  column2: FooterSettingsColumn;
-  column3: FooterSettingsColumn;
-  column4: FooterSettingsColumn;
-  footnote: string;
-  footnoteAlign: 'left' | 'center' | 'right';
-  colors: FooterSettingsColors;
-}
-
-type AddFooterBlockOptions = {
-  data: Ref<Block[]>;
-  cachedFooter: Ref<unknown>;
-  cleanData?: Ref<Block[]>;
-};
-
-export type AddFooterBlock = (options: AddFooterBlockOptions) => void;
