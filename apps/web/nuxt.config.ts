@@ -79,6 +79,7 @@ export default defineNuxtConfig({
         'vue-tel-input',
         'vuedraggable/src/vuedraggable',
         'yup',
+        '@nuxt/icon', // NK Add icons module
       ],
     },
     build: {
@@ -155,6 +156,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     'vuetify-nuxt-module',
     'nuxt-color-picker',
+    '@nuxt/icon', // NK Add icons module  https://nuxt.com/modules/icon
   ],
   vuetify: {
     moduleOptions: {
@@ -322,5 +324,15 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
+  },
+  icon: { // NK Add icons custom collection
+    customCollections: [
+      {
+        prefix: 'nk-icon',
+        dir: './app/assets/icons',
+        // if you want to include all the icons in nested directories:
+        // recursive: true,
+      },
+    ],
   },
 });
