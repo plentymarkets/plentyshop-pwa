@@ -81,12 +81,23 @@ export default defineNuxtModule({
 
 
     nuxt.hook('components:extend', (components) => {
+      const blocksNewsletterSubscribe = components.find((c) => c.pascalName === 'BlocksNewsletterSubscribe'); 
+      const blocksNewsletterSubscribeForm = components.find((c) => c.pascalName === 'BlocksNewsletterSubscribeForm'); 
+      if (blocksNewsletterSubscribe) { 
+        blocksNewsletterSubscribe.filePath = resolve('./runtime/components/blocks/NewsletterSubscribe/NewsletterSubscribe.vue'); }
+      if (blocksNewsletterSubscribeForm) { 
+        blocksNewsletterSubscribeForm.filePath = resolve('./runtime/components/blocks/NewsletterSubscribe/NewsletterSubscribeForm.vue'); }
+
       const blocksFooter = components.find((c) => c.pascalName === 'BlocksFooter'); 
       const blocksFooterForm = components.find((c) => c.pascalName === 'BlocksFooterForm'); 
       if (blocksFooter) { 
         blocksFooter.filePath = resolve('./runtime/components/blocks/Footer/Footer.vue'); }
       if (blocksFooterForm) { 
         blocksFooterForm.filePath = resolve('./runtime/components/blocks/Footer/FooterForm.vue'); }
+
+
+
+
     });
 
     /**

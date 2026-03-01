@@ -24,10 +24,12 @@ export function initializeNewsletterContent(content: Partial<NewsletterSubscribe
 
   if (!content.settings) {
     content.settings = { 
-      emailFolderId: 1
+      emailFolderId: 1,
+      nkExtraTitle: ''  // NK Add your default value here
      };
   } else {
     if (content.settings.emailFolderId === undefined) content.settings.emailFolderId = 1;
+    if (content.settings.nkExtraTitle === undefined) content.settings.nkExtraTitle = '';   // NK Add your default value here
   }
 
   return content as NewsletterSubscribeContent;
