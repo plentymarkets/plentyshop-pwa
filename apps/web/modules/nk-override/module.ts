@@ -1,4 +1,4 @@
-import { useLogger, defineNuxtModule, createResolver } from '@nuxt/kit';
+import { useLogger, defineNuxtModule, createResolver, addComponent } from '@nuxt/kit';
 import type { TailwindColors } from './types';
 import type { Config as TailwindConfig } from 'tailwindcss/types/config';
 
@@ -82,11 +82,11 @@ export default defineNuxtModule({
 
     nuxt.hook('components:extend', (components) => {
       const blocksNewsletterSubscribe = components.find((c) => c.pascalName === 'BlocksNewsletterSubscribe'); 
-      const blocksNewsletterSubscribeForm = components.find((c) => c.pascalName === 'BlocksNewsletterSubscribeForm'); 
+      // const blocksNewsletterSubscribeForm = components.find((c) => c.pascalName === 'NewsletterSubscribeForm'); 
       if (blocksNewsletterSubscribe) { 
         blocksNewsletterSubscribe.filePath = resolve('./runtime/components/blocks/NewsletterSubscribe/NewsletterSubscribe.vue'); }
-      if (blocksNewsletterSubscribeForm) { 
-        blocksNewsletterSubscribeForm.filePath = resolve('./runtime/components/blocks/NewsletterSubscribe/NewsletterSubscribeForm.vue'); }
+      // if (blocksNewsletterSubscribeForm) { 
+      //  blocksNewsletterSubscribeForm.filePath = resolve('./runtime/components/blocks/NewsletterSubscribe/NewsletterSubscribeForm.vue'); }
 
       const blocksFooter = components.find((c) => c.pascalName === 'BlocksFooter'); 
       const blocksFooterForm = components.find((c) => c.pascalName === 'BlocksFooterForm'); 
@@ -99,7 +99,13 @@ export default defineNuxtModule({
 
 
     });
-
+/**
+    await addComponent({
+            name: 'Tabs',
+            filePath: resolve('./runtime/components/blocks/Tabs/Tabs.vue'),
+            global: true,
+    });
+*/
     /**
      * Ready hook to log a message when the module is ready
      */
