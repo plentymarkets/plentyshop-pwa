@@ -260,6 +260,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         }
       } catch (error) {
         console.warn('Failed to fetch footer block, using defaults:', error);
+        console.error('cristi');
       }
 
       footerCache.value = getFooterBlock();
