@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export const createProduct = (): Block[] => {
+  const { t } = useI18n();
   const itemTextTitle = t('defaultTemplate.product.itemText.title');
   const technicalDataTitle = t('defaultTemplate.product.technicalData.title');
   const customerReviewTitle = t('defaultTemplate.product.customerReview.title');

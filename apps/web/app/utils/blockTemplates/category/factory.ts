@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export function createCategory(): Block[] {
+  const { t } = useI18n();
   const categoryName = t('defaultTemplate.category.categoryData.name');
 
   return [

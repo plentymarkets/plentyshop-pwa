@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export function createHomepage(): Block[] {
+  const { t } = useI18n();
   const banner1Pretitle = t('defaultTemplate.homepage.carousel.banner1.pretitle');
   const banner1Title = t('defaultTemplate.homepage.carousel.banner1.title');
   const banner1Description = t('defaultTemplate.homepage.carousel.banner1.description');
