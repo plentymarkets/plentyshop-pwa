@@ -8,7 +8,8 @@ if (import.meta.hot) import.meta.hot.dispose(() => cache.clear());
 export const getProductTemplate = async (locale: string): Promise<Block[]> => {
   const useCache = import.meta.env.PROD;
   const cached = cache.get(locale);
-  if (useCache && cached) return cached;
+
+  if (useCache && cached) return structuredClone(cached);
 
   const blocks = createProduct();
 
