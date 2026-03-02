@@ -23,6 +23,17 @@ export default defineVitestConfig({
     },
     testTimeout: 6000,
     environment: 'nuxt',
+    environmentOptions: {
+      nuxt: {
+        overrides: {
+          runtimeConfig: {
+            public: {
+              configId: '1',
+            },
+          },
+        },
+      },
+    },
     globals: true,
     clearMocks: true,
     setupFiles: './vitest.config.setup.ts',
