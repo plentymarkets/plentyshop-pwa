@@ -1,15 +1,17 @@
 import { createProduct } from '~/utils/blockTemplates/product/factory';
 import type { Block } from '@plentymarkets/shop-api';
 
+const mockT = (key: string) => key;
+
 describe('createProduct', () => {
   it('should create an array of blocks', () => {
-    const blocks = createProduct();
+    const blocks = createProduct(mockT);
     expect(Array.isArray(blocks)).toBe(true);
     expect(blocks.length).toBeGreaterThan(0);
   });
 
   it('should include required block types', () => {
-    const blocks = createProduct();
+    const blocks = createProduct(mockT);
     const blockNames = blocks.map((block) => block.name);
     expect(blockNames).toContain('MultiGrid');
     expect(blockNames).toContain('ItemText');
@@ -21,7 +23,7 @@ describe('createProduct', () => {
   });
 
   it('should create blocks with valid structure', () => {
-    const blocks = createProduct();
+    const blocks = createProduct(mockT);
     blocks.forEach((block) => {
       expect(block).toHaveProperty('name');
       expect(block).toHaveProperty('type');
@@ -32,7 +34,7 @@ describe('createProduct', () => {
   });
 
   it('should create MultiGrid with ImageGallery and PriceCard children', () => {
-    const blocks = createProduct();
+    const blocks = createProduct(mockT);
     const multiGridBlock = blocks.find((block) => block.name === 'MultiGrid');
     expect(multiGridBlock).toBeDefined();
     expect(Array.isArray(multiGridBlock?.content)).toBe(true);
@@ -42,7 +44,7 @@ describe('createProduct', () => {
   });
 
   it('should use translations for block titles', () => {
-    const blocks = createProduct();
+    const blocks = createProduct(mockT);
     const itemTextBlock = blocks.find((block) => block.name === 'ItemText');
     expect(itemTextBlock).toBeDefined();
     const content = itemTextBlock?.content as { text?: { title?: string } };
@@ -51,7 +53,7 @@ describe('createProduct', () => {
   });
 
   it('should have valid Footer block structure', () => {
-    const blocks = createProduct();
+    const blocks = createProduct(mockT);
     const footerBlock = blocks.find((block) => block.name === 'Footer');
     expect(footerBlock).toBeDefined();
     expect(footerBlock?.type).toBe('content');
