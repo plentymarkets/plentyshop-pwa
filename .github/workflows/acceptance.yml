@@ -3,6 +3,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run acceptance tests on'
+        required: true
+        default: 'main'
+        type: string
 
 permissions:
   contents: read
@@ -21,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ github.workflow_sha }}
+          ref: ${{ github.event.inputs.branch || github.workflow_sha }}
       - name: Setup Node
         uses: ./.github/actions/setup
 
