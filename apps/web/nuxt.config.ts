@@ -131,7 +131,7 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       noCache: process.env.NO_CACHE || '',
-      configId: process.env.CONFIG_ID || '1',
+      configId: process.env.CONFIG_ID || '',
       ...settingsConfig,
       ...featureFlagsConfig,
     },

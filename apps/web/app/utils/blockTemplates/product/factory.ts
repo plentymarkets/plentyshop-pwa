@@ -3,11 +3,12 @@ import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export const createProduct = (): Block[] => {
-  const itemTextTitle = t('defaultTemplate.product.itemText.title');
-  const technicalDataTitle = t('defaultTemplate.product.technicalData.title');
-  const customerReviewTitle = t('defaultTemplate.product.customerReview.title');
-  const legalInfoTitle = t('defaultTemplate.product.productLegalInformation.title');
-  const legalInfoLinkText = t('defaultTemplate.product.productLegalInformation.linkText');
+  const { $i18n } = useNuxtApp();
+  const itemTextTitle = $i18n.t('defaultTemplate.product.itemText.title');
+  const technicalDataTitle = $i18n.t('defaultTemplate.product.technicalData.title');
+  const customerReviewTitle = $i18n.t('defaultTemplate.product.customerReview.title');
+  const legalInfoTitle = $i18n.t('defaultTemplate.product.productLegalInformation.title');
+  const legalInfoLinkText = $i18n.t('defaultTemplate.product.productLegalInformation.linkText');
 
   return [
     {

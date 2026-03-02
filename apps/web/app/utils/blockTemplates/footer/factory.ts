@@ -2,8 +2,9 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
 export function createFooter(): Block {
-  const column1Title = t('defaultTemplate.footer.column1.title');
-  const column2Title = t('defaultTemplate.footer.column2.title');
+  const { $i18n } = useNuxtApp();
+  const column1Title = $i18n.t('defaultTemplate.footer.column1.title');
+  const column2Title = $i18n.t('defaultTemplate.footer.column2.title');
 
   return {
     name: 'Footer',
