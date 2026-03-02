@@ -1,16 +1,14 @@
 import { createFooter } from '~/utils/blockTemplates/footer/factory';
 
-const mockT = (key: string) => key;
-
 describe('createFooter', () => {
   it('should create a single Footer block', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     expect(footer).toBeDefined();
     expect(footer.name).toBe('Footer');
   });
 
   it('should have correct block structure', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     expect(footer).toHaveProperty('name');
     expect(footer).toHaveProperty('type');
     expect(footer).toHaveProperty('meta');
@@ -19,17 +17,17 @@ describe('createFooter', () => {
   });
 
   it('should be a content type block', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     expect(footer.type).toBe('content');
   });
 
   it('should be marked as global template', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     expect(footer.meta.isGlobalTemplate).toBe(true);
   });
 
   it('should have all four column configurations', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     const content = footer.content as {
       column1?: unknown;
       column2?: unknown;
@@ -43,7 +41,7 @@ describe('createFooter', () => {
   });
 
   it('should use translations for column titles', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     const content = footer.content as {
       column1?: { title?: string };
       column2?: { title?: string };
@@ -55,7 +53,7 @@ describe('createFooter', () => {
   });
 
   it('should have footnote configuration', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     const content = footer.content as {
       footnote?: string;
       footnoteAlign?: string;
@@ -66,7 +64,7 @@ describe('createFooter', () => {
   });
 
   it('should have color configuration', () => {
-    const footer = createFooter(mockT);
+    const footer = createFooter();
     const content = footer.content as {
       colors?: {
         background?: string;

@@ -11,8 +11,7 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
 
   if (useCache && cached) return structuredClone(cached);
 
-  const { t } = useI18n();
-  const block = createFooter(t);
+  const block = createFooter();
 
   if (useCache) cache.set(locale, block);
 

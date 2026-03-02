@@ -2,7 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
-export const createProduct = (t: (key: string) => string): Block[] => {
+export const createProduct = (): Block[] => {
   const itemTextTitle = t('defaultTemplate.product.itemText.title');
   const technicalDataTitle = t('defaultTemplate.product.technicalData.title');
   const customerReviewTitle = t('defaultTemplate.product.customerReview.title');
@@ -197,6 +197,6 @@ export const createProduct = (t: (key: string) => string): Block[] => {
         },
       },
     },
-    createFooter(t),
+    createFooter(),
   ] as Block[];
 };

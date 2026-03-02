@@ -2,7 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
-export function createHomepage(t: (key: string) => string): Block[] {
+export function createHomepage(): Block[] {
   const banner1Pretitle = t('defaultTemplate.homepage.carousel.banner1.pretitle');
   const banner1Title = t('defaultTemplate.homepage.carousel.banner1.title');
   const banner1Description = t('defaultTemplate.homepage.carousel.banner1.description');
@@ -283,6 +283,6 @@ export function createHomepage(t: (key: string) => string): Block[] {
         },
       },
     },
-    createFooter(t),
+    createFooter(),
   ];
 }

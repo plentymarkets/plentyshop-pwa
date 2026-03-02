@@ -11,8 +11,7 @@ export const getCategoryTemplate = async (locale: string): Promise<Block[]> => {
 
   if (useCache && cached) return structuredClone(cached);
 
-  const { t } = useI18n();
-  const blocks = createCategory(t);
+  const blocks = createCategory();
 
   if (useCache) cache.set(locale, blocks);
 

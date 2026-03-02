@@ -1,7 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
-export function createFooter(t: (key: string) => string): Block {
+export function createFooter(): Block {
   const column1Title = t('defaultTemplate.footer.column1.title');
   const column2Title = t('defaultTemplate.footer.column2.title');
 
