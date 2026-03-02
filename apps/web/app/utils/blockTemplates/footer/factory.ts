@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+import { v4 as uuid } from 'uuid';
 
 export function createFooter(): Block {
   const column1Title = t('defaultTemplate.footer.column1.title');
@@ -8,7 +9,7 @@ export function createFooter(): Block {
     name: 'Footer',
     type: 'content',
     meta: {
-      uuid: '4f7e2b1a-9c8d-4e6f-b3a2-1d0c5b4a3e2f',
+      uuid: uuid(),
       isGlobalTemplate: true,
     },
     content: {

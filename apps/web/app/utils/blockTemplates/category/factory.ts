@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export function createCategory(): Block[] {
@@ -9,7 +10,7 @@ export function createCategory(): Block[] {
       name: 'CategoryData',
       type: 'content',
       meta: {
-        uuid: '2a8b7e34-3d1a-4b6f-9c9d-5e7a1f2b3c4d',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -49,7 +50,7 @@ export function createCategory(): Block[] {
       name: 'MultiGrid',
       type: 'structure',
       meta: {
-        uuid: '7b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       configuration: {
@@ -64,7 +65,7 @@ export function createCategory(): Block[] {
           name: 'SortFilter',
           type: 'content',
           meta: {
-            uuid: '07b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z',
+            uuid: uuid(),
             isGlobalTemplate: false,
           },
           parent_slot: 0,
@@ -98,7 +99,7 @@ export function createCategory(): Block[] {
           name: 'ItemGrid',
           type: 'content',
           meta: {
-            uuid: '07b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d',
+            uuid: uuid(),
             isGlobalTemplate: false,
           },
           parent_slot: 1,

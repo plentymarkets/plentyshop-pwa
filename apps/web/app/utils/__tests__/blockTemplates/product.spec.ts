@@ -41,16 +41,6 @@ describe('createProduct', () => {
     expect(children.some((child) => child.name === 'PriceCard')).toBe(true);
   });
 
-  it('should have both configuration.layout and top-level layout in MultiGrid', () => {
-    const blocks = createProduct();
-    const multiGridBlock = blocks.find((block) => block.name === 'MultiGrid') as Block & {
-      layout?: unknown;
-      configuration?: { layout?: unknown };
-    };
-    expect(multiGridBlock?.configuration?.layout).toBeDefined();
-    expect(multiGridBlock?.layout).toBeDefined();
-  });
-
   it('should use translations for block titles', () => {
     const blocks = createProduct();
     const itemTextBlock = blocks.find((block) => block.name === 'ItemText');

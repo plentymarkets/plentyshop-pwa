@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export const createProduct = (): Block[] => {
@@ -13,7 +14,7 @@ export const createProduct = (): Block[] => {
       name: 'MultiGrid',
       type: 'structure',
       meta: {
-        uuid: '993a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       configuration: {
@@ -33,7 +34,7 @@ export const createProduct = (): Block[] => {
           name: 'ImageGallery',
           type: 'content',
           meta: {
-            uuid: 'c1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d',
+            uuid: uuid(),
             isGlobalTemplate: false,
           },
           parent_slot: 0,
@@ -49,7 +50,7 @@ export const createProduct = (): Block[] => {
           name: 'PriceCard',
           type: 'content',
           meta: {
-            uuid: 'p1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d',
+            uuid: uuid(),
             isGlobalTemplate: false,
           },
           parent_slot: 1,
@@ -107,7 +108,7 @@ export const createProduct = (): Block[] => {
       name: 'ItemText',
       type: 'content',
       meta: {
-        uuid: 'b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c522',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -128,7 +129,7 @@ export const createProduct = (): Block[] => {
       name: 'TechnicalData',
       type: 'content',
       meta: {
-        uuid: 'b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c523',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -149,7 +150,7 @@ export const createProduct = (): Block[] => {
       name: 'CustomerReview',
       type: 'content',
       meta: {
-        uuid: 'c1a2c3d3-5e6q-4a7b-8c9j-0e1f2a3b4c5l',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -166,7 +167,7 @@ export const createProduct = (): Block[] => {
       name: 'ProductLegalInformation',
       type: 'content',
       meta: {
-        uuid: 'c1a2c1d3-5e6q-4a7a-1c9j-0e2f2a3k4c5l',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -184,7 +185,7 @@ export const createProduct = (): Block[] => {
       name: 'ProductRecommendedProducts',
       type: 'content',
       meta: {
-        uuid: 'g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {

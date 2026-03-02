@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export function createHomepage(): Block[] {
@@ -45,7 +46,7 @@ export function createHomepage(): Block[] {
       name: 'Carousel',
       type: 'structure',
       meta: {
-        uuid: '3e1f8c9a-d2b4-4f8d-9c2b-8e1f3a7d5c9b',
+        uuid: uuid(),
       },
       configuration: {
         controls: {
@@ -58,7 +59,7 @@ export function createHomepage(): Block[] {
           name: 'Banner',
           type: 'content',
           meta: {
-            uuid: 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d',
+            uuid: uuid(),
             isGlobalTemplate: false,
           },
           content: {
@@ -93,7 +94,7 @@ export function createHomepage(): Block[] {
           name: 'Banner',
           type: 'content',
           meta: {
-            uuid: 'd4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a',
+            uuid: uuid(),
             isGlobalTemplate: false,
           },
           content: {
@@ -130,7 +131,7 @@ export function createHomepage(): Block[] {
       name: 'TextCard',
       type: 'content',
       meta: {
-        uuid: 'b1a2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -153,7 +154,7 @@ export function createHomepage(): Block[] {
       name: 'ProductRecommendedProducts',
       type: 'content',
       meta: {
-        uuid: 'f7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -170,7 +171,7 @@ export function createHomepage(): Block[] {
       name: 'MultiGrid',
       type: 'structure',
       meta: {
-        uuid: '9b8a7c6d-5e4f-4d3c-ab1a-0f9e8d7c6b5a',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       configuration: {
@@ -181,7 +182,7 @@ export function createHomepage(): Block[] {
           name: 'Image',
           type: 'content',
           meta: {
-            uuid: '1c2d3e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f',
+            uuid: uuid(),
           },
           parent_slot: 0,
           content: {
@@ -216,7 +217,7 @@ export function createHomepage(): Block[] {
           name: 'TextCard',
           type: 'content',
           meta: {
-            uuid: '6f5e4d3c-2b1a-4f8e-9d7c-0b1a2c3d4e5f',
+            uuid: uuid(),
           },
           parent_slot: 1,
           content: {
@@ -240,7 +241,7 @@ export function createHomepage(): Block[] {
       name: 'ProductRecommendedProducts',
       type: 'content',
       meta: {
-        uuid: 'g7a6b5c4-d3e2-4f1a-9b8c-7d6e5f4a3b2c',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {
@@ -261,7 +262,7 @@ export function createHomepage(): Block[] {
       name: 'NewsletterSubscribe',
       type: 'content',
       meta: {
-        uuid: '0f1e2d3c-4b5a-4c7d-8e9f-1a2b3c4d5e6f',
+        uuid: uuid(),
         isGlobalTemplate: false,
       },
       content: {

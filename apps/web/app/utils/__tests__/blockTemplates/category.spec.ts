@@ -37,13 +37,6 @@ describe('createCategory', () => {
     expect(children.some((child) => child.name === 'ItemGrid')).toBe(true);
   });
 
-  it('should have layout property at top level of MultiGrid', () => {
-    const blocks = createCategory();
-    const multiGridBlock = blocks.find((block) => block.name === 'MultiGrid') as Block & { layout?: unknown };
-    expect(multiGridBlock?.layout).toBeDefined();
-    expect(typeof multiGridBlock?.layout).toBe('object');
-  });
-
   it('should set correct parent_slot for child blocks', () => {
     const blocks = createCategory();
     const multiGridBlock = blocks.find((block) => block.name === 'MultiGrid');

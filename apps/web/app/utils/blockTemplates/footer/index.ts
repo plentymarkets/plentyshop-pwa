@@ -1,5 +1,6 @@
 import { createFooter } from './factory';
 import type { Block } from '@plentymarkets/shop-api';
+import { callWithNuxt } from '#app';
 
 const cache = new Map<string, Block>();
 
@@ -11,7 +12,8 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
 
   if (useCache && cached) return structuredClone(cached);
 
-  const block = createFooter();
+  const nuxtApp = useNuxtApp();
+  const block = await callWithNuxt(nuxtApp, () => createFooter());
 
   if (useCache) cache.set(locale, block);
 
