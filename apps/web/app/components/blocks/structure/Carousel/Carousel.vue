@@ -16,7 +16,7 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide
-        v-for="(banner, slideIndex) in visibleContent"
+        v-for="(block, slideIndex) in visibleContent"
         :key="slideIndex"
         :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
         :aria-label="
@@ -29,7 +29,7 @@
       >
         <slot
           name="content"
-          :content-block="banner"
+          :content-block="block"
           :index="getSlideAdjustedIndex(slideIndex)"
           :slide-index="slideIndex"
           :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
@@ -48,7 +48,11 @@
       :class="`swiper-button-prev swiper-button-prev-${index}`"
       :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
-      :style="{ color: configuration.controls.color + ' !important' }"
+      :style="{
+        color: configuration.controls.color + ' !important',
+        '--swiper-navigation-size': navigationSize,
+        visibility: swiperHeight === 0 ? 'hidden' : 'visible',
+      }"
     />
     <button
       v-if="enableModules && handleArrows()"
@@ -57,7 +61,11 @@
       :class="`swiper-button-next swiper-button-next-${index}`"
       :aria-controls="`carousel-${index}`"
       :aria-label="t('homepage.banner.ariaLabelNextSlide')"
-      :style="{ color: configuration.controls.color + ' !important' }"
+      :style="{
+        color: configuration.controls.color + ' !important',
+        '--swiper-navigation-size': navigationSize,
+        visibility: swiperHeight === 0 ? 'hidden' : 'visible',
+      }"
     />
   </NuxtErrorBoundary>
 </template>
@@ -71,6 +79,14 @@ import type { Swiper as SwiperType } from 'swiper';
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
+
+const swiperHeight = ref(0);
+let resizeObserver: ResizeObserver | null = null;
+
+const navigationSize = computed(() => {
+  const size = Math.min(swiperHeight.value * 0.1, 44);
+  return `${Math.max(size, 20)}px`;
+});
 
 const visibleContent = computed(() => {
   return (content as SlideBlock[]).filter((slide) => slide.configuration?.visible !== false);
@@ -143,7 +159,17 @@ const onSwiperInit = async (swiper: SwiperType) => {
   if (activeSlideIndex.value[meta.uuid] === null) {
     setIndex(meta.uuid, swiper.realIndex);
   }
+
+  const el = swiper.el as HTMLElement;
+  resizeObserver?.disconnect();
+  resizeObserver = new ResizeObserver((entries) => {
+    const entry = entries[0];
+    if (entry) swiperHeight.value = entry.contentRect.height;
+  });
+  resizeObserver.observe(el);
 };
+
+onUnmounted(() => resizeObserver?.disconnect());
 
 const reinitializeSwiper = async () => {
   if (!slider || slider.destroyed) return;
