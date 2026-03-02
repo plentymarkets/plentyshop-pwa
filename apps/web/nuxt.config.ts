@@ -211,6 +211,7 @@ export default defineNuxtConfig({
           '/login',
           '/signup',
           '/reset-password',
+          '/mollie-payment',
         ],
         includeAppSources: true,
       },
