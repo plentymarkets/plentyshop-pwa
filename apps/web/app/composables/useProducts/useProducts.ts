@@ -108,7 +108,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       const defaultData =
         state.value.data.category.type === 'item' ? await useBlockTemplatesData($i18n.locale.value) : [];
 
-      setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
+      await setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
     }
 
     state.value.loading = false;
