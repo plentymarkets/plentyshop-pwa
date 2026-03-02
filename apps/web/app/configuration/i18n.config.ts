@@ -75,6 +75,9 @@ export const nuxtI18nOptions: NuxtI18nOptions = {
   pages: {
     cart: disabledLocalesRules(),
     'cancellation-form': disabledLocalesRules(),
+    'my-account-new-return-id-accessKey': disabledLocalesRules(),
+    'my-account-my-orders-id': disabledLocalesRules(),
+    'password-reset-contactId-hash': disabledLocalesRules(),
     'cancellation-rights': disabledLocalesRules(),
     checkout: disabledLocalesRules(),
     'orderId-accessKey': disabledLocalesRules(),
