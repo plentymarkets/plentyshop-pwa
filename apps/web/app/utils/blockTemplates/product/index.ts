@@ -1,6 +1,5 @@
 import { createProduct } from './factory';
 import type { Block } from '@plentymarkets/shop-api';
-import { callWithNuxt } from '#app';
 
 const cache = new Map<string, Block[]>();
 
@@ -12,8 +11,7 @@ export const getProductTemplate = async (locale: string): Promise<Block[]> => {
 
   if (useCache && cached) return structuredClone(cached);
 
-  const nuxtApp = useNuxtApp();
-  const blocks = await callWithNuxt(nuxtApp, () => createProduct());
+  const blocks = createProduct();
 
   if (useCache) cache.set(locale, blocks);
 
