@@ -48,8 +48,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
 
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: 'settings' }));
-    console.log(data.value);
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: { settings: true } }));
     if (data.value?.data) {
       setUser(data.value.data.session.user);
       setCart(data.value.data.session?.basket as Cart);
@@ -78,7 +77,7 @@ const fetchSettings = async () => {
   } catch (error) {
     useHandleError(error as ApiError);
   }
-}
+};
 
 /**
  * @description Composable to get initial customer and cart data
