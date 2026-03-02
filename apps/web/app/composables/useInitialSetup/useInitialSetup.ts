@@ -68,6 +68,12 @@ const setInitialDataSSR: SetInitialData = async () => {
   return true;
 };
 
+/** Function for fetching all settings
+ * @example
+ * ``` ts
+ * fetchSettings();
+ * ```
+ */
 const fetchSettings = async () => {
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getSettings());
