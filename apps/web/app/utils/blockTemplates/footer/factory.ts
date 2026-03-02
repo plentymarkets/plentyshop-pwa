@@ -18,15 +18,12 @@ export function createFooter(): Block {
       column2: {
         title: column2Title,
         showContactLink: true,
-        htmlDescription: "<ul><li><a href='https://plentyshop.plentymarkets.com/contact'></a></li></ul>",
       },
       column3: {
         title: '',
-        htmlDescription: '',
       },
       column4: {
         title: '',
-        htmlDescription: '',
       },
       footnote: '',
       footnoteAlign: 'right',

@@ -183,13 +183,33 @@ export function createHomepage(): Block[] {
           meta: {
             uuid: '1c2d3e4f-5a6b-4c7d-8e9f-0a1b2c3d4e5f',
           },
+          parent_slot: 0,
           content: {
-            wideScreen: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            desktop: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-            alt: multigridImageAlt,
-            imageAlignment: 'left',
+            image: {
+              wideScreen: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+              desktop: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+              tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+              mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+              alt: multigridImageAlt,
+              imageAlignment: 'left',
+            },
+            text: {
+              textOverlay: '',
+              textOverlayColor: '',
+              textOverlayAlignY: 'center',
+              textOverlayAlignX: 'center',
+            },
+            button: {
+              label: '',
+              link: '',
+              variant: 'primary',
+            },
+            layout: {
+              paddingTop: 0,
+              paddingBottom: 0,
+              paddingLeft: 0,
+              paddingRight: 0,
+            },
           },
         },
         {
@@ -198,6 +218,7 @@ export function createHomepage(): Block[] {
           meta: {
             uuid: '6f5e4d3c-2b1a-4f8e-9d7c-0b1a2c3d4e5f',
           },
+          parent_slot: 1,
           content: {
             text: {
               htmlDescription: multigridDescription,
