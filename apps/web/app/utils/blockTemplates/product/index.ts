@@ -11,7 +11,8 @@ export const getProductTemplate = async (locale: string): Promise<Block[]> => {
 
   if (useCache && cached) return structuredClone(cached);
 
-  const blocks = createProduct();
+  const { t } = useI18n();
+  const blocks = createProduct(t);
 
   if (useCache) cache.set(locale, blocks);
 

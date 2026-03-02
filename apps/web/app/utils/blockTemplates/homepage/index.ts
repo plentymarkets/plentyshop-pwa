@@ -11,7 +11,8 @@ export const getHomepageTemplate = async (locale: string): Promise<Block[]> => {
 
   if (useCache && cached) return structuredClone(cached);
 
-  const blocks = createHomepage();
+  const { t } = useI18n();
+  const blocks = createHomepage(t);
 
   if (useCache) cache.set(locale, blocks);
 
