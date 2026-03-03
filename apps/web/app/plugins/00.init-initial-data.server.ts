@@ -1,9 +1,9 @@
 export default defineNuxtPlugin({
   name: 'init-initial-data',
   async setup() {
-    const { setInitialDataSSR } = useInitialSetup();
+    const { setInitialDataSSR, fetchSettings } = useInitialSetup();
     await callOnce(async () => {
-      await setInitialDataSSR();
+      await Promise.all([setInitialDataSSR(), fetchSettings()]);
     });
   },
 });
