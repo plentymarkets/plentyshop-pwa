@@ -28,7 +28,12 @@
       <div class="h-24 self-center">
         <div class="inline-flex font-medium typography-text-sm">
           <div class="mr-1">{{ productBundleGetters.getBundleItemQuantity(item) }} x</div>
-          <SfLink v-if="isLinkable(item)" :tag="NuxtLink" :to="localePath(productBundleGetters.getBundleItemUrl(item))" variant="secondary">
+          <SfLink
+            v-if="isLinkable(item)"
+            :tag="NuxtLink"
+            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+            variant="secondary"
+          >
             {{ productBundleGetters.getBundleItemName(item) }}
           </SfLink>
           <span v-else>{{ productBundleGetters.getBundleItemName(item) }}</span>
