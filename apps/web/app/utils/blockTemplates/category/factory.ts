@@ -3,8 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export function createCategory(): Block[] {
-  const { $i18n } = useNuxtApp();
-  const categoryName = $i18n.t('defaultTemplate.category.categoryData.name');
+  const categoryName = t('defaultTemplate.category.categoryData.name');
 
   return [
     {
