@@ -16,9 +16,11 @@ export interface DragEvent<T = Block> {
   };
 }
 
-export type EditablePageProps = {
-  identifier: string | number;
-  type: string;
+export type EditableBlocksProps = {
+  identifier?: string | number;
+  type?: string;
   hasEnabledActions?: boolean;
   preventBlocksRequest?: boolean;
+  readOnly?: boolean;
+  blocks?: Block[];
 };

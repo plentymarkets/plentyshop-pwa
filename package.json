@@ -45,8 +45,8 @@
     "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.154.2",
-    "@plentymarkets/shop-core": "^1.21.3",
+    "@plentymarkets/shop-api": "^0.155.0",
+    "@plentymarkets/shop-core": "^1.21.8",
     "@plentymarkets/shop-module-gtag": "^1.2.2",
     "@plentymarkets/shop-module-mollie": "^1.5.0",
     "@tanstack/vue-virtual": "^3.13.18",
@@ -101,7 +101,7 @@
     "playwright-core": "^1.58.2",
     "prettier": "^3.8.1",
     "rimraf": "^5.0.7",
-    "rollup": "^4.57.1",
+    "rollup": "^4.59.0",
     "turbo": "^2.8.8",
     "typedoc": "^0.28.17",
     "typedoc-plugin-markdown": "^4.10.0",

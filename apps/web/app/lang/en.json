@@ -1199,7 +1199,7 @@
       "vatServerFallback": "Your VAT number could not be validated. The order will be reviewed again."
     },
     "blocks": {
-      "base64NotAllowed": "The image was incorrectly uploaded. Please try again."
+      "base64NotAllowed": "The image was not uploaded correctly. Try uploading it again."
     },
     "cart": {
       "addToBasket": {

@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '#i18n';
 import type { OrderSearchParams } from '@plentymarkets/shop-api';
 
 const route = useRoute();
@@ -21,9 +20,6 @@ const { send } = useNotification();
 
 definePageMeta({
   pageType: 'static',
-});
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
 
 if (error.value) {
