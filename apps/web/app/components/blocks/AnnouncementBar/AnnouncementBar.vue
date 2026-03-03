@@ -1,5 +1,13 @@
 <template>
-  <div class="min-h-10 h-full w-full flex items-center justify-center" :style="inlineStyle" v-html="content.text" />
+  <div
+    class="min-h-10 h-full w-full flex items-center"
+    :style="inlineStyle"
+  >
+    <div
+      class="rte-prose rte-prose--render w-full text-center"
+      v-html="props.content.text"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
