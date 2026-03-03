@@ -1,22 +1,30 @@
 import { PageObject } from './PageObject';
 
-export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
-
 export class EditorObject extends PageObject {
+  getFirstBannerBlockUuid(): Cypress.Chainable<string> {
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .first()
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
+  }
+
   get pretitle() {
-    return cy.getByTestId(`banner-pretitle-${firstBannerBlockUuid}`);
+    return this.getFirstBannerBlockUuid().then((uuid) => cy.getByTestId(`banner-pretitle-${uuid}`));
   }
 
   get title() {
-    return cy.getByTestId(`banner-title-${firstBannerBlockUuid}`);
+    return this.getFirstBannerBlockUuid().then((uuid) => cy.getByTestId(`banner-title-${uuid}`));
   }
 
   get subtitle() {
-    return cy.getByTestId(`banner-subtitle-${firstBannerBlockUuid}`);
+    return this.getFirstBannerBlockUuid().then((uuid) => cy.getByTestId(`banner-subtitle-${uuid}`));
   }
 
   get description() {
-    return cy.getByTestId(`banner-description-${firstBannerBlockUuid}`);
+    return this.getFirstBannerBlockUuid().then((uuid) => cy.getByTestId(`banner-description-${uuid}`));
   }
 
   get editorToolbar() {
