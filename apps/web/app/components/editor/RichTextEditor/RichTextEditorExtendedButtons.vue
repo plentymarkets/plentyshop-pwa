@@ -51,6 +51,18 @@
   <span class="w-px h-5 bg-gray-200 mx-0.5" />
 
   <EditorRichTextEditorMenuButton icon-name="horizontalRule" @click="cmd('setHorizontalRule')" />
+  <EditorRichTextEditorMenuButton
+    data-testid="rte-insert-link-button"
+    icon-name="link"
+    title="Insert Link"
+    @click="insertLink"
+  />
+  <EditorRichTextEditorMenuButton
+    data-testid="rte-insert-button"
+    icon-name="button"
+    title="Insert UI Button"
+    @click="insertUIButton"
+  />
   <EditorRichTextEditorMenuButton data-testid="rte-undo-button" :disabled="!canUndo" icon-name="undo" @click="undo" />
   <EditorRichTextEditorMenuButton data-testid="rte-redo-button" :disabled="!canRedo" icon-name="redo" @click="redo" />
   <EditorRichTextEditorMenuButton icon-name="clearFormat" @click="clearFormatting" />
@@ -71,5 +83,7 @@ defineProps<{
   undo: () => void;
   redo: () => void;
   clearFormatting: () => void;
+  insertUIButton: () => void;
+  insertLink: () => void;
 }>();
 </script>

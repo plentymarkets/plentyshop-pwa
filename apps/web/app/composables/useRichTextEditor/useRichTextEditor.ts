@@ -14,6 +14,8 @@ import { setupRichTextEditorColors } from './helpers/colors';
 import { setupRichTextEditorAlignment } from './helpers/alignment';
 import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
+import { ButtonNode } from './extensions/ButtonNode';
+import { LinkNode } from './extensions/LinkNode';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -34,6 +36,8 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
+      ButtonNode,
+      LinkNode,
     ],
     onUpdate: ({ editor }: { editor: Editor }) => {
       args.onUpdateModelValue(editor.getHTML());
@@ -83,6 +87,29 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const focus = () => editor.value?.commands.focus();
 
+  const insertUIButton = () => {
+    editor.value?.commands.insertContent({
+      type: 'uiButton',
+      attrs: {
+        label: 'Click me',
+        to: '/',
+        variant: 'primary',
+      },
+    });
+  };
+
+  const insertLink = () => {
+    editor.value?.commands.insertContent({
+      type: 'customLink',
+      attrs: {
+        href: '/',
+        target: '_self',
+        rel: '',
+        label: 'Link',
+      },
+    });
+  };
+
   return {
     editor,
     expandedLocal,
@@ -104,5 +131,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     toggleLink,
     clearFormatting,
     focus,
+    insertUIButton,
+    insertLink,
   };
 }

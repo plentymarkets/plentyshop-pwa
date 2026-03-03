@@ -1,62 +1,30 @@
 <template>
-  <div
-    data-testid="text-content"
-    class="w-full"
-    :style="{ color: props.text?.color }"
-    :class="['space-y-4', textAlignmentClass]"
-  >
-    <div
-      v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription"
-      class="rte-prose rte-prose--render"
-      :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
-      v-html="renderedHtmlDescription"
-    />
+  <div data-testid="text-content" class="w-full" :style="{ color: props.text?.color }"
+    :class="['space-y-4', textAlignmentClass]">
+    <div v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription" class="rte-prose rte-prose--render"
+      :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`" v-html="renderedHtmlDescription" />
 
     <template v-else>
-      <div
-        v-if="props.text?.pretitle"
-        data-testid="text-pretitle"
-        class="text-xl font-bold mb-2"
-        v-html="renderedPretitle"
-      />
+      <div v-if="props.text?.pretitle" data-testid="text-pretitle" class="text-xl font-bold mb-2"
+        v-html="renderedPretitle" />
 
-      <h1
-        v-if="props.text?.title && props.index === 0"
-        data-testid="text-title"
+      <h1 v-if="props.text?.title && props.index === 0" data-testid="text-title"
         class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-        v-html="renderedTitle"
-      />
+        v-html="renderedTitle" />
 
-      <h2
-        v-else-if="props.text?.title"
-        data-testid="text-title"
-        class="text-2xl font-semibold mb-4"
-        v-html="renderedTitle"
-      />
+      <h2 v-else-if="props.text?.title" data-testid="text-title" class="text-2xl font-semibold mb-4"
+        v-html="renderedTitle" />
 
-      <div
-        v-if="props.text?.subtitle"
-        data-testid="text-subtitle"
-        class="text-lg font-semibold"
-        v-html="renderedSubtitle"
-      />
+      <div v-if="props.text?.subtitle" data-testid="text-subtitle" class="text-lg font-semibold"
+        v-html="renderedSubtitle" />
 
-      <div
-        v-if="props.text?.htmlDescription"
-        data-testid="text-html"
-        class="text-base"
-        v-html="renderedHtmlDescription"
-      />
+      <div v-if="props.text?.htmlDescription" data-testid="text-html" class="text-base">
+        <component :is="dynamicComponent" />
+      </div>
     </template>
 
-    <UiButton
-      v-if="props.button?.label && props.button?.link"
-      :tag="NuxtLink"
-      :to="localePath(props.button.link)"
-      :variant="props.button.variant ?? 'primary'"
-      data-testid="text-button"
-      class="mt-3 px-4 py-2"
-    >
+    <UiButton v-if="props.button?.label && props.button?.link" :tag="NuxtLink" :to="localePath(props.button.link)"
+      :variant="props.button.variant ?? 'primary'" data-testid="text-button" class="mt-3 px-4 py-2">
       {{ props.button.label }}
     </UiButton>
   </div>
@@ -64,8 +32,17 @@
 
 <script setup lang="ts">
 import type { TextContentProps } from '~/components/TextContent/types';
+import UiButton from '~/components/ui/Button/Button.vue'
+import AppLink from '~/components/AppLink.vue'
 
 const props = defineProps<TextContentProps>();
+
+const dynamicComponent = computed(() => {
+  return defineComponent({
+    components: { UiButton, AppLink: AppLink as any },
+    template: `<div>${renderedHtmlDescription.value ?? ''}</div>`,
+  })
+})
 
 const renderedHtmlDescription = computed(() => decodeHtmlEntities(props.text?.htmlDescription));
 const renderedPretitle = computed(() => decodeHtmlEntities(props.text?.pretitle));

@@ -41,6 +41,8 @@
               :undo="undo"
               :redo="redo"
               :clear-formatting="clearFormatting"
+              :insert-u-i-button="insertUIButton"
+              :insert-link="insertLink"
             />
           </div>
 
@@ -81,6 +83,8 @@ defineProps<{
   redo: () => void;
   toggleLink: () => void;
   clearFormatting: () => void;
+  insertUIButton: () => void;
+  insertLink: () => void;
 }>();
 
 const emit = defineEmits<{

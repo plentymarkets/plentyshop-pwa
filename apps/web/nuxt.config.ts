@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['~/composables', '~/composables/**', '~/utils/**'],
   },
+  vue: { runtimeCompiler: true },
   vite: {
     server: {
       fs: {

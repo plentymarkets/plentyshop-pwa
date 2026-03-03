@@ -52,6 +52,8 @@
         :undo="undo"
         :redo="redo"
         :clear-formatting="clearFormatting"
+        :insert-u-i-button="insertUIButton"
+        :insert-link="insertLink"
       />
       <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="openModal" />
     </div>
@@ -81,6 +83,7 @@
     :redo="redo"
     :toggle-link="toggleLink"
     :clear-formatting="clearFormatting"
+    :insert-u-i-button="insertUIButton"
     @switch-to-html="handleSwitchToHtml"
     @close="closeModal"
   />
@@ -135,6 +138,8 @@ const {
   toggleLink,
   clearFormatting,
   focus,
+  insertUIButton,
+  insertLink,
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
   onUpdateModelValue: (v) => emit('update:modelValue', v),
