@@ -3,44 +3,43 @@ import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
 export function createHomepage(): Block[] {
-  const { $i18n } = useNuxtApp();
-  const banner1Pretitle = $i18n.t('defaultTemplate.homepage.carousel.banner1.pretitle');
-  const banner1Title = $i18n.t('defaultTemplate.homepage.carousel.banner1.title');
-  const banner1Description = $i18n.t('defaultTemplate.homepage.carousel.banner1.description');
-  const banner1ButtonLabel = $i18n.t('defaultTemplate.homepage.carousel.banner1.buttonLabel');
-  const banner2Pretitle = $i18n.t('defaultTemplate.homepage.carousel.banner2.pretitle');
-  const banner2Title = $i18n.t('defaultTemplate.homepage.carousel.banner2.title');
-  const banner2Description = $i18n.t('defaultTemplate.homepage.carousel.banner2.description');
-  const banner2ButtonLabel = $i18n.t('defaultTemplate.homepage.carousel.banner2.buttonLabel');
-  const welcomePretitle = $i18n.t('defaultTemplate.homepage.textcard.welcome.pretitle');
-  const welcomeTitle = $i18n.t('defaultTemplate.homepage.textcard.welcome.title');
-  const welcomeSubtitle = $i18n.t('defaultTemplate.homepage.textcard.welcome.subtitle');
-  const welcomeParagraph1 = $i18n.t('defaultTemplate.homepage.textcard.welcome.paragraph1');
-  const welcomeParagraph2 = $i18n.t('defaultTemplate.homepage.textcard.welcome.paragraph2');
-  const welcomeButtonLabel = $i18n.t('defaultTemplate.homepage.textcard.welcome.buttonLabel');
+  const banner1Pretitle = t('defaultTemplate.homepage.carousel.banner1.pretitle');
+  const banner1Title = t('defaultTemplate.homepage.carousel.banner1.title');
+  const banner1Description = t('defaultTemplate.homepage.carousel.banner1.description');
+  const banner1ButtonLabel = t('defaultTemplate.homepage.carousel.banner1.buttonLabel');
+  const banner2Pretitle = t('defaultTemplate.homepage.carousel.banner2.pretitle');
+  const banner2Title = t('defaultTemplate.homepage.carousel.banner2.title');
+  const banner2Description = t('defaultTemplate.homepage.carousel.banner2.description');
+  const banner2ButtonLabel = t('defaultTemplate.homepage.carousel.banner2.buttonLabel');
+  const welcomePretitle = t('defaultTemplate.homepage.textcard.welcome.pretitle');
+  const welcomeTitle = t('defaultTemplate.homepage.textcard.welcome.title');
+  const welcomeSubtitle = t('defaultTemplate.homepage.textcard.welcome.subtitle');
+  const welcomeParagraph1 = t('defaultTemplate.homepage.textcard.welcome.paragraph1');
+  const welcomeParagraph2 = t('defaultTemplate.homepage.textcard.welcome.paragraph2');
+  const welcomeButtonLabel = t('defaultTemplate.homepage.textcard.welcome.buttonLabel');
   const welcomeDescription = `<p>${welcomeParagraph1}</p><p>${welcomeParagraph2}</p>`;
-  const multigridTitle = $i18n.t('defaultTemplate.homepage.multigrid.textcard.title');
-  const multigridSubtitle = $i18n.t('defaultTemplate.homepage.multigrid.textcard.subtitle');
-  const multigridParagraph = $i18n.t('defaultTemplate.homepage.multigrid.textcard.paragraph');
-  const multigridFeature1 = $i18n.t('defaultTemplate.homepage.multigrid.textcard.feature1');
-  const multigridFeature2 = $i18n.t('defaultTemplate.homepage.multigrid.textcard.feature2');
-  const multigridFeature3 = $i18n.t('defaultTemplate.homepage.multigrid.textcard.feature3');
-  const multigridFeature4 = $i18n.t('defaultTemplate.homepage.multigrid.textcard.feature4');
-  const multigridButtonLabel = $i18n.t('defaultTemplate.homepage.multigrid.textcard.buttonLabel');
-  const multigridImageAlt = $i18n.t('defaultTemplate.homepage.multigrid.image.alt');
+  const multigridTitle = t('defaultTemplate.homepage.multigrid.textcard.title');
+  const multigridSubtitle = t('defaultTemplate.homepage.multigrid.textcard.subtitle');
+  const multigridParagraph = t('defaultTemplate.homepage.multigrid.textcard.paragraph');
+  const multigridFeature1 = t('defaultTemplate.homepage.multigrid.textcard.feature1');
+  const multigridFeature2 = t('defaultTemplate.homepage.multigrid.textcard.feature2');
+  const multigridFeature3 = t('defaultTemplate.homepage.multigrid.textcard.feature3');
+  const multigridFeature4 = t('defaultTemplate.homepage.multigrid.textcard.feature4');
+  const multigridButtonLabel = t('defaultTemplate.homepage.multigrid.textcard.buttonLabel');
+  const multigridImageAlt = t('defaultTemplate.homepage.multigrid.image.alt');
   const multigridFeaturesList = [multigridFeature1, multigridFeature2, multigridFeature3, multigridFeature4]
     .map((feature) => `<li>${feature}</li>`)
     .join('');
   const multigridDescription = `<p>${multigridParagraph}</p><ul class='list-disc pl-4 mt-4 space-y-1'>${multigridFeaturesList}</ul>`;
-  const fashionPretitle = $i18n.t('defaultTemplate.homepage.productRecommended.fashion.pretitle');
-  const fashionTitle = $i18n.t('defaultTemplate.homepage.productRecommended.fashion.title');
-  const fashionSubtitle = $i18n.t('defaultTemplate.homepage.productRecommended.fashion.subtitle');
-  const fashionLinkText = $i18n.t('defaultTemplate.homepage.productRecommended.fashion.linkText');
-  const fashionLinkUrl = $i18n.t('defaultTemplate.homepage.productRecommended.fashion.linkUrl');
+  const fashionPretitle = t('defaultTemplate.homepage.productRecommended.fashion.pretitle');
+  const fashionTitle = t('defaultTemplate.homepage.productRecommended.fashion.title');
+  const fashionSubtitle = t('defaultTemplate.homepage.productRecommended.fashion.subtitle');
+  const fashionLinkText = t('defaultTemplate.homepage.productRecommended.fashion.linkText');
+  const fashionLinkUrl = t('defaultTemplate.homepage.productRecommended.fashion.linkUrl');
   const fashionDescription = `<a class='underline' href='${fashionLinkUrl}'>${fashionLinkText}</a>`;
-  const newsletterTitle = $i18n.t('defaultTemplate.homepage.newsletter.title');
-  const newsletterDescription = $i18n.t('defaultTemplate.homepage.newsletter.description');
-  const newsletterButtonLabel = $i18n.t('defaultTemplate.homepage.newsletter.buttonLabel');
+  const newsletterTitle = t('defaultTemplate.homepage.newsletter.title');
+  const newsletterDescription = t('defaultTemplate.homepage.newsletter.description');
+  const newsletterButtonLabel = t('defaultTemplate.homepage.newsletter.buttonLabel');
 
   return [
     {
