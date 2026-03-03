@@ -248,7 +248,7 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
-const { isFooterBlock } = useCategoryTemplate();
+const { isFooterBlock } = useBlockTemplates();
 
 const getBlockActions = (block: Block) => {
   if (isFooterBlock(block)) {
