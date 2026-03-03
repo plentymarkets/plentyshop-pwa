@@ -44,7 +44,7 @@
                     class="text-sm font-medium truncate"
                     :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
                   >
-                    {{ getEditorTranslation('slide-label') }} {{ index + 1 }}
+                    {{ getSlideLabel(slide, index) }}
                   </span>
                 </div>
 
@@ -239,12 +239,23 @@ const slides = computed({
   set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
 });
 
+const getSlideLabel = (slide: SlideBlock, index: number): string => {
+  if (slide.name === 'AnnouncementBar') {
+    const text = (slide.content as { text?: string })?.text;
+    if (text) {
+      const plain = text.replace(/<[^>]*>/g, '').trim();
+      if (plain) return plain.length > 20 ? plain.slice(0, 20) + '…' : plain;
+    }
+  }
+  return `Slide ${index + 1}`;
+};
+
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
   // Scroll the swiper to this slide
   setIndex(blockUuid.value, index);
-  emit('set-edit-title', `Slide ${index + 1}`);
+  emit('set-edit-title', getSlideLabel(slides.value[index]!, index));
 };
 
 const exitEditMode = (shouldEmit = true) => {
