@@ -27,7 +27,7 @@ export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
   const route = useRoute();
-  const { data, cleanData, updateBlocks } = useCategoryTemplate(
+  const { data, cleanData, updateBlocks } = useBlockTemplates(
     route?.meta?.identifier as string,
     route.meta.type as string,
     useNuxtApp().$i18n.locale.value,
@@ -37,7 +37,7 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { isFooterBlock } = useCategoryTemplate();
+  const { isFooterBlock } = useBlockTemplates();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);

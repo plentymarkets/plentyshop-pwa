@@ -153,7 +153,7 @@ import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './t
 
 const route = useRoute();
 
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,

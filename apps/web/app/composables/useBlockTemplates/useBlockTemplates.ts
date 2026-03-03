@@ -1,7 +1,7 @@
 import type {
   FetchCategoryTemplate,
-  UseCategoryTemplateReturn,
-  UseCategoryTemplateState,
+  UseBlockTemplatesReturn,
+  UseBlockTemplatesState,
   GetBlocks,
   SaveBlocks,
 } from './types';
@@ -181,7 +181,7 @@ const mapFooterDataHelper = (data: Block | null): FooterBlock => {
   );
 };
 
-export const useCategoryTemplate: UseCategoryTemplateReturn = (
+export const useBlockTemplates: UseBlockTemplatesReturn = (
   identifier: string = 'unknown',
   type: string = 'unknown',
   locale: string = 'locale',
@@ -189,16 +189,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
 ) => {
   const nuxtApp = useNuxtApp();
 
-  const state = useState<UseCategoryTemplateState>(
-    `useCategoryTemplate-${identifier}-${type}-${locale}-${blocks}`,
-    () => ({
-      data: [],
-      cleanData: [],
-      categoryTemplateData: null,
-      defaultTemplateData: [],
-      loading: false,
-    }),
-  );
+  const state = useState<UseBlockTemplatesState>(`useBlockTemplates-${identifier}-${type}-${locale}-${blocks}`, () => ({
+    data: [],
+    cleanData: [],
+    categoryTemplateData: null,
+    defaultTemplateData: [],
+    loading: false,
+  }));
 
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
