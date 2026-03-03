@@ -25,24 +25,20 @@
         loading="lazy"
       />
 
-      <div v-if="isLinkable(item)" class="h-24 self-center">
+      <div class="h-24 self-center">
         <div class="inline-flex font-medium typography-text-sm">
           <div class="mr-1">{{ productBundleGetters.getBundleItemQuantity(item) }} x</div>
-          <SfLink :tag="NuxtLink" :to="localePath(productBundleGetters.getBundleItemUrl(item))" variant="secondary">
+          <SfLink v-if="isLinkable(item)" :tag="NuxtLink" :to="localePath(productBundleGetters.getBundleItemUrl(item))" variant="secondary">
             {{ productBundleGetters.getBundleItemName(item) }}
           </SfLink>
+          <span v-else>{{ productBundleGetters.getBundleItemName(item) }}</span>
         </div>
 
         <div
+          v-if="productBundleGetters.getBundleItemShortDescription(item)"
           class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm no-preflight"
           v-html="productBundleGetters.getBundleItemShortDescription(item)"
         />
-      </div>
-      <div v-else>
-        <p class="font-medium text-sm">
-          {{ productBundleGetters.getBundleItemQuantity(item) }} x
-          <span class="h-auto">[{{ t('product.attributes.productNameMissing') }}]</span>
-        </p>
       </div>
     </div>
   </div>
@@ -60,6 +56,7 @@ const { addModernImageExtension } = useModernImage();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (
+    productBundleGetters.isItemBundleSalable(item) &&
     !productBundleGetters.getBundleItemUrl(item).includes('null') &&
     productBundleGetters.getBundleItemName(item).length > 0
   );
