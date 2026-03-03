@@ -60,7 +60,6 @@ const { addModernImageExtension } = useModernImage();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (
-    productBundleGetters.isItemBundleSalable(item) &&
     !productBundleGetters.getBundleItemUrl(item).includes('null') &&
     productBundleGetters.getBundleItemName(item).length > 0
   );
