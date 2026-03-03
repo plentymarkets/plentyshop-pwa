@@ -99,7 +99,10 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.closeImageGroup();
       bannerSlider.openTextGroup();
       bannerSlider.changeTexts();
-      bannerSlider.checkNewTexts(firstBannerBlockUuid);
+      bannerSlider.clearBannerCache();
+      bannerSlider.getFirstBannerBlockUuid().then((uuid) => {
+        bannerSlider.checkNewTexts(uuid);
+      });
     });
 
     it('should change the text box alignment x', () => {
@@ -139,9 +142,12 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.closeImageGroup();
       bannerSlider.closeTextGroup();
       bannerSlider.changeButtonLabelAndLink();
-      bannerSlider.checkButtonLabelAndLink(firstBannerBlockUuid);
-      bannerSlider.checkButtonSecondary(firstBannerBlockUuid);
-      bannerSlider.checkButtonPrimary(firstBannerBlockUuid);
+      bannerSlider.clearBannerCache();
+      bannerSlider.getFirstBannerBlockUuid().then((uuid) => {
+        bannerSlider.checkButtonLabelAndLink(uuid);
+        bannerSlider.checkButtonSecondary(uuid);
+        bannerSlider.checkButtonPrimary(uuid);
+      });
     });
   });
 });
