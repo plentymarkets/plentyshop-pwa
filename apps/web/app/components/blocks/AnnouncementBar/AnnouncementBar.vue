@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-10 flex items-center justify-center" :style="inlineStyle" v-html="content.text" />
+  <div class="min-h-10 h-full w-full flex items-center justify-center" :style="inlineStyle" v-html="content.text" />
 </template>
 
 <script setup lang="ts">
