@@ -28,8 +28,18 @@ const { setDefaultTemplate } = useBlockTemplates(
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
 
-const homepageTemplate = await getHomepageTemplate($i18n.locale.value);
-setDefaultTemplate(homepageTemplate);
+try {
+  // eslint-disable-next-line no-console
+  console.log('[Homepage] Loading template, t() available?', typeof t === 'function');
+  const homepageTemplate = await getHomepageTemplate($i18n.locale.value);
+  // eslint-disable-next-line no-console
+  console.log('[Homepage] Template loaded successfully');
+  setDefaultTemplate(homepageTemplate);
+} catch (error) {
+  // eslint-disable-next-line no-console
+  console.error('[Homepage] Failed to load template:', error);
+  throw error;
+}
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
