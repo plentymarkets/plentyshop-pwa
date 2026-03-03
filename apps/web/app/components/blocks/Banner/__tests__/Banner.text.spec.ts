@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { BlocksBannerCarouselBanner } from '#components';
+import { BlocksBanner } from '#components';
 
 const bannerBlockUuid = '11111111-1111-4111-8111-111111111111';
 
 describe('Banner text', () => {
   it('should not render a pretitle if no pretitle is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -34,7 +34,7 @@ describe('Banner text', () => {
   });
 
   it('should not render a title if no title is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -62,7 +62,7 @@ describe('Banner text', () => {
   });
 
   it('should not render a subtitle if no subtitle is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -90,7 +90,7 @@ describe('Banner text', () => {
   });
 
   it('should not render a description if no description is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -118,7 +118,7 @@ describe('Banner text', () => {
   });
 
   it('should set the given text color', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -146,7 +146,7 @@ describe('Banner text', () => {
   });
 
   it('should set the given background color', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -175,7 +175,7 @@ describe('Banner text', () => {
   });
 
   it('should set the given background opacity', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -205,7 +205,7 @@ describe('Banner text', () => {
 
   describe('text alignment', () => {
     it('should align text to the left by default', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -232,7 +232,7 @@ describe('Banner text', () => {
     });
 
     it('should align text to the center', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -260,7 +260,7 @@ describe('Banner text', () => {
     });
 
     it('should align text to the right', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -290,7 +290,7 @@ describe('Banner text', () => {
 
   describe('justify content', () => {
     it('should justify content to the start by default', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -317,7 +317,7 @@ describe('Banner text', () => {
     });
 
     it('should justify content to the center', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -345,7 +345,7 @@ describe('Banner text', () => {
     });
 
     it('should justify content to the end', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -375,7 +375,7 @@ describe('Banner text', () => {
 
   describe('align items', () => {
     it('should align items to the start by default', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -402,7 +402,7 @@ describe('Banner text', () => {
     });
 
     it('should align items to the center', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',
@@ -430,7 +430,7 @@ describe('Banner text', () => {
     });
 
     it('should align items to the end', () => {
-      const wrapper = mount(BlocksBannerCarouselBanner, {
+      const wrapper = mount(BlocksBanner, {
         props: {
           name: 'Banner',
           type: 'content',

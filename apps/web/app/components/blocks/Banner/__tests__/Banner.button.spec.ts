@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { BlocksBannerCarouselBanner } from '#components';
+import { BlocksBanner } from '#components';
 
 const bannerBlockUuid = '11111111-1111-4111-8111-111111111111';
 
 describe('Banner button', () => {
   it('should not render a button if no button is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -32,7 +32,7 @@ describe('Banner button', () => {
   });
 
   it('should not render a button if no label is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -60,7 +60,7 @@ describe('Banner button', () => {
   });
 
   it('should not render a button if no link is provided', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
@@ -88,7 +88,7 @@ describe('Banner button', () => {
   });
 
   it('should set the given button variant', () => {
-    const wrapper = mount(BlocksBannerCarouselBanner, {
+    const wrapper = mount(BlocksBanner, {
       props: {
         name: 'Banner',
         type: 'content',
