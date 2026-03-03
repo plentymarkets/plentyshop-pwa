@@ -244,7 +244,7 @@ const getSlideLabel = (slide: SlideBlock, index: number): string => {
     const text = (slide.content as { text?: string })?.text;
     if (text) {
       const plain = text.replace(/<[^>]*>/g, '').trim();
-      if (plain) return plain.length > 20 ? plain.slice(0, 20) + '…' : plain;
+      if (plain) return plain.length > 30 ? plain.slice(0, 30) + '…' : plain;
     }
   }
   return `Slide ${index + 1}`;
