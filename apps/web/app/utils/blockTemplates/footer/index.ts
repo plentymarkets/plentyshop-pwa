@@ -13,7 +13,10 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
 
   const block = createFooter();
 
-  if (useCache) cache.set(locale, block);
+  if (useCache) {
+    cache.set(locale, block);
+    return JSON.parse(JSON.stringify(block));
+  }
 
   return block;
 };

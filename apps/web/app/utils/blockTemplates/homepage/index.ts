@@ -13,7 +13,10 @@ export const getHomepageTemplate = async (locale: string): Promise<Block[]> => {
 
   const blocks = createHomepage();
 
-  if (useCache) cache.set(locale, blocks);
+  if (useCache) {
+    cache.set(locale, blocks);
+    return JSON.parse(JSON.stringify(blocks));
+  }
 
   return blocks;
 };
