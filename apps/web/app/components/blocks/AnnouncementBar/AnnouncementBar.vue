@@ -4,7 +4,7 @@
     :style="inlineStyle"
   >
     <div
-      class="rte-prose rte-prose--render w-full text-center"
+      class="rte-prose rte-prose--render w-full text-center px-20"
       v-html="props.content.text"
     />
   </div>
