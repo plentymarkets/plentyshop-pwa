@@ -15,4 +15,11 @@ export const composablePrompts = [
       return validation === true ? true : validation;
     },
   },
+  {
+    type: 'confirm',
+    name: 'skipTests',
+    message: 'Skip test files?',
+    default: false,
+    when: () => process.env.PLENTYSHOP_SKIP_TESTS === undefined,
+  },
 ];

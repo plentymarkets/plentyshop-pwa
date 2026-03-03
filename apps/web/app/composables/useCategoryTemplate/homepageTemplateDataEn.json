@@ -116,7 +116,12 @@
     },
     "content": {
       "categoryId": "73",
-      "text": {}
+      "text": {
+        "pretitle": "",
+        "title": "",
+        "subtitle": "",
+        "htmlDescription": ""
+      }
     }
   },
   {

@@ -1,5 +1,5 @@
 <template>
-  <div class="code-editor">
+  <div class="code-editor" data-testid="code-editor">
     <div ref="editorElement" class="editor-container" />
   </div>
 </template>

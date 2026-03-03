@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { nextTick } from 'vue';
 import { useResetProductPageModal } from '../useResetProductPageModal';
 
 const mockSend = vi.fn();

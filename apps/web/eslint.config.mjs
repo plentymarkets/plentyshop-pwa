@@ -48,6 +48,15 @@ export default withNuxt(
       'jsonc/no-useless-escape': 'off', // incompatible with ESLint 9, affects postCodeMapper.json
       'no-console': ['error'],
       'no-constant-binary-expression': 'off',
+      'no-restricted-imports': ['error', {
+        patterns: [
+          {
+            regex: '^vue$',
+            message: 'Use Nuxt auto-imports instead of importing from vue directly.',
+            allowTypeImports: true
+          }
+        ]
+      }],
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       'vue/no-console': ['error'],
       'vue/no-multiple-template-root': ['off'],

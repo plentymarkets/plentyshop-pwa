@@ -1,0 +1,50 @@
+version: v1
+
+labels:
+  - label: 'feature'
+    sync: true
+    matcher:
+      title: '^feat:.*'
+  - label: 'fix'
+    sync: true
+    matcher:
+      title: '^fix:.*'
+  - label: 'refactor'
+    sync: true
+    matcher:
+      title: '^refactor:.*'
+  - label: 'source'
+    sync: true
+    matcher:
+      files:
+        any:
+          - 'apps/**/!(*.cy|*.spec|*.test).{css,scss,ts,vue}'
+          - 'packages/**/!(*.cy|*.spec|*.test).{css,scss,ts,vue}'
+  - label: 'documentation'
+    sync: true
+    matcher:
+      files:
+        any:
+          - '**/*.md'
+          - 'docs/**'
+  - label: 'testing'
+    sync: true
+    matcher:
+      files:
+        any:
+          - '**/*.cy.ts'
+          - '**/*.spec.ts'
+          - '**/*.test.ts'
+          - 'apps/web/__tests__/**'
+          - 'apps/web/cypress.config.ts'
+          - 'apps/web/vitest.config.ts'
+          - 'apps/web/vitest.config.setup.ts'
+  - label: 'ci'
+    sync: true
+    matcher:
+      files:
+        any:
+          - '.github/workflows/*.yml'
+          - '.github/workflows/*.yaml'
+          - '.github/actions/*.yml'
+          - '.github/actions/*.yaml'

@@ -112,18 +112,21 @@
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     <div class="py-4">
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
-
-      <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
-        <template #suffix>
-          <label
-            for="border-color"
-            :style="{ backgroundColor: priceCardBlock.borderColor }"
-            class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-          >
-            <input id="border-color" v-model="priceCardBlock.borderColor" type="color" class="invisible w-8" />
-          </label>
+      <EditorColorPicker v-model="priceCardBlock.borderColor" class="w-full">
+        <template #trigger="{ color, toggle }">
+          <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
         </template>
-      </SfInput>
+      </EditorColorPicker>
     </div>
     <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>

@@ -28,11 +28,11 @@ const showCustomerReferenceComponent = computed({
 {
   "en": {
     "label": "Your Reference Input Field",
-    "description": "Toggle to show or hide the \"Your reference\" input field during checkout."
+    "description": "Show or hide the \"Your reference\" input field during checkout."
   },
   "de": {
     "label": "Your Reference Input Field",
-    "description": "Toggle to show or hide the \"Your reference\" input field during checkout."
+    "description": "Show or hide the \"Your reference\" input field during checkout."
   }
 }
 </i18n>

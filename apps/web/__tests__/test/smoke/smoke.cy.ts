@@ -23,6 +23,7 @@ describe('Smoke Tests', () => {
     // prettier-ignore
     homePage
       .checkLanguage(text_en)
+      .safeModeBannerShouldNotExist()
       .topToolbarShouldNotExist()
       .sideToolbarShouldNotExist()
       .blockActionsShouldNotExist()

@@ -55,9 +55,9 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
 <i18n lang="json">
 {
   "en": {
-    "description": "Map item data fields from your backend to Schema.org fields for Rich Snippets. This improves how search engines interpret your products and can enhance their presentation in search results.",
-    "label": "Select source for the brand in Rich Snippets of the item page",
-    "tooltip": "Select source for the brand in Rich Snippets of the item page",
+    "description": "Rich Snippets provide search engines with additional information to display when a particular page appears in a search result. This can improve its discoverability and appeal to users. In this section you can map item data fields from your backend to Schema.org fields for Rich Snippets.",
+    "label": "Brand",
+    "tooltip": "Select a source for the brand displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "Do not display",
@@ -65,9 +65,9 @@ const seoRichSnippetBrands = ref(['1', '2', '3']);
     "seoRichSnippetBrandOption-3": "Use brand name from variation property of the type text"
   },
   "de": {
-    "description": "Map item data fields from your backend to Schema.org fields for Rich Snippets. This improves how search engines interpret your products and can enhance their presentation in search results.",
-    "label": "Select source for the brand in Rich Snippets of the item page",
-    "tooltip": "Select source for the brand in Rich Snippets of the item page",
+    "description": "Rich Snippets provide search engines with additional information to display when a particular page appears in a search result. This can improve its discoverability and appeal to users. In this section you can map item data fields from your backend to Schema.org fields for Rich Snippets.",
+    "label": "Brand",
+    "tooltip": "Select a source for the brand displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetBrandOption-1": "De-Do not display",

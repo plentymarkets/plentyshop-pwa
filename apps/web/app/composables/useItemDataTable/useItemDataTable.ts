@@ -14,8 +14,7 @@ import {
 import type { TranslateFn } from '~/composables/useItemDataTable/types';
 
 export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?: TranslateFn }) {
-  const { $isPreview } = useNuxtApp();
-  const { disableActions } = useEditor();
+  const { shouldHideZeroValues } = useEditorState();
 
   const fieldValues = computed<ItemDataFieldValues>(() => {
     const product = productRef.value as Product | null;
@@ -45,7 +44,7 @@ export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?
     const widthMM = variation.widthMM ?? null;
     const heightMM = variation.heightMM ?? null;
 
-    const hideZeroInPreview = ($isPreview && !disableActions.value) || !$isPreview;
+    const hideZeroInPreview = shouldHideZeroValues.value;
 
     const shouldHideWeightG = hideZeroInPreview && weightG === 0;
     const shouldHideWeightNetG = hideZeroInPreview && weightNetG === 0;

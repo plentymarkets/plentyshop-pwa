@@ -1,42 +1,66 @@
 import { getPaletteFromColor } from '../utils/tailwindHelper';
 import type { Shade } from '../utils/tailwindHelper';
 
-export default defineNuxtPlugin(async () => {
-  const buildPalette = (colorType: string, baseColor?: string): Array<Shade & { type: string }> => {
-    if (!baseColor) return [];
+const paletteCache = new Map<string, Array<Shade & { type: string }>>();
+const MAX_CACHE_SIZE = 50;
 
-    return getPaletteFromColor(colorType, baseColor).map((item: Shade) => ({
-      ...item,
-      type: colorType,
-    }));
-  };
+export default defineNuxtPlugin({
+  name: 'generate-color-palette',
+  dependsOn: ['init-initial-data'],
+  enforce: 'post',
+  async setup() {
+    const buildPalette = (colorType: string, baseColor?: string): Array<Shade & { type: string }> => {
+      if (!baseColor) return [];
 
-  try {
-    const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
-    const { getSetting: getSecondaryColor } = useSiteSettings('secondaryColor');
-    const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+      const cacheKey = `${colorType}:${baseColor}`;
+      const cached = paletteCache.get(cacheKey);
+      if (cached) {
+        paletteCache.delete(cacheKey);
+        paletteCache.set(cacheKey, cached);
+        return cached;
+      }
 
-    const primaryColor = getPrimaryColor() || '#062633';
-    const secondaryColor = getSecondaryColor() || '#31687d';
-    const headerColor = getHeaderBackgroundColor() || primaryColor || '#062633';
-    const primaryPalette = buildPalette('primary', primaryColor);
-    const secondaryPalette = buildPalette('secondary', secondaryColor);
-    const headerPalette = buildPalette('header', headerColor);
+      const palette = getPaletteFromColor(colorType, baseColor).map((item: Shade) => ({
+        ...item,
+        type: colorType,
+      }));
 
-    const colors = [...primaryPalette, ...secondaryPalette, ...headerPalette];
+      if (paletteCache.size >= MAX_CACHE_SIZE) {
+        const firstKey = paletteCache.keys().next().value;
+        if (firstKey) paletteCache.delete(firstKey);
+      }
 
-    const styleString = colors.reduce((acc, { type, weight, rgb }) => {
-      return acc + `--colors-2-${type}-${weight}: ${rgb};`;
-    }, '');
+      paletteCache.set(cacheKey, palette);
+      return palette;
+    };
 
-    useHead({
-      style: [
-        {
-          innerHTML: `:root { ${styleString} }`,
-        },
-      ],
-    });
-  } catch (error) {
-    console.error('Failed to initialize settings:', error);
-  }
+    try {
+      const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
+      const { getSetting: getSecondaryColor } = useSiteSettings('secondaryColor');
+      const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+
+      const primaryColor = getPrimaryColor() || '#062633';
+      const secondaryColor = getSecondaryColor() || '#31687d';
+      const headerColor = getHeaderBackgroundColor() || primaryColor || '#062633';
+      const primaryPalette = buildPalette('primary', primaryColor);
+      const secondaryPalette = buildPalette('secondary', secondaryColor);
+      const headerPalette = buildPalette('header', headerColor);
+
+      const colors = [...primaryPalette, ...secondaryPalette, ...headerPalette];
+
+      const styleString = colors.reduce((acc, { type, weight, rgb }) => {
+        return acc + `--colors-2-${type}-${weight}: ${rgb};`;
+      }, '');
+
+      useHead({
+        style: [
+          {
+            innerHTML: `:root { ${styleString} }`,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('Failed to initialize settings:', error);
+    }
+  },
 });

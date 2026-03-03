@@ -1,0 +1,69 @@
+name: "coverage"
+on:
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  coverage-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - branch: main
+            artifact: main
+          - branch: ${{ github.head_ref }}
+            artifact: pull-request
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ matrix.branch }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: "Install Node"
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: "Test"
+        continue-on-error: true
+        run: npm run test:coverage
+      - name: "Upload Coverage Artifact"
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-${{ matrix.artifact }}
+          path: apps/web/coverage
+
+  coverage-report:
+    needs: coverage-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: "Download Coverage Artifacts"
+        uses: actions/download-artifact@v7
+        with:
+          name: coverage-pull-request
+          path: coverage
+      - uses: actions/download-artifact@v7
+        with:
+          name: coverage-main
+          path: coverage-main
+      - name: "Report Coverage"
+        # Only works if you set `reportOnFailure: true` in your vite config
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          vite-config-path: 'apps/web/vitest.config.ts'
+          threshold-icons: "{0: '🔴', 80: '🟠', 90: '🟢'}"
+          json-summary-compare-path: coverage-main/coverage-summary.json
+

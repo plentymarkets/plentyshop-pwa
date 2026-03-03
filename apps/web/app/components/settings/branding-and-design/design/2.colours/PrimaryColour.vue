@@ -6,19 +6,24 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
-        <template #suffix>
-          <label
-            for="primary-color"
-            :style="{ backgroundColor: primaryColor }"
-            class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-          >
-            <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
-          </label>
-        </template>
-      </SfInput>
-    </label>
+
+    <EditorColorPicker v-model="primaryColor" class="w-full" :show-shop-colors="false">
+      <template #trigger="{ color, toggle }">
+        <label>
+          <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
+        </label>
+      </template>
+    </EditorColorPicker>
   </div>
 </template>
 <script setup lang="ts">

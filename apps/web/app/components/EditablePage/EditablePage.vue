@@ -45,7 +45,7 @@ import type { DragEvent, EditablePageProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
-const { $isPreview } = useNuxtApp();
+const { isInEditor, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditablePageProps>(), {
   hasEnabledActions: true,
   preventBlocksRequest: false,
@@ -56,21 +56,22 @@ const { data, getBlocksServer, cleanData } = useCategoryTemplate(
   props.type.toString(),
   useNuxtApp().$i18n.locale.value,
 );
+const { isFooterBlock } = useCategoryTemplate();
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer' && !!$isPreview),
+  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0]) && isInEditor.value),
 );
 
 const isContentEmptyInLive = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && data.value[0]?.name === 'Footer'),
+  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
 );
 
 if (!props.preventBlocksRequest) {
   await getBlocksServer(props.identifier, props.type);
 }
 
-const { footerCache } = useFooter();
+const { footerCache, addFooterBlock } = useCategoryTemplate();
 addFooterBlock({
   data,
   cachedFooter: footerCache,
@@ -89,7 +90,7 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block) => block.name === 'Footer');
+  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = data.value.splice(footerIndex, 1)[0];
@@ -111,19 +112,19 @@ const scrollToBlock = (evt: DragEvent) => {
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty } = useSiteSettings();
-const { isEditingEnabled, disableActions } = useEditor();
+const { isEditingEnabled } = useEditor();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const enabledActions = computed(
-  () => !!$isPreview && props.hasEnabledActions && disableActions.value && !localizationDrawerOpen.value,
+  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 
 onMounted(async () => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
 
-  if ($isPreview) {
+  if (isInEditor.value) {
     await import('./draggable.css');
   }
 

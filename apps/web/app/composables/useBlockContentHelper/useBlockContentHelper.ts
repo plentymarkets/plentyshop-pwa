@@ -2,7 +2,14 @@ export const useBlockContentHelper = () => {
   const viewport = useViewport();
 
   const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
-    const cleanHex = hex.replace('#', '');
+    const value = (hex || '#fff').trim();
+
+    if (value.startsWith('rgb(')) {
+      const inner = value.slice(4, -1);
+      return `rgb(${inner} / ${opacity})`;
+    }
+
+    const cleanHex = value.replace('#', '');
 
     const fullHex =
       cleanHex.length === 3

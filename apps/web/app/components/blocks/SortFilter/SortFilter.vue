@@ -93,12 +93,10 @@ const props = defineProps<SortFilterProps>();
 const showSortAndFilter = ref(false);
 const { isOpen, open, close } = useDisclosure();
 const { t } = useI18n({ useScope: 'global' });
-const clientPreview = ref(false);
 
-const { $isPreview } = useNuxtApp();
-onNuxtReady(() => {
-  clientPreview.value = !!$isPreview;
-});
+const { isInEditorClient } = useEditorState();
+const clientPreview = computed(() => isInEditorClient.value);
+
 const showAllFiltersImmediately = computed(() => props.content?.showAllFiltersImmediately ?? true);
 const numberOfFiltersToShowInitially = computed(() => props.content?.numberOfFiltersToShowInitially ?? 0);
 

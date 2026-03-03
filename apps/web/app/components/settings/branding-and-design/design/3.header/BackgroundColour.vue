@@ -6,19 +6,24 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <label>
-      <SfInput v-model="headerBackgroundColor" type="text" data-testid="background-icon-color">
-        <template #suffix>
-          <label
-            for="icon-background-color"
-            :style="{ backgroundColor: headerBackgroundColor }"
-            class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-          >
-            <input id="icon-background-color" v-model="headerBackgroundColor" type="color" class="invisible w-8" />
-          </label>
-        </template>
-      </SfInput>
-    </label>
+
+    <EditorColorPicker v-model="headerBackgroundColor" class="w-full">
+      <template #trigger="{ color, toggle }">
+        <label>
+          <SfInput v-model="headerBackgroundColor" type="text" data-testid="header-background-color-select">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
+        </label>
+      </template>
+    </EditorColorPicker>
   </div>
 </template>
 <script setup lang="ts">

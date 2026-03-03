@@ -17,7 +17,7 @@ import { SfSwitch } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('enableGoogleAnalytics');
 
 const enableGoogleAnalytics = computed({
-  get: () => getSetting() === 'true',
+  get: () => !!getSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

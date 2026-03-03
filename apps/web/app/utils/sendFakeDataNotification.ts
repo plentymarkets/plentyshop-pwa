@@ -2,7 +2,7 @@
  * Sends a notification to inform users about example data in editor preview mode.
  *
  * This notification only appears when the application is running in PlentyONE editor
- * preview mode ($isPreview is true). It informs users that fields without product data
+ * preview mode (isInEditor is true). It informs users that fields without product data
  * are displaying example data for editing purposes, and suggests switching to preview
  * mode to view only real data.
  *
@@ -13,8 +13,8 @@
  * ```
  */
 export const sendFakeDataNotification = () => {
-  const { $isPreview } = useNuxtApp();
-  if (!$isPreview) return;
+  const { isInEditor } = useEditorState();
+  if (!isInEditor.value) return;
 
   const { send } = useNotification();
   send({

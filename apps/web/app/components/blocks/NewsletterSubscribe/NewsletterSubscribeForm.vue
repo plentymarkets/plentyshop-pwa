@@ -118,18 +118,21 @@
       </div>
       <div class="mb-6">
         <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
-
-        <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
-          <template #suffix>
-            <label
-              for="text-color"
-              :style="{ backgroundColor: newsletterBlock.text.bgColor }"
-              class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-            >
-              <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
-            </label>
+        <EditorColorPicker v-model="newsletterBlock.text.bgColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
           </template>
-        </SfInput>
+        </EditorColorPicker>
       </div>
     </UiAccordionItem>
     <UiAccordionItem

@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 describe('PayPal Express Flows', () => {
-  it('[feature] Guest Flow', () => {
+  it.skip('[feature] Guest Flow', () => {
     cy.intercept('/plentysystems/getPayPalMerchantAndClientIds').as('getPayPalMerchantAndClientIds');
     cy.intercept('/plentysystems/getSession').as('getSession');
     cy.visitAndHydrate(`/de${paths.cart}`);

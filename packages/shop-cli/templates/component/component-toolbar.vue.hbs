@@ -1,0 +1,36 @@
+<template>
+  <SfTooltip
+    :label="getEditorTranslation('tooltip')"
+    placement="right"
+    class="inline-grid font-editor"
+    :show-arrow="true"
+  >
+    <button
+      type="button"
+      class="editor-button relative py-2 flex justify-center"
+      :class="{ 'bg-editor-button text-white rounded-md': active }"
+      :aria-label="getEditorTranslation('aria-label')"
+      data-testid="{{kebabCase name}}-toolbar-trigger"
+    >
+      <SfIconSettings v-if="active" class="text-white" />
+      <SfIconSettings v-else class="text-black" />
+    </button>
+  </SfTooltip>
+</template>
+
+<script setup lang="ts">
+import { SfTooltip, SfIconSettings } from '@storefront-ui/vue';
+
+defineProps({
+  active: Boolean,
+});
+</script>
+
+<i18n lang="json">
+{
+  "en": {
+    "tooltip": "{{pascalCase name}}: Configure settings for this component.",
+    "aria-label": "Open {{pascalCase name}} settings drawer"
+  }
+}
+</i18n>
