@@ -27,7 +27,7 @@ describe('ItemUrlHandling', () => {
     seoSettings.checkDrawerNotVisible();
   });
 
-  it('should open the item URL Handling section', () => {
+  it('should open the item URL Scheme section', () => {
     seoEditorInit();
 
     seoSettings
@@ -40,7 +40,7 @@ describe('ItemUrlHandling', () => {
     seoSettings.checkDrawerNotVisible();
   });
 
-  it('should toggle between Modern and Legacy options', () => {
+  it('should toggle between Unique variant URLs and Single Product URL options', () => {
     seoEditorInit();
 
     seoSettings
