@@ -12,6 +12,15 @@ export class PageObject {
   }
 
   /**
+   * Clears the banner UUID cache
+   * Should be called in beforeEach when banner structure change between tests
+   */
+  clearBannerCache() {
+    this.cachedBannerUuids.clear();
+    return this;
+  }
+
+  /**
    * Extracts UUID from a banner block test-id attribute
    * @param index Index of the banner to get
    * @returns Chainable UUID string

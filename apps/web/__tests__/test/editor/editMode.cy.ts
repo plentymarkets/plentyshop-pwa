@@ -11,6 +11,7 @@ describe('EditMode', () => {
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
+    editor.clearBannerCache();
   });
 
   it('should display and interact with the editor textarea', () => {

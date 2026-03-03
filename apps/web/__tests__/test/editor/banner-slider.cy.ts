@@ -38,6 +38,7 @@ describe('Banner Slider Block Form', () => {
     cookieBar.acceptAll();
     openSettingsForBannerSliderBlock();
 
+    bannerSlider.clearBannerCache();
     bannerSlider.getFirstBannerBlockUuid().then((uuid) => {
       firstBannerBlockUuid = uuid;
     });
