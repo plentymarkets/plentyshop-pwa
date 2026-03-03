@@ -9,7 +9,7 @@ definePageMeta({
 });
 const { setPageMeta } = usePageMeta();
 const { getSetting } = useSiteSettings('shippingTextCategoryId');
-const { categoryTemplateData, fetchCategoryTemplate } = useCategoryTemplate();
+const { categoryTemplateData, fetchCategoryTemplate } = useBlockTemplates();
 
 await fetchCategoryTemplate(Number(getSetting()));
 

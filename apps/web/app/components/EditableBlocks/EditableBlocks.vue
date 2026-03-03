@@ -59,7 +59,7 @@ const {
   data: templateData,
   getBlocksServer,
   isFooterBlock,
-} = useCategoryTemplate(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
+} = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
 const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
 

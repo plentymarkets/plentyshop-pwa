@@ -1,5 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { useCategoryTemplate } from '../useCategoryTemplate';
+import { useBlockTemplates } from '../useBlockTemplates';
 import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
 import type { Block } from '@plentymarkets/shop-api';
 
@@ -114,7 +114,7 @@ const createMockState = () => ({
   },
 });
 
-describe('useCategoryTemplate', () => {
+describe('useBlockTemplates', () => {
   let mockStateRef: ReturnType<typeof createMockState>;
   let mockFooterCacheRef: { value: FooterBlock | null };
   let mockGetBlocks: ReturnType<typeof vi.fn>;
@@ -181,13 +181,13 @@ describe('useCategoryTemplate', () => {
         expected: null,
       },
     ])('$name', ({ input, expected }) => {
-      const { extractFooterContentFromBlocks } = useCategoryTemplate();
+      const { extractFooterContentFromBlocks } = useBlockTemplates();
       expect(extractFooterContentFromBlocks(input)).toEqual(expected);
     });
 
     it('should return null and log warning for invalid JSON', () => {
       const consoleSpy = setupConsoleSpy();
-      const { extractFooterContentFromBlocks } = useCategoryTemplate();
+      const { extractFooterContentFromBlocks } = useBlockTemplates();
 
       expect(extractFooterContentFromBlocks('invalid json')).toBeNull();
       expect(consoleSpy).toHaveBeenCalledWith('Failed to extract footer from blocks:', expect.any(Error));
@@ -198,14 +198,14 @@ describe('useCategoryTemplate', () => {
   describe('fetchFooterBlock', () => {
     it('should return cached footer if available', async () => {
       mockFooterCacheRef.value = mockFooterBlock;
-      const result = await useCategoryTemplate().fetchFooterBlock();
+      const result = await useBlockTemplates().fetchFooterBlock();
       expect(result).toBe(mockFooterBlock);
       expect(mockGetBlocks).not.toHaveBeenCalled();
     });
 
     it('should fetch from API and cache successful response', async () => {
       setupApiResponse({ data: [{ name: 'Header', content: { title: 'Header' } }, mockFooterBlock] });
-      const { fetchFooterBlock } = useCategoryTemplate();
+      const { fetchFooterBlock } = useBlockTemplates();
       const { $i18n } = useNuxtApp();
 
       const result = await fetchFooterBlock();
@@ -217,13 +217,13 @@ describe('useCategoryTemplate', () => {
 
     it('should call SDK getBlocks with correct parameters', async () => {
       setupApiCall();
-      await useCategoryTemplate().fetchFooterBlock();
+      await useBlockTemplates().fetchFooterBlock();
       expect(mockGetBlocks).toHaveBeenCalledWith({ identifier: 'index', type: 'immutable', blocks: 'Footer' });
     });
 
     it('should return defaults if no footer block found in API response', async () => {
       setupApiResponse({ data: [{ name: 'Header' }, { name: 'Content' }] });
-      const result = await useCategoryTemplate().fetchFooterBlock();
+      const result = await useBlockTemplates().fetchFooterBlock();
       expect(result.name).toBe('Footer');
       expect(result.type).toBe('content');
       expect(mockFooterCacheRef.value).toEqual(result);
@@ -236,7 +236,7 @@ describe('useCategoryTemplate', () => {
       };
       useAsyncData.mockImplementation(throwError);
 
-      const result = await useCategoryTemplate().fetchFooterBlock();
+      const result = await useBlockTemplates().fetchFooterBlock();
 
       expect(result.name).toBe('Footer');
       expect(result.type).toBe('content');
@@ -249,18 +249,18 @@ describe('useCategoryTemplate', () => {
   describe('cache management', () => {
     it('getFooterBlock - should return cached footer if available', () => {
       mockFooterCacheRef.value = mockFooterBlock;
-      expect(useCategoryTemplate().getFooterBlock()).toBe(mockFooterBlock);
+      expect(useBlockTemplates().getFooterBlock()).toBe(mockFooterBlock);
     });
 
     it('getFooterBlock - should return default block if cache is empty', () => {
-      const result = useCategoryTemplate().getFooterBlock();
+      const result = useBlockTemplates().getFooterBlock();
       expect(result.name).toBe('Footer');
       expect(result.type).toBe('content');
     });
 
     it('clearFooterCache - should clear the cached footer', () => {
       mockFooterCacheRef.value = mockFooterBlock;
-      useCategoryTemplate().clearFooterCache();
+      useBlockTemplates().clearFooterCache();
       expect(mockFooterCacheRef.value).toBeNull();
     });
 
@@ -269,7 +269,7 @@ describe('useCategoryTemplate', () => {
         ...mockFooterBlock,
         content: { ...(mockFooterBlock.content as FooterContent), footnote: '© Updated Company 2024' },
       };
-      useCategoryTemplate().updateFooterCache(newBlock);
+      useBlockTemplates().updateFooterCache(newBlock);
       expect(mockFooterCacheRef.value).toBe(newBlock);
     });
   });
@@ -277,7 +277,7 @@ describe('useCategoryTemplate', () => {
   describe('factory functions', () => {
     it('createFooterBlock - should create a footer block with provided content', () => {
       const content = mockFooterBlock.content as FooterContent;
-      const result = useCategoryTemplate().createFooterBlock(content);
+      const result = useBlockTemplates().createFooterBlock(content);
       expect(result.name).toBe('Footer');
       expect(result.type).toBe('content');
       expect(result.content).toBe(content);
@@ -286,13 +286,13 @@ describe('useCategoryTemplate', () => {
     it('createFooterBlock - should create a footer block with custom meta', () => {
       const content = mockFooterBlock.content as FooterContent;
       const meta = { uuid: 'custom-uuid', isGlobalTemplate: false };
-      const result = useCategoryTemplate().createFooterBlock(content, meta);
+      const result = useBlockTemplates().createFooterBlock(content, meta);
       expect(result.meta.uuid).toBe('custom-uuid');
       expect(result.meta.isGlobalTemplate).toBe(false);
     });
 
     it('createDefaultFooterBlock - should create a default footer block', () => {
-      const result = useCategoryTemplate().createDefaultFooterBlock();
+      const result = useBlockTemplates().createDefaultFooterBlock();
       expect(result.name).toBe('Footer');
       expect(result.type).toBe('content');
       expect(result.meta.isGlobalTemplate).toBe(true);
@@ -303,20 +303,20 @@ describe('useCategoryTemplate', () => {
     it('addFooterBlock - should add footer if not exists', () => {
       const data = ref([...mockBlocks]);
       const cachedFooter = ref(mockFooterBlock);
-      useCategoryTemplate().addFooterBlock({ data, cachedFooter });
+      useBlockTemplates().addFooterBlock({ data, cachedFooter });
       expect(data.value).toHaveLength(3);
       expect(data.value[2]).toStrictEqual(mockFooterBlock);
     });
 
     it('addFooterBlock - should not add footer if already exists', () => {
       const data = ref([...mockBlocks, mockFooterBlock]);
-      useCategoryTemplate().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock) });
+      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock) });
       expect(data.value).toHaveLength(3);
     });
 
     it('addFooterBlock - should use default footer if cache is null', () => {
       const data = ref([...mockBlocks]);
-      useCategoryTemplate().addFooterBlock({ data, cachedFooter: ref(null) });
+      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(null) });
       expect(data.value).toHaveLength(3);
       expect(data.value[2]?.name).toBe('Footer');
     });
@@ -324,7 +324,7 @@ describe('useCategoryTemplate', () => {
     it('addFooterBlock - should also add to cleanData if provided', () => {
       const data = ref([...mockBlocks]);
       const cleanData = ref([...mockBlocks]);
-      useCategoryTemplate().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock), cleanData });
+      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock), cleanData });
       expect(data.value).toHaveLength(3);
       expect(cleanData.value).toHaveLength(3);
     });
@@ -336,21 +336,21 @@ describe('useCategoryTemplate', () => {
         meta: { uuid: 'test-uuid' },
         content: { column1: { title: 'Custom Legal' } },
       };
-      const result = useCategoryTemplate().mapFooterData(inputBlock);
+      const result = useBlockTemplates().mapFooterData(inputBlock);
       expect(result.name).toBe('Footer');
       expect((result.content as FooterContent).column1.title).toBe('Custom Legal');
       expect((result.content as FooterContent).column2).toBeDefined();
     });
 
     it('mapFooterData - should return default footer if input is null', () => {
-      const result = useCategoryTemplate().mapFooterData(null);
+      const result = useBlockTemplates().mapFooterData(null);
       expect(result.name).toBe('Footer');
       expect(result.type).toBe('content');
     });
   });
 
   it('FOOTER_SWITCH_DEFINITIONS - should expose footer switch definitions', () => {
-    const { FOOTER_SWITCH_DEFINITIONS } = useCategoryTemplate();
+    const { FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates();
     expect(FOOTER_SWITCH_DEFINITIONS).toBeDefined();
     expect(Array.isArray(FOOTER_SWITCH_DEFINITIONS)).toBe(true);
     expect(FOOTER_SWITCH_DEFINITIONS.length).toBeGreaterThan(0);
@@ -359,7 +359,7 @@ describe('useCategoryTemplate', () => {
   describe('getBlocksServer', () => {
     it('should fetch blocks from server using useAsyncData', async () => {
       setupApiResponse({ data: mockBlocks });
-      const { getBlocksServer } = useCategoryTemplate('test-id', 'category');
+      const { getBlocksServer } = useBlockTemplates('test-id', 'category');
       const { $i18n } = useNuxtApp();
 
       await getBlocksServer('test-id', 'category');
@@ -374,13 +374,13 @@ describe('useCategoryTemplate', () => {
     it('should handle errors gracefully', async () => {
       setupApiError('Server error');
       const { send } = useNotification();
-      await useCategoryTemplate().getBlocksServer('test-id', 'category');
+      await useBlockTemplates().getBlocksServer('test-id', 'category');
       expect(send).toHaveBeenCalledWith({ type: 'negative', message: 'Server error' });
     });
 
     it('should set loading state correctly', async () => {
       setupApiResponse({ data: mockBlocks });
-      const { getBlocksServer, loading } = useCategoryTemplate();
+      const { getBlocksServer, loading } = useBlockTemplates();
       await getBlocksServer('test-id', 'category');
       expect(loading.value).toBe(false);
     });
@@ -389,14 +389,14 @@ describe('useCategoryTemplate', () => {
   describe('getBlocks', () => {
     it('should fetch blocks directly from SDK', async () => {
       mockGetBlocks.mockResolvedValue({ data: mockBlocks });
-      await useCategoryTemplate().getBlocks('test-id', 'category');
+      await useBlockTemplates().getBlocks('test-id', 'category');
       expect(mockGetBlocks).toHaveBeenCalledWith({ identifier: 'test-id', type: 'category', blocks: undefined });
       expect(mockStateRef.value.loading).toBe(false);
     });
 
     it('should handle blocks parameter', async () => {
       mockGetBlocks.mockResolvedValue({ data: mockBlocks });
-      await useCategoryTemplate().getBlocks('test-id', 'category', 'Footer');
+      await useBlockTemplates().getBlocks('test-id', 'category', 'Footer');
       expect(mockGetBlocks).toHaveBeenCalledWith({ identifier: 'test-id', type: 'category', blocks: 'Footer' });
     });
   });
@@ -404,7 +404,7 @@ describe('useCategoryTemplate', () => {
   describe('saveBlocks', () => {
     it('should save blocks successfully', async () => {
       mockDoSaveBlocks.mockResolvedValue({ success: true });
-      const result = await useCategoryTemplate().saveBlocks('test-id', 'category', JSON.stringify(mockBlocks));
+      const result = await useBlockTemplates().saveBlocks('test-id', 'category', JSON.stringify(mockBlocks));
       expect(mockDoSaveBlocks).toHaveBeenCalledWith({
         identifier: 'test-id',
         entityType: 'category',
@@ -415,7 +415,7 @@ describe('useCategoryTemplate', () => {
 
     it('should update footer cache when saving footer block', async () => {
       mockDoSaveBlocks.mockResolvedValue({ success: true });
-      await useCategoryTemplate().saveBlocks('test-id', 'category', JSON.stringify([...mockBlocks, mockFooterBlock]));
+      await useBlockTemplates().saveBlocks('test-id', 'category', JSON.stringify([...mockBlocks, mockFooterBlock]));
       expect(mockFooterCacheRef.value).toBeDefined();
     });
 
@@ -425,7 +425,7 @@ describe('useCategoryTemplate', () => {
       const noOp = () => {};
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(noOp);
 
-      const result = await useCategoryTemplate().saveBlocks('test-id', 'category', JSON.stringify(mockBlocks));
+      const result = await useBlockTemplates().saveBlocks('test-id', 'category', JSON.stringify(mockBlocks));
 
       expect(result).toBe(false);
       expect(useHandleError).toHaveBeenCalledWith(error);
@@ -436,32 +436,32 @@ describe('useCategoryTemplate', () => {
 
   it('updateBlocks - should update blocks in state', () => {
     const newBlocks = [...mockBlocks];
-    useCategoryTemplate().updateBlocks(newBlocks);
+    useBlockTemplates().updateBlocks(newBlocks);
     expect(mockStateRef.value.data).toBe(newBlocks);
   });
 
   it('setDefaultTemplate - should set default template data', () => {
     const defaultBlocks = [...mockBlocks];
-    useCategoryTemplate().setDefaultTemplate(defaultBlocks);
+    useBlockTemplates().setDefaultTemplate(defaultBlocks);
     expect(mockStateRef.value.defaultTemplateData).toBe(defaultBlocks);
   });
 
   it('fetchCategoryTemplate - should fetch category template data', async () => {
     setupApiResponse({ data: { id: 1, name: 'Test Template' } });
-    await useCategoryTemplate().fetchCategoryTemplate(1);
+    await useBlockTemplates().fetchCategoryTemplate(1);
     expect(useAsyncData).toHaveBeenCalledWith('fetchCategoryTemplate-1', expect.any(Function));
   });
 
   describe('setupBlocks', () => {
     it('should setup blocks in state', () => {
-      useCategoryTemplate().setupBlocks(mockBlocks);
+      useBlockTemplates().setupBlocks(mockBlocks);
       expect(mockStateRef.value.data).toEqual(mockBlocks);
       expect(mockStateRef.value.cleanData).toBeDefined();
     });
 
     it('should use default template if no blocks provided', () => {
       const defaultBlocks = [mockBlocks[0]] as Block[];
-      const { setupBlocks, setDefaultTemplate } = useCategoryTemplate();
+      const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate(defaultBlocks);
       setupBlocks([]);
       expect(mockStateRef.value.data).toEqual(defaultBlocks);
@@ -470,7 +470,7 @@ describe('useCategoryTemplate', () => {
 
   describe('State management', () => {
     it('should expose readonly refs for state properties', () => {
-      const { data, cleanData, loading, categoryTemplateData, footerCache } = useCategoryTemplate();
+      const { data, cleanData, loading, categoryTemplateData, footerCache } = useBlockTemplates();
       expect(data).toBeDefined();
       expect(cleanData).toBeDefined();
       expect(loading).toBeDefined();
@@ -479,14 +479,14 @@ describe('useCategoryTemplate', () => {
     });
 
     it('should create unique state per identifier-type-locale combination', () => {
-      useCategoryTemplate('id1', 'type1', 'en');
-      useCategoryTemplate('id2', 'type2', 'de');
+      useBlockTemplates('id1', 'type1', 'en');
+      useBlockTemplates('id2', 'type2', 'de');
       expect(useState).toHaveBeenCalledWith(
-        expect.stringContaining('useCategoryTemplate-id1-type1-en'),
+        expect.stringContaining('useBlockTemplates-id1-type1-en'),
         expect.any(Function),
       );
       expect(useState).toHaveBeenCalledWith(
-        expect.stringContaining('useCategoryTemplate-id2-type2-de'),
+        expect.stringContaining('useBlockTemplates-id2-type2-de'),
         expect.any(Function),
       );
     });
