@@ -11,7 +11,7 @@
       :loop="true"
       :pagination="paginationConfig"
       :navigation="navigationConfig"
-      class="!z-0 bg-red-500 !w-full [&_.swiper-wrapper]:items-stretch [&_.swiper-slide]:h-auto [&_.swiper-slide>div]:h-full [&_.swiper-slide>div>.block-wrapper]:h-full"
+      class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
     >
@@ -24,6 +24,7 @@
             ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: visibleContent.length })
             : null
         "
+        class="!h-auto"
         v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
       >
