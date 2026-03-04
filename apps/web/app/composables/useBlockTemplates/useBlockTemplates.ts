@@ -197,6 +197,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     loading: false,
   }));
 
+  /**
+   * Shared footer cache across all pages in the same locale.
+   * Populated by the footer-block plugin on app startup from homepage API.
+   * This ensures all pages (homepage, category, product) display the same footer.
+   */
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   /** Clears the cached footer block, forcing a fresh fetch on next access */
@@ -213,7 +218,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const extractFooterContentFromBlocks = extractFooterContentFromBlocksHelper;
   const mapFooterData = mapFooterDataHelper;
 
-  /** Adds a footer block to the blocks array if one doesn't already exist */
+  /**
+   * Legacy method: Adds a footer block to blocks array if one doesn't exist.
+   * @deprecated No longer needed - setupBlocks() automatically handles footer injection.
+   * Kept for backward compatibility only.
+   */
   const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
     const footerExists = data.value.some((block) => isFooterBlock(block));
 
@@ -235,7 +244,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
   };
 
-  /** Fetches the footer block from the server or returns cached version */
+  /**
+   * Fetches the footer block from homepage API and caches it.
+   * Called by the footer-block plugin on app startup to populate the cache.
+   * Returns cached version on subsequent calls without refetching.
+   */
   const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) return footerCache.value;
 
@@ -325,27 +338,38 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data ?? []);
   };
 
-  /** Sets up blocks in state, applying migrations and falling back to default template if empty */
+  /**
+   * Sets up blocks in state with footer cache injection.
+   *
+   * This function ensures a single source of truth for the footer:
+   * 1. Any footer from fetched blocks (API or default templates) is discarded
+   * 2. The footer from cache (populated by plugin from homepage) is always used
+   * 3. If cache is empty, a default footer is created as fallback
+   *
+   * This guarantees the same footer appears on all pages regardless of their template.
+   */
   const setupBlocks = (fetchedBlocks: Block[]) => {
-    const blocks = fetchedBlocks;
-
-    if (Array.isArray(blocks)) {
-      migrateAllBlocks(blocks);
-
-      // Remove any footer from blocks (could be from default template)
-      // We'll add the cached/saved footer after this
-      const blocksWithoutFooter = blocks.filter((block) => !isFooterBlock(block));
-      blocks.splice(0, blocks.length, ...blocksWithoutFooter);
+    if (!Array.isArray(fetchedBlocks)) {
+      console.warn('setupBlocks called with non-array:', fetchedBlocks);
+      return;
     }
 
-    // Always add the cached footer (or create default if cache is empty)
-    const footerBlock = footerCache.value || createDefaultFooterBlockHelper();
-    blocks.push(footerBlock);
+    // Apply migrations to all blocks (mutates in place)
+    migrateAllBlocks(fetchedBlocks);
 
-    if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
-      state.value.data.splice(0, state.value.data.length, ...blocks);
+    // Build final blocks array: all non-footer blocks + the cached footer
+    const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
+    const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();
+    const finalBlocks = [...contentBlocks, cachedOrDefaultFooter];
+
+    // Update state only if content changed (avoid unnecessary reactivity triggers)
+    const isDifferent = JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks);
+    if (isDifferent) {
+      state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
+
+    // Store clean copy for reset/comparison purposes
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
   };
 
   /** Updates the blocks in state with new block data */
