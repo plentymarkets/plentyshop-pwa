@@ -110,12 +110,12 @@
 
     <template v-if="editingSectionIndex === undefined">
       <UiAccordionItem
-        v-model="colorsOpen"
+        v-model="layoutOpen"
         summary-active-class="bg-neutral-100"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2 data-testid="utility-bar-colors-title">{{ getEditorTranslation('colors-label') }}</h2>
+          <h2 data-testid="utility-bar-layout-title">{{ getEditorTranslation('layout-label') }}</h2>
         </template>
 
         <div class="space-y-4 py-4">
@@ -132,7 +132,7 @@
             </EditorColorPicker>
           </div>
 
-          <!-- Icon Color -->
+         
           <div>
             <UiFormLabel class="mb-1">{{ getEditorTranslation('icon-color-label') }}</UiFormLabel>
             <EditorColorPicker v-model="configuration.colors.iconColor" class="w-full">
@@ -146,16 +146,6 @@
             </EditorColorPicker>
           </div>
         </div>
-      </UiAccordionItem>
-
-      <UiAccordionItem
-        v-model="layoutOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2 data-testid="utility-bar-layout-title">{{ getEditorTranslation('layout-label') }}</h2>
-        </template>
 
         <div class="py-2">
           <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
@@ -197,11 +187,6 @@
               />
             </div>
           </div>
-          <div class="px-4 py-3">
-            <span class="typography-text-xs text-neutral-700">
-              {{ getEditorTranslation('spacing-around') }}
-            </span>
-          </div>
         </div>
       </UiAccordionItem>
     </template>
@@ -226,7 +211,6 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const elementsOpen = ref(true);
 const layoutOpen = ref(true);
-const colorsOpen = ref(true);
 const editingSectionIndex = ref<number | undefined>(undefined);
 const openSectionMenuIndex = ref<number | undefined>(undefined);
 
@@ -364,15 +348,14 @@ defineExpose({
 <i18n lang="json">
 {
   "en": {
-    "elements-group-label": "Sections",
+    "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
     "back-aria": "Go back to sections list",
     "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "layout-label": "Layout",
-    "sticky-label": "Sticky Header",
-    "colors-label": "Colors",
+
     "header-bg-color-label": "Header Background Color",
     "icon-color-label": "Icon Color",
     "padding-label": "Padding (px)",
@@ -382,15 +365,14 @@ defineExpose({
     "actions-section-label": "Actions"
   },
   "de": {
-    "elements-group-label": "Sections",
+    "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
     "back-aria": "Go back to sections list",
     "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "layout-label": "Layout",
-    "sticky-label": "Sticky Header",
-    "colors-label": "Colors",
+
     "header-bg-color-label": "Header Background Color",
     "icon-color-label": "Icon Color",
     "padding-label": "Padding (px)",
