@@ -118,7 +118,7 @@
     </UiAccordionItem>
 
     <div v-else-if="slides[editingSlideIndex]" class="space-y-0">
-      <BlocksBannerCarouselBannerForm :uuid="slides[editingSlideIndex]!.meta.uuid" />
+      <component :is="blockForm" :uuid="slides[editingSlideIndex]!.meta.uuid" />
     </div>
 
     <template v-if="editingSlideIndex === undefined">
@@ -170,17 +170,15 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
-import type { CarouselStructureProps } from './types';
-import { v4 as uuid } from 'uuid';
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { CarouselStructureProps, SlideBlock } from './types';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
-const { updateBannerItems, setIndex, activeSlideIndex } = useCarousel();
+const { updateCarouselItems, setIndex, activeSlideIndex, createSlide } = useCarousel();
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
@@ -200,6 +198,21 @@ const controlsOpen = ref(true);
 
 setIndex(blockUuid.value, 0);
 
+const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
+  string,
+  () => Promise<{ default: unknown }>
+>;
+
+const blockForm = computed(() => {
+  if (editingSlideIndex.value === undefined) return null;
+
+  const slide = slides.value[editingSlideIndex.value];
+  if (!slide) return null;
+
+  const key = Object.keys(blockForms).find((path) => path.endsWith(`/${slide.name}Form.vue`));
+  const loader = key ? blockForms[key] : undefined;
+  return loader ? defineAsyncComponent(loader) : null;
+});
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
@@ -213,7 +226,7 @@ const currentActiveSlideIndex = computed(() => activeSlideIndex.value[blockUuid.
 
 const slides = computed({
   get: () => {
-    const content = (carouselStructure.value?.content || []) as BannerProps[];
+    const content = (carouselStructure.value?.content || []) as SlideBlock[];
 
     return content.map((slide) => ({
       ...slide,
@@ -223,7 +236,7 @@ const slides = computed({
       },
     }));
   },
-  set: (value: BannerProps[]) => updateBannerItems(value, blockUuid.value),
+  set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
 });
 
 const editSlide = (index: number) => {
@@ -281,48 +294,10 @@ onMounted(() => {
 });
 
 const addSlide = async () => {
-  const newSlide: BannerProps = {
-    name: 'Banner',
-    type: 'content',
-    configuration: {
-      visible: true,
-    },
-    content: {
-      image: {
-        wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-        brightness: 0.5,
-        alt: '',
-      },
-      text: {
-        pretitle: 'PreTitle',
-        title: 'Title',
-        subtitle: 'SubTitle',
-        htmlDescription: 'Text that supports HTML formatting',
-        color: '#000',
-        bgcolor: '#fff',
-        bgopacity: 1,
-        textAlignment: 'left',
-        justify: 'center',
-        align: 'left',
-        background: false,
-      },
-      button: {
-        label: 'Button',
-        link: '/',
-        variant: 'primary',
-      },
-    },
-    meta: {
-      uuid: uuid(),
-    },
-    lazyLoading: 'eager',
-    index: slides.value.length,
-  };
+  const slideType = slides.value[0]?.name ?? 'Banner';
+  const newSlide = await createSlide(slideType, slides.value.length);
 
-  slides.value = [...slides.value, newSlide] as BannerProps[];
+  slides.value = [...slides.value, newSlide];
 
   await nextTick();
 
@@ -332,7 +307,7 @@ const addSlide = async () => {
 
 const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
-  slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
+  slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
   setIndex(blockUuid.value, 0);
   await nextTick();
   openSlideMenuIndex.value = undefined;

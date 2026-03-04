@@ -1,6 +1,6 @@
 <template>
   <footer
-    v-if="shouldRender && resolvedContent"
+    v-if="resolvedContent"
     class="pt-10"
     :style="{
       backgroundColor: resolvedContent.colors?.background,
@@ -95,8 +95,7 @@ const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock, createDefaultFooterBlock } =
-  useCategoryTemplate();
+const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useBlockTemplates();
 
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
@@ -104,9 +103,9 @@ const shouldRender = computed(() => {
 });
 
 const resolvedContent = computed(() => {
-  const block = props.content
-    ? createFooterBlock(props.content, props.meta)
-    : footerCache.value || createDefaultFooterBlock();
+  if (!shouldRender.value) return null;
+
+  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
 
   return mapFooterData(block).content as FooterContent;
 });

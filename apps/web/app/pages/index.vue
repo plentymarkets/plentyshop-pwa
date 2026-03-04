@@ -1,17 +1,11 @@
 <template>
   <div>
-    <EditablePage :identifier="'index'" :type="'immutable'" />
+    <EditableBlocks :identifier="'index'" :type="'immutable'" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { Block } from '@plentymarkets/shop-api';
-import homepageTemplateDataDe from '~/composables/useCategoryTemplate/homepageTemplateDataDe.json';
-import homepageTemplateDataEn from '~/composables/useCategoryTemplate/homepageTemplateDataEn.json';
-import type { Locale } from '#i18n';
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
+import { getHomepageTemplate } from '~/utils/blockTemplates/homepage';
 
 definePageMeta({
   pageType: 'static',
@@ -21,14 +15,11 @@ definePageMeta({
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
 });
 
-const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? (homepageTemplateDataDe as Block[]) : (homepageTemplateDataEn as Block[]);
-
 const { $i18n } = useNuxtApp();
 
 const { setPageMeta } = usePageMeta();
 const route = useRoute();
-const { setDefaultTemplate } = useCategoryTemplate(
+const { setDefaultTemplate } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
@@ -37,7 +28,8 @@ const { setDefaultTemplate } = useCategoryTemplate(
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);
 
-setDefaultTemplate(useLocaleSpecificHomepageTemplate($i18n.locale.value));
+const homepageTemplate = await getHomepageTemplate($i18n.locale.value);
+setDefaultTemplate(homepageTemplate);
 
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();

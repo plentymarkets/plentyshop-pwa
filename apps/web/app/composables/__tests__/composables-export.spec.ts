@@ -19,6 +19,7 @@ describe('composables index exports', () => {
     'useCategorySettingsCollection',
     'useDrawerState',
     'useEditor',
+    'useEditorUnsavedChangesGuard',
     'useJsonEditor',
     'useToolbar',
     'useUpdatePageTemplate',
