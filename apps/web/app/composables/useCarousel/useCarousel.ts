@@ -25,10 +25,14 @@ export const useCarousel: UseCarouselReturn = () => {
     const fallbackLabel = `Slide ${index + 1}`;
     if (!module.labelPath) return fallbackLabel;
 
-    const label = module.labelPath.split('.').reduce((acc: any, key: string) => acc?.[key], slide);
+    const label = module.labelPath
+      .split('.')
+      .reduce((acc: Record<string, unknown>, key: string) => acc?.[key], slide as unknown);
     if (!label) return fallbackLabel;
 
-    const plainText = String(label).replace(/<[^>]*>/g, '').trim();
+    const plainText = String(label)
+      .replace(/<[^>]*>/g, '')
+      .trim();
     if (!plainText) return fallbackLabel;
     return plainText.length > 30 ? plainText.slice(0, 30) + '…' : plainText;
   };

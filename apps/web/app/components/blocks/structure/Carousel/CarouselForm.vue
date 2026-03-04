@@ -241,9 +241,7 @@ const slides = computed({
 });
 
 const resolveSlideLabels = async () => {
-  slideLabels.value = await Promise.all(
-    slides.value.map((slide, index) => getSlideLabel(slide, index))
-  );
+  slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
 };
 
 watch(slides, resolveSlideLabels, { immediate: true, deep: true });
