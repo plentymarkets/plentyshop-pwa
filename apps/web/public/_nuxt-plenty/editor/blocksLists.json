@@ -1,4 +1,95 @@
 {
+  "utility-bar": {
+    "category": "utility-bar",
+    "accessControl": ["content", "productCategory", "product"],
+    "title": "Utility Bar",
+    "blockName": "UtilityBar",
+    "variations": [
+      {
+        "title": "Utility Bar Default",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility_bar.png",
+        "template": {
+          "en": {
+            "name": "UtilityBar",
+            "type": "immutable",
+            "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
+            "configuration": {
+              "spacing": {
+                "paddingX": "px-4 md:px-10",
+                "paddingY": "py-2 md:py-5"
+              },
+              "colors": {
+                "headerBackgroundColor": "#000000",
+                "iconColor": "#ffffff"
+              },
+              "sectionOrder": {
+                "sections": ["logo", "search", "actions"]
+              },
+              "sectionVisibility": {
+                "logo": true,
+                "search": true,
+                "actions": true
+              },
+              "logo": {
+                "logo": ""
+              },
+              "search": {
+                "displayMode": "full"
+              },
+              "actions": {
+                "order": ["language", "wishlist", "cart", "account"],
+                "visibility": {
+                  "language": true,
+                  "wishlist": true,
+                  "cart": true,
+                  "account": true
+                }
+              }
+            }
+          },
+          "de": {
+            "name": "UtilityBar",
+            "type": "immutable",
+            "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
+            "configuration": {
+              "isSticky": true,
+              "spacing": {
+                "paddingX": "px-4 md:px-10",
+                "paddingY": "py-2 md:py-5"
+              },
+              "colors": {
+                "headerBackgroundColor": "#000000",
+                "iconColor": "#ffffff"
+              },
+              "sectionOrder": {
+                "sections": ["logo", "search", "actions"]
+              },
+              "sectionVisibility": {
+                "logo": true,
+                "search": true,
+                "actions": true
+              },
+              "logo": {
+                "logo": ""
+              },
+              "search": {
+                "displayMode": "full"
+              },
+              "actions": {
+                "order": ["language", "wishlist", "cart", "account"],
+                "visibility": {
+                  "language": true,
+                  "wishlist": true,
+                  "cart": true,
+                  "account": true
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
   "layout": {
     "category": "layout",
     "accessControl": ["content", "productCategory", "product"],
