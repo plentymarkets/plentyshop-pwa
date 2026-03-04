@@ -338,37 +338,22 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data ?? []);
   };
 
-  /**
-   * Sets up blocks in state with footer cache injection.
-   *
-   * This function ensures a single source of truth for the footer:
-   * 1. Any footer from fetched blocks (API or default templates) is discarded
-   * 2. The footer from cache (populated by plugin from homepage) is always used
-   * 3. If cache is empty, a default footer is created as fallback
-   *
-   * This guarantees the same footer appears on all pages regardless of their template.
-   */
+  /** Sets up blocks in state, applying migrations and falling back to default template if empty */
   const setupBlocks = (fetchedBlocks: Block[]) => {
     if (!Array.isArray(fetchedBlocks)) {
-      console.warn('setupBlocks called with non-array:', fetchedBlocks);
+      console.warn('Invalid blocks data received');
       return;
     }
 
-    // Apply migrations to all blocks (mutates in place)
     migrateAllBlocks(fetchedBlocks);
 
-    // Build final blocks array: all non-footer blocks + the cached footer
     const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
     const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();
     const finalBlocks = [...contentBlocks, cachedOrDefaultFooter];
 
-    // Update state only if content changed (avoid unnecessary reactivity triggers)
-    const isDifferent = JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks);
-    if (isDifferent) {
+    if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
-
-    // Store clean copy for reset/comparison purposes
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
   };
 
