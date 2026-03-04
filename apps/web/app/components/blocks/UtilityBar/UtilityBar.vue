@@ -251,6 +251,17 @@ import {
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
 import { handleLogout } from '~/utils/logout';
+import type { UtilityBarProps } from './types';
+
+interface Props extends Partial<UtilityBarProps> {
+  enableActions?: boolean;
+  root?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  enableActions: false,
+  root: true,
+});
 
 const isLogin = ref(true);
 const { data: cart } = useCart();
@@ -259,8 +270,11 @@ const cartItemsCount = ref(0);
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 
-const iconColor = computed(() => getIconColor());
-const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
+// Use configuration colors from block if available, otherwise fall back to site settings
+const iconColor = computed(() => props.configuration?.colors?.iconColor || getIconColor());
+const headerBackgroundColor = computed(
+  () => props.configuration?.colors?.headerBackgroundColor || getHeaderBackgroundColor(),
+);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();

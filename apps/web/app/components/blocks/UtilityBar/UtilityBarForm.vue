@@ -123,23 +123,22 @@
             <UiFormLabel class="mb-1">{{ getEditorTranslation('header-bg-color-label') }}</UiFormLabel>
             <EditorColorPicker v-model="configuration.colors.headerBackgroundColor" class="w-full">
               <template #trigger="{ color, toggle }">
-                <SfInput v-model="configuration.colors.headerBackgroundColor" type="text" @click="toggle">
+                <SfInput v-model="configuration.colors.headerBackgroundColor" type="text" >
                   <template #suffix>
-                    <div class="w-6 h-6 rounded border" :style="{ backgroundColor: color }" />
+                    <div class="w-6 h-6 rounded border cursor-pointer" :style="{ backgroundColor: color }" @click="toggle"/>
                   </template>
                 </SfInput>
               </template>
             </EditorColorPicker>
           </div>
 
-         
           <div>
             <UiFormLabel class="mb-1">{{ getEditorTranslation('icon-color-label') }}</UiFormLabel>
             <EditorColorPicker v-model="configuration.colors.iconColor" class="w-full">
               <template #trigger="{ color, toggle }">
                 <SfInput v-model="configuration.colors.iconColor" type="text" @click="toggle">
                   <template #suffix>
-                    <div class="w-6 h-6 rounded border" :style="{ backgroundColor: color }" />
+                    <div class="w-6 h-6 rounded border cursor-pointer" :style="{ backgroundColor: color } "  @click="toggle"/>
                   </template>
                 </SfInput>
               </template>
@@ -194,7 +193,16 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfIconMoreVert,
+  SfIconBase,
+  SfSwitch,
+  SfIconArrowDownward,
+  SfIconArrowUpward,
+  SfIconArrowBack,
+  SfIconArrowForward,
+} from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
