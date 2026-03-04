@@ -48,7 +48,8 @@ const getDefaultLocale = () => {
   return localeKeys.includes(defaultLocale) ? defaultLocale : 'en';
 };
 
-const disabledLocalesRules = () => {
+export const disabledLocalesRules = () => {
+  console.log('process.env.LANGUAGELIST: ', process.env.LANGUAGELIST)
   const allowedLocales = process.env.LANGUAGELIST?.split(',') || ['de', 'en'];
 
   const disabledLocalesRules: Record<string, false> = {};
@@ -71,46 +72,5 @@ export const nuxtI18nOptions: NuxtI18nOptions = {
   strategy: 'prefix_and_default',
   vueI18n: '~/configuration/vueI18n.config.ts',
   detectBrowserLanguage: false,
-  customRoutes: 'config',
-  pages: {
-    cart: disabledLocalesRules(),
-    'cancellation-form': disabledLocalesRules(),
-    'my-account-new-return-id-accessKey': disabledLocalesRules(),
-    'my-account-my-orders-id': disabledLocalesRules(),
-    'password-reset-contactId-hash': disabledLocalesRules(),
-    'cancellation-rights': disabledLocalesRules(),
-    checkout: disabledLocalesRules(),
-    'orderId-accessKey': disabledLocalesRules(),
-    contact: disabledLocalesRules(),
-    'declaration-of-accessibility': disabledLocalesRules(),
-    'guest-login': disabledLocalesRules(),
-    'legal-disclosure': disabledLocalesRules(),
-    login: disabledLocalesRules(),
-    'billing-details': disabledLocalesRules(),
-    'my-account': disabledLocalesRules(),
-    'my-orders': disabledLocalesRules(),
-    id: disabledLocalesRules(),
-    'id-accessKey': disabledLocalesRules(),
-    'personal-data': disabledLocalesRules(),
-    returns: disabledLocalesRules(),
-    'shipping-details': disabledLocalesRules(),
-    'my-account-wishlist': disabledLocalesRules(),
-    'offerId-accessKey': disabledLocalesRules(),
-    offline: disabledLocalesRules(),
-    hash: disabledLocalesRules(),
-    'privacy-policy': disabledLocalesRules(),
-    'product-slug': disabledLocalesRules(),
-    'readonly-checkout': disabledLocalesRules(),
-    register: disabledLocalesRules(),
-    'reset-password-success': disabledLocalesRules(),
-    'reset-password': disabledLocalesRules(),
-    search: disabledLocalesRules(),
-    'set-new-password': disabledLocalesRules(),
-    shipping: disabledLocalesRules(),
-    'tag-slug': disabledLocalesRules(),
-    'terms-and-conditions': disabledLocalesRules(),
-    slug: disabledLocalesRules(),
-    wishlist: disabledLocalesRules(),
-    index: disabledLocalesRules(),
-  },
+  customRoutes: 'meta'
 };

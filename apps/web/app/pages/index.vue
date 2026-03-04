@@ -6,6 +6,7 @@
 
 <script lang="ts" setup>
 import { getHomepageTemplate } from '~/utils/blockTemplates/homepage';
+import { disabledLocalesRules } from '~/configuration/i18n.config';
 
 definePageMeta({
   pageType: 'static',
@@ -13,6 +14,9 @@ definePageMeta({
   type: 'immutable',
   identifier: 'index',
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
+  nuxtI18n: {
+    paths: disabledLocalesRules(),
+  },
 });
 
 const { $i18n } = useNuxtApp();
