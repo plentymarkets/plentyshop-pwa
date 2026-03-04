@@ -1,8 +1,8 @@
 <template>
   <header class="relative w-full md:sticky md:shadow-md z-10">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
-      :style="{ backgroundColor: headerBackgroundColor }"
+      class="flex justify-between items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
+      :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
       data-testid="navbar-top"
     >
       <div class="flex items-center">
@@ -275,6 +275,18 @@ const iconColor = computed(() => props.configuration?.colors?.iconColor || getIc
 const headerBackgroundColor = computed(
   () => props.configuration?.colors?.headerBackgroundColor || getHeaderBackgroundColor(),
 );
+
+// Build padding styles from configuration layout settings
+const paddingStyles = computed(() => {
+  const layout = props.configuration?.layout;
+  if (!layout) return {};
+  return {
+    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : undefined,
+    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : undefined,
+    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : undefined,
+    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : undefined,
+  };
+});
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();
