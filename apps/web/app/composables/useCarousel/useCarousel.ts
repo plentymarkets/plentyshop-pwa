@@ -21,20 +21,23 @@ export const useCarousel: UseCarouselReturn = () => {
   };
 
   const getSlideLabel = async (slide: SlideBlock, index: number): Promise<string> => {
-    const module = await import(`~/components/blocks/${slide.name}/defaults.ts`);
-    const fallbackLabel = `Slide ${index + 1}`;
-    if (!module.labelPath) return fallbackLabel;
+    try{
+      const module = await import(`~/components/blocks/${slide.name}/defaults.ts`);
+      const fallbackLabel = `Slide ${index + 1}`;
 
-    const label = module.labelPath
-      .split('.')
-      .reduce((acc: Record<string, unknown>, key: string) => acc?.[key], slide as unknown);
-    if (!label) return fallbackLabel;
+      const label = module.labelpath ? module.labelPath
+        .split('.')
+        .reduce((acc: unknown, key: string) => (acc as Record<string, unknown>)?.[key], slide as unknown) : fallbackLabel;
 
-    const plainText = String(label)
-      .replace(/<[^>]*>/g, '')
-      .trim();
-    if (!plainText) return fallbackLabel;
-    return plainText.length > 30 ? plainText.slice(0, 30) + '…' : plainText;
+      const plainText = String(label)
+        .replace(/<[^>]*>/g, '')
+        .trim();
+      if (!plainText) return fallbackLabel;
+      return plainText.length > 30 ? plainText.slice(0, 30) + '…' : plainText;
+    }
+    catch (e) {
+      return `Slide ${index + 1}`;
+    }
   };
 
   const updateCarouselItems: UpdateCarouselItems = (newBannerItems: SlideBlock[], blockUuid: string) => {
