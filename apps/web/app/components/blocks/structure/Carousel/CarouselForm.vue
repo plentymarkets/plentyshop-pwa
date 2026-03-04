@@ -44,7 +44,7 @@
                     class="text-sm font-medium truncate"
                     :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
                   >
-                    {{ getSlideLabel(slide, index) }}
+                    {{ slideLabels[index] }}
                   </span>
                 </div>
 
@@ -176,7 +176,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
-const { updateCarouselItems, setIndex, activeSlideIndex, createSlide } = useCarousel();
+const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
 const route = useRoute();
 const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
@@ -195,6 +195,7 @@ const editingSlideIndex = ref<number | undefined>(undefined);
 const openSlideMenuIndex = ref<number | undefined>(undefined);
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
+const slideLabels = ref<string[]>([]);
 
 setIndex(blockUuid.value, 0);
 
@@ -239,23 +240,20 @@ const slides = computed({
   set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
 });
 
-const getSlideLabel = (slide: SlideBlock, index: number): string => {
-  if (slide.name === 'AnnouncementBar') {
-    const text = (slide.content as { text?: string })?.text;
-    if (text) {
-      const plain = text.replace(/<[^>]*>/g, '').trim();
-      if (plain) return plain.length > 30 ? plain.slice(0, 30) + '…' : plain;
-    }
-  }
-  return `Slide ${index + 1}`;
+const resolveSlideLabels = async () => {
+  slideLabels.value = await Promise.all(
+    slides.value.map((slide, index) => getSlideLabel(slide, index))
+  );
 };
+
+watch(slides, resolveSlideLabels, { immediate: true, deep: true });
 
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
   // Scroll the swiper to this slide
   setIndex(blockUuid.value, index);
-  emit('set-edit-title', getSlideLabel(slides.value[index]!, index));
+  emit('set-edit-title', slideLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true) => {

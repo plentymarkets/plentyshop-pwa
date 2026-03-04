@@ -13,3 +13,5 @@ export const createDefault = (): AnnouncementBarProps => ({
     text: 'This is an example announcement.',
   },
 });
+
+export const labelPath = 'content.text';

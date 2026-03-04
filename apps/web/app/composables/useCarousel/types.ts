@@ -14,6 +14,7 @@ export interface UseCarouselState {
 export type UpdateCarouselItems = (newCarouselItems: SlideBlock[], blockUuid: string) => void;
 export type SetIndex = (blockUuid: string, slideIndex: number) => void;
 export type CreateSlide = (type: string, index: number) => Promise<SlideBlock>;
+export type GetSlideLabel = (slide: SlideBlock, index: number) => Promise<string>;
 
 export interface UseCarousel {
   data: Readonly<Ref<UseCarouselState['data']>>;
@@ -22,6 +23,7 @@ export interface UseCarousel {
   updateCarouselItems: UpdateCarouselItems;
   setIndex: SetIndex;
   createSlide: CreateSlide;
+  getSlideLabel: GetSlideLabel;
 }
 
 export type UseCarouselReturn = () => UseCarousel;
