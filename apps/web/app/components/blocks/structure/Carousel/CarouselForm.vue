@@ -244,7 +244,9 @@ const resolveSlideLabels = async () => {
   slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
 };
 
-watch(slides, resolveSlideLabels, { immediate: true, deep: true });
+onMounted(() => {
+  resolveSlideLabels();
+});
 
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
@@ -260,6 +262,7 @@ const exitEditMode = (shouldEmit = true) => {
   if (shouldEmit) {
     emit('clear-edit-title');
   }
+  resolveSlideLabels();
 };
 
 const toggleSlideMenu = (index: number) => {
