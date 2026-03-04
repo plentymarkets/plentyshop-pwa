@@ -120,6 +120,9 @@ const blockDisplayName = computed(() => {
       return blockTypeNames[firstChild.name] ?? firstChild.name;
     }
   }
+  if (blockType.value === 'UtilityBar' && customTitle.value) {
+    return customTitle.value;
+  }
   return blockTypeNames[blockType.value] ?? blockType.value;
 });
 </script>

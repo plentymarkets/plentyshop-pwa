@@ -13,7 +13,7 @@
         <div>
           <UiFormLabel class="mb-2">{{ getEditorTranslation('display-mode-label') }}</UiFormLabel>
           <p class="text-xs text-gray-500 mb-3">{{ getEditorTranslation('display-mode-hint') }}</p>
-          
+
           <div class="flex gap-2">
             <button
               :class="[
@@ -45,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { useBlockManager } from '~/composables/useBlockManager';
 import { useBlockTemplates } from '~/composables/useBlockTemplates';
 import type { UtilityBarProps, SearchSettings } from './types';

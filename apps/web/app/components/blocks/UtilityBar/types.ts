@@ -16,6 +16,7 @@ export type LogoSettings = {
 
 export type UtilityBarSection = {
   id: SectionType;
+  name: string;
   visible: boolean;
 };
 

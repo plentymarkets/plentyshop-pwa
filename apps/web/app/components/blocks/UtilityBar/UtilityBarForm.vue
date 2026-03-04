@@ -99,15 +99,6 @@
     <div v-else-if="sections[editingSectionIndex]" class="space-y-0">
       <component :is="sectionForm" />
     </div>
-
-    <template v-if="editingSectionIndex !== undefined">
-      <div class="px-4 py-3 border-t">
-        <UiButton variant="secondary" class="w-full" @click="exitEditMode">
-          {{ getEditorTranslation('back-aria') }}
-        </UiButton>
-      </div>
-    </template>
-
     <template v-if="editingSectionIndex === undefined">
       <UiAccordionItem
         v-model="layoutOpen"
@@ -123,9 +114,13 @@
             <UiFormLabel class="mb-1">{{ getEditorTranslation('header-bg-color-label') }}</UiFormLabel>
             <EditorColorPicker v-model="configuration.colors.headerBackgroundColor" class="w-full">
               <template #trigger="{ color, toggle }">
-                <SfInput v-model="configuration.colors.headerBackgroundColor" type="text" >
+                <SfInput v-model="configuration.colors.headerBackgroundColor" type="text">
                   <template #suffix>
-                    <div class="w-6 h-6 rounded border cursor-pointer" :style="{ backgroundColor: color }" @click="toggle"/>
+                    <div
+                      class="w-6 h-6 rounded border cursor-pointer"
+                      :style="{ backgroundColor: color }"
+                      @click="toggle"
+                    />
                   </template>
                 </SfInput>
               </template>
@@ -138,7 +133,11 @@
               <template #trigger="{ color, toggle }">
                 <SfInput v-model="configuration.colors.iconColor" type="text" @click="toggle">
                   <template #suffix>
-                    <div class="w-6 h-6 rounded border cursor-pointer" :style="{ backgroundColor: color } "  @click="toggle"/>
+                    <div
+                      class="w-6 h-6 rounded border cursor-pointer"
+                      :style="{ backgroundColor: color }"
+                      @click="toggle"
+                    />
                   </template>
                 </SfInput>
               </template>
@@ -208,6 +207,11 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { UtilityBarProps, SectionType, UtilityBarSection } from './types';
 
+const emit = defineEmits<{
+  'set-edit-title': [title: string];
+  'clear-edit-title': [];
+}>();
+
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
 const { data } = useBlockTemplates(
@@ -241,6 +245,7 @@ const sections = computed({
     return order.map(
       (id): UtilityBarSection => ({
         id,
+        name: `UtilityBar${id.charAt(0).toUpperCase()}${id.slice(1)}`,
         visible: configuration.value.sectionVisibility?.[id] !== false,
       }),
     );
@@ -262,13 +267,14 @@ const sections = computed({
 
 const currentEditingSectionIndex = computed(() => editingSectionIndex.value);
 
+const sectionLabels = computed(() => ({
+  logo: getEditorTranslation('logo-section-label'),
+  search: getEditorTranslation('search-section-label'),
+  actions: getEditorTranslation('actions-section-label'),
+}));
+
 const getSectionLabel = (sectionId: SectionType): string => {
-  const labels: Record<SectionType, string> = {
-    logo: getEditorTranslation('logo-section-label'),
-    search: getEditorTranslation('search-section-label'),
-    actions: getEditorTranslation('actions-section-label'),
-  };
-  return labels[sectionId];
+  return sectionLabels.value[sectionId] || sectionId;
 };
 
 const sectionForms = import.meta.glob('@/components/**/blocks/UtilityBar/**Form.vue') as Record<
@@ -282,10 +288,7 @@ const sectionForm = computed(() => {
   const section = sections.value[editingSectionIndex.value];
   if (!section) return null;
 
-  const sectionId = section.id;
-  const key = Object.keys(sectionForms).find((path) =>
-    path.includes(`UtilityBar${sectionId.charAt(0).toUpperCase()}${sectionId.slice(1)}Form.vue`),
-  );
+  const key = Object.keys(sectionForms).find((path) => path.endsWith(`/${section.name}Form.vue`));
   const loader = key ? sectionForms[key] : undefined;
   return loader ? defineAsyncComponent(loader) : null;
 });
@@ -293,11 +296,18 @@ const sectionForm = computed(() => {
 const editSection = (index: number) => {
   editingSectionIndex.value = index;
   openSectionMenuIndex.value = undefined;
+  const sectionId = sections.value[index]?.id;
+  if (sectionId) {
+    emit('set-edit-title', getSectionLabel(sectionId));
+  }
 };
 
-const exitEditMode = () => {
+const exitEditMode = (shouldEmit = true) => {
   editingSectionIndex.value = undefined;
   openSectionMenuIndex.value = undefined;
+  if (shouldEmit) {
+    emit('clear-edit-title');
+  }
 };
 
 const toggleSectionMenu = (index: number) => {
@@ -321,32 +331,32 @@ const toggleSectionVisibility = (index: number) => {
   sections.value = updatedSections;
 };
 
-onMounted(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (openSectionMenuIndex.value === undefined) return;
+// onMounted(() => {
+//   const handleClickOutside = (event: MouseEvent) => {
+//     if (openSectionMenuIndex.value === undefined) return;
 
-    const target = event.target as HTMLElement;
-    const openMenuButton = document.querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`);
-    const openMenu = document
-      .querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`)
-      ?.parentElement?.querySelector('.absolute.right-0');
+//     const target = event.target as HTMLElement;
+//     const openMenuButton = document.querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`);
+//     const openMenu = document
+//       .querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`)
+//       ?.parentElement?.querySelector('.absolute.right-0');
 
-    if (openMenuButton && openMenu) {
-      const isClickOnButton = openMenuButton.contains(target);
-      const isClickOnMenu = openMenu.contains(target);
+//     if (openMenuButton && openMenu) {
+//       const isClickOnButton = openMenuButton.contains(target);
+//       const isClickOnMenu = openMenu.contains(target);
 
-      if (!isClickOnButton && !isClickOnMenu) {
-        openSectionMenuIndex.value = undefined;
-      }
-    }
-  };
+//       if (!isClickOnButton && !isClickOnMenu) {
+//         openSectionMenuIndex.value = undefined;
+//       }
+//     }
+//   };
 
-  document.addEventListener('click', handleClickOutside);
+//   document.addEventListener('click', handleClickOutside);
 
-  onBeforeUnmount(() => {
-    document.removeEventListener('click', handleClickOutside);
-  });
-});
+//   onBeforeUnmount(() => {
+//     document.removeEventListener('click', handleClickOutside);
+//   });
+// });
 
 defineExpose({
   exitEditMode,
@@ -358,7 +368,6 @@ defineExpose({
   "en": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "back-aria": "Go back to sections list",
     "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
@@ -375,7 +384,6 @@ defineExpose({
   "de": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "back-aria": "Go back to sections list",
     "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
