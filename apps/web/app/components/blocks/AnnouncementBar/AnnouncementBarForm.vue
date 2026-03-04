@@ -1,4 +1,3 @@
-@ -1,312 +0,0 @@
 <template>
   <UiAccordionItem
     :model-value="true"
