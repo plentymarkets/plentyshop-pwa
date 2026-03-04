@@ -29,7 +29,7 @@ const product = computed(() => props.product);
 const route = useRoute();
 
 const lastSegment = route.path.split('/').pop() ?? '';
-const selectAttributes = ref(lastSegment.split('_').length > 2);
+const selectAttributes = ref(lastSegment.split('_').length > 2 || useCallisto().isEnabled);
 
 watch(
   selectAttributes,
@@ -38,6 +38,7 @@ watch(
   },
   { immediate: true },
 );
+
 watch(
   product,
   (newProduct) => {

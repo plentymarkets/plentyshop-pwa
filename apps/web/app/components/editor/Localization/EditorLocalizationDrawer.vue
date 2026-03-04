@@ -60,68 +60,76 @@
           </div>
 
           <div class="flex-1 flex overflow-hidden">
-            <div class="flex-shrink-0 z-10" style="width: 384px">
-              <div ref="leftScrollerRef" class="h-full overflow-y-auto scrollbar-thin" @scroll="syncScrollLeft">
-                <div :style="{ height: `${leftVirtualizer.getTotalSize()}px`, position: 'relative' }">
-                  <div
-                    v-for="virtualRow in leftVirtualItems"
-                    :key="virtualRow.index"
-                    :style="{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: `${virtualRow.size}px`,
-                      transform: `translateY(${virtualRow.start}px)`,
-                    }"
-                  >
-                    <div class="flex h-12 text-xs border-r">
-                      <div class="w-96 overflow-x-scroll no-scrollbar flex items-center">
-                        <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700 flex-shrink-0">
-                          {{ getCategoryFromKey(virtualRow.item.key) }}
+            <div
+              v-if="emptyStateMessage"
+              class="w-full h-full flex justify-center text-black-500 font-medium text-lg pt-24"
+            >
+              {{ emptyStateMessage }}
+            </div>
+            <template v-else>
+              <div class="flex-shrink-0 z-10" style="width: 384px">
+                <div ref="leftScrollerRef" class="h-full overflow-y-auto scrollbar-thin" @scroll="syncScrollLeft">
+                  <div :style="{ height: `${leftVirtualizer.getTotalSize()}px`, position: 'relative' }">
+                    <div
+                      v-for="virtualRow in leftVirtualItems"
+                      :key="virtualRow.index"
+                      :style="{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: `${virtualRow.size}px`,
+                        transform: `translateY(${virtualRow.start}px)`,
+                      }"
+                    >
+                      <div class="flex h-12 text-xs border-r">
+                        <div class="w-96 overflow-x-scroll no-scrollbar flex items-center">
+                          <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700 flex-shrink-0">
+                            {{ getCategoryFromKey(virtualRow.item.key) }}
+                          </div>
+                          {{ getKeyFromFullKey(virtualRow.item.key) }}
                         </div>
-                        {{ getKeyFromFullKey(virtualRow.item.key) }}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex-1 overflow-hidden">
-              <div
-                ref="rightScrollerRef"
-                class="h-full overflow-x-auto overflow-y-auto no-scrollbar-y scrollbar-thin-x"
-                @scroll="syncScrollRight"
-              >
-                <div :style="{ height: `${rightVirtualizer.getTotalSize()}px`, position: 'relative' }">
-                  <div
-                    v-for="virtualRow in rightVirtualItems"
-                    :key="virtualRow.index"
-                    :style="{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: `${virtualRow.size}px`,
-                      transform: `translateY(${virtualRow.start}px)`,
-                    }"
-                  >
-                    <div class="flex h-12">
-                      <EditorLocalizationTranslationInput
-                        v-for="locale in selectedLocales"
-                        :key="`${virtualRow.item.key}-${locale}`"
-                        :row-key="virtualRow.item.key"
-                        :lang="locale"
-                        :translation="virtualRow.item.translations[locale]"
-                        @update="handleTranslationInput"
-                        @revert="revertToDefault"
-                      />
+              <div class="flex-1 overflow-hidden">
+                <div
+                  ref="rightScrollerRef"
+                  class="h-full overflow-x-auto overflow-y-auto no-scrollbar-y scrollbar-thin-x"
+                  @scroll="syncScrollRight"
+                >
+                  <div :style="{ height: `${rightVirtualizer.getTotalSize()}px`, position: 'relative' }">
+                    <div
+                      v-for="virtualRow in rightVirtualItems"
+                      :key="virtualRow.index"
+                      :style="{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: `${virtualRow.size}px`,
+                        transform: `translateY(${virtualRow.start}px)`,
+                      }"
+                    >
+                      <div class="flex h-12">
+                        <EditorLocalizationTranslationInput
+                          v-for="locale in selectedLocales"
+                          :key="`${virtualRow.item.key}-${locale}`"
+                          :row-key="virtualRow.item.key"
+                          :lang="locale"
+                          :translation="virtualRow.item.translations[locale]"
+                          @update="handleTranslationInput"
+                          @revert="revertToDefault"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </template>
           </div>
         </div>
       </div>
@@ -248,6 +256,21 @@ const headerScrollHandler = () => {
     });
   }
 };
+const emptyStateMessage = computed(() => {
+  if (displayedKeys.value.length > 0) return null;
+
+  const hasSearch = searchTerm.value.trim().length > 0;
+
+  if (hasSearch) {
+    return getEditorTranslation('no-search-results');
+  }
+
+  if (showMissingOnly.value) {
+    return getEditorTranslation('no-missing-translations');
+  }
+
+  return null;
+});
 
 onMounted(() => {
   headerScroll.value?.addEventListener('scroll', headerScrollHandler, { passive: true });
@@ -319,12 +342,16 @@ onBeforeUnmount(() => {
   "en": {
     "category-key": "Category + Key",
     "edit-translations": "Edit translations",
-    "show-missing-only": "Show missing translations only"
+    "show-missing-only": "Show missing translations only",
+    "no-missing-translations": "There are no missing translations. Try adjusting your filter.",
+    "no-search-results": "There are no translations matching your search."
   },
   "de": {
     "category-key": "Category + Key",
     "edit-translations": "Edit translations",
-    "show-missing-only": "Show missing translations only"
+    "show-missing-only": "Show missing translations only",
+    "no-missing-translations": "There are no missing translations. Try adjusting your filter.",
+    "no-search-results": "There are no translations matching your search."
   }
 }
 </i18n>

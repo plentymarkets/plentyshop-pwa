@@ -1,11 +1,11 @@
 import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
-import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
+import { getCategoryTemplate } from '~/utils/blockTemplates/category';
 import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
 import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
 
-const useCategoryTemplateData = () => categoryTemplateData as Block[];
+const useBlockTemplatesData = async (locale: string) => await getCategoryTemplate(locale);
 
 /**
  * @description Composable for managing products.
@@ -58,7 +58,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       data: blockData,
       setupBlocks,
       getBlocksServer,
-    } = useCategoryTemplate(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+    } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
 
     state.value.loading = true;
 
@@ -68,7 +68,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const fakeBlocks = blockData.value?.length ? blockData.value : useCategoryTemplateData();
+      const fakeBlocks = blockData.value?.length ? blockData.value : await useBlockTemplatesData($i18n.locale.value);
 
       state.value.data = {
         category: fakeFacet['data'].category,
@@ -105,7 +105,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
       state.value.data = data.value.data;
       handlePreviewProducts(state, $i18n.locale.value);
 
-      const defaultData = state.value.data.category.type === 'item' ? useCategoryTemplateData() : [];
+      const defaultData =
+        state.value.data.category.type === 'item' ? await useBlockTemplatesData($i18n.locale.value) : [];
 
       await setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
     }

@@ -1,9 +1,15 @@
 import type { Block } from '@plentymarkets/shop-api';
 
+export type SlideBlock = Block & {
+  configuration?: {
+    visible?: boolean;
+  };
+};
+
 export type CarouselStructureProps = {
   name: string;
   type: string;
-  content: Block[];
+  content: SlideBlock[];
   configuration: {
     controls: {
       color: string;
@@ -12,6 +18,7 @@ export type CarouselStructureProps = {
     layout?: {
       fullWidth?: boolean;
     };
+    visible?: boolean;
   };
   index: number;
   meta: {

@@ -127,6 +127,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('open-general-settings-drawer');
   }
 
+  get seoSettingsButton() {
+    return cy.getByTestId('open-seo-settings-drawer');
+  }
+
   blockIsBanner(el: JQuery<HTMLElement>) {
     return el[0]?.innerHTML.includes('banner-image');
   }
@@ -170,6 +174,11 @@ export class EditorObject extends PageObject {
 
   toggleCategorySettings() {
     this.categorySettingsButton.should('be.visible').click();
+    return this;
+  }
+
+  toggleSeoSettings() {
+    this.seoSettingsButton.should('be.visible').click();
     return this;
   }
 
