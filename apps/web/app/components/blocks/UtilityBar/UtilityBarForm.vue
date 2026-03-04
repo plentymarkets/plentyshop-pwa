@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="utility-bar-form" class="block-slider-edit sticky top-[52px] h-[80vh] overflow-y-auto">s
+  <div data-testid="utility-bar-form" class="block-slider-edit sticky top-[52px] h-[80vh] overflow-y-auto">
     <UiAccordionItem
       v-if="editingSectionIndex === undefined"
       v-model="elementsOpen"
@@ -100,33 +100,15 @@
       <component :is="sectionForm" />
     </div>
 
-
     <template v-if="editingSectionIndex !== undefined">
       <div class="px-4 py-3 border-t">
-        <UiButton
-          variant="secondary"
-          class="w-full"
-          @click="exitEditMode"
-        >
+        <UiButton variant="secondary" class="w-full" @click="exitEditMode">
           {{ getEditorTranslation('back-aria') }}
         </UiButton>
       </div>
     </template>
 
     <template v-if="editingSectionIndex === undefined">
-
-      <UiAccordionItem
-        v-model="layoutOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2 data-testid="utility-bar-layout-title">{{ getEditorTranslation('layout-label') }}</h2>
-        </template>
-
-
-      </UiAccordionItem>
-
       <UiAccordionItem
         v-model="colorsOpen"
         summary-active-class="bg-neutral-100"
@@ -137,7 +119,6 @@
         </template>
 
         <div class="space-y-4 py-4">
-    
           <div>
             <UiFormLabel class="mb-1">{{ getEditorTranslation('header-bg-color-label') }}</UiFormLabel>
             <EditorColorPicker v-model="configuration.colors.headerBackgroundColor" class="w-full">
@@ -167,28 +148,59 @@
         </div>
       </UiAccordionItem>
 
-      <!-- Spacing Section -->
       <UiAccordionItem
-        v-model="spacingOpen"
+        v-model="layoutOpen"
         summary-active-class="bg-neutral-100"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2 data-testid="utility-bar-spacing-title">{{ getEditorTranslation('spacing-label') }}</h2>
+          <h2 data-testid="utility-bar-layout-title">{{ getEditorTranslation('layout-label') }}</h2>
         </template>
 
-        <div class="space-y-4 py-4">
-            
-          <!-- Padding X -->
-          <div>
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('padding-x-label') }}</UiFormLabel>
-            <SfInput v-model="configuration.spacing.paddingX" type="text" placeholder="px-4 md:px-10" />
+        <div class="py-2">
+          <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+          <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowUpward /></span>
+              <input
+                v-model.number="configuration.layout.paddingTop"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-top"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowDownward /></span>
+              <input
+                v-model.number="configuration.layout.paddingBottom"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-bottom"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowBack /></span>
+              <input
+                v-model.number="configuration.layout.paddingLeft"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-left"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+              <span><SfIconArrowForward /></span>
+              <input
+                v-model.number="configuration.layout.paddingRight"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-right"
+              />
+            </div>
           </div>
-
-          <!-- Padding Y -->
-          <div>
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('padding-y-label') }}</UiFormLabel>
-            <SfInput v-model="configuration.spacing.paddingY" type="text" placeholder="py-2 md:py-5" />
+          <div class="px-4 py-3">
+            <span class="typography-text-xs text-neutral-700">
+              {{ getEditorTranslation('spacing-around') }}
+            </span>
           </div>
         </div>
       </UiAccordionItem>
@@ -201,12 +213,7 @@ import { SfInput, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vu
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
-import type { UtilityBarProps, SectionType } from './types';
-
-interface UtilityBarSection {
-  id: SectionType;
-  visible: boolean;
-}
+import type { UtilityBarProps, SectionType, UtilityBarSection } from './types';
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
@@ -220,7 +227,6 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 const elementsOpen = ref(true);
 const layoutOpen = ref(true);
 const colorsOpen = ref(true);
-const spacingOpen = ref(true);
 const editingSectionIndex = ref<number | undefined>(undefined);
 const openSectionMenuIndex = ref<number | undefined>(undefined);
 
@@ -229,7 +235,7 @@ const utilityBarBlock = computed<UtilityBarProps>(
 );
 
 const configuration = computed<UtilityBarProps['configuration']>({
-  get: () => utilityBarBlock.value.configuration || {} as UtilityBarProps['configuration'],
+  get: () => utilityBarBlock.value.configuration || ({} as UtilityBarProps['configuration']),
   set: (value) => {
     if (utilityBarBlock.value) {
       utilityBarBlock.value.configuration = value;
@@ -237,14 +243,15 @@ const configuration = computed<UtilityBarProps['configuration']>({
   },
 });
 
-
 const sections = computed({
   get: () => {
     const order: SectionType[] = configuration.value.sectionOrder?.sections || ['logo', 'search', 'actions'];
-    return order.map((id): UtilityBarSection => ({
-      id,
-      visible: configuration.value.sectionVisibility?.[id] !== false,
-    }));
+    return order.map(
+      (id): UtilityBarSection => ({
+        id,
+        visible: configuration.value.sectionVisibility?.[id] !== false,
+      }),
+    );
   },
   set: (value: UtilityBarSection[]) => {
     if (!configuration.value.sectionOrder) {
@@ -284,8 +291,8 @@ const sectionForm = computed(() => {
   if (!section) return null;
 
   const sectionId = section.id;
-  const key = Object.keys(sectionForms).find(
-    (path) => path.includes(`UtilityBar${sectionId.charAt(0).toUpperCase()}${sectionId.slice(1)}Form.vue`),
+  const key = Object.keys(sectionForms).find((path) =>
+    path.includes(`UtilityBar${sectionId.charAt(0).toUpperCase()}${sectionId.slice(1)}Form.vue`),
   );
   const loader = key ? sectionForms[key] : undefined;
   return loader ? defineAsyncComponent(loader) : null;
@@ -327,9 +334,7 @@ onMounted(() => {
     if (openSectionMenuIndex.value === undefined) return;
 
     const target = event.target as HTMLElement;
-    const openMenuButton = document.querySelector(
-      `[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`,
-    );
+    const openMenuButton = document.querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`);
     const openMenu = document
       .querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`)
       ?.parentElement?.querySelector('.absolute.right-0');
@@ -370,9 +375,8 @@ defineExpose({
     "colors-label": "Colors",
     "header-bg-color-label": "Header Background Color",
     "icon-color-label": "Icon Color",
-    "spacing-label": "Spacing",
-    "padding-x-label": "Horizontal Padding",
-    "padding-y-label": "Vertical Padding",
+    "padding-label": "Padding (px)",
+
     "logo-section-label": "Logo",
     "search-section-label": "Search",
     "actions-section-label": "Actions"
@@ -389,9 +393,8 @@ defineExpose({
     "colors-label": "Colors",
     "header-bg-color-label": "Header Background Color",
     "icon-color-label": "Icon Color",
-    "spacing-label": "Spacing",
-    "padding-x-label": "Horizontal Padding",
-    "padding-y-label": "Vertical Padding",
+    "padding-label": "Padding (px)",
+
     "logo-section-label": "Logo",
     "search-section-label": "Search",
     "actions-section-label": "Actions"

@@ -14,9 +14,11 @@
             "type": "immutable",
             "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
             "configuration": {
-              "spacing": {
-                "paddingX": "px-4 md:px-10",
-                "paddingY": "py-2 md:py-5"
+              "layout": {
+                "paddingTop": "0",
+                "paddingBottom": "0",
+                "paddingLeft": "0",
+                "paddingRight": "0"
               },
               "colors": {
                 "headerBackgroundColor": "#000000",

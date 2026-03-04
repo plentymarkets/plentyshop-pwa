@@ -109,6 +109,7 @@ const blockTypeNames: Record<string, string> = {
   TechnicalData: 'Technical Data',
   ItemData: 'Item Data',
   Banner: 'Image Banner',
+  UtilityBar: 'Utility Bar',
 };
 
 const blockDisplayName = computed(() => {

@@ -1,6 +1,8 @@
 export type SpacingSettings = {
-  paddingX: string;
-  paddingY: string;
+  paddingTop?: string;
+  paddingBottom?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
 };
 
 export type ColorSettings = {
@@ -14,8 +16,13 @@ export type LogoSettings = {
 
 export type UtilityBarSection = {
   id: SectionType;
-  name: string;
-}
+  visible: boolean;
+};
+
+export type ActionOrderItem = {
+  id: ActionType;
+  visible: boolean;
+};
 
 export type SearchDisplayMode = 'icon-only' | 'full';
 
@@ -45,7 +52,7 @@ export type UtilityBarProps = {
   name: string;
   type: string;
   configuration: {
-    spacing: SpacingSettings;
+    layout: SpacingSettings;
     colors: ColorSettings;
     sectionOrder: SectionOrderSettings;
     sectionVisibility?: Record<SectionType, boolean>;

@@ -53,12 +53,7 @@
 import { SfSwitch } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
-import type { ActionType, UtilityBarProps, ActionsSettings } from './types';
-
-interface ActionOrderItem {
-  id: ActionType;
-  visible: boolean;
-}
+import type { ActionType, UtilityBarProps, ActionsSettings, ActionOrderItem } from './types';
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
