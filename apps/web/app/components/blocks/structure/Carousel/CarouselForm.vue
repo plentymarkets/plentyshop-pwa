@@ -244,10 +244,6 @@ const resolveSlideLabels = async () => {
   slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
 };
 
-onMounted(() => {
-  resolveSlideLabels();
-});
-
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
@@ -272,6 +268,14 @@ const toggleSlideMenu = (index: number) => {
     openSlideMenuIndex.value = index;
   }
 };
+
+watch(
+  () => slides.value.map((slide) => slide.meta.uuid),
+  () => {
+    resolveSlideLabels();
+  },
+  { immediate: true },
+);
 
 // Handle click outside to close popover
 onMounted(() => {

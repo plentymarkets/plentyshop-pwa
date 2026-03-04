@@ -31,9 +31,8 @@ export const useCarousel: UseCarouselReturn = () => {
             .reduce((acc: unknown, key: string) => (acc as Record<string, unknown>)?.[key], slide as unknown)
         : fallbackLabel;
 
-      const plainText = String(label)
-        .replace(/<[^>]*>/g, '')
-        .trim();
+      const strippedHtml = String(label).replace(/<[^>]*>/g, '').trim();
+      const plainText = decodeHtmlEntities(strippedHtml);
       if (!plainText) return fallbackLabel;
       return plainText.length > 30 ? plainText.slice(0, 30) + '…' : plainText;
     } catch {
