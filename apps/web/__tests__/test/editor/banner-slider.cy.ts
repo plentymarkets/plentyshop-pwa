@@ -38,7 +38,6 @@ describe('Banner Slider Block Form', () => {
     cookieBar.acceptAll();
     openSettingsForBannerSliderBlock();
 
-    bannerSlider.clearBannerCache();
     bannerSlider.getFirstBannerBlockUuid().then((uuid) => {
       firstBannerBlockUuid = uuid;
     });
@@ -99,28 +98,7 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.closeImageGroup();
       bannerSlider.openTextGroup();
       bannerSlider.changeTexts();
-      cy.log('[Text Settings] Changed texts in form, waiting for banner update...');
-      // eslint-disable-next-line no-console
-      console.log('[Text Settings] Changed texts in form, waiting for banner update...');
-      // Wait for banner to update after text changes
-      cy.wait(500);
-      cy.log('[Text Settings] Wait complete, checking if banner has new text...');
-      // eslint-disable-next-line no-console
-      console.log('[Text Settings] Wait complete, checking if banner has new text...');
-      cy.get('[data-testid^="banner-pretitle-"]').should('contain.text', 'New Pre-Title');
-      cy.log('[Text Settings] Banner has new text, clearing cache and fetching UUID...');
-      // eslint-disable-next-line no-console
-      console.log('[Text Settings] Banner has new text, clearing cache and fetching UUID...');
-      bannerSlider.clearBannerCache();
-      bannerSlider.getFirstBannerBlockUuid().then((uuid) => {
-        cy.log(`[Text Settings] Got UUID: ${uuid}, now checking all texts...`);
-        // eslint-disable-next-line no-console
-        console.log(`[Text Settings] Got UUID: ${uuid}, now checking all texts...`);
-        bannerSlider.checkNewTexts(uuid);
-        cy.log('[Text Settings] All text checks passed!');
-        // eslint-disable-next-line no-console
-        console.log('[Text Settings] All text checks passed!');
-      });
+      bannerSlider.checkNewTexts(firstBannerBlockUuid);
     });
 
     it('should change the text box alignment x', () => {
@@ -160,29 +138,9 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.closeImageGroup();
       bannerSlider.closeTextGroup();
       bannerSlider.changeButtonLabelAndLink();
-      cy.log('[Button Settings] Changed button in form, waiting for banner update...');
-      // eslint-disable-next-line no-console
-      console.log('[Button Settings] Changed button in form, waiting for banner update...');
-      cy.wait(500);
-      cy.log('[Button Settings] Wait complete, checking if banner has new button...');
-      // eslint-disable-next-line no-console
-      console.log('[Button Settings] Wait complete, checking if banner has new button...');
-      cy.get('[data-testid^="banner-button-"]').should('contain.text', 'New Button Label');
-      cy.log('[Button Settings] Banner has new button, clearing cache and fetching UUID...');
-      // eslint-disable-next-line no-console
-      console.log('[Button Settings] Banner has new button, clearing cache and fetching UUID...');
-      bannerSlider.clearBannerCache();
-      bannerSlider.getFirstBannerBlockUuid().then((uuid) => {
-        cy.log(`[Button Settings] Got UUID: ${uuid}, now checking button properties...`);
-        // eslint-disable-next-line no-console
-        console.log(`[Button Settings] Got UUID: ${uuid}, now checking button properties...`);
-        bannerSlider.checkButtonLabelAndLink(uuid);
-        bannerSlider.checkButtonSecondary(uuid);
-        bannerSlider.checkButtonPrimary(uuid);
-        cy.log('[Button Settings] All button checks passed!');
-        // eslint-disable-next-line no-console
-        console.log('[Button Settings] All button checks passed!');
-      });
+      bannerSlider.checkButtonLabelAndLink(firstBannerBlockUuid);
+      bannerSlider.checkButtonSecondary(firstBannerBlockUuid);
+      bannerSlider.checkButtonPrimary(firstBannerBlockUuid);
     });
   });
 });

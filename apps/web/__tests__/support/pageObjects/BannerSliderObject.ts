@@ -2,11 +2,23 @@ import { PageObject } from './PageObject';
 
 export class BannerSliderObject extends PageObject {
   getFirstBannerBlockUuid(): Cypress.Chainable<string> {
-    return this.getBannerBlockUuid(0);
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .first()
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
   }
 
   getSecondBannerBlockUuid(): Cypress.Chainable<string> {
-    return this.getBannerBlockUuid(1);
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .eq(1)
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
   }
 
   checkDroneImageVisibility() {

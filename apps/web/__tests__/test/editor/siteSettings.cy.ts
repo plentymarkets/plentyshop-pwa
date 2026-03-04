@@ -19,7 +19,6 @@ describe('SiteSettings', () => {
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
-    editor.clearBannerCache();
   });
 
   it('should change the font', () => {

@@ -1,20 +1,22 @@
 import { PageObject } from './PageObject';
 
+export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
+
 export class EditorObject extends PageObject {
   get pretitle() {
-    return this.getBannerBlockUuid(0).then((uuid) => cy.getByTestId(`banner-pretitle-${uuid}`));
+    return cy.getByTestId(`banner-pretitle-${firstBannerBlockUuid}`);
   }
 
   get title() {
-    return this.getBannerBlockUuid(0).then((uuid) => cy.getByTestId(`banner-title-${uuid}`));
+    return cy.getByTestId(`banner-title-${firstBannerBlockUuid}`);
   }
 
   get subtitle() {
-    return this.getBannerBlockUuid(0).then((uuid) => cy.getByTestId(`banner-subtitle-${uuid}`));
+    return cy.getByTestId(`banner-subtitle-${firstBannerBlockUuid}`);
   }
 
   get description() {
-    return this.getBannerBlockUuid(0).then((uuid) => cy.getByTestId(`banner-description-${uuid}`));
+    return cy.getByTestId(`banner-description-${firstBannerBlockUuid}`);
   }
 
   get editorToolbar() {
@@ -296,7 +298,7 @@ export class EditorObject extends PageObject {
     this.languageList.children().should('have.length', 2);
     this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
-    this.title.first().should('contain.text', 'Ihr Sound');
+    this.title.first().should('have.text', 'Ihr Sound');
   }
 
   addBlockTop() {

@@ -10,7 +10,6 @@ describe('Blocks', () => {
     cy.clearCookies();
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
-    editor.clearBannerCache();
   });
 
   it('should ensure correct block logic and template', () => {
