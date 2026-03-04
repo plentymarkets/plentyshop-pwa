@@ -424,18 +424,23 @@ describe('useBlockTemplates', () => {
   });
 
   describe('setupBlocks', () => {
-    it('should setup blocks in state', () => {
+    it('should setup blocks in state and automatically add footer', () => {
       useBlockTemplates().setupBlocks(mockBlocks);
-      expect(mockStateRef.value.data).toEqual(mockBlocks);
+
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
       expect(mockStateRef.value.cleanData).toBeDefined();
     });
 
-    it('should use default template if no blocks provided', () => {
-      const defaultBlocks = [mockBlocks[0]] as Block[];
+    it('should add footer even when no blocks provided', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
-      setDefaultTemplate(defaultBlocks);
+      setDefaultTemplate([]);
       setupBlocks([]);
-      expect(mockStateRef.value.data).toEqual(defaultBlocks);
+
+      expect(mockStateRef.value.data).toHaveLength(1);
+      expect(mockStateRef.value.data[0]?.name).toBe('Footer');
     });
   });
 

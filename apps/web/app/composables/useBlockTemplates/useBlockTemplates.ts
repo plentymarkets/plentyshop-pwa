@@ -248,32 +248,36 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     });
   };
 
-  const migrateAllBlocks = (blocks: Block[], isRootLevel = true) => {
+  const migrateAllBlocks = (blocks: Block[]) => {
     const config = useRuntimeConfig().public;
 
-    blocks.forEach((block, index) => {
-      if (block.name === 'Image' && block.content) {
-        block.content = migrateImageContent(block.content);
-      }
+    const migrate = (blocks: Block[], isRootLevel = true) => {
+      blocks.forEach((block, index) => {
+        if (block.name === 'Image' && block.content) {
+          block.content = migrateImageContent(block.content);
+        }
 
-      if (block.name === 'ProductRecommendedProducts' && block.content) {
-        block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
-      }
+        if (block.name === 'ProductRecommendedProducts' && block.content) {
+          block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
+        }
 
-      if (block.name === 'TextCard' && block.content) {
-        const isFirstBlock = isRootLevel && index === 0;
+        if (block.name === 'TextCard' && block.content) {
+          const isFirstBlock = isRootLevel && index === 0;
 
-        block.content = migrateTextCardContent(
-          block.content as Partial<TextCardContent>,
-          config.enableRichTextEditorV2,
-          isFirstBlock,
-        );
-      }
+          block.content = migrateTextCardContent(
+            block.content as Partial<TextCardContent>,
+            config.enableRichTextEditorV2,
+            isFirstBlock,
+          );
+        }
 
-      if (Array.isArray(block.content)) {
-        migrateAllBlocks(block.content, false);
-      }
-    });
+        if (Array.isArray(block.content)) {
+          migrate(block.content, false);
+        }
+      });
+    };
+
+    migrate(blocks);
   };
 
   /** Fetches blocks from server using useAsyncData and ensures footer block is loaded */
