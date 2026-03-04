@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <EditableBlocks :identifier="'index'" :type="'immutable'" />
@@ -18,7 +17,7 @@ definePageMeta({
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
-  middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client']
+  middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
 });
 
 const { $i18n } = useNuxtApp();
