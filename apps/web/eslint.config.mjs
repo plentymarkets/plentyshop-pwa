@@ -51,7 +51,7 @@ export default withNuxt(
       "no-restricted-globals": [
         "error",
         {
-          name: 'structuredClone'
+          name: 'structuredClone',
           message: 'structuredClone strips Vue reactivity. Avoid cloning reactive state; use JSON.parse(JSON.stringify(...)) for plain data or toRaw() on reactive objects instead.'
         }
       ],
