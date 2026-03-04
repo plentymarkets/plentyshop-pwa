@@ -6,6 +6,18 @@
       data-testid="navbar-top"
     >
       <div class="flex items-center">
+        <UiButton
+          v-if="viewport.isLessThan('lg')"
+          variant="tertiary"
+          square
+          :aria-label="t('common.navigation.openMenu')"
+          class="mr-5 hover:!bg-header-400"
+          :style="{ color: iconColor }"
+          @click="openMenu([])"
+        >
+          <SfIconMenu aria-hidden="true" />
+        </UiButton>
+
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
@@ -233,6 +245,7 @@ import {
   SfListItem,
   SfModal,
   SfIconFavorite,
+  SfIconMenu,
   useDisclosure,
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
@@ -257,6 +270,8 @@ const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisc
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
+const { open: openMegaMenu, activeNode } = useMegaMenu();
+const { setDrawerOpen } = useDrawerState();
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -267,6 +282,12 @@ const isActive = computed(() => isLanguageSelectOpen);
 onNuxtReady(async () => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
+
+const openMenu = (menuType: number[]) => {
+  activeNode.value = menuType;
+  openMegaMenu();
+  setDrawerOpen(true);
+};
 
 const navigateAfterAuth = (reload: boolean) => {
   if (reload) {
