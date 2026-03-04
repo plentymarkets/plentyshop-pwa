@@ -5,7 +5,7 @@
       :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
       data-testid="navbar-top"
     >
-      <div class="flex items-center">
+      <div class="flex items-center" :style="{ order: getSectionFlexOrder('logo') }">
         <UiButton
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
@@ -27,133 +27,142 @@
         </NuxtLink>
       </div>
 
-      <template v-if="viewport.isGreaterOrEquals('md')">
-        <UiSearch class="hidden md:block flex-1" />
-        <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-          <template v-if="localeCodes.length > 1">
-            <UiButton
-              v-if="!isLanguageSelectOpen"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-              :aria-label="t('common.navigation.languageSelector')"
-              variant="tertiary"
-              :style="{ color: iconColor }"
-              square
-              data-testid="open-languageselect-button"
-              :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-              @click="toggleLanguageSelect()"
-            >
-              <template #prefix>
-                <SfIconLanguage class="relative" />
-              </template>
-            </UiButton>
-            <UiButton
-              v-else
-              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-              :aria-label="t('common.navigation.languageSelector')"
-              :style="{ color: isActive ? iconColor : '' }"
-              variant="tertiary"
-              square
-              data-testid="open-languageselect-button"
-            >
-              <template #prefix>
-                <SfIconLanguage class="relative" />
-              </template>
-            </UiButton>
-          </template>
+      <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
+        <div :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
+          <UiSearch class="hidden md:block" />
+        </div>
+      </template>
+      <nav
+        v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('actions')"
+        :style="{ order: getSectionFlexOrder('actions') }"
+        class="hidden ml-4 md:flex md:flex-row md:flex-nowrap"
+      >
+        <template v-if="localeCodes.length > 1">
           <UiButton
-            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
-            :tag="NuxtLink"
-            :to="localePath(paths.wishlist)"
-            :style="{ color: iconColor }"
-            :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
+            v-if="!isLanguageSelectOpen"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
             variant="tertiary"
+            :style="{ color: iconColor }"
             square
-            data-testid="wishlist-page-navigation"
+            data-testid="open-languageselect-button"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
           >
             <template #prefix>
-              <SfIconFavorite />
-              <SfBadge
-                :content="wishlistItemIds.length"
-                :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
-                class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
-                data-testid="wishlist-badge"
-                placement="top-right"
-                :max="99"
-              />
+              <SfIconLanguage class="relative" />
             </template>
           </UiButton>
-          <UiButton
-            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
-            :tag="NuxtLink"
-            :style="{ color: iconColor }"
-            :to="localePath(paths.cart)"
-            :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
-            variant="tertiary"
-            square
-          >
-            <template #prefix>
-              <SfIconShoppingCart />
-              <SfBadge
-                :content="cartItemsCount"
-                :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
-                class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
-                data-testid="cart-badge"
-                placement="top-right"
-                :max="99"
-              />
-            </template>
-          </UiButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
-            <template #trigger>
-              <UiButton
-                variant="tertiary"
-                class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
-                :style="{ color: iconColor }"
-                :class="{ 'bg-primary-700': isAccountDropdownOpen }"
-                data-testid="account-dropdown-button"
-                @click="accountDropdownToggle()"
-              >
-                <template #prefix>
-                  <SfIconPerson />
-                </template>
-                {{ user?.firstName }}
-              </UiButton>
-            </template>
-            <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
-              <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
-                <template v-if="label === t('account.logout')">
-                  <UiDivider class="my-2" />
-                  <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
-                    {{ label }}
-                  </SfListItem>
-                </template>
-                <SfListItem
-                  v-else
-                  :tag="NuxtLink"
-                  :to="link"
-                  :class="{ 'bg-neutral-200': route.path === link }"
-                  data-testid="account-dropdown-list-item"
-                >
-                  {{ label }}
-                </SfListItem>
-              </li>
-            </ul>
-          </SfDropdown>
           <UiButton
             v-else
-            :style="{ color: iconColor }"
-            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            :style="{ color: isActive ? iconColor : '' }"
             variant="tertiary"
-            :aria-label="t('authentication.login.openLoginForm')"
             square
-            @click="navigateToLogin"
+            data-testid="open-languageselect-button"
           >
-            <SfIconPerson />
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
           </UiButton>
-        </nav>
-      </template>
+        </template>
+        <UiButton
+          class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :to="localePath(paths.wishlist)"
+          :style="{ color: iconColor }"
+          :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
+          variant="tertiary"
+          square
+          data-testid="wishlist-page-navigation"
+        >
+          <template #prefix>
+            <SfIconFavorite />
+            <SfBadge
+              :content="wishlistItemIds.length"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              data-testid="wishlist-badge"
+              placement="top-right"
+              :max="99"
+            />
+          </template>
+        </UiButton>
+        <UiButton
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :style="{ color: iconColor }"
+          :to="localePath(paths.cart)"
+          :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
+          variant="tertiary"
+          square
+        >
+          <template #prefix>
+            <SfIconShoppingCart />
+            <SfBadge
+              :content="cartItemsCount"
+              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              data-testid="cart-badge"
+              placement="top-right"
+              :max="99"
+            />
+          </template>
+        </UiButton>
+        <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+          <template #trigger>
+            <UiButton
+              variant="tertiary"
+              class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
+              :style="{ color: iconColor }"
+              :class="{ 'bg-primary-700': isAccountDropdownOpen }"
+              data-testid="account-dropdown-button"
+              @click="accountDropdownToggle()"
+            >
+              <template #prefix>
+                <SfIconPerson />
+              </template>
+              {{ user?.firstName }}
+            </UiButton>
+          </template>
+          <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
+            <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
+              <template v-if="label === t('account.logout')">
+                <UiDivider class="my-2" />
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
+                  {{ label }}
+                </SfListItem>
+              </template>
+              <SfListItem
+                v-else
+                :tag="NuxtLink"
+                :to="link"
+                :class="{ 'bg-neutral-200': route.path === link }"
+                data-testid="account-dropdown-list-item"
+              >
+                {{ label }}
+              </SfListItem>
+            </li>
+          </ul>
+        </SfDropdown>
+        <UiButton
+          v-else
+          :style="{ color: iconColor }"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+          variant="tertiary"
+          :aria-label="t('authentication.login.openLoginForm')"
+          square
+          @click="navigateToLogin"
+        >
+          <SfIconPerson />
+        </UiButton>
+      </nav>
 
-      <div v-if="viewport.isLessThan('lg')">
+      <div
+        v-if="viewport.isLessThan('lg') && isSectionVisible('actions')"
+        :style="{ order: getSectionFlexOrder('actions') }"
+      >
         <UiButton
           variant="tertiary"
           class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
@@ -270,13 +279,11 @@ const cartItemsCount = ref(0);
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 
-// Use configuration colors from block if available, otherwise fall back to site settings
 const iconColor = computed(() => props.configuration?.colors?.iconColor || getIconColor());
 const headerBackgroundColor = computed(
   () => props.configuration?.colors?.headerBackgroundColor || getHeaderBackgroundColor(),
 );
 
-// Build padding styles from configuration layout settings
 const paddingStyles = computed(() => {
   const layout = props.configuration?.layout;
   if (!layout) return {};
@@ -287,6 +294,24 @@ const paddingStyles = computed(() => {
     paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : undefined,
   };
 });
+
+const orderedVisibleSections = computed(() => {
+  const order = props.configuration?.sectionOrder?.sections || ['logo', 'search', 'actions'];
+  const visibility = props.configuration?.sectionVisibility || { logo: true, search: true, actions: true };
+
+  return order
+    .filter((sectionId) => visibility[sectionId as keyof typeof visibility] !== false)
+    .map((sectionId, index) => ({ sectionId, order: index }));
+});
+
+const getSectionFlexOrder = (sectionId: string): number => {
+  const section = orderedVisibleSections.value.find((section) => section.sectionId === sectionId);
+  return section?.order ?? 999;
+};
+
+const isSectionVisible = (sectionId: string): boolean => {
+  return orderedVisibleSections.value.some((section) => section.sectionId === sectionId);
+};
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();
@@ -304,10 +329,6 @@ const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
-
-onNuxtReady(async () => {
-  cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
-});
 
 const openMenu = (menuType: number[]) => {
   activeNode.value = menuType;
