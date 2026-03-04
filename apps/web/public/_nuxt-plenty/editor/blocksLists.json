@@ -1064,7 +1064,7 @@
           "de": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "57e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "meta": { "uuid": "5ff701a4-4b18-4364-b494-4f2cf223e8c4" },
             "configuration": {
               "controls": {
                 "color": "#000000",
@@ -1077,7 +1077,7 @@
               {
                 "name": "AnnouncementBar",
                 "type": "content",
-                "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "meta": { "uuid": "76a7fc16-ada0-4e73-a1e0-ead3774387e0" },
                 "configuration": {
                   "visible": true
                 },
@@ -1089,7 +1089,7 @@
               {
                 "name": "AnnouncementBar",
                 "type": "content",
-                "meta": { "uuid": "df7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "meta": { "uuid": "7e9dcf94-8bb4-41ed-a056-03a64b99b866" },
                 "configuration": {
                   "visible": true
                 },

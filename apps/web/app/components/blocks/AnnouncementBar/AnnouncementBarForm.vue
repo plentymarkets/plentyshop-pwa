@@ -1,4 +1,3 @@
-@ -1,312 +0,0 @@
 <template>
   <UiAccordionItem
     :model-value="true"
@@ -27,7 +26,7 @@
       <h2>{{ getEditorTranslation('layout-label') }}</h2>
     </template>
     <div class="py-2 px-2">
-      <UIFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UIFormLabel>
+      <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       <EditorColorPicker v-model="editingBackgroundColor" class="w-full">
         <template #trigger="{ color, toggle }">
           <SfInput v-model="editingBackgroundColor" type="text">
