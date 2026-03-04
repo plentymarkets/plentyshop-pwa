@@ -300,35 +300,6 @@ describe('useBlockTemplates', () => {
   });
 
   describe('block operations', () => {
-    it('addFooterBlock - should add footer if not exists', () => {
-      const data = ref([...mockBlocks]);
-      const cachedFooter = ref(mockFooterBlock);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter });
-      expect(data.value).toHaveLength(3);
-      expect(data.value[2]).toStrictEqual(mockFooterBlock);
-    });
-
-    it('addFooterBlock - should not add footer if already exists', () => {
-      const data = ref([...mockBlocks, mockFooterBlock]);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock) });
-      expect(data.value).toHaveLength(3);
-    });
-
-    it('addFooterBlock - should use default footer if cache is null', () => {
-      const data = ref([...mockBlocks]);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(null) });
-      expect(data.value).toHaveLength(3);
-      expect(data.value[2]?.name).toBe('Footer');
-    });
-
-    it('addFooterBlock - should also add to cleanData if provided', () => {
-      const data = ref([...mockBlocks]);
-      const cleanData = ref([...mockBlocks]);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock), cleanData });
-      expect(data.value).toHaveLength(3);
-      expect(cleanData.value).toHaveLength(3);
-    });
-
     it('mapFooterData - should map block to footer block with defaults', () => {
       const inputBlock: Block = {
         name: 'Footer',

@@ -8,12 +8,7 @@ import type {
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
-import type {
-  FooterContent,
-  FooterSwitchDefinition,
-  FooterBlock,
-  AddFooterBlock,
-} from '~/components/blocks/Footer/types';
+import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
 
@@ -212,21 +207,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const createDefaultFooterBlock = createDefaultFooterBlockHelper;
   const extractFooterContentFromBlocks = extractFooterContentFromBlocksHelper;
   const mapFooterData = mapFooterDataHelper;
-
-  /**
-   * Legacy method: Adds a footer block to blocks array if one doesn't exist.
-   * @deprecated No longer needed - setupBlocks() automatically handles footer injection.
-   * Kept for backward compatibility only.
-   */
-  const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
-    const footerExists = data.value.some((block) => isFooterBlock(block));
-
-    if (!footerExists) {
-      const footerBlock = cachedFooter.value || createDefaultFooterBlockHelper();
-      data.value.push(footerBlock);
-      if (cleanData) cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
-    }
-  };
 
   /** Resets the footer block in data to the saved/cached state, discarding unsaved changes */
   const resetFooterToSaved = async () => {
@@ -432,7 +412,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     clearFooterCache,
     updateFooterCache,
     extractFooterContentFromBlocks,
-    addFooterBlock,
     mapFooterData,
     isFooterBlock,
     FOOTER_BLOCK_NAME,

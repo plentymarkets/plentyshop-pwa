@@ -1,11 +1,6 @@
 import type { Ref } from 'vue';
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
-import type {
-  FooterBlock,
-  FooterContent,
-  FooterSwitchDefinition,
-  AddFooterBlock,
-} from '~/components/blocks/Footer/types';
+import type { FooterBlock, FooterContent, FooterSwitchDefinition } from '~/components/blocks/Footer/types';
 
 export interface UseBlockTemplatesState {
   data: Block[];
@@ -56,7 +51,6 @@ export interface UseBlockTemplates {
   clearFooterCache: ClearFooterCache;
   updateFooterCache: UpdateFooterCache;
   extractFooterContentFromBlocks: ExtractFooterContentFromBlocks;
-  addFooterBlock: AddFooterBlock;
   mapFooterData: MapFooterData;
   isFooterBlock: IsFooterBlock;
   FOOTER_BLOCK_NAME: 'Footer';
