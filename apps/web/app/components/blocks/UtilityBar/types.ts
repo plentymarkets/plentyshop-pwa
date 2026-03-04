@@ -1,0 +1,52 @@
+export type LayoutSettings = {
+  paddingTop: number;
+  paddingBottom: number;
+  paddingLeft: number;
+  paddingRight: number;
+};
+
+export type ColorSettings = {
+  headerBackgroundColor: string;
+  iconColor: string;
+};
+
+export type LogoSettings = {
+  logo: string;
+};
+
+export type SearchDisplayMode = 'icon-only' | 'full';
+
+export type SearchSettings = {
+  displayMode: SearchDisplayMode;
+};
+
+export type ActionType = 'language' | 'wishlist' | 'cart' | 'account';
+
+export type ActionsSettings = {
+  order: ActionType[];
+  visibility: {
+    language: boolean;
+    wishlist: boolean;
+    cart: boolean;
+    account: boolean;
+  };
+};
+
+export type SectionType = 'logo' | 'search' | 'actions';
+
+export type SectionOrderSettings = {
+  sections: SectionType[];
+};
+
+export type UtilityBarProps = {
+  name: string;
+  type: string;
+  content: {
+    layout: LayoutSettings;
+    colors: ColorSettings;
+    sectionOrder: SectionOrderSettings;
+    logo: LogoSettings;
+    search: SearchSettings;
+    actions: ActionsSettings;
+  };
+};
