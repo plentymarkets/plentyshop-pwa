@@ -25,7 +25,7 @@ export const useCarousel: UseCarouselReturn = () => {
       const module = await import(`~/components/blocks/${slide.name}/defaults.ts`);
       const fallbackLabel = `Slide ${index + 1}`;
 
-      const label = module.labelpath
+      const label = module.labelPath
         ? module.labelPath
             .split('.')
             .reduce((acc: unknown, key: string) => (acc as Record<string, unknown>)?.[key], slide as unknown)
