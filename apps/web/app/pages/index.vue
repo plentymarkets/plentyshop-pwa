@@ -1,5 +1,6 @@
 <template>
   <div>
+    <BlocksUtilityBar />
     <EditableBlocks :identifier="'index'" :type="'immutable'" />
   </div>
 </template>
