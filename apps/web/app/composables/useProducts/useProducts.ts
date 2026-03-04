@@ -1,6 +1,6 @@
-import type { Block, Facet, FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
-import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
+import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 import { getCategoryTemplate } from '~/utils/blockTemplates/category';
 import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
 import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';

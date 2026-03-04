@@ -197,11 +197,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     loading: false,
   }));
 
-  /**
-   * Shared footer cache across all pages in the same locale.
-   * Populated by the footer-block plugin on app startup from homepage API.
-   * This ensures all pages (homepage, category, product) display the same footer.
-   */
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   /** Clears the cached footer block, forcing a fresh fetch on next access */
@@ -244,11 +239,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
   };
 
-  /**
-   * Fetches the footer block from homepage API and caches it.
-   * Called by the footer-block plugin on app startup to populate the cache.
-   * Returns cached version on subsequent calls without refetching.
-   */
+  /** Fetches the footer block from the server or returns cached version */
   const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) return footerCache.value;
 
