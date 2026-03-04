@@ -264,13 +264,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     });
   };
 
-  const ensureFooterBlock = async () => {
-    try {
-      await fetchFooterBlock();
-    } catch (error) {
-      console.warn('Failed to ensure footer block:', error);
-    }
-  };
   const migrateAllBlocks = (blocks: Block[], isRootLevel = true) => {
     const config = useRuntimeConfig().public;
 
@@ -318,8 +311,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
 
     setupBlocks(data?.value?.data ?? []);
-
-    await ensureFooterBlock();
   };
 
   /** Fetches blocks directly from SDK without caching */
@@ -336,19 +327,20 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
   /** Sets up blocks in state, applying migrations and falling back to default template if empty */
   const setupBlocks = (fetchedBlocks: Block[]) => {
-    const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
+    const blocks = fetchedBlocks;
 
     if (Array.isArray(blocks)) {
       migrateAllBlocks(blocks);
 
-      const footerBlock = blocks.find((block) => isFooterBlock(block));
-      if (footerBlock) footerCache.value = footerBlock as FooterBlock;
+      // Remove any footer from blocks (could be from default template)
+      // We'll add the cached/saved footer after this
+      const blocksWithoutFooter = blocks.filter((block) => !isFooterBlock(block));
+      blocks.splice(0, blocks.length, ...blocksWithoutFooter);
     }
 
-    if (!blocks.some((block) => isFooterBlock(block))) {
-      const footerBlock = footerCache.value || createDefaultFooterBlockHelper();
-      blocks.push(footerBlock);
-    }
+    // Always add the cached footer (or create default if cache is empty)
+    const footerBlock = footerCache.value || createDefaultFooterBlockHelper();
+    blocks.push(footerBlock);
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
       state.value.data.splice(0, state.value.data.length, ...blocks);

@@ -2,8 +2,6 @@ import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 import { getCategoryTemplate } from '~/utils/blockTemplates/category';
-import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
-import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
 
 const useBlockTemplatesData = async (locale: string) => await getCategoryTemplate(locale);
 
@@ -54,38 +52,18 @@ export const useProducts: UseProductsReturn = (category = '') => {
     const route = useRoute();
     const { $i18n } = useNuxtApp();
     const { isInEditor } = useEditorState();
-    const {
-      data: blockData,
-      setupBlocks,
-      getBlocksServer,
-    } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+    const { setupBlocks, getBlocksServer } = useBlockTemplates(
+      route?.meta?.identifier as string,
+      route.meta.type as string,
+      $i18n.locale.value,
+    );
 
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 
     if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
-      const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
-
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const fakeBlocks = blockData.value?.length ? blockData.value : await useBlockTemplatesData($i18n.locale.value);
-
-      state.value.data = {
-        category: fakeFacet['data'].category,
-        products: [],
-        facets: [],
-        blocks: fakeBlocks,
-        languageUrls: {
-          'x-default': '',
-        },
-        pagination: {
-          totals: 8,
-          perPageOptions: defaults.PER_PAGE_STEPS,
-        },
-      } as Facet;
-
-      setupBlocks(fakeBlocks);
-
       handlePreviewProducts(state, $i18n.locale.value);
 
       state.value.loading = false;
@@ -108,7 +86,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       const defaultData =
         state.value.data.category.type === 'item' ? await useBlockTemplatesData($i18n.locale.value) : [];
 
-      await setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
+      setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
     }
 
     state.value.loading = false;
