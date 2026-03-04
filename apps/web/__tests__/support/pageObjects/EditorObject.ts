@@ -298,7 +298,7 @@ export class EditorObject extends PageObject {
     this.languageList.children().should('have.length', 2);
     this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
-    this.title.first().should('have.text', 'Ihr Sound');
+    this.title.first().should('have.text', 'Ihr Sound auf höchstem Niveau');
   }
 
   addBlockTop() {
