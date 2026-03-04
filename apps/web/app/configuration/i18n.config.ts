@@ -48,29 +48,11 @@ const getDefaultLocale = () => {
   return localeKeys.includes(defaultLocale) ? defaultLocale : 'en';
 };
 
-export const disabledLocalesRules = () => {
-  console.log('process.env.LANGUAGELIST: ', process.env.LANGUAGELIST)
-  const allowedLocales = process.env.LANGUAGELIST?.split(',') || ['de', 'en'];
-
-  const disabledLocalesRules: Record<string, false> = {};
-
-  const allLocales = getLocales();
-
-  allLocales.forEach((locale) => {
-    if (!allowedLocales.includes(locale.code)) {
-      disabledLocalesRules[locale.code] = false;
-    }
-  });
-
-  return disabledLocalesRules;
-};
-
 export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: getLocales(),
   defaultLocale: getDefaultLocale(),
   langDir: '../app/lang',
   strategy: 'prefix_and_default',
   vueI18n: '~/configuration/vueI18n.config.ts',
-  detectBrowserLanguage: false,
-  customRoutes: 'meta'
+  detectBrowserLanguage: false
 };

@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <EditableBlocks :identifier="'index'" :type="'immutable'" />
@@ -6,17 +7,18 @@
 
 <script lang="ts" setup>
 import { getHomepageTemplate } from '~/utils/blockTemplates/homepage';
-import { disabledLocalesRules } from '~/configuration/i18n.config';
+import type { Locale } from '#i18n';
+
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 definePageMeta({
   pageType: 'static',
   isBlockified: true,
   type: 'immutable',
   identifier: 'index',
-  middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
-  nuxtI18n: {
-    paths: disabledLocalesRules(),
-  },
+  middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client']
 });
 
 const { $i18n } = useNuxtApp();
