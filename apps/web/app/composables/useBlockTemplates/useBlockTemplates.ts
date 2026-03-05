@@ -322,7 +322,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    // Extract footer from server response and update cache (e.g., after save or from legacy data)
     const serverFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
     if (serverFooter) {
       footerCache.value = serverFooter;
