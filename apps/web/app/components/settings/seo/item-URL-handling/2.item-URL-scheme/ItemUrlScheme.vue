@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableEditorCallistoUrlScheme" class="py-2 mb-2">
+  <div v-if="runtimeConfig.enableEditorItemURLScheme" class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
