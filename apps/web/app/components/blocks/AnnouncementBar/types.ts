@@ -4,8 +4,8 @@ export type AnnouncementBarProps = {
   meta: {
     uuid: string;
   };
-  configuration: {
-    visible?: boolean;
+  configuration?: {
+    visible: boolean;
   };
   content: {
     backgroundColor: string;
