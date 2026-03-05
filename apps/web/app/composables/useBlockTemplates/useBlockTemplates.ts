@@ -323,17 +323,14 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     migrateAllBlocks(fetchedBlocks);
 
     const contentBlocks: Block[] = [];
-    let footerFromServer: FooterBlock | undefined;
 
     for (const block of fetchedBlocks) {
-      if (isFooterBlock(block)) {
-        footerFromServer = block as FooterBlock;
-      } else {
+      if (!isFooterBlock(block)) {
         contentBlocks.push(block);
       }
     }
 
-    const footerToUse = footerCache.value || footerFromServer || createDefaultFooterBlockHelper();
+    const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       contentBlocks.length > 0
         ? contentBlocks
