@@ -48,11 +48,3 @@ export interface FooterContent {
   footnoteAlign: 'left' | 'center' | 'right';
   colors: FooterColors;
 }
-
-type AddFooterBlockOptions = {
-  data: Ref<Block[]>;
-  cachedFooter: Ref<FooterBlock | null>;
-  cleanData?: Ref<Block[]>;
-};
-
-export type AddFooterBlock = (options: AddFooterBlockOptions) => void;

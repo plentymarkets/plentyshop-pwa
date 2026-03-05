@@ -95,7 +95,11 @@ const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useBlockTemplates();
+const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useBlockTemplates(
+  'index',
+  'immutable',
+  useNuxtApp().$i18n.locale.value,
+);
 
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;

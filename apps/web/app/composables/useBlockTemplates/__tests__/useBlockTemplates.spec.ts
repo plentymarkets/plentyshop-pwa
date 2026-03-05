@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlockTemplates } from '../useBlockTemplates';
 import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
@@ -300,35 +301,6 @@ describe('useBlockTemplates', () => {
   });
 
   describe('block operations', () => {
-    it('addFooterBlock - should add footer if not exists', () => {
-      const data = ref([...mockBlocks]);
-      const cachedFooter = ref(mockFooterBlock);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter });
-      expect(data.value).toHaveLength(3);
-      expect(data.value[2]).toStrictEqual(mockFooterBlock);
-    });
-
-    it('addFooterBlock - should not add footer if already exists', () => {
-      const data = ref([...mockBlocks, mockFooterBlock]);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock) });
-      expect(data.value).toHaveLength(3);
-    });
-
-    it('addFooterBlock - should use default footer if cache is null', () => {
-      const data = ref([...mockBlocks]);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(null) });
-      expect(data.value).toHaveLength(3);
-      expect(data.value[2]?.name).toBe('Footer');
-    });
-
-    it('addFooterBlock - should also add to cleanData if provided', () => {
-      const data = ref([...mockBlocks]);
-      const cleanData = ref([...mockBlocks]);
-      useBlockTemplates().addFooterBlock({ data, cachedFooter: ref(mockFooterBlock), cleanData });
-      expect(data.value).toHaveLength(3);
-      expect(cleanData.value).toHaveLength(3);
-    });
-
     it('mapFooterData - should map block to footer block with defaults', () => {
       const inputBlock: Block = {
         name: 'Footer',
@@ -453,18 +425,69 @@ describe('useBlockTemplates', () => {
   });
 
   describe('setupBlocks', () => {
-    it('should setup blocks in state', () => {
+    it('should setup blocks in state and automatically add footer', () => {
       useBlockTemplates().setupBlocks(mockBlocks);
-      expect(mockStateRef.value.data).toEqual(mockBlocks);
+
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
       expect(mockStateRef.value.cleanData).toBeDefined();
     });
 
-    it('should use default template if no blocks provided', () => {
-      const defaultBlocks = [mockBlocks[0]] as Block[];
+    it('should add footer even when no blocks provided', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
-      setDefaultTemplate(defaultBlocks);
+      setDefaultTemplate([]);
       setupBlocks([]);
-      expect(mockStateRef.value.data).toEqual(defaultBlocks);
+
+      expect(mockStateRef.value.data).toHaveLength(1);
+      expect(mockStateRef.value.data[0]?.name).toBe('Footer');
+    });
+
+    it('should extract and cache footer block when cache is empty', () => {
+      mockFooterCacheRef.value = null;
+      const blocksWithFooter = [...mockBlocks, mockFooterBlock];
+      useBlockTemplates().setupBlocks(blocksWithFooter);
+      expect(mockFooterCacheRef.value).toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[2]).toEqual(mockFooterBlock);
+    });
+
+    it('should prioritize cached footer over footer in fetchedBlocks', () => {
+      const cachedFooter: FooterBlock = {
+        ...mockFooterBlock,
+        meta: { uuid: 'cached-uuid', isGlobalTemplate: true },
+        content: {
+          ...(mockFooterBlock.content as FooterContent),
+          footnote: '© Cached Footer 2024',
+        },
+      };
+      mockFooterCacheRef.value = cachedFooter;
+
+      const differentFooter: FooterBlock = {
+        ...mockFooterBlock,
+        meta: { uuid: 'different-uuid', isGlobalTemplate: true },
+        content: {
+          ...(mockFooterBlock.content as FooterContent),
+          footnote: '© Different Footer 2024',
+        },
+      };
+      const blocksWithFooter = [...mockBlocks, differentFooter];
+
+      useBlockTemplates().setupBlocks(blocksWithFooter);
+      expect(mockFooterCacheRef.value).toEqual(differentFooter);
+      expect(mockStateRef.value.data[2]).toEqual(differentFooter);
+    });
+
+    it('should normalize footer position to the end', () => {
+      mockFooterCacheRef.value = null;
+      const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
+      useBlockTemplates().setupBlocks(blocksWithFooterFirst);
+      expect(mockFooterCacheRef.value).toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[mockBlocks.length]).toEqual(mockFooterBlock);
     });
   });
 
