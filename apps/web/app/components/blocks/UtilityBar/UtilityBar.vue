@@ -32,17 +32,20 @@
           <template v-if="props.configuration?.search?.displayMode === 'full'">
             <UiSearch class="hidden md:block" />
           </template>
+
           <template v-else>
-            <UiButton
-              variant="tertiary"
-              class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md hidden md:block"
-              square
-              :style="{ color: iconColor }"
-              :aria-label="t('common.actions.search')"
-              @click="searchModalOpen"
-            >
-              <SfIconSearch />
-            </UiButton>
+            <div class="hidden md:block">
+              <UiButton
+                variant="tertiary"
+                square
+                class="hover:!bg-header-400 rounded-md"
+                :style="{ color: iconColor }"
+                :aria-label="t('common.actions.search')"
+                @click="searchModalOpen"
+              >
+                <SfIconSearch />
+              </UiButton>
+            </div>
           </template>
         </div>
       </template>
