@@ -341,11 +341,9 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     const finalBlocks = [...blocksToUse, footerToUse];
 
-    const hasChanged =
-      state.value.data.length !== finalBlocks.length ||
-      state.value.data.some((block, i) => block.meta?.uuid !== finalBlocks[i]?.meta?.uuid);
-
-    if (hasChanged) state.value.data.splice(0, state.value.data.length, ...finalBlocks);
+    if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
+      state.value.data.splice(0, state.value.data.length, ...finalBlocks);
+    }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
   };
 
