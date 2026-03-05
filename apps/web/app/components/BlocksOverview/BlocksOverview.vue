@@ -20,7 +20,7 @@
         <li
           v-for="(item, index) in flatBlocks"
           :key="item.uuid"
-          class="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2"
+          class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2"
           :class="{ 'bg-[#E6F0FF]': selectedUuid === item.uuid }"
           :style="{ paddingLeft: `${16 + item.depth * 16}px` }"
           :data-testid="`blocks-overview-item-${index}`"
