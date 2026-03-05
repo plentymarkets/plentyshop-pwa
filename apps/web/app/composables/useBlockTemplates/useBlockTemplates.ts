@@ -280,7 +280,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     migrate(blocks);
   };
 
-  /** Fetches blocks from server using useAsyncData and ensures footer block is loaded */
+  /** Fetches blocks from server using useAsyncData with Nuxt caching */
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -301,7 +301,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data?.value?.data ?? []);
   };
 
-  /** Fetches blocks directly from SDK without caching */
+  /** Fetches blocks directly from SDK without Nuxt caching */
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -313,7 +313,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data ?? []);
   };
 
-  /** Sets up blocks in state, applying migrations and falling back to default template if empty */
+  /** Sets up blocks in state, applying migrations and extracting footer from response */
   const setupBlocks = (fetchedBlocks: Block[]) => {
     if (!Array.isArray(fetchedBlocks)) {
       console.warn('Invalid blocks data received');
@@ -321,6 +321,12 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
 
     migrateAllBlocks(fetchedBlocks);
+
+    // Extract footer from server response and update cache (e.g., after save or from legacy data)
+    const serverFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
+    if (serverFooter) {
+      footerCache.value = serverFooter;
+    }
 
     const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
     const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();

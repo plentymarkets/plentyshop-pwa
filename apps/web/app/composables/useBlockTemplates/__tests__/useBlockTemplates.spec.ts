@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlockTemplates } from '../useBlockTemplates';
 import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
@@ -441,6 +442,52 @@ describe('useBlockTemplates', () => {
 
       expect(mockStateRef.value.data).toHaveLength(1);
       expect(mockStateRef.value.data[0]?.name).toBe('Footer');
+    });
+
+    it('should extract and cache footer block when cache is empty', () => {
+      mockFooterCacheRef.value = null;
+      const blocksWithFooter = [...mockBlocks, mockFooterBlock];
+      useBlockTemplates().setupBlocks(blocksWithFooter);
+      expect(mockFooterCacheRef.value).toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[2]).toEqual(mockFooterBlock);
+    });
+
+    it('should prioritize cached footer over footer in fetchedBlocks', () => {
+      const cachedFooter: FooterBlock = {
+        ...mockFooterBlock,
+        meta: { uuid: 'cached-uuid', isGlobalTemplate: true },
+        content: {
+          ...(mockFooterBlock.content as FooterContent),
+          footnote: '© Cached Footer 2024',
+        },
+      };
+      mockFooterCacheRef.value = cachedFooter;
+
+      const differentFooter: FooterBlock = {
+        ...mockFooterBlock,
+        meta: { uuid: 'different-uuid', isGlobalTemplate: true },
+        content: {
+          ...(mockFooterBlock.content as FooterContent),
+          footnote: '© Different Footer 2024',
+        },
+      };
+      const blocksWithFooter = [...mockBlocks, differentFooter];
+
+      useBlockTemplates().setupBlocks(blocksWithFooter);
+      expect(mockFooterCacheRef.value).toEqual(differentFooter);
+      expect(mockStateRef.value.data[2]).toEqual(differentFooter);
+    });
+
+    it('should normalize footer position to the end', () => {
+      mockFooterCacheRef.value = null;
+      const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
+      useBlockTemplates().setupBlocks(blocksWithFooterFirst);
+      expect(mockFooterCacheRef.value).toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[mockBlocks.length]).toEqual(mockFooterBlock);
     });
   });
 
