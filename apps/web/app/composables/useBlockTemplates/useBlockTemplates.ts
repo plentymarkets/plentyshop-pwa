@@ -328,8 +328,14 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
 
     const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
+
+    const blocksToUse =
+      contentBlocks.length > 0
+        ? contentBlocks
+        : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block));
+
     const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();
-    const finalBlocks = [...contentBlocks, cachedOrDefaultFooter];
+    const finalBlocks = [...blocksToUse, cachedOrDefaultFooter];
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
