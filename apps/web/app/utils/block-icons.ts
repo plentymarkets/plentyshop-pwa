@@ -1,10 +1,7 @@
-const blockIconLoaders = import.meta.glob(
-  '@/components/**/blocks/**/icon.svg',
-  {
-    query: '?raw',
-    import: 'default',
-  },
-) as Record<string, () => Promise<string>>;
+const blockIconLoaders = import.meta.glob('@/components/**/blocks/**/icon.svg', {
+  query: '?raw',
+  import: 'default',
+}) as Record<string, () => Promise<string>>;
 
 const normalizeIconPath = (path: string): string => {
   const match = path.match(/blocks\/(?:structure\/)?([^/]+)\/[^/]*icon\.svg/);
@@ -35,7 +32,3 @@ initializeIcons().catch((error) => {
 export const getBlockIconSvg = (blockName: string): string | null => {
   return blockIcons.get(blockName) ?? null;
 };
-
-
-
-
