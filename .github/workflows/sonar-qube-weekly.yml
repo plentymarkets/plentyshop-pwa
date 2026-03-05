@@ -23,6 +23,12 @@ jobs:
           path: .
           fetch-depth: 0
           ref: ${{ env.base_branch }}
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: "Test"
+        continue-on-error: true
+        run: npm run test:coverage
 
       - uses: SonarSource/sonarqube-scan-action@v6
         env:
@@ -32,6 +38,9 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.branch.name=${{ env.base_branch }}
-            -Dsonar.exclusions=**/node_modules/**,**/.nuxt/**,**/.output/**
-            -Dsonar.sources=.
+            -Dsonar.sources=apps/web
+            -Dsonar.exclusions=**/__tests__/**,.nuxt/**,.output/**,.env
+            -Dsonar.tests=apps/web
+            -Dsonar.test.inclusions=**/__tests__/**
+            -Dsonar.javascript.lcov.reportPaths=./apps/web/coverage/lcov.info
             -Dsonar.scanner.socketTimeout=1800

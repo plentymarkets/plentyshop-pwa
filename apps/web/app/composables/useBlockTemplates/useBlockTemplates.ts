@@ -322,14 +322,21 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    const serverFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
-    if (serverFooter) {
-      footerCache.value = serverFooter;
+    const contentBlocks: Block[] = [];
+
+    for (const block of fetchedBlocks) {
+      if (!isFooterBlock(block)) {
+        contentBlocks.push(block);
+      }
     }
 
-    const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
-    const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();
-    const finalBlocks = [...contentBlocks, cachedOrDefaultFooter];
+    const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
+    const blocksToUse =
+      contentBlocks.length > 0
+        ? contentBlocks
+        : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block));
+
+    const finalBlocks = [...blocksToUse, footerToUse];
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
