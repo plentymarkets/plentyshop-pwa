@@ -20,15 +20,22 @@
         <li
           v-for="(item, index) in flatBlocks"
           :key="item.uuid"
-          class="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF]"
+          class="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2"
           :class="{ 'bg-[#E6F0FF]': selectedUuid === item.uuid }"
           :style="{ paddingLeft: `${16 + item.depth * 16}px` }"
           :data-testid="`blocks-overview-item-${index}`"
           @click="scrollToBlock(item.uuid)"
         >
-          <span class="truncate text-sm">{{ item.label }}</span>
+          <div class="flex items-center gap-2 min-w-0">
+            <span
+              v-if="getBlockIconSvg(item.block.name)"
+              class="shrink-0 w-5 h-5 [&>svg]:w-full [&>svg]:h-full"
+              v-html="getBlockIconSvg(item.block.name)"
+            />
+            <span class="truncate text-sm">{{ item.label }}</span>
+          </div>
           <button
-            class="shrink-0 p-1 rounded hover:bg-[#d0e2ff]"
+            class="shrink-0 p-1 rounded "
             :data-testid="`blocks-overview-edit-${index}`"
             @click.stop="editBlock(item.block)"
           >
@@ -51,6 +58,7 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconBase } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
+import { getBlockIconSvg } from '~/utils/blocks-imports';
 import type { Block } from '@plentymarkets/shop-api';
 
 const { closeDrawer, openDrawerWithView } = useSiteConfiguration();
@@ -60,6 +68,7 @@ const { data } = useBlockTemplates(
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
 );
+const { setIndex } = useCarousel();
 
 interface FlatBlock {
   uuid: string;
@@ -109,6 +118,21 @@ const scrollToBlock = (uuid: string) => {
 
 const editBlock = (block: Block) => {
   scrollToBlock(block.meta.uuid);
+
+  if (data.value) {
+    for (const parentBlock of data.value) {
+      if (parentBlock.name === 'Carousel' && Array.isArray(parentBlock.content)) {
+        const slideIndex = (parentBlock.content as Block[]).findIndex(
+          (slide) => slide.meta?.uuid === block.meta.uuid
+        );
+        if (slideIndex !== -1) {
+          setIndex(parentBlock.meta.uuid, slideIndex);
+          break;
+        }
+      }
+    }
+  }
+
   openDrawerWithView('blocksSettings', block);
 };
 </script>
