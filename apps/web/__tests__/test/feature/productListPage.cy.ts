@@ -9,7 +9,7 @@ describe('Smoke: Product List Page', function () {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ enableCallistoUrlScheme: false });
+    cy.setConfig({ enableSingleProductUrlScheme: false });
     cy.visitAndHydrate(paths.home);
   });
   it('[smoke] User should be able to see the products as list and grid', () => {
@@ -28,7 +28,7 @@ describe('Smoke: Product List Page', function () {
   describe('Callisto URL Scheme', () => {
     beforeEach(() => {
       cy.clearConfig();
-      cy.setConfig({ enableCallistoUrlScheme: true });
+      cy.setConfig({ enableSingleProductUrlScheme: true });
       cy.visitAndHydrate(paths.home);
     });
 
