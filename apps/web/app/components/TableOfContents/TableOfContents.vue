@@ -136,7 +136,7 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconBase } from '@storefront-ui/vue';
-import { getBlockIconSvg } from '~/utils/blocks-imports';
+import { getBlockIconSvg } from '~/utils/block-icons';
 import type { Block } from '@plentymarkets/shop-api';
 
 const { closeDrawer, openDrawerWithView } = useSiteConfiguration();

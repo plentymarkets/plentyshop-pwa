@@ -29,7 +29,7 @@
           <SfIconLanguage width="24" height="24px" />
         </button>
       </SfTooltip>
-      <SfTooltip :label="tableOfContentsLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
+      <SfTooltip  v-if="enableTableOfContents" :label="tableOfContentsLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
@@ -38,8 +38,8 @@
           data-testid="open-table-of-contents-drawer"
           @click="toggleDrawerView('TableOfContents')"
         >
-          <NuxtImg v-if="drawerView === 'TableOfContents'" width="24" height="24" :src="layersWhite" />
-          <NuxtImg v-else width="24" height="24" :src="layersBlack" />
+          <NuxtImg v-if="drawerView === 'TableOfContents'" width="24" height="24" :src="tableOfContentsWhite" />
+          <NuxtImg v-else width="24" height="24" :src="tableOfContentsBlack" />
         </button>
       </SfTooltip>
       <component
@@ -57,11 +57,12 @@
 import { SfIconLanguage, SfTooltip } from '@storefront-ui/vue';
 import pagesWhite from '~/assets/icons/paths/pages-white.svg';
 import pagesBlack from '~/assets/icons/paths/pages-black.svg';
-import layersWhite from '~/assets/icons/paths/layers-white.svg';
-import layersBlack from '~/assets/icons/paths/layers-black.svg';
+import tableOfContentsWhite from '~/assets/icons/paths/table-of-contents-white.svg';
+import tableOfContentsBlack from '~/assets/icons/paths/table-of-contents-black.svg';
 
 const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
+const { public: { enableTableOfContents } } = useRuntimeConfig();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
