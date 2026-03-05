@@ -12,7 +12,7 @@ describe('Smoke: Product Detail Page', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ useAvif: true, useWebp: true, enableCallistoUrlScheme: true });
+    cy.setConfig({ useAvif: true, useWebp: true, enableSingleProductUrlScheme: true });
   });
 
   it('[smoke] Open product page and check displayed data', () => {
