@@ -32,10 +32,8 @@ export const useCarousel: UseCarouselReturn = () => {
         : fallbackLabel;
 
       const strippedHtml = (() => {
-        let s = String(label);
-        let prev: string;
-        do { prev = s; s = s.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ''); } while (s !== prev);
-        return s.replace(/<[^>]*>/g, '').trim();
+        const doc = new DOMParser().parseFromString(String(label), 'text/html');
+        return doc.body.textContent?.trim() || '';
       })();
       const plainText = decodeHtmlEntities(strippedHtml);
       if (!plainText) return fallbackLabel;
