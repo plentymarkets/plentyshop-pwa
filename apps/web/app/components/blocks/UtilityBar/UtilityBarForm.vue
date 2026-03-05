@@ -1,210 +1,42 @@
 <template>
   <div data-testid="utility-bar-form" class="block-slider-edit sticky top-[52px] h-[80vh] overflow-y-auto">
-    <UiAccordionItem
+    <BlocksUtilityBarSectionsList
       v-if="editingSectionIndex === undefined"
-      v-model="elementsOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      content-padding-class="py-4"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('elements-group-label') }}</h2>
-      </template>
+      v-model:open="elementsOpen"
+      :sections="sections"
+      :open-section-menu-index="openSectionMenuIndex"
+      :current-editing-section-index="currentEditingSectionIndex"
+      :get-section-label="getSectionLabel"
+      :get-editor-translation="getEditorTranslation"
+      :edit-section="editSection"
+      :toggle-section-menu="toggleSectionMenu"
+      :toggle-section-visibility="toggleSectionVisibility"
+      @update:sections="sections = $event"
+    />
 
-      <div>
-        <draggable
-          v-if="sections.length"
-          v-model="sections"
-          item-key="id"
-          handle=".drag-sections-handle"
-          class=""
-          :filter="'.no-drag'"
-        >
-          <template #item="{ element: section, index }">
-            <div
-              :key="section.id"
-              class="mb-3 flex items-center justify-between transition-colors"
-              :style="
-                currentEditingSectionIndex === index
-                  ? { backgroundColor: 'rgba(83, 138, 234, 0.1)', borderLeft: '4px solid #538AEA' }
-                  : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
-              "
-            >
-              <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4">
-                <div class="flex items-center gap-3 flex-1 min-w-0">
-                  <button
-                    class="drag-sections-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
-                    :aria-label="getEditorTranslation('drag-reorder-aria')"
-                    :data-testid="`actions-drag-section-handle-${index}`"
-                  >
-                    <NuxtImg width="18" height="18" :src="dragIcon" />
-                  </button>
+    <BlocksUtilityBarSectionEditor
+      v-if="editingSectionIndex !== undefined"
+      :sections="sections"
+      :editing-section-index="editingSectionIndex"
+      :section-form="sectionForm"
+    />
 
-                  <span
-                    class="text-sm font-medium truncate"
-                    :class="section.visible !== false ? 'text-gray-700' : 'text-gray-400'"
-                  >
-                    {{ getSectionLabel(section.id) }}
-                  </span>
-                </div>
-
-                <button
-                  :data-testid="`actions-edit-section-${index}`"
-                  class="text-gray-500 rounded-full no-drag"
-                  :aria-label="getEditorTranslation('edit-section-aria')"
-                  @click="editSection(index)"
-                >
-                  <SfIconBase size="xs" viewBox="0 0 18 18">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path :d="editPath" fill="currentColor" />
-                    </svg>
-                  </SfIconBase>
-                </button>
-
-                <div :key="`menu-${index}`" class="relative">
-                  <button
-                    :data-testid="`actions-menu-section-${index}`"
-                    class="text-gray-500 rounded-full no-drag"
-                    @click="toggleSectionMenu(index)"
-                  >
-                    <SfIconMoreVert />
-                  </button>
-
-                  <div
-                    v-if="openSectionMenuIndex === index"
-                    class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
-                    @click.stop
-                  >
-                    <div class="px-4 py-3 border-b">
-                      <div class="flex items-center justify-between">
-                        <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
-                        <SfSwitch
-                          :model-value="sections[index]?.visible !== false"
-                          :data-testid="`actions-toggle-visibility-section-${index}`"
-                          :aria-label="getEditorTranslation('toggle-visibility-aria')"
-                          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-                          @update:model-value="toggleSectionVisibility(index)"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </draggable>
-      </div>
-    </UiAccordionItem>
-
-    <div v-else-if="sections[editingSectionIndex]" class="space-y-0">
-      <component :is="sectionForm" />
-    </div>
-    <template v-if="editingSectionIndex === undefined">
-      <UiAccordionItem
-        v-model="layoutOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2 data-testid="utility-bar-layout-title">{{ getEditorTranslation('layout-label') }}</h2>
-        </template>
-
-        <div class="space-y-4 py-4">
-          <div>
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('header-bg-color-label') }}</UiFormLabel>
-            <EditorColorPicker v-model="configuration.colors.headerBackgroundColor" class="w-full">
-              <template #trigger="{ color, toggle }">
-                <SfInput v-model="configuration.colors.headerBackgroundColor" type="text">
-                  <template #suffix>
-                    <div
-                      class="w-6 h-6 rounded border cursor-pointer"
-                      :style="{ backgroundColor: color }"
-                      @click="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </template>
-            </EditorColorPicker>
-          </div>
-
-          <div>
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('icon-color-label') }}</UiFormLabel>
-            <EditorColorPicker v-model="configuration.colors.iconColor" class="w-full">
-              <template #trigger="{ color, toggle }">
-                <SfInput v-model="configuration.colors.iconColor" type="text" @click="toggle">
-                  <template #suffix>
-                    <div
-                      class="w-6 h-6 rounded border cursor-pointer"
-                      :style="{ backgroundColor: color }"
-                      @click="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </template>
-            </EditorColorPicker>
-          </div>
-        </div>
-
-        <div class="py-2">
-          <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
-          <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowUpward /></span>
-              <input
-                v-model.number="configuration.layout.paddingTop"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="padding-top"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowDownward /></span>
-              <input
-                v-model.number="configuration.layout.paddingBottom"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="padding-bottom"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowBack /></span>
-              <input
-                v-model.number="configuration.layout.paddingLeft"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="padding-left"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-              <span><SfIconArrowForward /></span>
-              <input
-                v-model.number="configuration.layout.paddingRight"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="padding-right"
-              />
-            </div>
-          </div>
-        </div>
-      </UiAccordionItem>
-    </template>
+    <BlocksUtilityBarLayoutSettings
+      v-if="editingSectionIndex === undefined"
+      v-model:open="layoutOpen"
+      :configuration="configuration"
+      :get-editor-translation="getEditorTranslation"
+      @update:header-bg-color="configuration.colors.headerBackgroundColor = $event"
+      @update:icon-color="configuration.colors.iconColor = $event"
+      @update:padding-top="configuration.layout.paddingTop = $event"
+      @update:padding-bottom="configuration.layout.paddingBottom = $event"
+      @update:padding-left="configuration.layout.paddingLeft = $event"
+      @update:padding-right="configuration.layout.paddingRight = $event"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  SfInput,
-  SfIconMoreVert,
-  SfIconBase,
-  SfSwitch,
-  SfIconArrowDownward,
-  SfIconArrowUpward,
-  SfIconArrowBack,
-  SfIconArrowForward,
-} from '@storefront-ui/vue';
-import draggable from 'vuedraggable/src/vuedraggable';
-import dragIcon from '~/assets/icons/paths/drag.svg';
-import { editPath } from '~/assets/icons/paths/edit';
 import type { UtilityBarProps, SectionType, UtilityBarSection } from './types';
 
 const emit = defineEmits<{
