@@ -32,6 +32,7 @@ export const useCarousel: UseCarouselReturn = () => {
         : fallbackLabel;
 
       const strippedHtml = String(label)
+        .replace(/<[^>]*script[^>]*>/gi, '')
         .replace(/<[^>]*>/g, '')
         .trim();
       const plainText = decodeHtmlEntities(strippedHtml);
