@@ -35,7 +35,7 @@
             <span class="truncate text-sm">{{ item.label }}</span>
           </div>
           <button
-            class="shrink-0 p-1 rounded "
+            class="shrink-0 p-1 rounded"
             :data-testid="`blocks-overview-edit-${index}`"
             @click.stop="editBlock(item.block)"
           >
@@ -122,9 +122,7 @@ const editBlock = (block: Block) => {
   if (data.value) {
     for (const parentBlock of data.value) {
       if (parentBlock.name === 'Carousel' && Array.isArray(parentBlock.content)) {
-        const slideIndex = (parentBlock.content as Block[]).findIndex(
-          (slide) => slide.meta?.uuid === block.meta.uuid
-        );
+        const slideIndex = (parentBlock.content as Block[]).findIndex((slide) => slide.meta?.uuid === block.meta.uuid);
         if (slideIndex !== -1) {
           setIndex(parentBlock.meta.uuid, slideIndex);
           break;
@@ -136,7 +134,6 @@ const editBlock = (block: Block) => {
   openDrawerWithView('blocksSettings', block);
 };
 </script>
-
 
 <i18n lang="json">
 {
@@ -152,4 +149,3 @@ const editBlock = (block: Block) => {
   }
 }
 </i18n>
-
