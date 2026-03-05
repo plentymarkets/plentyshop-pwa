@@ -19,11 +19,15 @@
       <ul v-if="flatBlocks.length" class="mt-2 mb-4">
         <template v-for="(item, index) in flatBlocks" :key="item.uuid">
           <li
+            role="button"
+            tabindex="0"
             class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2 group"
             :class="{ 'bg-[#E6F0FF]': selectedUuid === item.uuid }"
             :style="{ paddingLeft: `${16 + item.depth * 16}px` }"
             :data-testid="`blocks-overview-item-${index}`"
             @click="editBlock(item.block)"
+            @keydown.enter="editBlock(item.block)"
+            @keydown.space.prevent="editBlock(item.block)"
           >
             <div class="flex items-center gap-2 min-w-0 flex-1">
               <button
@@ -74,11 +78,15 @@
             <li
               v-for="child in getChildren(item)"
               :key="child.uuid"
+              role="button"
+              tabindex="0"
               class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2 group"
               :class="{ 'bg-[#E6F0FF]': selectedUuid === child.uuid }"
               :style="{ paddingLeft: `${16 + child.depth * 16}px` }"
               :data-testid="`blocks-overview-item-${child.uuid}`"
               @click="editBlock(child.block)"
+              @keydown.enter="editBlock(child.block)"
+              @keydown.space.prevent="editBlock(child.block)"
             >
               <div class="flex items-center gap-2 min-w-0 flex-1">
                 <button
