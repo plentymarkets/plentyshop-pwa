@@ -10,7 +10,7 @@ export default defineVitestConfig({
   test: {
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html', 'json-summary', 'json'],
+      reporter: ['text', 'html', 'json-summary', 'json', 'lcov'],
       reportsDirectory: fileURLToPath(new URL('./coverage', import.meta.url)),
       exclude: [...coverageConfigDefaults.exclude, 'assets/**', 'build/**'],
       reportOnFailure: true,

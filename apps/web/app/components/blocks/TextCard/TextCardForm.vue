@@ -10,48 +10,40 @@
     </template>
 
     <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
-      <fieldset class="py-2">
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <button
-            type="button"
-            class="flex items-center justify-center w-1/2 px-4 py-2 text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'wysiwyg' }"
-            data-testid="mode-wysiwyg"
-            @click="editorMode = 'wysiwyg'"
-          >
-            <SfIconCheck :class="{ invisible: editorMode !== 'wysiwyg' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('wysiwyg-label') }}
-          </button>
-
-          <button
-            type="button"
-            class="flex items-center justify-center w-1/2 px-4 py-2 text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'html' }"
-            data-testid="mode-html"
-            @click="editorMode = 'html'"
-          >
-            <SfIconCheck :class="{ invisible: editorMode !== 'html' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('html-label') }}
-          </button>
-        </div>
-      </fieldset>
+      <EditorOptionsTabs
+        :model-value="editorMode"
+        test-id-prefix="mode"
+        :legend="getEditorTranslation('content-label')"
+        :options="editorModeOptions"
+        @update:model-value="editorMode = $event"
+      />
 
       <div v-if="editorMode === 'wysiwyg'" class="py-2">
         <EditorRichTextEditor
+          ref="contentRichTextEditor"
           v-model="contentModel"
           v-model:expanded="expandedToolbars.content"
           :min-height="232"
           :expandable="true"
           :text-align="textCardBlock.text.textAlignment"
           data-testid="rte-content"
+          @request-html-modal="handleRequestHtmlModal"
         />
       </div>
 
       <div v-else class="py-2">
-        <UiFormLabel for="html-editor">
-          {{ getEditorTranslation('html-editor-label') }}
-        </UiFormLabel>
+        <div class="flex items-center justify-between">
+          <UiFormLabel for="html-editor" class="m-0">
+            {{ getEditorTranslation('html-editor-label') }}
+          </UiFormLabel>
 
+          <EditorRichTextEditorMenuButton
+            aria-label="Open HTML editor in fullscreen"
+            icon-name="fullscreen"
+            class="ml-2"
+            @click="toggleModal"
+          />
+        </div>
         <SfTextarea
           id="html-editor"
           v-model="htmlDraft"
@@ -76,6 +68,15 @@
           </ul>
         </div>
       </div>
+
+      <EditorHtmlEditor
+        v-if="modalOpen"
+        v-model="htmlDraft"
+        :aria-describedby="ariaDescribedBy"
+        :html-errors="htmlErrors"
+        @switch-to-wysiwyg="handleSwitchToWysiwygFromModal"
+        @close="toggleModal"
+      />
     </div>
 
     <div v-else data-testid="text-card-form">
@@ -379,11 +380,20 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { TextCardFormProps, TextCardContent } from './types';
+const props = defineProps<TextCardFormProps>();
 
 const runtimeConfig = useRuntimeConfig().public;
+const modalOpen = ref(false);
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value;
+};
+
+const contentRichTextEditor = ref<{
+  openModal: () => void;
+} | null>(null);
 
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
@@ -391,8 +401,6 @@ const { data } = useCategoryTemplate(
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
-const props = defineProps<TextCardFormProps>();
 
 const expandedToolbars = ref({
   content: true,
@@ -427,17 +435,38 @@ const textCardBlock = computed<TextCardContent>(() => {
 });
 
 const contentModel = computed<string>({
-  get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (val) => {
+  get: () => decodeHtmlEntities(textCardBlock.value.text.htmlDescription ?? ''),
+  set: (val: string) => {
     textCardBlock.value.text.htmlDescription = val ?? '';
   },
 });
+const editorModeOptions = computed(
+  (): Array<{ value: EditorMode; label: string; testId: string }> => [
+    { value: 'wysiwyg', label: getEditorTranslation('wysiwyg-label'), testId: 'mode-wysiwyg' },
+    { value: 'html', label: getEditorTranslation('html-label'), testId: 'mode-html' },
+  ],
+);
 
-const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy } = useHtmlEditorMode(contentModel, {
-  defaultMode: 'wysiwyg',
-  commitOnValid: true,
-  maxErrors: 5,
-});
+const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy, switchToHtmlMode, switchToWysiwygMode } = useHtmlEditorMode(
+  contentModel,
+  {
+    defaultMode: 'wysiwyg',
+    commitOnValid: true,
+    maxErrors: 5,
+  },
+);
+
+const handleRequestHtmlModal = () => {
+  switchToHtmlMode();
+  if (!modalOpen.value) toggleModal();
+};
+
+const handleSwitchToWysiwygFromModal = async () => {
+  if (modalOpen.value) toggleModal();
+  switchToWysiwygMode();
+  await nextTick();
+  contentRichTextEditor.value?.openModal();
+};
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 

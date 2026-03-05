@@ -48,7 +48,7 @@
         />
       </ClientOnly>
 
-      <component :is="getBlockComponent" v-bind="contentProps" :index="index">
+      <component :is="getBlockComponent" v-if="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
             :index="index"
@@ -248,8 +248,10 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
+const { isFooterBlock } = useBlockTemplates();
+
 const getBlockActions = (block: Block) => {
-  if (block.name === 'Footer') {
+  if (isFooterBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,

@@ -159,9 +159,11 @@ import { toTypedSchema } from '@vee-validate/yup';
 import { paths } from '~/utils/paths';
 import { userGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
+
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 definePageMeta({
   layout: false,
   pageType: 'static',

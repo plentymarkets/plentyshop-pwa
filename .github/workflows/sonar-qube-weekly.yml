@@ -1,0 +1,46 @@
+name: "Weekly sonar qube scan"
+on:
+  schedule:
+    # Every Sunday at 10 PM UTC
+    - cron: '0 22 * * 0'
+  workflow_dispatch:
+
+env:
+  base_branch: main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  syntax-check:
+    name: Scan Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          path: .
+          fetch-depth: 0
+          ref: ${{ env.base_branch }}
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: "Test"
+        continue-on-error: true
+        run: npm run test:coverage
+
+      - uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.branch.name=${{ env.base_branch }}
+            -Dsonar.sources=apps/web
+            -Dsonar.exclusions=**/__tests__/**,.nuxt/**,.output/**,.env
+            -Dsonar.tests=apps/web
+            -Dsonar.test.inclusions=**/__tests__/**
+            -Dsonar.javascript.lcov.reportPaths=./apps/web/coverage/lcov.info
+            -Dsonar.scanner.socketTimeout=1800
