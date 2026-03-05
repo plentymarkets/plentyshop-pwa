@@ -103,3 +103,4 @@ export * from './useCustomAssets';
 export * from './useItemDataTable';
 export * from './useBlockClasses';
 export * from './useCallisto';
+export * from './useUtilityBarSection';

@@ -267,16 +267,6 @@ const sections = computed({
 
 const currentEditingSectionIndex = computed(() => editingSectionIndex.value);
 
-const sectionLabels = computed(() => ({
-  logo: getEditorTranslation('logo-section-label'),
-  search: getEditorTranslation('search-section-label'),
-  actions: getEditorTranslation('actions-section-label'),
-}));
-
-const getSectionLabel = (sectionId: SectionType): string => {
-  return sectionLabels.value[sectionId] || sectionId;
-};
-
 const sectionForms = import.meta.glob('@/components/**/blocks/UtilityBar/**Form.vue') as Record<
   string,
   () => Promise<{ default: unknown }>
@@ -293,44 +283,15 @@ const sectionForm = computed(() => {
   return loader ? defineAsyncComponent(loader) : null;
 });
 
-const editSection = (index: number) => {
-  editingSectionIndex.value = index;
-  openSectionMenuIndex.value = undefined;
-  const sectionId = sections.value[index]?.id;
-  if (sectionId) {
-    emit('set-edit-title', getSectionLabel(sectionId));
-  }
-};
-
-const exitEditMode = (shouldEmit = true) => {
-  editingSectionIndex.value = undefined;
-  openSectionMenuIndex.value = undefined;
-  if (shouldEmit) {
-    emit('clear-edit-title');
-  }
-};
-
-const toggleSectionMenu = (index: number) => {
-  if (openSectionMenuIndex.value === index) {
-    openSectionMenuIndex.value = undefined;
-  } else {
-    openSectionMenuIndex.value = index;
-  }
-};
-
-const toggleSectionVisibility = (index: number) => {
-  const section = sections.value[index];
-  if (!section) return;
-
-  const updatedSections = [...sections.value];
-  const sectionToUpdate = updatedSections[index];
-
-  if (!sectionToUpdate) return;
-
-  sectionToUpdate.visible = !sectionToUpdate.visible;
-  sections.value = updatedSections;
-};
-
+const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSectionVisibility } = useUtilityBarSection(
+  {
+    sections,
+    editingSectionIndex,
+    openSectionMenuIndex,
+    getEditorTranslation,
+    emit,
+  },
+);
 
 defineExpose({
   exitEditMode,

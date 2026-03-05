@@ -46,6 +46,8 @@ npm run lint:fix     # Auto-fix linting issues
 ### State Management
 
 - **Composables pattern**: Business logic in `composables/` (e.g., `useCustomer`, `useCart`)
+  - **Auto-import**: Composables in `composables/` are automatically available—no imports needed
+  - Simply call the composable directly in components: `const { method } = useMyComposable(options)`
 - **State persistence**: `useState()` for reactive state across components
 - **Event system**: Custom `usePlentyEvent()` for cross-module communication
 
@@ -62,6 +64,22 @@ npm run lint:fix     # Auto-fix linting issues
 - **Nuxt-i18n**: Multi-language support with configuration in `configuration/i18n.config.ts`
 - **Auto-import**: The `t` function is auto-imported from a custom wrapper composable in the `@plentymarkets/shop-core` package
 - **Admin views translations**: Components in `components/settings/` and `components/blocks/**/*Form.vue` use `getEditorTranslation()` for admin panel translations and are always in English, even if the shop frontend is in another language.
+
+**CRITICAL: Admin Component Translation Convention**
+- Both `"en"` and `"de"` language keys must contain **English text only** (no German translations)
+- This applies to all `<i18n>` blocks in form components (e.g., `UtilityBarSearchForm.vue`)
+- Example:
+  ```json
+  {
+    "en": {
+      "label": "Show Icon Only"
+    },
+    "de": {
+      "label": "Show Icon Only"
+    }
+  }
+  ```
+- This unconventional pattern is intentional and allows admin panels to remain in English across all language settings
 
 ### Dynamic Component System
 
@@ -93,3 +111,112 @@ npm run lint:fix     # Auto-fix linting issues
 - Turbo cache may need clearing: `npm run clean` for node_modules, `npm run clean:hard` for full reset
 - Components auto-import from `components/` - no manual imports needed
 - PWA features require HTTPS in production (configured in `nuxt.config.ts`)
+
+## TypeScript Strict Mode Rules
+
+- **NEVER use `as any` or implicit `any` types** - The project enforces `noImplicitAny: true`
+- Always provide explicit types using interfaces or imported types
+- Use proper type inference or type assertions with specific types instead
+
+## Vue & Nuxt Auto-Imports Rules
+
+- **NEVER import from `vue` directly** - The project has a linting rule that blocks direct `vue` imports
+- Nuxt automatically imports all Vue composables and functions: `ref`, `computed`, `watch`, `onMounted`, `onUnmounted`, `reactive`, `toRef`, `toRefs`, etc.
+- Just use them directly without imports:
+  ```typescript
+  // ❌ WRONG - Will cause linting error
+  import { computed, ref } from 'vue';
+  const count = ref(0);
+  const doubled = computed(() => count.value * 2);
+
+  // ✅ CORRECT - Use without imports
+  const count = ref(0);
+  const doubled = computed(() => count.value * 2);
+  ```
+- This applies to both components and composables
+- Error message if you try to import from vue: `'vue' import is restricted from being used by a pattern. Use Nuxt auto-imports instead of importing from vue directly.`
+
+## Code Readability & Naming Conventions
+
+### Variable Naming
+
+- **Use full, descriptive names** - Never abbreviate parameter names just to save characters
+  - ✅ `set: (value) =>` not `set: (v) =>`
+  - ✅ `forEach((section) =>` not `forEach((s) =>`
+  - ✅ `map((item) =>` not `map((i) =>`
+  - ✅ `filter((user) =>` not `filter((u) =>`
+
+- **Avoid single-letter variables** except in:
+  - Loop indices: `for (let i = 0; i < length; i++)`
+  - Mathematical operations: `const total = a + b + c` (where a, b, c have clear context)
+  - Destructured parameters when context is obvious: `[x, y]` for coordinates
+
+- **Use meaningful callback parameters** - The parameter name should describe what it represents
+  - ✅ `items.map((item) => item.id)` - Clear what we're mapping over
+  - ❌ `items.map((x) => x.id)` - Unclear
+
+### Computed Properties & Getters/Setters
+
+- **Always use full parameter names** in computed property setters:
+  ```typescript
+  // ✅ GOOD
+  const configuration = computed<ConfigType>({
+    get: () => source.value.configuration || defaultConfig,
+    set: (newConfiguration: ConfigType) => {
+      if (source.value) {
+        source.value.configuration = newConfiguration;
+      }
+    },
+  });
+
+  // ❌ BAD
+  const configuration = computed<ConfigType>({
+    get: () => source.value.configuration || defaultConfig,
+    set: (v) => {
+      if (source.value) {
+        source.value.configuration = v;
+      }
+    },
+  });
+  ```
+
+- **Callback functions should have explicit names:**
+  ```typescript
+  // ✅ GOOD
+  sections.forEach((section) => {
+    visibility[section.id] = section.visible !== false;
+  });
+
+  // ❌ BAD
+  sections.forEach((s) => {
+    visibility[s.id] = s.visible !== false;
+  });
+  ```
+
+### Comments for Complex Logic
+
+- **Add brief comments** for non-obvious computed property behavior:
+  ```typescript
+  const sections = computed({
+    get: () => {
+      // Map section IDs to section objects with visibility state
+      const order = configuration.value.sectionOrder?.sections || ['logo', 'search', 'actions'];
+      return order.map((id) => ({
+        id,
+        visible: configuration.value.sectionVisibility?.[id] !== false,
+      }));
+    },
+  });
+  ```
+
+- **Explain the "why"** for non-intuitive null checks or defaults:
+  ```typescript
+  // Ensure section visibility is initialized with all sections visible by default
+  if (!configuration.value.sectionVisibility) {
+    configuration.value.sectionVisibility = { logo: true, search: true, actions: true };
+  }
+  ```
+
+## Summary
+
+**Golden Rule**: Write code as if someone unfamiliar with this file will read it in 6 months. Prioritize clarity over brevity.
