@@ -466,7 +466,7 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[2]).toEqual(mockFooterBlock);
     });
 
-    it('should never write to footerCache', () => {
+    it('should not write to footerCache', () => {
       mockFooterCacheRef.value = null;
       useBlockTemplates().setupBlocks([...mockBlocks, mockFooterBlock]);
       expect(mockFooterCacheRef.value).toBeNull();
