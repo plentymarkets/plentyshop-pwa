@@ -37,9 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import UtilityBarSectionsList from './components/UtilityBarSectionsList.vue';
-import UtilityBarLayoutSettings from './components/UtilityBarLayoutSettings.vue';
-import UtilityBarSectionEditor from './components/UtilityBarSectionEditor.vue';
+import UtilityBarSectionsList from './partials/UtilityBarSectionsList.vue';
+import UtilityBarLayoutSettings from './partials/UtilityBarLayoutSettings.vue';
+import UtilityBarSectionEditor from './partials/UtilityBarSectionEditor.vue';
 import type { UtilityBarProps, SectionType, UtilityBarSection } from './types';
 
 const emit = defineEmits<{

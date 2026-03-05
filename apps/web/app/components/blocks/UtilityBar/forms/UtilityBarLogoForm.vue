@@ -13,7 +13,7 @@
         <div>
           <UiFormLabel class="mb-2">{{ getEditorTranslation('logo-image-label') }}</UiFormLabel>
           <p class="text-xs text-gray-500 mb-3">{{ getEditorTranslation('logo-image-hint') }}</p>
-          
+
           <UiImagePicker
             :label="getEditorTranslation('logo-image-label')"
             :image="logoConfig.logo"
