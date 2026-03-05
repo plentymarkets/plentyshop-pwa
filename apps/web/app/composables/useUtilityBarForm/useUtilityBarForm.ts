@@ -14,7 +14,7 @@ export const useUtilityBarForm = (sections: ComputedRef<UtilityBarSection[]>) =>
 
   const currentEditingSectionIndex = computed(() => editingSectionIndex.value);
 
-  const sectionForms = import.meta.glob('@/components/**/blocks/UtilityBar/**Form.vue') as Record<
+  const sectionForms = import.meta.glob('@/components/**/blocks/UtilityBar/forms/**Form.vue') as Record<
     string,
     () => Promise<{ default: unknown }>
   >;

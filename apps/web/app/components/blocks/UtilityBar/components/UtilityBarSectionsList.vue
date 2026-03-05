@@ -101,7 +101,7 @@ import { SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
-import type { UtilityBarSection, SectionType } from './types';
+import type { UtilityBarSection, SectionType } from '../types';
 
 defineProps<{
   sections: UtilityBarSection[];

@@ -96,7 +96,7 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import type { UtilityBarProps } from './types';
+import type { UtilityBarProps } from '../types';
 
 const props = defineProps<{
   configuration: UtilityBarProps['configuration'];

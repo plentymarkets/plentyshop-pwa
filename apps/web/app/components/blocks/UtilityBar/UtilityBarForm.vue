@@ -1,6 +1,6 @@
 <template>
   <div data-testid="utility-bar-form" class="block-slider-edit sticky top-[52px] h-[80vh] overflow-y-auto">
-    <BlocksUtilityBarSectionsList
+    <UtilityBarSectionsList
       v-if="editingSectionIndex === undefined"
       v-model:open="elementsOpen"
       :sections="sections"
@@ -14,14 +14,14 @@
       @update:sections="sections = $event"
     />
 
-    <BlocksUtilityBarSectionEditor
+    <UtilityBarSectionEditor
       v-if="editingSectionIndex !== undefined"
       :sections="sections"
       :editing-section-index="editingSectionIndex"
       :section-form="sectionForm"
     />
 
-    <BlocksUtilityBarLayoutSettings
+    <UtilityBarLayoutSettings
       v-if="editingSectionIndex === undefined"
       v-model:open="layoutOpen"
       :configuration="configuration"
@@ -37,6 +37,9 @@
 </template>
 
 <script setup lang="ts">
+import UtilityBarSectionsList from './components/UtilityBarSectionsList.vue';
+import UtilityBarLayoutSettings from './components/UtilityBarLayoutSettings.vue';
+import UtilityBarSectionEditor from './components/UtilityBarSectionEditor.vue';
 import type { UtilityBarProps, SectionType, UtilityBarSection } from './types';
 
 const emit = defineEmits<{

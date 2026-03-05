@@ -25,9 +25,7 @@
 
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
-import { useBlockManager } from '~/composables/useBlockManager';
-import { useBlockTemplates } from '~/composables/useBlockTemplates';
-import type { UtilityBarProps, SearchSettings } from './types';
+import type { UtilityBarProps, SearchSettings } from '../types';
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();

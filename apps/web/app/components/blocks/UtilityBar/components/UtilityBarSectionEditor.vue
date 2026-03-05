@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UtilityBarSection } from './types';
+import type { UtilityBarSection } from '../types';
 
 defineProps<{
   sections: UtilityBarSection[];

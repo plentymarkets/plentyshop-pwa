@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UtilityBarProps, LogoSettings } from './types';
+import type { UtilityBarProps, LogoSettings } from '../types';
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
