@@ -20,6 +20,29 @@ export const useCarousel: UseCarouselReturn = () => {
     return module.createDefault(index);
   };
 
+  const getSlideLabel = async (slide: SlideBlock, index: number): Promise<string> => {
+    try {
+      const module = await import(`~/components/blocks/${slide.name}/defaults.ts`);
+      const fallbackLabel = `Slide ${index + 1}`;
+
+      const label = module.labelPath
+        ? module.labelPath
+            .split('.')
+            .reduce((acc: unknown, key: string) => (acc as Record<string, unknown>)?.[key], slide as unknown)
+        : fallbackLabel;
+
+      const strippedHtml = (() => {
+        const doc = new DOMParser().parseFromString(String(label), 'text/html');
+        return doc.body.textContent?.trim() || '';
+      })();
+      const plainText = decodeHtmlEntities(strippedHtml);
+      if (!plainText) return fallbackLabel;
+      return plainText.length > 30 ? plainText.slice(0, 30) + '…' : plainText;
+    } catch {
+      return `Slide ${index + 1}`;
+    }
+  };
+
   const updateCarouselItems: UpdateCarouselItems = (newBannerItems: SlideBlock[], blockUuid: string) => {
     const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
 
@@ -48,6 +71,7 @@ export const useCarousel: UseCarouselReturn = () => {
   });
   return {
     createSlide,
+    getSlideLabel,
     updateCarouselItems,
     setIndex,
     ...toRefs(state.value),
