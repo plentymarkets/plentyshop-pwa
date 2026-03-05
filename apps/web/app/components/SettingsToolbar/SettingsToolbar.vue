@@ -29,16 +29,16 @@
           <SfIconLanguage width="24" height="24px" />
         </button>
       </SfTooltip>
-      <SfTooltip :label="blocksOverviewLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
+      <SfTooltip :label="tableOfContentsLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
-          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'BlocksOverview' }"
-          aria-label="Open blocks overview drawer"
-          data-testid="open-blocks-overview-drawer"
-          @click="toggleDrawerView('BlocksOverview')"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'TableOfContents' }"
+          aria-label="Open table of contents drawer"
+          data-testid="open-table-of-contents-drawer"
+          @click="toggleDrawerView('TableOfContents')"
         >
-          <NuxtImg v-if="drawerView === 'BlocksOverview'" width="24" height="24" :src="layersWhite" />
+          <NuxtImg v-if="drawerView === 'TableOfContents'" width="24" height="24" :src="layersWhite" />
           <NuxtImg v-else width="24" height="24" :src="layersBlack" />
         </button>
       </SfTooltip>
@@ -65,7 +65,7 @@ const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
-const blocksOverviewLabel = 'Table of contents: view and navigate to all blocks on the current page.';
+const tableOfContentsLabel = 'Table of contents: view and navigate to all blocks on the current page.';
 
 function toggleDrawerView(view: DrawerView) {
   if (drawerView.value === 'LocalizationView') {

@@ -5,7 +5,7 @@ export type DrawerView =
   | 'PagesView'
   | 'blocksSettings'
   | 'LocalizationView'
-  | 'BlocksOverview'
+  | 'TableOfContents'
   | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 
