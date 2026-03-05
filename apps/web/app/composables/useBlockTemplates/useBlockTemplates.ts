@@ -322,24 +322,30 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    const serverFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
-    if (serverFooter) {
-      footerCache.value = serverFooter;
+    const contentBlocks: Block[] = [];
+    let footerFromServer: FooterBlock | undefined;
+
+    for (const block of fetchedBlocks) {
+      if (isFooterBlock(block)) {
+        footerFromServer = block as FooterBlock;
+      } else {
+        contentBlocks.push(block);
+      }
     }
 
-    const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
-
+    const footerToUse = footerCache.value || footerFromServer || createDefaultFooterBlockHelper();
     const blocksToUse =
       contentBlocks.length > 0
         ? contentBlocks
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block));
 
-    const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();
-    const finalBlocks = [...blocksToUse, cachedOrDefaultFooter];
+    const finalBlocks = [...blocksToUse, footerToUse];
 
-    if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
-      state.value.data.splice(0, state.value.data.length, ...finalBlocks);
-    }
+    const hasChanged =
+      state.value.data.length !== finalBlocks.length ||
+      state.value.data.some((block, i) => block.meta?.uuid !== finalBlocks[i]?.meta?.uuid);
+
+    if (hasChanged) state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
   };
 
