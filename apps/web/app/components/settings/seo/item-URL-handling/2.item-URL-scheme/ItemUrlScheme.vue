@@ -96,7 +96,7 @@
 import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 const runtimeConfig = useRuntimeConfig().public;
 
-const { updateSetting, getSetting } = useSiteSettings('enableCallistoUrlScheme');
+const { updateSetting, getSetting } = useSiteSettings('enableSingleProductUrlScheme');
 
 const urlScheme = computed({
   get: () => {
