@@ -221,11 +221,6 @@ const { data } = useBlockTemplates(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const elementsOpen = ref(true);
-const layoutOpen = ref(true);
-const editingSectionIndex = ref<number | undefined>(undefined);
-const openSectionMenuIndex = ref<number | undefined>(undefined);
-
 const utilityBarBlock = computed<UtilityBarProps>(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as UtilityBarProps,
 );
@@ -265,25 +260,10 @@ const sections = computed({
   },
 });
 
-const currentEditingSectionIndex = computed(() => editingSectionIndex.value);
+const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
+  useUtilityBarForm(sections);
 
-const sectionForms = import.meta.glob('@/components/**/blocks/UtilityBar/**Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
-const sectionForm = computed(() => {
-  if (editingSectionIndex.value === undefined) return null;
-
-  const section = sections.value[editingSectionIndex.value];
-  if (!section) return null;
-
-  const key = Object.keys(sectionForms).find((path) => path.endsWith(`/${section.name}Form.vue`));
-  const loader = key ? sectionForms[key] : undefined;
-  return loader ? defineAsyncComponent(loader) : null;
-});
-
-const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSectionVisibility } = useUtilityBarSection(
+const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSectionVisibility } = useUtilityBarActions(
   {
     sections,
     editingSectionIndex,
