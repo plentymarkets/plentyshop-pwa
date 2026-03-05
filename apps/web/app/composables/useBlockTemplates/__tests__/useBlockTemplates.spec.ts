@@ -444,15 +444,33 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[0]?.name).toBe('Footer');
     });
 
-    it('should extract and cache footer block when cache is empty', () => {
-      mockFooterCacheRef.value = null;
-      const blocksWithFooter = [...mockBlocks, mockFooterBlock];
-      useBlockTemplates().setupBlocks(blocksWithFooter);
-      expect(mockFooterCacheRef.value).toEqual(mockFooterBlock);
+    it('should fallback to default template when server returns no content blocks', () => {
+      const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
+      setDefaultTemplate(mockBlocks);
+      setupBlocks([]);
+
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
       expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
       expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
-      expect(mockStateRef.value.data[2]).toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
+    });
+
+    it('should use default footer when cache is empty, ignoring any footer in fetched blocks', () => {
+      mockFooterCacheRef.value = null;
+      const blocksWithFooter = [...mockBlocks, mockFooterBlock];
+      useBlockTemplates().setupBlocks(blocksWithFooter);
+      expect(mockFooterCacheRef.value).toBeNull();
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
+      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
+      expect(mockStateRef.value.data[2]).not.toEqual(mockFooterBlock);
+    });
+
+    it('should not write to footerCache', () => {
+      mockFooterCacheRef.value = null;
+      useBlockTemplates().setupBlocks([...mockBlocks, mockFooterBlock]);
+      expect(mockFooterCacheRef.value).toBeNull();
     });
 
     it('should prioritize cached footer over footer in fetchedBlocks', () => {
@@ -477,17 +495,18 @@ describe('useBlockTemplates', () => {
       const blocksWithFooter = [...mockBlocks, differentFooter];
 
       useBlockTemplates().setupBlocks(blocksWithFooter);
-      expect(mockFooterCacheRef.value).toEqual(differentFooter);
-      expect(mockStateRef.value.data[2]).toEqual(differentFooter);
+      expect(mockFooterCacheRef.value).toEqual(cachedFooter);
+      expect(mockStateRef.value.data[2]).toEqual(cachedFooter);
     });
 
-    it('should normalize footer position to the end', () => {
+    it('should normalize footer position to the end using cache or default', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
       useBlockTemplates().setupBlocks(blocksWithFooterFirst);
-      expect(mockFooterCacheRef.value).toEqual(mockFooterBlock);
+      expect(mockFooterCacheRef.value).toBeNull();
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
-      expect(mockStateRef.value.data[mockBlocks.length]).toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data[mockBlocks.length]?.name).toBe('Footer');
+      expect(mockStateRef.value.data[mockBlocks.length]).not.toEqual(mockFooterBlock);
     });
   });
 
