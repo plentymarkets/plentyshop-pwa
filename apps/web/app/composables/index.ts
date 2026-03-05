@@ -105,3 +105,4 @@ export * from './useBlockClasses';
 export * from './useCallisto';
 export * from './useUtilityBarActions';
 export * from './useUtilityBarForm';
+export * from './useUtilityBarConfiguration';
