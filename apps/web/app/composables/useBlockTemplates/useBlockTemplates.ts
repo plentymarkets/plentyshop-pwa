@@ -8,12 +8,7 @@ import type {
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
-import type {
-  FooterContent,
-  FooterSwitchDefinition,
-  FooterBlock,
-  AddFooterBlock,
-} from '~/components/blocks/Footer/types';
+import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
 
@@ -213,17 +208,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const extractFooterContentFromBlocks = extractFooterContentFromBlocksHelper;
   const mapFooterData = mapFooterDataHelper;
 
-  /** Adds a footer block to the blocks array if one doesn't already exist */
-  const addFooterBlock: AddFooterBlock = ({ data, cachedFooter, cleanData }) => {
-    const footerExists = data.value.some((block) => isFooterBlock(block));
-
-    if (!footerExists) {
-      const footerBlock = cachedFooter.value || createDefaultFooterBlockHelper();
-      data.value.push(footerBlock);
-      if (cleanData) cleanData.value.push(JSON.parse(JSON.stringify(footerBlock)));
-    }
-  };
-
   /** Resets the footer block in data to the saved/cached state, discarding unsaved changes */
   const resetFooterToSaved = async () => {
     footerCache.value = null;
@@ -264,42 +248,39 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     });
   };
 
-  const ensureFooterBlock = async () => {
-    try {
-      await fetchFooterBlock();
-    } catch (error) {
-      console.warn('Failed to ensure footer block:', error);
-    }
-  };
-  const migrateAllBlocks = (blocks: Block[], isRootLevel = true) => {
+  const migrateAllBlocks = (blocks: Block[]) => {
     const config = useRuntimeConfig().public;
 
-    blocks.forEach((block, index) => {
-      if (block.name === 'Image' && block.content) {
-        block.content = migrateImageContent(block.content);
-      }
+    const migrate = (blocks: Block[], isRootLevel = true) => {
+      blocks.forEach((block, index) => {
+        if (block.name === 'Image' && block.content) {
+          block.content = migrateImageContent(block.content);
+        }
 
-      if (block.name === 'ProductRecommendedProducts' && block.content) {
-        block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
-      }
+        if (block.name === 'ProductRecommendedProducts' && block.content) {
+          block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
+        }
 
-      if (block.name === 'TextCard' && block.content) {
-        const isFirstBlock = isRootLevel && index === 0;
+        if (block.name === 'TextCard' && block.content) {
+          const isFirstBlock = isRootLevel && index === 0;
 
-        block.content = migrateTextCardContent(
-          block.content as Partial<TextCardContent>,
-          config.enableRichTextEditorV2,
-          isFirstBlock,
-        );
-      }
+          block.content = migrateTextCardContent(
+            block.content as Partial<TextCardContent>,
+            config.enableRichTextEditorV2,
+            isFirstBlock,
+          );
+        }
 
-      if (Array.isArray(block.content)) {
-        migrateAllBlocks(block.content, false);
-      }
-    });
+        if (Array.isArray(block.content)) {
+          migrate(block.content, false);
+        }
+      });
+    };
+
+    migrate(blocks);
   };
 
-  /** Fetches blocks from server using useAsyncData and ensures footer block is loaded */
+  /** Fetches blocks from server using useAsyncData with Nuxt caching */
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -318,11 +299,9 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
 
     setupBlocks(data?.value?.data ?? []);
-
-    await ensureFooterBlock();
   };
 
-  /** Fetches blocks directly from SDK without caching */
+  /** Fetches blocks directly from SDK without Nuxt caching */
   const getBlocks: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -334,26 +313,28 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data ?? []);
   };
 
-  /** Sets up blocks in state, applying migrations and falling back to default template if empty */
+  /** Sets up blocks in state, applying migrations and extracting footer from response */
   const setupBlocks = (fetchedBlocks: Block[]) => {
-    const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
-
-    if (Array.isArray(blocks)) {
-      migrateAllBlocks(blocks);
-
-      const footerBlock = blocks.find((block) => isFooterBlock(block));
-      if (footerBlock) footerCache.value = footerBlock as FooterBlock;
+    if (!Array.isArray(fetchedBlocks)) {
+      console.warn('Invalid blocks data received');
+      return;
     }
 
-    if (!blocks.some((block) => isFooterBlock(block))) {
-      const footerBlock = footerCache.value || createDefaultFooterBlockHelper();
-      blocks.push(footerBlock);
+    migrateAllBlocks(fetchedBlocks);
+
+    const serverFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
+    if (serverFooter) {
+      footerCache.value = serverFooter;
     }
 
-    if (JSON.stringify(state.value.data) !== JSON.stringify(blocks)) {
-      state.value.data.splice(0, state.value.data.length, ...blocks);
+    const contentBlocks = fetchedBlocks.filter((block) => !isFooterBlock(block));
+    const cachedOrDefaultFooter = footerCache.value || createDefaultFooterBlockHelper();
+    const finalBlocks = [...contentBlocks, cachedOrDefaultFooter];
+
+    if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
+      state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(blocks)));
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
   };
 
   /** Updates the blocks in state with new block data */
@@ -440,7 +421,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     clearFooterCache,
     updateFooterCache,
     extractFooterContentFromBlocks,
-    addFooterBlock,
     mapFooterData,
     isFooterBlock,
     FOOTER_BLOCK_NAME,
