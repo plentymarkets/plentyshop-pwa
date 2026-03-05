@@ -331,32 +331,6 @@ const toggleSectionVisibility = (index: number) => {
   sections.value = updatedSections;
 };
 
-// onMounted(() => {
-//   const handleClickOutside = (event: MouseEvent) => {
-//     if (openSectionMenuIndex.value === undefined) return;
-
-//     const target = event.target as HTMLElement;
-//     const openMenuButton = document.querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`);
-//     const openMenu = document
-//       .querySelector(`[data-testid="actions-menu-section-${openSectionMenuIndex.value}"]`)
-//       ?.parentElement?.querySelector('.absolute.right-0');
-
-//     if (openMenuButton && openMenu) {
-//       const isClickOnButton = openMenuButton.contains(target);
-//       const isClickOnMenu = openMenu.contains(target);
-
-//       if (!isClickOnButton && !isClickOnMenu) {
-//         openSectionMenuIndex.value = undefined;
-//       }
-//     }
-//   };
-
-//   document.addEventListener('click', handleClickOutside);
-
-//   onBeforeUnmount(() => {
-//     document.removeEventListener('click', handleClickOutside);
-//   });
-// });
 
 defineExpose({
   exitEditMode,

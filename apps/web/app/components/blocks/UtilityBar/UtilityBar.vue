@@ -37,13 +37,13 @@
         :style="{ order: getSectionFlexOrder('actions') }"
         class="hidden ml-4 md:flex md:flex-row md:flex-nowrap"
       >
-        <template v-if="localeCodes.length > 1">
+        <template v-if="localeCodes.length > 1 && isActionVisible('language')">
           <UiButton
             v-if="!isLanguageSelectOpen"
             class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('common.navigation.languageSelector')"
             variant="tertiary"
-            :style="{ color: iconColor }"
+            :style="{ color: iconColor, order: getActionOrder('language') }"
             square
             data-testid="open-languageselect-button"
             :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
@@ -57,7 +57,7 @@
             v-else
             class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('common.navigation.languageSelector')"
-            :style="{ color: isActive ? iconColor : '' }"
+            :style="{ color: isActive ? iconColor : '', order: getActionOrder('language') }"
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
@@ -68,10 +68,11 @@
           </UiButton>
         </template>
         <UiButton
+          v-if="isActionVisible('wishlist')"
           class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
-          :style="{ color: iconColor }"
+          :style="{ color: iconColor, order: getActionOrder('wishlist') }"
           :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
           variant="tertiary"
           square
@@ -81,7 +82,11 @@
             <SfIconFavorite />
             <SfBadge
               :content="wishlistItemIds.length"
-              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              :style="{
+                backgroundColor: iconColor,
+                outlineColor: headerBackgroundColor,
+                color: headerBackgroundColor,
+              }"
               class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="wishlist-badge"
               placement="top-right"
@@ -90,9 +95,10 @@
           </template>
         </UiButton>
         <UiButton
+          v-if="isActionVisible('cart')"
           class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
-          :style="{ color: iconColor }"
+          :style="{ color: iconColor, order: getActionOrder('cart') }"
           :to="localePath(paths.cart)"
           :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
           variant="tertiary"
@@ -102,7 +108,11 @@
             <SfIconShoppingCart />
             <SfBadge
               :content="cartItemsCount"
-              :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+              :style="{
+                backgroundColor: iconColor,
+                outlineColor: headerBackgroundColor,
+                color: headerBackgroundColor,
+              }"
               class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="cart-badge"
               placement="top-right"
@@ -110,12 +120,18 @@
             />
           </template>
         </UiButton>
-        <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+        <SfDropdown
+          v-if="isAuthorized && isActionVisible('account')"
+          v-model="isAccountDropdownOpen"
+          placement="bottom-end"
+          class="z-50"
+          :style="{ order: getActionOrder('account') }"
+        >
           <template #trigger>
             <UiButton
               variant="tertiary"
               class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
-              :style="{ color: iconColor }"
+              :style="{ color: iconColor, order: getActionOrder('account') }"
               :class="{ 'bg-primary-700': isAccountDropdownOpen }"
               data-testid="account-dropdown-button"
               @click="accountDropdownToggle()"
@@ -147,8 +163,8 @@
           </ul>
         </SfDropdown>
         <UiButton
-          v-else
-          :style="{ color: iconColor }"
+          v-else-if="!isAuthorized && isActionVisible('account')"
+          :style="{ color: iconColor, order: getActionOrder('account') }"
           class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           :aria-label="t('authentication.login.openLoginForm')"
@@ -311,6 +327,29 @@ const getSectionFlexOrder = (sectionId: string): number => {
 
 const isSectionVisible = (sectionId: string): boolean => {
   return orderedVisibleSections.value.some((section) => section.sectionId === sectionId);
+};
+
+const orderedActions = computed(() => {
+  const order = props.configuration?.actions?.order || ['language', 'wishlist', 'cart', 'account'];
+  const visibility = props.configuration?.actions?.visibility || {
+    language: true,
+    wishlist: true,
+    cart: true,
+    account: true,
+  };
+
+  return order
+    .filter((actionId) => visibility[actionId as keyof typeof visibility] !== false)
+    .map((actionId, index) => ({ actionId, order: index }));
+});
+
+const isActionVisible = (actionId: string): boolean => {
+  return orderedActions.value.some((action) => action.actionId === actionId);
+};
+
+const getActionOrder = (actionId: string): number => {
+  const action = orderedActions.value.find((a) => a.actionId === actionId);
+  return action?.order ?? 999;
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
