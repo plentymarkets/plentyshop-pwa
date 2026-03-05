@@ -16,17 +16,28 @@
         {{ getEditorTranslation('description') }}
       </p>
 
-      <ul v-if="flatBlocks.length" class="mx-2 mt-2 mb-4">
+      <ul v-if="flatBlocks.length" class="mt-2 mb-4">
         <li
           v-for="(item, index) in flatBlocks"
           :key="item.uuid"
-          class="flex items-center px-3 py-2 mx-2 mb-1 rounded-md cursor-pointer transition-colors hover:bg-[#E6F0FF]"
+          class="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF]"
           :class="{ 'bg-[#E6F0FF]': selectedUuid === item.uuid }"
-          :style="{ paddingLeft: `${12 + item.depth * 16}px` }"
+          :style="{ paddingLeft: `${16 + item.depth * 16}px` }"
           :data-testid="`blocks-overview-item-${index}`"
           @click="scrollToBlock(item.uuid)"
         >
           <span class="truncate text-sm">{{ item.label }}</span>
+          <button
+            class="shrink-0 p-1 rounded hover:bg-[#d0e2ff]"
+            :data-testid="`blocks-overview-edit-${index}`"
+            @click.stop="editBlock(item.block)"
+          >
+            <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path :d="editPath" fill="black" />
+              </svg>
+            </SfIconBase>
+          </button>
         </li>
       </ul>
 
@@ -38,10 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose, SfIconBase } from '@storefront-ui/vue';
+import { editPath } from '~/assets/icons/paths/edit';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { closeDrawer } = useSiteConfiguration();
+const { closeDrawer, openDrawerWithView } = useSiteConfiguration();
 const route = useRoute();
 const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
@@ -53,6 +65,7 @@ interface FlatBlock {
   uuid: string;
   label: string;
   depth: number;
+  block: Block;
 }
 
 const flattenBlocks = (blocks: Block[], depth = 0): FlatBlock[] => {
@@ -63,6 +76,7 @@ const flattenBlocks = (blocks: Block[], depth = 0): FlatBlock[] => {
       uuid: block.meta.uuid,
       label: formatBlockName(block.name),
       depth,
+      block,
     });
     if (Array.isArray(block.content) && block.content.length) {
       result.push(...flattenBlocks(block.content as Block[], depth + 1));
@@ -91,6 +105,11 @@ const scrollToBlock = (uuid: string) => {
       el.classList.remove('ring-2', 'ring-primary-500', 'ring-offset-2');
     }, 1500);
   }
+};
+
+const editBlock = (block: Block) => {
+  scrollToBlock(block.meta.uuid);
+  openDrawerWithView('blocksSettings', block);
 };
 </script>
 
