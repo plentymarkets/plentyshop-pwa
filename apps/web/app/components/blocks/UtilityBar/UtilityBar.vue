@@ -29,7 +29,21 @@
 
       <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
         <div :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
-          <UiSearch class="hidden md:block" />
+          <template v-if="props.configuration?.search?.displayMode === 'full'">
+            <UiSearch class="hidden md:block" />
+          </template>
+          <template v-else>
+            <UiButton
+              variant="tertiary"
+              class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md hidden md:block"
+              square
+              :style="{ color: iconColor }"
+              :aria-label="t('common.actions.search')"
+              @click="searchModalOpen"
+            >
+              <SfIconSearch />
+            </UiButton>
+          </template>
         </div>
       </template>
       <nav
