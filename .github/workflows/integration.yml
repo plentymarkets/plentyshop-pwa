@@ -121,7 +121,7 @@ jobs:
           configuration: ${{ vars.CONFIG }}
 
       - name: Download build
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: build
 
