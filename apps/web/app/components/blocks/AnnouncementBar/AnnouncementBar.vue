@@ -15,6 +15,6 @@ const inlineStyle = computed(() => {
 
 const textContentProps = computed(() => ({
   htmlDescription: props.content.text,
-  textAlignment: 'center' as const
+  textAlignment: 'center' as const,
 }));
 </script>
