@@ -12,7 +12,7 @@
       <EditorRichTextEditor
         ref="contentRichTextEditor"
         :model-value="modelValue"
-        v-model:expanded="expandedContent"
+        v-model:expanded="expandedToolbars"
         :min-height="232"
         :expandable="true"
         :text-align="textAlign"
@@ -89,7 +89,7 @@ const emit = defineEmits<{
 
 const runtimeConfig = useRuntimeConfig().public;
 const modalOpen = ref(false);
-const expandedContent = ref(true);
+const expandedToolbars = ref(true);
 const contentRichTextEditor = ref<{ openModal: () => void } | null>(null);
 
 const toggleModal = () => {
