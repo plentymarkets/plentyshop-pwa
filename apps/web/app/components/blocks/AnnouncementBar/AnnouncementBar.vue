@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-10 h-full w-full flex items-center px-14" :style="inlineStyle">
-    <TextContent data-testid="announcement-bar-text-content" :text="textContentProps" />
+    <TextContent data-testid="announcement-bar-text" :text="textContentProps" />
   </div>
 </template>
 

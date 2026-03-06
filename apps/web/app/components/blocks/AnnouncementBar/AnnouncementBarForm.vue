@@ -8,12 +8,12 @@
       <h2>{{ getEditorTranslation('text-label') }}</h2>
     </template>
 
-    <EditorRichTextEditorForm v-model="contentModel" :text-align="'center'">
+    <EditorRichTextEditorForm v-model="editingText" :text-align="'center'">
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
         <SfTextarea
           id="text-html-description"
-          v-model="contentModel"
+          v-model="editingText"
           data-testid="textarea-description"
           name="text-html-description"
           rows="3"
@@ -72,7 +72,7 @@ const block = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as AnnouncementBarProps,
 );
 
-const contentModel = computed({
+const editingText = computed({
   get: () => decodeHtmlEntities(block.value.content.text ?? ''),
   set: (val: string) => {
     block.value.content.text = val ?? '';
