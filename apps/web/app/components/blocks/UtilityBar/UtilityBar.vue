@@ -34,10 +34,25 @@
           </template>
 
           <template v-else>
-            <div class="hidden md:block">
-              <UiSearch v-if="isIconSearchExpanded" class="w-full" :close="collapseIconSearch" />
+            <div class="hidden md:block relative">
+              <Transition
+                enter-active-class="transition-[transform,opacity] duration-300 ease-out"
+                enter-from-class="opacity-0 scale-x-0"
+                enter-to-class="opacity-100 scale-x-100"
+                leave-active-class="transition-[transform,opacity] duration-200 ease-in absolute inset-0"
+                leave-from-class="opacity-100 scale-x-100"
+                leave-to-class="opacity-0 scale-x-0"
+                @after-leave="showSearchIcon = true"
+              >
+                <UiSearch
+                  v-if="isIconSearchExpanded"
+                  class="w-full"
+                  :style="{ transformOrigin: searchExpandOrigin }"
+                  :close="collapseIconSearch"
+                />
+              </Transition>
               <UiButton
-                v-else
+                v-if="showSearchIcon && !isIconSearchExpanded"
                 variant="tertiary"
                 square
                 class="hover:!bg-header-400 rounded-md"
@@ -387,9 +402,17 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 const isIconSearchExpanded = ref(false);
+const showSearchIcon = ref(true);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
+const searchExpandOrigin = computed(() => {
+  const searchOrder = getSectionFlexOrder('search');
+  if (searchOrder === 0) return 'left center';
+  return 'center center';
+});
+
 const expandIconSearch = () => {
+  showSearchIcon.value = false;
   isIconSearchExpanded.value = true;
 };
 
