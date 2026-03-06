@@ -11,9 +11,9 @@
     <div class="space-y-4 py-4">
       <div>
         <UiFormLabel class="mb-1">{{ getEditorTranslation('header-bg-color-label') }}</UiFormLabel>
-        <EditorColorPicker v-model="headerBgColor" class="w-full">
+        <EditorColorPicker v-model="headerBackgroundColor" class="w-full">
           <template #trigger="{ color, toggle }">
-            <SfInput v-model="headerBgColor" type="text">
+            <SfInput v-model="headerBackgroundColor" type="text">
               <template #suffix>
                 <div
                   class="w-6 h-6 rounded border cursor-pointer"
@@ -97,6 +97,7 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import type { UtilityBarProps } from '../types';
+import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 
 const props = defineProps<{
   configuration: UtilityBarProps['configuration'];
@@ -114,10 +115,21 @@ const emit = defineEmits<{
 
 const isOpen = defineModel<boolean>('open', { default: true });
 
-const headerBgColor = computed({
-  get: () => props.configuration.colors.headerBackgroundColor,
-  set: (newColor: string) => {
-    emit('update:headerBgColor', newColor);
+const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
+
+const updateHeaderBackgroundColor = (hexColor: string) => {
+  const tailwindColors = getPaletteFromColor('header', hexColor).map((color) => ({
+    ...color,
+  }));
+
+  setColorProperties('header', tailwindColors);
+};
+
+const headerBackgroundColor = computed({
+  get: () => getSetting(),
+  set: (value) => {
+    updateSetting(value);
+    updateHeaderBackgroundColor(value);
   },
 });
 

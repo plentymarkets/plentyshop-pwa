@@ -313,9 +313,7 @@ const { getSetting: getIconColor } = useSiteSettings('iconColor');
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 
 const iconColor = computed(() => props.configuration?.colors?.iconColor || getIconColor());
-const headerBackgroundColor = computed(
-  () => props.configuration?.colors?.headerBackgroundColor || getHeaderBackgroundColor(),
-);
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const paddingStyles = computed(() => {
   const layout = props.configuration?.layout;
