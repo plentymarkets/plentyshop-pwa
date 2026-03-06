@@ -28,20 +28,22 @@
       </div>
 
       <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
-        <div :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
+        <div ref="iconSearchContainerRef" :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
           <template v-if="props.configuration?.search?.displayMode === 'full'">
             <UiSearch class="hidden md:block" />
           </template>
 
           <template v-else>
             <div class="hidden md:block">
+              <UiSearch v-if="isIconSearchExpanded" class="w-full" :close="collapseIconSearch" />
               <UiButton
+                v-else
                 variant="tertiary"
                 square
                 class="hover:!bg-header-400 rounded-md"
                 :style="{ color: iconColor }"
                 :aria-label="t('common.actions.search')"
-                @click="searchModalOpen"
+                @click="expandIconSearch"
               >
                 <SfIconSearch />
               </UiButton>
@@ -290,9 +292,9 @@ import {
   SfIconMenu,
   useDisclosure,
 } from '@storefront-ui/vue';
+import { onClickOutside } from '@vueuse/core';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
-import { paths } from '~/utils/paths';
-import { handleLogout } from '~/utils/logout';
+
 import type { UtilityBarProps } from './types';
 
 interface Props extends Partial<UtilityBarProps> {
@@ -383,6 +385,24 @@ const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
+
+const isIconSearchExpanded = ref(false);
+const iconSearchContainerRef = ref<HTMLElement | null>(null);
+
+const expandIconSearch = () => {
+  isIconSearchExpanded.value = true;
+};
+
+const collapseIconSearch = () => {
+  isIconSearchExpanded.value = false;
+  return true;
+};
+
+onClickOutside(iconSearchContainerRef, () => {
+  if (isIconSearchExpanded.value) {
+    isIconSearchExpanded.value = false;
+  }
+});
 
 const openMenu = (menuType: number[]) => {
   activeNode.value = menuType;
