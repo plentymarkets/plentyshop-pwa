@@ -21,8 +21,8 @@
           <li
             role="button"
             tabindex="0"
-            class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2 group"
-            :class="{ 'bg-[#E6F0FF]': selectedUuid === item.uuid }"
+            class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-editor-toc-highlight gap-2 group"
+            :class="{ 'bg-editor-toc-highlight': selectedUuid === item.uuid }"
             :style="{ paddingLeft: `${16 + item.depth * 16}px` }"
             :data-testid="`blocks-overview-item-${index}`"
             @click="editBlock(item.block)"
@@ -80,8 +80,8 @@
               :key="child.uuid"
               role="button"
               tabindex="0"
-              class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-[#E6F0FF] gap-2 group"
-              :class="{ 'bg-[#E6F0FF]': selectedUuid === child.uuid }"
+              class="flex items-center justify-between py-1 px-3 cursor-pointer transition-colors hover:bg-editor-toc-highlight gap-2 group"
+              :class="{ 'bg-editor-toc-highlight': selectedUuid === child.uuid }"
               :style="{ paddingLeft: `${16 + child.depth * 16}px` }"
               :data-testid="`blocks-overview-item-${child.uuid}`"
               @click="editBlock(child.block)"
@@ -145,123 +145,10 @@
 <script setup lang="ts">
 import { SfIconClose, SfIconBase } from '@storefront-ui/vue';
 import { getBlockIconSvg } from '~/utils/block-icons';
-import type { Block } from '@plentymarkets/shop-api';
 
-const { closeDrawer, openDrawerWithView } = useSiteConfiguration();
-const route = useRoute();
-const { setIndex } = useCarousel();
-const { $i18n } = useNuxtApp();
-
-interface FlatBlock {
-  uuid: string;
-  label: string;
-  depth: number;
-  block: Block;
-}
-
-const flattenBlocks = (blocks: Block[], depth = 0): FlatBlock[] => {
-  const result: FlatBlock[] = [];
-  for (const block of blocks) {
-    if (!block.meta?.uuid) continue;
-    result.push({
-      uuid: block.meta.uuid,
-      label: formatBlockName(block.name),
-      depth,
-      block,
-    });
-  }
-  return result;
-};
-
-const formatBlockName = (name: string): string => {
-  if (!name) return 'Unknown Block';
-  return name.replace(/([A-Z])/g, ' $1').trim();
-};
-
-const selectedUuid = ref('');
-const expandedBlocks = ref(new Set<string>());
-
-const data = computed(() => {
-  const identifier = route?.meta?.identifier as string;
-  const type = route.meta.type as string;
-  const locale = $i18n.locale.value;
-
-  if (identifier === undefined || !type) return [];
-
-  const { data: blockData } = useBlockTemplates(identifier, type, locale);
-
-  return blockData.value ?? [];
-});
-
-watch(
-  () => route.fullPath,
-  () => {
-    expandedBlocks.value.clear();
-    selectedUuid.value = '';
-  },
-);
-
-const flatBlocks = computed(() => (data.value.length ? flattenBlocks(data.value) : []));
-
-const isStructureBlock = (block: Block): boolean => {
-  return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
-};
-
-const toggleBlockExpansion = (uuid: string) => {
-  if (expandedBlocks.value.has(uuid)) {
-    expandedBlocks.value.delete(uuid);
-  } else {
-    expandedBlocks.value.add(uuid);
-  }
-};
-
-const getChildren = (item: FlatBlock): FlatBlock[] => {
-  const children: FlatBlock[] = [];
-  if (Array.isArray(item.block.content)) {
-    for (const child of item.block.content as Block[]) {
-      if (child.meta?.uuid) {
-        children.push({
-          uuid: child.meta.uuid,
-          label: formatBlockName(child.name),
-          depth: item.depth + 1,
-          block: child,
-        });
-      }
-    }
-  }
-  return children;
-};
-
-const scrollToBlock = (uuid: string) => {
-  selectedUuid.value = uuid;
-  const el = document.querySelector(`[data-uuid="${uuid}"]`);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    el.classList.add('ring-2', 'ring-primary-500', 'ring-offset-2');
-    setTimeout(() => {
-      el.classList.remove('ring-2', 'ring-primary-500', 'ring-offset-2');
-    }, 1500);
-  }
-};
-
-const editBlock = (block: Block) => {
-  scrollToBlock(block.meta.uuid);
-
-  if (data.value) {
-    for (const parentBlock of data.value) {
-      if (parentBlock.name === 'Carousel' && Array.isArray(parentBlock.content)) {
-        const slideIndex = (parentBlock.content as Block[]).findIndex((slide) => slide.meta?.uuid === block.meta.uuid);
-        if (slideIndex !== -1) {
-          setIndex(parentBlock.meta.uuid, slideIndex);
-          break;
-        }
-      }
-    }
-  }
-
-  openDrawerWithView('blocksSettings', block);
-};
+const { closeDrawer } = useSiteConfiguration();
+const { selectedUuid, expandedBlocks, flatBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
+  useTableOfContents();
 </script>
 
 <i18n lang="json">
