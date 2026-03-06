@@ -55,8 +55,8 @@ const seoRichSnippetSkuBarcodeId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for SKU barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for SKU barcode in Rich Snippets of the item page",
+    "label": "SKU barcode",
+    "tooltip": "Select a source for the SKU barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetSkuBarcode-1": "Use variation ID",
@@ -65,8 +65,8 @@ const seoRichSnippetSkuBarcodeId = computed({
     "seoRichSnippetSkuBarcode-4": "Item ID"
   },
   "de": {
-    "label": "Select source for SKU barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for SKU barcode in Rich Snippets of the item page",
+    "label": "SKU barcode",
+    "tooltip": "Select a source for the SKU barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetSkuBarcode-1": "Use variation ID",

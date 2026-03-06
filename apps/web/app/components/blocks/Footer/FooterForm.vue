@@ -14,10 +14,15 @@
           <UiFormLabel>{{ getEditorTranslation('column-1-title-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerBlock.column1.title" type="text" data-testid="input-title-column-1">
+          <SfInput v-model="footerContent.column1.title" type="text" data-testid="input-title-column-1">
             <template #suffix>
               <label for="text-title-column-1" class="rounded-lg cursor-pointer">
-                <input id="text-title-column-1" v-model="footerBlock.column1.title" type="text" class="invisible w-8" />
+                <input
+                  id="text-title-column-1"
+                  v-model="footerContent.column1.title"
+                  type="text"
+                  class="invisible w-8"
+                />
               </label>
             </template>
           </SfInput>
@@ -50,12 +55,12 @@
           <UiFormLabel>{{ getEditorTranslation('column-2-title-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerBlock.column2.title" type="text" data-testid="input-title-column-2">
+          <SfInput v-model="footerContent.column2.title" type="text" data-testid="input-title-column-2">
             <template #suffix>
               <label for="input-title-column-2" class="rounded-lg cursor-pointer">
                 <input
                   id="input-title-column-2"
-                  v-model="footerBlock.column2.title"
+                  v-model="footerContent.column2.title"
                   type="text"
                   class="invisible w-8"
                 />
@@ -79,7 +84,7 @@
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('column-2-description-label') }}</UiFormLabel>
         <SfTextarea
-          v-model="footerBlock.column2.description"
+          v-model="footerContent.column2.description"
           name="description"
           type="text"
           class="w-full min-h-[232px]"
@@ -103,12 +108,12 @@
           <UiFormLabel>{{ getEditorTranslation('column-3-title-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerBlock.column3.title" type="text" data-testid="input-title-column-3">
+          <SfInput v-model="footerContent.column3.title" type="text" data-testid="input-title-column-3">
             <template #suffix>
               <label for="input-title-column-3" class="rounded-lg cursor-pointer">
                 <input
                   id="input-title-column-3"
-                  v-model="footerBlock.column3.title"
+                  v-model="footerContent.column3.title"
                   type="text"
                   class="invisible w-8"
                 />
@@ -121,7 +126,7 @@
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('column-3-description-label') }}</UiFormLabel>
         <SfTextarea
-          v-model="footerBlock.column3.description"
+          v-model="footerContent.column3.description"
           name="description"
           type="text"
           class="w-full min-h-[232px]"
@@ -145,12 +150,12 @@
           <UiFormLabel>{{ getEditorTranslation('column-4-title-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerBlock.column4.title" type="text" data-testid="input-title-column-4">
+          <SfInput v-model="footerContent.column4.title" type="text" data-testid="input-title-column-4">
             <template #suffix>
               <label for="input-title-column-4" class="rounded-lg cursor-pointer">
                 <input
                   id="input-title-column-4"
-                  v-model="footerBlock.column4.title"
+                  v-model="footerContent.column4.title"
                   type="text"
                   class="invisible w-8"
                 />
@@ -163,7 +168,7 @@
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('column-4-description-label') }}</UiFormLabel>
         <SfTextarea
-          v-model="footerBlock.column4.description"
+          v-model="footerContent.column4.description"
           name="description"
           type="text"
           class="w-full min-h-[232px]"
@@ -187,10 +192,10 @@
           <UiFormLabel>{{ getEditorTranslation('footnotes-text-label') }}</UiFormLabel>
         </div>
         <label>
-          <SfInput v-model="footerBlock.footnote" type="text" data-testid="input-footnote">
+          <SfInput v-model="footerContent.footnote" type="text" data-testid="input-footnote">
             <template #suffix>
               <label for="input-footnote" class="rounded-lg cursor-pointer">
-                <input id="input-footnote" v-model="footerBlock.footnote" type="text" class="invisible w-8" />
+                <input id="input-footnote" v-model="footerContent.footnote" type="text" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -202,31 +207,31 @@
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
             class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerBlock.footnoteAlign === 'left' }"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerContent.footnoteAlign === 'left' }"
             data-testid="footnoteAlign-textbox-y-align-left"
-            @click="footerBlock.footnoteAlign = 'left'"
+            @click="footerContent.footnoteAlign = 'left'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerBlock.footnoteAlign !== 'left' }" />
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerContent.footnoteAlign !== 'left' }" />
             {{ getEditorTranslation('footnotes-align-option-left-label') }}
           </div>
 
           <div
             class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerBlock.footnoteAlign === 'center' }"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerContent.footnoteAlign === 'center' }"
             data-testid="footnoteAlign-textbox-y-align-center"
-            @click="footerBlock.footnoteAlign = 'center'"
+            @click="footerContent.footnoteAlign = 'center'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerBlock.footnoteAlign !== 'center' }" />
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerContent.footnoteAlign !== 'center' }" />
             {{ getEditorTranslation('footnotes-align-option-center-label') }}
           </div>
 
           <div
             class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerBlock.footnoteAlign === 'right' }"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerContent.footnoteAlign === 'right' }"
             data-testid="footnoteAlign-textbox-y-align-right"
-            @click="footerBlock.footnoteAlign = 'right'"
+            @click="footerContent.footnoteAlign = 'right'"
           >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerBlock.footnoteAlign !== 'right' }" />
+            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerContent.footnoteAlign !== 'right' }" />
             {{ getEditorTranslation('footnotes-align-option-right-label') }}
           </div>
         </div>
@@ -246,176 +251,93 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-text-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="footerBlock.colors.text" class="w-full">
-            <template #trigger="{ color, toggle }">
-              <label>
-                <SfInput v-model="footerBlock.colors.text" type="text" data-testid="text-color-select">
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </label>
-            </template>
-          </EditorColorPicker>
-        </div>
-        <div v-else>
-          <label>
-            <SfInput v-model="footerBlock.colors.text" type="text" data-testid="text-color-select">
-              <template #suffix>
-                <label
-                  for="footer-text-color"
-                  :style="{ backgroundColor: footerBlock.colors.text }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input id="footer-text-color" v-model="footerBlock.colors.text" type="color" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
-          </label>
-        </div>
+        <EditorColorPicker v-model="footerContent.colors.text" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="footerContent.colors.text" type="text" data-testid="text-color-select">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-background-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="footerBlock.colors.background" class="w-full">
-            <template #trigger="{ color, toggle }">
-              <label>
-                <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </label>
-            </template>
-          </EditorColorPicker>
-        </div>
-        <div v-else>
-          <label>
-            <SfInput v-model="footerBlock.colors.background" type="text" data-testid="bg-footer-color-select">
-              <template #suffix>
-                <label
-                  for="bg-footer-color"
-                  :style="{ backgroundColor: footerBlock.colors.background }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input
-                    id="bg-footer-color"
-                    v-model="footerBlock.colors.background"
-                    type="color"
-                    class="invisible w-8"
+        <EditorColorPicker v-model="footerContent.colors.background" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="footerContent.colors.background" type="text" data-testid="bg-footer-color-select">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
                   />
-                </label>
-              </template>
-            </SfInput>
-          </label>
-        </div>
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-footnote-text-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="footerBlock.colors.footnoteText" class="w-full">
-            <template #trigger="{ color, toggle }">
-              <label>
-                <SfInput v-model="footerBlock.colors.footnoteText" type="text" data-testid="footnote-text-color-select">
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </label>
-            </template>
-          </EditorColorPicker>
-        </div>
-        <div v-else>
-          <label>
-            <SfInput v-model="footerBlock.colors.footnoteText" type="text" data-testid="footnote-text-color-select">
-              <template #suffix>
-                <label
-                  for="footnote-text-color"
-                  :style="{ backgroundColor: footerBlock.colors.footnoteText }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input
-                    id="footnote-text-color"
-                    v-model="footerBlock.colors.footnoteText"
-                    type="color"
-                    class="invisible w-8"
+        <EditorColorPicker v-model="footerContent.colors.footnoteText" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput v-model="footerContent.colors.footnoteText" type="text" data-testid="footnote-text-color-select">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
                   />
-                </label>
-              </template>
-            </SfInput>
-          </label>
-        </div>
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-footnote-background-label') }}</UiFormLabel>
         </div>
-        <div v-if="runtimeConfig.enableColorPicker">
-          <EditorColorPicker v-model="footerBlock.colors.footnoteBackground" class="w-full">
-            <template #trigger="{ color, toggle }">
-              <label>
-                <SfInput
-                  v-model="footerBlock.colors.footnoteBackground"
-                  type="text"
-                  data-testid="footnote-bg-color-select"
-                >
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </label>
-            </template>
-          </EditorColorPicker>
-        </div>
-        <div v-else>
-          <label>
-            <SfInput v-model="footerBlock.colors.footnoteBackground" type="text" data-testid="footnote-bg-color-select">
-              <template #suffix>
-                <label
-                  for="footnote-bg-color"
-                  :style="{ backgroundColor: footerBlock.colors.footnoteBackground }"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
-                >
-                  <input
-                    id="footnote-bg-color"
-                    v-model="footerBlock.colors.footnoteBackground"
-                    type="color"
-                    class="invisible w-8"
+        <EditorColorPicker v-model="footerContent.colors.footnoteBackground" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput
+                v-model="footerContent.colors.footnoteBackground"
+                type="text"
+                data-testid="footnote-bg-color-select"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
                   />
-                </label>
-              </template>
-            </SfInput>
-          </label>
-        </div>
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
       </div>
     </UiAccordionItem>
   </div>
@@ -423,9 +345,10 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
-import type { FooterSettings } from './types';
+import type { FooterContent, FooterBlock } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
@@ -434,8 +357,6 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const props = defineProps<{ uuid?: string }>();
 
-const runtimeConfig = useRuntimeConfig().public;
-
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
 const thirdColumnOpen = ref(false);
@@ -443,21 +364,23 @@ const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
 
-const getSourceBlock = () => {
+const getSourceBlock = (): Block | null => {
   return findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
 };
 
-const sourceContent = getSourceBlock()?.content || {};
-const footerBlock = ref(mapFooterData(sourceContent as FooterSettings));
+const sourceBlock = getSourceBlock();
+const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
+const footerContent = computed(() => footerBlock.value.content as FooterContent);
 
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
   (switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
-      get: () => footerBlock.value.column1[switchConfig.key] as boolean,
+      get: () => footerContent.value.column1[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        footerBlock.value.column1[switchConfig.key] = value;
+        const content = footerBlock.value.content as FooterContent;
+        content.column1[switchConfig.key] = value;
       },
     }),
   }),
@@ -468,9 +391,10 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
-      get: () => footerBlock.value.column2[switchConfig.key] as boolean,
+      get: () => footerContent.value.column2[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        footerBlock.value.column2[switchConfig.key] = value;
+        const content = footerBlock.value.content as FooterContent;
+        content.column2[switchConfig.key] = value;
       },
     }),
   }),
@@ -481,7 +405,7 @@ watch(
   (updatedFooterBlock) => {
     const block = getSourceBlock();
     if (block) {
-      block.content = updatedFooterBlock;
+      block.content = updatedFooterBlock.content;
     }
   },
   { deep: true },

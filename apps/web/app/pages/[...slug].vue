@@ -7,7 +7,7 @@
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
 
-    <EditablePage
+    <EditableBlocks
       :identifier="identifier"
       :type="'category'"
       data-testid="category-page-content"
@@ -18,15 +18,17 @@
 
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
+import { SfLoaderCircular } from '@storefront-ui/vue';
+
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { setCategoriesPageMeta } = useCanonical();
+const { setCategoriesPageMeta } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, loading } = useProducts();

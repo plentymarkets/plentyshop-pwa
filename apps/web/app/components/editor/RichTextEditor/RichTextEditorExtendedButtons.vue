@@ -53,7 +53,7 @@
   <EditorRichTextEditorMenuButton icon-name="horizontalRule" @click="cmd('setHorizontalRule')" />
   <EditorRichTextEditorMenuButton data-testid="rte-undo-button" :disabled="!canUndo" icon-name="undo" @click="undo" />
   <EditorRichTextEditorMenuButton data-testid="rte-redo-button" :disabled="!canRedo" icon-name="redo" @click="redo" />
-  <EditorRichTextEditorMenuButton icon-name="backspace" @click="clearFormatting" />
+  <EditorRichTextEditorMenuButton icon-name="clearFormat" @click="clearFormatting" />
 </template>
 
 <script setup lang="ts">

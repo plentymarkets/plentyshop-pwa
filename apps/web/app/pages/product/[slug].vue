@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <EditableBlocks :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
@@ -8,12 +8,14 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import type { Locale } from '#i18n';
+import type { WatchStopHandle } from 'vue';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
@@ -29,10 +31,12 @@ const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
+const { variationId } = useProductAttributes();
+let variationWatchHandler: WatchStopHandle | undefined;
 
 definePageMeta({
   layout: false,
-  path: '/:slug*_:itemId',
+  path: '/:slug*:sep(/a-|_):itemId',
   validate: async (route) => {
     return validateProductParams(route.params);
   },
@@ -52,6 +56,7 @@ await fetchProduct(productParams).then(() => {
     product: product.value,
   });
 });
+
 if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
 
@@ -151,7 +156,22 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
+  if (variationWatchHandler) {
+    variationWatchHandler();
+  }
 });
 
-onNuxtReady(() => observeRecommendedSection());
+onNuxtReady(() => {
+  observeRecommendedSection();
+
+  if (import.meta.client && useCallisto().isEnabled) {
+    variationWatchHandler = watch(variationId, async () => {
+      if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
+        productParams.variationId = variationId.value;
+        await fetchProduct(productParams);
+        setCurrentProduct(productForEditor.value || ({} as Product));
+      }
+    });
+  }
+});
 </script>

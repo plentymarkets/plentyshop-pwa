@@ -48,6 +48,13 @@ export default withNuxt(
       'jsonc/no-useless-escape': 'off', // incompatible with ESLint 9, affects postCodeMapper.json
       'no-console': ['error'],
       'no-constant-binary-expression': 'off',
+      "no-restricted-globals": [
+        "error",
+        {
+          name: 'structuredClone',
+          message: 'structuredClone strips Vue reactivity. Avoid cloning reactive state; use JSON.parse(JSON.stringify(...)) for plain data or toRaw() on reactive objects instead.'
+        }
+      ],
       'no-restricted-imports': ['error', {
         patterns: [
           {

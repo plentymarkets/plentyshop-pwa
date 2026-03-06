@@ -55,8 +55,8 @@ const seoRichSnippetMpnBarcodeId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for the MPN barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for the MPN barcode in Rich Snippets of the item page",
+    "label": "MPN barcode",
+    "tooltip": "Select a source for the MPN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetMpnBarcode-1": "Do not display",
@@ -64,10 +64,10 @@ const seoRichSnippetMpnBarcodeId = computed({
     "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"
   },
   "de": {
-    "label": "Select source for the MPN barcode in Rich Snippets of the item page",
-    "tooltip": "Select source for the MPN barcode in Rich Snippets of the item page",
+    "label": "MPN barcode",
+    "tooltip": "Select source for the MPN barcode displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
-    "conditionalLabel": "ID aus Varianteneigenschaft vom Typ Text",
+    "conditionalLabel": "Enter the ID of the variation property",
     "seoRichSnippetMpnBarcode-1": "Do not display",
     "seoRichSnippetMpnBarcode-2": "Show external variation ID",
     "seoRichSnippetMpnBarcode-3": "Use MPN from variation property of the type text"

@@ -20,7 +20,7 @@ import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('robotsUrlWithParameters');
 
 const robotsUrlWithParameters = computed({
-  get: () => getSetting() === 'true',
+  get: () => !!getSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

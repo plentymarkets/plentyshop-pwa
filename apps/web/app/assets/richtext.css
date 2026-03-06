@@ -46,3 +46,7 @@
 .rte-prose li > p {
   margin: 0;
 }
+
+.editor-parent .ProseMirror {
+  padding: 0.25rem;
+}

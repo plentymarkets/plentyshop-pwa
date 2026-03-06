@@ -4,7 +4,6 @@ import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
 import cookieConfig from './app/configuration/cookie.config';
 import { paths } from './app/utils/paths';
-import { resolve } from 'pathe';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
@@ -40,6 +39,9 @@ export default defineNuxtConfig({
     plugins: [FailOnLargeChunksPlugin],
     optimizeDeps: {
       include: [
+        '@codemirror/lang-css',
+        '@codemirror/lang-javascript',
+        '@codemirror/state',
         '@floating-ui/vue',
         '@intlify/core-base',
         '@intlify/shared',
@@ -49,15 +51,25 @@ export default defineNuxtConfig({
         '@storefront-ui/shared',
         '@storefront-ui/vue',
         '@tanstack/vue-virtual',
+        '@tiptap/extension-color',
+        '@tiptap/extension-highlight',
+        '@tiptap/extension-link',
+        '@tiptap/extension-text-align',
+        '@tiptap/extension-text-style',
+        '@tiptap/extension-underline',
+        '@tiptap/starter-kit',
+        '@tiptap/vue-3',
         '@vee-validate/yup',
         '@vue/devtools-core',
         '@vue/devtools-kit',
         '@vueuse/core',
         '@vueuse/shared',
+        'codemirror',
         'cookie',
         'country-flag-icons/string/3x2',
         'dotenv',
         'drift-zoom',
+        'js-beautify',
         'js-sha256',
         'swiper/modules',
         'swiper/vue',
@@ -85,13 +97,6 @@ export default defineNuxtConfig({
               '@tiptap/extension-text-align',
             ],
             vuetify: ['vuetify', '@mdi/js'],
-            cmmain: ['codemirror'],
-            cmplugins: [
-              'js-beautify',
-              '@codemirror/lang-css',
-              '@codemirror/lang-javascript',
-              '@codemirror/theme-one-dark',
-            ],
           },
         },
       },
@@ -164,6 +169,7 @@ export default defineNuxtConfig({
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
     apiEndpoint: process.env.API_ENDPOINT,
     configId: Number(process.env.CONFIG_ID) || 1,
+    middlewareSSRUrl: 'http://localhost:8181',
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
@@ -315,16 +321,5 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
-  },
-  hooks: {
-    'pages:extend'(pages) {
-      if (process.env.E2E_TEST) {
-        pages.push({
-          name: 'e2e',
-          path: '/smoke-e2e',
-          file: resolve(__dirname, 'e2e/smoke-e2e.vue'),
-        });
-      }
-    },
   },
 });

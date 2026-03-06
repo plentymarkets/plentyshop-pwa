@@ -43,16 +43,16 @@ const seoRichSnippetManufacturer = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Select source for the manufacturer in Rich Snippets of the item page",
-    "tooltip": "Select source for the manufacturer in Rich Snippets of the item page",
+    "label": "Manufacturer",
+    "tooltip": "Select a source for the manufacturer displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "seoRichSnippetManufacturer-1": "Do not display",
     "seoRichSnippetManufacturer-2": "External name of the manufacturer",
     "seoRichSnippetManufacturer-3": "Name of the manufacturer"
   },
   "de": {
-    "label": "Select source for the manufacturer in Rich Snippets of the item page",
-    "tooltip": "Select source for the manufacturer in Rich Snippets of the item page",
+    "label": "Manufacturer",
+    "tooltip": "Select a source for the manufacturer displayed in Rich Snippets of your item pages.",
     "placeholder": "Select robots",
     "seoRichSnippetManufacturer-1": "Do not display",
     "seoRichSnippetManufacturer-2": "External name of the manufacturer",

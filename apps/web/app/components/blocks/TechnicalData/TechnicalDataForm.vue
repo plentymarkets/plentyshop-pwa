@@ -114,7 +114,7 @@ import {
 import type { TechnicalDataFormProps, TechnicalDataContent } from './types';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
