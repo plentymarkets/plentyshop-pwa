@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableEditorCallistoUrlScheme" class="py-2 mb-2">
+  <div v-if="runtimeConfig.enableEditorItemURLScheme" class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -96,7 +96,7 @@
 import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 const runtimeConfig = useRuntimeConfig().public;
 
-const { updateSetting, getSetting } = useSiteSettings('enableCallistoUrlScheme');
+const { updateSetting, getSetting } = useSiteSettings('enableSingleProductUrlScheme');
 
 const urlScheme = computed({
   get: () => {
