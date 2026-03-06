@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-10 h-full w-full flex items-center" :style="inlineStyle">
-    <div class="rte-prose rte-prose--render w-full text-center px-20" v-html="props.content.text" />
+  <div class="min-h-10 h-full w-full flex items-center px-14" :style="inlineStyle">
+    <TextContent data-testid="announcement-bar-text" :text="textContentProps" />
   </div>
 </template>
 
@@ -12,4 +12,9 @@ const props = defineProps<AnnouncementBarProps>();
 const inlineStyle = computed(() => {
   return { backgroundColor: props.content.backgroundColor || '#FFFFFF' };
 });
+
+const textContentProps = computed(() => ({
+  htmlDescription: props.content.text,
+  textAlignment: 'center' as const,
+}));
 </script>
