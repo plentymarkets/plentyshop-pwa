@@ -11,8 +11,8 @@
     <div v-if="editorMode === 'wysiwyg'" class="py-2">
       <EditorRichTextEditor
         ref="contentRichTextEditor"
-        :model-value="modelValue"
         v-model:expanded="expandedToolbars"
+        :model-value="modelValue"
         :min-height="232"
         :expandable="true"
         :text-align="textAlign"
