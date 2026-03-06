@@ -105,8 +105,6 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  'update:headerBgColor': [color: string];
-  'update:iconColor': [color: string];
   'update:paddingTop': [value: number];
   'update:paddingBottom': [value: number];
   'update:paddingLeft': [value: number];
@@ -116,6 +114,7 @@ const emit = defineEmits<{
 const isOpen = defineModel<boolean>('open', { default: true });
 
 const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
+const { getSetting: getIconColor, updateSetting: updateIconColor } = useSiteSettings('iconColor');
 
 const updateHeaderBackgroundColor = (hexColor: string) => {
   const tailwindColors = getPaletteFromColor('header', hexColor).map((color) => ({
@@ -134,11 +133,16 @@ const headerBackgroundColor = computed({
 });
 
 const iconColor = computed({
-  get: () => props.configuration.colors.iconColor,
-  set: (newColor: string) => {
-    emit('update:iconColor', newColor);
-  },
+  get: () => getIconColor(),
+  set: (value) => updateIconColor(value),
 });
+
+// const iconColor = computed({
+//   get: () => props.configuration.colors.iconColor,
+//   set: (newColor: string) => {
+//     emit('update:iconColor', newColor);
+//   },
+// });
 
 const paddingTop = computed({
   get: () => props.configuration.layout.paddingTop,

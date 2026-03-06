@@ -26,8 +26,6 @@
       v-model:open="layoutOpen"
       :configuration="configuration"
       :get-editor-translation="getEditorTranslation"
-      @update:header-bg-color="configuration.colors.headerBackgroundColor = $event"
-      @update:icon-color="configuration.colors.iconColor = $event"
       @update:padding-top="configuration.layout.paddingTop = $event"
       @update:padding-bottom="configuration.layout.paddingBottom = $event"
       @update:padding-left="configuration.layout.paddingLeft = $event"

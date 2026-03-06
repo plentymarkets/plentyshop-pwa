@@ -312,7 +312,7 @@ const cartItemsCount = ref(0);
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 
-const iconColor = computed(() => props.configuration?.colors?.iconColor || getIconColor());
+const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const paddingStyles = computed(() => {
