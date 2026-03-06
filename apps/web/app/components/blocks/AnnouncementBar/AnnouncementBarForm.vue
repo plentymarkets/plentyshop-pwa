@@ -1,6 +1,6 @@
 <template>
   <UiAccordionItem
-    :model-value="true"
+    :model-value="expandedTextSettings"
     summary-active-class="bg-neutral-100"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
@@ -24,7 +24,7 @@
   </UiAccordionItem>
 
   <UiAccordionItem
-    v-model="expandedSettings"
+    v-model="expandedLayoutSettings"
     summary-active-class="bg-neutral-100"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
@@ -66,7 +66,8 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const expandedSettings = ref(true);
+const expandedLayoutSettings = ref(true);
+const expandedTextSettings = ref(true);
 
 const block = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as AnnouncementBarProps,
