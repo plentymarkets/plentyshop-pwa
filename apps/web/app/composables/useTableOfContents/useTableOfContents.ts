@@ -50,7 +50,6 @@ export const useTableOfContents = () => {
 
   const flatBlocks = computed(() => (data.value.length ? flattenBlocks(data.value) : []));
 
-
   const toggleBlockExpansion = (uuid: string) => {
     if (expandedBlocks.value.has(uuid)) {
       expandedBlocks.value.delete(uuid);
@@ -122,4 +121,3 @@ export const useTableOfContents = () => {
     editBlock,
   };
 };
-

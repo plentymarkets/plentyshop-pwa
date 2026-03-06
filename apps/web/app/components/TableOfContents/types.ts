@@ -6,4 +6,3 @@ export interface FlatBlock {
   depth: number;
   block: Block;
 }
-

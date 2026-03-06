@@ -26,4 +26,3 @@ Object.entries(blockIconLoaders).forEach(([path, loader]) => {
 export const getBlockIconSvg = (blockName: string): string | null => {
   return blockIcons[blockName] ?? null;
 };
-
