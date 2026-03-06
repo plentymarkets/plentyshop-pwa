@@ -10,31 +10,13 @@
     </template>
 
     <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
-      <fieldset class="py-2">
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <button
-            type="button"
-            class="flex items-center justify-center w-1/2 px-4 py-2 text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'wysiwyg' }"
-            data-testid="mode-wysiwyg"
-            @click="editorMode = 'wysiwyg'"
-          >
-            <SfIconCheck :class="{ invisible: editorMode !== 'wysiwyg' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('wysiwyg-label') }}
-          </button>
-
-          <button
-            type="button"
-            class="flex items-center justify-center w-1/2 px-4 py-2 text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': editorMode === 'html' }"
-            data-testid="mode-html"
-            @click="editorMode = 'html'"
-          >
-            <SfIconCheck :class="{ invisible: editorMode !== 'html' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('html-label') }}
-          </button>
-        </div>
-      </fieldset>
+      <EditorOptionsTabs
+        :model-value="editorMode"
+        test-id-prefix="mode"
+        :legend="getEditorTranslation('content-label')"
+        :options="editorModeOptions"
+        @update:model-value="editorMode = $event"
+      />
 
       <div v-if="editorMode === 'wysiwyg'" class="py-2">
         <EditorRichTextEditor
@@ -411,7 +393,7 @@ const contentRichTextEditor = ref<{
 } | null>(null);
 
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
@@ -453,11 +435,17 @@ const textCardBlock = computed<TextCardContent>(() => {
 });
 
 const contentModel = computed<string>({
-  get: () => textCardBlock.value.text.htmlDescription ?? '',
-  set: (val) => {
+  get: () => decodeHtmlEntities(textCardBlock.value.text.htmlDescription ?? ''),
+  set: (val: string) => {
     textCardBlock.value.text.htmlDescription = val ?? '';
   },
 });
+const editorModeOptions = computed(
+  (): Array<{ value: EditorMode; label: string; testId: string }> => [
+    { value: 'wysiwyg', label: getEditorTranslation('wysiwyg-label'), testId: 'mode-wysiwyg' },
+    { value: 'html', label: getEditorTranslation('html-label'), testId: 'mode-html' },
+  ],
+);
 
 const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy, switchToHtmlMode, switchToWysiwygMode } = useHtmlEditorMode(
   contentModel,

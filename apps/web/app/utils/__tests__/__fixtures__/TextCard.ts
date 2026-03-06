@@ -17,7 +17,7 @@ export const createMigratedTextCard = (overrides?: Partial<TextCardContent>): Pa
     pretitle: '',
     title: '',
     subtitle: '',
-    htmlDescription: '<h2>Pretitle</h2>\n<h1>Title</h1>\n<h3>Subtitle</h3>\n<p>Some description</p>',
+    htmlDescription: '<p>Pretitle</p>\n<h1>Title</h1>\n<h3>Subtitle</h3>\n<p>Some description</p>',
     textAlignment: 'center',
     color: '#fff',
     ...overrides?.text,

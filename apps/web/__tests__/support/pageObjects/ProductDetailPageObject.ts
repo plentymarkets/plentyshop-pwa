@@ -29,6 +29,22 @@ export class ProductDetailPageObject extends PageObject {
     return cy.getByTestId('product-image-0');
   }
 
+  get itemTextBlock() {
+    return cy.getByTestId('item-text-block');
+  }
+
+  get technicalDataBlock() {
+    return cy.getByTestId('technical-data-block');
+  }
+
+  get reviewArea() {
+    return cy.getByTestId('review-area');
+  }
+
+  get legalInformation() {
+    return cy.getByTestId('legal-information');
+  }
+
   displayCheck() {
     this.assertProductDetailPageElements();
     return this;
@@ -40,6 +56,16 @@ export class ProductDetailPageObject extends PageObject {
     this.productPriceValue.should('be.visible');
     this.quantitySelector.should('be.visible');
     this.addToCartButton.should('be.visible');
+    return this;
+  }
+
+  assertBlockTemplate() {
+    this.multiGridStructure.should('exist');
+    this.itemTextBlock.should('exist');
+    this.technicalDataBlock.should('exist');
+    this.reviewArea.should('exist');
+    this.legalInformation.should('exist');
+    this.footer.should('have.length', 1);
     return this;
   }
 

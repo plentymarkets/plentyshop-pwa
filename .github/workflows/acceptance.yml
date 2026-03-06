@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ github.workflow_sha }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.workflow_sha }}
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -69,7 +70,7 @@ jobs:
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: cypress-screenshots
