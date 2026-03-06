@@ -1,12 +1,12 @@
 <template>
   <div class="site-settings-view sticky top-[52px]" data-testid="block-edit-view">
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3">
+      <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3 flex-1 min-w-0">
         <template v-if="customTitle">
-          <button class="rounded-full transition-colors" @click="handleBackClick">
+          <button class="shrink-0 rounded-full transition-colors" @click="handleBackClick">
             <SfIconChevronLeft />
           </button>
-          <span>{{ customTitle }}</span>
+          <span class="block truncate">{{ customTitle }}</span>
         </template>
         <template v-else> {{ blockDisplayName }} </template>
       </div>
