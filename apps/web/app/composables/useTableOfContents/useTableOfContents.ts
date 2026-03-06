@@ -5,6 +5,7 @@ export const useTableOfContents = () => {
   const { setIndex } = useCarousel();
   const route = useRoute();
   const { $i18n } = useNuxtApp();
+  const { isStructureBlock } = useBlockManager();
   const selectedUuid = ref('');
   const expandedBlocks = ref(new Set<string>());
 
@@ -49,9 +50,6 @@ export const useTableOfContents = () => {
 
   const flatBlocks = computed(() => (data.value.length ? flattenBlocks(data.value) : []));
 
-  const isStructureBlock = (block: Block): boolean => {
-    return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
-  };
 
   const toggleBlockExpansion = (uuid: string) => {
     if (expandedBlocks.value.has(uuid)) {
