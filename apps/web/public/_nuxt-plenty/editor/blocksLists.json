@@ -20,10 +20,7 @@
                 "paddingLeft": 40,
                 "paddingRight": 40
               },
-              "colors": {
-                "headerBackgroundColor": "rgb(var(--colors-2-primary-500))",
-                "iconColor": "#ffffff"
-              },
+
               "sectionOrder": {
                 "sections": ["logo", "search", "actions"]
               },

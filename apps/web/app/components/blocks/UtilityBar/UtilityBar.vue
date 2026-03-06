@@ -5,7 +5,7 @@
       :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
       data-testid="navbar-top"
     >
-      <div class="flex items-center" :style="{ order: getSectionFlexOrder('logo') }">
+      <div v-if="isSectionVisible('logo')" class="flex items-center" :style="{ order: getSectionFlexOrder('logo') }">
         <UiButton
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"

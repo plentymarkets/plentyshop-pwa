@@ -5,10 +5,10 @@ export type SpacingSettings = {
   paddingRight?: number;
 };
 
-export type ColorSettings = {
-  headerBackgroundColor: string;
-  iconColor: string;
-};
+// export type ColorSettings = {
+//   headerBackgroundColor: string;
+//   iconColor: string;
+// };
 
 export type LogoSettings = {
   logo: string;
@@ -54,7 +54,7 @@ export type UtilityBarProps = {
   type: string;
   configuration: {
     layout: SpacingSettings;
-    colors: ColorSettings;
+    //  colors: ColorSettings;
     sectionOrder: SectionOrderSettings;
     sectionVisibility?: Record<SectionType, boolean>;
     logo: LogoSettings;
