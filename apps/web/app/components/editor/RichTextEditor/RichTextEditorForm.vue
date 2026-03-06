@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
+  <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-form-v2">
     <EditorOptionsTabs
       :model-value="editorMode"
       test-id-prefix="mode"
@@ -70,7 +70,7 @@
     />
   </div>
 
-  <div v-else data-testid="text-card-form">
+  <div v-else data-testid="text-form">
     <slot />
   </div>
 </template>
