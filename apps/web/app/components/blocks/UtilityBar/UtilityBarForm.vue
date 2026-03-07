@@ -1,0 +1,104 @@
+<template>
+  <div data-testid="utility-bar-form" class="block-slider-edit sticky top-[52px] h-[80vh] overflow-y-auto">
+    <UtilityBarSectionsList
+      v-if="editingSectionIndex === undefined"
+      v-model:open="elementsOpen"
+      :sections="sections"
+      :open-section-menu-index="openSectionMenuIndex"
+      :current-editing-section-index="currentEditingSectionIndex"
+      :get-section-label="getSectionLabel"
+      :get-editor-translation="getEditorTranslation"
+      :edit-section="editSection"
+      :toggle-section-menu="toggleSectionMenu"
+      :toggle-section-visibility="toggleSectionVisibility"
+      @update:sections="sections = $event"
+    />
+
+    <UtilityBarSectionEditor
+      v-if="editingSectionIndex !== undefined"
+      :sections="sections"
+      :editing-section-index="editingSectionIndex"
+      :section-form="sectionForm"
+    />
+
+    <UtilityBarLayoutSettings
+      v-if="editingSectionIndex === undefined"
+      v-model:open="layoutOpen"
+      :configuration="configuration"
+      :get-editor-translation="getEditorTranslation"
+      @update:header-bg-color="configuration.colors.headerBackgroundColor = $event"
+      @update:icon-color="configuration.colors.iconColor = $event"
+      @update:padding-top="configuration.layout.paddingTop = $event"
+      @update:padding-bottom="configuration.layout.paddingBottom = $event"
+      @update:padding-left="configuration.layout.paddingLeft = $event"
+      @update:padding-right="configuration.layout.paddingRight = $event"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import UtilityBarSectionsList from './partials/UtilityBarSectionsList.vue';
+import UtilityBarLayoutSettings from './partials/UtilityBarLayoutSettings.vue';
+import UtilityBarSectionEditor from './partials/UtilityBarSectionEditor.vue';
+
+const emit = defineEmits<{
+  'set-edit-title': [title: string];
+  'clear-edit-title': [];
+}>();
+
+const { configuration, sections } = useUtilityBarConfiguration();
+
+const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
+  useUtilityBarForm(sections);
+
+const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSectionVisibility } = useUtilityBarActions(
+  {
+    sections,
+    editingSectionIndex,
+    openSectionMenuIndex,
+    getEditorTranslation,
+    emit,
+  },
+);
+
+defineExpose({
+  exitEditMode,
+});
+</script>
+
+<i18n lang="json">
+{
+  "en": {
+    "elements-group-label": "Elements",
+    "edit-section-aria": "Edit section",
+    "drag-reorder-aria": "Drag to reorder section",
+    "visibility-label": "Visibility",
+    "toggle-visibility-aria": "Toggle section visibility",
+    "layout-label": "Layout",
+
+    "header-bg-color-label": "Header Background Color",
+    "icon-color-label": "Icon Color",
+    "padding-label": "Padding (px)",
+
+    "logo-section-label": "Logo",
+    "search-section-label": "Search",
+    "actions-section-label": "Actions"
+  },
+  "de": {
+    "elements-group-label": "Elements",
+    "edit-section-aria": "Edit section",
+    "drag-reorder-aria": "Drag to reorder section",
+    "visibility-label": "Visibility",
+    "toggle-visibility-aria": "Toggle section visibility",
+    "layout-label": "Layout",
+
+    "header-bg-color-label": "Header Background Color",
+    "icon-color-label": "Icon Color",
+    "padding-label": "Padding (px)",
+
+    "logo-section-label": "Logo",
+    "search-section-label": "Search",
+    "actions-section-label": "Actions"
+  }
+}
+</i18n>

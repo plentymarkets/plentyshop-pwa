@@ -109,6 +109,7 @@ const blockTypeNames: Record<string, string> = {
   TechnicalData: 'Technical Data',
   ItemData: 'Item Data',
   Banner: 'Image Banner',
+  UtilityBar: 'Utility Bar',
 };
 
 const blockDisplayName = computed(() => {
@@ -118,6 +119,9 @@ const blockDisplayName = computed(() => {
     if (firstChild?.name) {
       return blockTypeNames[firstChild.name] ?? firstChild.name;
     }
+  }
+  if (blockType.value === 'UtilityBar' && customTitle.value) {
+    return customTitle.value;
   }
   return blockTypeNames[blockType.value] ?? blockType.value;
 });
