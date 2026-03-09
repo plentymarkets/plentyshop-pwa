@@ -19,11 +19,9 @@
       <div class="px-2">
         <ul v-if="flatBlocks.length" class="mt-2 mb-4">
           <TableOfContentsItem
-            v-for="(item, index) in flatBlocks"
+            v-for="item in flatBlocks"
             :key="item.uuid"
             :item="item"
-            :test-id="`blocks-overview-item-${index}`"
-            :delete-test-id="`blocks-overview-delete-${index}`"
           />
         </ul>
 
