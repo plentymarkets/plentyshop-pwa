@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import type {
   FetchCategoryTemplate,
   UseBlockTemplatesReturn,
@@ -9,10 +10,19 @@ import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
+import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
+import type { HeaderBlock } from '~/components/blocks/Header/types';
+import {
+  HEADER_CONTAINER_BLOCK_NAME,
+  isHeaderContainerBlock,
+  createHeaderContainerBlock,
+  createDefaultHeaderContainerBlock,
+} from '~/utils/blockTemplates/header/factory';
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
 
 const FOOTER_BLOCK_NAME = 'Footer' as const;
+const HEADER_BLOCK_NAME = 'Header' as const;
 
 const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   {
@@ -109,6 +119,10 @@ const isFooterBlock = (block: Block | null | undefined): block is FooterBlock =>
   return block?.name === FOOTER_BLOCK_NAME;
 };
 
+const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock => {
+  return block?.name === HEADER_BLOCK_NAME;
+};
+
 const createFooterBlockHelper = (
   content: FooterContent,
   meta?: { uuid?: string; isGlobalTemplate?: boolean },
@@ -194,6 +208,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
+  const headerContainerCache = useState<HeaderContainerBlock | null>(
+    `header-container-cache-${nuxtApp.$i18n.locale.value}`,
+    () => null,
+  );
+
   /** Clears the cached footer block, forcing a fresh fetch on next access */
   const clearFooterCache = () => (footerCache.value = null);
 
@@ -202,6 +221,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
   /** Returns the cached footer block or creates a default one if cache is empty */
   const getFooterBlock = (): FooterBlock => footerCache.value || createDefaultFooterBlockHelper();
+
+  const clearHeaderContainerCache = () => (headerContainerCache.value = null);
+  const updateHeaderContainerCache = (block: HeaderContainerBlock) => (headerContainerCache.value = block);
+  const getHeaderContainerBlock = (): HeaderContainerBlock =>
+    headerContainerCache.value || createDefaultHeaderContainerBlock();
 
   const createFooterBlock = createFooterBlockHelper;
   const createDefaultFooterBlock = createDefaultFooterBlockHelper;
@@ -245,6 +269,34 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
       footerCache.value = getFooterBlock();
       return footerCache.value;
+    });
+  };
+
+  const fetchHeaderContainerBlock = async (): Promise<HeaderContainerBlock> => {
+    if (headerContainerCache.value) return headerContainerCache.value;
+
+    return callWithNuxt(nuxtApp, async () => {
+      try {
+        const { data } = await useAsyncData(`header-container-block-${nuxtApp.$i18n.locale.value}`, () =>
+          useSdk().plentysystems.getBlocks({
+            identifier: 'index',
+            type: 'immutable',
+            blocks: HEADER_CONTAINER_BLOCK_NAME,
+          }),
+        );
+
+        const headerBlock = data.value?.data?.find((block) => isHeaderContainerBlock(block));
+
+        if (headerBlock) {
+          headerContainerCache.value = headerBlock as HeaderContainerBlock;
+          return headerContainerCache.value;
+        }
+      } catch (error) {
+        console.warn('Failed to fetch header container block, using defaults:', error);
+      }
+
+      headerContainerCache.value = getHeaderContainerBlock();
+      return headerContainerCache.value;
     });
   };
 
@@ -313,7 +365,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data ?? []);
   };
 
-  /** Sets up blocks in state, applying migrations and extracting footer from response */
+  /** Sets up blocks in state, applying migrations and extracting footer and header container from response */
   const setupBlocks = (fetchedBlocks: Block[]) => {
     if (!Array.isArray(fetchedBlocks)) {
       console.warn('Invalid blocks data received');
@@ -322,21 +374,18 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    const contentBlocks: Block[] = [];
+    const headerContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
+    if (headerContainer) headerContainerCache.value = headerContainer;
 
-    for (const block of fetchedBlocks) {
-      if (!isFooterBlock(block)) {
-        contentBlocks.push(block);
-      }
-    }
+    const contentBlocks = fetchedBlocks.filter((block) => !isHeaderContainerBlock(block) && !isFooterBlock(block));
 
     const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       contentBlocks.length > 0
         ? contentBlocks
-        : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block));
+        : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
-    const finalBlocks = [...blocksToUse, footerToUse];
+    const finalBlocks = type === 'header' ? [...blocksToUse] : [...blocksToUse, footerToUse];
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
@@ -433,6 +482,17 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     FOOTER_BLOCK_NAME,
     FOOTER_SWITCH_DEFINITIONS,
     footerCache: readonly(footerCache),
+    fetchHeaderContainerBlock,
+    getHeaderContainerBlock,
+    createHeaderContainerBlock,
+    createDefaultHeaderContainerBlock,
+    clearHeaderContainerCache,
+    updateHeaderContainerCache,
+    isHeaderContainerBlock,
+    HEADER_CONTAINER_BLOCK_NAME,
+    isHeaderBlock,
+    HEADER_BLOCK_NAME,
+    headerContainerCache: readonly(headerContainerCache),
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
     loading: computed(() => state.value.loading),

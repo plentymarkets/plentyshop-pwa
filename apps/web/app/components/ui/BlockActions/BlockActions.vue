@@ -15,7 +15,7 @@
   >
     <SfTooltip
       v-if="!props.actions.isEditable"
-      label="You can only edit the footer on the homepage"
+      :label="getEditorUITranslation('block-edit-homepage-only', { blockName: props.block.name.toLowerCase() })"
       placement="left"
       class="flex"
     >

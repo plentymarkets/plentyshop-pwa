@@ -1,6 +1,8 @@
 import type { Ref } from 'vue';
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
 import type { FooterBlock, FooterContent, FooterSwitchDefinition } from '~/components/blocks/Footer/types';
+import type { HeaderContainerBlock, HeaderContainerContent } from '~/components/blocks/structure/HeaderContainer/types';
+import type { HeaderBlock } from '~/components/blocks/Header/types';
 
 export interface UseBlockTemplatesState {
   data: Block[];
@@ -29,6 +31,18 @@ export type ResetFooterToSaved = () => Promise<void>;
 export type ExtractFooterContentFromBlocks = (content: string) => FooterContent | null;
 export type MapFooterData = (data: Block | null) => FooterBlock;
 export type IsFooterBlock = (block: Block | null | undefined) => block is FooterBlock;
+export type IsHeaderBlock = (block: Block | null | undefined) => block is HeaderBlock;
+
+export type FetchHeaderContainerBlock = () => Promise<HeaderContainerBlock>;
+export type GetHeaderContainerBlock = () => HeaderContainerBlock;
+export type CreateHeaderContainerBlock = (
+  content: HeaderContainerContent,
+  meta?: { uuid?: string; isGlobalTemplate?: boolean },
+) => HeaderContainerBlock;
+export type CreateDefaultHeaderContainerBlock = () => HeaderContainerBlock;
+export type ClearHeaderContainerCache = () => void;
+export type UpdateHeaderContainerCache = (block: HeaderContainerBlock) => void;
+export type IsHeaderContainerBlock = (block: Block | null | undefined) => block is HeaderContainerBlock;
 
 export interface UseBlockTemplates {
   data: Readonly<Ref<UseBlockTemplatesState['data']>>;
@@ -36,6 +50,7 @@ export interface UseBlockTemplates {
   categoryTemplateData: Readonly<Ref<UseBlockTemplatesState['categoryTemplateData']>>;
   loading: Readonly<Ref<boolean>>;
   footerCache: Readonly<Ref<FooterBlock | null>>;
+  headerContainerCache: Readonly<Ref<HeaderContainerBlock | null>>;
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
@@ -55,6 +70,16 @@ export interface UseBlockTemplates {
   isFooterBlock: IsFooterBlock;
   FOOTER_BLOCK_NAME: 'Footer';
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
+  fetchHeaderContainerBlock: FetchHeaderContainerBlock;
+  getHeaderContainerBlock: GetHeaderContainerBlock;
+  createHeaderContainerBlock: CreateHeaderContainerBlock;
+  createDefaultHeaderContainerBlock: CreateDefaultHeaderContainerBlock;
+  clearHeaderContainerCache: ClearHeaderContainerCache;
+  updateHeaderContainerCache: UpdateHeaderContainerCache;
+  isHeaderContainerBlock: IsHeaderContainerBlock;
+  HEADER_CONTAINER_BLOCK_NAME: 'HeaderContainer';
+  isHeaderBlock: IsHeaderBlock;
+  HEADER_BLOCK_NAME: 'Header';
 }
 
 export type UseBlockTemplatesReturn = (

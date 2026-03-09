@@ -3,7 +3,7 @@
     <EmptyBlock v-if="!readOnly && isContentEmptyInEditor" />
     <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
     <draggable
-      v-if="data.length"
+      v-if="dataLength"
       v-model="data"
       item-key="meta.uuid"
       handle=".drag-handle"
@@ -27,7 +27,7 @@
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
             :change-block-position="changeBlockPosition"
-            :root="getBlockDepth(block.meta.uuid) === 0"
+            :root="getBlockDepth(block.meta.uuid) <= 0"
             class="group"
             :class="getBlockClass(block).value"
             data-testid="block-wrapper"
@@ -77,6 +77,8 @@ if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.bl
   await getBlocksServer(props.identifier, props.type);
 }
 
+const dataLength = computed(() => data.value.length);
+
 const {
   isClicked,
   clickedBlockIndex,
@@ -118,7 +120,7 @@ const enabledActions = computed(
 );
 
 useEditorUnsavedChangesGuard({
-  enabled: !props.readOnly,
+  enabled: !props.readOnly && !props.preventRouteGuard,
   onConfirmLeave: () => closeDrawer(),
 });
 

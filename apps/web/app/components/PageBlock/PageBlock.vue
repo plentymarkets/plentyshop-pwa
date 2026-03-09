@@ -248,10 +248,10 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
-const { isFooterBlock } = useBlockTemplates();
+const { isFooterBlock, isHeaderBlock } = useBlockTemplates();
 
 const getBlockActions = (block: Block) => {
-  if (isFooterBlock(block)) {
+  if (isFooterBlock(block) || isHeaderBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,

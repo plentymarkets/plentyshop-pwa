@@ -22,5 +22,6 @@ export type EditableBlocksProps = {
   hasEnabledActions?: boolean;
   preventBlocksRequest?: boolean;
   readOnly?: boolean;
+  preventRouteGuard?: boolean;
   blocks?: Block[];
 };
