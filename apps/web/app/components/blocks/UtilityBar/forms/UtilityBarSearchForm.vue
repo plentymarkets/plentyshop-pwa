@@ -25,29 +25,22 @@
 
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
-import type { UtilityBarProps, SearchSettings } from '../types';
-
-const { blockUuid } = useSiteConfiguration();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
-const { findOrDeleteBlockByUuid } = useBlockManager();
+import type { SearchSettings } from '../types';
 
 const searchOpen = ref(true);
+const { configuration } = useUtilityBarConfiguration();
+const fallbackSearchSettings = ref<SearchSettings>({ displayMode: 'full' });
 
-const utilityBarBlock = computed<UtilityBarProps>(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as UtilityBarProps,
-);
+watchEffect(() => {
+  if (!configuration.value.search) {
+    configuration.value.search = { displayMode: 'full' };
+  }
+});
 
 const searchConfig = computed<SearchSettings>({
-  get: () => utilityBarBlock.value.configuration?.search || { displayMode: 'full' },
-  set: (value) => {
-    if (utilityBarBlock.value.configuration) {
-      utilityBarBlock.value.configuration.search = value;
-    }
+  get: () => configuration.value.search || fallbackSearchSettings.value,
+  set: (newSearchSettings) => {
+    configuration.value.search = newSearchSettings;
   },
 });
 </script>

@@ -145,28 +145,28 @@ const iconColor = computed({
 // });
 
 const paddingTop = computed({
-  get: () => props.configuration.layout.paddingTop,
+  get: () => props.configuration.layout?.paddingTop ?? 0,
   set: (newValue: number) => {
     emit('update:paddingTop', newValue);
   },
 });
 
 const paddingBottom = computed({
-  get: () => props.configuration.layout.paddingBottom,
+  get: () => props.configuration.layout?.paddingBottom ?? 0,
   set: (newValue: number) => {
     emit('update:paddingBottom', newValue);
   },
 });
 
 const paddingLeft = computed({
-  get: () => props.configuration.layout.paddingLeft,
+  get: () => props.configuration.layout?.paddingLeft ?? 0,
   set: (newValue: number) => {
     emit('update:paddingLeft', newValue);
   },
 });
 
 const paddingRight = computed({
-  get: () => props.configuration.layout.paddingRight,
+  get: () => props.configuration.layout?.paddingRight ?? 0,
   set: (newValue: number) => {
     emit('update:paddingRight', newValue);
   },

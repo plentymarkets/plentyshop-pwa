@@ -53,44 +53,56 @@
 import { SfSwitch } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
-import type { ActionType, UtilityBarProps, ActionsSettings, ActionOrderItem } from '../types';
-
-const { blockUuid } = useSiteConfiguration();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
-const { findOrDeleteBlockByUuid } = useBlockManager();
+import type { ActionType, ActionsSettings, ActionOrderItem } from '../types';
 
 const actionsOpen = ref(true);
+const { configuration } = useUtilityBarConfiguration();
+const defaultActionOrder: ActionType[] = ['language', 'wishlist', 'cart', 'account'];
+const fallbackActionsSettings = ref<ActionsSettings>({
+  order: [...defaultActionOrder],
+  visibility: {
+    language: true,
+    wishlist: true,
+    cart: true,
+    account: true,
+  },
+});
 
-const utilityBarBlock = computed<UtilityBarProps>(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as UtilityBarProps,
-);
+const createDefaultActionVisibility = (): ActionsSettings['visibility'] => ({
+  language: true,
+  wishlist: true,
+  cart: true,
+  account: true,
+});
 
-const actionsConfig = computed({
-  get: () =>
-    utilityBarBlock.value.configuration?.actions || {
-      order: ['language', 'wishlist', 'cart', 'account'],
-      visibility: {
-        language: true,
-        wishlist: true,
-        cart: true,
-        account: true,
-      },
-    },
-  set: (value) => {
-    if (utilityBarBlock.value.configuration) {
-      utilityBarBlock.value.configuration.actions = value;
-    }
+watchEffect(() => {
+  if (!configuration.value.actions) {
+    configuration.value.actions = {
+      order: [...defaultActionOrder],
+      visibility: createDefaultActionVisibility(),
+    };
+    return;
+  }
+
+  if (!configuration.value.actions.order?.length) {
+    configuration.value.actions.order = [...defaultActionOrder];
+  }
+
+  if (!configuration.value.actions.visibility) {
+    configuration.value.actions.visibility = createDefaultActionVisibility();
+  }
+});
+
+const actionsConfig = computed<ActionsSettings>({
+  get: () => configuration.value.actions || fallbackActionsSettings.value,
+  set: (newActionsSettings) => {
+    configuration.value.actions = newActionsSettings;
   },
 });
 
 const actionOrder = computed<ActionOrderItem[]>({
   get: () =>
-    (actionsConfig.value.order || ['language', 'wishlist', 'cart', 'account']).map(
+    (actionsConfig.value.order || defaultActionOrder).map(
       (actionId: ActionType) => ({
         id: actionId,
         visible: actionsConfig.value.visibility?.[actionId] !== false,
