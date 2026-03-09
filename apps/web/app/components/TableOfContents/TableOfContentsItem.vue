@@ -15,6 +15,8 @@
       :block-name="item.block.name"
       :label="item.label"
       :is-selected="isItemSelected"
+      :block="item.block"
+      @update-visibility="onUpdateVisibility"
     >
       <template v-if="isStructureBlock(item.block)" #arrow>
         <button
@@ -57,5 +59,13 @@ const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
 
 const onItemClick = async () => {
   editBlock(props.item.block);
+};
+
+const onUpdateVisibility = (visible: boolean) => {
+  const block = props.item.block as unknown as Record<string, unknown>;
+  if (!block.configuration) {
+    block.configuration = {};
+  }
+  (block.configuration as Record<string, unknown>).visible = visible;
 };
 </script>
