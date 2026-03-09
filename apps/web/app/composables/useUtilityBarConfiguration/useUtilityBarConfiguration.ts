@@ -1,45 +1,4 @@
-import type { UtilityBarProps, SectionType } from '~/components/blocks/UtilityBar/types';
-
-const DEFAULT_LAYOUT = {
-  paddingTop: 20,
-  paddingBottom: 20,
-  paddingLeft: 40,
-  paddingRight: 40,
-};
-
-const DEFAULT_SECTION_ORDER: SectionType[] = ['logo', 'search', 'actions'];
-
-const DEFAULT_SECTION_VISIBILITY: Record<SectionType, boolean> = {
-  logo: true,
-  search: true,
-  actions: true,
-};
-
-const DEFAULT_ACTION_ORDER: UtilityBarProps['content']['actions']['order'] = [
-  'language',
-  'wishlist',
-  'cart',
-  'account',
-];
-
-const DEFAULT_ACTION_VISIBILITY: UtilityBarProps['content']['actions']['visibility'] = {
-  language: true,
-  wishlist: true,
-  cart: true,
-  account: true,
-};
-
-const createDefaultConfiguration = (): UtilityBarProps['content'] => ({
-  layout: { ...DEFAULT_LAYOUT },
-  sectionOrder: { sections: [...DEFAULT_SECTION_ORDER] },
-  sectionVisibility: { ...DEFAULT_SECTION_VISIBILITY },
-  logo: { logo: '' },
-  search: { displayMode: 'full' },
-  actions: {
-    order: [...DEFAULT_ACTION_ORDER],
-    visibility: { ...DEFAULT_ACTION_VISIBILITY },
-  },
-});
+import type { UtilityBarProps } from '~/components/blocks/UtilityBar/types';
 
 const findBlockByName = (blocks: unknown, blockName: string): UtilityBarProps | null => {
   if (!Array.isArray(blocks)) {
@@ -67,91 +26,10 @@ const findBlockByName = (blocks: unknown, blockName: string): UtilityBarProps | 
   return null;
 };
 
-const ensureUtilityBarConfiguration = (
-  block: UtilityBarProps | null,
-  previousConfiguration: UtilityBarProps['content'] | null,
-) => {
-  if (!block) {
-    return;
-  }
-
-  if (!block.content) {
-    block.content = previousConfiguration ? { ...createDefaultConfiguration(), ...previousConfiguration } : createDefaultConfiguration();
-    return;
-  }
-
-  if (!block.content.layout) {
-    block.content.layout = previousConfiguration?.layout ? { ...previousConfiguration.layout } : { ...DEFAULT_LAYOUT };
-  }
-
-  if (block.content.layout.paddingTop === undefined) {
-    block.content.layout.paddingTop = previousConfiguration?.layout?.paddingTop ?? DEFAULT_LAYOUT.paddingTop;
-  }
-  if (block.content.layout.paddingBottom === undefined) {
-    block.content.layout.paddingBottom = previousConfiguration?.layout?.paddingBottom ?? DEFAULT_LAYOUT.paddingBottom;
-  }
-  if (block.content.layout.paddingLeft === undefined) {
-    block.content.layout.paddingLeft = previousConfiguration?.layout?.paddingLeft ?? DEFAULT_LAYOUT.paddingLeft;
-  }
-  if (block.content.layout.paddingRight === undefined) {
-    block.content.layout.paddingRight = previousConfiguration?.layout?.paddingRight ?? DEFAULT_LAYOUT.paddingRight;
-  }
-
-  if (!block.content.sectionOrder) {
-    block.content.sectionOrder = previousConfiguration?.sectionOrder
-      ? { sections: [...previousConfiguration.sectionOrder.sections] }
-      : { sections: [...DEFAULT_SECTION_ORDER] };
-  }
-
-  if (!block.content.sectionOrder.sections?.length) {
-    block.content.sectionOrder.sections = previousConfiguration?.sectionOrder?.sections?.length
-      ? [...previousConfiguration.sectionOrder.sections]
-      : [...DEFAULT_SECTION_ORDER];
-  }
-
-  if (!block.content.sectionVisibility) {
-    block.content.sectionVisibility = previousConfiguration?.sectionVisibility
-      ? { ...DEFAULT_SECTION_VISIBILITY, ...previousConfiguration.sectionVisibility }
-      : { ...DEFAULT_SECTION_VISIBILITY };
-  }
-
-  if (!block.content.logo) {
-    block.content.logo = previousConfiguration?.logo ? { ...previousConfiguration.logo } : { logo: '' };
-  }
-
-  if (!block.content.search) {
-    block.content.search = previousConfiguration?.search ? { ...previousConfiguration.search } : { displayMode: 'full' };
-  }
-
-  if (!block.content.actions) {
-    block.content.actions = previousConfiguration?.actions
-      ? {
-          order: [...previousConfiguration.actions.order],
-          visibility: { ...DEFAULT_ACTION_VISIBILITY, ...previousConfiguration.actions.visibility },
-        }
-      : {
-          order: [...DEFAULT_ACTION_ORDER],
-          visibility: { ...DEFAULT_ACTION_VISIBILITY },
-        };
-  }
-
-  if (!block.content.actions.order?.length) {
-    block.content.actions.order = previousConfiguration?.actions?.order?.length
-      ? [...previousConfiguration.actions.order]
-      : [...DEFAULT_ACTION_ORDER];
-  }
-
-  if (!block.content.actions.visibility) {
-    block.content.actions.visibility = previousConfiguration?.actions?.visibility
-      ? { ...DEFAULT_ACTION_VISIBILITY, ...previousConfiguration.actions.visibility }
-      : { ...DEFAULT_ACTION_VISIBILITY };
-  }
-};
-
 /**
  * Manages UtilityBar block data retrieval and syncs it to the global state store.
- * Establishes bidirectional sync: block data ↔ useState.
- * Use useUtilityBarState() for reading derived computeds.
+ * Defaults are applied exclusively by useUtilityBarState.setContent (single source of truth).
+ * No mutations happen inside computeds — block data stays clean for dirty detection.
  */
 export const useUtilityBarConfiguration = () => {
   const { blockUuid } = useSiteConfiguration();
@@ -162,57 +40,53 @@ export const useUtilityBarConfiguration = () => {
     useNuxtApp().$i18n.locale.value,
   );
   const { findOrDeleteBlockByUuid } = useBlockManager();
-  const lastKnownConfiguration = ref<UtilityBarProps['content'] | null>(null);
 
   const { content: stateContent, sections, setContent } = useUtilityBarState();
 
-  // Guard flag to prevent infinite sync loops between watchers
-  const isSyncing = useState<boolean>('utilityBarSyncing', () => false);
+  let syncing = false;
+  let initialized = false;
 
+  // Pure computed — no side effects, no mutations
   const utilityBarBlock = computed<UtilityBarProps | null>(() => {
     const blockByUuid = findOrDeleteBlockByUuid(data.value, blockUuid.value) as UtilityBarProps | null;
-    const block = blockByUuid || findBlockByName(data.value, 'UtilityBar');
-    ensureUtilityBarConfiguration(block, lastKnownConfiguration.value);
-
-    if (block?.content) {
-      lastKnownConfiguration.value = block.content;
-    }
-
-    return block;
+    return blockByUuid || findBlockByName(data.value, 'UtilityBar');
   });
 
-  // Block → State: sync when block data changes (load, save response)
+  // Block → State: sync when block becomes available or changes (initial load, after save/reload)
   watch(
-    () => utilityBarBlock.value?.content,
-    (blockContent) => {
-      if (blockContent && !isSyncing.value) {
-        isSyncing.value = true;
-        setContent(blockContent);
+    () => utilityBarBlock.value,
+    (block) => {
+      if (block && !syncing) {
+        syncing = true;
+        // mergeWithDefaults fills in any missing fields for the UI
+        setContent(block.content);
+        initialized = true;
         nextTick(() => {
-          isSyncing.value = false;
+          syncing = false;
         });
       }
     },
-    { immediate: true, deep: true },
+    { immediate: true },
   );
 
-  // State → Block: sync form edits back to block data (so saves persist changes)
+  // State → Block: sync form edits back to block data so saves persist changes.
+  // Only runs after initial load to avoid immediately dirtying the block data.
+  // Uses deep clone to prevent shared object references between state and block.
   watch(
     stateContent,
     (newContent) => {
-      if (!isSyncing.value && utilityBarBlock.value && newContent) {
-        isSyncing.value = true;
-        utilityBarBlock.value.content = { ...newContent };
-        lastKnownConfiguration.value = { ...newContent };
+      const block = utilityBarBlock.value;
+      if (block && newContent && !syncing && initialized) {
+        syncing = true;
+        block.content = JSON.parse(JSON.stringify(newContent));
         nextTick(() => {
-          isSyncing.value = false;
+          syncing = false;
         });
       }
     },
     { deep: true },
   );
 
-  // Writable computed for direct content assignment
   const content = computed<UtilityBarProps['content']>({
     get: () => stateContent.value,
     set: (newConfiguration) => {
