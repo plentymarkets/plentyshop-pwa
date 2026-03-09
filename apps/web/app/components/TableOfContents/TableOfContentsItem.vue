@@ -24,7 +24,7 @@
           @click.stop="toggleBlockExpansion(item.uuid)"
         >
           <SfIconChevronRight
-            class="!w-4 !h-4 transition-transform"
+            class="!w-6 !h-6 transition-transform"
             :class="{ 'rotate-90': expandedBlocks.has(item.uuid) }"
           />
         </button>

@@ -38,25 +38,25 @@
 
     <div class="flex items-center gap-1 shrink-0">
       <button
-        class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+        class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover transition-colors"
         :data-testid="`toc-delete-${uuid}`"
         @click.stop
       >
         <SfIconDelete class="!w-5 !h-5" />
       </button>
       <button
-        class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+        class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-editor-icon-hover"
         :class="{ 'opacity-100': !isVisible }"
         :data-testid="`toc-visibility-${uuid}`"
         @click.stop="toggleVisibility"
       >
         <SfIconVisibility
           v-if="isVisible"
-          class="!w-4 !h-4 text-neutral-600"
+          class="!w-5 !h-5 text-neutral-600"
         />
         <SfIconVisibilityOff
           v-else
-          class="!w-4 !h-4 text-neutral-600"
+          class="!w-5 !h-5 text-neutral-600"
         />
       </button>
     </div>

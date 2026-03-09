@@ -64,7 +64,6 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
   const shouldShowBlock = (block: Block, isEditorModeEnabled = false): boolean => {
     if (!block?.meta) return false;
 
-    console.log('block.configuration: ', block.configuration)
     if ((block.configuration as Record<string, unknown>)?.visible === false) {
       return false;
     }
