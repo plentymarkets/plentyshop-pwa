@@ -1,13 +1,5 @@
-import type { Block } from '@plentymarkets/shop-api';
-import { v4 as uuid } from 'uuid';
+import { createHeader } from './factory';
 
-export function createHeaderSection(): Block[] {
-  return [
-    {
-      name: 'Header',
-      type: 'content',
-      meta: { uuid: uuid() },
-      content: { backgroundColor: '', iconColor: '' },
-    },
-  ];
+export function createHeaderSection() {
+  return [createHeader()];
 }

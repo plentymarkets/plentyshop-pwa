@@ -46,3 +46,12 @@ export function createHeaderContainerBlock(
 export function createDefaultHeaderContainerBlock(): HeaderContainerBlock {
   return createHeaderContainerBlock(createHeaderContainer().content);
 }
+
+export function createHeader(): Block {
+  return {
+    name: 'Header',
+    type: 'content',
+    meta: { uuid: uuid() },
+    content: { backgroundColor: '', iconColor: '' },
+  };
+}

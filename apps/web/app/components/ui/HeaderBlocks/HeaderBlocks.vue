@@ -1,10 +1,8 @@
 <template>
-  <BlocksStructureHeaderContainer v-if="headerContainerBlock" :block="headerContainerBlock" />
-  <UiHeader v-else />
+  <BlocksStructureHeaderContainer :block="getHeaderContainerBlock()" />
 </template>
 
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
-const { headerContainerCache } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
-const headerContainerBlock = computed(() => headerContainerCache.value);
+const { getHeaderContainerBlock } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
 </script>
