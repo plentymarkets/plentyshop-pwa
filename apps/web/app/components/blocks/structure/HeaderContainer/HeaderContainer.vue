@@ -1,8 +1,19 @@
 <template>
   <div data-testid="header-container">
-    <div v-for="section in enabledSections" :key="section.identifier" :data-header-section="section.identifier">
-      <EditableBlocks :identifier="section.identifier" :type="section.type" prevent-route-guard />
-    </div>
+    <PageBlock
+      v-for="(childBlock, index) in block.content"
+      :key="childBlock.meta.uuid"
+      :index="index"
+      :block="childBlock"
+      :enable-actions="enableActions"
+      :is-clicked="isClicked"
+      :clicked-block-index="clickedBlockIndex"
+      :is-tablet="isTablet"
+      :change-block-position="() => {}"
+      :root="true"
+      class="group"
+      @click="tabletEdit(index)"
+    />
   </div>
 </template>
 
@@ -11,18 +22,9 @@ import type { HeaderContainerProps } from '~/components/blocks/structure/HeaderC
 
 const { block } = defineProps<HeaderContainerProps>();
 
-const enabledSections = computed(() =>
-  [...block.content.sections].filter((s) => s.enabled).sort((a, b) => a.order - b.order),
-);
+const { shouldShowEditorUI } = useEditorState();
+const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
+const { isClicked, clickedBlockIndex, isTablet, tabletEdit } = useBlockManager();
 
-const locale = useNuxtApp().$i18n.locale.value;
-const {
-  setDefaultTemplate,
-  data: headerData,
-  cleanData: headerCleanData,
-} = useBlockTemplates('header', 'header', locale);
-setDefaultTemplate(createHeaderSection());
-
-const { isEditingEnabled } = useEditor();
-watch(headerData, () => (isEditingEnabled.value = !deepEqual(headerCleanData.value, headerData.value)), { deep: true });
+const enableActions = computed(() => shouldShowEditorUI.value && !localizationDrawerOpen.value);
 </script>

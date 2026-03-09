@@ -27,7 +27,7 @@
             :clicked-block-index="clickedBlockIndex"
             :is-tablet="isTablet"
             :change-block-position="changeBlockPosition"
-            :root="getBlockDepth(block.meta.uuid) <= 0"
+            :root="getBlockDepth(block.meta.uuid) === 0"
             class="group"
             :class="getBlockClass(block).value"
             data-testid="block-wrapper"
@@ -59,9 +59,13 @@ const {
   data: templateData,
   getBlocksServer,
   isFooterBlock,
+  isHeaderContainerBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
-const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
+const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
+
+// HeaderContainer is always rendered by UiHeaderBlocks in the layout — skip it here
+const data = computed(() => rawData.value.filter((block) => !isHeaderContainerBlock(block)));
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 

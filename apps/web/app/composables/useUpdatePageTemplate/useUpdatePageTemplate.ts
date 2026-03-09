@@ -13,13 +13,17 @@ export const useUpdatePageTemplate = () => {
     const { data: dataProducts } = useProducts();
 
     try {
-      const cleanedData = JSON.stringify(data.value);
+      const pageBlocks = data.value;
+      const cleanedData = JSON.stringify(pageBlocks);
 
       let identifier: string | number = route.meta.identifier as string | number;
 
       if (dataProducts.value?.category?.type === 'content' && dataProducts.value.category.id) {
         identifier = dataProducts.value.category.id;
       }
+
+      console.warn('[updatePageTemplate] saving to identifier:', identifier, 'type:', route.meta.type);
+      console.warn('[updatePageTemplate] pageBlocks being saved:', JSON.parse(JSON.stringify(pageBlocks)));
 
       return await saveBlocks(identifier, route.meta.type as string, cleanedData);
     } catch (error) {

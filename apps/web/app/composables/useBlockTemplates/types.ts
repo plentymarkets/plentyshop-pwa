@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
 import type { FooterBlock, FooterContent, FooterSwitchDefinition } from '~/components/blocks/Footer/types';
-import type { HeaderContainerBlock, HeaderContainerContent } from '~/components/blocks/structure/HeaderContainer/types';
+import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { HeaderBlock } from '~/components/blocks/Header/types';
 
 export interface UseBlockTemplatesState {
@@ -28,6 +28,7 @@ export type CreateDefaultFooterBlock = () => FooterBlock;
 export type ClearFooterCache = () => void;
 export type UpdateFooterCache = (newFooterBlock: FooterBlock) => void;
 export type ResetFooterToSaved = () => Promise<void>;
+export type ResetHeaderToSaved = () => Promise<void>;
 export type ExtractFooterContentFromBlocks = (content: string) => FooterContent | null;
 export type MapFooterData = (data: Block | null) => FooterBlock;
 export type IsFooterBlock = (block: Block | null | undefined) => block is FooterBlock;
@@ -36,7 +37,7 @@ export type IsHeaderBlock = (block: Block | null | undefined) => block is Header
 export type FetchHeaderContainerBlock = () => Promise<HeaderContainerBlock>;
 export type GetHeaderContainerBlock = () => HeaderContainerBlock;
 export type CreateHeaderContainerBlock = (
-  content: HeaderContainerContent,
+  content: Block[],
   meta?: { uuid?: string; isGlobalTemplate?: boolean },
 ) => HeaderContainerBlock;
 export type CreateDefaultHeaderContainerBlock = () => HeaderContainerBlock;
@@ -50,7 +51,7 @@ export interface UseBlockTemplates {
   categoryTemplateData: Readonly<Ref<UseBlockTemplatesState['categoryTemplateData']>>;
   loading: Readonly<Ref<boolean>>;
   footerCache: Readonly<Ref<FooterBlock | null>>;
-  headerContainerCache: Readonly<Ref<HeaderContainerBlock | null>>;
+  headerContainerCache: Ref<HeaderContainerBlock | null>;
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
@@ -60,6 +61,7 @@ export interface UseBlockTemplates {
   setDefaultTemplate: SetDefaultTemplate;
   fetchFooterBlock: FetchFooterBlock;
   resetFooterToSaved: ResetFooterToSaved;
+  resetHeaderToSaved: ResetHeaderToSaved;
   getFooterBlock: GetFooterBlock;
   createDefaultFooterBlock: CreateDefaultFooterBlock;
   createFooterBlock: CreateFooterBlock;

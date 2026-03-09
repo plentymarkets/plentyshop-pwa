@@ -13,7 +13,12 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const { isEditingEnabled } = useEditor();
   const { settingsIsDirty } = useSiteSettings();
   const { closeDrawer } = useSiteConfiguration();
-  const { resetFooterToSaved } = useBlockTemplates();
+  const route = useRoute();
+  const { resetFooterToSaved, resetHeaderToSaved } = useBlockTemplates(
+    route.meta.identifier as string,
+    route.meta.type as string,
+    useNuxtApp().$i18n.locale.value,
+  );
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
@@ -25,7 +30,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
 
   const handleConfirmLeave = async () => {
     if (isEditingEnabled.value) {
-      await resetFooterToSaved();
+      await Promise.all([resetHeaderToSaved(), resetFooterToSaved()]);
       isEditingEnabled.value = false;
     }
 

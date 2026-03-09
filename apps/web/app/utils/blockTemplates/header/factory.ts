@@ -1,4 +1,4 @@
-import type { HeaderContainerBlock, HeaderContainerContent } from '~/components/blocks/structure/HeaderContainer/types';
+import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
@@ -12,16 +12,7 @@ export function createHeaderContainer(): HeaderContainerBlock {
       uuid: uuid(),
       isGlobalTemplate: true,
     },
-    content: {
-      sections: [
-        {
-          identifier: 'header',
-          type: 'header',
-          enabled: true,
-          order: 0,
-        },
-      ],
-    },
+    content: [createHeader()],
   };
 }
 
@@ -29,7 +20,7 @@ export const isHeaderContainerBlock = (block: Block | null | undefined): block i
   block?.name === HEADER_CONTAINER_BLOCK_NAME;
 
 export function createHeaderContainerBlock(
-  content: HeaderContainerContent,
+  content: Block[],
   meta?: { uuid?: string; isGlobalTemplate?: boolean },
 ): HeaderContainerBlock {
   return {
@@ -44,7 +35,7 @@ export function createHeaderContainerBlock(
 }
 
 export function createDefaultHeaderContainerBlock(): HeaderContainerBlock {
-  return createHeaderContainerBlock(createHeaderContainer().content);
+  return createHeaderContainerBlock([createHeader()]);
 }
 
 export function createHeader(): Block {

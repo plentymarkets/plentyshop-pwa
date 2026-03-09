@@ -243,6 +243,36 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     }
   };
 
+  const resetHeaderToSaved = async () => {
+    headerContainerCache.value = null;
+
+    try {
+      const response = await useSdk().plentysystems.getBlocks({
+        identifier: 'index',
+        type: 'immutable',
+        blocks: HEADER_CONTAINER_BLOCK_NAME,
+      });
+
+      const headerBlock = response?.data?.find((block) => isHeaderContainerBlock(block)) as
+        | HeaderContainerBlock
+        | undefined;
+
+      if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
+        headerContainerCache.value = headerBlock;
+      } else {
+        headerContainerCache.value = createDefaultHeaderContainerBlock();
+      }
+    } catch (error) {
+      console.warn('Failed to reset header to saved:', error);
+      headerContainerCache.value = createDefaultHeaderContainerBlock();
+    }
+
+    const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));
+    if (headerIndex !== -1 && headerContainerCache.value) {
+      state.value.data[headerIndex] = JSON.parse(JSON.stringify(headerContainerCache.value));
+    }
+  };
+
   /** Fetches the footer block from the server or returns cached version */
   const fetchFooterBlock = async (): Promise<FooterBlock> => {
     if (footerCache.value) return footerCache.value;
@@ -285,10 +315,20 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           }),
         );
 
-        const headerBlock = data.value?.data?.find((block) => isHeaderContainerBlock(block));
+        const allBlocks = data.value?.data ?? [];
+        const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block)) as
+          | HeaderContainerBlock
+          | undefined;
 
-        if (headerBlock) {
-          headerContainerCache.value = headerBlock as HeaderContainerBlock;
+        if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
+          const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
+          if (flatHeader) {
+            headerBlock.content = [flatHeader];
+          }
+        }
+
+        if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
+          headerContainerCache.value = headerBlock;
           return headerContainerCache.value;
         }
       } catch (error) {
@@ -374,23 +414,52 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    const headerContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
-    if (headerContainer) headerContainerCache.value = headerContainer;
+    const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block)) as
+      | HeaderContainerBlock
+      | undefined;
+    if (
+      fetchedHeaderContainer &&
+      Array.isArray(fetchedHeaderContainer.content) &&
+      fetchedHeaderContainer.content.length === 0
+    ) {
+      const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
+      if (flatHeader) {
+        fetchedHeaderContainer.content = [flatHeader];
+      }
+    }
+    if (
+      fetchedHeaderContainer &&
+      Array.isArray(fetchedHeaderContainer.content) &&
+      fetchedHeaderContainer.content.length > 0
+    ) {
+      headerContainerCache.value = fetchedHeaderContainer;
+    }
 
-    const contentBlocks = fetchedBlocks.filter((block) => !isHeaderContainerBlock(block) && !isFooterBlock(block));
+    console.warn('[setupBlocks] fetchedBlocks (full):', JSON.parse(JSON.stringify(fetchedBlocks)));
+    console.warn(
+      '[setupBlocks] fetchedHeaderContainer (full):',
+      fetchedHeaderContainer ? JSON.parse(JSON.stringify(fetchedHeaderContainer)) : null,
+    );
 
+    const contentBlocks = fetchedBlocks.filter(
+      (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
+    );
+
+    const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
     const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       contentBlocks.length > 0
         ? contentBlocks
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
-    const finalBlocks = type === 'header' ? [...blocksToUse] : [...blocksToUse, footerToUse];
+    const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
+
+    headerContainerCache.value = state.value.data[0] as HeaderContainerBlock;
   };
 
   /** Updates the blocks in state with new block data */
@@ -422,7 +491,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
-  /** Saves blocks to the server and updates footer cache if footer block is included */
+  /** Saves blocks to the server and updates footer/header caches if those blocks are included */
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
       state.value.loading = true;
@@ -435,7 +504,23 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
       const data = response?.data ?? state.value.data;
 
+      console.warn('[saveBlocks] full response data:', JSON.parse(JSON.stringify(response?.data ?? state.value.data)));
+
       setupBlocks(data);
+
+      if (typeof content === 'string' && content.includes(`"name":"${HEADER_CONTAINER_BLOCK_NAME}"`)) {
+        try {
+          const parsed: Block[] = JSON.parse(content);
+          const headerBlock = parsed.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
+          if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
+            updateHeaderContainerCache(headerBlock);
+          } else {
+            clearHeaderContainerCache();
+          }
+        } catch {
+          clearHeaderContainerCache();
+        }
+      }
 
       if (typeof content === 'string' && content.includes(`"name":"${FOOTER_BLOCK_NAME}"`)) {
         const footerSettings = extractFooterContentFromBlocks(content);
@@ -482,6 +567,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     FOOTER_BLOCK_NAME,
     FOOTER_SWITCH_DEFINITIONS,
     footerCache: readonly(footerCache),
+    resetHeaderToSaved,
     fetchHeaderContainerBlock,
     getHeaderContainerBlock,
     createHeaderContainerBlock,
@@ -492,7 +578,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     HEADER_CONTAINER_BLOCK_NAME,
     isHeaderBlock,
     HEADER_BLOCK_NAME,
-    headerContainerCache: readonly(headerContainerCache),
+    headerContainerCache,
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
     loading: computed(() => state.value.loading),

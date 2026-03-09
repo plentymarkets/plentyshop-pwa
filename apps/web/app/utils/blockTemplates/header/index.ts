@@ -22,4 +22,3 @@ export const getHeaderContainerTemplate = async (locale: string): Promise<Header
 };
 
 export * from './factory';
-export * from './section-factory';

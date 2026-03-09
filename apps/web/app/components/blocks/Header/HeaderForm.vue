@@ -48,16 +48,21 @@
 
 <script setup lang="ts">
 import type { HeaderProps, HeaderFormProps } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 import { SfInput } from '@storefront-ui/vue';
 
 const props = defineProps<HeaderFormProps>();
 
 const { blockUuid } = useSiteConfiguration();
-const { data } = useBlockTemplates('header', 'header', useNuxtApp().$i18n.locale.value);
+const { headerContainerCache } = useBlockTemplates();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const expandedColors = ref(true);
 
-const block = computed(() => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as HeaderProps);
+const block = computed(
+  () =>
+    (findOrDeleteBlockByUuid((headerContainerCache.value?.content as Block[]) ?? [], props.uuid || blockUuid.value) ||
+      {}) as HeaderProps,
+);
 
 const editingBackgroundColor = computed({
   get: () => block.value.content?.backgroundColor ?? '',
