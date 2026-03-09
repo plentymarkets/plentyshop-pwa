@@ -3,7 +3,7 @@
     <EmptyBlock v-if="!readOnly && isContentEmptyInEditor" />
     <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
     <draggable
-      v-if="dataLength"
+      v-if="data.length"
       v-model="data"
       item-key="meta.uuid"
       handle=".drag-handle"
@@ -76,8 +76,6 @@ const isContentEmptyInLive = computed(
 if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
   await getBlocksServer(props.identifier, props.type);
 }
-
-const dataLength = computed(() => data.value.length);
 
 const {
   isClicked,
