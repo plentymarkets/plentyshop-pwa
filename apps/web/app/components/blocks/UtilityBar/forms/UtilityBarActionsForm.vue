@@ -56,47 +56,13 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { ActionType, ActionsSettings, ActionOrderItem } from '../types';
 
 const actionsOpen = ref(true);
-const { content } = useUtilityBarConfiguration();
+const { content } = useUtilityBarState();
 const defaultActionOrder: ActionType[] = ['language', 'wishlist', 'cart', 'account'];
-const fallbackActionsSettings = ref<ActionsSettings>({
-  order: [...defaultActionOrder],
-  visibility: {
-    language: true,
-    wishlist: true,
-    cart: true,
-    account: true,
-  },
-});
-
-const createDefaultActionVisibility = (): ActionsSettings['visibility'] => ({
-  language: true,
-  wishlist: true,
-  cart: true,
-  account: true,
-});
-
-watchEffect(() => {
-  if (!content.value.actions) {
-    content.value.actions = {
-      order: [...defaultActionOrder],
-      visibility: createDefaultActionVisibility(),
-    };
-    return;
-  }
-
-  if (!content.value.actions.order?.length) {
-    content.value.actions.order = [...defaultActionOrder];
-  }
-
-  if (!content.value.actions.visibility) {
-    content.value.actions.visibility = createDefaultActionVisibility();
-  }
-});
 
 const actionsConfig = computed<ActionsSettings>({
-  get: () => content.value.actions || fallbackActionsSettings.value,
+  get: () => content.value.actions,
   set: (newActionsSettings) => {
-    content.value.actions = newActionsSettings;
+    content.value = { ...content.value, actions: newActionsSettings };
   },
 });
 

@@ -29,7 +29,7 @@
 
       <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
         <div ref="iconSearchContainerRef" :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
-          <template v-if="props.content?.search?.displayMode === 'full'">
+          <template v-if="isFullSearchMode">
             <UiSearch class="hidden md:block" />
           </template>
 
@@ -317,7 +317,7 @@ interface Props extends Partial<UtilityBarProps> {
   root?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   enableActions: false,
   root: true,
 });
@@ -332,57 +332,17 @@ const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgrou
 const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const paddingStyles = computed(() => {
-  const layout = props.content?.layout;
-  if (!layout) return {};
-  return {
-    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : undefined,
-    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : undefined,
-    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : undefined,
-    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : undefined,
-  };
-});
+// Establish bidirectional block ↔ state sync (reads block data from useBlockTemplates, not props)
+useUtilityBarConfiguration();
 
-const orderedVisibleSections = computed(() => {
-  const order = props.content?.sectionOrder?.sections || ['logo', 'search', 'actions'];
-  const visibility = props.content?.sectionVisibility || { logo: true, search: true, actions: true };
-
-  return order
-    .filter((sectionId) => visibility[sectionId as keyof typeof visibility] !== false)
-    .map((sectionId, index) => ({ sectionId, order: index }));
-});
-
-const getSectionFlexOrder = (sectionId: string): number => {
-  const section = orderedVisibleSections.value.find((section) => section.sectionId === sectionId);
-  return section?.order ?? 999;
-};
-
-const isSectionVisible = (sectionId: string): boolean => {
-  return orderedVisibleSections.value.some((section) => section.sectionId === sectionId);
-};
-
-const orderedActions = computed(() => {
-  const order = props.content?.actions?.order || ['language', 'wishlist', 'cart', 'account'];
-  const visibility = props.content?.actions?.visibility || {
-    language: true,
-    wishlist: true,
-    cart: true,
-    account: true,
-  };
-
-  return order
-    .filter((actionId) => visibility[actionId as keyof typeof visibility] !== false)
-    .map((actionId, index) => ({ actionId, order: index }));
-});
-
-const isActionVisible = (actionId: string): boolean => {
-  return orderedActions.value.some((action) => action.actionId === actionId);
-};
-
-const getActionOrder = (actionId: string): number => {
-  const action = orderedActions.value.find((a) => a.actionId === actionId);
-  return action?.order ?? 999;
-};
+const {
+  paddingStyles,
+  isSectionVisible,
+  getSectionFlexOrder,
+  isActionVisible,
+  getActionOrder,
+  isFullSearchMode,
+} = useUtilityBarState();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();
@@ -440,6 +400,7 @@ const navigateAfterAuth = (reload: boolean) => {
     closeAuthentication();
   }
 };
+
 
 watch(
   () => cart.value?.items,

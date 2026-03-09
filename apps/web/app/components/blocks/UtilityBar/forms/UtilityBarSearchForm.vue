@@ -28,19 +28,12 @@ import { SfSwitch } from '@storefront-ui/vue';
 import type { SearchSettings } from '../types';
 
 const searchOpen = ref(true);
-const { content } = useUtilityBarConfiguration();
-const fallbackSearchSettings = ref<SearchSettings>({ displayMode: 'full' });
-
-watchEffect(() => {
-  if (!content.value.search) {
-    content.value.search = { displayMode: 'full' };
-  }
-});
+const { content } = useUtilityBarState();
 
 const searchConfig = computed<SearchSettings>({
-  get: () => content.value.search || fallbackSearchSettings.value,
+  get: () => content.value.search,
   set: (newSearchSettings) => {
-    content.value.search = newSearchSettings;
+    content.value = { ...content.value, search: newSearchSettings };
   },
 });
 </script>

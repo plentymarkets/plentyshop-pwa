@@ -57,6 +57,7 @@ export type UtilityBarProps = {
   name: string;
   type: string;
   content: UtilityBarContent;
+  configuration?: object;
   index?: number;
   meta: {
     uuid: string;

@@ -1,4 +1,4 @@
-import type { UtilityBarProps, SectionType, UtilityBarSection } from '~/components/blocks/UtilityBar/types';
+import type { UtilityBarProps, SectionType } from '~/components/blocks/UtilityBar/types';
 
 const DEFAULT_LAYOUT = {
   paddingTop: 20,
@@ -149,8 +149,9 @@ const ensureUtilityBarConfiguration = (
 };
 
 /**
- * Manages UtilityBar block configuration state.
- * Handles block data retrieval, configuration access, and section computation.
+ * Manages UtilityBar block data retrieval and syncs it to the global state store.
+ * Establishes bidirectional sync: block data ↔ useState.
+ * Use useUtilityBarState() for reading derived computeds.
  */
 export const useUtilityBarConfiguration = () => {
   const { blockUuid } = useSiteConfiguration();
@@ -162,69 +163,60 @@ export const useUtilityBarConfiguration = () => {
   );
   const { findOrDeleteBlockByUuid } = useBlockManager();
   const lastKnownConfiguration = ref<UtilityBarProps['content'] | null>(null);
-  const detachedConfiguration = ref<UtilityBarProps['content']>(createDefaultConfiguration());
 
-  const utilityBarBlock = computed<UtilityBarProps | null>(
-    () => {
-      const blockByUuid = findOrDeleteBlockByUuid(data.value, blockUuid.value) as UtilityBarProps | null;
-      const block = blockByUuid || findBlockByName(data.value, 'UtilityBar');
-      ensureUtilityBarConfiguration(block, lastKnownConfiguration.value);
+  const { content: stateContent, sections, setContent } = useUtilityBarState();
 
-      if (block?.content) {
-        lastKnownConfiguration.value = block.content;
-      }
+  // Guard flag to prevent infinite sync loops between watchers
+  const isSyncing = useState<boolean>('utilityBarSyncing', () => false);
 
-      return block;
-    },
-  );
+  const utilityBarBlock = computed<UtilityBarProps | null>(() => {
+    const blockByUuid = findOrDeleteBlockByUuid(data.value, blockUuid.value) as UtilityBarProps | null;
+    const block = blockByUuid || findBlockByName(data.value, 'UtilityBar');
+    ensureUtilityBarConfiguration(block, lastKnownConfiguration.value);
 
-  const content = computed<UtilityBarProps['content']>({
-    get: () => {
-      if (utilityBarBlock.value?.content) {
-        return utilityBarBlock.value.content;
-      }
+    if (block?.content) {
+      lastKnownConfiguration.value = block.content;
+    }
 
-      if (lastKnownConfiguration.value) {
-        return lastKnownConfiguration.value;
-      }
-
-      return detachedConfiguration.value;
-    },
-    set: (newConfiguration) => {
-      if (utilityBarBlock.value) {
-        utilityBarBlock.value.content = newConfiguration;
-        lastKnownConfiguration.value = newConfiguration;
-      } else {
-        detachedConfiguration.value = newConfiguration;
-      }
-    },
+    return block;
   });
 
-  const sections = computed<UtilityBarSection[]>({
-    get: () => {
-      const order: SectionType[] = content.value.sectionOrder?.sections || ['logo', 'search', 'actions'];
-      return order.map(
-        (id): UtilityBarSection => ({
-          id,
-          name: `UtilityBar${id.charAt(0).toUpperCase()}${id.slice(1)}`,
-          visible: content.value.sectionVisibility?.[id] !== false,
-        }),
-      );
+  // Block → State: sync when block data changes (load, save response)
+  watch(
+    () => utilityBarBlock.value?.content,
+    (blockContent) => {
+      if (blockContent && !isSyncing.value) {
+        isSyncing.value = true;
+        setContent(blockContent);
+        nextTick(() => {
+          isSyncing.value = false;
+        });
+      }
     },
-    set: (value: UtilityBarSection[]) => {
-      if (!content.value.sectionOrder) {
-        content.value.sectionOrder = { sections: [] };
-      }
-      content.value.sectionOrder.sections = value.map((section) => section.id);
+    { immediate: true, deep: true },
+  );
 
-      if (!content.value.sectionVisibility) {
-        content.value.sectionVisibility = { logo: true, search: true, actions: true };
+  // State → Block: sync form edits back to block data (so saves persist changes)
+  watch(
+    stateContent,
+    (newContent) => {
+      if (!isSyncing.value && utilityBarBlock.value && newContent) {
+        isSyncing.value = true;
+        utilityBarBlock.value.content = { ...newContent };
+        lastKnownConfiguration.value = { ...newContent };
+        nextTick(() => {
+          isSyncing.value = false;
+        });
       }
+    },
+    { deep: true },
+  );
 
-      const sectionVisibility = content.value.sectionVisibility;
-      value.forEach((section) => {
-        sectionVisibility[section.id] = section.visible !== false;
-      });
+  // Writable computed for direct content assignment
+  const content = computed<UtilityBarProps['content']>({
+    get: () => stateContent.value,
+    set: (newConfiguration) => {
+      stateContent.value = newConfiguration;
     },
   });
 

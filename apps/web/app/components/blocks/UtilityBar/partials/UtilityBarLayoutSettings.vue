@@ -96,22 +96,11 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import type { UtilityBarProps } from '../types';
 import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 
-const props = defineProps<{
-  content: UtilityBarProps['content'];
-  getEditorTranslation: (key: string) => string;
-}>();
-
-const emit = defineEmits<{
-  'update:paddingTop': [value: number];
-  'update:paddingBottom': [value: number];
-  'update:paddingLeft': [value: number];
-  'update:paddingRight': [value: number];
-}>();
-
 const isOpen = defineModel<boolean>('open', { default: true });
+
+const { content } = useUtilityBarState();
 
 const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
 const { getSetting: getIconColor, updateSetting: updateIconColor } = useSiteSettings('iconColor');
@@ -145,30 +134,30 @@ const iconColor = computed({
 // });
 
 const paddingTop = computed({
-  get: () => props.content.layout?.paddingTop ?? 0,
+  get: () => content.value.layout?.paddingTop ?? 0,
   set: (newValue: number) => {
-    emit('update:paddingTop', newValue);
+    content.value = { ...content.value, layout: { ...content.value.layout, paddingTop: newValue } };
   },
 });
 
 const paddingBottom = computed({
-  get: () => props.content.layout?.paddingBottom ?? 0,
+  get: () => content.value.layout?.paddingBottom ?? 0,
   set: (newValue: number) => {
-    emit('update:paddingBottom', newValue);
+    content.value = { ...content.value, layout: { ...content.value.layout, paddingBottom: newValue } };
   },
 });
 
 const paddingLeft = computed({
-  get: () => props.content.layout?.paddingLeft ?? 0,
+  get: () => content.value.layout?.paddingLeft ?? 0,
   set: (newValue: number) => {
-    emit('update:paddingLeft', newValue);
+    content.value = { ...content.value, layout: { ...content.value.layout, paddingLeft: newValue } };
   },
 });
 
 const paddingRight = computed({
-  get: () => props.content.layout?.paddingRight ?? 0,
+  get: () => content.value.layout?.paddingRight ?? 0,
   set: (newValue: number) => {
-    emit('update:paddingRight', newValue);
+    content.value = { ...content.value, layout: { ...content.value.layout, paddingRight: newValue } };
   },
 });
 </script>
