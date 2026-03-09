@@ -16,7 +16,7 @@
       <div class="flex items-center gap-2 min-w-0 flex-1">
         <button
           v-if="isStructureBlock(item.block)"
-          class="shrink-0 w-4 h-4 flex items-center justify-center"
+          class="shrink-0 w-4 h-4 flex items-center justify-center rounded hover:bg-editor-icon-hover transition-colors p-0.5"
           @click.stop="toggleBlockExpansion(item.uuid)"
         >
           <svg
@@ -47,21 +47,19 @@
       <div class="flex items-center gap-1 shrink-0">
         <button
           class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+          :data-testid="deleteTestId"
+          @click.stop
+        >
+          <SfIconDelete class="!w-5 !h-5 text-red-600" />
+        </button>
+        <button
+          class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
           :data-testid="`blocks-overview-visibility-${testId}`"
           @click.stop
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4 text-neutral-600">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
             <circle cx="12" cy="12" r="3" />
-          </svg>
-        </button>
-        <button
-          class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-          :data-testid="deleteTestId"
-          @click.stop
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-red-600">
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-9l-1 1H5v2h14V4z" fill="currentColor" />
           </svg>
         </button>
       </div>
@@ -80,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+import { SfIconDelete } from '@storefront-ui/vue';
 import { getBlockIconSvg } from '~/utils/block-icons';
 import type { FlatBlock } from './types';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
