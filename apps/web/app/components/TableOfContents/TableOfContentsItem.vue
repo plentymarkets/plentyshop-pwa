@@ -3,7 +3,6 @@
     role="button"
     tabindex="0"
     class="flex items-center justify-between py-1 my-1 cursor-pointer transition-colors gap-2 group"
-    :style="{ paddingLeft: `${item.depth * 16}px` }"
     :data-testid="`toc-item-${item.uuid}`"
     @click="onItemClick"
     @keydown.enter="onItemClick"
