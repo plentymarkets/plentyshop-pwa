@@ -16,18 +16,20 @@
         {{ getEditorTranslation('description') }}
       </p>
 
-      <ul v-if="flatBlocks.length" class="mt-2 mb-4">
-        <TableOfContentsItem
-          v-for="(item, index) in flatBlocks"
-          :key="item.uuid"
-          :item="item"
-          :test-id="`blocks-overview-item-${index}`"
-          :delete-test-id="`blocks-overview-delete-${index}`"
-        />
-      </ul>
+      <div class="px-2">
+        <ul v-if="flatBlocks.length" class="mt-2 mb-4">
+          <TableOfContentsItem
+            v-for="(item, index) in flatBlocks"
+            :key="item.uuid"
+            :item="item"
+            :test-id="`blocks-overview-item-${index}`"
+            :delete-test-id="`blocks-overview-delete-${index}`"
+          />
+        </ul>
 
-      <div v-else class="mx-4 mt-8 text-center text-sm text-neutral-400">
-        {{ getEditorTranslation('empty') }}
+        <div v-else class="mx-2 mt-8 text-center text-sm text-neutral-400">
+          {{ getEditorTranslation('empty') }}
+        </div>
       </div>
     </div>
   </div>

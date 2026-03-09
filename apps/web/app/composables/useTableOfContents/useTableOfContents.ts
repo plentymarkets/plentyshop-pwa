@@ -6,8 +6,8 @@ export const useTableOfContents = () => {
   const route = useRoute();
   const { $i18n } = useNuxtApp();
   const { isStructureBlock } = useBlockManager();
-  const selectedUuid = ref('');
-  const expandedBlocks = ref(new Set<string>());
+  const selectedUuid = useState<string>('toc-selected-uuid', () => '');
+  const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
   const data = computed(() => {
     const identifier = route?.meta?.identifier as string;
