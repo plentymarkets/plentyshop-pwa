@@ -16,7 +16,7 @@
       >
         <div class="flex items-center gap-2 min-w-0 flex-1">
           <button
-            class="shrink-0 w-4 h-4 flex items-center justify-center rounded transition-colors p-0.5 -ml-0.5"
+            class="shrink-0 w-4 h-4 flex items-center justify-center rounded hover:bg-editor-icon-hover transition-colors p-0.5 -ml-0.5"
             @click.stop="toggleBlockExpansion(item.uuid)"
           >
             <svg
