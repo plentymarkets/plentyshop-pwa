@@ -56,7 +56,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { ActionType, ActionsSettings, ActionOrderItem } from '../types';
 
 const actionsOpen = ref(true);
-const { configuration } = useUtilityBarConfiguration();
+const { content } = useUtilityBarConfiguration();
 const defaultActionOrder: ActionType[] = ['language', 'wishlist', 'cart', 'account'];
 const fallbackActionsSettings = ref<ActionsSettings>({
   order: [...defaultActionOrder],
@@ -76,27 +76,27 @@ const createDefaultActionVisibility = (): ActionsSettings['visibility'] => ({
 });
 
 watchEffect(() => {
-  if (!configuration.value.actions) {
-    configuration.value.actions = {
+  if (!content.value.actions) {
+    content.value.actions = {
       order: [...defaultActionOrder],
       visibility: createDefaultActionVisibility(),
     };
     return;
   }
 
-  if (!configuration.value.actions.order?.length) {
-    configuration.value.actions.order = [...defaultActionOrder];
+  if (!content.value.actions.order?.length) {
+    content.value.actions.order = [...defaultActionOrder];
   }
 
-  if (!configuration.value.actions.visibility) {
-    configuration.value.actions.visibility = createDefaultActionVisibility();
+  if (!content.value.actions.visibility) {
+    content.value.actions.visibility = createDefaultActionVisibility();
   }
 });
 
 const actionsConfig = computed<ActionsSettings>({
-  get: () => configuration.value.actions || fallbackActionsSettings.value,
+  get: () => content.value.actions || fallbackActionsSettings.value,
   set: (newActionsSettings) => {
-    configuration.value.actions = newActionsSettings;
+    content.value.actions = newActionsSettings;
   },
 });
 

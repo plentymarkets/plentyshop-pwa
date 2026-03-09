@@ -13,7 +13,7 @@
             "name": "UtilityBar",
             "type": "immutable",
             "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
-            "configuration": {
+            "content": {
               "layout": {
                 "paddingTop": 20,
                 "paddingBottom": 20,
@@ -50,7 +50,7 @@
             "name": "UtilityBar",
             "type": "immutable",
             "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
-            "configuration": {
+            "content": {
               "isSticky": true,
               "spacing": {
                 "paddingX": "px-4 md:px-10",

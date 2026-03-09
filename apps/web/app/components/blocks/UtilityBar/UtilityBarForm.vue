@@ -24,12 +24,12 @@
     <UtilityBarLayoutSettings
       v-if="editingSectionIndex === undefined"
       v-model:open="layoutOpen"
-      :configuration="configuration"
+      :content="content"
       :get-editor-translation="getEditorTranslation"
-      @update:padding-top="configuration.layout.paddingTop = $event"
-      @update:padding-bottom="configuration.layout.paddingBottom = $event"
-      @update:padding-left="configuration.layout.paddingLeft = $event"
-      @update:padding-right="configuration.layout.paddingRight = $event"
+      @update:padding-top="content.layout.paddingTop = $event"
+      @update:padding-bottom="content.layout.paddingBottom = $event"
+      @update:padding-left="content.layout.paddingLeft = $event"
+      @update:padding-right="content.layout.paddingRight = $event"
     />
   </div>
 </template>
@@ -44,7 +44,7 @@ const emit = defineEmits<{
   'clear-edit-title': [];
 }>();
 
-const { configuration, sections } = useUtilityBarConfiguration();
+const { content, sections } = useUtilityBarConfiguration();
 
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
   useUtilityBarForm(sections);

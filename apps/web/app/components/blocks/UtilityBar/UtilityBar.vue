@@ -29,7 +29,7 @@
 
       <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
         <div ref="iconSearchContainerRef" :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
-          <template v-if="props.configuration?.search?.displayMode === 'full'">
+          <template v-if="props.content?.search?.displayMode === 'full'">
             <UiSearch class="hidden md:block" />
           </template>
 
@@ -333,7 +333,7 @@ const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const paddingStyles = computed(() => {
-  const layout = props.configuration?.layout;
+  const layout = props.content?.layout;
   if (!layout) return {};
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : undefined,
@@ -344,8 +344,8 @@ const paddingStyles = computed(() => {
 });
 
 const orderedVisibleSections = computed(() => {
-  const order = props.configuration?.sectionOrder?.sections || ['logo', 'search', 'actions'];
-  const visibility = props.configuration?.sectionVisibility || { logo: true, search: true, actions: true };
+  const order = props.content?.sectionOrder?.sections || ['logo', 'search', 'actions'];
+  const visibility = props.content?.sectionVisibility || { logo: true, search: true, actions: true };
 
   return order
     .filter((sectionId) => visibility[sectionId as keyof typeof visibility] !== false)
@@ -362,8 +362,8 @@ const isSectionVisible = (sectionId: string): boolean => {
 };
 
 const orderedActions = computed(() => {
-  const order = props.configuration?.actions?.order || ['language', 'wishlist', 'cart', 'account'];
-  const visibility = props.configuration?.actions?.visibility || {
+  const order = props.content?.actions?.order || ['language', 'wishlist', 'cart', 'account'];
+  const visibility = props.content?.actions?.visibility || {
     language: true,
     wishlist: true,
     cart: true,

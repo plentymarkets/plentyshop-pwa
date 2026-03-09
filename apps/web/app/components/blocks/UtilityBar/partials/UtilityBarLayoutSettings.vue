@@ -100,7 +100,7 @@ import type { UtilityBarProps } from '../types';
 import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 
 const props = defineProps<{
-  configuration: UtilityBarProps['configuration'];
+  content: UtilityBarProps['content'];
   getEditorTranslation: (key: string) => string;
 }>();
 
@@ -145,28 +145,28 @@ const iconColor = computed({
 // });
 
 const paddingTop = computed({
-  get: () => props.configuration.layout?.paddingTop ?? 0,
+  get: () => props.content.layout?.paddingTop ?? 0,
   set: (newValue: number) => {
     emit('update:paddingTop', newValue);
   },
 });
 
 const paddingBottom = computed({
-  get: () => props.configuration.layout?.paddingBottom ?? 0,
+  get: () => props.content.layout?.paddingBottom ?? 0,
   set: (newValue: number) => {
     emit('update:paddingBottom', newValue);
   },
 });
 
 const paddingLeft = computed({
-  get: () => props.configuration.layout?.paddingLeft ?? 0,
+  get: () => props.content.layout?.paddingLeft ?? 0,
   set: (newValue: number) => {
     emit('update:paddingLeft', newValue);
   },
 });
 
 const paddingRight = computed({
-  get: () => props.configuration.layout?.paddingRight ?? 0,
+  get: () => props.content.layout?.paddingRight ?? 0,
   set: (newValue: number) => {
     emit('update:paddingRight', newValue);
   },

@@ -5,11 +5,6 @@ export type SpacingSettings = {
   paddingRight?: number;
 };
 
-// export type ColorSettings = {
-//   headerBackgroundColor: string;
-//   iconColor: string;
-// };
-
 export type LogoSettings = {
   logo: string;
 };
@@ -49,17 +44,21 @@ export type SectionOrderSettings = {
   sections: SectionType[];
 };
 
+export type UtilityBarContent = {
+  layout: SpacingSettings;
+  sectionOrder: SectionOrderSettings;
+  sectionVisibility?: Record<SectionType, boolean>;
+  logo: LogoSettings;
+  search: SearchSettings;
+  actions: ActionsSettings;
+};
+
 export type UtilityBarProps = {
   name: string;
   type: string;
-  configuration: {
-    layout: SpacingSettings;
-    //  colors: ColorSettings;
-    sectionOrder: SectionOrderSettings;
-    sectionVisibility?: Record<SectionType, boolean>;
-    logo: LogoSettings;
-    search: SearchSettings;
-    actions: ActionsSettings;
+  content: UtilityBarContent;
+  index?: number;
+  meta: {
+    uuid: string;
   };
-  content?: unknown;
 };
