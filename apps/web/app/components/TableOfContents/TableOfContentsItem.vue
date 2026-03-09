@@ -54,7 +54,7 @@
             :data-testid="deleteTestId"
             @click.stop
           >
-            <SfIconDelete class="!w-5 !h-5 text-red-600" />
+            <SfIconDelete class="!w-5 !h-5" />
           </button>
           <button
             class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
@@ -111,7 +111,7 @@
               :data-testid="deleteTestId"
               @click.stop
             >
-              <SfIconDelete class="!w-5 !h-5 text-red-600" />
+              <SfIconDelete class="!w-5 !h-5" />
             </button>
             <button
               class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
@@ -152,7 +152,7 @@
               :data-testid="deleteTestId"
               @click.stop
             >
-              <SfIconDelete class="!w-5 !h-5 text-red-600" />
+              <SfIconDelete class="!w-5 !h-5" />
             </button>
             <button
               class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
