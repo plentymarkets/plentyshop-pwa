@@ -23,19 +23,18 @@ export const getLocales = (): LocaleObject[] => {
     { code: 'vn', file: 'vn.json' },
   ];
 
-  // 1. Get the active languages from the environment (fallback to 'en,de')
   const activeLanguagesStr = process.env.LANGUAGELIST || 'en,de';
-  const activeLanguages = activeLanguagesStr.split(',').map((lang) => lang.trim());
+  const activeLanguages = activeLanguagesStr.split(',').map(lang => lang.trim());
 
-  // 2. Filter the locales so ONLY the active ones are returned
-  const locales = allLocales.filter((locale) => activeLanguages.includes(locale.code));
+  const locales = activeLanguages
+      .map(code => allLocales.find(locale => locale.code === code))
+      .filter((locale): locale is LocaleObject => locale !== undefined); // Drop invalid codes
 
-  // Safety fallback in case of misconfiguration
   if (locales.length === 0) {
     return [{ code: 'en', file: 'en.json' }];
   }
 
-  return locales as LocaleObject[];
+  return locales;
 };
 
 const getDefaultLocale = () => {
@@ -43,7 +42,6 @@ const getDefaultLocale = () => {
   const localeKeys = locales.map((locale) => locale.code);
   const defaultLocale = process.env.DEFAULTLANGUAGE as LocaleObject['code'];
 
-  // Ensure the default locale actually exists in our filtered list
   return localeKeys.includes(defaultLocale) ? defaultLocale : localeKeys[0];
 };
 
