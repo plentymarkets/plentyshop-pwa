@@ -33,11 +33,11 @@ export const getLocales = (): LocaleObject[] => {
   ];
 
   const activeLanguagesStr = process.env.LANGUAGELIST || 'en,de';
-  const activeLanguages = activeLanguagesStr.split(',').map(lang => lang.trim());
+  const activeLanguages = activeLanguagesStr.split(',').map((lang) => lang.trim());
 
   const locales = activeLanguages
-      .map(code => allLocales.find(locale => locale.code === code))
-      .filter(locale => locale !== undefined);
+    .map((code) => allLocales.find((locale) => locale.code === code))
+    .filter((locale) => locale !== undefined);
 
   if (locales.length === 0) {
     return [{ code: 'en', file: 'en.json' } as unknown as LocaleObject];
