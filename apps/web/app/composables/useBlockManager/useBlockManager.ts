@@ -345,6 +345,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastNonFooterBlock,
     addNewBlock,
+    scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,

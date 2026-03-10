@@ -102,7 +102,7 @@ export const useTableOfContents = () => {
   };
 
   const addBlockAtBottom = () => {
-    const { togglePlaceholder, multigridColumnUuid } = useBlockManager();
+    const { togglePlaceholder, multigridColumnUuid, scrollIntoBlockView } = useBlockManager();
     const { openDrawerWithView } = useSiteConfiguration();
 
     const blocks = data.value;
@@ -115,13 +115,7 @@ export const useTableOfContents = () => {
       togglePlaceholder(targetBlock.meta.uuid, 'bottom');
       openDrawerWithView('blocksList');
       multigridColumnUuid.value = null;
-
-      nextTick(() => {
-        const el = document.querySelector(`[data-uuid="${targetBlock.meta.uuid}"]`);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }
-      });
+      scrollIntoBlockView(targetBlock);
     }
   };
 
