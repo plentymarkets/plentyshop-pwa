@@ -18,4 +18,3 @@ const blockTypeNames: Record<string, string> = {
 export const getBlockDisplayName = (blockName: string): string => {
   return blockTypeNames[blockName] ?? blockName;
 };
-
