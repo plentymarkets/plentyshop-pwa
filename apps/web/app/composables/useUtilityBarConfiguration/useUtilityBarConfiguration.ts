@@ -1,4 +1,30 @@
 import type { UtilityBarProps } from '~/components/blocks/UtilityBar/types';
+import { deepEqual } from '~/utils/jsonHelper';
+
+const collectUtilityBarBlocks = (blocks: unknown): UtilityBarProps[] => {
+  if (!Array.isArray(blocks)) {
+    return [];
+  }
+
+  const matches: UtilityBarProps[] = [];
+
+  for (const candidate of blocks) {
+    if (!candidate || typeof candidate !== 'object') {
+      continue;
+    }
+
+    const block = candidate as UtilityBarProps;
+    if (block.name === 'UtilityBar') {
+      matches.push(block);
+    }
+
+    if (Array.isArray(block.content)) {
+      matches.push(...collectUtilityBarBlocks(block.content));
+    }
+  }
+
+  return matches;
+};
 
 /**
  * Manages UtilityBar block data retrieval and syncs it to the global state store.
@@ -28,48 +54,54 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     isFullSearchMode,
   } = useUtilityBarState(targetUuid.value);
 
-  let syncing = false;
-  let initialized = false;
-
   // Pure computed — no side effects, no mutations
   const utilityBarBlock = computed<UtilityBarProps | null>(() => {
-    if (!targetUuid.value) {
-      return null;
+    const blockByUuid = targetUuid.value
+      ? (findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null)
+      : null;
+
+    if (blockByUuid) {
+      return blockByUuid;
     }
 
-    return findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null;
+    // After save, some backends can remap UUIDs. If exactly one UtilityBar exists,
+    // keep syncing with that block instead of stalling until the form is reopened.
+    const utilityBarMatches = collectUtilityBarBlocks(data.value);
+    if (utilityBarMatches.length === 1) {
+      return utilityBarMatches[0] || null;
+    }
+
+    return null;
   });
 
   // Block → State: sync when block becomes available or changes (initial load, after save/reload)
   watch(
     () => utilityBarBlock.value,
     (block) => {
-      if (block && !syncing) {
-        syncing = true;
-        // mergeWithDefaults fills in any missing fields for the UI
+      if (!block) {
+        return;
+      }
+
+      // Sync persisted block state into editor state after load/save.
+      if (!deepEqual(stateContent.value, block.content)) {
         setContent(block.content);
-        initialized = true;
-        nextTick(() => {
-          syncing = false;
-        });
       }
     },
     { immediate: true },
   );
 
   // State → Block: sync form edits back to block data so saves persist changes.
-  // Only runs after initial load to avoid immediately dirtying the block data.
   // Uses deep clone to prevent shared object references between state and block.
   watch(
     stateContent,
     (newContent) => {
       const block = utilityBarBlock.value;
-      if (block && newContent && !syncing && initialized) {
-        syncing = true;
+      if (block && newContent) {
+        if (deepEqual(block.content, newContent)) {
+          return;
+        }
+
         block.content = JSON.parse(JSON.stringify(newContent));
-        nextTick(() => {
-          syncing = false;
-        });
       }
     },
     { deep: true },

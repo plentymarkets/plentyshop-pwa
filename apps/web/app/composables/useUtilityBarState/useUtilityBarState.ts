@@ -68,10 +68,10 @@ const mergeWithDefaults = (incoming: Partial<UtilityBarContent> | undefined): Ut
  * Scoped state store for a UtilityBar block.
  * Uses a UUID-scoped key so multiple instances cannot overwrite each other.
  */
-export const useUtilityBarState = (uuid?: string) => {
-  const { blockUuid } = useSiteConfiguration();
-  const resolvedUuid = uuid || blockUuid.value || 'default';
-  const state = useState<UtilityBarContent>(`utilityBarContent:${resolvedUuid}`, () => createDefaultContent());
+export const useUtilityBarState = (_uuid?: string) => {
+  // Keep a shared UtilityBar state so editor form and rendered block stay in sync,
+  // even if backend save responses remap block UUIDs during an active edit session.
+  const state = useState<UtilityBarContent>('utilityBarContent', () => createDefaultContent());
 
   /** Replace state content, merging with defaults to fill any missing fields */
   const setContent = (incoming: Partial<UtilityBarContent> | undefined) => {
@@ -180,3 +180,4 @@ export const useUtilityBarState = (uuid?: string) => {
     isFullSearchMode,
   };
 };
+
