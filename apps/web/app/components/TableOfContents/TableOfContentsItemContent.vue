@@ -48,6 +48,7 @@
       <button
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover"
         :data-testid="`toc-delete-${uuid}`"
+        :aria-label="getEditorTranslation('delete-block-label')"
         @click.stop="handleDelete"
       >
         <SfIconDelete class="!w-5 !h-5" />
@@ -56,6 +57,7 @@
         class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover"
         :class="{ 'opacity-100': !isVisible }"
         :data-testid="`toc-visibility-${uuid}`"
+        :aria-label="isVisible ? getEditorTranslation('hide-block-label') : getEditorTranslation('show-block-label')"
         @click.stop="handleToggleVisibility"
       >
         <SfIconVisibility v-if="isVisible" class="!w-5 !h-5 text-neutral-600" />
@@ -92,3 +94,18 @@ const handleDelete = () => {
   deleteBlock(props.uuid);
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "delete-block-label": "Delete block",
+    "hide-block-label": "Hide block",
+    "show-block-label": "Show block"
+  },
+  "de": {
+    "delete-block-label": "Delete block",
+    "hide-block-label": "Hide block",
+    "show-block-label": "Show block"
+  }
+}
+</i18n>

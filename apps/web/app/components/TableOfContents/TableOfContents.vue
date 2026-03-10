@@ -24,6 +24,7 @@
           handle=".toc-drag-handle"
           tag="ul"
           class="mt-2 mb-4"
+          @change="enforceFooterAtBottom"
         >
           <template #item="{ element: block }">
             <div>
@@ -55,11 +56,13 @@
 import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
+import { getBlockDisplayName } from '~/utils/get-block-display-name';
 import type { Block } from '@plentymarkets/shop-api';
 import type { FlatBlock } from './types';
 
 const { closeDrawer } = useSiteConfiguration();
 const { data, addBlockAtBottom } = useTableOfContents();
+const { isFooterBlock } = useBlockTemplates();
 
 const draggableData = computed({
   get: () => data.value,
@@ -68,14 +71,20 @@ const draggableData = computed({
   },
 });
 
-const formatBlockName = (name: string): string => {
-  if (!name) return 'Unknown Block';
-  return name.replace(/([A-Z])/g, ' $1').trim();
+const enforceFooterAtBottom = () => {
+  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
+  const lastIndex = data.value.length - 1;
+  if (footerIndex !== -1 && footerIndex !== lastIndex) {
+    const footerBlock = data.value.splice(footerIndex, 1)[0];
+    if (footerBlock) {
+      data.value.push(footerBlock);
+    }
+  }
 };
 
 const blockToFlatBlock = (block: Block): FlatBlock => ({
   uuid: block.meta.uuid,
-  label: formatBlockName(block.name),
+  label: getBlockDisplayName(block.name),
   depth: 0,
   block,
 });

@@ -1,5 +1,6 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { FlatBlock } from '~/components/TableOfContents/types';
+import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 export const useTableOfContents = () => {
   const { setIndex } = useCarousel();
@@ -20,18 +21,13 @@ export const useTableOfContents = () => {
     },
   );
 
-  const formatBlockName = (name: string): string => {
-    if (!name) return 'Unknown Block';
-    return name.replace(/([A-Z])/g, ' $1').trim();
-  };
-
   const flattenBlocks = (blocks: Block[], depth = 0): FlatBlock[] => {
     const result: FlatBlock[] = [];
     for (const block of blocks) {
       if (!block.meta?.uuid) continue;
       result.push({
         uuid: block.meta.uuid,
-        label: formatBlockName(block.name),
+        label: getBlockDisplayName(block.name),
         depth,
         block,
       });
@@ -56,7 +52,7 @@ export const useTableOfContents = () => {
         if (child.meta?.uuid) {
           children.push({
             uuid: child.meta.uuid,
-            label: formatBlockName(child.name),
+            label: getBlockDisplayName(child.name),
             depth: item.depth + 1,
             block: child,
           });
