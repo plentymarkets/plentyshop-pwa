@@ -109,13 +109,15 @@ export const useTableOfContents = () => {
     if (!blocks.length) return;
 
     const footerIndex = blocks.findIndex((block) => isFooterBlock(block));
-    const targetBlock = footerIndex > 0 ? blocks[footerIndex - 1] : blocks[blocks.length - 1];
+    const footerBlock = footerIndex >= 0 ? blocks[footerIndex] : null;
 
-    if (targetBlock) {
-      togglePlaceholder(targetBlock.meta.uuid, 'bottom');
+    if (footerBlock) {
+      togglePlaceholder(footerBlock.meta.uuid, 'top');
       openDrawerWithView('blocksList');
       multigridColumnUuid.value = null;
-      scrollIntoBlockView(targetBlock);
+      nextTick(() => {
+        scrollIntoBlockView(footerBlock);
+      });
     }
   };
 

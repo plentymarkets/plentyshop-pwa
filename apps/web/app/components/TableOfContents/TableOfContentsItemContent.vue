@@ -53,6 +53,7 @@
         <SfIconDelete class="!w-5 !h-5" />
       </button>
       <button
+        v-if="!isFooterBlock(block)"
         class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover"
         :class="{ 'opacity-100': !isVisible }"
         :data-testid="`toc-visibility-${uuid}`"
@@ -75,6 +76,7 @@ import type { TableOfContentsItemContentProps } from './types';
 const props = defineProps<TableOfContentsItemContentProps>();
 
 const { deleteBlock } = useBlockManager();
+const { isFooterBlock } = useBlockTemplates();
 
 const isVisible = computed(() => (props.block.configuration as Record<string, unknown>)?.visible !== false);
 
