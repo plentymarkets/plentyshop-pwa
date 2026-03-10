@@ -66,26 +66,23 @@ const handleBackClick = () => {
   clearCustomTitle();
 };
 
-const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
 
 const getComponent = (name: string) => {
   if (!name) return null;
 
-  if (componentCache.has(name)) {
-    return componentCache.get(name);
+  const formName = name + 'Form';
+
+  if (componentCache.has(formName)) {
+    return componentCache.get(formName);
   }
 
-  const regex = new RegExp(`${name}Form\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path));
+  const loader = getBlockLoader(formName);
+  if (!loader) return null;
 
-  if (matched && modules[matched]) {
-    const component = defineAsyncComponent(modules[matched]);
-    componentCache.set(name, component);
+  if (loader) {
+    const component = defineAsyncComponent(loader);
+    componentCache.set(formName, component);
     return component;
   }
 
