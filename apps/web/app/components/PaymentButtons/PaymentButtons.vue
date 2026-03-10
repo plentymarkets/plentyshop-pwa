@@ -184,12 +184,11 @@ const handlePayUponInvoiceModalClosing = () => {
 
 const validateAndProceed = async (): Promise<boolean> => {
   if (!readyToBuy()) return false;
-  await doAdditionalInformation({
+  return await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
     orderCustomerSign: customerSign.value,
   });
-  return true;
 };
 
 const handlePreparePaymentPayPal = async (callback?: PayPalAddToCartCallback) => {
