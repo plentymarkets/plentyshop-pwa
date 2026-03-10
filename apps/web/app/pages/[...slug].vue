@@ -45,6 +45,7 @@ definePageMeta({
   type: 'category',
   isBlockified: true,
   identifier: 0,
+  skipCookiesSSR: true,
 });
 
 const breadcrumbs = computed(() => {
