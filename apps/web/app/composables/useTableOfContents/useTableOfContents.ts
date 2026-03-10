@@ -9,17 +9,12 @@ export const useTableOfContents = () => {
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
-  const data = computed(() => {
-    const identifier = route?.meta?.identifier as string;
-    const type = route.meta.type as string;
-    const locale = $i18n.locale.value;
-
-    if (identifier === undefined || !type) return [];
-
-    const { data: blockData } = useBlockTemplates(identifier, type, locale);
-
-    return blockData.value ?? [];
-  });
+  const { data } = useBlockTemplates(
+    route?.meta?.identifier as string,
+    route.meta.type as string,
+    $i18n.locale.value,
+  );
+  const { isFooterBlock } = useBlockTemplates();
 
   watch(
     () => route.fullPath,
@@ -110,14 +105,40 @@ export const useTableOfContents = () => {
     openDrawerWithView('blocksSettings', block);
   };
 
+  const addBlockAtBottom = () => {
+    const { togglePlaceholder, multigridColumnUuid } = useBlockManager();
+    const { openDrawerWithView } = useSiteConfiguration();
+
+    const blocks = data.value;
+    if (!blocks.length) return;
+
+    const footerIndex = blocks.findIndex((block) => isFooterBlock(block));
+    const targetBlock = footerIndex > 0 ? blocks[footerIndex - 1] : blocks[blocks.length - 1];
+
+    if (targetBlock) {
+      togglePlaceholder(targetBlock.meta.uuid, 'bottom');
+      openDrawerWithView('blocksList');
+      multigridColumnUuid.value = null;
+
+      nextTick(() => {
+        const el = document.querySelector(`[data-uuid="${targetBlock.meta.uuid}"]`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+      });
+    }
+  };
+
   return {
     selectedUuid,
     expandedBlocks,
+    data,
     flatBlocks,
     isStructureBlock,
     toggleBlockExpansion,
     getChildren,
     scrollToBlock,
     editBlock,
+    addBlockAtBottom,
   };
 };

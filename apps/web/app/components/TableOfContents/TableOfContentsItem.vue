@@ -2,7 +2,7 @@
   <li
     role="button"
     tabindex="0"
-    class="flex items-center justify-between py-1 my-1 cursor-pointer transition-colors gap-2 group"
+    class="flex items-center justify-between py-1 my-1 cursor-pointer transition-colors gap-1 group"
     :data-testid="`toc-item-${item.uuid}`"
     @click="onItemClick"
     @keydown.enter="onItemClick"
@@ -16,7 +16,9 @@
       :label="item.label"
       :is-selected="isItemSelected"
       :block="item.block"
+      :is-root="item.depth === 0"
       @update-visibility="onUpdateVisibility"
+      @delete="onDelete"
     >
       <template v-if="isStructureBlock(item.block)" #arrow>
         <button
@@ -63,5 +65,10 @@ const onUpdateVisibility = (visible: boolean) => {
     block.configuration = {};
   }
   (block.configuration as Record<string, unknown>).visible = visible;
+};
+
+const onDelete = () => {
+  const { deleteBlock } = useBlockManager();
+  deleteBlock(props.item.uuid);
 };
 </script>

@@ -8,25 +8,36 @@
         <div class="shrink-0 w-4" />
       </slot>
 
-      <span
-        v-if="getBlockIconSvg(blockName)"
-        class="shrink-0 w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"
-        :class="{
-          '[&>svg]:brightness-0 [&>svg]:invert': isSelected,
-          'group-hover:[&>svg]:brightness-100 group-hover:[&>svg]:invert-0': isSelected,
-          'opacity-50': !isVisible,
-        }"
-        v-html="getBlockIconSvg(blockName)"
-      />
-      <NuxtImg
-        v-else
-        :src="defaultBlockIcon"
-        class="shrink-0 w-5 h-5 transition-all"
-        :class="{
-          'brightness-0 invert group-hover:brightness-100 group-hover:invert-0': isSelected,
-          'opacity-50': !isVisible,
-        }"
-      />
+      <div class="shrink-0 w-5 h-5 relative">
+        <div class="transition-opacity" :class="{ 'group-hover:opacity-0': isRoot }">
+          <span
+            v-if="getBlockIconSvg(blockName)"
+            class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"
+            :class="{
+              '[&>svg]:brightness-0 [&>svg]:invert': isSelected,
+              'group-hover:[&>svg]:brightness-100 group-hover:[&>svg]:invert-0': isSelected,
+              'opacity-50': !isVisible,
+            }"
+            v-html="getBlockIconSvg(blockName)"
+          />
+          <NuxtImg
+            v-else
+            :src="defaultBlockIcon"
+            class="w-5 h-5 transition-all"
+            :class="{
+              'brightness-0 invert group-hover:brightness-100 group-hover:invert-0': isSelected,
+              'opacity-50': !isVisible,
+            }"
+          />
+        </div>
+        <div
+          v-if="isRoot"
+          class="toc-drag-handle absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-grab active:cursor-grabbing transition-opacity"
+          @mousedown.stop
+        >
+          <NuxtImg width="18" height="18" :src="dragIcon" />
+        </div>
+      </div>
 
       <span class="truncate text-sm" :class="{ 'opacity-50': !isVisible }" :title="label">
         {{ label }}
@@ -58,6 +69,7 @@
 import { SfIconDelete, SfIconVisibility, SfIconVisibilityOff } from '@storefront-ui/vue';
 import { getBlockIconSvg } from '~/utils/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
+import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { Block } from '@plentymarkets/shop-api';
 
 interface Props {
@@ -66,23 +78,23 @@ interface Props {
   label: string;
   isSelected: boolean;
   block: Block;
+  isRoot: boolean;
 }
 
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
   'update-visibility': [visible: boolean];
+  'delete': [];
 }>();
 
 const isVisible = computed(() => (props.block.configuration as Record<string, unknown>)?.visible !== false);
 
 const toggleVisibility = () => {
-  const newVisibility = !isVisible.value;
-  emit('update-visibility', newVisibility);
+  emit('update-visibility', !isVisible.value);
 };
 
 const onDelete = () => {
-  const { deleteBlock } = useBlockManager();
-  deleteBlock(props.uuid);
+  emit('delete');
 };
 </script>
