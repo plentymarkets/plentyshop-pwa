@@ -28,21 +28,21 @@
         }"
       />
 
-      <span class="truncate text-sm transition-opacity" :class="{ 'opacity-50': !isVisible }" :title="label">
+      <span class="truncate text-sm" :class="{ 'opacity-50': !isVisible }" :title="label">
         {{ label }}
       </span>
     </div>
 
     <div class="flex items-center gap-1 shrink-0">
       <button
-        class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover transition-colors"
+        class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover"
         :data-testid="`toc-delete-${uuid}`"
         @click.stop="onDelete"
       >
         <SfIconDelete class="!w-5 !h-5" />
       </button>
       <button
-        class="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-editor-icon-hover"
+        class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover"
         :class="{ 'opacity-100': !isVisible }"
         :data-testid="`toc-visibility-${uuid}`"
         @click.stop="toggleVisibility"
