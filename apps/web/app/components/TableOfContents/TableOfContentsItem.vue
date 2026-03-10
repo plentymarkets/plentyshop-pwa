@@ -33,11 +33,7 @@
   </li>
 
   <template v-if="(expandedBlocks.has(item.uuid) || !isStructureBlock(item.block)) && getChildren(item).length">
-    <TableOfContentsItem
-      v-for="child in getChildren(item)"
-      :key="child.uuid"
-      :item="child"
-    />
+    <TableOfContentsItem v-for="child in getChildren(item)" :key="child.uuid" :item="child" />
   </template>
 </template>
 

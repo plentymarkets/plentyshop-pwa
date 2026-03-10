@@ -18,11 +18,7 @@
 
       <div class="px-2">
         <ul v-if="flatBlocks.length" class="mt-2 mb-4">
-          <TableOfContentsItem
-            v-for="item in flatBlocks"
-            :key="item.uuid"
-            :item="item"
-          />
+          <TableOfContentsItem v-for="item in flatBlocks" :key="item.uuid" :item="item" />
         </ul>
 
         <div v-else class="mx-2 mt-8 text-center text-sm text-neutral-400">

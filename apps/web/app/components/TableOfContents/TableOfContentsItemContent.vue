@@ -14,7 +14,7 @@
         :class="{
           '[&>svg]:brightness-0 [&>svg]:invert': isSelected,
           'group-hover:[&>svg]:brightness-100 group-hover:[&>svg]:invert-0': isSelected,
-          'opacity-50': !isVisible
+          'opacity-50': !isVisible,
         }"
         v-html="getBlockIconSvg(blockName)"
       />
@@ -24,15 +24,11 @@
         class="shrink-0 w-5 h-5 transition-all"
         :class="{
           'brightness-0 invert group-hover:brightness-100 group-hover:invert-0': isSelected,
-          'opacity-50': !isVisible
+          'opacity-50': !isVisible,
         }"
       />
 
-      <span
-        class="truncate text-sm transition-opacity"
-        :class="{ 'opacity-50': !isVisible }"
-        :title="label"
-      >
+      <span class="truncate text-sm transition-opacity" :class="{ 'opacity-50': !isVisible }" :title="label">
         {{ label }}
       </span>
     </div>
@@ -51,14 +47,8 @@
         :data-testid="`toc-visibility-${uuid}`"
         @click.stop="toggleVisibility"
       >
-        <SfIconVisibility
-          v-if="isVisible"
-          class="!w-5 !h-5 text-neutral-600"
-        />
-        <SfIconVisibilityOff
-          v-else
-          class="!w-5 !h-5 text-neutral-600"
-        />
+        <SfIconVisibility v-if="isVisible" class="!w-5 !h-5 text-neutral-600" />
+        <SfIconVisibilityOff v-else class="!w-5 !h-5 text-neutral-600" />
       </button>
     </div>
   </div>
