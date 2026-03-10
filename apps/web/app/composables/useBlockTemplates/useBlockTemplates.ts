@@ -311,7 +311,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           useSdk().plentysystems.getBlocks({
             identifier: 'index',
             type: 'immutable',
-            blocks: HEADER_CONTAINER_BLOCK_NAME,
           }),
         );
 
@@ -414,25 +413,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block)) as
-      | HeaderContainerBlock
-      | undefined;
-    if (
-      fetchedHeaderContainer &&
-      Array.isArray(fetchedHeaderContainer.content) &&
-      fetchedHeaderContainer.content.length === 0
-    ) {
-      const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
-      if (flatHeader) {
-        fetchedHeaderContainer.content = [flatHeader];
+    const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
+
+    if (fetchedHeaderContainer && Array.isArray(fetchedHeaderContainer.content)) {
+      if (fetchedHeaderContainer.content.length === 0) {
+        const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
+        if (flatHeader) fetchedHeaderContainer.content = [flatHeader];
       }
-    }
-    if (
-      fetchedHeaderContainer &&
-      Array.isArray(fetchedHeaderContainer.content) &&
-      fetchedHeaderContainer.content.length > 0
-    ) {
-      headerContainerCache.value = fetchedHeaderContainer;
+
+      if (fetchedHeaderContainer.content.length > 0) headerContainerCache.value = fetchedHeaderContainer;
     }
 
     const contentBlocks = fetchedBlocks.filter(
@@ -452,8 +441,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
-
-    headerContainerCache.value = state.value.data[0] as HeaderContainerBlock;
   };
 
   /** Updates the blocks in state with new block data */
