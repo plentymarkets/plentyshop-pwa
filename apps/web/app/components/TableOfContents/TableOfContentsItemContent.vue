@@ -31,6 +31,7 @@
       <span
         class="truncate text-sm transition-opacity"
         :class="{ 'opacity-50': !isVisible }"
+        :title="label"
       >
         {{ label }}
       </span>
@@ -40,7 +41,7 @@
       <button
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover transition-colors"
         :data-testid="`toc-delete-${uuid}`"
-        @click.stop
+        @click.stop="onDelete"
       >
         <SfIconDelete class="!w-5 !h-5" />
       </button>
@@ -88,5 +89,10 @@ const isVisible = computed(() => (props.block.configuration as Record<string, un
 const toggleVisibility = () => {
   const newVisibility = !isVisible.value;
   emit('update-visibility', newVisibility);
+};
+
+const onDelete = () => {
+  const { deleteBlock } = useBlockManager();
+  deleteBlock(props.uuid);
 };
 </script>
