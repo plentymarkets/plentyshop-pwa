@@ -426,15 +426,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       if (resolvedHeaderContainer.content.length > 0) headerContainerCache.value = resolvedHeaderContainer;
     }
 
-    const contentBlocks = fetchedBlocks.filter(
+    const mainBlocks = fetchedBlocks.filter(
       (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
     );
 
     const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
     const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
-      contentBlocks.length > 0
-        ? contentBlocks
+      mainBlocks.length > 0
+        ? mainBlocks
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
     const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
@@ -561,6 +561,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     isHeaderBlock,
     HEADER_BLOCK_NAME,
     data: computed(() => state.value.data),
+    renderableBlocks: computed(() => state.value.data.filter((block) => !isHeaderContainerBlock(block))),
     cleanData: computed(() => state.value.cleanData),
     loading: computed(() => state.value.loading),
     categoryTemplateData: computed(() => state.value.categoryTemplateData),

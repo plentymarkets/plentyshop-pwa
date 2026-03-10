@@ -47,6 +47,7 @@ export type IsHeaderContainerBlock = (block: Block | null | undefined) => block 
 
 export interface UseBlockTemplates {
   data: Readonly<Ref<UseBlockTemplatesState['data']>>;
+  renderableBlocks: Readonly<Ref<Block[]>>;
   cleanData: Readonly<Ref<UseBlockTemplatesState['cleanData']>>;
   categoryTemplateData: Readonly<Ref<UseBlockTemplatesState['categoryTemplateData']>>;
   loading: Readonly<Ref<boolean>>;

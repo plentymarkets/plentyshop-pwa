@@ -430,10 +430,9 @@ describe('useBlockTemplates', () => {
   });
 
   describe('setupBlocks', () => {
-    it('should setup blocks in state and automatically add footer', () => {
+    it('should build [HeaderContainer, ...blocks, Footer] structure in state', () => {
       useBlockTemplates().setupBlocks(mockBlocks);
 
-      // data = [HeaderContainer, ...mockBlocks, Footer]
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
       expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
       expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
@@ -442,23 +441,21 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.cleanData).toBeDefined();
     });
 
-    it('should add footer even when no blocks provided', () => {
+    it('should build [HeaderContainer, Footer] structure when no blocks provided', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate([]);
       setupBlocks([]);
 
-      // data = [HeaderContainer, Footer]
       expect(mockStateRef.value.data).toHaveLength(2);
       expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
       expect(mockStateRef.value.data[1]?.name).toBe('Footer');
     });
 
-    it('should fallback to default template when server returns no content blocks', () => {
+    it('should build [HeaderContainer, ...defaultTemplate, Footer] when server returns no content blocks', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate(mockBlocks);
       setupBlocks([]);
 
-      // data = [HeaderContainer, ...mockBlocks, Footer]
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
       expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
       expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
@@ -466,12 +463,11 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[3]?.name).toBe('Footer');
     });
 
-    it('should use default footer when cache is empty, ignoring any footer in fetched blocks', () => {
+    it('should build [HeaderContainer, ...blocks, Footer(default)] ignoring footer in fetched blocks when cache is empty', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooter = [...mockBlocks, mockFooterBlock];
       useBlockTemplates().setupBlocks(blocksWithFooter);
       expect(mockFooterCacheRef.value).toBeNull();
-      // data = [HeaderContainer, ...mockBlocks, Footer]
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
       expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
       expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
@@ -486,7 +482,7 @@ describe('useBlockTemplates', () => {
       expect(mockFooterCacheRef.value).toBeNull();
     });
 
-    it('should prioritize cached footer over footer in fetchedBlocks', () => {
+    it('should build [HeaderContainer, ...blocks, cachedFooter] prioritizing cached footer over footer in fetchedBlocks', () => {
       const cachedFooter: FooterBlock = {
         ...mockFooterBlock,
         meta: { uuid: 'cached-uuid', isGlobalTemplate: true },
@@ -509,18 +505,15 @@ describe('useBlockTemplates', () => {
 
       useBlockTemplates().setupBlocks(blocksWithFooter);
       expect(mockFooterCacheRef.value).toEqual(cachedFooter);
-      // data = [HeaderContainer, ...mockBlocks, cachedFooter]
       expect(mockStateRef.value.data[3]).toEqual(cachedFooter);
     });
 
-    it('should normalize footer position to the end using cache or default', () => {
+    it('should build [HeaderContainer, ...blocks, Footer(default)] normalizing footer to last position regardless of input order', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
       useBlockTemplates().setupBlocks(blocksWithFooterFirst);
       expect(mockFooterCacheRef.value).toBeNull();
-      // data = [HeaderContainer, ...mockBlocks, Footer]
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
-      // Footer is at the last position
       expect(mockStateRef.value.data[mockBlocks.length + 1]?.name).toBe('Footer');
       expect(mockStateRef.value.data[mockBlocks.length + 1]).not.toEqual(mockFooterBlock);
     });

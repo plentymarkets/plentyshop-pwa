@@ -14,13 +14,13 @@
       @start="handleDragStart"
       @end="handleDragEnd"
     >
-      <template #item="{ element: block, index }">
+      <template #item="{ element: block }">
         <component
           :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
           v-if="shouldShowBlock(block, enabledActions)"
         >
           <PageBlock
-            :index="index"
+            :index="getRawIndex(block)"
             :block="block"
             :enable-actions="enabledActions"
             :is-clicked="isClicked"
@@ -31,7 +31,7 @@
             class="group"
             :class="getBlockClass(block).value"
             data-testid="block-wrapper"
-            @click="tabletEdit(index)"
+            @click="tabletEdit(getRawIndex(block))"
           />
         </component>
       </template>
@@ -42,6 +42,7 @@
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { DragEvent, EditableBlocksProps } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
@@ -56,14 +57,16 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
 
 const {
   data: templateData,
+  renderableBlocks,
   getBlocksServer,
   isFooterBlock,
-  isHeaderContainerBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
 
-const data = computed(() => rawData.value.filter((block) => !isHeaderContainerBlock(block)));
+const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value));
+
+const getRawIndex = (block: Block) => rawData.value.indexOf(block);
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 

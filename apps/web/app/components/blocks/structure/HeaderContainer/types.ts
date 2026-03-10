@@ -3,7 +3,7 @@ import type { Block } from '@plentymarkets/shop-api';
 export type HeaderContainerBlock = Block & {
   name: 'HeaderContainer';
   type: 'structure';
-  content: Block[] | readonly Block[];
+  content: Block[];
 };
 
 export type HeaderContainerProps = {
