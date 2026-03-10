@@ -57,11 +57,11 @@
 
   <Teleport to="body">
     <UiModal
-        v-if="payPalPayUponInvoice"
-        v-model="payPalPayUponInvoice"
-        class="h-full w-full md:w-[600px] md:h-fit"
-        tag="section"
-        disable-click-away
+      v-if="payPalPayUponInvoice"
+      v-model="payPalPayUponInvoice"
+      class="h-full w-full md:w-[600px] md:h-fit"
+      tag="section"
+      disable-click-away
     >
       <PayPalPayUponInvoiceForm @confirm-cancel="handlePayUponInvoiceModalClosing" />
     </UiModal>
