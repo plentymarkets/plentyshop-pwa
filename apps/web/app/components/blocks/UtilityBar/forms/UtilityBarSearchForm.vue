@@ -25,10 +25,12 @@
 
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
-import type { SearchSettings } from '../types';
+import type { SearchSettings, UtilityBarFormProps } from '../types';
+
+const props = defineProps<UtilityBarFormProps>();
 
 const searchOpen = ref(true);
-const { content } = useUtilityBarState();
+const { content } = useUtilityBarState(props.uuid);
 
 const searchConfig = computed<SearchSettings>({
   get: () => content.value.search,

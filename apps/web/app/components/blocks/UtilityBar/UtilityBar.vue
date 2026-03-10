@@ -317,7 +317,7 @@ interface Props extends Partial<UtilityBarProps> {
   root?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   enableActions: false,
   root: true,
 });
@@ -332,8 +332,8 @@ const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgrou
 const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-// Establish bidirectional block ↔ state sync (reads block data from useBlockTemplates, not props)
-useUtilityBarConfiguration();
+// Establish bidirectional block ↔ state sync for this specific block instance.
+useUtilityBarConfiguration(props.meta?.uuid);
 
 const {
   paddingStyles,
@@ -342,7 +342,7 @@ const {
   isActionVisible,
   getActionOrder,
   isFullSearchMode,
-} = useUtilityBarState();
+} = useUtilityBarState(props.meta?.uuid);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();

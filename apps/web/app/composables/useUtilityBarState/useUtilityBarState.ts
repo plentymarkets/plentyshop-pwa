@@ -65,12 +65,13 @@ const mergeWithDefaults = (incoming: Partial<UtilityBarContent> | undefined): Ut
 };
 
 /**
- * Global state store for UtilityBar block.
- * Uses useState to share reactive state between display and form components.
- * All derived computeds live here — no prop drilling needed.
+ * Scoped state store for a UtilityBar block.
+ * Uses a UUID-scoped key so multiple instances cannot overwrite each other.
  */
-export const useUtilityBarState = () => {
-  const state = useState<UtilityBarContent>('utilityBarContent', () => createDefaultContent());
+export const useUtilityBarState = (uuid?: string) => {
+  const { blockUuid } = useSiteConfiguration();
+  const resolvedUuid = uuid || blockUuid.value || 'default';
+  const state = useState<UtilityBarContent>(`utilityBarContent:${resolvedUuid}`, () => createDefaultContent());
 
   /** Replace state content, merging with defaults to fill any missing fields */
   const setContent = (incoming: Partial<UtilityBarContent> | undefined) => {
@@ -90,10 +91,10 @@ export const useUtilityBarState = () => {
     const layout = content.value.layout;
     if (!layout) return {};
     return {
-      paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : undefined,
-      paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : undefined,
-      paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : undefined,
-      paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : undefined,
+      paddingTop: layout.paddingTop != null ? `${layout.paddingTop}px` : undefined,
+      paddingBottom: layout.paddingBottom != null ? `${layout.paddingBottom}px` : undefined,
+      paddingLeft: layout.paddingLeft != null ? `${layout.paddingLeft}px` : undefined,
+      paddingRight: layout.paddingRight != null ? `${layout.paddingRight}px` : undefined,
     };
   });
 

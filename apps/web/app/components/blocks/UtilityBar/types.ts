@@ -63,3 +63,7 @@ export type UtilityBarProps = {
     uuid: string;
   };
 };
+
+export type UtilityBarFormProps = {
+  uuid?: string;
+};

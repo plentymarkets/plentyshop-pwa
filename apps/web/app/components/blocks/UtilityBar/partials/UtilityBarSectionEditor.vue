@@ -1,6 +1,6 @@
 <template>
   <div v-if="editingSectionIndex !== undefined && sections[editingSectionIndex]" class="space-y-0">
-    <component :is="sectionForm" />
+    <component :is="sectionForm" :uuid="uuid" />
   </div>
 </template>
 
@@ -10,6 +10,7 @@ import type { UtilityBarSection } from '../types';
 defineProps<{
   sections: UtilityBarSection[];
   editingSectionIndex: number | undefined;
+  uuid?: string;
   sectionForm: unknown;
 }>();
 </script>

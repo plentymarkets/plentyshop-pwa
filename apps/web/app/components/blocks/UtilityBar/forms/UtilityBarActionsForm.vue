@@ -53,10 +53,12 @@
 import { SfSwitch } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import dragIcon from '~/assets/icons/paths/drag.svg';
-import type { ActionType, ActionsSettings, ActionOrderItem } from '../types';
+import type { ActionType, ActionsSettings, ActionOrderItem, UtilityBarFormProps } from '../types';
+
+const props = defineProps<UtilityBarFormProps>();
 
 const actionsOpen = ref(true);
-const { content } = useUtilityBarState();
+const { content } = useUtilityBarState(props.uuid);
 const defaultActionOrder: ActionType[] = ['language', 'wishlist', 'cart', 'account'];
 
 const actionsConfig = computed<ActionsSettings>({

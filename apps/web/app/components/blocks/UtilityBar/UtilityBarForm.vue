@@ -18,12 +18,14 @@
       v-if="editingSectionIndex !== undefined"
       :sections="sections"
       :editing-section-index="editingSectionIndex"
+      :uuid="props.uuid"
       :section-form="sectionForm"
     />
 
     <UtilityBarLayoutSettings
       v-if="editingSectionIndex === undefined"
       v-model:open="layoutOpen"
+      :uuid="props.uuid"
     />
   </div>
 </template>
@@ -32,6 +34,9 @@
 import UtilityBarSectionsList from './partials/UtilityBarSectionsList.vue';
 import UtilityBarLayoutSettings from './partials/UtilityBarLayoutSettings.vue';
 import UtilityBarSectionEditor from './partials/UtilityBarSectionEditor.vue';
+import type { UtilityBarFormProps } from './types';
+
+const props = defineProps<UtilityBarFormProps>();
 
 const emit = defineEmits<{
   'set-edit-title': [title: string];
@@ -39,9 +44,9 @@ const emit = defineEmits<{
 }>();
 
 // useUtilityBarConfiguration syncs block data → state
-useUtilityBarConfiguration();
+useUtilityBarConfiguration(props.uuid);
 
-const { sections } = useUtilityBarState();
+const { sections } = useUtilityBarState(props.uuid);
 
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
   useUtilityBarForm(sections);

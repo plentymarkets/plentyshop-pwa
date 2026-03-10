@@ -11,7 +11,7 @@
         "template": {
           "en": {
             "name": "UtilityBar",
-            "type": "immutable",
+            "type": "content",
             "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
             "content": {
               "layout": {
@@ -48,17 +48,14 @@
           },
           "de": {
             "name": "UtilityBar",
-            "type": "immutable",
+            "type": "content",
             "meta": { "uuid": "12345678-1234-5678-1234-567812345678" },
             "content": {
-              "isSticky": true,
-              "spacing": {
-                "paddingX": "px-4 md:px-10",
-                "paddingY": "py-2 md:py-5"
-              },
-              "colors": {
-                "headerBackgroundColor": "#000000",
-                "iconColor": "#ffffff"
+              "layout": {
+                "paddingTop": 20,
+                "paddingBottom": 20,
+                "paddingLeft": 40,
+                "paddingRight": 40
               },
               "sectionOrder": {
                 "sections": ["logo", "search", "actions"]

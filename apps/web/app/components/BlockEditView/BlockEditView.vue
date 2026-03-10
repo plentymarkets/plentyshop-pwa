@@ -26,7 +26,9 @@
       <component
         :is="currentComponent"
         v-if="currentComponent"
+        :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
+        :uuid="blockUuid"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
       />

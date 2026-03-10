@@ -97,10 +97,13 @@ import {
   SfIconArrowForward,
 } from '@storefront-ui/vue';
 import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
+import type { UtilityBarFormProps } from '../types';
+
+const props = defineProps<UtilityBarFormProps>();
 
 const isOpen = defineModel<boolean>('open', { default: true });
 
-const { content } = useUtilityBarState();
+const { content } = useUtilityBarState(props.uuid);
 
 const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
 const { getSetting: getIconColor, updateSetting: updateIconColor } = useSiteSettings('iconColor');

@@ -1,37 +1,11 @@
 import type { UtilityBarProps } from '~/components/blocks/UtilityBar/types';
 
-const findBlockByName = (blocks: unknown, blockName: string): UtilityBarProps | null => {
-  if (!Array.isArray(blocks)) {
-    return null;
-  }
-
-  for (const block of blocks) {
-    if (!block || typeof block !== 'object') {
-      continue;
-    }
-
-    const candidate = block as UtilityBarProps;
-    if (candidate.name === blockName) {
-      return candidate;
-    }
-
-    if (Array.isArray(candidate.content)) {
-      const nestedBlock = findBlockByName(candidate.content, blockName);
-      if (nestedBlock) {
-        return nestedBlock;
-      }
-    }
-  }
-
-  return null;
-};
-
 /**
  * Manages UtilityBar block data retrieval and syncs it to the global state store.
  * Defaults are applied exclusively by useUtilityBarState.setContent (single source of truth).
  * No mutations happen inside computeds — block data stays clean for dirty detection.
  */
-export const useUtilityBarConfiguration = () => {
+export const useUtilityBarConfiguration = (uuid?: string) => {
   const { blockUuid } = useSiteConfiguration();
   const route = useRoute();
   const { data } = useBlockTemplates(
@@ -41,15 +15,19 @@ export const useUtilityBarConfiguration = () => {
   );
   const { findOrDeleteBlockByUuid } = useBlockManager();
 
-  const { content: stateContent, sections, setContent } = useUtilityBarState();
+  const targetUuid = computed(() => uuid || blockUuid.value);
+  const { content: stateContent, sections, setContent } = useUtilityBarState(targetUuid.value);
 
   let syncing = false;
   let initialized = false;
 
   // Pure computed — no side effects, no mutations
   const utilityBarBlock = computed<UtilityBarProps | null>(() => {
-    const blockByUuid = findOrDeleteBlockByUuid(data.value, blockUuid.value) as UtilityBarProps | null;
-    return blockByUuid || findBlockByName(data.value, 'UtilityBar');
+    if (!targetUuid.value) {
+      return null;
+    }
+
+    return findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null;
   });
 
   // Block → State: sync when block becomes available or changes (initial load, after save/reload)
