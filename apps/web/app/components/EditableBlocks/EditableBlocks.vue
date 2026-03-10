@@ -52,7 +52,6 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   hasEnabledActions: true,
   preventBlocksRequest: false,
   readOnly: false,
-  blocks: () => [],
 });
 
 const {
@@ -121,7 +120,7 @@ const enabledActions = computed(
 );
 
 useEditorUnsavedChangesGuard({
-  enabled: !props.readOnly && !props.preventRouteGuard,
+  enabled: !props.readOnly,
   onConfirmLeave: () => closeDrawer(),
 });
 
