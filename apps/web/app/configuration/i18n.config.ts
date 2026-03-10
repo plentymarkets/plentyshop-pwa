@@ -25,10 +25,10 @@ export const getLocales = (): LocaleObject[] => {
 
   // 1. Get the active languages from the environment (fallback to 'en,de')
   const activeLanguagesStr = process.env.LANGUAGELIST || 'en,de';
-  const activeLanguages = activeLanguagesStr.split(',').map(lang => lang.trim());
+  const activeLanguages = activeLanguagesStr.split(',').map((lang) => lang.trim());
 
   // 2. Filter the locales so ONLY the active ones are returned
-  const locales = allLocales.filter(locale => activeLanguages.includes(locale.code));
+  const locales = allLocales.filter((locale) => activeLanguages.includes(locale.code));
 
   // Safety fallback in case of misconfiguration
   if (locales.length === 0) {
