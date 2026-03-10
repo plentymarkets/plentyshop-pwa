@@ -28,13 +28,13 @@ export const getLocales = (): LocaleObject[] => {
 
   const locales = activeLanguages
       .map(code => allLocales.find(locale => locale.code === code))
-      .filter((locale): locale is LocaleObject => locale !== undefined); // Drop invalid codes
+      .filter(locale => locale !== undefined);
 
   if (locales.length === 0) {
-    return [{ code: 'en', file: 'en.json' }];
+    return [{ code: 'en', file: 'en.json' } as unknown as LocaleObject];
   }
 
-  return locales;
+  return locales as unknown as LocaleObject[];
 };
 
 const getDefaultLocale = () => {
