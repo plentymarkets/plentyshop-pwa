@@ -4,18 +4,6 @@ import { v4 as uuid } from 'uuid';
 
 export const HEADER_CONTAINER_BLOCK_NAME = 'HeaderContainer' as const;
 
-export function createHeaderContainer(): HeaderContainerBlock {
-  return {
-    name: HEADER_CONTAINER_BLOCK_NAME,
-    type: 'structure',
-    meta: {
-      uuid: uuid(),
-      isGlobalTemplate: true,
-    },
-    content: [createHeader()],
-  };
-}
-
 export const isHeaderContainerBlock = (block: Block | null | undefined): block is HeaderContainerBlock =>
   block?.name === HEADER_CONTAINER_BLOCK_NAME;
 

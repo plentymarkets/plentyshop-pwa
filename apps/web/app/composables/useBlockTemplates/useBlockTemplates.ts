@@ -317,15 +317,18 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         const allBlocks = data.value?.data ?? [];
         const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
 
+        let resolvedHeaderBlock = headerBlock;
         if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
           const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
-          if (flatHeader) {
-            headerBlock.content = [flatHeader];
-          }
+          if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] };
         }
 
-        if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
-          headerContainerCache.value = headerBlock;
+        if (
+          resolvedHeaderBlock &&
+          Array.isArray(resolvedHeaderBlock.content) &&
+          resolvedHeaderBlock.content.length > 0
+        ) {
+          headerContainerCache.value = resolvedHeaderBlock;
           return headerContainerCache.value;
         }
       } catch (error) {
@@ -414,12 +417,13 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
 
     if (fetchedHeaderContainer && Array.isArray(fetchedHeaderContainer.content)) {
+      let resolvedHeaderContainer = fetchedHeaderContainer;
       if (fetchedHeaderContainer.content.length === 0) {
         const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
-        if (flatHeader) fetchedHeaderContainer.content = [flatHeader];
+        if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
       }
 
-      if (fetchedHeaderContainer.content.length > 0) headerContainerCache.value = fetchedHeaderContainer;
+      if (resolvedHeaderContainer.content.length > 0) headerContainerCache.value = resolvedHeaderContainer;
     }
 
     const contentBlocks = fetchedBlocks.filter(
@@ -544,6 +548,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     FOOTER_BLOCK_NAME,
     FOOTER_SWITCH_DEFINITIONS,
     footerCache: readonly(footerCache),
+    headerContainerCache,
     resetHeaderToSaved,
     fetchHeaderContainerBlock,
     getHeaderContainerBlock,
@@ -555,7 +560,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     HEADER_CONTAINER_BLOCK_NAME,
     isHeaderBlock,
     HEADER_BLOCK_NAME,
-    headerContainerCache,
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
     loading: computed(() => state.value.loading),

@@ -1,4 +1,4 @@
-import { createHeaderContainer } from './factory';
+import { createDefaultHeaderContainerBlock } from './factory';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 
 const cache = new Map<string, HeaderContainerBlock>();
@@ -11,7 +11,7 @@ export const getHeaderContainerTemplate = async (locale: string): Promise<Header
 
   if (useCache && cached) return JSON.parse(JSON.stringify(cached));
 
-  const block = createHeaderContainer();
+  const block = createDefaultHeaderContainerBlock();
 
   if (useCache) {
     cache.set(locale, block);
