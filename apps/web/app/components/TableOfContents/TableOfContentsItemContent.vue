@@ -48,7 +48,7 @@
       <button
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover"
         :data-testid="`toc-delete-${uuid}`"
-        @click.stop="onDelete"
+        @click.stop="handleDelete"
       >
         <SfIconDelete class="!w-5 !h-5" />
       </button>
@@ -56,7 +56,7 @@
         class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover"
         :class="{ 'opacity-100': !isVisible }"
         :data-testid="`toc-visibility-${uuid}`"
-        @click.stop="toggleVisibility"
+        @click.stop="handleToggleVisibility"
       >
         <SfIconVisibility v-if="isVisible" class="!w-5 !h-5 text-neutral-600" />
         <SfIconVisibilityOff v-else class="!w-5 !h-5 text-neutral-600" />
@@ -83,18 +83,19 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
-  'update-visibility': [visible: boolean];
-  'delete': [];
-}>();
+const { deleteBlock } = useBlockManager();
 
 const isVisible = computed(() => (props.block.configuration as Record<string, unknown>)?.visible !== false);
 
-const toggleVisibility = () => {
-  emit('update-visibility', !isVisible.value);
+const handleToggleVisibility = () => {
+  const block = props.block as unknown as Record<string, unknown>;
+  if (!block.configuration) {
+    block.configuration = {};
+  }
+  (block.configuration as Record<string, unknown>).visible = !isVisible.value;
 };
 
-const onDelete = () => {
-  emit('delete');
+const handleDelete = () => {
+  deleteBlock(props.uuid);
 };
 </script>

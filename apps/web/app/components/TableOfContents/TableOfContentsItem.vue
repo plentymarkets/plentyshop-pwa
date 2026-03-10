@@ -4,9 +4,9 @@
     tabindex="0"
     class="flex items-center justify-between py-1 my-1 cursor-pointer transition-colors gap-1 group"
     :data-testid="`toc-item-${item.uuid}`"
-    @click="onItemClick"
-    @keydown.enter="onItemClick"
-    @keydown.space.prevent="onItemClick"
+    @click="editBlock(item.block)"
+    @keydown.enter="editBlock(item.block)"
+    @keydown.space.prevent="editBlock(item.block)"
   >
     <div v-if="item.depth > 0 && !isStructureBlock(item.block)" class="shrink-0 w-4" />
 
@@ -17,8 +17,6 @@
       :is-selected="isItemSelected"
       :block="item.block"
       :is-root="item.depth === 0"
-      @update-visibility="onUpdateVisibility"
-      @delete="onDelete"
     >
       <template v-if="isStructureBlock(item.block)" #arrow>
         <button
@@ -54,21 +52,4 @@ const { selectedUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, ge
   useTableOfContents();
 
 const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
-
-const onItemClick = async () => {
-  editBlock(props.item.block);
-};
-
-const onUpdateVisibility = (visible: boolean) => {
-  const block = props.item.block as unknown as Record<string, unknown>;
-  if (!block.configuration) {
-    block.configuration = {};
-  }
-  (block.configuration as Record<string, unknown>).visible = visible;
-};
-
-const onDelete = () => {
-  const { deleteBlock } = useBlockManager();
-  deleteBlock(props.item.uuid);
-};
 </script>
