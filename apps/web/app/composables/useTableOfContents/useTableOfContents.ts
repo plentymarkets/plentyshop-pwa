@@ -9,11 +9,7 @@ export const useTableOfContents = () => {
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
-  const { data } = useBlockTemplates(
-    route?.meta?.identifier as string,
-    route.meta.type as string,
-    $i18n.locale.value,
-  );
+  const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
   const { isFooterBlock } = useBlockTemplates();
 
   watch(

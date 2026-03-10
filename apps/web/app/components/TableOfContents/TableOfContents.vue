@@ -27,9 +27,7 @@
         >
           <template #item="{ element: block }">
             <div>
-              <TableOfContentsItem
-                :item="blockToFlatBlock(block)"
-              />
+              <TableOfContentsItem :item="blockToFlatBlock(block)" />
             </div>
           </template>
         </draggable>
