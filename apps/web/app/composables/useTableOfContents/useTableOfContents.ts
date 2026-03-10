@@ -115,9 +115,7 @@ export const useTableOfContents = () => {
       togglePlaceholder(footerBlock.meta.uuid, 'top');
       openDrawerWithView('blocksList');
       multigridColumnUuid.value = null;
-      nextTick(() => {
-        scrollIntoBlockView(footerBlock);
-      });
+      scrollIntoBlockView(footerBlock);
     }
   };
 
