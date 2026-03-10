@@ -332,9 +332,6 @@ const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgrou
 const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-// Establish bidirectional block ↔ state sync for this specific block instance.
-useUtilityBarConfiguration(props.meta?.uuid);
-
 const {
   paddingStyles,
   isSectionVisible,
@@ -342,7 +339,7 @@ const {
   isActionVisible,
   getActionOrder,
   isFullSearchMode,
-} = useUtilityBarState(props.meta?.uuid);
+} = useUtilityBarConfiguration(props.meta?.uuid);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();

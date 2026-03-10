@@ -16,7 +16,17 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
   const { findOrDeleteBlockByUuid } = useBlockManager();
 
   const targetUuid = computed(() => uuid || blockUuid.value);
-  const { content: stateContent, sections, setContent } = useUtilityBarState(targetUuid.value);
+  const {
+    content: stateContent,
+    sections,
+    setContent,
+    paddingStyles,
+    isSectionVisible,
+    getSectionFlexOrder,
+    isActionVisible,
+    getActionOrder,
+    isFullSearchMode,
+  } = useUtilityBarState(targetUuid.value);
 
   let syncing = false;
   let initialized = false;
@@ -76,5 +86,11 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     utilityBarBlock,
     content,
     sections,
+    paddingStyles,
+    isSectionVisible,
+    getSectionFlexOrder,
+    isActionVisible,
+    getActionOrder,
+    isFullSearchMode,
   };
 };

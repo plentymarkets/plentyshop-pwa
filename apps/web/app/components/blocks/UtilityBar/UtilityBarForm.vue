@@ -43,10 +43,7 @@ const emit = defineEmits<{
   'clear-edit-title': [];
 }>();
 
-// useUtilityBarConfiguration syncs block data → state
-useUtilityBarConfiguration(props.uuid);
-
-const { sections } = useUtilityBarState(props.uuid);
+const { sections } = useUtilityBarConfiguration(props.uuid);
 
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
   useUtilityBarForm(sections);
