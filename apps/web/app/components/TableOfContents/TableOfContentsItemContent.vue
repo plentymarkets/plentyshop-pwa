@@ -70,18 +70,9 @@ import { SfIconDelete, SfIconVisibility, SfIconVisibilityOff } from '@storefront
 import { getBlockIconSvg } from '~/utils/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import dragIcon from '~/assets/icons/paths/drag.svg';
-import type { Block } from '@plentymarkets/shop-api';
+import type { TableOfContentsItemContentProps } from './types';
 
-interface Props {
-  uuid: string;
-  blockName: string;
-  label: string;
-  isSelected: boolean;
-  block: Block;
-  isRoot: boolean;
-}
-
-const props = defineProps<Props>();
+const props = defineProps<TableOfContentsItemContentProps>();
 
 const { deleteBlock } = useBlockManager();
 

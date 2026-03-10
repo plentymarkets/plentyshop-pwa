@@ -39,14 +39,10 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import type { FlatBlock } from './types';
+import type { TableOfContentsItemProps } from './types';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
 
-interface Props {
-  item: FlatBlock;
-}
-
-const props = defineProps<Props>();
+const props = defineProps<TableOfContentsItemProps>();
 
 const { selectedUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
   useTableOfContents();
