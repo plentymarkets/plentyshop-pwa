@@ -44,7 +44,7 @@
       </span>
     </div>
 
-    <div class="flex items-center gap-1 shrink-0">
+    <div v-if="!isFooterBlock(block)" class="flex items-center gap-1 shrink-0">
       <button
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover"
         :data-testid="`toc-delete-${uuid}`"
@@ -53,7 +53,6 @@
         <SfIconDelete class="!w-5 !h-5" />
       </button>
       <button
-        v-if="!isFooterBlock(block)"
         class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover"
         :class="{ 'opacity-100': !isVisible }"
         :data-testid="`toc-visibility-${uuid}`"
@@ -63,6 +62,7 @@
         <SfIconVisibilityOff v-else class="!w-5 !h-5 text-neutral-600" />
       </button>
     </div>
+    <div v-else class="flex items-center gap-1 shrink-0 h-[30px]" />
   </div>
 </template>
 
