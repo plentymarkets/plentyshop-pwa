@@ -315,9 +315,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         );
 
         const allBlocks = data.value?.data ?? [];
-        const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block)) as
-          | HeaderContainerBlock
-          | undefined;
+        const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
 
         if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
           const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
