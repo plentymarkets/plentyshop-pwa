@@ -38,23 +38,16 @@ const setInitialData: SetInitialData = async () => {
  * ```
  */
 const setInitialDataSSR: SetInitialData = async () => {
-  const { setUser } = useCustomer();
-  const { setCategoryTree } = useCategoryTree();
-  const { setCart, loading: cartLoading } = useCart();
-  const { setWishlistItemIds } = useWishlist();
+  const { loading: cartLoading } = useCart();
   const { setRobots } = useRobots();
   const { setInitialData: setInitialAssetsData } = useCustomAssets();
 
   cartLoading.value = true;
 
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: { settings: true } }));
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getAssetsAndRobots());
     if (data.value?.data) {
-      setUser(data.value.data.session.user);
-      setCart(data.value.data.session?.basket as Cart);
-      setCategoryTree(data.value.data.categories);
       setInitialAssetsData(data.value.data.customAssets || []);
-      setWishlistItemIds(Object.values(data.value.data.session?.basket?.itemWishListIds || []));
       if (data.value.data.robots) {
         setRobots(data.value.data.robots);
       }
