@@ -435,12 +435,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       headerContainerCache.value = fetchedHeaderContainer;
     }
 
-    console.warn('[setupBlocks] fetchedBlocks (full):', JSON.parse(JSON.stringify(fetchedBlocks)));
-    console.warn(
-      '[setupBlocks] fetchedHeaderContainer (full):',
-      fetchedHeaderContainer ? JSON.parse(JSON.stringify(fetchedHeaderContainer)) : null,
-    );
-
     const contentBlocks = fetchedBlocks.filter(
       (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
     );
@@ -503,8 +497,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       });
 
       const data = response?.data ?? state.value.data;
-
-      console.warn('[saveBlocks] full response data:', JSON.parse(JSON.stringify(response?.data ?? state.value.data)));
 
       setupBlocks(data);
 
