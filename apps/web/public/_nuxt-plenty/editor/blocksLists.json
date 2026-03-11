@@ -30,8 +30,8 @@
                 "actions": true
               },
               "color": {
-                "iconColor": "#000000",
-                "backgroundColor": "#FFFFFF"
+                "iconColor": "#ffffff",
+                "backgroundColor": "#062633"
               },
 
               "search": {
@@ -68,8 +68,8 @@
                 "actions": true
               },
               "color": {
-                "iconColor": "#000000",
-                "backgroundColor": "#FFFFFF"
+                "iconColor": "#ffffff",
+                "backgroundColor": "#062633"
               },
 
               "search": {

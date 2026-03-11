@@ -96,7 +96,6 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 import type { UtilityBarFormProps } from '../types';
 
 const props = defineProps<UtilityBarFormProps>();
@@ -104,14 +103,6 @@ const props = defineProps<UtilityBarFormProps>();
 const isOpen = defineModel<boolean>('open', { default: true });
 
 const { content } = useUtilityBarState(props.uuid);
-
-const updateHeaderBackgroundColor = (hexColor: string) => {
-  const tailwindColors = getPaletteFromColor('header', hexColor).map((color) => ({
-    ...color,
-  }));
-
-  setColorProperties('header', tailwindColors);
-};
 
 const headerBackgroundColor = computed({
   get: () => content.value.color?.backgroundColor ?? '',
@@ -123,8 +114,6 @@ const headerBackgroundColor = computed({
         backgroundColor: newColor,
       },
     };
-
-    updateHeaderBackgroundColor(newColor);
   },
 });
 
