@@ -24,7 +24,7 @@
           handle=".toc-drag-handle"
           tag="ul"
           class="mt-2 mb-4"
-          @change="enforceFooterAtBottom"
+          @change="handleDragChange"
         >
           <template #item="{ element: block }">
             <div>
@@ -59,10 +59,12 @@ import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfC
 import { getBlockDisplayName } from '~/utils/get-block-display-name';
 import type { Block } from '@plentymarkets/shop-api';
 import type { FlatBlock } from './types';
+import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeDrawer } = useSiteConfiguration();
 const { data, addBlockAtBottom } = useTableOfContents();
 const { isFooterBlock } = useBlockTemplates();
+const { scrollIntoBlockView } = useBlockManager();
 
 const draggableData = computed({
   get: () => data.value,
@@ -78,6 +80,20 @@ const enforceFooterAtBottom = () => {
     const footerBlock = data.value.splice(footerIndex, 1)[0];
     if (footerBlock) {
       data.value.push(footerBlock);
+    }
+  }
+};
+
+const handleDragChange = (evt: DragEvent) => {
+  enforceFooterAtBottom();
+  scrollToDraggedBlock(evt);
+};
+
+const scrollToDraggedBlock = (evt: DragEvent) => {
+  if (evt.moved && evt.moved.oldIndex !== evt.moved.newIndex) {
+    const draggedBlock = data.value[evt.moved.newIndex];
+    if (draggedBlock) {
+      scrollIntoBlockView(draggedBlock);
     }
   }
 };

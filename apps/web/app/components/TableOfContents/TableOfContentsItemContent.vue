@@ -46,7 +46,8 @@
 
     <div v-if="!isFooterBlock(block)" class="flex items-center gap-1 shrink-0">
       <button
-        class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover"
+        class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover group-hover:text-black"
+        :class="{ 'text-white': isSelected }"
         :data-testid="`toc-delete-${uuid}`"
         :aria-label="getEditorTranslation('delete-block-label')"
         @click.stop="handleDelete"
@@ -54,14 +55,14 @@
         <SfIconDelete class="!w-5 !h-5" />
       </button>
       <button
-        class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover"
-        :class="{ 'opacity-100': !isVisible }"
+        class="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-editor-icon-hover group-hover:text-black"
+        :class="{ 'opacity-100': !isVisible, 'text-white': isSelected }"
         :data-testid="`toc-visibility-${uuid}`"
         :aria-label="isVisible ? getEditorTranslation('hide-block-label') : getEditorTranslation('show-block-label')"
         @click.stop="handleToggleVisibility"
       >
-        <SfIconVisibility v-if="isVisible" class="!w-5 !h-5 text-neutral-600" />
-        <SfIconVisibilityOff v-else class="!w-5 !h-5 text-neutral-600" />
+        <SfIconVisibility v-if="isVisible" class="!w-5 !h-5 text-neutral-600 group-hover:text-black" :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }" />
+        <SfIconVisibilityOff v-else class="!w-5 !h-5 text-neutral-600 group-hover:text-black" :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }" />
       </button>
     </div>
     <div v-else class="flex items-center gap-1 shrink-0 h-[30px]" />
