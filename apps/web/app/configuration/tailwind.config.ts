@@ -78,6 +78,7 @@ export default {
         editor: {
           'body-bg': '#F1F3F5',
           button: '#062633',
+          'toc-highlight': '#E6F0FF',
         },
 
         header: {

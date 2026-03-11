@@ -25,6 +25,14 @@ export class ProductListPageObject extends PageObject {
     return cy.getByTestId('product-card-link').first();
   }
 
+  get categoryData() {
+    return cy.getByTestId('category-data');
+  }
+
+  get sortFilter() {
+    return cy.getByTestId('category-sort-filter');
+  }
+
   assertProductCardPath(expectedPathContent?: string) {
     const link = this.productLink;
 
@@ -62,6 +70,14 @@ export class ProductListPageObject extends PageObject {
             });
         });
     });
+    return this;
+  }
+
+  assertBlockTemplate() {
+    this.categoryData.should('exist');
+    this.sortFilter.should('exist');
+    this.categoryGrid.should('exist');
+    this.footer.should('have.length', 1);
     return this;
   }
 

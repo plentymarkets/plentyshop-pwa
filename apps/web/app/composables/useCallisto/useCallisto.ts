@@ -1,6 +1,6 @@
 export const useCallisto = () => {
   const isEnabled = computed(() => {
-    const { getSetting } = useSiteSettings('enableCallistoUrlScheme');
+    const { getSetting } = useSiteSettings('enableSingleProductUrlScheme');
     return String(getSetting()) === 'true';
   });
 

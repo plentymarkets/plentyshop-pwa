@@ -163,6 +163,9 @@ export default defineNuxtConfig({
       icons: {
         defaultSet: 'mdi-svg',
       },
+      theme: {
+        defaultTheme: 'light',
+      },
     },
   },
   shopCore: {

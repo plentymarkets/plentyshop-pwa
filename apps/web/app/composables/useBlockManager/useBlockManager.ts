@@ -322,6 +322,10 @@ export const useBlockManager = () => {
     return checkBlocks(data.value);
   };
 
+  const isStructureBlock = (block: Block): boolean => {
+    return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -352,5 +356,6 @@ export const useBlockManager = () => {
     getLazyLoadRef,
     showBottomAddInGrid,
     blockExistsOnPage,
+    isStructureBlock,
   };
 };
