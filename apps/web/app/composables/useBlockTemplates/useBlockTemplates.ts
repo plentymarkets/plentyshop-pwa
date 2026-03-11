@@ -340,6 +340,42 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     });
   };
 
+  const fetchGlobalBlocks = async (): Promise<void> => {
+    if (footerCache.value && headerContainerCache.value) return;
+
+    await callWithNuxt(nuxtApp, async () => {
+      try {
+        const { data } = await useAsyncData(`global-blocks-${nuxtApp.$i18n.locale.value}`, () =>
+          useSdk().plentysystems.getBlocks({ identifier: 'index', type: 'immutable' }),
+        );
+
+        const allBlocks = data.value?.data ?? [];
+
+        if (!footerCache.value) {
+          const footerBlock = allBlocks.find((block) => isFooterBlock(block));
+          footerCache.value = footerBlock ? (footerBlock as FooterBlock) : createDefaultFooterBlockHelper();
+        }
+
+        if (!headerContainerCache.value) {
+          const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
+          let resolvedHeaderBlock = headerBlock;
+          if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
+            const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
+            if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] };
+          }
+          headerContainerCache.value =
+            resolvedHeaderBlock && Array.isArray(resolvedHeaderBlock.content) && resolvedHeaderBlock.content.length > 0
+              ? resolvedHeaderBlock
+              : getHeaderContainerBlock();
+        }
+      } catch (error) {
+        console.warn('Failed to preload global blocks, using defaults:', error);
+        if (!footerCache.value) footerCache.value = createDefaultFooterBlockHelper();
+        if (!headerContainerCache.value) headerContainerCache.value = getHeaderContainerBlock();
+      }
+    });
+  };
+
   const migrateAllBlocks = (blocks: Block[]) => {
     const config = useRuntimeConfig().public;
 
@@ -553,6 +589,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     headerContainerCache,
     resetHeaderToSaved,
     fetchHeaderContainerBlock,
+    fetchGlobalBlocks,
     getHeaderContainerBlock,
     createHeaderContainerBlock,
     createDefaultHeaderContainerBlock,

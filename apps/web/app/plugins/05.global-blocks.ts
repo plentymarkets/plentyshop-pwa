@@ -6,16 +6,8 @@ export default defineNuxtPlugin({
   parallel: true,
   async setup() {
     const nuxtApp = useNuxtApp();
-    const { fetchHeaderContainerBlock, fetchFooterBlock } = useBlockTemplates(
-      'index',
-      'immutable',
-      nuxtApp.$i18n.locale.value,
-    );
+    const { fetchGlobalBlocks } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
 
-    try {
-      await Promise.all([fetchHeaderContainerBlock(), fetchFooterBlock()]);
-    } catch (error) {
-      console.warn('Failed to preload global blocks:', error);
-    }
+    await fetchGlobalBlocks();
   },
 });

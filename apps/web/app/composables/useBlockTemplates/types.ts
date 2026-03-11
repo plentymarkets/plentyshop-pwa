@@ -35,6 +35,7 @@ export type IsFooterBlock = (block: Block | null | undefined) => block is Footer
 export type IsHeaderBlock = (block: Block | null | undefined) => block is HeaderBlock;
 
 export type FetchHeaderContainerBlock = (force?: boolean) => Promise<HeaderContainerBlock>;
+export type FetchGlobalBlocks = () => Promise<void>;
 export type GetHeaderContainerBlock = () => HeaderContainerBlock;
 export type CreateHeaderContainerBlock = (
   content: Block[],
@@ -74,6 +75,7 @@ export interface UseBlockTemplates {
   FOOTER_BLOCK_NAME: 'Footer';
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
   fetchHeaderContainerBlock: FetchHeaderContainerBlock;
+  fetchGlobalBlocks: FetchGlobalBlocks;
   getHeaderContainerBlock: GetHeaderContainerBlock;
   createHeaderContainerBlock: CreateHeaderContainerBlock;
   createDefaultHeaderContainerBlock: CreateDefaultHeaderContainerBlock;
