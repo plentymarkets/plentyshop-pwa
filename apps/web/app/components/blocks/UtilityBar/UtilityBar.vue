@@ -6,6 +6,7 @@
       data-testid="navbar-top"
     >
       <div v-if="isSectionVisible('logo')" class="flex items-center" :style="{ order: getSectionFlexOrder('logo') }">
+        <!--
         <UiButton
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
@@ -17,6 +18,7 @@
         >
           <SfIconMenu aria-hidden="true" />
         </UiButton>
+        -->
 
         <NuxtLink
           :to="localePath(paths.home)"
@@ -214,6 +216,7 @@
         :style="{ order: getSectionFlexOrder('actions') }"
       >
         <UiButton
+          v-if="localeCodes.length > 1 && isActionVisible('language')"
           variant="tertiary"
           class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
           square
@@ -226,6 +229,7 @@
           <SfIconLanguage />
         </UiButton>
         <UiButton
+          v-if="isSectionVisible('search')"
           variant="tertiary"
           class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
           square
@@ -242,6 +246,8 @@
     v-if="viewport.isLessThan('lg') && isSectionVisible('actions')"
     :action-order="content.actions.order"
     :action-visibility="content.actions.visibility"
+    :background-color="headerBackgroundColor"
+    :icon-color="iconColor"
   />
   <LanguageSelector />
   <UiModal
@@ -309,7 +315,7 @@ import {
   SfListItem,
   SfModal,
   SfIconFavorite,
-  SfIconMenu,
+  // SfIconMenu,
   useDisclosure,
 } from '@storefront-ui/vue';
 import { onClickOutside } from '@vueuse/core';
@@ -348,8 +354,8 @@ const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisc
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
-const { open: openMegaMenu, activeNode } = useMegaMenu();
-const { setDrawerOpen } = useDrawerState();
+// const { open: openMegaMenu, activeNode } = useMegaMenu();
+// const { setDrawerOpen } = useDrawerState();
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -383,11 +389,11 @@ onClickOutside(iconSearchContainerRef, () => {
   }
 });
 
-const openMenu = (menuType: number[]) => {
-  activeNode.value = menuType;
-  openMegaMenu();
-  setDrawerOpen(true);
-};
+// const openMenu = (menuType: number[]) => {
+//   activeNode.value = menuType;
+//   openMegaMenu();
+//   setDrawerOpen(true);
+// };
 
 const navigateAfterAuth = (reload: boolean) => {
   if (reload) {

@@ -5,9 +5,10 @@
       :key="id"
       variant="tertiary"
       :class="[
-        '!p-1 !pt-3 flex flex-col h-full w-full rounded-none bg-primary-500 text-white hover:text-white hover:bg-primary-800 active:text-white active:bg-primary-700 !text-xs !font-base',
-        { 'text-white bg-primary-700': route.path === link },
+        '!p-1 !pt-3 flex flex-col h-full w-full rounded-none !text-xs !font-base',
+        { 'opacity-90': route.path === link && Boolean(link) },
       ]"
+      :style="buttonStyle"
       size="sm"
       :tag="link ? NuxtLink : undefined"
       :to="link || undefined"
@@ -20,13 +21,15 @@
             v-if="id === 'cart'"
             :content="cartItemsCount"
             :max="99"
-            class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+            :style="badgeStyle"
+            class="translate-x-[5px] translate-y-[-3px] outline flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
           />
           <SfBadge
             v-if="id === 'wishlist'"
             :content="wishlistItemIds.length"
             :max="99"
-            class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+            :style="badgeStyle"
+            class="translate-x-[5px] translate-y-[-3px] outline flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
             data-testid="wishlist-badge"
           />
         </div>
@@ -54,10 +57,14 @@ const props = withDefaults(
   defineProps<{
     actionOrder?: ActionType[];
     actionVisibility?: Partial<Record<ActionType, boolean>>;
+    backgroundColor?: string;
+    iconColor?: string;
   }>(),
   {
     actionOrder: () => ['language', 'wishlist', 'cart', 'account'],
     actionVisibility: () => ({ language: true, wishlist: true, cart: true, account: true }),
+    backgroundColor: '#0f4c81',
+    iconColor: '#ffffff',
   },
 );
 
@@ -115,6 +122,17 @@ const orderedActionItems = computed<NavbarItem[]>(() => {
 });
 
 const items = computed<NavbarItem[]>(() => [...fixedItems.value, ...orderedActionItems.value]);
+
+const buttonStyle = computed(() => ({
+  backgroundColor: props.backgroundColor,
+  color: props.iconColor,
+}));
+
+const badgeStyle = computed(() => ({
+  backgroundColor: props.iconColor,
+  color: props.backgroundColor,
+  outlineColor: props.backgroundColor,
+}));
 
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const NuxtLink = resolveComponent('NuxtLink');
