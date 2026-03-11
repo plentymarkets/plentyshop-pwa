@@ -87,7 +87,6 @@ import type { TableOfContentsItemContentProps } from './types';
 const props = defineProps<TableOfContentsItemContentProps>();
 
 const { deleteBlock } = useBlockManager();
-const { isFooterBlock } = useBlockTemplates();
 const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
 
 const isVisible = computed(() => isBlockVisible(props.block));

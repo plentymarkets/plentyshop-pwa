@@ -71,7 +71,6 @@ const draggableData = computed({
 });
 
 const enforceFooterAtBottom = () => {
-  const { isFooterBlock } = useBlockTemplates();
   const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {

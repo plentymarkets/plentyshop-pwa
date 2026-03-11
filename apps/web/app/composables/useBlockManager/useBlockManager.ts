@@ -37,7 +37,6 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { isFooterBlock, isHeaderContainerBlock } = useBlockTemplates();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);

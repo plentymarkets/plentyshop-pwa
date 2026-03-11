@@ -3,9 +3,14 @@
  */
 export default defineNuxtPlugin({
   name: 'global-blocks',
-  parallel: false,
+  parallel: true,
   async setup() {
-    const { fetchHeaderContainerBlock, fetchFooterBlock } = useBlockTemplates();
+    const nuxtApp = useNuxtApp();
+    const { fetchHeaderContainerBlock, fetchFooterBlock } = useBlockTemplates(
+      'index',
+      'immutable',
+      nuxtApp.$i18n.locale.value,
+    );
 
     try {
       await Promise.all([fetchHeaderContainerBlock(), fetchFooterBlock()]);

@@ -123,7 +123,6 @@ const {
   getBlockDepth,
   showBottomAddInGrid,
 } = useBlockManager();
-const { isFooterBlock, isHeaderBlock } = useBlockTemplates();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const shouldShowBottomAddInGrid = computed(() =>

@@ -15,8 +15,8 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const { closeDrawer } = useSiteConfiguration();
   const route = useRoute();
   const { resetFooterToSaved, resetHeaderToSaved } = useBlockTemplates(
-    route.meta.identifier as string,
-    route.meta.type as string,
+    (route.meta.identifier as string) ?? 'unknown',
+    (route.meta.type as string) ?? 'unknown',
     useNuxtApp().$i18n.locale.value,
   );
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');

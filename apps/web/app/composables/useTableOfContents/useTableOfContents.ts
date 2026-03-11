@@ -11,7 +11,6 @@ export const useTableOfContents = () => {
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
   const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
-  const { isFooterBlock } = useBlockTemplates();
 
   watch(
     () => route.fullPath,

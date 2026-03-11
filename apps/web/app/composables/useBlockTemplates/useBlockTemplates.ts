@@ -115,11 +115,11 @@ const createDefaultFooterContent = (): FooterContent => {
   };
 };
 
-const isFooterBlock = (block: Block | null | undefined): block is FooterBlock => {
+export const isFooterBlock = (block: Block | null | undefined): block is FooterBlock => {
   return block?.name === FOOTER_BLOCK_NAME;
 };
 
-const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock => {
+export const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock => {
   return block?.name === HEADER_BLOCK_NAME;
 };
 
