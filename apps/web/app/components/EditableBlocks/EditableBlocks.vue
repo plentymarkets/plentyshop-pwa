@@ -16,7 +16,7 @@
     >
       <template #item="{ element: block, index }">
         <div>
-          <UiBlockPlaceholder v-if="displayPlaceholder(block.meta.uuid, 'top')" />
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
           <component
             :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
             v-if="shouldShowBlock(block, enabledActions)"
@@ -36,7 +36,7 @@
               @click="tabletEdit(index)"
             />
           </component>
-          <UiBlockPlaceholder v-if="displayPlaceholder(block.meta.uuid, 'bottom')" />
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </template>
     </draggable>
@@ -117,7 +117,7 @@ const {
   handleDragStart,
   handleDragEnd,
   getBlockDepth,
-  visiblePlaceholder,
+  shouldDisplayPlaceholder,
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
@@ -146,14 +146,6 @@ const { drawerOpen, drawerView } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
-const displayPlaceholder = (uuid: string, position: 'top' | 'bottom'): boolean => {
-  return (
-    visiblePlaceholder.value.position === position &&
-    visiblePlaceholder.value.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
 
 const enabledActions = computed(
   () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
