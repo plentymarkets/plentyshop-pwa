@@ -21,7 +21,6 @@ export interface TableOfContentsItemProps {
 }
 
 export interface InsertBlockLineProps {
-  index: number;
   block: Block;
   isTop?: boolean;
 }

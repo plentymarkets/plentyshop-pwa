@@ -357,14 +357,14 @@ export const useBlockManager = () => {
   const shouldDisplayPlaceholder = (
     uuid: string,
     position: 'top' | 'bottom',
-    drawerOpen: boolean,
-    drawerView: string,
+    drawerOpen: boolean | Ref<boolean>,
+    drawerView: string | null | Ref<string | null>,
   ): boolean => {
     return (
       visiblePlaceholder.value.position === position &&
       visiblePlaceholder.value.uuid === uuid &&
-      drawerOpen &&
-      drawerView === 'blocksList'
+      unref(drawerOpen) &&
+      unref(drawerView) === 'blocksList'
     );
   };
 

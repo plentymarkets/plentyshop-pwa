@@ -70,10 +70,13 @@ const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
 const { isDragging, shouldDisplayPlaceholder } = useBlockManager();
-const { drawerOpen, drawerView } = useSiteConfiguration();
+const { drawerOpen: drawerOpenRef, drawerView: drawerViewRef } = useSiteConfiguration();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
+
+const drawerOpen = computed(() => drawerOpenRef.value);
+const drawerView = computed(() => drawerViewRef.value);
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',

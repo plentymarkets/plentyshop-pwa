@@ -141,10 +141,12 @@ const scrollToBlock = (evt: DragEvent) => {
   }
 };
 
-const { closeDrawer } = useSiteConfiguration();
-const { drawerOpen, drawerView } = useSiteConfiguration();
+const { closeDrawer, drawerOpen: drawerOpenRef, drawerView: drawerViewRef } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
+
+const drawerOpen = computed<boolean>(() => drawerOpenRef.value);
+const drawerView = computed<string | null>(() => drawerViewRef.value);
 
 
 const enabledActions = computed(

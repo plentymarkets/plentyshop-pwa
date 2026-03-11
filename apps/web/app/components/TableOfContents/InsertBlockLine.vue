@@ -1,5 +1,11 @@
 <template>
-  <div class="relative group py-2" @mouseenter="startHoverTimer" @mouseleave="handleMouseLeave">
+  <div
+    class="relative group py-2"
+    @mouseenter="startHoverTimer"
+    @mouseleave="handleMouseLeave"
+    @focusin="handleFocusIn"
+    @focusout="handleFocusOut"
+  >
     <transition
       enter-active-class="transition-opacity duration-200"
       leave-active-class="transition-opacity duration-200"
@@ -11,9 +17,12 @@
       <div v-show="showLine" class="absolute flex items-center justify-center w-full top-[-50%]">
         <div class="absolute inset-y-1/2 left-0 right-0 border-t-2 border-editor-toc-selected" />
         <button
-          class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none transition-opacity"
+          ref="addBlockButton"
+          class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-editor-toc-selected"
           :aria-label="getEditorTranslation('add-block-label')"
           @click="handleAddBlock"
+          @keydown.space.prevent="handleAddBlock"
+          @keydown.enter="handleAddBlock"
         >
           <SfIconAdd class="w-4 h-4" />
         </button>
@@ -32,7 +41,9 @@ const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlock
 const { openDrawerWithView } = useSiteConfiguration();
 
 const showLine = ref(false);
+const addBlockButton = ref<HTMLButtonElement | null>(null);
 let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
+let isFocused = false;
 
 const startHoverTimer = () => {
   if (!hoverTimeout) {
@@ -48,6 +59,19 @@ const handleMouseLeave = () => {
     clearTimeout(hoverTimeout);
     hoverTimeout = null;
   }
+
+  if (!isFocused) {
+    showLine.value = false;
+  }
+};
+
+const handleFocusIn = () => {
+  isFocused = true;
+  showLine.value = true;
+};
+
+const handleFocusOut = () => {
+  isFocused = false;
   showLine.value = false;
 };
 

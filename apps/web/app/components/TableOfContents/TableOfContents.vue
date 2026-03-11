@@ -28,9 +28,9 @@
         >
           <template #item="{ element: block, index }">
             <div>
-              <TableOfContentsInsertBlockLine v-if="index === 0" :index="index" :block="block" is-top />
+              <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top />
               <TableOfContentsItem :item="blockToFlatBlock(block)" />
-              <TableOfContentsInsertBlockLine v-if="index < data.length - 1" :index="index" :block="block" />
+              <TableOfContentsInsertBlockLine v-if="index < data.length - 1" :block="block" />
             </div>
           </template>
         </draggable>
