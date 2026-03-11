@@ -281,18 +281,18 @@ onBeforeUnmount(() => {
 });
 
 watch(
-    selectedLocales,
-    (newLocales) => {
-      keys.value.forEach((keyEntry) => {
-        newLocales.forEach((locale) => {
-          if (!keyEntry.translations[locale]) {
-            keyEntry.translations[locale] = { input: '', value: '', default: '', isDeployed: false };
-          }
-        });
+  selectedLocales,
+  (newLocales) => {
+    keys.value.forEach((keyEntry) => {
+      newLocales.forEach((locale) => {
+        if (!keyEntry.translations[locale]) {
+          keyEntry.translations[locale] = { input: '', value: '', default: '', isDeployed: false };
+        }
       });
-      filterKeys(searchTerm.value, newLocales, showMissingOnly.value);
-    },
-    { deep: true },
+    });
+    filterKeys(searchTerm.value, newLocales, showMissingOnly.value);
+  },
+  { deep: true },
 );
 </script>
 
