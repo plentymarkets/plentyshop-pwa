@@ -61,8 +61,16 @@
         :aria-label="isVisible ? getEditorTranslation('hide-block-label') : getEditorTranslation('show-block-label')"
         @click.stop="handleToggleVisibility"
       >
-        <SfIconVisibility v-if="isVisible" class="!w-5 !h-5 text-neutral-600 group-hover:text-black" :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }" />
-        <SfIconVisibilityOff v-else class="!w-5 !h-5 text-neutral-600 group-hover:text-black" :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }" />
+        <SfIconVisibility
+          v-if="isVisible"
+          class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
+          :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
+        />
+        <SfIconVisibilityOff
+          v-else
+          class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
+          :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
+        />
       </button>
     </div>
     <div v-else class="flex items-center gap-1 shrink-0 h-[30px]" />
