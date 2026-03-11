@@ -202,21 +202,21 @@ onNuxtReady(() => {
   if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 
-  const showOutline = computed(() => {
-    return (
-      clientPreview.value &&
-      props.enableActions &&
-      props.isClicked &&
-      props.isTablet &&
-      props.clickedBlockIndex === props.index
-    );
-  });
+const showOutline = computed(() => {
+  return (
+    clientPreview.value &&
+    props.enableActions &&
+    props.isClicked &&
+    props.isTablet &&
+    props.clickedBlockIndex === props.index
+  );
+});
 
-  const addNewBlock = (block: Block, position: BlockPosition) => {
-    togglePlaceholder(block.meta.uuid, position);
-    openDrawerWithView('blocksList');
-    multigridColumnUuid.value = null;
-  };
+const addNewBlock = (block: Block, position: BlockPosition) => {
+  togglePlaceholder(block.meta.uuid, position);
+  openDrawerWithView('blocksList');
+  multigridColumnUuid.value = null;
+};
 
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 

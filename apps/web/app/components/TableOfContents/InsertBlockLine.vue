@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="relative group py-2"
-    @mouseenter="startHoverTimer"
-    @mouseleave="handleMouseLeave"
-  >
+  <div class="relative group py-2" @mouseenter="startHoverTimer" @mouseleave="handleMouseLeave">
     <transition
       enter-active-class="transition-opacity duration-200"
       leave-active-class="transition-opacity duration-200"
@@ -86,6 +82,3 @@ onUnmounted(() => {
   }
 }
 </i18n>
-
-
-

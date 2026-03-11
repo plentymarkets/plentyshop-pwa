@@ -84,11 +84,15 @@ const data = computed({
   },
 });
 
-watch(() => props.blocks, (newBlocks) => {
-  if (newBlocks && newBlocks.length > 0) {
-    localBlocks.value = JSON.parse(JSON.stringify(newBlocks));
-  }
-}, { deep: true });
+watch(
+  () => props.blocks,
+  (newBlocks) => {
+    if (newBlocks && newBlocks.length > 0) {
+      localBlocks.value = JSON.parse(JSON.stringify(newBlocks));
+    }
+  },
+  { deep: true },
+);
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
