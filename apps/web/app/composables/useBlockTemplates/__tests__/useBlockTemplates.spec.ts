@@ -430,7 +430,7 @@ describe('useBlockTemplates', () => {
   });
 
   describe('setupBlocks', () => {
-    it('should build [HeaderContainer, ...blocks, Footer] structure in state', () => {
+    it('should wrap content blocks with HeaderContainer first and Footer last', () => {
       useBlockTemplates().setupBlocks(mockBlocks);
 
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
@@ -441,7 +441,7 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.cleanData).toBeDefined();
     });
 
-    it('should build [HeaderContainer, Footer] structure when no blocks provided', () => {
+    it('should produce only HeaderContainer and Footer when no content blocks are given', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate([]);
       setupBlocks([]);
@@ -451,7 +451,7 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[1]?.name).toBe('Footer');
     });
 
-    it('should build [HeaderContainer, ...defaultTemplate, Footer] when server returns no content blocks', () => {
+    it('should fall back to the default template when server returns no content blocks', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate(mockBlocks);
       setupBlocks([]);
@@ -463,7 +463,7 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[3]?.name).toBe('Footer');
     });
 
-    it('should build [HeaderContainer, ...blocks, Footer(default)] ignoring footer in fetched blocks when cache is empty', () => {
+    it('should replace fetched footer with the default footer when footer cache is empty', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooter = [...mockBlocks, mockFooterBlock];
       useBlockTemplates().setupBlocks(blocksWithFooter);
@@ -482,7 +482,7 @@ describe('useBlockTemplates', () => {
       expect(mockFooterCacheRef.value).toBeNull();
     });
 
-    it('should build [HeaderContainer, ...blocks, cachedFooter] prioritizing cached footer over footer in fetchedBlocks', () => {
+    it('should use the cached footer instead of the footer from fetched blocks', () => {
       const cachedFooter: FooterBlock = {
         ...mockFooterBlock,
         meta: { uuid: 'cached-uuid', isGlobalTemplate: true },
@@ -508,7 +508,7 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[3]).toEqual(cachedFooter);
     });
 
-    it('should build [HeaderContainer, ...blocks, Footer(default)] normalizing footer to last position regardless of input order', () => {
+    it('should always place the footer last regardless of its position in the input blocks', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
       useBlockTemplates().setupBlocks(blocksWithFooterFirst);
