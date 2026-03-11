@@ -51,6 +51,7 @@
       <component :is="getBlockComponent" v-if="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
+            v-if="shouldShowBlock(slotProps.contentBlock, enableActions)"
             :index="index"
             :block="slotProps.contentBlock"
             :root="false"
@@ -123,6 +124,7 @@ const {
   showBottomAddInGrid,
 } = useBlockManager();
 const { isFooterBlock, isHeaderBlock } = useBlockTemplates();
+const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
