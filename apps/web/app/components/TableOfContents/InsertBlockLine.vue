@@ -6,28 +6,23 @@
     @focusin="handleFocusIn"
     @focusout="handleFocusOut"
   >
-    <transition
-      enter-active-class="transition-opacity duration-200"
-      leave-active-class="transition-opacity duration-200"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div v-show="showLine" class="absolute flex items-center justify-center w-full top-[-50%]">
-        <div class="absolute inset-y-1/2 left-0 right-0 border-t-2 border-editor-toc-selected" />
-        <button
-          ref="addBlockButton"
-          class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-editor-toc-selected"
-          :aria-label="getEditorTranslation('add-block-label')"
-          @click="handleAddBlock"
-          @keydown.space.prevent="handleAddBlock"
-          @keydown.enter="handleAddBlock"
-        >
-          <SfIconAdd class="w-4 h-4" />
-        </button>
-      </div>
-    </transition>
+    <div class="absolute flex items-center justify-center w-full top-[-50%]">
+      <div
+        class="absolute inset-y-1/2 left-0 right-0 border-t-2 transition-opacity duration-200"
+        :class="showLine ? 'border-editor-toc-selected opacity-100' : 'border-transparent opacity-0'"
+      />
+      <button
+        ref="addBlockButton"
+        class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-editor-toc-selected"
+        :class="showLine ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+        :aria-label="getEditorTranslation('add-block-label')"
+        @click="handleAddBlock"
+        @keydown.space.prevent="handleAddBlock"
+        @keydown.enter="handleAddBlock"
+      >
+        <SfIconAdd class="w-4 h-4" />
+      </button>
+    </div>
   </div>
 </template>
 
