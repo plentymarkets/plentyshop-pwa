@@ -97,6 +97,13 @@ export const useBlockManager = () => {
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
     scrollIntoBlockView(newBlock);
+
+    const { enableTableOfContents } = useRuntimeConfig().public;
+    if (enableTableOfContents) {
+      const { selectedUuid } = useTableOfContents();
+      selectedUuid.value = newBlock.meta.uuid;
+      openDrawerWithView('TableOfContents');
+    }
   };
 
   const scrollIntoBlockView = (block: Block, scrollToPlaceholder: boolean = false, position?: 'top' | 'bottom') => {
