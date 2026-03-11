@@ -212,6 +212,22 @@
       </nav>
 
       <div
+        v-if="viewport.isLessThan('lg') && isSectionVisible('search')"
+        :style="{ order: getSectionFlexOrder('search') }"
+      >
+        <UiButton
+          variant="tertiary"
+          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
+          square
+          :style="{ color: iconColor }"
+          :aria-label="t('common.navigation.openSearchModal')"
+          @click="searchModalOpen"
+        >
+          <SfIconSearch />
+        </UiButton>
+      </div>
+
+      <div
         v-if="viewport.isLessThan('lg') && isSectionVisible('actions')"
         :style="{ order: getSectionFlexOrder('actions') }"
       >
@@ -221,23 +237,12 @@
           class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
           square
           data-testid="open-languageselect-button"
-          :style="{ color: iconColor }"
+          :style="{ color: iconColor, order: getActionOrder('language') }"
           :aria-label="t('common.navigation.languageSelector')"
           :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
           @click="toggleLanguageSelect()"
         >
           <SfIconLanguage />
-        </UiButton>
-        <UiButton
-          v-if="isSectionVisible('search')"
-          variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-          square
-          :style="{ color: iconColor }"
-          :aria-label="t('common.navigation.openSearchModal')"
-          @click="searchModalOpen"
-        >
-          <SfIconSearch />
         </UiButton>
       </div>
     </div>
@@ -343,8 +348,15 @@ const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgrou
 const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const { content, paddingStyles, isSectionVisible, getSectionFlexOrder, isActionVisible, getActionOrder, isFullSearchMode } =
-  useUtilityBarConfiguration(props.meta?.uuid);
+const {
+  content,
+  paddingStyles,
+  isSectionVisible,
+  getSectionFlexOrder,
+  isActionVisible,
+  getActionOrder,
+  isFullSearchMode,
+} = useUtilityBarConfiguration(props.meta?.uuid);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();
