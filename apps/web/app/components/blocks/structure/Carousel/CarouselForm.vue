@@ -177,6 +177,7 @@ import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
+const { toggleBlockVisibility } = useBlocksVisibility();
 const route = useRoute();
 const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
@@ -332,20 +333,13 @@ const deleteSlide = async (index: number) => {
 
 const toggleSlideVisibility = (index: number) => {
   const slide = slides.value[index];
-
   if (!slide) return;
 
   const updatedSlides = [...slides.value];
   const slideToUpdate = updatedSlides[index];
-
   if (!slideToUpdate) return;
 
-  if (!slideToUpdate.configuration) {
-    slideToUpdate.configuration = { visible: true };
-  }
-
-  slideToUpdate.configuration.visible = !slideToUpdate.configuration.visible;
-
+  toggleBlockVisibility(slideToUpdate);
   slides.value = updatedSlides;
 };
 
