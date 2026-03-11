@@ -88,15 +88,12 @@ const props = defineProps<TableOfContentsItemContentProps>();
 
 const { deleteBlock } = useBlockManager();
 const { isFooterBlock } = useBlockTemplates();
+const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
 
-const isVisible = computed(() => (props.block.configuration as Record<string, unknown>)?.visible !== false);
+const isVisible = computed(() => isBlockVisible(props.block));
 
 const handleToggleVisibility = () => {
-  const block = props.block as unknown as Record<string, unknown>;
-  if (!block.configuration) {
-    block.configuration = {};
-  }
-  (block.configuration as Record<string, unknown>).visible = !isVisible.value;
+  toggleBlockVisibility(props.block);
 };
 
 const handleDelete = () => {

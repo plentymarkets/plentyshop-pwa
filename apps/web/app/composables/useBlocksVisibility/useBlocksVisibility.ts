@@ -55,6 +55,30 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
   };
 
   /**
+   * Check if a block is visible
+   * @param block - The block to check
+   * @returns true if block is visible (assumes true if not explicitly set to false)
+   */
+  const isBlockVisible = (block: Block): boolean => {
+    return (block.configuration as Record<string, unknown>)?.visible !== false;
+  };
+
+  /**
+   * Toggle a block's visibility state
+   * @param block - The block to toggle visibility for
+   */
+  const toggleBlockVisibility = (block: Block): void => {
+    if (!block) return;
+
+    if (!block.configuration) {
+      block.configuration = {};
+    }
+
+    const blockConfig = block.configuration as Record<string, unknown>;
+    blockConfig.visible = !isBlockVisible(block);
+  };
+
+  /**
    * Determine if a block should be shown
    * Checks both static configuration and registered runtime state
    * @param block - The block to check
@@ -91,5 +115,7 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
     registerBlockVisibility,
     clearRegistry,
     isHydrationComplete,
+    isBlockVisible,
+    toggleBlockVisibility,
   };
 };
