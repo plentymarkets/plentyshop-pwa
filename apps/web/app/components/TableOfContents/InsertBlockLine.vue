@@ -11,7 +11,7 @@
       <div v-show="showLine" class="absolute flex items-center justify-center w-full top-[-50%]">
         <div class="absolute inset-y-1/2 left-0 right-0 border-t-2 border-editor-toc-selected" />
         <button
-          class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none hover:opacity-80 transition-opacity"
+          class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none transition-opacity"
           :aria-label="getEditorTranslation('add-block-label')"
           @click="handleAddBlock"
         >
