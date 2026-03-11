@@ -77,9 +77,9 @@ const mergeWithDefaults = (incoming: Partial<UtilityBarContent> | undefined): Ut
  * Uses a UUID-scoped key so multiple instances cannot overwrite each other.
  */
 export const useUtilityBarState = (_uuid?: string) => {
-  // Keep a shared UtilityBar state so editor form and rendered block stay in sync,
-  // even if backend save responses remap block UUIDs during an active edit session.
-  const state = useState<UtilityBarContent>('utilityBarContent', () => createDefaultContent());
+  // Keep state isolated per UtilityBar instance so multiple blocks cannot overwrite each other.
+  const stateKey = _uuid ? `utilityBarContent:${_uuid}` : 'utilityBarContent';
+  const state = useState<UtilityBarContent>(stateKey, () => createDefaultContent());
 
   /** Replace state content, merging with defaults to fill any missing fields */
   const setContent = (incoming: Partial<UtilityBarContent> | undefined) => {
