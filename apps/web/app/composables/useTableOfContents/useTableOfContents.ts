@@ -1,25 +1,17 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { FlatBlock } from '~/components/TableOfContents/types';
+import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 export const useTableOfContents = () => {
   const { setIndex } = useCarousel();
   const route = useRoute();
   const { $i18n } = useNuxtApp();
   const { isStructureBlock } = useBlockManager();
-  const selectedUuid = ref('');
-  const expandedBlocks = ref(new Set<string>());
+  const selectedUuid = useState<string>('toc-selected-uuid', () => '');
+  const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
-  const data = computed(() => {
-    const identifier = route?.meta?.identifier as string;
-    const type = route.meta.type as string;
-    const locale = $i18n.locale.value;
-
-    if (identifier === undefined || !type) return [];
-
-    const { data: blockData } = useBlockTemplates(identifier, type, locale);
-
-    return blockData.value ?? [];
-  });
+  const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+  const { isFooterBlock } = useBlockTemplates();
 
   watch(
     () => route.fullPath,
@@ -29,24 +21,26 @@ export const useTableOfContents = () => {
     },
   );
 
-  const formatBlockName = (name: string): string => {
-    if (!name) return 'Unknown Block';
-    return name.replace(/([A-Z])/g, ' $1').trim();
-  };
-
   const flattenBlocks = (blocks: Block[], depth = 0): FlatBlock[] => {
     const result: FlatBlock[] = [];
     for (const block of blocks) {
       if (!block.meta?.uuid) continue;
       result.push({
         uuid: block.meta.uuid,
-        label: formatBlockName(block.name),
+        label: getBlockDisplayName(block.name),
         depth,
         block,
       });
     }
     return result;
   };
+
+  const blockToFlatBlock = (block: Block, depth = 0): FlatBlock => ({
+    uuid: block.meta.uuid,
+    label: getBlockDisplayName(block.name),
+    depth,
+    block,
+  });
 
   const flatBlocks = computed(() => (data.value.length ? flattenBlocks(data.value) : []));
 
@@ -65,7 +59,7 @@ export const useTableOfContents = () => {
         if (child.meta?.uuid) {
           children.push({
             uuid: child.meta.uuid,
-            label: formatBlockName(child.name),
+            label: getBlockDisplayName(child.name),
             depth: item.depth + 1,
             block: child,
           });
@@ -110,14 +104,35 @@ export const useTableOfContents = () => {
     openDrawerWithView('blocksSettings', block);
   };
 
+  const addBlockAtBottom = () => {
+    const { togglePlaceholder, multigridColumnUuid, scrollIntoBlockView } = useBlockManager();
+    const { openDrawerWithView } = useSiteConfiguration();
+
+    const blocks = data.value;
+    if (!blocks.length) return;
+
+    const footerIndex = blocks.findIndex((block) => isFooterBlock(block));
+    const footerBlock = footerIndex >= 0 ? blocks[footerIndex] : null;
+
+    if (footerBlock) {
+      togglePlaceholder(footerBlock.meta.uuid, 'top');
+      openDrawerWithView('blocksList');
+      multigridColumnUuid.value = null;
+      scrollIntoBlockView(footerBlock);
+    }
+  };
+
   return {
     selectedUuid,
     expandedBlocks,
+    data,
     flatBlocks,
     isStructureBlock,
     toggleBlockExpansion,
     getChildren,
     scrollToBlock,
     editBlock,
+    addBlockAtBottom,
+    blockToFlatBlock,
   };
 };
