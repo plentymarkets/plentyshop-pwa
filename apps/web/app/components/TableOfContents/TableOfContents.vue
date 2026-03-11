@@ -56,14 +56,11 @@
 import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
-import { getBlockDisplayName } from '~/utils/get-block-display-name';
 import type { Block } from '@plentymarkets/shop-api';
-import type { FlatBlock } from './types';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeDrawer } = useSiteConfiguration();
-const { data, addBlockAtBottom } = useTableOfContents();
-const { isFooterBlock } = useBlockTemplates();
+const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 
 const draggableData = computed({
@@ -74,6 +71,7 @@ const draggableData = computed({
 });
 
 const enforceFooterAtBottom = () => {
+  const { isFooterBlock } = useBlockTemplates();
   const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
@@ -97,13 +95,6 @@ const scrollToDraggedBlock = (evt: DragEvent) => {
     }
   }
 };
-
-const blockToFlatBlock = (block: Block): FlatBlock => ({
-  uuid: block.meta.uuid,
-  label: getBlockDisplayName(block.name),
-  depth: 0,
-  block,
-});
 </script>
 
 <i18n lang="json">

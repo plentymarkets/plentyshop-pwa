@@ -35,6 +35,13 @@ export const useTableOfContents = () => {
     return result;
   };
 
+  const blockToFlatBlock = (block: Block, depth = 0): FlatBlock => ({
+    uuid: block.meta.uuid,
+    label: getBlockDisplayName(block.name),
+    depth,
+    block,
+  });
+
   const flatBlocks = computed(() => (data.value.length ? flattenBlocks(data.value) : []));
 
   const toggleBlockExpansion = (uuid: string) => {
@@ -126,5 +133,6 @@ export const useTableOfContents = () => {
     scrollToBlock,
     editBlock,
     addBlockAtBottom,
+    blockToFlatBlock,
   };
 };
