@@ -24,15 +24,9 @@
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
-import type { Block } from '@plentymarkets/shop-api';
+import type { InsertBlockLineProps } from './types';
 
-interface Props {
-  index: number;
-  block: Block;
-  isTop?: boolean;
-}
-
-const props = defineProps<Props>();
+const props = defineProps<InsertBlockLineProps>();
 
 const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
 const { openDrawerWithView } = useSiteConfiguration();
