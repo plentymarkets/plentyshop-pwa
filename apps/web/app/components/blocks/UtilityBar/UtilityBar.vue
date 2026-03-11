@@ -238,6 +238,11 @@
       </div>
     </div>
   </header>
+  <UiNavbarBottom
+    v-if="viewport.isLessThan('lg') && isSectionVisible('actions')"
+    :action-order="content.actions.order"
+    :action-visibility="content.actions.visibility"
+  />
   <LanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
@@ -332,14 +337,8 @@ const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgrou
 const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const {
-  paddingStyles,
-  isSectionVisible,
-  getSectionFlexOrder,
-  isActionVisible,
-  getActionOrder,
-  isFullSearchMode,
-} = useUtilityBarConfiguration(props.meta?.uuid);
+const { content, paddingStyles, isSectionVisible, getSectionFlexOrder, isActionVisible, getActionOrder, isFullSearchMode } =
+  useUtilityBarConfiguration(props.meta?.uuid);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();
@@ -397,7 +396,6 @@ const navigateAfterAuth = (reload: boolean) => {
     closeAuthentication();
   }
 };
-
 
 watch(
   () => cart.value?.items,
