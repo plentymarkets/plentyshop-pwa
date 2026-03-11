@@ -474,6 +474,36 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
+  const syncHeaderCacheAfterSave = (content: string) => {
+    if (!content.includes(`"name":"${HEADER_CONTAINER_BLOCK_NAME}"`)) return;
+    try {
+      const parsed: Block[] = JSON.parse(content);
+      const headerBlock = parsed.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
+      if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
+        updateHeaderContainerCache(headerBlock);
+      } else {
+        clearHeaderContainerCache();
+      }
+    } catch {
+      clearHeaderContainerCache();
+    }
+  };
+
+  const syncFooterCacheAfterSave = async (content: string) => {
+    if (!content.includes(`"name":"${FOOTER_BLOCK_NAME}"`)) return;
+    const footerSettings = extractFooterContentFromBlocks(content);
+    if (footerSettings) {
+      updateFooterCache(createFooterBlock(footerSettings));
+    } else {
+      clearFooterCache();
+      try {
+        await fetchFooterBlock();
+      } catch (error) {
+        console.warn('Failed to refresh footer block after save:', error);
+      }
+    }
+  };
+
   /** Saves blocks to the server and updates footer/header caches if those blocks are included */
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
@@ -485,38 +515,10 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         blocks: content,
       });
 
-      const data = response?.data ?? state.value.data;
+      setupBlocks(response?.data ?? state.value.data);
+      syncHeaderCacheAfterSave(content);
+      await syncFooterCacheAfterSave(content);
 
-      setupBlocks(data);
-
-      if (typeof content === 'string' && content.includes(`"name":"${HEADER_CONTAINER_BLOCK_NAME}"`)) {
-        try {
-          const parsed: Block[] = JSON.parse(content);
-          const headerBlock = parsed.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
-          if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
-            updateHeaderContainerCache(headerBlock);
-          } else {
-            clearHeaderContainerCache();
-          }
-        } catch {
-          clearHeaderContainerCache();
-        }
-      }
-
-      if (typeof content === 'string' && content.includes(`"name":"${FOOTER_BLOCK_NAME}"`)) {
-        const footerSettings = extractFooterContentFromBlocks(content);
-        if (footerSettings) {
-          const footerBlock = createFooterBlock(footerSettings);
-          updateFooterCache(footerBlock);
-        } else {
-          clearFooterCache();
-          try {
-            await fetchFooterBlock();
-          } catch (error) {
-            console.warn('Failed to refresh footer block after save:', error);
-          }
-        }
-      }
       return true;
     } catch (error) {
       useHandleError(error as ApiError);
