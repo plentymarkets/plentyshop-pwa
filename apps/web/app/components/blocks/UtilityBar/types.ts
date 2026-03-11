@@ -44,10 +44,16 @@ export type SectionOrderSettings = {
   sections: SectionType[];
 };
 
+export type UtilityBarColor = {
+  iconColor: string;
+  backgroundColor: string;
+}
+
 export type UtilityBarContent = {
   layout: SpacingSettings;
   sectionOrder: SectionOrderSettings;
   sectionVisibility?: Record<SectionType, boolean>;
+  color: UtilityBarColor;
   logo: LogoSettings;
   search: SearchSettings;
   actions: ActionsSettings;

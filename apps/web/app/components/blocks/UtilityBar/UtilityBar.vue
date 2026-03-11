@@ -342,11 +342,6 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
-const { getSetting: getIconColor } = useSiteSettings('iconColor');
-const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
-
-const iconColor = computed(() => getIconColor());
-const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const {
   content,
@@ -357,6 +352,9 @@ const {
   getActionOrder,
   isFullSearchMode,
 } = useUtilityBarConfiguration(props.meta?.uuid);
+
+const iconColor = computed(() => content.value?.color?.iconColor || '');
+const headerBackgroundColor = computed(() => content.value?.color?.backgroundColor || '');
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();

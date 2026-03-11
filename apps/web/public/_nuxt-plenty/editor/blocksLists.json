@@ -29,9 +29,11 @@
                 "search": true,
                 "actions": true
               },
-              "logo": {
-                "logo": ""
+              "color": {
+                "iconColor": "#000000",
+                "backgroundColor": "#FFFFFF"
               },
+
               "search": {
                 "displayMode": "full"
               },
@@ -65,9 +67,11 @@
                 "search": true,
                 "actions": true
               },
-              "logo": {
-                "logo": ""
+              "color": {
+                "iconColor": "#000000",
+                "backgroundColor": "#FFFFFF"
               },
+
               "search": {
                 "displayMode": "full"
               },

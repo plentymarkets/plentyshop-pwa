@@ -105,9 +105,6 @@ const isOpen = defineModel<boolean>('open', { default: true });
 
 const { content } = useUtilityBarState(props.uuid);
 
-const { updateSetting, getSetting } = useSiteSettings('headerBackgroundColor');
-const { getSetting: getIconColor, updateSetting: updateIconColor } = useSiteSettings('iconColor');
-
 const updateHeaderBackgroundColor = (hexColor: string) => {
   const tailwindColors = getPaletteFromColor('header', hexColor).map((color) => ({
     ...color,
@@ -117,16 +114,31 @@ const updateHeaderBackgroundColor = (hexColor: string) => {
 };
 
 const headerBackgroundColor = computed({
-  get: () => getSetting(),
-  set: (value) => {
-    updateSetting(value);
-    updateHeaderBackgroundColor(value);
+  get: () => content.value.color?.backgroundColor ?? '',
+  set: (newColor: string) => {
+    content.value = {
+      ...content.value,
+      color: {
+        ...content.value.color,
+        backgroundColor: newColor,
+      },
+    };
+
+    updateHeaderBackgroundColor(newColor);
   },
 });
 
 const iconColor = computed({
-  get: () => getIconColor(),
-  set: (value) => updateIconColor(value),
+  get: () => content.value.color?.iconColor ?? '',
+  set: (newColor: string) => {
+    content.value = {
+      ...content.value,
+      color: {
+        ...content.value.color,
+        iconColor: newColor,
+      },
+    };
+  },
 });
 
 // const iconColor = computed({

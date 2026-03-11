@@ -20,7 +20,7 @@
 import type { DefaultLayoutProps } from '~/layouts/types';
 
 defineProps<DefaultLayoutProps>();
-// const viewport = useViewport();
+// const viewport = useVi ewport();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 

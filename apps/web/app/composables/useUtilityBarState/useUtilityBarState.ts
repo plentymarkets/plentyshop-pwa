@@ -4,6 +4,7 @@ import type {
   UtilityBarSection,
   ActionType,
   SpacingSettings,
+  UtilityBarColor,
 } from '~/components/blocks/UtilityBar/types';
 
 const DEFAULT_LAYOUT: SpacingSettings = {
@@ -11,6 +12,11 @@ const DEFAULT_LAYOUT: SpacingSettings = {
   paddingBottom: 20,
   paddingLeft: 40,
   paddingRight: 40,
+};
+
+const DEFAULT_COLOR: UtilityBarColor = {
+  iconColor: '#fff',
+  backgroundColor: 'rgb(var(--colors-2-primary-500))',
 };
 
 const DEFAULT_SECTION_ORDER: SectionType[] = ['logo', 'search', 'actions'];
@@ -34,6 +40,7 @@ const createDefaultContent = (): UtilityBarContent => ({
   layout: { ...DEFAULT_LAYOUT },
   sectionOrder: { sections: [...DEFAULT_SECTION_ORDER] },
   sectionVisibility: { ...DEFAULT_SECTION_VISIBILITY },
+  color: { ...DEFAULT_COLOR },
   logo: { logo: '' },
   search: { displayMode: 'full' },
   actions: {
@@ -57,6 +64,7 @@ const mergeWithDefaults = (incoming: Partial<UtilityBarContent> | undefined): Ut
     sectionVisibility: { ...defaults.sectionVisibility, ...incoming.sectionVisibility } as Record<SectionType, boolean>,
     logo: incoming.logo || defaults.logo,
     search: { ...defaults.search, ...incoming.search },
+    color: { ...defaults.color, ...incoming.color },
     actions: {
       order: incoming.actions?.order?.length ? [...incoming.actions.order] : [...defaults.actions.order],
       visibility: { ...defaults.actions.visibility, ...incoming.actions?.visibility },
@@ -180,4 +188,3 @@ export const useUtilityBarState = (_uuid?: string) => {
     isFullSearchMode,
   };
 };
-
