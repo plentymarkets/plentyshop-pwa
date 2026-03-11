@@ -11,8 +11,32 @@
     <option value="h1">H1</option>
     <option value="h2">H2</option>
     <option value="h3">H3</option>
+    <option value="h4">H4</option>
+    <option value="h5">H5</option>
+    <option value="h6">H6</option>
   </select>
-
+  <select
+    class="h-8 pl-2 rounded bg-transparent hover:bg-gray-100 text-sm cursor-pointer font-bold"
+    :value="currentFontSize || '1rem'"
+    data-testid="rte-font-size"
+    @mousedown.stop
+    @click.stop
+    @change="onTextSizeChange(($event.target as HTMLSelectElement).value)"
+  >
+    <option value="0.5rem">8px</option>
+    <option value="0.625rem">10px</option>
+    <option value="0.75rem">12px</option>
+    <option value="0.875rem">14px</option>
+    <option value="1rem">16px (Default)</option>
+    <option value="1.125rem">18px</option>
+    <option value="1.25rem">20px</option>
+    <option value="1.5rem">24px</option>
+    <option value="1.875rem">30px</option>
+    <option value="2.25rem">36px</option>
+    <option value="3rem">48px</option>
+    <option value="3.75rem">60px</option>
+    <option value="4.5rem">72px</option>
+  </select>
   <EditorRichTextEditorMenuButton :active="isActive('bold')" icon-name="bold" @click="cmd('toggleBold')" />
   <EditorRichTextEditorMenuButton :active="isActive('italic')" icon-name="italic" @click="cmd('toggleItalic')" />
   <EditorRichTextEditorMenuButton
@@ -56,6 +80,8 @@ defineProps<{
   isActive: (name: string) => boolean;
   currentBlockType: RteBlockType;
   onFontSizeChange: (value: string) => void;
+  currentFontSize: string; // e.g. "1rem" or ""
+  onTextSizeChange: (value: string) => void;
   textColor: string;
   setFontColor: (color: string) => void;
   toggleLink: () => void;
