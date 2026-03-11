@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue';
+import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();
@@ -91,31 +92,14 @@ const getComponent = (name: string) => {
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
-const blockTypeNames: Record<string, string> = {
-  Carousel: 'Carousel',
-  NewsletterSubscribe: 'Newsletter',
-  ProductRecommendedProducts: 'Product Gallery',
-  TextCard: 'Rich Text',
-  AnnouncementBar: 'Announcement Bar',
-  CustomerReview: 'Customer reviews',
-  ProductLegalInformation: 'Legal Information',
-  MultiGrid: 'Layout',
-  Footer: 'Footer',
-  ItemText: 'Item Details',
-  CategoryData: 'Category Data',
-  TechnicalData: 'Technical Data',
-  ItemData: 'Item Data',
-  Banner: 'Image Banner',
-};
-
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
     const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
     const firstChild = (block?.content as Array<{ name: string }>)?.[0];
     if (firstChild?.name) {
-      return blockTypeNames[firstChild.name] ?? firstChild.name;
+      return getBlockDisplayName(firstChild.name);
     }
   }
-  return blockTypeNames[blockType.value] ?? blockType.value;
+  return getBlockDisplayName(blockType.value);
 });
 </script>

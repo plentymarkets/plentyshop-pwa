@@ -102,7 +102,7 @@ export const useBlockManager = () => {
   const scrollIntoBlockView = (block: Block) => {
     setTimeout(() => {
       const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
-      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   };
 
@@ -345,6 +345,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastNonFooterBlock,
     addNewBlock,
+    scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,

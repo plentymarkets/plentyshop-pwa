@@ -16,29 +16,85 @@
         {{ getEditorTranslation('description') }}
       </p>
 
-      <ul v-if="flatBlocks.length" class="mt-2 mb-4">
-        <TableOfContentsItem
-          v-for="(item, index) in flatBlocks"
-          :key="item.uuid"
-          :item="item"
-          :test-id="`blocks-overview-item-${index}`"
-          :delete-test-id="`blocks-overview-delete-${index}`"
-        />
-      </ul>
+      <div class="px-2">
+        <draggable
+          v-if="data.length"
+          v-model="draggableData"
+          item-key="meta.uuid"
+          handle=".toc-drag-handle"
+          tag="ul"
+          class="mt-2 mb-4"
+          @change="handleDragChange"
+        >
+          <template #item="{ element: block }">
+            <div>
+              <TableOfContentsItem :item="blockToFlatBlock(block)" />
+            </div>
+          </template>
+        </draggable>
 
-      <div v-else class="mx-4 mt-8 text-center text-sm text-neutral-400">
-        {{ getEditorTranslation('empty') }}
+        <div v-else class="mx-2 mt-8 text-center text-sm text-neutral-400">
+          {{ getEditorTranslation('empty') }}
+        </div>
+
+        <div v-if="data.length" class="px-2 mb-4">
+          <button
+            class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
+            data-testid="toc-add-block"
+            @click="addBlockAtBottom"
+          >
+            <SfIconAdd />
+            {{ getEditorTranslation('add-element-label') }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
+import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
+import type { Block } from '@plentymarkets/shop-api';
+import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeDrawer } = useSiteConfiguration();
-const { flatBlocks } = useTableOfContents();
+const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
+const { scrollIntoBlockView } = useBlockManager();
+
+const draggableData = computed({
+  get: () => data.value,
+  set: (newValue: Block[]) => {
+    data.value.splice(0, data.value.length, ...newValue);
+  },
+});
+
+const enforceFooterAtBottom = () => {
+  const { isFooterBlock } = useBlockTemplates();
+  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
+  const lastIndex = data.value.length - 1;
+  if (footerIndex !== -1 && footerIndex !== lastIndex) {
+    const footerBlock = data.value.splice(footerIndex, 1)[0];
+    if (footerBlock) {
+      data.value.push(footerBlock);
+    }
+  }
+};
+
+const handleDragChange = (evt: DragEvent) => {
+  enforceFooterAtBottom();
+  scrollToDraggedBlock(evt);
+};
+
+const scrollToDraggedBlock = (evt: DragEvent) => {
+  if (evt.moved && evt.moved.oldIndex !== evt.moved.newIndex) {
+    const draggedBlock = data.value[evt.moved.newIndex];
+    if (draggedBlock) {
+      scrollIntoBlockView(draggedBlock);
+    }
+  }
+};
 </script>
 
 <i18n lang="json">
@@ -46,12 +102,14 @@ const { flatBlocks } = useTableOfContents();
   "en": {
     "label": "Table of Contents",
     "description": "Click on a block to scroll to its position on the page.",
-    "empty": "No blocks found on this page."
+    "empty": "No blocks found on this page.",
+    "add-element-label": "Add element"
   },
   "de": {
     "label": "Table of Contents",
     "description": "Click on a block to scroll to its position on the page.",
-    "empty": "No blocks found on this page."
+    "empty": "No blocks found on this page.",
+    "add-element-label": "Add element"
   }
 }
 </i18n>
