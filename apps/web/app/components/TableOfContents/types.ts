@@ -25,4 +25,3 @@ export interface InsertBlockLineProps {
   block: Block;
   isTop?: boolean;
 }
-
