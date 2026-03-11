@@ -148,7 +148,6 @@ const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibil
 const drawerOpen = computed<boolean>(() => drawerOpenRef.value);
 const drawerView = computed<string | null>(() => drawerViewRef.value);
 
-
 const enabledActions = computed(
   () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
