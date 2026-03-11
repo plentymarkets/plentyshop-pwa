@@ -13,10 +13,6 @@ const { getHeaderContainerBlock, fetchHeaderContainerBlock } = useBlockTemplates
 
 const headerBlock = computed(() => getHeaderContainerBlock());
 
-onMounted(async () => {
-  await fetchHeaderContainerBlock();
-});
-
 watch(
   () => nuxtApp.$i18n.locale.value,
   async () => {
