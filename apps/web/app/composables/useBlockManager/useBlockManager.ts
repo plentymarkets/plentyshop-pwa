@@ -99,10 +99,31 @@ export const useBlockManager = () => {
     scrollIntoBlockView(newBlock);
   };
 
-  const scrollIntoBlockView = (block: Block) => {
+  const scrollIntoBlockView = (block: Block, scrollToPlaceholder: boolean = false, position?: 'top' | 'bottom') => {
     setTimeout(() => {
-      const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      let el: Element | null = null;
+
+      if (scrollToPlaceholder && position) {
+        const blockEl = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+        if (blockEl) {
+          const parentWrapper = blockEl.closest('div');
+          if (parentWrapper) {
+            const placeholder = parentWrapper.querySelector('[data-testid="block-placeholder"]');
+            if (placeholder) {
+              el = placeholder;
+            }
+          }
+        }
+        if (!el) {
+          el = document.querySelector('[data-testid="block-placeholder"]');
+        }
+      } else {
+        el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+      }
+
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }, 100);
   };
 

@@ -1,6 +1,5 @@
 <template>
   <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full">
-    <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
@@ -96,7 +95,6 @@
         </button>
       </ClientOnly>
     </div>
-    <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
   </div>
 </template>
 
@@ -113,12 +111,11 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
-const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
-  visiblePlaceholder,
-  togglePlaceholder,
   isDragging,
+  togglePlaceholder,
   multigridColumnUuid,
   lazyLoadStates,
   lazyLoadRefs,
@@ -205,43 +202,21 @@ onNuxtReady(() => {
   if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 
-const showOutline = computed(() => {
-  return (
-    clientPreview.value &&
-    props.enableActions &&
-    props.isClicked &&
-    props.isTablet &&
-    props.clickedBlockIndex === props.index
-  );
-});
+  const showOutline = computed(() => {
+    return (
+      clientPreview.value &&
+      props.enableActions &&
+      props.isClicked &&
+      props.isTablet &&
+      props.clickedBlockIndex === props.index
+    );
+  });
 
-const displayTopPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'top' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
-const displayBottomPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'bottom' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
-const addNewBlock = (block: Block, position: BlockPosition) => {
-  togglePlaceholder(block.meta.uuid, position);
-  openDrawerWithView('blocksList');
-  multigridColumnUuid.value = null;
-};
+  const addNewBlock = (block: Block, position: BlockPosition) => {
+    togglePlaceholder(block.meta.uuid, position);
+    openDrawerWithView('blocksList');
+    multigridColumnUuid.value = null;
+  };
 
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 

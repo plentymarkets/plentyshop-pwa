@@ -66,7 +66,7 @@ const handleAddBlock = () => {
   togglePlaceholder(props.block.meta.uuid, position);
   openDrawerWithView('blocksList');
   multigridColumnUuid.value = null;
-  scrollIntoBlockView(props.block);
+  scrollIntoBlockView(props.block, true, position);
 };
 
 onUnmounted(() => {

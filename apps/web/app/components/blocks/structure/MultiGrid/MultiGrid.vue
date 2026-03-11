@@ -15,6 +15,7 @@
         @mouseenter="onRowEnter(row)"
         @mouseleave="onRowLeave"
       >
+        <UiBlockPlaceholder v-if="displayPlaceholder(row.meta.uuid, 'top')" />
         <ClientOnly>
           <template v-if="showOverlay(row)">
             <div
@@ -45,6 +46,7 @@
           :column-length="column.length"
           :is-row-hovered="showOverlay(row) && isRowHovered(row)"
         />
+        <UiBlockPlaceholder v-if="displayPlaceholder(row.meta.uuid, 'bottom')" />
       </div>
     </div>
   </div>
@@ -67,7 +69,8 @@ const onRowLeave = () => {
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
-const { isDragging } = useBlockManager();
+const { isDragging, visiblePlaceholder } = useBlockManager();
+const { drawerOpen, drawerView } = useSiteConfiguration();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
@@ -168,4 +171,13 @@ const columns = computed<Block[][]>(() => {
   });
   return blocks.value;
 });
+
+const displayPlaceholder = (uuid: string, position: 'top' | 'bottom'): boolean => {
+  return (
+    visiblePlaceholder.value.position === position &&
+    visiblePlaceholder.value.uuid === uuid &&
+    drawerOpen.value &&
+    drawerView.value === 'blocksList'
+  );
+};
 </script>

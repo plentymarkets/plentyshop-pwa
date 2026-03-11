@@ -15,25 +15,29 @@
       @end="handleDragEnd"
     >
       <template #item="{ element: block, index }">
-        <component
-          :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
-          v-if="shouldShowBlock(block, enabledActions)"
-        >
-          <PageBlock
-            :index="index"
-            :block="block"
-            :enable-actions="enabledActions"
-            :is-clicked="isClicked"
-            :clicked-block-index="clickedBlockIndex"
-            :is-tablet="isTablet"
-            :change-block-position="changeBlockPosition"
-            :root="getBlockDepth(block.meta.uuid) === 0"
-            class="group"
-            :class="getBlockClass(block).value"
-            data-testid="block-wrapper"
-            @click="tabletEdit(index)"
-          />
-        </component>
+        <div>
+          <UiBlockPlaceholder v-if="displayPlaceholder(block.meta.uuid, 'top')" />
+          <component
+            :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+            v-if="shouldShowBlock(block, enabledActions)"
+          >
+            <PageBlock
+              :index="index"
+              :block="block"
+              :enable-actions="enabledActions"
+              :is-clicked="isClicked"
+              :clicked-block-index="clickedBlockIndex"
+              :is-tablet="isTablet"
+              :change-block-position="changeBlockPosition"
+              :root="getBlockDepth(block.meta.uuid) === 0"
+              class="group"
+              :class="getBlockClass(block).value"
+              data-testid="block-wrapper"
+              @click="tabletEdit(index)"
+            />
+          </component>
+          <UiBlockPlaceholder v-if="displayPlaceholder(block.meta.uuid, 'bottom')" />
+        </div>
       </template>
     </draggable>
   </div>
@@ -41,6 +45,7 @@
 
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
+import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
@@ -61,7 +66,29 @@ const {
   isFooterBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
-const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
+const localBlocks = ref<Block[]>(props.blocks ? JSON.parse(JSON.stringify(props.blocks)) : []);
+
+const data = computed({
+  get: () => {
+    if (props.blocks && props.blocks.length > 0) {
+      return localBlocks.value;
+    }
+    return templateData.value;
+  },
+  set: (newValue) => {
+    if (props.blocks && props.blocks.length > 0) {
+      localBlocks.value.splice(0, localBlocks.value.length, ...newValue);
+    } else {
+      templateData.value.splice(0, templateData.value.length, ...newValue);
+    }
+  },
+});
+
+watch(() => props.blocks, (newBlocks) => {
+  if (newBlocks && newBlocks.length > 0) {
+    localBlocks.value = JSON.parse(JSON.stringify(newBlocks));
+  }
+}, { deep: true });
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
@@ -86,10 +113,11 @@ const {
   handleDragStart,
   handleDragEnd,
   getBlockDepth,
+  visiblePlaceholder,
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
+  const footerIndex = data.value.findIndex((block: Block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = data.value.splice(footerIndex, 1)[0];
@@ -110,8 +138,18 @@ const scrollToBlock = (evt: DragEvent) => {
 };
 
 const { closeDrawer } = useSiteConfiguration();
+const { drawerOpen, drawerView } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
+
+const displayPlaceholder = (uuid: string, position: 'top' | 'bottom'): boolean => {
+  return (
+    visiblePlaceholder.value.position === position &&
+    visiblePlaceholder.value.uuid === uuid &&
+    drawerOpen.value &&
+    drawerView.value === 'blocksList'
+  );
+};
 
 const enabledActions = computed(
   () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
