@@ -302,8 +302,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     });
   };
 
-  const fetchHeaderContainerBlock = async (): Promise<HeaderContainerBlock> => {
-    if (headerContainerCache.value) return headerContainerCache.value;
+  const fetchHeaderContainerBlock = async (force = false): Promise<HeaderContainerBlock> => {
+    if (!force && headerContainerCache.value) return headerContainerCache.value;
 
     return callWithNuxt(nuxtApp, async () => {
       try {

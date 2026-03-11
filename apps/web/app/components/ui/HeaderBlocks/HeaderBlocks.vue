@@ -1,26 +1,26 @@
 <template>
   <!-- TODO: Create a feature flag for the editable header -->
-  <BlocksStructureHeaderContainer v-if="headerContainerCache" :block="headerContainerCache" />
+  <BlocksStructureHeaderContainer :block="headerBlock" />
 </template>
 
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
-const { headerContainerCache, clearHeaderContainerCache, fetchHeaderContainerBlock } = useBlockTemplates(
+const { getHeaderContainerBlock, fetchHeaderContainerBlock } = useBlockTemplates(
   'index',
   'immutable',
   nuxtApp.$i18n.locale.value,
 );
-const { getCategoryTree } = useCategoryTree();
+
+const headerBlock = computed(() => getHeaderContainerBlock());
 
 onMounted(async () => {
-  if (!headerContainerCache.value) await fetchHeaderContainerBlock();
+  await fetchHeaderContainerBlock();
 });
 
 watch(
   () => nuxtApp.$i18n.locale.value,
   async () => {
-    clearHeaderContainerCache();
-    await Promise.all([fetchHeaderContainerBlock(), getCategoryTree()]);
+    await fetchHeaderContainerBlock(true);
   },
 );
 </script>

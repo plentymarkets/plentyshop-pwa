@@ -34,7 +34,7 @@ export type MapFooterData = (data: Block | null) => FooterBlock;
 export type IsFooterBlock = (block: Block | null | undefined) => block is FooterBlock;
 export type IsHeaderBlock = (block: Block | null | undefined) => block is HeaderBlock;
 
-export type FetchHeaderContainerBlock = () => Promise<HeaderContainerBlock>;
+export type FetchHeaderContainerBlock = (force?: boolean) => Promise<HeaderContainerBlock>;
 export type GetHeaderContainerBlock = () => HeaderContainerBlock;
 export type CreateHeaderContainerBlock = (
   content: Block[],
