@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: Create a feature flag for the editable header -->
   <BlocksStructureHeaderContainer :block="headerBlock" />
 </template>
 
