@@ -10,7 +10,24 @@ export const useTableOfContents = () => {
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
-  const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+  const identifier = computed(() => route?.meta?.identifier as string);
+  const type = computed(() => route.meta.type as string);
+  const locale = computed(() => $i18n.locale.value);
+
+  const blockTemplates = computed(() =>
+    useBlockTemplates(identifier.value, type.value, locale.value),
+  );
+
+  const data = ref<Block[]>([]);
+
+  watch(
+    () => blockTemplates.value.data.value,
+    (newData) => {
+      data.value = newData;
+    },
+    { immediate: true, deep: false },
+  );
+
   const { isFooterBlock } = useBlockTemplates();
 
   watch(
@@ -111,7 +128,7 @@ export const useTableOfContents = () => {
     const blocks = data.value;
     if (!blocks.length) return;
 
-    const footerIndex = blocks.findIndex((block) => isFooterBlock(block));
+    const footerIndex = blocks.findIndex((block: Block) => isFooterBlock(block));
     const footerBlock = footerIndex >= 0 ? blocks[footerIndex] : null;
 
     if (footerBlock) {
