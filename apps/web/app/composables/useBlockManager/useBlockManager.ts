@@ -96,7 +96,7 @@ export const useBlockManager = () => {
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
-    scrollIntoBlockView(newBlock);
+    scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
 
     const { enableTableOfContents } = useRuntimeConfig().public;
     if (enableTableOfContents) {
@@ -106,7 +106,7 @@ export const useBlockManager = () => {
     }
   };
 
-  const scrollIntoBlockView = (block: Block, scrollToPlaceholder: boolean = false, position?: 'top' | 'bottom') => {
+  const scrollIntoBlockView = (block: Block, scrollToPlaceholder: boolean = false, position?: 'top' | 'bottom', behaviour: 'auto' | 'instant' | 'smooth' = 'smooth') => {
     setTimeout(() => {
       let el: Element | null = null;
 
@@ -129,7 +129,7 @@ export const useBlockManager = () => {
       }
 
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.scrollIntoView({ behavior: behaviour, block: 'center' });
       }
     }, 100);
   };

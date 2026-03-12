@@ -66,33 +66,14 @@ const {
   isFooterBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
-const localBlocks = ref<Block[]>(props.blocks ? JSON.parse(JSON.stringify(props.blocks)) : []);
-
 const data = computed({
-  get: () => {
-    if (props.blocks && props.blocks.length > 0) {
-      return localBlocks.value;
-    }
-    return templateData.value;
-  },
-  set: (newValue) => {
-    if (props.blocks && props.blocks.length > 0) {
-      localBlocks.value.splice(0, localBlocks.value.length, ...newValue);
-    } else {
-      templateData.value.splice(0, templateData.value.length, ...newValue);
-    }
+  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value),
+  set: (newValue: Block[]) => {
+    const target = props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value;
+    target.splice(0, target.length, ...newValue);
   },
 });
 
-watch(
-  () => props.blocks,
-  (newBlocks) => {
-    if (newBlocks && newBlocks.length > 0) {
-      localBlocks.value = JSON.parse(JSON.stringify(newBlocks));
-    }
-  },
-  { deep: true },
-);
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 

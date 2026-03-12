@@ -1,12 +1,12 @@
 <template>
   <div
-    class="relative group py-2"
+    class="relative group py-1"
     @mouseenter="startHoverTimer"
     @mouseleave="handleMouseLeave"
     @focusin="handleFocusIn"
     @focusout="handleFocusOut"
   >
-    <div class="absolute flex items-center justify-center w-full top-[-50%]">
+    <div class="absolute flex items-center justify-center w-full top-[-100%]">
       <div
         class="absolute inset-y-1/2 left-0 right-0 border-t-2 transition-opacity duration-200"
         :class="showLine ? 'border-editor-toc-selected opacity-100' : 'border-transparent opacity-0'"
