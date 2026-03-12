@@ -62,7 +62,7 @@
         <nav
           v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('actions')"
           :style="{ order: getSectionFlexOrder('actions') }"
-          class="hidden ml-4 md:flex md:flex-row md:flex-nowrap"
+          class="hidden md:flex md:flex-row md:flex-nowrap"
         >
           <template v-if="localeCodes.length > 1 && isActionVisible('language')">
             <UiButton
