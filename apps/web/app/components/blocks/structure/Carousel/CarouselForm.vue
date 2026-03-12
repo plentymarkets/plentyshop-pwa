@@ -44,7 +44,7 @@
                     class="text-sm font-medium truncate"
                     :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
                   >
-                    {{ getEditorTranslation('slide-label') }} {{ index + 1 }}
+                    {{ slideLabels[index] }}
                   </span>
                 </div>
 
@@ -176,7 +176,8 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
-const { updateCarouselItems, setIndex, activeSlideIndex, createSlide } = useCarousel();
+const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
+const { toggleBlockVisibility } = useBlocksVisibility();
 const route = useRoute();
 const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
@@ -195,6 +196,7 @@ const editingSlideIndex = ref<number | undefined>(undefined);
 const openSlideMenuIndex = ref<number | undefined>(undefined);
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
+const slideLabels = ref<string[]>([]);
 
 setIndex(blockUuid.value, 0);
 
@@ -239,12 +241,16 @@ const slides = computed({
   set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
 });
 
+const resolveSlideLabels = async () => {
+  slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
+};
+
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
   // Scroll the swiper to this slide
   setIndex(blockUuid.value, index);
-  emit('set-edit-title', `Slide ${index + 1}`);
+  emit('set-edit-title', slideLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true) => {
@@ -253,6 +259,7 @@ const exitEditMode = (shouldEmit = true) => {
   if (shouldEmit) {
     emit('clear-edit-title');
   }
+  resolveSlideLabels();
 };
 
 const toggleSlideMenu = (index: number) => {
@@ -262,6 +269,14 @@ const toggleSlideMenu = (index: number) => {
     openSlideMenuIndex.value = index;
   }
 };
+
+watch(
+  () => slides.value.map((slide) => slide.meta.uuid),
+  () => {
+    resolveSlideLabels();
+  },
+  { immediate: true },
+);
 
 // Handle click outside to close popover
 onMounted(() => {
@@ -318,20 +333,13 @@ const deleteSlide = async (index: number) => {
 
 const toggleSlideVisibility = (index: number) => {
   const slide = slides.value[index];
-
   if (!slide) return;
 
   const updatedSlides = [...slides.value];
   const slideToUpdate = updatedSlides[index];
-
   if (!slideToUpdate) return;
 
-  if (!slideToUpdate.configuration) {
-    slideToUpdate.configuration = { visible: true };
-  }
-
-  slideToUpdate.configuration.visible = !slideToUpdate.configuration.visible;
-
+  toggleBlockVisibility(slideToUpdate);
   slides.value = updatedSlides;
 };
 

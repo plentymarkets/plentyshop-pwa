@@ -6,6 +6,11 @@
 
 <script lang="ts" setup>
 import { getHomepageTemplate } from '~/utils/blockTemplates/homepage';
+import type { Locale } from '#i18n';
+
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 definePageMeta({
   pageType: 'static',

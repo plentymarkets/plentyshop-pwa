@@ -61,6 +61,7 @@ export const useProduct: UseProductReturn = (slug) => {
       data: blockData,
       setupBlocks,
       getBlocksServer,
+      isFooterBlock,
     } = useBlockTemplates(
       route?.meta?.identifier as string,
       route.meta.type as string,
@@ -73,7 +74,9 @@ export const useProduct: UseProductReturn = (slug) => {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const blocks = blockData.value?.length ? blockData.value : await useProductTemplateData($i18n.locale.value);
+
+      const hasContentBlocks = blockData.value?.some((block) => !isFooterBlock(block));
+      const blocks = hasContentBlocks ? blockData.value : await useProductTemplateData($i18n.locale.value);
 
       state.value.data = {
         blocks: blocks,
