@@ -3,8 +3,6 @@ export default {
   enableEditableHeader: process.env?.ENABLE_EDITABLE_HEADER === '1',
   /** @description Enables TipTap rich text editor in block forms */
   enableRichTextEditorV2: process.env?.ENABLE_RICH_TEXT_EDITOR_V2 === '1',
-  /** @description Enables the new URL scheme for Callisto links */
-  enableEditorItemURLScheme: process.env?.ENABLE_EDITOR_ITEM_URL_SCHEME === '1',
   /** @description Enables the Table of Contents drawer in the editor toolbar */
   enableTableOfContents: process.env?.ENABLE_TABLE_OF_CONTENTS === '1',
 };

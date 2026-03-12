@@ -19,3 +19,8 @@ export interface TableOfContentsItemContentProps {
 export interface TableOfContentsItemProps {
   item: FlatBlock;
 }
+
+export interface InsertBlockLineProps {
+  block: Block;
+  isTop?: boolean;
+}
