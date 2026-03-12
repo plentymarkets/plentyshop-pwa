@@ -7,20 +7,6 @@
         data-testid="navbar-top"
       >
         <div v-if="isSectionVisible('logo')" class="flex items-center" :style="{ order: getSectionFlexOrder('logo') }">
-          <!--
-        <UiButton
-          v-if="viewport.isLessThan('lg')"
-          variant="tertiary"
-          square
-          :aria-label="t('common.navigation.openMenu')"
-          class="mr-5 hover:!bg-header-400"
-          :style="{ color: iconColor }"
-          @click="openMenu([])"
-        >
-          <SfIconMenu aria-hidden="true" />
-        </UiButton>
-        -->
-
           <NuxtLink
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
@@ -31,7 +17,11 @@
         </div>
 
         <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
-          <div ref="iconSearchContainerRef" :style="{ order: getSectionFlexOrder('search') }" class="flex-1">
+          <div
+            ref="iconSearchContainerRef"
+            :style="{ order: getSectionFlexOrder('search') }"
+            :class="isFullSearchMode || isIconSearchExpanded ? 'flex-1' : 'flex-none'"
+          >
             <template v-if="isFullSearchMode">
               <UiSearch class="hidden md:block" />
             </template>
@@ -228,7 +218,7 @@
       <div>
         <UiButton
           variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
           square
           data-testid="open-languageselect-button"
           :style="{ color: iconColor }"
@@ -240,7 +230,7 @@
         </UiButton>
         <UiButton
           variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
           square
           :style="{ color: iconColor }"
           :aria-label="t('common.navigation.openSearchModal')"
@@ -380,8 +370,6 @@ const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisc
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
-// const { open: openMegaMenu, activeNode } = useMegaMenu();
-// const { setDrawerOpen } = useDrawerState();
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -422,12 +410,6 @@ onClickOutside(iconSearchContainerRef, () => {
     isIconSearchExpanded.value = false;
   }
 });
-
-// const openMenu = (menuType: number[]) => {
-//   activeNode.value = menuType;
-//   openMegaMenu();
-//   setDrawerOpen(true);
-// };
 
 const navigateAfterAuth = (reload: boolean) => {
   if (reload) {
