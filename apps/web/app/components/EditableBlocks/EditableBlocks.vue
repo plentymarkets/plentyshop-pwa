@@ -69,7 +69,15 @@ const {
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
 
-const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value));
+const data = computed({
+  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value),
+  set: (newValue: Block[]) => {
+    const target = props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value;
+    const header = target.find((block) => isHeaderContainerBlock(block));
+    const rebuilt = header ? [header, ...newValue] : newValue;
+    target.splice(0, target.length, ...rebuilt);
+  },
+});
 
 const getRawIndex = (block: Block) => rawData.value.indexOf(block);
 
@@ -100,12 +108,12 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block: Block) => isFooterBlock(block));
-  const lastIndex = data.value.length - 1;
+  const footerIndex = templateData.value.findIndex((block: Block) => isFooterBlock(block));
+  const lastIndex = templateData.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
-    const footerBlock = data.value.splice(footerIndex, 1)[0];
+    const footerBlock = templateData.value.splice(footerIndex, 1)[0];
     if (footerBlock) {
-      data.value.push(footerBlock);
+      templateData.value.push(footerBlock);
     }
   }
 
