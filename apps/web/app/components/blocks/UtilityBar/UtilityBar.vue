@@ -20,22 +20,22 @@
           <div
             ref="iconSearchContainerRef"
             :style="{ order: getSectionFlexOrder('search') }"
-            :class="isFullSearchMode || isIconSearchExpanded ? 'flex-1' : 'flex-none'"
+            :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? 'flex-1' : 'flex-none w-10 shrink-0'"
           >
             <template v-if="isFullSearchMode">
               <UiSearch class="hidden md:block" />
             </template>
 
             <template v-else>
-              <div class="hidden md:block relative">
+              <div class="hidden md:block relative overflow-hidden">
                 <Transition
-                  enter-active-class="transition-[transform,opacity] duration-300 ease-out"
-                  enter-from-class="opacity-0 scale-x-0"
-                  enter-to-class="opacity-100 scale-x-100"
-                  leave-active-class="transition-[transform,opacity] duration-200 ease-in absolute inset-0"
-                  leave-from-class="opacity-100 scale-x-100"
-                  leave-to-class="opacity-0 scale-x-0"
-                  @after-leave="showSearchIcon = true"
+                  enter-active-class="transition-opacity duration-120 ease-out"
+                  enter-from-class="opacity-0"
+                  enter-to-class="opacity-100"
+                  leave-active-class="transition-opacity duration-120 ease-out absolute inset-0"
+                  leave-from-class="opacity-100"
+                  leave-to-class="opacity-0"
+                  @after-leave="handleSearchAfterLeave"
                 >
                   <UiSearch
                     v-if="isIconSearchExpanded"
@@ -387,6 +387,7 @@ onNuxtReady(async () => {
 
 const isIconSearchExpanded = ref(false);
 const showSearchIcon = ref(true);
+const isSearchClosing = ref(false);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
 const searchExpandOrigin = computed(() => {
@@ -401,8 +402,14 @@ const expandIconSearch = () => {
 };
 
 const collapseIconSearch = () => {
+  isSearchClosing.value = true;
   isIconSearchExpanded.value = false;
   return true;
+};
+
+const handleSearchAfterLeave = () => {
+  showSearchIcon.value = true;
+  isSearchClosing.value = false;
 };
 
 onClickOutside(iconSearchContainerRef, () => {
@@ -456,3 +463,4 @@ const navigateToLogin = () => {
   }
 };
 </script>
+
