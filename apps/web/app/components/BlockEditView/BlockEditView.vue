@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px]" data-testid="block-edit-view">
+  <div class="site-settings-view sticky" data-testid="block-edit-view">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3 flex-1 min-w-0">
         <template v-if="customTitle">
@@ -17,7 +17,7 @@
           </button>
           <div class="w-px h-4 bg-gray-300" />
         </div>
-        <button data-testid="close-editor-button" @click="drawerOpen = false">
+        <button data-testid="close-editor-button" @click="closeRightDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -46,7 +46,7 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 
-const { drawerOpen, blockType, blockUuid } = useSiteConfiguration();
+const { closeRightDrawer, blockType, blockUuid } = useSiteConfiguration();
 const { deleteBlock } = useBlockManager();
 
 const customTitle = ref<string | null>(null);

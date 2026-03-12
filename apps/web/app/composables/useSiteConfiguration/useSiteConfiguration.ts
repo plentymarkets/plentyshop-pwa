@@ -20,6 +20,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
     drawerOpen: false,
+    drawerOpenLeft: false,
+    drawerOpenRight: false,
     pageModalOpen: false,
     settingsCategory: null,
     settingsType: null,
@@ -28,6 +30,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
     drawerView: null,
+    drawerViewLeft: null,
+    drawerViewRight: null,
     activeSetting: '',
     activeSubCategory: '',
     blockType: '',
@@ -59,17 +63,34 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockUuid = block.meta.uuid;
     }
 
-    state.value.drawerView = view;
-    state.value.drawerOpen = true;
-    state.value.activeSetting = '';
-
-    state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
+    console.log('view: ', view)
+    if (view === 'blocksSettings') {
+      state.value.drawerViewRight = view;
+      state.value.drawerOpenRight = true;
+    } else {
+      state.value.drawerViewLeft = view;
+      state.value.drawerOpenLeft = true;
+      state.value.activeSetting = '';
+    }
   };
 
   const closeDrawer = () => {
-    state.value.drawerOpen = false;
-    state.value.drawerView = null;
+    state.value.drawerOpenLeft = false;
+    state.value.drawerOpenRight = false;
+    state.value.drawerViewLeft = null;
+    state.value.drawerViewRight = null;
     state.value.activeSetting = '';
+  };
+
+  const closeLeftDrawer = () => {
+    state.value.drawerOpenLeft = false;
+    state.value.drawerViewLeft = null;
+    state.value.activeSetting = '';
+  };
+
+  const closeRightDrawer = () => {
+    state.value.drawerOpenRight = false;
+    state.value.drawerViewRight = null;
   };
 
   const updateNewBlockPosition = (position: number) => {
@@ -92,19 +113,16 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const setActiveSetting: SetActiveSetting = (setting: string) => {
     state.value.activeSubCategory = '';
     state.value.activeSetting = setting;
-    state.value.drawerOpen = true;
-    state.value.placement = 'left';
-    state.value.drawerView = null;
+    state.value.drawerOpenLeft = true;
+    state.value.drawerViewLeft = null;
   };
   if (import.meta.client) {
     const route = useRoute();
     watch(
       () => route.fullPath,
       () => {
-        if (state.value.drawerView === 'blocksSettings') {
-          state.value.drawerOpen = false;
-          state.value.drawerView = null;
-          state.value.activeSetting = '';
+        if (state.value.drawerViewRight === 'blocksSettings') {
+          closeRightDrawer();
         }
       },
     );
@@ -116,6 +134,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loadGoogleFont,
     openDrawerWithView,
     closeDrawer,
+    closeLeftDrawer,
+    closeRightDrawer,
     togglePageModal,
     setSettingsCategory,
     setActiveSubCategory,

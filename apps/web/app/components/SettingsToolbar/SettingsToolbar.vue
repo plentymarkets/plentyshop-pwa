@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="sticky top-[52px] h-[calc(100vh-150px)] bg-white z-[1] md:z-[10] lg:z-[150] mb-3 w-[54px] min-w-[54px] border-r"
+    class="sticky h-[calc(100vh-150px)] bg-white z-[1] md:z-[10] lg:z-[150] mb-3 w-[54px] min-w-[54px] border-r"
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
@@ -8,12 +8,12 @@
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
-          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'PagesView' }"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerViewLeft === 'PagesView' }"
           aria-label="Open pages drawer"
           data-testid="open-pages-drawer"
           @click="toggleDrawerView('PagesView')"
         >
-          <NuxtImg v-if="drawerView === 'PagesView'" width="24" height="24" :src="pagesWhite" />
+          <NuxtImg v-if="drawerViewLeft === 'PagesView'" width="24" height="24" :src="pagesWhite" />
           <NuxtImg v-else width="24" height="24" :src="pagesBlack" />
         </button>
       </SfTooltip>
@@ -21,7 +21,7 @@
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
-          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'LocalizationView' }"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerViewLeft === 'LocalizationView' }"
           aria-label="Open pages drawer"
           data-testid="open-pages-drawer"
           @click="toggleDrawerView('LocalizationView')"
@@ -39,12 +39,12 @@
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
-          :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'TableOfContents' }"
+          :class="{ 'bg-editor-button text-white rounded-md': drawerViewLeft === 'TableOfContents' }"
           aria-label="Open table of contents drawer"
           data-testid="open-table-of-contents-drawer"
           @click="toggleDrawerView('TableOfContents')"
         >
-          <NuxtImg v-if="drawerView === 'TableOfContents'" width="24" height="24" :src="tableOfContentsWhite" />
+          <NuxtImg v-if="drawerViewLeft === 'TableOfContents'" width="24" height="24" :src="tableOfContentsWhite" />
           <NuxtImg v-else width="24" height="24" :src="tableOfContentsBlack" />
         </button>
       </SfTooltip>
@@ -66,7 +66,7 @@ import pagesBlack from '~/assets/icons/paths/pages-black.svg';
 import tableOfContentsWhite from '~/assets/icons/paths/table-of-contents-white.svg';
 import tableOfContentsBlack from '~/assets/icons/paths/table-of-contents-black.svg';
 
-const { drawerView, activeSetting, openDrawerWithView, closeDrawer, setActiveSetting } = useSiteConfiguration();
+const { drawerViewLeft, activeSetting, openDrawerWithView, closeLeftDrawer, setActiveSetting } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const {
   public: { enableTableOfContents },
@@ -77,11 +77,11 @@ const localizationLabel = 'Localization settings: manage languages, translations
 const tableOfContentsLabel = 'Table of contents: view and navigate to all blocks on the current page.';
 
 function toggleDrawerView(view: DrawerView) {
-  if (drawerView.value === 'LocalizationView') {
+  if (drawerViewLeft.value === 'LocalizationView') {
     localizationDrawerOpen.value = false;
   }
-  if (drawerView.value === view) {
-    closeDrawer();
+  if (drawerViewLeft.value === view) {
+    closeLeftDrawer();
   } else {
     openDrawerWithView(view);
   }

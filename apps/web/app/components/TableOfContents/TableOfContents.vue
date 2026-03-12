@@ -1,11 +1,11 @@
 <template>
-  <div class="pages-view sticky top-[52px] z-[2]" data-testid="blocks-overview-drawer">
+  <div class="pages-view sticky z-[2]" data-testid="blocks-overview-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
       </div>
       <div class="flex items-center gap-2">
-        <button data-testid="blocks-overview-close" class="!p-0" @click="closeDrawer">
+        <button data-testid="blocks-overview-close" class="!p-0" @click="closeLeftDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -62,7 +62,7 @@ import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfC
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
-const { closeDrawer } = useSiteConfiguration();
+const { closeLeftDrawer } = useSiteConfiguration();
 const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 

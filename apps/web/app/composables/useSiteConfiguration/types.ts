@@ -15,11 +15,15 @@ export interface UseSiteConfigurationState {
   settingsCategory: CategoryTreeItem | null;
   settingsType: SettingsType;
   drawerOpen: boolean;
+  drawerOpenLeft: boolean;
+  drawerOpenRight: boolean;
   pageModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
   placement: string;
   drawerView: DrawerView;
+  drawerViewLeft: DrawerView;
+  drawerViewRight: DrawerView;
   activeSetting: string;
   activeSubCategory: string;
   blockType: string;
@@ -38,6 +42,8 @@ export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
+  drawerOpenLeft: Readonly<Ref<UseSiteConfigurationState['drawerOpenLeft']>>;
+  drawerOpenRight: Readonly<Ref<UseSiteConfigurationState['drawerOpenRight']>>;
   settingsCategory: Readonly<Ref<UseSiteConfigurationState['settingsCategory']>>;
   settingsType: Readonly<Ref<UseSiteConfigurationState['settingsType']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
@@ -47,6 +53,8 @@ export interface UseSiteConfiguration {
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
+  drawerViewLeft: Readonly<Ref<UseSiteConfigurationState['drawerViewLeft']>>;
+  drawerViewRight: Readonly<Ref<UseSiteConfigurationState['drawerViewRight']>>;
   activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
   activeSubCategory: Readonly<Ref<UseSiteConfigurationState['activeSubCategory']>>;
   setActiveSetting: SetActiveSetting;
@@ -57,6 +65,8 @@ export interface UseSiteConfiguration {
   togglePageModal: TogglePageModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
+  closeLeftDrawer: () => void;
+  closeRightDrawer: () => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

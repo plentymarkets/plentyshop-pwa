@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[52px] h-[80vh] overflow-y-auto">
+  <div class="sticky h-[80vh] overflow-y-auto">
     <UiAccordionItem
       v-model="textsOpen"
       summary-active-class="bg-neutral-100"

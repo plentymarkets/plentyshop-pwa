@@ -3,41 +3,22 @@
     <component :is="SafeModeBanner" v-if="clientPreview && isSafeMode" />
     <component :is="Toolbar" v-if="clientPreview" />
   </ClientOnly>
-  <div
-    class="w-100 relative md:flex"
-    :class="{
-      'lg:flex-row-reverse': placement !== 'left',
-      'md:max-lg:w-[calc(100%-54px)]': disableActions && drawerOpen && clientPreview,
-      'md:max-lg:w-[calc(100%-66px)]': disableActions && !drawerOpen && clientPreview,
-    }"
-  >
+  <div class="h-[calc(100vh-52px)] w-screen overflow-hidden flex">
     <ClientOnly>
       <component
         :is="SettingsToolbar"
         v-if="clientPreview && disableActions"
-        :class="{
-          'order-first': placement === 'left',
-          'order-last': placement === 'right',
-          'mr-3': !drawerOpen || placement === 'right',
-        }"
+        class="flex-shrink-0"
       />
     </ClientOnly>
 
     <component
       :is="SiteConfigurationDrawer"
-      v-if="drawerOpen"
-      class="absolute lg:relative bg-white font-editor"
-      :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
+      v-if="drawerOpenLeft"
+      class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-y-auto"
     />
 
-    <div
-      class="bg-white w-full relative"
-      :class="{
-        'w-[calc(50vw-80px)] lg:w-[calc(75vw-80px)] xl:w-[calc(80vw-80px)]': drawerOpen,
-        'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
-        'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,
-      }"
-    >
+    <div class="flex-1 bg-white relative overflow-auto">
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest />
@@ -46,6 +27,12 @@
         <NuxtPage />
       </NuxtLayout>
     </div>
+
+    <component
+      :is="SiteConfigurationDrawerRight"
+      v-if="drawerOpenRight"
+      class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
+    />
   </div>
   <ClientOnly>
     <component :is="PageModal" v-if="clientPreview" />
@@ -61,7 +48,7 @@ import { categoryGetters } from '@plentymarkets/shop-api';
 const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
-const { drawerOpen, currentFont, placement } = useSiteConfiguration();
+const { drawerOpenLeft, drawerOpenRight, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
 
@@ -245,6 +232,9 @@ const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolb
 const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
 const SiteConfigurationDrawer = defineAsyncComponent(
   () => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue'),
+);
+const SiteConfigurationDrawerRight = defineAsyncComponent(
+  () => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawerRight.vue'),
 );
 const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
 const UnlinkCategoryModal = defineAsyncComponent(

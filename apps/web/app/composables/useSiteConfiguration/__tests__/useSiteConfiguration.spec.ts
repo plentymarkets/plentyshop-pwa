@@ -9,13 +9,24 @@ vi.mock('vue-router', () => ({
 }));
 
 describe('useSiteConfiguration route watcher', () => {
-  it('should reset drawer state on route change', async () => {
-    const { drawerOpen, drawerView, activeSetting } = useSiteConfiguration();
+  it('should reset right drawer state on route change when blocksSettings is open', async () => {
+    const { drawerOpenRight, drawerViewRight } = useSiteConfiguration();
     mockRoute.fullPath.value = '/new-route';
     await nextTick();
 
-    expect(drawerOpen.value).toBe(false);
-    expect(drawerView.value).toBe(null);
-    expect(activeSetting.value).toBe('');
+    expect(drawerOpenRight.value).toBe(false);
+    expect(drawerViewRight.value).toBe(null);
+  });
+
+  it('should preserve left drawer state on route change', async () => {
+    const { drawerOpenLeft, drawerViewLeft } = useSiteConfiguration();
+    drawerOpenLeft.value = true;
+    drawerViewLeft.value = 'PagesView';
+
+    mockRoute.fullPath.value = '/new-route';
+    await nextTick();
+
+    expect(drawerOpenLeft.value).toBe(true);
+    expect(drawerViewLeft.value).toBe('PagesView');
   });
 });
