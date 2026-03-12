@@ -111,6 +111,7 @@ export class CartPageObject extends PageObject {
   assertCartPreviewElements() {
     this.cartPreview.should('be.visible');
     this.totalPrice.should('be.visible');
+    this.footer.should('have.length', 1);
     return this;
   }
 

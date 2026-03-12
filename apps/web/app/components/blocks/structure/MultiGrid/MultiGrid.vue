@@ -15,6 +15,7 @@
         @mouseenter="onRowEnter(row)"
         @mouseleave="onRowLeave"
       >
+        <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
         <ClientOnly>
           <template v-if="showOverlay(row)">
             <div
@@ -45,6 +46,7 @@
           :column-length="column.length"
           :is-row-hovered="showOverlay(row) && isRowHovered(row)"
         />
+        <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
       </div>
     </div>
   </div>
@@ -67,10 +69,12 @@ const onRowLeave = () => {
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
-const { isDragging } = useBlockManager();
+const { isDragging, shouldDisplayPlaceholder } = useBlockManager();
+const { drawerOpen, drawerView } = useSiteConfiguration();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
+
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',

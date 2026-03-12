@@ -1,11 +1,10 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
-    <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
+  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full">
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
-        'relative block-wrapper',
+        'relative block-wrapper h-full',
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
@@ -51,6 +50,7 @@
       <component :is="getBlockComponent" v-if="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
+            v-if="shouldShowBlock(slotProps.contentBlock, enableActions)"
             :index="index"
             :block="slotProps.contentBlock"
             :root="false"
@@ -95,7 +95,6 @@
         </button>
       </ClientOnly>
     </div>
-    <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
   </div>
 </template>
 
@@ -112,12 +111,11 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
-const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
-  visiblePlaceholder,
-  togglePlaceholder,
   isDragging,
+  togglePlaceholder,
   multigridColumnUuid,
   lazyLoadStates,
   lazyLoadRefs,
@@ -128,6 +126,7 @@ const {
   getBlockDepth,
   showBottomAddInGrid,
 } = useBlockManager();
+const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
@@ -212,28 +211,6 @@ const showOutline = computed(() => {
     props.clickedBlockIndex === props.index
   );
 });
-
-const displayTopPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'top' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
-const displayBottomPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'bottom' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
 
 const addNewBlock = (block: Block, position: BlockPosition) => {
   togglePlaceholder(block.meta.uuid, position);

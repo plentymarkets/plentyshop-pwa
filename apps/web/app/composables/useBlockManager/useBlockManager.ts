@@ -96,13 +96,46 @@ export const useBlockManager = () => {
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
-    scrollIntoBlockView(newBlock);
+    scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
+
+    const { enableTableOfContents } = useRuntimeConfig().public;
+    if (enableTableOfContents) {
+      const { selectedUuid } = useTableOfContents();
+      selectedUuid.value = newBlock.meta.uuid;
+      openDrawerWithView('TableOfContents');
+    }
   };
 
-  const scrollIntoBlockView = (block: Block) => {
+  const scrollIntoBlockView = (
+    block: Block,
+    scrollToPlaceholder: boolean = false,
+    position?: 'top' | 'bottom',
+    behaviour: 'auto' | 'instant' | 'smooth' = 'smooth',
+  ) => {
     setTimeout(() => {
-      const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
-      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      let el: Element | null = null;
+
+      if (scrollToPlaceholder && position) {
+        const blockEl = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+        if (blockEl) {
+          const parentWrapper = blockEl.closest('div');
+          if (parentWrapper) {
+            const placeholder = parentWrapper.querySelector('[data-testid="block-placeholder"]');
+            if (placeholder) {
+              el = placeholder;
+            }
+          }
+        }
+        if (!el) {
+          el = document.querySelector('[data-testid="block-placeholder"]');
+        }
+      } else {
+        el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+      }
+
+      if (el) {
+        el.scrollIntoView({ behavior: behaviour, block: 'center' });
+      }
     }, 100);
   };
 
@@ -322,6 +355,24 @@ export const useBlockManager = () => {
     return checkBlocks(data.value);
   };
 
+  const isStructureBlock = (block: Block): boolean => {
+    return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
+  };
+
+  const shouldDisplayPlaceholder = (
+    uuid: string,
+    position: 'top' | 'bottom',
+    drawerOpen: boolean | Ref<boolean>,
+    drawerView: string | null | Ref<string | null>,
+  ): boolean => {
+    return (
+      visiblePlaceholder.value.position === position &&
+      visiblePlaceholder.value.uuid === uuid &&
+      unref(drawerOpen) &&
+      unref(drawerView) === 'blocksList'
+    );
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -341,6 +392,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastNonFooterBlock,
     addNewBlock,
+    scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
@@ -352,5 +404,7 @@ export const useBlockManager = () => {
     getLazyLoadRef,
     showBottomAddInGrid,
     blockExistsOnPage,
+    isStructureBlock,
+    shouldDisplayPlaceholder,
   };
 };

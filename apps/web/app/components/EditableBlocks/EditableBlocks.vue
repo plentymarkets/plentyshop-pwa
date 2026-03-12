@@ -15,25 +15,29 @@
       @end="handleDragEnd"
     >
       <template #item="{ element: block, index }">
-        <component
-          :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
-          v-if="shouldShowBlock(block, enabledActions)"
-        >
-          <PageBlock
-            :index="index"
-            :block="block"
-            :enable-actions="enabledActions"
-            :is-clicked="isClicked"
-            :clicked-block-index="clickedBlockIndex"
-            :is-tablet="isTablet"
-            :change-block-position="changeBlockPosition"
-            :root="getBlockDepth(block.meta.uuid) === 0"
-            class="group"
-            :class="getBlockClass(block).value"
-            data-testid="block-wrapper"
-            @click="tabletEdit(index)"
-          />
-        </component>
+        <div>
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
+          <component
+            :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+            v-if="shouldShowBlock(block, enabledActions)"
+          >
+            <PageBlock
+              :index="index"
+              :block="block"
+              :enable-actions="enabledActions"
+              :is-clicked="isClicked"
+              :clicked-block-index="clickedBlockIndex"
+              :is-tablet="isTablet"
+              :change-block-position="changeBlockPosition"
+              :root="getBlockDepth(block.meta.uuid) === 0"
+              class="group"
+              :class="getBlockClass(block).value"
+              data-testid="block-wrapper"
+              @click="tabletEdit(index)"
+            />
+          </component>
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+        </div>
       </template>
     </draggable>
   </div>
@@ -41,6 +45,7 @@
 
 <script lang="ts" setup>
 import draggable from 'vuedraggable/src/vuedraggable';
+import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
@@ -61,7 +66,13 @@ const {
   isFooterBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
-const data = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
+const data = computed({
+  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value),
+  set: (newValue: Block[]) => {
+    const target = props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value;
+    target.splice(0, target.length, ...newValue);
+  },
+});
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
@@ -86,10 +97,11 @@ const {
   handleDragStart,
   handleDragEnd,
   getBlockDepth,
+  shouldDisplayPlaceholder,
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
+  const footerIndex = data.value.findIndex((block: Block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = data.value.splice(footerIndex, 1)[0];
@@ -109,9 +121,12 @@ const scrollToBlock = (evt: DragEvent) => {
   }
 };
 
-const { closeDrawer } = useSiteConfiguration();
+const { closeDrawer, drawerOpen: drawerOpenRef, drawerView: drawerViewRef } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
+
+const drawerOpen = computed<boolean>(() => drawerOpenRef.value);
+const drawerView = computed<string | null>(() => drawerViewRef.value);
 
 const enabledActions = computed(
   () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
