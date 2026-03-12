@@ -43,6 +43,7 @@ definePageMeta({
   type: 'product',
   isBlockified: true,
   identifier: 0,
+  skipCookiesSSR: true,
 });
 
 const showRecommended = ref(false);
