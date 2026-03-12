@@ -24,7 +24,7 @@ describe('useSiteConfiguration route watcher', () => {
     mockRoute.fullPath.value = '/new-route';
     await nextTick();
 
-    expect(drawerOpenRight.value).toBe(false);
-    expect(drawerViewRight.value).toBe(null);
+    expect(drawerOpenLeft.value).toBe(false);
+    expect(drawerViewLeft.value).toBe(null);
   });
 });
