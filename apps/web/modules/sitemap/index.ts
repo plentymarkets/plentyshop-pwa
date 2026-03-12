@@ -1,5 +1,5 @@
 import { createResolver, defineNuxtModule, addServerHandler } from 'nuxt/kit';
-import type { NuxtPage } from "@nuxt/schema";
+import type { NuxtPage } from '@nuxt/schema';
 
 export interface ModuleOptions {
   locales?: string[];

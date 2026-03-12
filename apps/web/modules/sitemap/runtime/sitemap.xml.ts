@@ -4,7 +4,7 @@ type SitemapURL = {
   loc: string;
   alternate?: { hreflang: string; href: string }[];
   lastmod?: string;
-}
+};
 
 const applyTrailingSlash = (url: string, mode: string): string => {
   const [path, query] = url.split('?');
@@ -67,9 +67,10 @@ export default defineEventHandler((event) => {
   }
 
   const renderUrl = (url: SitemapURL) => {
-    const alternateLinks = url.alternate
-      ?.map((alt) => `    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${alt.href}" />`)
-      .join('\n') ?? '';
+    const alternateLinks =
+      url.alternate
+        ?.map((alt) => `    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${alt.href}" />`)
+        .join('\n') ?? '';
 
     return `  <url>
     <loc>${url.loc}</loc>
