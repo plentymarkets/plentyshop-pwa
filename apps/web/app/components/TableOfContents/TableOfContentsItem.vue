@@ -2,7 +2,7 @@
   <li
     role="button"
     tabindex="0"
-    class="flex items-center justify-between py-1 my-1 cursor-pointer transition-colors gap-1 group"
+    class="flex items-center justify-between cursor-pointer transition-colors gap-1 group"
     :data-testid="`toc-item-${item.uuid}`"
     @click="editBlock(item.block)"
     @keydown.enter="editBlock(item.block)"
