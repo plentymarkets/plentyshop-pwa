@@ -121,7 +121,6 @@ const urlScheme = computed({
     "description-legacy-body-list-line-three": "Consolidates SEO signals to a single product page",
     "description-legacy-body-list-line-four": "Simplifies analytics and maintenance",
     "description-legacy-body-footer": "Since the page loads one default variant, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variants differ. This can lead to price mismatch errors or product disapprovals. Best suited when variants are mostly cosmetic or share the same price.",
-    "info-text": "This setting is currently under development"
   },
   "de": {
     "label": "Item URL Scheme",
@@ -144,7 +143,6 @@ const urlScheme = computed({
     "description-legacy-body-list-line-three": "Consolidates SEO signals to a single product page",
     "description-legacy-body-list-line-four": "Simplifies analytics and maintenance",
     "description-legacy-body-footer": "Since the page loads one default variant, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variants differ. This can lead to price mismatch errors or product disapprovals. Best suited when variants are mostly cosmetic or share the same price.",
-    "info-text": "This setting is currently under development"
   }
 }
 </i18n>
