@@ -4,7 +4,6 @@ type SitemapURL = {
   loc: string;
   alternate?: { hreflang: string; href: string }[];
   lastmod?: string;
-  changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 }
 
 const applyTrailingSlash = (url: string, mode: string): string => {
