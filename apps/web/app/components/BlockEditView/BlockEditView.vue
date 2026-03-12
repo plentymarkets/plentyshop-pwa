@@ -26,7 +26,9 @@
       <component
         :is="currentComponent"
         v-if="currentComponent"
+        :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
+        :uuid="blockUuid"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
       />
@@ -92,6 +94,24 @@ const getComponent = (name: string) => {
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
+const blockTypeNames: Record<string, string> = {
+  Carousel: 'Carousel',
+  NewsletterSubscribe: 'Newsletter',
+  ProductRecommendedProducts: 'Product Gallery',
+  TextCard: 'Rich Text',
+  AnnouncementBar: 'Announcement Bar',
+  CustomerReview: 'Customer reviews',
+  ProductLegalInformation: 'Legal Information',
+  MultiGrid: 'Layout',
+  Footer: 'Footer',
+  ItemText: 'Item Details',
+  CategoryData: 'Category Data',
+  TechnicalData: 'Technical Data',
+  ItemData: 'Item Data',
+  Banner: 'Image Banner',
+  UtilityBar: 'Utility Bar',
+};
+
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
     const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
@@ -100,6 +120,10 @@ const blockDisplayName = computed(() => {
       return getBlockDisplayName(firstChild.name);
     }
   }
-  return getBlockDisplayName(blockType.value);
+  if (blockType.value === 'UtilityBar' && customTitle.value) {
+    return customTitle.value;
+  }
+  return blockTypeNames[blockType.value] ?? blockType.value;
+
 });
 </script>
