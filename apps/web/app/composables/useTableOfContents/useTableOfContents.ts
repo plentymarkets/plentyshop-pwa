@@ -14,9 +14,7 @@ export const useTableOfContents = () => {
   const type = computed(() => route.meta.type as string);
   const locale = computed(() => $i18n.locale.value);
 
-  const blockTemplates = computed(() =>
-    useBlockTemplates(identifier.value, type.value, locale.value),
-  );
+  const blockTemplates = computed(() => useBlockTemplates(identifier.value, type.value, locale.value));
 
   const data = ref<Block[]>([]);
 

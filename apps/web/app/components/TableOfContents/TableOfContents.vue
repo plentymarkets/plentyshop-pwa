@@ -119,11 +119,9 @@ const scrollToDraggedBlock = (evt: DragEvent) => {
 </i18n>
 
 <style>
-
 .toc-drag-chosen .toc-insert-line,
 .toc-drag-ghost .toc-insert-line,
 .sortable-drag .toc-insert-line {
   display: none !important;
 }
 </style>
-

@@ -49,4 +49,3 @@ const { selectedUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, ge
 
 const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
 </script>
-
