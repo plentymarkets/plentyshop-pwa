@@ -23,7 +23,7 @@
             :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? 'flex-1' : 'flex-none w-10 shrink-0'"
           >
             <template v-if="isFullSearchMode">
-              <UiSearch class="hidden md:block" />
+              <UiSearch class="hidden md:block w-[99%]" />
             </template>
 
             <template v-else>
@@ -40,7 +40,7 @@
                 >
                   <UiSearch
                     v-if="isIconSearchExpanded"
-                    class="w-full"
+                    class="w-[99%]"
                     :style="{ transformOrigin: searchExpandOrigin }"
                     :close="collapseIconSearch"
                   />
@@ -296,7 +296,7 @@
             {{ t('common.actions.search') }}
           </h3>
         </header>
-        <UiSearch :close="searchModalClose" />
+        <UiSearch class="w-[99%]" :close="searchModalClose" />
       </SfModal>
     </NuxtLazyHydrate>
   </div>
