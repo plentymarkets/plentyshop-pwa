@@ -1,11 +1,11 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
+  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full">
     <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
-        'relative block-wrapper',
+        'relative block-wrapper h-full',
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
@@ -48,9 +48,10 @@
         />
       </ClientOnly>
 
-      <component :is="getBlockComponent" v-bind="contentProps" :index="index">
+      <component :is="getBlockComponent" v-if="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
+            v-if="shouldShowBlock(slotProps.contentBlock, enableActions)"
             :index="index"
             :block="slotProps.contentBlock"
             :root="false"
@@ -128,6 +129,7 @@ const {
   getBlockDepth,
   showBottomAddInGrid,
 } = useBlockManager();
+const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
@@ -248,7 +250,7 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
-const { isFooterBlock } = useCategoryTemplate();
+const { isFooterBlock } = useBlockTemplates();
 
 const getBlockActions = (block: Block) => {
   if (isFooterBlock(block)) {

@@ -37,10 +37,9 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
   const changeVariationId = (variationId: number): void => {
     if (state.value.variationId === variationId) return;
 
-    const config = useRuntimeConfig().public;
     const route = useRoute();
 
-    if (!config.enableCallistoUrlScheme) {
+    if (!useCallisto().isEnabled) {
       const path = updateProductURLPathForVariation(route.path, state.value.itemId, variationId);
       navigateTo(path);
     }

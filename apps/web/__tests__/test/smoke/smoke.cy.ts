@@ -27,10 +27,12 @@ describe('Smoke Tests', () => {
       .topToolbarShouldNotExist()
       .sideToolbarShouldNotExist()
       .blockActionsShouldNotExist()
+      .assertBlockTemplate()
       .goToCategory();
 
     // prettier-ignore
     productListPage
+      .assertBlockTemplate()
       .assertGridView()
       .addToCart();
 
@@ -42,6 +44,7 @@ describe('Smoke Tests', () => {
     // prettier-ignore
     productDetailPage
       .assertProductDetailPageElements()
+      .assertBlockTemplate()
       .addToCart(2);
 
     // prettier-ignore

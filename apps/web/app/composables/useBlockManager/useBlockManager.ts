@@ -27,7 +27,7 @@ export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
   const route = useRoute();
-  const { data, cleanData, updateBlocks } = useCategoryTemplate(
+  const { data, cleanData, updateBlocks } = useBlockTemplates(
     route?.meta?.identifier as string,
     route.meta.type as string,
     useNuxtApp().$i18n.locale.value,
@@ -37,7 +37,7 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { isFooterBlock } = useCategoryTemplate();
+  const { isFooterBlock } = useBlockTemplates();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -102,7 +102,7 @@ export const useBlockManager = () => {
   const scrollIntoBlockView = (block: Block) => {
     setTimeout(() => {
       const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
-      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   };
 
@@ -322,6 +322,10 @@ export const useBlockManager = () => {
     return checkBlocks(data.value);
   };
 
+  const isStructureBlock = (block: Block): boolean => {
+    return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -341,6 +345,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastNonFooterBlock,
     addNewBlock,
+    scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
@@ -352,5 +357,6 @@ export const useBlockManager = () => {
     getLazyLoadRef,
     showBottomAddInGrid,
     blockExistsOnPage,
+    isStructureBlock,
   };
 };
