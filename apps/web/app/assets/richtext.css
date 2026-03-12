@@ -1,25 +1,49 @@
 .rte-prose h1 {
-  font-size: 1.75rem;
-  line-height: 2.1rem;
+  font-size: 3.75rem;
   font-weight: 700;
-  margin: 10px 0;
+  line-height: 1.2;
+  margin: 1.25rem 0 0.5rem;
 }
+
 .rte-prose h2 {
   font-size: 1.5rem;
-  line-height: 1.9rem;
   font-weight: 700;
-  margin: 10px 0;
+  line-height: 1.2;
+  margin: 1rem 0 0.45rem;
 }
+
 .rte-prose h3 {
   font-size: 1.25rem;
-  line-height: 1.65rem;
   font-weight: 600;
-  margin: 8px 0;
+  line-height: 1.2;
+  margin: 0.9rem 0 0.4rem;
 }
+
+.rte-prose h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0.85rem 0 0.35rem;
+}
+
+.rte-prose h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.8rem 0 0.3rem;
+}
+
+.rte-prose h6 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.75rem 0 0.25rem;
+}
+
 .rte-prose p {
-  font-size: 14px;
+  font-size: 1rem;
   line-height: 1.5;
-  margin: 6px 0;
+  margin: 0.4rem 0;
 }
 .rte-prose blockquote {
   border-left: 3px solid #dee2e6;
