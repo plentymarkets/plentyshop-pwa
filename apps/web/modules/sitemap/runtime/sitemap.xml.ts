@@ -30,7 +30,7 @@ export default defineEventHandler((event) => {
   setHeader(event, 'Content-Type', 'application/xml');
 
   const host = getRequestHost(event);
-  const baseUrl = host ? `${getRequestProtocol(event)}://${host}` : '';
+  const baseUrl = host.startsWith('localhost') ? `http://${host}` : `https://${host}`;
   const config = useRuntimeConfig();
   const { locales, defaultLocale, trailingSlash } = config.public.plentySitemap;
   const urls: SitemapURL[] = [];
