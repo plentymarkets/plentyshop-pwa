@@ -80,7 +80,7 @@ defineProps<{
   isActive: (name: string) => boolean;
   currentBlockType: RteBlockType;
   onFontSizeChange: (value: string) => void;
-  currentFontSize: string; // e.g. "1rem" or ""
+  currentFontSize: string;
   onTextSizeChange: (value: string) => void;
   textColor: string;
   setFontColor: (color: string) => void;

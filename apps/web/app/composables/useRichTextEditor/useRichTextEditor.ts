@@ -80,11 +80,11 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const currentFontSize = computed(() => editor.value?.getAttributes('textStyle')?.fontSize ?? '');
 
   const setFontSize = (value: string) => {
-    const v = (value ?? '').trim();
+    const normalizedFontSize = (value ?? '').trim();
     editor.value
       ?.chain()
       .focus()
-      .setFontSize(v || null)
+      .setFontSize(normalizedFontSize || null)
       .run();
   };
   const { textColor, highlightColor, setFontColor, setHighlightColor } = setupRichTextEditorColors(

@@ -3,23 +3,23 @@ export function stripInlineFontSizesFromHtml(html: string): string {
   const doc = parser.parseFromString(html, 'text/html');
 
   const all = doc.body.querySelectorAll<HTMLElement>('*');
-  all.forEach((el) => {
-    if (el.tagName.toLowerCase() === 'font') {
-      el.removeAttribute('size');
+  all.forEach((element) => {
+    if (element.tagName.toLowerCase() === 'font') {
+      element.removeAttribute('size');
     }
 
-    const style = el.getAttribute('style');
+    const style = element.getAttribute('style');
     if (!style) return;
 
-    const next = style
+    const cleanedStyle = style
       .split(';')
-      .map((s) => s.trim())
+      .map((declaration) => declaration.trim())
       .filter(Boolean)
-      .filter((decl) => !/^font-size\s*:/.test(decl.toLowerCase()))
+      .filter((declaration) => !/^font-size\s*:/.test(declaration.toLowerCase()))
       .join('; ');
 
-    if (next) el.setAttribute('style', next);
-    else el.removeAttribute('style');
+    if (cleanedStyle) element.setAttribute('style', cleanedStyle);
+    else element.removeAttribute('style');
   });
 
   return doc.body.innerHTML;

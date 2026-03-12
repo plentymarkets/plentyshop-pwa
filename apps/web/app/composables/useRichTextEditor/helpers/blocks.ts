@@ -6,11 +6,13 @@ export const setupRichTextEditorBlocks = (
   focusChain: () => ReturnType<Editor['chain']> | undefined,
 ) => {
   const currentBlockType = computed<RteBlockType>(() => {
-    const e = editor?.value;
-    if (!e) return 'paragraph';
+    const editorInstance = editor?.value;
+    if (!editorInstance) return 'paragraph';
 
-    for (const level of [1, 2, 3, 4, 5, 6] as const) {
-      if (e.isActive('heading', { level })) return `h${level}` as RteBlockType;
+    for (const headingLevel of [1, 2, 3, 4, 5, 6] as const) {
+      if (editorInstance.isActive('heading', { level: headingLevel })) {
+        return `h${headingLevel}` as RteBlockType;
+      }
     }
 
     return 'paragraph';
