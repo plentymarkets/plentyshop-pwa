@@ -106,7 +106,12 @@ export const useBlockManager = () => {
     }
   };
 
-  const scrollIntoBlockView = (block: Block, scrollToPlaceholder: boolean = false, position?: 'top' | 'bottom', behaviour: 'auto' | 'instant' | 'smooth' = 'smooth') => {
+  const scrollIntoBlockView = (
+    block: Block,
+    scrollToPlaceholder: boolean = false,
+    position?: 'top' | 'bottom',
+    behaviour: 'auto' | 'instant' | 'smooth' = 'smooth',
+  ) => {
     setTimeout(() => {
       let el: Element | null = null;
 

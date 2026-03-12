@@ -74,7 +74,6 @@ const data = computed({
   },
 });
 
-
 const dataIsEmpty = computed(() => data.value.length === 0);
 
 const isContentEmptyInEditor = computed(
