@@ -14,7 +14,10 @@
       class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-y-auto"
     />
 
-    <div class="flex-1 bg-white relative overflow-auto">
+    <div
+      class="flex-1 w-full bg-white relative"
+      :class="clientPreview ? 'overflow-auto' : 'overflow-visible'"
+    >
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest />
