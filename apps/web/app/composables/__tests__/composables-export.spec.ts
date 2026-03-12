@@ -11,6 +11,7 @@ describe('composables index exports', () => {
 
   // Editor composables are intentionally excluded from barrel export to avoid unused JavaScript
   const editorComposablesBlacklist = [
+    'useTableOfContents',
     'useBlockManager',
     'useBlocksList',
     'useCategoryManagement',
