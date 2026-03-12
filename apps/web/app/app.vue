@@ -3,7 +3,10 @@
     <component :is="SafeModeBanner" v-if="clientPreview && isSafeMode" />
     <component :is="Toolbar" v-if="clientPreview" />
   </ClientOnly>
-  <div class="h-[calc(100vh-52px)] w-screen overflow-hidden flex">
+  <div
+    class="w-screen overflow-hidden flex"
+    :class="clientPreview ? 'h-[calc(100vh-52px)]' : ''"
+  >
     <ClientOnly>
       <component :is="SettingsToolbar" v-if="clientPreview && disableActions" class="flex-shrink-0" />
     </ClientOnly>
