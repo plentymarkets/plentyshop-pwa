@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableEditorItemURLScheme" class="py-2 mb-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -82,19 +82,10 @@
       </p>
     </div>
   </div>
-
-  <div v-else>
-    <div class="rounded-md bg-amber-50 p-4 shadow-sm">
-      <p class="text-sm text-center font-medium text-amber-800">
-        {{ getEditorTranslation('info-text') }}
-      </p>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
-const runtimeConfig = useRuntimeConfig().public;
 
 const { updateSetting, getSetting } = useSiteSettings('enableSingleProductUrlScheme');
 
