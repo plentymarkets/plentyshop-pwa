@@ -27,7 +27,7 @@
             </template>
 
             <template v-else>
-              <div class="hidden md:block relative overflow-hidden">
+              <div class="hidden md:block relative">
                 <Transition
                   enter-active-class="transition-opacity duration-120 ease-out"
                   enter-from-class="opacity-0"
