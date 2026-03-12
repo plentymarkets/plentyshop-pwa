@@ -23,7 +23,6 @@
           item-key="meta.uuid"
           handle=".toc-drag-handle"
           ghost-class="toc-drag-ghost"
-          chosen-class="toc-drag-chosen"
           tag="ul"
           class="mt-2 mb-4"
           @change="handleDragChange"
@@ -119,7 +118,6 @@ const scrollToDraggedBlock = (evt: DragEvent) => {
 </i18n>
 
 <style>
-.toc-drag-chosen .toc-insert-line,
 .toc-drag-ghost .toc-insert-line,
 .sortable-drag .toc-insert-line {
   display: none !important;
