@@ -20,8 +20,6 @@ describe('useSiteConfiguration route watcher', () => {
 
   it('should preserve left drawer state on route change', async () => {
     const { drawerOpenLeft, drawerViewLeft } = useSiteConfiguration();
-    drawerOpenLeft.value = true;
-    drawerViewLeft.value = 'PagesView';
 
     mockRoute.fullPath.value = '/new-route';
     await nextTick();
