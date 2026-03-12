@@ -5,11 +5,7 @@
   </ClientOnly>
   <div class="h-[calc(100vh-52px)] w-screen overflow-hidden flex">
     <ClientOnly>
-      <component
-        :is="SettingsToolbar"
-        v-if="clientPreview && disableActions"
-        class="flex-shrink-0"
-      />
+      <component :is="SettingsToolbar" v-if="clientPreview && disableActions" class="flex-shrink-0" />
     </ClientOnly>
 
     <component

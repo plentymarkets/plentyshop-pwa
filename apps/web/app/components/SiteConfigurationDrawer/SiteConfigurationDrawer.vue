@@ -85,4 +85,3 @@ watch(activeSetting, () => {
   transform: translateX(-100%);
 }
 </style>
-

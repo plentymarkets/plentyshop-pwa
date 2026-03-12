@@ -28,6 +28,3 @@ const getDrawerView = (view: string) => {
   transform: translateX(100%);
 }
 </style>
-
-
-

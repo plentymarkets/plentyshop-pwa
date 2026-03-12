@@ -63,7 +63,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockUuid = block.meta.uuid;
     }
 
-    console.log('view: ', view)
+    console.log('view: ', view);
     if (view === 'blocksSettings') {
       state.value.drawerViewRight = view;
       state.value.drawerOpenRight = true;

@@ -121,7 +121,11 @@ const scrollToBlock = (evt: DragEvent) => {
   }
 };
 
-const { closeLeftDrawer, drawerOpenLeft: drawerOpenLeftRef, drawerViewLeft: drawerViewLeftRef } = useSiteConfiguration();
+const {
+  closeLeftDrawer,
+  drawerOpenLeft: drawerOpenLeftRef,
+  drawerViewLeft: drawerViewLeftRef,
+} = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
