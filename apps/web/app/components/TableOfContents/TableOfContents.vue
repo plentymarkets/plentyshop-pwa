@@ -22,13 +22,16 @@
           v-model="draggableData"
           item-key="meta.uuid"
           handle=".toc-drag-handle"
+          ghost-class="toc-drag-ghost"
           tag="ul"
           class="mt-2 mb-4"
           @change="handleDragChange"
         >
-          <template #item="{ element: block }">
+          <template #item="{ element: block, index }">
             <div>
+              <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
               <TableOfContentsItem :item="blockToFlatBlock(block)" />
+              <TableOfContentsInsertBlockLine v-if="index < data.length - 1" :block="block" class="toc-insert-line" />
             </div>
           </template>
         </draggable>
@@ -113,3 +116,10 @@ const scrollToDraggedBlock = (evt: DragEvent) => {
   }
 }
 </i18n>
+
+<style>
+.toc-drag-ghost .toc-insert-line,
+.sortable-drag .toc-insert-line {
+  display: none !important;
+}
+</style>
