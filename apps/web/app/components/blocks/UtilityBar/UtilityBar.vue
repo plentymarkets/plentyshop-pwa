@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full md:sticky md:shadow-md z-10">
+    <header v-if="viewport.isGreaterOrEquals('md')" class="relative w-full md:sticky md:shadow-md z-10">
       <div
         class="flex justify-between items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
         :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
@@ -216,47 +216,43 @@
             <SfIconPerson />
           </UiButton>
         </nav>
-
-        <div
-          v-if="viewport.isLessThan('lg') && isSectionVisible('search')"
-          :style="{ order: getSectionFlexOrder('search') }"
-        >
-          <UiButton
-            variant="tertiary"
-            class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-            square
-            :style="{ color: iconColor }"
-            :aria-label="t('common.navigation.openSearchModal')"
-            @click="searchModalOpen"
-          >
-            <SfIconSearch />
-          </UiButton>
-        </div>
-
-        <div
-          v-if="viewport.isLessThan('lg') && isSectionVisible('actions')"
-          :style="{ order: getSectionFlexOrder('actions') }"
-        >
-          <UiButton
-            v-if="localeCodes.length > 1 && isActionVisible('language')"
-            variant="tertiary"
-            class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-            square
-            data-testid="open-languageselect-button"
-            :style="{ color: iconColor, order: getActionOrder('language') }"
-            :aria-label="t('common.navigation.languageSelector')"
-            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-            @click="toggleLanguageSelect()"
-          >
-            <SfIconLanguage />
-          </UiButton>
-        </div>
       </div>
     </header>
+
+    <MegaMenu
+      v-if="viewport.isLessThan('md')"
+      :categories="categoryTree"
+      :icon-color="iconColor"
+      :header-background-color="headerBackgroundColor"
+    >
+      <div>
+        <UiButton
+          variant="tertiary"
+          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+          square
+          data-testid="open-languageselect-button"
+          :style="{ color: iconColor }"
+          :aria-label="t('common.navigation.languageSelector')"
+          :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+          @click="toggleLanguageSelect()"
+        >
+          <SfIconLanguage />
+        </UiButton>
+        <UiButton
+          variant="tertiary"
+          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+          square
+          :style="{ color: iconColor }"
+          :aria-label="t('common.navigation.openSearchModal')"
+          @click="searchModalOpen"
+        >
+          <SfIconSearch />
+        </UiButton>
+      </div>
+    </MegaMenu>
+
     <UiNavbarBottom
-      v-if="viewport.isLessThan('lg') && isSectionVisible('actions')"
-      :action-order="content.actions.order"
-      :action-visibility="content.actions.visibility"
+      v-if="viewport.isLessThan('md')"
       :background-color="headerBackgroundColor"
       :icon-color="iconColor"
     />
@@ -350,6 +346,7 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
+const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
   content,
@@ -391,6 +388,14 @@ const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
+
+onNuxtReady(async () => {
+  if (categoryTree.value.length === 0) {
+    await getCategoryTree();
+  }
+
+  cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
+});
 
 const isIconSearchExpanded = ref(false);
 const showSearchIcon = ref(true);
