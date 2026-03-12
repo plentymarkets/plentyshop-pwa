@@ -10,23 +10,7 @@ export const useTableOfContents = () => {
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
 
-  const identifier = computed(() => route?.meta?.identifier as string);
-  const type = computed(() => route.meta.type as string);
-  const locale = computed(() => $i18n.locale.value);
-
-  const blockTemplates = computed(() => useBlockTemplates(identifier.value, type.value, locale.value));
-
-  const data = ref<Block[]>([]);
-
-  watch(
-    () => blockTemplates.value.data.value,
-    (newData) => {
-      data.value = newData;
-    },
-    { immediate: true, deep: false },
-  );
-
-  const { isFooterBlock } = useBlockTemplates();
+  const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
 
   watch(
     () => route.fullPath,

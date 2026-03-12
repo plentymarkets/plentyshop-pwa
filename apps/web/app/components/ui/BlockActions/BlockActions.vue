@@ -15,7 +15,7 @@
   >
     <SfTooltip
       v-if="!props.actions.isEditable"
-      label="You can only edit the footer on the homepage"
+      :label="getEditorUITranslation('block-edit-homepage-only', { blockName: props.block.name.toLowerCase() })"
       placement="left"
       class="flex"
     >
@@ -57,8 +57,8 @@
           class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
           data-testid="move-up-button"
           aria-label="move up button"
-          :disabled="props.index === 0"
-          :class="{ 'opacity-40 cursor-not-allowed': props.index === 0 }"
+          :disabled="isFirstContentBlock(props.index)"
+          :class="{ 'opacity-40 cursor-not-allowed': isFirstContentBlock(props.index) }"
           @click="changePosition(-1)"
         >
           <SfIconExpandLess />
@@ -125,7 +125,7 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
-const { deleteBlock, isLastNonFooterBlock } = useBlockManager();
+const { deleteBlock, isLastNonFooterBlock, isFirstContentBlock } = useBlockManager();
 
 const triggerEdit = () => {
   openDrawerWithView('blocksSettings', props.block);

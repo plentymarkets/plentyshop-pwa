@@ -37,7 +37,6 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { isFooterBlock } = useBlockTemplates();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -193,6 +192,12 @@ export const useBlockManager = () => {
     const hasFooter = data.value.length > 0 && isFooterBlock(data.value[data.value.length - 1]);
     const lastNonFooterIndex = hasFooter ? data.value.length - 2 : data.value.length - 1;
     return index === lastNonFooterIndex;
+  };
+
+  const isFirstContentBlock = (index: number): boolean => {
+    if (!data.value || data.value.length === 0) return false;
+    const firstContentIndex = data.value.findIndex((block) => !isHeaderContainerBlock(block));
+    return index === firstContentIndex;
   };
 
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
@@ -391,6 +396,7 @@ export const useBlockManager = () => {
     updateBlock,
     changeBlockPosition,
     isLastNonFooterBlock,
+    isFirstContentBlock,
     addNewBlock,
     scrollIntoBlockView,
     handleEdit,

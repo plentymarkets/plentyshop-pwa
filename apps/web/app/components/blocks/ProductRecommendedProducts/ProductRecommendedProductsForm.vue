@@ -182,7 +182,7 @@
         <EditorCategorySelect
           v-model="categoryIdModel"
           :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
-          data-test-id="recommended-form-categories"
+          data-testid="recommended-form-categories"
         />
       </div>
     </UiAccordionItem>
