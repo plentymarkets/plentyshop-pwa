@@ -29,6 +29,7 @@
             <template v-else>
               <div class="hidden md:block relative">
                 <Transition
+                  mode="out-in"
                   enter-active-class="transition-opacity duration-120 ease-out"
                   enter-from-class="opacity-0"
                   enter-to-class="opacity-100"
@@ -441,7 +442,7 @@ const handleSearchAfterLeave = () => {
 
 onClickOutside(iconSearchContainerRef, () => {
   if (isIconSearchExpanded.value) {
-    isIconSearchExpanded.value = false;
+    collapseIconSearch();
   }
 });
 
