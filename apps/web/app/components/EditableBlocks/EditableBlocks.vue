@@ -22,7 +22,7 @@
             v-if="shouldShowBlock(block, enabledActions)"
           >
             <PageBlock
-            :index="getRawIndex(block)"
+              :index="getRawIndex(block)"
               :block="block"
               :enable-actions="enabledActions"
               :is-clicked="isClicked"
@@ -33,7 +33,7 @@
               class="group"
               :class="getBlockClass(block).value"
               data-testid="block-wrapper"
-            @click="tabletEdit(getRawIndex(block))"
+              @click="tabletEdit(getRawIndex(block))"
             />
           </component>
           <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
