@@ -17,8 +17,8 @@
   </select>
   <select
     class="h-8 pl-2 rounded bg-transparent hover:bg-gray-100 text-sm cursor-pointer font-bold"
-    :value="currentFontSize || '1rem'"
-    data-testid="rte-font-size"
+    :value="currentFontSize"
+    data-testid="rte-font-size-select"
     @mousedown.stop
     @click.stop
     @change="onTextSizeChange(($event.target as HTMLSelectElement).value)"

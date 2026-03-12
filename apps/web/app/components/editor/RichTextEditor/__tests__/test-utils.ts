@@ -5,6 +5,8 @@ export const createMockUseRichTextEditor = (overrides: Record<string, unknown> =
   isActive: vi.fn().mockReturnValue(false),
   currentBlockType: ref('paragraph'),
   onFontSizeChange: vi.fn(),
+  currentFontSize: ref(''),
+  setFontSize: vi.fn(),
   textColor: ref('#000000'),
   highlightColor: ref('#ffffff'),
   setFontColor: vi.fn(),
