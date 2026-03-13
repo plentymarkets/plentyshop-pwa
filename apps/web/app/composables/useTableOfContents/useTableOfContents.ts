@@ -9,6 +9,7 @@ export const useTableOfContents = () => {
   const { isStructureBlock } = useBlockManager();
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
+  const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
 
   const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
 
@@ -17,6 +18,7 @@ export const useTableOfContents = () => {
     () => {
       expandedBlocks.value.clear();
       selectedUuid.value = '';
+      hoveredUuid.value = '';
     },
   );
 
@@ -74,9 +76,9 @@ export const useTableOfContents = () => {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      el.classList.add('ring-2', 'ring-primary-500', 'ring-offset-2');
+      el.classList.add('outline', 'outline-4', 'outline-editor-toc-selected');
       setTimeout(() => {
-        el.classList.remove('ring-2', 'ring-primary-500', 'ring-offset-2');
+        el.classList.remove('outline', 'outline-4', 'outline-editor-toc-selected');
       }, 1500);
     }
   };
@@ -121,8 +123,17 @@ export const useTableOfContents = () => {
     }
   };
 
+  const setHoveredBlock = (uuid: string) => {
+    hoveredUuid.value = uuid;
+  };
+
+  const clearHoveredBlock = () => {
+    hoveredUuid.value = '';
+  };
+
   return {
     selectedUuid,
+    hoveredUuid,
     expandedBlocks,
     data,
     flatBlocks,
@@ -133,5 +144,7 @@ export const useTableOfContents = () => {
     editBlock,
     addBlockAtBottom,
     blockToFlatBlock,
+    setHoveredBlock,
+    clearHoveredBlock,
   };
 };
