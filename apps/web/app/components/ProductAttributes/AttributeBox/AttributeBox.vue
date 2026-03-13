@@ -37,7 +37,7 @@ import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 
 const { updateValue, getValue } = useProductAttributes();
-const { disableActions } = useEditor();
+const { shouldUseFakeData } = useEditorState();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
@@ -56,7 +56,7 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-if (disableActions.value) {
+if (!shouldUseFakeData.value) {
   registerValidator(validate);
 }
 
@@ -84,7 +84,7 @@ watch(
 watch(
   () => meta.value,
   () => {
-    if (disableActions.value) return;
+    if (shouldUseFakeData.value) return;
 
     registerInvalidFields(
       meta.value.valid,
