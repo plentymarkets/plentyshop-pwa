@@ -1,5 +1,12 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full" @mouseenter="onBlockHover" @mouseleave="onBlockUnhover">
+  <div
+    v-if="block.meta"
+    :key="block.meta.uuid"
+    :data-uuid="block.meta.uuid"
+    class="h-full"
+    @mouseenter="onBlockHover"
+    @mouseleave="onBlockUnhover"
+  >
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
