@@ -1,7 +1,7 @@
 <template>
   <Transition name="drawer-left" appear>
     <div class="flex-shrink-0 w-1/4 min-w-[250px] max-w-[300px] bg-neutral-50 border-0 border-gray-300 z-[15] relative">
-      <component :is="getDrawerView(drawerViewLeft)" v-if="drawerViewLeft" />
+      <component :is="getDrawerView(siteConfigurationDrawerView)" v-if="siteConfigurationDrawerView" />
 
       <Transition v-else-if="viewComponent" :name="transitionName" mode="out-in" appear>
         <component :is="viewComponent" :key="viewComponent" />
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-const { drawerViewLeft, activeSetting, activeSubCategory } = useSiteConfiguration();
+const { siteConfigurationDrawerView, activeSetting, activeSubCategory } = useSiteConfiguration();
 
 const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');

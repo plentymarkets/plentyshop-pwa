@@ -14,13 +14,13 @@ export interface UseSiteConfigurationState {
   loading: boolean;
   settingsCategory: CategoryTreeItem | null;
   settingsType: SettingsType;
-  drawerOpenLeft: boolean;
-  drawerOpenRight: boolean;
+  siteConfigurationDrawerOpen: boolean;
+  blocksConfigurationDrawerOpen: boolean;
   pageModalOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
-  drawerViewLeft: DrawerView;
-  drawerViewRight: DrawerView;
+  siteConfigurationDrawerView: DrawerView;
+  blocksConfigurationDrawerView: DrawerView;
   activeSetting: string;
   activeSubCategory: string;
   blockType: string;
@@ -38,8 +38,8 @@ export type SetSettingsCategory = (category: CategoryTreeItem | null, settingsTy
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  drawerOpenLeft: Readonly<Ref<UseSiteConfigurationState['drawerOpenLeft']>>;
-  drawerOpenRight: Readonly<Ref<UseSiteConfigurationState['drawerOpenRight']>>;
+  siteConfigurationDrawerOpen: Readonly<Ref<UseSiteConfigurationState['siteConfigurationDrawerOpen']>>;
+  blocksConfigurationDrawerOpen: Readonly<Ref<UseSiteConfigurationState['blocksConfigurationDrawerOpen']>>;
   settingsCategory: Readonly<Ref<UseSiteConfigurationState['settingsCategory']>>;
   settingsType: Readonly<Ref<UseSiteConfigurationState['settingsType']>>;
   pageModalOpen: Readonly<Ref<UseSiteConfigurationState['pageModalOpen']>>;
@@ -47,10 +47,8 @@ export interface UseSiteConfiguration {
   blockUuid: Readonly<Ref<UseSiteConfigurationState['blockUuid']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
-  drawerViewLeft: Readonly<Ref<UseSiteConfigurationState['drawerViewLeft']>>;
-  drawerViewRight: Readonly<Ref<UseSiteConfigurationState['drawerViewRight']>>;
-  activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
-  activeSubCategory: Readonly<Ref<UseSiteConfigurationState['activeSubCategory']>>;
+  siteConfigurationDrawerView: Readonly<Ref<UseSiteConfigurationState['siteConfigurationDrawerView']>>;
+  blocksConfigurationDrawerView: Readonly<Ref<UseSiteConfigurationState['blocksConfigurationDrawerView']>>;
   setActiveSetting: SetActiveSetting;
   setActiveSubCategory: SetActiveSubCategory;
   updateNewBlockPosition: UpdateNewBlockPosition;
@@ -59,8 +57,8 @@ export interface UseSiteConfiguration {
   togglePageModal: TogglePageModal;
   setSettingsCategory: SetSettingsCategory;
   closeDrawer: () => void;
-  closeLeftDrawer: () => void;
-  closeRightDrawer: () => void;
+  closeSiteConfigurationDrawer: () => void;
+  closeBlocksConfigurationDrawer: () => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

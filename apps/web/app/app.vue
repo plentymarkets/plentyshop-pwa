@@ -10,7 +10,7 @@
 
     <component
       :is="SiteConfigurationDrawer"
-      v-if="drawerOpenLeft"
+      v-if="siteConfigurationDrawerOpen"
       class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
     />
 
@@ -25,8 +25,8 @@
     </div>
 
     <component
-      :is="SiteConfigurationDrawerRight"
-      v-if="drawerOpenRight"
+      :is="BlocksConfigurationDrawer"
+      v-if="blocksConfigurationDrawerOpen"
       class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
     />
   </div>
@@ -44,7 +44,7 @@ import { categoryGetters } from '@plentymarkets/shop-api';
 const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
-const { drawerOpenLeft, drawerOpenRight, currentFont } = useSiteConfiguration();
+const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
 
@@ -229,8 +229,8 @@ const SettingsToolbar = defineAsyncComponent(() => import('~/components/Settings
 const SiteConfigurationDrawer = defineAsyncComponent(
   () => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue'),
 );
-const SiteConfigurationDrawerRight = defineAsyncComponent(
-  () => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawerRight.vue'),
+const BlocksConfigurationDrawer = defineAsyncComponent(
+  () => import('~/components/SiteConfigurationDrawer/BlocksConfigurationDrawer.vue'),
 );
 const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
 const UnlinkCategoryModal = defineAsyncComponent(

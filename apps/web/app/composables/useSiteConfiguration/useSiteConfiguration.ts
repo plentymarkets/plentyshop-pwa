@@ -19,16 +19,16 @@ import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
-    drawerOpenLeft: false,
-    drawerOpenRight: false,
+    siteConfigurationDrawerOpen: false,
+    blocksConfigurationDrawerOpen: false,
     pageModalOpen: false,
     settingsCategory: null,
     settingsType: null,
     loading: false,
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
-    drawerViewLeft: null,
-    drawerViewRight: null,
+    siteConfigurationDrawerView: null,
+    blocksConfigurationDrawerView: null,
     activeSetting: '',
     activeSubCategory: '',
     blockType: '',
@@ -66,32 +66,32 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     }
 
     if (view === 'blocksSettings') {
-      state.value.drawerViewRight = view;
-      state.value.drawerOpenRight = true;
+      state.value.blocksConfigurationDrawerView = view;
+      state.value.blocksConfigurationDrawerOpen = true;
     } else {
-      state.value.drawerViewLeft = view;
-      state.value.drawerOpenLeft = true;
+      state.value.siteConfigurationDrawerView = view;
+      state.value.siteConfigurationDrawerOpen = true;
       state.value.activeSetting = '';
     }
   };
 
   const closeDrawer = () => {
-    state.value.drawerOpenLeft = false;
-    state.value.drawerOpenRight = false;
-    state.value.drawerViewLeft = null;
-    state.value.drawerViewRight = null;
+    state.value.siteConfigurationDrawerOpen = false;
+    state.value.blocksConfigurationDrawerOpen = false;
+    state.value.siteConfigurationDrawerView = null;
+    state.value.blocksConfigurationDrawerView = null;
     state.value.activeSetting = '';
   };
 
-  const closeLeftDrawer = () => {
-    state.value.drawerOpenLeft = false;
-    state.value.drawerViewLeft = null;
+  const closeSiteConfigurationDrawer = () => {
+    state.value.siteConfigurationDrawerOpen = false;
+    state.value.siteConfigurationDrawerView = null;
     state.value.activeSetting = '';
   };
 
-  const closeRightDrawer = () => {
-    state.value.drawerOpenRight = false;
-    state.value.drawerViewRight = null;
+  const closeBlocksConfigurationDrawer = () => {
+    state.value.blocksConfigurationDrawerOpen = false;
+    state.value.blocksConfigurationDrawerView = null;
   };
 
   const updateNewBlockPosition = (position: number) => {
@@ -114,16 +114,16 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const setActiveSetting: SetActiveSetting = (setting: string) => {
     state.value.activeSubCategory = '';
     state.value.activeSetting = setting;
-    state.value.drawerOpenLeft = true;
-    state.value.drawerViewLeft = null;
+    state.value.siteConfigurationDrawerOpen = true;
+    state.value.siteConfigurationDrawerView = null;
   };
   if (import.meta.client) {
     const route = useRoute();
     watch(
       () => route.fullPath,
       () => {
-        if (state.value.drawerViewRight === 'blocksSettings') {
-          closeRightDrawer();
+        if (state.value.blocksConfigurationDrawerView === 'blocksSettings') {
+          closeBlocksConfigurationDrawer();
         }
       },
     );
@@ -135,8 +135,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loadGoogleFont,
     openDrawerWithView,
     closeDrawer,
-    closeLeftDrawer,
-    closeRightDrawer,
+    closeSiteConfigurationDrawer,
+    closeBlocksConfigurationDrawer,
     togglePageModal,
     setSettingsCategory,
     setActiveSubCategory,

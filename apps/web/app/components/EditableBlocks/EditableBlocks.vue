@@ -122,15 +122,15 @@ const scrollToBlock = (evt: DragEvent) => {
 };
 
 const {
-  closeLeftDrawer,
-  drawerOpenLeft: drawerOpenLeftRef,
-  drawerViewLeft: drawerViewLeftRef,
+  closeSiteConfigurationDrawer,
+  siteConfigurationDrawerOpen: siteConfigurationDrawerOpenRef,
+  siteConfigurationDrawerView: siteConfigurationDrawerViewRef,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
-const drawerOpen = computed<boolean>(() => drawerOpenLeftRef.value);
-const drawerView = computed<string | null>(() => drawerViewLeftRef.value);
+const drawerOpen = computed<boolean>(() => siteConfigurationDrawerOpenRef.value);
+const drawerView = computed<string | null>(() => siteConfigurationDrawerViewRef.value);
 
 const enabledActions = computed(
   () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
@@ -138,7 +138,7 @@ const enabledActions = computed(
 
 useEditorUnsavedChangesGuard({
   enabled: !props.readOnly,
-  onConfirmLeave: () => closeLeftDrawer(),
+  onConfirmLeave: () => closeSiteConfigurationDrawer(),
 });
 
 onMounted(async () => {
