@@ -4,7 +4,6 @@
     :key="block.meta.uuid"
     :data-uuid="block.meta.uuid"
     class="h-full max-w-screen-2xl"
-    data-testid="block-wrapper"
     @mouseenter="onBlockHover"
     @mouseleave="onBlockUnhover"
   >

@@ -12,7 +12,7 @@
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
-          <button data-testid="delete-block-button" @click="deleteBlock(blockUuid)">
+          <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
             <SfIconDelete />
           </button>
           <div class="w-px h-4 bg-gray-300" />
