@@ -56,7 +56,7 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-if(disableActions.value) {
+if (disableActions.value) {
   registerValidator(validate);
 }
 
@@ -84,7 +84,7 @@ watch(
 watch(
   () => meta.value,
   () => {
-    if(disableActions.value) return;
+    if (disableActions.value) return;
 
     registerInvalidFields(
       meta.value.valid,
