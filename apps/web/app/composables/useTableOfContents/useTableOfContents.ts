@@ -92,9 +92,9 @@ export const useTableOfContents = () => {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      el.classList.add('ring-2', 'ring-primary-500', 'ring-offset-2');
+      el.classList.add('outline', 'outline-4', 'outline-editor-toc-selected');
       setTimeout(() => {
-        el.classList.remove('ring-2', 'ring-primary-500', 'ring-offset-2');
+        el.classList.remove('outline', 'outline-4', 'outline-editor-toc-selected');
       }, 1500);
     }
   };

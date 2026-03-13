@@ -6,10 +6,10 @@
       :class="[
         'relative block-wrapper h-full',
         {
-          'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
+          'outline outline-4 outline-editor-toc-selected': showOutline && !isDragging,
         },
         {
-          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
+          'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
             clientPreview && enableActions && !isTablet && root && !isDragging,
         },
       ]"
