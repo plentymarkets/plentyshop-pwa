@@ -47,7 +47,12 @@
               <slot name="setting-title" />
             </div>
           </div>
-          <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeSiteConfigurationDrawer">
+          <button
+            v-if="subCategories.length === 1"
+            data-testid="view-close"
+            class="!p-0"
+            @click="closeSiteConfigurationDrawer"
+          >
             <SfIconClose />
           </button>
           <button v-else data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
