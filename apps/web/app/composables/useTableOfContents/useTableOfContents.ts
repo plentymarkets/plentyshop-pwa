@@ -9,6 +9,7 @@ export const useTableOfContents = () => {
   const { isStructureBlock } = useBlockManager();
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
+  const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
 
   const identifier = computed(() => route?.meta?.identifier as string);
   const type = computed(() => route.meta.type as string);
@@ -33,6 +34,7 @@ export const useTableOfContents = () => {
     () => {
       expandedBlocks.value.clear();
       selectedUuid.value = '';
+      hoveredUuid.value = '';
     },
   );
 
@@ -137,8 +139,17 @@ export const useTableOfContents = () => {
     }
   };
 
+  const setHoveredBlock = (uuid: string) => {
+    hoveredUuid.value = uuid;
+  };
+
+  const clearHoveredBlock = () => {
+    hoveredUuid.value = '';
+  };
+
   return {
     selectedUuid,
+    hoveredUuid,
     expandedBlocks,
     data,
     flatBlocks,
@@ -149,5 +160,7 @@ export const useTableOfContents = () => {
     editBlock,
     addBlockAtBottom,
     blockToFlatBlock,
+    setHoveredBlock,
+    clearHoveredBlock,
   };
 };

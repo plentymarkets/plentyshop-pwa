@@ -61,9 +61,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     if (block) {
       state.value.blockType = block.name;
       state.value.blockUuid = block.meta.uuid;
+
+      if (view === 'blocksSettings') {
+        const { selectedUuid } = useTableOfContents();
+        selectedUuid.value = block.meta.uuid;
+      }
     }
 
-    console.log('view: ', view);
     if (view === 'blocksSettings') {
       state.value.drawerViewRight = view;
       state.value.drawerOpenRight = true;

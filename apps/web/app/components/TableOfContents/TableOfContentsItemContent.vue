@@ -1,7 +1,10 @@
 <template>
   <div
     class="flex items-center justify-between flex-1 px-2 py-1 rounded-md transition-colors hover:bg-editor-toc-highlight hover:text-black"
-    :class="{ 'bg-editor-toc-selected text-white': isSelected }"
+    :class="{
+      'bg-editor-toc-selected text-white': isSelected,
+      'bg-editor-toc-highlight': isHovered && !isSelected,
+    }"
   >
     <div class="flex items-center gap-2 min-w-0 flex-1">
       <slot name="arrow">
@@ -89,8 +92,10 @@ const props = defineProps<TableOfContentsItemContentProps>();
 const { deleteBlock } = useBlockManager();
 const { isFooterBlock } = useBlockTemplates();
 const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
+const { hoveredUuid } = useTableOfContents();
 
 const isVisible = computed(() => isBlockVisible(props.block));
+const isHovered = computed(() => hoveredUuid.value === props.uuid);
 
 const handleToggleVisibility = () => {
   toggleBlockVisibility(props.block);
