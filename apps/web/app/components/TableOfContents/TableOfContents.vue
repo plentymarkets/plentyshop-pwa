@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky z-[2]" data-testid="blocks-overview-drawer">
+  <div class="pages-view sticky" data-testid="blocks-overview-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}

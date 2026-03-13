@@ -11,7 +11,7 @@
     <component
       :is="SiteConfigurationDrawer"
       v-if="drawerOpenLeft"
-      class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-y-auto"
+      class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
     />
 
     <div class="flex-1 w-full bg-white relative" :class="clientPreview ? 'overflow-auto' : 'overflow-visible'">

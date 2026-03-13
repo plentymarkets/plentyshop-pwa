@@ -19,17 +19,14 @@ import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
-    drawerOpen: false,
     drawerOpenLeft: false,
     drawerOpenRight: false,
     pageModalOpen: false,
     settingsCategory: null,
     settingsType: null,
     loading: false,
-    placement: 'left',
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
-    drawerView: null,
     drawerViewLeft: null,
     drawerViewRight: null,
     activeSetting: '',
@@ -63,7 +60,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockUuid = block.meta.uuid;
 
       if (view === 'blocksSettings') {
-        const { selectedUuid } = useTableOfContents();
+        const selectedUuid = useState<string | null>('toc-selected-uuid');
         selectedUuid.value = block.meta.uuid;
       }
     }
