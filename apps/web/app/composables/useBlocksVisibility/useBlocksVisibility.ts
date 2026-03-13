@@ -12,7 +12,7 @@ import type { BlockVisibilityRegistry, UseBlocksVisibilityReturn } from './types
  * // In a block component that needs runtime visibility:
  * registerBlockVisibility(block.meta.uuid, hasRealData);
  *
- * // In EditablePage.vue:
+ * // In EditableBlocks.vue:
  * v-if="shouldShowBlock(block, enableActions)"
  *
  * onBeforeUnmount(() => {
@@ -55,6 +55,30 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
   };
 
   /**
+   * Check if a block is visible
+   * @param block - The block to check
+   * @returns true if block is visible (assumes true if not explicitly set to false)
+   */
+  const isBlockVisible = (block: Block): boolean => {
+    return (block.configuration as Record<string, unknown>)?.visible !== false;
+  };
+
+  /**
+   * Toggle a block's visibility state
+   * @param block - The block to toggle visibility for
+   */
+  const toggleBlockVisibility = (block: Block): void => {
+    if (!block) return;
+
+    if (!block.configuration) {
+      block.configuration = {};
+    }
+
+    const blockConfig = block.configuration as Record<string, unknown>;
+    blockConfig.visible = !isBlockVisible(block);
+  };
+
+  /**
    * Determine if a block should be shown
    * Checks both static configuration and registered runtime state
    * @param block - The block to check
@@ -63,6 +87,10 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
    */
   const shouldShowBlock = (block: Block, isEditorModeEnabled = false): boolean => {
     if (!block?.meta) return false;
+
+    if ((block.configuration as Record<string, unknown>)?.visible === false) {
+      return false;
+    }
 
     if (isEditorModeEnabled) {
       return true;
@@ -87,5 +115,7 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
     registerBlockVisibility,
     clearRegistry,
     isHydrationComplete,
+    isBlockVisible,
+    toggleBlockVisibility,
   };
 };

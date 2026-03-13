@@ -1,6 +1,7 @@
 <template>
   <div>
-    <UiHeader />
+    <UiHeaderBlocks v-if="enableEditableHeader" />
+    <UiHeader v-else />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
@@ -10,23 +11,20 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
-    <ClientOnly>
-      <FooterBlock v-if="!route.meta.isBlockified" />
-    </ClientOnly>
+    <UiFooterBlocks />
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
-import FooterBlock from '~/components/blocks/Footer/Footer.vue';
 
 defineProps<DefaultLayoutProps>();
 
+const { enableEditableHeader } = useRuntimeConfig().public;
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-const route = useRoute();
 
 setLogoMeta();
 </script>

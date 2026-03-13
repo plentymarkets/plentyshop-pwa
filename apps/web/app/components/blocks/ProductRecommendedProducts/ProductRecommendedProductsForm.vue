@@ -182,7 +182,7 @@
         <EditorCategorySelect
           v-model="categoryIdModel"
           :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
-          data-test-id="recommended-form-categories"
+          data-testid="recommended-form-categories"
         />
       </div>
     </UiAccordionItem>
@@ -210,7 +210,7 @@ import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,

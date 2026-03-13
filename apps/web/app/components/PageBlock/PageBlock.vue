@@ -1,11 +1,10 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid">
-    <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
+  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full">
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
-        'relative block-wrapper',
+        'relative block-wrapper h-full',
         {
           'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
         },
@@ -17,7 +16,7 @@
     >
       <ClientOnly>
         <button
-          v-if="enableActions && clientPreview && root && !isDragging"
+          v-if="showTopAddBlockButton"
           class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[40] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
           :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
           data-testid="top-add-block"
@@ -48,9 +47,10 @@
         />
       </ClientOnly>
 
-      <component :is="getBlockComponent" v-bind="contentProps" :index="index">
+      <component :is="getBlockComponent" v-if="getBlockComponent" v-bind="contentProps" :index="index">
         <template v-if="block.type === 'structure'" #content="slotProps">
           <PageBlock
+            v-if="shouldShowBlock(slotProps.contentBlock, enableActions)"
             :index="index"
             :block="slotProps.contentBlock"
             :root="false"
@@ -69,13 +69,7 @@
 
       <ClientOnly>
         <button
-          v-if="
-            enableActions &&
-            clientPreview &&
-            !isDragging &&
-            props.block.name !== 'Footer' &&
-            (root || shouldShowBottomAddInGrid)
-          "
+          v-if="showBottomAddBlockButton"
           :key="isDragging ? 'dragging' : 'not-dragging'"
           class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[
@@ -95,7 +89,6 @@
         </button>
       </ClientOnly>
     </div>
-    <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
   </div>
 </template>
 
@@ -112,12 +105,11 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
-const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
-  visiblePlaceholder,
-  togglePlaceholder,
   isDragging,
+  togglePlaceholder,
   multigridColumnUuid,
   lazyLoadStates,
   lazyLoadRefs,
@@ -128,6 +120,7 @@ const {
   getBlockDepth,
   showBottomAddInGrid,
 } = useBlockManager();
+const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
@@ -213,28 +206,6 @@ const showOutline = computed(() => {
   );
 });
 
-const displayTopPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'top' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
-const displayBottomPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'bottom' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
 const addNewBlock = (block: Block, position: BlockPosition) => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
@@ -248,8 +219,22 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
+const showTopAddBlockButton = computed(
+  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderBlock(props.block),
+);
+
+const showBottomAddBlockButton = computed(
+  () =>
+    props.enableActions &&
+    clientPreview.value &&
+    !isDragging.value &&
+    !isFooterBlock(props.block) &&
+    !isHeaderBlock(props.block) &&
+    (props.root || shouldShowBottomAddInGrid.value),
+);
+
 const getBlockActions = (block: Block) => {
-  if (block.name === 'Footer') {
+  if (isFooterBlock(block) || isHeaderBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,

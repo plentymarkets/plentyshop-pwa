@@ -160,7 +160,7 @@ const settingsGroup = ref(true);
 const layoutOpen = ref(true);
 
 const route = useRoute();
-const { data } = useCategoryTemplate(
+const { data } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,

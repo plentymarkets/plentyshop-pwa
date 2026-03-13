@@ -27,6 +27,8 @@
               :text-color="textColor"
               :set-font-color="setFontColor"
               :toggle-link="toggleLink"
+              :current-font-size="currentFontSize"
+              :on-text-size-change="setFontSize"
             />
 
             <EditorRichTextEditorExtendedButtons
@@ -71,6 +73,8 @@ defineProps<{
   onFontSizeChange: (value: string) => void;
   textColor: string;
   highlightColor: string;
+  currentFontSize: string;
+  setFontSize: (value: string) => void;
   setFontColor: (color: string) => void;
   setHighlightColor: (color: string) => void;
   setAlign: (align: RteAlign) => void;

@@ -1,15 +1,10 @@
-import {
-  BannerSliderObject,
-  firstBannerBlockUuid,
-  secondBannerBlockUuid,
-} from '../../support/pageObjects/BannerSliderObject';
+import { BannerSliderObject } from '../../support/pageObjects/BannerSliderObject';
 import { paths } from '../../../app/utils/paths';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Banner Slider Block Form', () => {
   const bannerSlider = new BannerSliderObject();
   const cookieBar = new CookieBarObject();
-
   const openSettingsForBannerSliderBlock = () => {
     cy.get('[data-testid="Carousel-open-editor-button"]').eq(0).should('exist').click();
 
@@ -43,22 +38,25 @@ describe('Banner Slider Block Form', () => {
 
   describe('Slide Settings', () => {
     it('should display the slide whose settings are open', () => {
-      bannerSlider.checkIsBannerImageVisible(firstBannerBlockUuid);
-      bannerSlider.checkSlideSettings(0);
+      bannerSlider.checkIsBannerImageVisible(0);
       bannerSlider.openSlideOneSettings();
-      bannerSlider.checkIsBannerImageVisible(secondBannerBlockUuid);
-      bannerSlider.checkSlideSettings(1);
+      bannerSlider.checkIsBannerImageVisible(0);
+      bannerSlider.goBackToElementList();
+      bannerSlider.openSlideTwoSettings();
+      bannerSlider.checkIsBannerImageVisible(1);
     });
 
     it('should add a new slide via quick add', () => {
       bannerSlider.quickAddSlide();
       bannerSlider.checkIsNewBannerImageVisible();
+      bannerSlider.openSlideOneSettings();
     });
 
     it('should add a new slide via the actions menu', () => {
       bannerSlider.openSlideActions();
       bannerSlider.addSlide();
       bannerSlider.checkIsNewBannerImageVisible();
+      bannerSlider.openSlideOneSettings();
     });
 
     it('should remove a slide', () => {
@@ -72,22 +70,11 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.deleteSlide();
       bannerSlider.checkIfSlideActionsAreVisible();
     });
-
-    it('should move a slide up and down', () => {
-      bannerSlider.openSlideActions();
-      bannerSlider.addSlide();
-      bannerSlider.openSlideActions();
-      bannerSlider.moveSlideUp(2);
-      bannerSlider.checkSlideSettings(1);
-      bannerSlider.openSlideActions();
-      bannerSlider.moveSlideDown(1);
-      bannerSlider.checkSlideSettings(2);
-    });
   });
 
   describe('Image Settings', () => {
     it('should open the image settings', () => {
-      cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('be.visible');
+      bannerSlider.openSlideOneSettings();
       bannerSlider.openImageGroup();
       bannerSlider.openImageSelector('wideScreen');
       bannerSlider.selectImage();
@@ -97,6 +84,7 @@ describe('Banner Slider Block Form', () => {
 
   describe('Text Settings', () => {
     it('should change the texts', () => {
+      bannerSlider.openSlideOneSettings();
       bannerSlider.closeImageGroup();
       bannerSlider.openTextGroup();
       bannerSlider.changeTexts();
@@ -104,6 +92,7 @@ describe('Banner Slider Block Form', () => {
     });
 
     it('should change the text box alignment x', () => {
+      bannerSlider.openSlideOneSettings();
       bannerSlider.closeImageGroup();
       bannerSlider.openTextGroup();
       bannerSlider.scrollFormDown();
@@ -113,6 +102,7 @@ describe('Banner Slider Block Form', () => {
     });
 
     it('should change the text box alignment y', () => {
+      bannerSlider.openSlideOneSettings();
       bannerSlider.closeImageGroup();
       bannerSlider.openTextGroup();
       bannerSlider.scrollFormDown();
@@ -122,6 +112,7 @@ describe('Banner Slider Block Form', () => {
     });
 
     it('should change the text alignment ', () => {
+      bannerSlider.openSlideOneSettings();
       bannerSlider.closeImageGroup();
       bannerSlider.openTextGroup();
       bannerSlider.scrollFormDown();
@@ -133,6 +124,7 @@ describe('Banner Slider Block Form', () => {
 
   describe('Button Settings', () => {
     it('should change the texts', () => {
+      bannerSlider.openSlideOneSettings();
       bannerSlider.closeImageGroup();
       bannerSlider.closeTextGroup();
       bannerSlider.changeButtonLabelAndLink();

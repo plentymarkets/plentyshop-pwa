@@ -12,8 +12,12 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '#i18n';
 import type { OrderSearchParams } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
+
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 
 const route = useRoute();
 const { data, error, fetchOrder, fetchOrderClient } = useCustomerOrder('soft-login');
@@ -21,9 +25,6 @@ const { send } = useNotification();
 
 definePageMeta({
   pageType: 'static',
-});
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
 
 if (error.value) {

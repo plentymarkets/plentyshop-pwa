@@ -33,7 +33,9 @@ const haveEqualStructure = (lang1: object, lang2: object) => {
 };
 
 const hasAllKeys = (obj1: object, obj2: object) => {
+  // eslint-disable-next-line no-restricted-globals
   const obj1WorkingCopy = structuredClone(obj1);
+  // eslint-disable-next-line no-restricted-globals
   const obj2WorkingCopy = structuredClone(obj2);
 
   const obj1Skeleton = setValuesToEmptyString(obj1WorkingCopy);

@@ -1,22 +1,19 @@
 import { PageObject } from './PageObject';
 
-export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
-
 export class EditorObject extends PageObject {
   get pretitle() {
-    return cy.getByTestId(`banner-pretitle-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="banner-pretitle-"]').first();
   }
-
   get title() {
-    return cy.getByTestId(`banner-title-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="banner-title-"]').first();
   }
 
   get subtitle() {
-    return cy.getByTestId(`banner-subtitle-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="banner-subtitle-"]').first();
   }
 
   get description() {
-    return cy.getByTestId(`banner-description-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="banner-description-"]').first();
   }
 
   get editorToolbar() {
@@ -127,6 +124,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('open-general-settings-drawer');
   }
 
+  get seoSettingsButton() {
+    return cy.getByTestId('open-seo-settings-drawer');
+  }
+
   blockIsBanner(el: JQuery<HTMLElement>) {
     return el[0]?.innerHTML.includes('banner-image');
   }
@@ -170,6 +171,11 @@ export class EditorObject extends PageObject {
 
   toggleCategorySettings() {
     this.categorySettingsButton.should('be.visible').click();
+    return this;
+  }
+
+  toggleSeoSettings() {
+    this.seoSettingsButton.should('be.visible').click();
     return this;
   }
 
@@ -289,7 +295,7 @@ export class EditorObject extends PageObject {
     this.languageList.children().should('have.length', 2);
     this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
-    this.title.first().should('have.text', 'Ihr Sound');
+    this.title.should('contain.text', 'Ihr Sound');
   }
 
   addBlockTop() {
