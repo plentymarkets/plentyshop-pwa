@@ -120,5 +120,5 @@ export default {
   manufacturerEmail: process.env.NUXT_PUBLIC_MANUFACTURER_EMAIL || '0',
   manufacturerContactUrl: process.env.NUXT_PUBLIC_MANUFACTURER_CONTACT_URL || '0',
   customAssetsSafeMode: process.env.NUXT_PUBLIC_CUSTOM_ASSETS_SAFE_MODE === 'true',
-  enableCallistoUrlScheme: process.env.NUXT_PUBLIC_ENABLE_CALLISTO_URL_SCHEME === 'true',
+  enableSingleProductUrlScheme: process.env.NUXT_PUBLIC_ENABLE_SINGLE_PRODUCT_URL_SCHEME === 'true',
 };

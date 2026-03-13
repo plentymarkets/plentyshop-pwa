@@ -7,7 +7,7 @@ describe('Smoke: Cart Page', () => {
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ enableCallistoUrlScheme: false });
+    cy.setConfig({ enableSingleProductUrlScheme: false });
 
     cy.visitSmoke();
   });
@@ -82,7 +82,7 @@ describe('Smoke: Cart Page', () => {
       cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
       cy.clearCookies();
       cy.clearConfig();
-      cy.setConfig({ enableCallistoUrlScheme: true });
+      cy.setConfig({ enableSingleProductUrlScheme: true });
       cy.visitSmoke();
     });
 

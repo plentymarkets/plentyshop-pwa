@@ -960,10 +960,10 @@
       }
     ]
   },
-  "rich-text": {
-    "category": "rich-text",
+  "text": {
+    "category": "text",
     "accessControl": ["content", "productCategory", "product"],
-    "title": "Rich Text",
+    "title": "Text",
     "blockName": "TextCard",
     "variations": [
       {

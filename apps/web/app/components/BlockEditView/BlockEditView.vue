@@ -1,12 +1,12 @@
 <template>
   <div class="site-settings-view sticky top-[52px]" data-testid="block-edit-view">
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3">
+      <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3 flex-1 min-w-0">
         <template v-if="customTitle">
-          <button class="rounded-full transition-colors" @click="handleBackClick">
+          <button class="shrink-0 rounded-full transition-colors" @click="handleBackClick">
             <SfIconChevronLeft />
           </button>
-          <span>{{ customTitle }}</span>
+          <span class="block truncate">{{ customTitle }}</span>
         </template>
         <template v-else> {{ blockDisplayName }} </template>
       </div>
@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue';
+import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();
@@ -66,26 +67,23 @@ const handleBackClick = () => {
   clearCustomTitle();
 };
 
-const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
 
 const getComponent = (name: string) => {
   if (!name) return null;
 
-  if (componentCache.has(name)) {
-    return componentCache.get(name);
+  const formName = name + 'Form';
+
+  if (componentCache.has(formName)) {
+    return componentCache.get(formName);
   }
 
-  const regex = new RegExp(`${name}Form\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path));
+  const loader = getBlockLoader(formName);
+  if (!loader) return null;
 
-  if (matched && modules[matched]) {
-    const component = defineAsyncComponent(modules[matched]);
-    componentCache.set(name, component);
+  if (loader) {
+    const component = defineAsyncComponent(loader);
+    componentCache.set(formName, component);
     return component;
   }
 
@@ -94,31 +92,14 @@ const getComponent = (name: string) => {
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
-const blockTypeNames: Record<string, string> = {
-  Carousel: 'Carousel',
-  NewsletterSubscribe: 'Newsletter',
-  ProductRecommendedProducts: 'Product Gallery',
-  TextCard: 'Rich Text',
-  AnnouncementBar: 'Announcement Bar',
-  CustomerReview: 'Customer reviews',
-  ProductLegalInformation: 'Legal Information',
-  MultiGrid: 'Layout',
-  Footer: 'Footer',
-  ItemText: 'Item Details',
-  CategoryData: 'Category Data',
-  TechnicalData: 'Technical Data',
-  ItemData: 'Item Data',
-  Banner: 'Image Banner',
-};
-
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
     const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
     const firstChild = (block?.content as Array<{ name: string }>)?.[0];
     if (firstChild?.name) {
-      return blockTypeNames[firstChild.name] ?? firstChild.name;
+      return getBlockDisplayName(firstChild.name);
     }
   }
-  return blockTypeNames[blockType.value] ?? blockType.value;
+  return getBlockDisplayName(blockType.value);
 });
 </script>

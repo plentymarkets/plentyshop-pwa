@@ -102,7 +102,7 @@ export const useBlockManager = () => {
   const scrollIntoBlockView = (block: Block) => {
     setTimeout(() => {
       const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
-      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   };
 
@@ -322,6 +322,10 @@ export const useBlockManager = () => {
     return checkBlocks(data.value);
   };
 
+  const isStructureBlock = (block: Block): boolean => {
+    return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -341,6 +345,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastNonFooterBlock,
     addNewBlock,
+    scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
@@ -352,5 +357,6 @@ export const useBlockManager = () => {
     getLazyLoadRef,
     showBottomAddInGrid,
     blockExistsOnPage,
+    isStructureBlock,
   };
 };
