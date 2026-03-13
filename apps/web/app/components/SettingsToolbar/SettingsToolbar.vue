@@ -44,7 +44,12 @@
           data-testid="open-table-of-contents-drawer"
           @click="toggleDrawerView('TableOfContents')"
         >
-          <NuxtImg v-if="siteConfigurationDrawerView === 'TableOfContents'" width="24" height="24" :src="tableOfContentsWhite" />
+          <NuxtImg
+            v-if="siteConfigurationDrawerView === 'TableOfContents'"
+            width="24"
+            height="24"
+            :src="tableOfContentsWhite"
+          />
           <NuxtImg v-else width="24" height="24" :src="tableOfContentsBlack" />
         </button>
       </SfTooltip>
@@ -66,7 +71,13 @@ import pagesBlack from '~/assets/icons/paths/pages-black.svg';
 import tableOfContentsWhite from '~/assets/icons/paths/table-of-contents-white.svg';
 import tableOfContentsBlack from '~/assets/icons/paths/table-of-contents-black.svg';
 
-const { siteConfigurationDrawerView, activeSetting, openDrawerWithView, closeSiteConfigurationDrawer, setActiveSetting } = useSiteConfiguration();
+const {
+  siteConfigurationDrawerView,
+  activeSetting,
+  openDrawerWithView,
+  closeSiteConfigurationDrawer,
+  setActiveSetting,
+} = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const {
   public: { enableTableOfContents },
