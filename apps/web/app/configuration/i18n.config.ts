@@ -1,7 +1,6 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
 
 export const getLocales = (): LocaleObject[] => {
-  const locales: unknown[] = [];
   const allLocales = [
     { code: 'de', file: 'de.json' },
     { code: 'en', file: 'en.json' },
@@ -33,11 +32,18 @@ export const getLocales = (): LocaleObject[] => {
      */
   ];
 
-  allLocales.forEach((locale) => {
-    locales.push(locale);
-  });
+  const activeLanguagesStr = process.env.LANGUAGELIST || 'en,de';
+  const activeLanguages = activeLanguagesStr.split(',').map((lang) => lang.trim());
 
-  return locales as LocaleObject[];
+  const locales = activeLanguages
+    .map((code) => allLocales.find((locale) => locale.code === code))
+    .filter((locale) => locale !== undefined);
+
+  if (locales.length === 0) {
+    return [{ code: 'en', file: 'en.json' } as unknown as LocaleObject];
+  }
+
+  return locales as unknown as LocaleObject[];
 };
 
 const getDefaultLocale = () => {
@@ -45,7 +51,7 @@ const getDefaultLocale = () => {
   const localeKeys = locales.map((locale) => locale.code);
   const defaultLocale = process.env.DEFAULTLANGUAGE as LocaleObject['code'];
 
-  return localeKeys.includes(defaultLocale) ? defaultLocale : 'en';
+  return localeKeys.includes(defaultLocale) ? defaultLocale : localeKeys[0];
 };
 
 export const nuxtI18nOptions: NuxtI18nOptions = {
