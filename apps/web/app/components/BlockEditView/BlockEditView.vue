@@ -17,7 +17,7 @@
           </button>
           <div class="w-px h-4 bg-gray-300" />
         </div>
-        <button data-testid="close-editor-button" @click="closeRightDrawer">
+        <button data-testid="close-editor-button" @click="closeBlocksConfigurationDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -46,7 +46,7 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 
-const { closeRightDrawer, blockType, blockUuid } = useSiteConfiguration();
+const { closeBlocksConfigurationDrawer, blockType, blockUuid } = useSiteConfiguration();
 const { deleteBlock } = useBlockManager();
 
 const customTitle = ref<string | null>(null);

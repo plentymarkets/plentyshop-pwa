@@ -5,7 +5,7 @@
         {{ getEditorTranslation('label') }}
       </div>
       <div class="flex items-center gap-2">
-        <button data-testid="blocks-overview-close" class="!p-0" @click="closeLeftDrawer">
+        <button data-testid="blocks-overview-close" class="!p-0" @click="closeSiteConfigurationDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -62,7 +62,7 @@ import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfC
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
-const { closeLeftDrawer } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 

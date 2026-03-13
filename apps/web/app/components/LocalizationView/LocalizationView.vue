@@ -12,7 +12,7 @@
           data-testid="pages-view-close"
           class="!p-0"
           @click="
-            closeLeftDrawer();
+            closeSiteConfigurationDrawer();
             drawerOpen = false;
           "
         >
@@ -58,7 +58,7 @@ const { keys, drawerOpen } = useEditorLocalizationKeys();
 const { initializeLocales } = useEditorLocalizationLocales();
 
 initializeLocales();
-const { closeLeftDrawer } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const editTranslationsOpen = ref(false);
 const editLanguagesOpen = ref(false);
 </script>

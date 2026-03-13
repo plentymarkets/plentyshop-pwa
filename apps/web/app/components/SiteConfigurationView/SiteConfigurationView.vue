@@ -11,7 +11,7 @@
               <slot name="setting-title" />
             </div>
           </div>
-          <button data-testid="view-close" class="!p-0 flex-shrink-0" @click="closeLeftDrawer">
+          <button data-testid="view-close" class="!p-0 flex-shrink-0" @click="closeSiteConfigurationDrawer">
             <SfIconClose />
           </button>
         </div>
@@ -47,7 +47,7 @@
               <slot name="setting-title" />
             </div>
           </div>
-          <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeLeftDrawer">
+          <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeSiteConfigurationDrawer">
             <SfIconClose />
           </button>
           <button v-else data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
 
-const { closeLeftDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 
 const subCategories = computed(() => {

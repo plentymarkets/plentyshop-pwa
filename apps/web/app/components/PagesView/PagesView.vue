@@ -13,7 +13,7 @@
         >
           <SfIconHelp class="cursor-pointer" @click="openHelpPage" />
         </SfTooltip>
-        <button data-testid="pages-view-close" class="!p-0" @click="closeLeftDrawer">
+        <button data-testid="pages-view-close" class="!p-0" @click="closeSiteConfigurationDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -146,7 +146,7 @@ import {
 } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale, defaultLocale } = useI18n();
-const { closeLeftDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
 const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =

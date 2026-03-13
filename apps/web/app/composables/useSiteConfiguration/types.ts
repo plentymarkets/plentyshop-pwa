@@ -49,6 +49,8 @@ export interface UseSiteConfiguration {
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   siteConfigurationDrawerView: Readonly<Ref<UseSiteConfigurationState['siteConfigurationDrawerView']>>;
   blocksConfigurationDrawerView: Readonly<Ref<UseSiteConfigurationState['blocksConfigurationDrawerView']>>;
+  activeSetting: Readonly<Ref<UseSiteConfigurationState['activeSetting']>>;
+  activeSubCategory: Readonly<Ref<UseSiteConfigurationState['activeSubCategory']>>;
   setActiveSetting: SetActiveSetting;
   setActiveSubCategory: SetActiveSubCategory;
   updateNewBlockPosition: UpdateNewBlockPosition;

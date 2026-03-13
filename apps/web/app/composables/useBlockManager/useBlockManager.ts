@@ -245,7 +245,7 @@ export const useBlockManager = () => {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-      closeRightDrawer();
+      closeBlocksConfigurationDrawer();
     }
   };
 
