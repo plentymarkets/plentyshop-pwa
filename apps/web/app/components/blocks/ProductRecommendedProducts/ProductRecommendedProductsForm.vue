@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[52px] h-[80vh] overflow-y-auto">
+  <div class="sticky h-[80vh] overflow-y-auto">
     <UiAccordionItem
       v-model="textsOpen"
       summary-active-class="bg-neutral-100"
@@ -182,7 +182,7 @@
         <EditorCategorySelect
           v-model="categoryIdModel"
           :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
-          data-test-id="recommended-form-categories"
+          data-testid="recommended-form-categories"
         />
       </div>
     </UiAccordionItem>

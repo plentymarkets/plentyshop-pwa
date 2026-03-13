@@ -173,4 +173,52 @@ describe('RichTextEditor', () => {
     expect(undo).toHaveBeenCalledTimes(1);
     expect(redo).toHaveBeenCalledTimes(1);
   });
+
+  it('should call onFontSizeChange when block type select changes', async () => {
+    const onFontSizeChange = vi.fn();
+
+    useRichTextEditor.mockReturnValue(
+      createMockUseRichTextEditor({
+        onFontSizeChange,
+      }),
+    );
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+        },
+      },
+    });
+
+    const blockTypeSelect = wrapper.get('[data-testid="rte-font-size"]');
+    await blockTypeSelect.setValue('h4');
+
+    expect(onFontSizeChange).toHaveBeenCalledWith('h4');
+  });
+  it('should call setFontSize when font size select changes', async () => {
+    const setFontSize = vi.fn();
+
+    useRichTextEditor.mockReturnValue(
+      createMockUseRichTextEditor({
+        currentFontSize: ref(''),
+        setFontSize,
+      }),
+    );
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+        },
+      },
+    });
+
+    const fontSizeSelect = wrapper.get('[data-testid="rte-font-size-select"]');
+    await fontSizeSelect.setValue('1.5rem');
+
+    expect(setFontSize).toHaveBeenCalledWith('1.5rem');
+  });
 });

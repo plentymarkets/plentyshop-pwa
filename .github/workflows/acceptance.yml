@@ -78,7 +78,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Notify Google Chat on Failure
-        if: failure()
+        if: failure() && github.event_name == 'push'
         env:
           WEBHOOK_URL: ${{ secrets.CHAT_WEBHOOK }}
           WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

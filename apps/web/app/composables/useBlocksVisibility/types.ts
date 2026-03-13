@@ -21,6 +21,19 @@ export interface UseBlocksVisibility {
   shouldShowBlock: (block: Block, isEditorModeEnabled?: boolean) => boolean;
 
   /**
+   * Check if a block is visible (not explicitly set to false)
+   * @param block - The block to check
+   * @returns true if block is visible
+   */
+  isBlockVisible: (block: Block) => boolean;
+
+  /**
+   * Toggle a block's visibility state
+   * @param block - The block to toggle visibility for
+   */
+  toggleBlockVisibility: (block: Block) => void;
+
+  /**
    * Register a block's runtime visibility state
    * @param uuid - Block's meta.uuid
    * @param hasData - Indicates if block has data to display

@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px] relative" data-testid="site-settings-drawer">
+  <div class="site-settings-view sticky" data-testid="site-settings-drawer">
     <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
       <header class="border-b">
         <div class="flex items-center justify-between px-4 py-5">
@@ -11,7 +11,7 @@
               <slot name="setting-title" />
             </div>
           </div>
-          <button data-testid="view-close" class="!p-0 flex-shrink-0" @click="closeDrawer">
+          <button data-testid="view-close" class="!p-0 flex-shrink-0" @click="closeSiteConfigurationDrawer">
             <SfIconClose />
           </button>
         </div>
@@ -47,7 +47,12 @@
               <slot name="setting-title" />
             </div>
           </div>
-          <button v-if="subCategories.length === 1" data-testid="view-close" class="!p-0" @click="closeDrawer">
+          <button
+            v-if="subCategories.length === 1"
+            data-testid="view-close"
+            class="!p-0"
+            @click="closeSiteConfigurationDrawer"
+          >
             <SfIconClose />
           </button>
           <button v-else data-testid="view-back" class="!p-0" @click="activeSubCategory = ''">
@@ -74,7 +79,7 @@
 <script setup lang="ts">
 import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
 
-const { closeDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 
 const subCategories = computed(() => {
