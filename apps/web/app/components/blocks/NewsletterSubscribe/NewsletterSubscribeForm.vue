@@ -11,7 +11,7 @@
 
       <div>
         <!-- TODO: use another check, because with RTE disabled we wouldn't display anything when discription is undefined. we should probalby use a fallback to an empty string here. -->
-        <EditorRichTextEditorForm v-if="newsletterBlock.text.htmlDescription" v-model="newsletterBlock.text.htmlDescription">
+        <EditorRichTextEditorForm v-if="newsletterBlock.text.htmlDescription" v-model="newsletterBlock.text.htmlDescription" :text-align="'center'">
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
             <SfInput

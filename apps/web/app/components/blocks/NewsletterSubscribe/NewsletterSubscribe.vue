@@ -163,6 +163,7 @@ const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
+props.content.text.textAlignment = props.content.text.textAlignment ?? 'center';
 
 const validationSchema = toTypedSchema(
   object({
