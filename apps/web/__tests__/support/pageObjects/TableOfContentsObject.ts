@@ -41,6 +41,10 @@ export class TableOfContentsObject extends PageObject {
     return cy.get('[data-testid^="toc-item-"] button');
   }
 
+  get expandButtons() {
+    return cy.get('[data-testid^="toc-expand-"]');
+  }
+
   get bannerImageBlocks() {
     return cy.get('[data-testid^="banner-image-"]');
   }
@@ -65,13 +69,13 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkCollapsibleArrowForStructureBlocks() {
-    this.structureBlockButtons.should('have.length.greaterThan', 0);
+    this.expandButtons.should('have.length.greaterThan', 0);
     return this;
   }
 
   expandStructureBlock() {
     this.tableOfContentsItems.its('length').as('tocItemCountBeforeExpand');
-    this.structureBlockButtons.first().click({ force: true });
+    this.expandButtons.first().click({ force: true });
     cy.wait(300);
     return this;
   }
@@ -82,7 +86,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   collapseStructureBlock() {
-    this.structureBlockButtons.first().click({ force: true });
+    this.expandButtons.first().click({ force: true });
     cy.wait(300);
     return this;
   }
