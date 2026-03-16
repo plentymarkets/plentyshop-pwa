@@ -1,1 +1,1 @@
-export { useUtilityBarState } from './useUtilityBarState';
+export * from './useUtilityBarState';
