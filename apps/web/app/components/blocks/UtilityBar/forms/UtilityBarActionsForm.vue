@@ -12,18 +12,10 @@
       <div class="space-y-6 py-4">
         <div>
           <UiFormLabel class="mb-3 block">{{ getEditorTranslation('actions-order-label') }}</UiFormLabel>
-          
-          <draggable
-            v-model="actionOrder"
-            item-key="id"
-            handle=".drag-action-handle"
-            class="space-y-2"
-          >
+
+          <draggable v-model="actionOrder" item-key="id" handle=".drag-action-handle" class="space-y-2">
             <template #item="{ element: action }">
-              <div
-                :key="action.id"
-                class="flex items-center justify-between p-3 bg-gray-50 rounded-md border"
-              >
+              <div :key="action.id" class="flex items-center justify-between p-3 bg-gray-50 rounded-md border">
                 <div class="flex items-center gap-3 flex-1">
                   <button
                     class="drag-action-handle cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600"
@@ -33,7 +25,7 @@
                   </button>
                   <span class="text-sm font-medium">{{ getActionLabel(action.id) }}</span>
                 </div>
-                
+
                 <SfSwitch
                   :model-value="action.visible"
                   :aria-label="getEditorTranslation('toggle-action-arial')"
@@ -70,12 +62,10 @@ const actionsConfig = computed<ActionsSettings>({
 
 const actionOrder = computed<ActionOrderItem[]>({
   get: () =>
-    (actionsConfig.value.order || defaultActionOrder).map(
-      (actionId: ActionType) => ({
-        id: actionId,
-        visible: actionsConfig.value.visibility?.[actionId] !== false,
-      }),
-    ),
+    (actionsConfig.value.order || defaultActionOrder).map((actionId: ActionType) => ({
+      id: actionId,
+      visible: actionsConfig.value.visibility?.[actionId] !== false,
+    })),
   set: (value: ActionOrderItem[]) => {
     const newConfig: ActionsSettings = {
       ...actionsConfig.value,
@@ -126,14 +116,14 @@ const toggleActionVisibility = (actionId: ActionType, visible: boolean) => {
     "account-action-label": "Account"
   },
   "de": {
-    "actions-section-label": "Aktionseinstellungen",
-    "actions-order-label": "Aktionsreihenfolge",
-    "drag-action-aria": "Ziehen Sie, um die Aktion neu zu ordnen",
-    "toggle-action-arial": "Sichtbarkeit der Aktion umschalten",
-    "language-action-label": "Sprachauswahl",
-    "wishlist-action-label": "Wunschliste",
-    "cart-action-label": "Warenkorb",
-    "account-action-label": "Konto"
+    "actions-section-label": "Actions Settings",
+    "actions-order-label": "Actions Order",
+    "drag-action-aria": "Drag to reorder action",
+    "toggle-action-arial": "Toggle action visibility",
+    "language-action-label": "Language Selector",
+    "wishlist-action-label": "Wishlist",
+    "cart-action-label": "Cart",
+    "account-action-label": "Account"
   }
 }
 </i18n>

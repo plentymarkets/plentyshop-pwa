@@ -242,7 +242,7 @@
       </div>
     </MegaMenu>
 
-    <UiNavbarBottom
+    <BlocksNavbarBottom
       v-if="viewport.isLessThan('md')"
       :background-color="headerBackgroundColor"
       :icon-color="iconColor"
@@ -314,7 +314,6 @@ import {
   SfListItem,
   SfModal,
   SfIconFavorite,
-  // SfIconMenu,
   useDisclosure,
 } from '@storefront-ui/vue';
 import { onClickOutside } from '@vueuse/core';

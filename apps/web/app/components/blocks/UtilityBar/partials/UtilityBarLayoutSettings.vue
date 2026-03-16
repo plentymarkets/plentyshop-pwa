@@ -130,13 +130,6 @@ const iconColor = computed({
   },
 });
 
-// const iconColor = computed({
-//   get: () => props.configuration.colors.iconColor,
-//   set: (newColor: string) => {
-//     emit('update:iconColor', newColor);
-//   },
-// });
-
 const paddingTop = computed({
   get: () => content.value.layout?.paddingTop ?? 0,
   set: (newValue: number) => {

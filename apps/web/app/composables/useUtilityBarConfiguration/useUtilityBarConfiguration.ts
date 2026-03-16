@@ -54,7 +54,6 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     isFullSearchMode,
   } = useUtilityBarState(targetUuid.value);
 
-  // Pure computed — no side effects, no mutations
   const utilityBarBlock = computed<UtilityBarProps | null>(() => {
     const blockByUuid = targetUuid.value
       ? (findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null)
@@ -64,8 +63,6 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
       return blockByUuid;
     }
 
-    // After save, some backends can remap UUIDs. If exactly one UtilityBar exists,
-    // keep syncing with that block instead of stalling until the form is reopened.
     const utilityBarMatches = collectUtilityBarBlocks(data.value);
     if (utilityBarMatches.length === 1) {
       return utilityBarMatches[0] || null;
@@ -74,7 +71,6 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     return null;
   });
 
-  // Block → State: sync when block becomes available or changes (initial load, after save/reload)
   watch(
     () => utilityBarBlock.value,
     (block) => {
@@ -82,7 +78,6 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
         return;
       }
 
-      // Sync persisted block state into editor state after load/save.
       if (!deepEqual(stateContent.value, block.content)) {
         setContent(block.content);
       }
@@ -90,8 +85,6 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     { immediate: true },
   );
 
-  // State → Block: sync form edits back to block data so saves persist changes.
-  // Uses deep clone to prevent shared object references between state and block.
   watch(
     stateContent,
     (newContent) => {

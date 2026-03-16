@@ -77,11 +77,9 @@ const mergeWithDefaults = (incoming: Partial<UtilityBarContent> | undefined): Ut
  * Uses a UUID-scoped key so multiple instances cannot overwrite each other.
  */
 export const useUtilityBarState = (_uuid?: string) => {
-  // Keep state isolated per UtilityBar instance so multiple blocks cannot overwrite each other.
   const stateKey = _uuid ? `utilityBarContent:${_uuid}` : 'utilityBarContent';
   const state = useState<UtilityBarContent>(stateKey, () => createDefaultContent());
 
-  /** Replace state content, merging with defaults to fill any missing fields */
   const setContent = (incoming: Partial<UtilityBarContent> | undefined) => {
     state.value = mergeWithDefaults(incoming);
   };
@@ -93,8 +91,6 @@ export const useUtilityBarState = (_uuid?: string) => {
     },
   });
 
-  // -- Layout --
-
   const paddingStyles = computed(() => {
     const layout = content.value.layout;
     if (!layout) return {};
@@ -105,8 +101,6 @@ export const useUtilityBarState = (_uuid?: string) => {
       paddingRight: layout.paddingRight != null ? `${layout.paddingRight}px` : undefined,
     };
   });
-
-  // -- Sections --
 
   const orderedVisibleSections = computed(() => {
     const order = content.value.sectionOrder?.sections || DEFAULT_SECTION_ORDER;
@@ -150,8 +144,6 @@ export const useUtilityBarState = (_uuid?: string) => {
     },
   });
 
-  // -- Actions --
-
   const orderedActions = computed(() => {
     const order = content.value.actions?.order || DEFAULT_ACTION_ORDER;
     const visibility = content.value.actions?.visibility || DEFAULT_ACTION_VISIBILITY;
@@ -169,8 +161,6 @@ export const useUtilityBarState = (_uuid?: string) => {
     const action = orderedActions.value.find((item) => item.actionId === actionId);
     return action?.order ?? 999;
   };
-
-  // -- Search --
 
   const isFullSearchMode = computed(() => content.value.search?.displayMode === 'full');
 
