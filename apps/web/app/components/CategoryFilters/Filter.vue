@@ -156,7 +156,7 @@ const facetChange = () => updateFilters(models.value);
 updateFilter();
 
 watch(
-  () => useNuxtApp().$router.currentRoute.value.query,
+  () => useRouter().currentRoute.value.query,
   async () => {
     updateFilter();
 
