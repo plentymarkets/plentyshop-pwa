@@ -30,46 +30,49 @@
         }"
         :data-testid="'banner-content-' + meta.uuid"
       >
-        <div
-          v-if="banner.text.pretitle"
-          class="typography-headline-6 font-bold tracking-widest"
-          :data-testid="'banner-pretitle-' + meta.uuid"
-          v-html="banner.text.pretitle"
-        />
-
-        <template v-if="!props.index">
-          <h1
-            v-if="banner.text.title"
-            :id="`carousel_item-${props.slideIndex}_heading`"
-            class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-            :data-testid="'banner-title-' + meta.uuid"
-            v-html="banner.text.title"
+      <!-- TODO: improve if check and give textalignment -->
+        <TextContent :text="banner.text" v-if="useRuntimeConfig().public.enableRichTextEditorV2" />
+        <div v-else>
+          <div
+            v-if="banner.text.pretitle"
+            class="typography-headline-6 font-bold tracking-widest"
+            :data-testid="'banner-pretitle-' + meta.uuid"
+            v-html="banner.text.pretitle"
           />
-        </template>
 
-        <template v-else>
-          <h2
-            v-if="banner.text.title"
-            :id="`carousel_item-${props.slideIndex}_heading`"
-            class="text-2xl font-semibold mb-4"
-            :data-testid="'banner-title-' + meta.uuid"
-            v-html="banner.text.title"
+          <template v-if="!props.index">
+            <h1
+              v-if="banner.text.title"
+              :id="`carousel_item-${props.slideIndex}_heading`"
+              class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+              :data-testid="'banner-title-' + meta.uuid"
+              v-html="banner.text.title"
+            />
+          </template>
+
+          <template v-else>
+            <h2
+              v-if="banner.text.title"
+              :id="`carousel_item-${props.slideIndex}_heading`"
+              class="text-2xl font-semibold mb-4"
+              :data-testid="'banner-title-' + meta.uuid"
+              v-html="banner.text.title"
+            />
+          </template>
+          <div
+            v-if="banner.text.subtitle"
+            class="typography-headline-6 font-bold tracking-widest mb-4"
+            :data-testid="'banner-subtitle-' + meta.uuid"
+            v-html="banner.text.subtitle"
           />
-        </template>
-        <div
-          v-if="banner.text.subtitle"
-          class="typography-headline-6 font-bold tracking-widest mb-4"
-          :data-testid="'banner-subtitle-' + meta.uuid"
-          v-html="banner.text.subtitle"
-        />
 
-        <div
-          v-if="banner.text.htmlDescription"
-          class="typography-text-sm md:typography-text-lg font-normal"
-          :data-testid="'banner-description-' + meta.uuid"
-          v-html="banner.text.htmlDescription"
-        />
-
+          <div
+            v-if="banner.text.htmlDescription"
+            class="typography-text-sm md:typography-text-lg font-normal"
+            :data-testid="'banner-description-' + meta.uuid"
+            v-html="banner.text.htmlDescription"
+          />
+        </div>
         <UiButton
           v-if="banner.button && banner.button.label && banner.button.link"
           class="flex flex-col md:flex-row gap-4 mt-6"

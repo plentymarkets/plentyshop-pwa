@@ -389,7 +389,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
         }
 
-        if (block.name === 'TextCard' && block.content) {
+        // TODO: use a more robust and scalable way to handle if the text of a block has to be migrated or not
+        if ((block.name === 'TextCard' || block.name === 'Banner' || block.name === 'ProductRecommendedProducts' || block.name === 'NewsletterSubscribe') && block.content) {
           const isFirstBlock = isRootLevel && index === 0;
 
           block.content = migrateTextCardContent(

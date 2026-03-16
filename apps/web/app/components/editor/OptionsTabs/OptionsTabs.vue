@@ -16,7 +16,7 @@
         type="button"
         :data-testid="opt.testId ?? `${testIdPrefix}-${String(opt.value)}`"
         class="flex items-center justify-center px-4 py-2 text-sm"
-        :class="itemClass(opt.value, idx)"
+        :class="itemClass(opt.value, Number(idx))"
         role="radio"
         :aria-checked="modelValue === opt.value"
         @click="onSelect(opt.value)"
