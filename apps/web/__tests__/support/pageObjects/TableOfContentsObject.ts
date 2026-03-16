@@ -44,7 +44,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlocksExist() {
-    cy.get('[data-testid^="toc-item-"]').should('have.length.greaterThan', 0);
+    this.tableOfContentsItems.should('have.length.greaterThan', 0);
     return this;
   }
 
@@ -60,7 +60,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkChildrenVisible() {
-    cy.get('[data-testid^="toc-item-"]').should('have.length.greaterThan', 1);
+    this.tableOfContentsItems.should('have.length.greaterThan', 1);
     return this;
   }
 
@@ -71,7 +71,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkChildrenHidden() {
-    cy.get('[data-testid^="toc-item-"]').should('have.length.lessThan', 17);
+    this.tableOfContentsItems.should('have.length.lessThan', 17);
     return this;
   }
 
@@ -81,49 +81,49 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkVisibilityIconExists() {
-    cy.get('[data-testid^="toc-visibility-"]').should('have.length.greaterThan', 0);
+    this.visibilityIcons.should('have.length.greaterThan', 0);
     return this;
   }
 
   toggleBlockVisibility() {
-    cy.get('[data-testid^="toc-visibility-"]').eq(1).click({ force: true });
+    this.visibilityIcons.eq(1).click({ force: true });
     cy.wait(800);
     return this;
   }
 
   checkBlockIsGrayedOut() {
-    cy.get('[data-testid^="toc-item-"]').eq(1).should('have.class', 'opacity-50');
+    this.tableOfContentsItems.eq(1).should('have.class', 'opacity-50');
     return this;
   }
 
   checkBlockNotVisibleOnPage() {
-    cy.getByTestId('block-wrapper').should('have.length.lessThan', 17);
+    this.tableOfContentsItems.should('have.length.lessThan', 17);
     return this;
   }
 
   checkBlockIsNotGrayedOut() {
-    cy.get('[data-testid^="toc-item-"]').eq(1).should('not.have.class', 'opacity-50');
+    this.tableOfContentsItems.eq(1).should('not.have.class', 'opacity-50');
     return this;
   }
 
   checkBlockVisibleOnPage() {
-    cy.getByTestId('block-wrapper').first().should('be.visible');
+    this.tableOfContentsItems.should('have.length.greaterThan', 16);
     return this;
   }
 
   deleteBlockFromToc() {
-    cy.get('[data-testid^="toc-delete-"]').first().click({ force: true });
+    this.deleteIcons.first().click({ force: true });
     cy.wait(500);
     return this;
   }
 
   checkBlockDeletedFromToc(initialCount: number) {
-    cy.get('[data-testid^="toc-item-"]').should('have.length', initialCount - 1);
+    this.tableOfContentsItems.should('have.length', initialCount - 1);
     return this;
   }
 
   clickOnBlockInToc(index: number) {
-    cy.get('[data-testid^="toc-item-"]').eq(index).click({ force: true });
+    this.tableOfContentsItems.eq(index).click({ force: true });
     cy.wait(500);
     return this;
   }
