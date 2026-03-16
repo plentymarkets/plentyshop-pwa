@@ -17,7 +17,7 @@
   </select>
   <select
     class="h-8 pl-2 rounded bg-transparent hover:bg-gray-100 text-sm cursor-pointer font-bold"
-    :value="currentFontSize"
+    :value="currentFontSize || '1rem'"
     data-testid="rte-font-size-select"
     @mousedown.stop
     @click.stop
@@ -27,7 +27,7 @@
     <option value="0.625rem">10px</option>
     <option value="0.75rem">12px</option>
     <option value="0.875rem">14px</option>
-    <option value="1rem">16px (Default)</option>
+    <option value="1rem">16px </option>
     <option value="1.125rem">18px</option>
     <option value="1.25rem">20px</option>
     <option value="1.5rem">24px</option>
