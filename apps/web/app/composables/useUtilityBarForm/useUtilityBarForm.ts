@@ -1,4 +1,3 @@
-import type { ComputedRef } from 'vue';
 import type { UtilityBarSection } from '~/components/blocks/UtilityBar/types';
 
 /**

@@ -1,76 +1,16 @@
 import type {
   UtilityBarContent,
-  SectionType,
   UtilityBarSection,
-  ActionType,
-  SpacingSettings,
-  UtilityBarColor,
 } from '~/components/blocks/UtilityBar/types';
 
-const DEFAULT_LAYOUT: SpacingSettings = {
-  paddingTop: 20,
-  paddingBottom: 20,
-  paddingLeft: 40,
-  paddingRight: 40,
-};
-
-const DEFAULT_COLOR: UtilityBarColor = {
-  iconColor: '#fff',
-  backgroundColor: 'rgb(var(--colors-2-primary-500))',
-};
-
-const DEFAULT_SECTION_ORDER: SectionType[] = ['logo', 'search', 'actions'];
-
-const DEFAULT_SECTION_VISIBILITY: Record<SectionType, boolean> = {
-  logo: true,
-  search: true,
-  actions: true,
-};
-
-const DEFAULT_ACTION_ORDER: ActionType[] = ['language', 'wishlist', 'cart', 'account'];
-
-const DEFAULT_ACTION_VISIBILITY: Record<ActionType, boolean> = {
-  language: true,
-  wishlist: true,
-  cart: true,
-  account: true,
-};
-
-const createDefaultContent = (): UtilityBarContent => ({
-  layout: { ...DEFAULT_LAYOUT },
-  sectionOrder: { sections: [...DEFAULT_SECTION_ORDER] },
-  sectionVisibility: { ...DEFAULT_SECTION_VISIBILITY },
-  color: { ...DEFAULT_COLOR },
-  logo: { logo: '' },
-  search: { displayMode: 'full' },
-  actions: {
-    order: [...DEFAULT_ACTION_ORDER],
-    visibility: { ...DEFAULT_ACTION_VISIBILITY },
-  },
-});
-
-/** Merges incoming (possibly partial) content with defaults to ensure all fields exist */
-const mergeWithDefaults = (incoming: Partial<UtilityBarContent> | undefined): UtilityBarContent => {
-  if (!incoming) return createDefaultContent();
-
-  const defaults = createDefaultContent();
-  return {
-    layout: { ...defaults.layout, ...incoming.layout },
-    sectionOrder: {
-      sections: incoming.sectionOrder?.sections?.length
-        ? [...incoming.sectionOrder.sections]
-        : [...defaults.sectionOrder.sections],
-    },
-    sectionVisibility: { ...defaults.sectionVisibility, ...incoming.sectionVisibility } as Record<SectionType, boolean>,
-    logo: incoming.logo || defaults.logo,
-    search: { ...defaults.search, ...incoming.search },
-    color: { ...defaults.color, ...incoming.color },
-    actions: {
-      order: incoming.actions?.order?.length ? [...incoming.actions.order] : [...defaults.actions.order],
-      visibility: { ...defaults.actions.visibility, ...incoming.actions?.visibility },
-    },
-  };
-};
+import {
+  createDefaultContent,
+  DEFAULT_ACTION_ORDER,
+  DEFAULT_ACTION_VISIBILITY,
+  DEFAULT_SECTION_ORDER,
+  DEFAULT_SECTION_VISIBILITY,
+} from './helpers/create-default-content';
+import { mergeWithDefaults } from './helpers/merge-with-defaults';
 
 /**
  * Scoped state store for a UtilityBar block.
@@ -122,7 +62,7 @@ export const useUtilityBarState = (_uuid?: string) => {
 
   const sections = computed<UtilityBarSection[]>({
     get: () => {
-      const order: SectionType[] = content.value.sectionOrder?.sections || DEFAULT_SECTION_ORDER;
+      const order = content.value.sectionOrder?.sections || DEFAULT_SECTION_ORDER;
       return order.map(
         (id): UtilityBarSection => ({
           id,
