@@ -50,8 +50,6 @@ const props = defineProps<TableOfContentsItemProps>();
 
 const { selectedUuid, hoveredUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
   useTableOfContents();
-const { isBlockVisible } = useBlocksVisibility();
 
 const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
-const isVisible = computed(() => isBlockVisible(props.item.block));
 </script>
