@@ -32,8 +32,11 @@ describe('composables index exports', () => {
     'useHtmlEditorMode',
     'useUtilityBarForm',
     'useUtilityBarConfiguration',
-    'useUtilityBarConfiguration',
+    'useUtilityBarActions',
     'useUtilityBarState',
+    'useBlockIsFake',
+    'useIsUsingFakeData',
+    'useShouldShow',
   ];
 
   const allFileModules = fs
