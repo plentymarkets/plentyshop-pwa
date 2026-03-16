@@ -3,5 +3,5 @@ export const validateApiUrl = (url: string | undefined): string | undefined => {
 };
 
 export const isPageOfType = (type: string): boolean => {
-  return useNuxtApp().$router.currentRoute.value.meta.type === type;
+  return useRouter().currentRoute.value.meta.type === type;
 };
