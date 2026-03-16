@@ -44,7 +44,6 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { TableOfContentsItemProps } from './types';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
-import { useBlocksVisibility } from '~/composables/useBlocksVisibility/useBlocksVisibility';
 
 const props = defineProps<TableOfContentsItemProps>();
 
