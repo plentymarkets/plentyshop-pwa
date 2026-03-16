@@ -70,8 +70,8 @@ export class BannerSliderObject extends PageObject {
     cy.get(`[data-testid="actions-edit-slide-${index}"]`).click();
   }
 
-  checkIsBannerImageVisible(uuid: string) {
-    cy.get(`[data-testid="banner-image-${uuid}"]`).should('be.visible');
+  checkIsBannerImageVisible(index = 0) {
+    cy.get('[data-testid^="banner-image-"]').eq(index).should('be.visible');
   }
 
   checkIsNewBannerImageVisible() {
@@ -103,22 +103,20 @@ export class BannerSliderObject extends PageObject {
     cy.get('[data-testid="image-selector-modal"]').should('not.exist');
   }
 
-  checkNewBannerImage(uuid: string) {
-    cy.get(`[data-testid="banner-image-${uuid}"]`).should('be.visible');
-    cy.get(`[data-testid="banner-image-${uuid}"]`).should(
-      'have.attr',
-      'src',
-      'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg',
-    );
+  checkNewBannerImage() {
+    cy.get('[data-testid^="banner-image-"]').first().should('be.visible');
+    cy.get('[data-testid^="banner-image-"]')
+      .first()
+      .should('have.attr', 'src', 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg');
   }
 
-  checkBannerAltText(uuid: string) {
+  checkBannerAltText() {
     cy.get('[data-testid="slide-alt-text"]')
       .scrollIntoView()
       .should('be.visible')
       .clear()
       .type('New Alt Text', { delay: 0 });
-    cy.get(`[data-testid="banner-image-${uuid}"]`).should('have.attr', 'alt', 'New Alt Text');
+    cy.get('[data-testid^="banner-image-"]').first().should('have.attr', 'alt', 'New Alt Text');
   }
 
   closeImageGroup() {
@@ -152,60 +150,60 @@ export class BannerSliderObject extends PageObject {
       .type('New Text Content', { delay: 0 });
   }
 
-  checkNewTexts(uuid: string) {
-    cy.get(`[data-testid="banner-pretitle-${uuid}"]`).should('have.text', 'New Pre-Title');
-    cy.get(`[data-testid="banner-title-${uuid}"]`).should('have.text', 'New Title');
-    cy.get(`[data-testid="banner-subtitle-${uuid}"]`).should('have.text', 'New Subtitle');
-    cy.get(`[data-testid="banner-description-${uuid}"]`).should('have.text', 'New Text Content');
+  checkNewTexts() {
+    cy.get('[data-testid^="banner-pretitle-"]').first().should('have.text', 'New Pre-Title');
+    cy.get('[data-testid^="banner-title-"]').first().should('have.text', 'New Title');
+    cy.get('[data-testid^="banner-subtitle-"]').first().should('have.text', 'New Subtitle');
+    cy.get('[data-testid^="banner-description-"]').first().should('have.text', 'New Text Content');
   }
 
   scrollFormDown() {
     cy.get('[data-testid="banner-carousel-form"]').scrollTo('bottom');
   }
 
-  alignBoxCenterX(uuid: string) {
+  alignBoxCenterX() {
     cy.get('[data-testid="slider-textbox-align-center"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'justify-content', 'center');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'center');
   }
 
-  alignBoxBottomX(uuid: string) {
+  alignBoxBottomX() {
     cy.get('[data-testid="slider-textbox-align-bottom"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'justify-content', 'flex-end');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-end');
   }
 
-  alignBoxTopX(uuid: string) {
+  alignBoxTopX() {
     cy.get('[data-testid="slider-textbox-align-top"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'justify-content', 'flex-start');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-start');
   }
 
-  alignBoxCenterY(uuid: string) {
+  alignBoxCenterY() {
     cy.get('[data-testid="slider-textbox-y-align-center"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'align-items', 'center');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'center');
   }
 
-  alignBoxRightY(uuid: string) {
+  alignBoxRightY() {
     cy.get('[data-testid="slider-textbox-y-align-right"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'align-items', 'flex-end');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-end');
   }
 
-  alignBoxLeftY(uuid: string) {
+  alignBoxLeftY() {
     cy.get('[data-testid="slider-textbox-y-align-left"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'align-items', 'flex-start');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-start');
   }
 
-  textAlignCenter(uuid: string) {
+  textAlignCenter() {
     cy.get('[data-testid="slider-text-align-center"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'text-align', 'center');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'text-align', 'center');
   }
 
-  textAlignRight(uuid: string) {
+  textAlignRight() {
     cy.get('[data-testid="slider-text-align-right"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'text-align', 'right');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'text-align', 'right');
   }
 
-  textAlignLeft(uuid: string) {
+  textAlignLeft() {
     cy.get('[data-testid="slider-text-align-left"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${uuid}"]`).should('have.css', 'text-align', 'left');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'text-align', 'left');
   }
 
   closeTextGroup() {
@@ -229,19 +227,20 @@ export class BannerSliderObject extends PageObject {
       .type('https://www.google.com', { delay: 0 });
   }
 
-  checkButtonLabelAndLink(uuid: string) {
-    cy.get(`[data-testid="banner-button-${uuid}"]`)
+  checkButtonLabelAndLink() {
+    cy.get('[data-testid^="banner-button-"]')
+      .first()
       .should('have.text', 'New Button Label')
       .should('have.attr', 'href', 'https://www.google.com');
   }
 
-  checkButtonSecondary(uuid: string) {
+  checkButtonSecondary() {
     cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
-    cy.get(`[data-testid="banner-button-${uuid}"]`).should('have.class', 'active:text-primary-900');
+    cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:text-primary-900');
   }
 
-  checkButtonPrimary(uuid: string) {
+  checkButtonPrimary() {
     cy.get('[data-testid="slider-button-primary"]').should('exist').click();
-    cy.get(`[data-testid="banner-button-${uuid}"]`).should('have.class', 'active:bg-primary-700');
+    cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:bg-primary-700');
   }
 }

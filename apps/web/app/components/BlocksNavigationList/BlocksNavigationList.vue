@@ -21,7 +21,7 @@
                 'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
               }"
               @click="
-                drawerOpen = false;
+                closeSiteConfigurationDrawer();
                 addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
               "
             >
@@ -64,7 +64,7 @@ const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList()
 
 await getBlocksLists();
 
-const { drawerOpen } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);

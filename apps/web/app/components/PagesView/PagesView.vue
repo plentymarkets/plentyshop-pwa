@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky top-[52px] z-[2]" data-testid="pages-management-drawer">
+  <div class="pages-view sticky z-[2]" data-testid="pages-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
@@ -13,7 +13,7 @@
         >
           <SfIconHelp class="cursor-pointer" @click="openHelpPage" />
         </SfTooltip>
-        <button data-testid="pages-view-close" class="!p-0" @click="closeDrawer">
+        <button data-testid="pages-view-close" class="!p-0" @click="closeSiteConfigurationDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -146,7 +146,7 @@ import {
 } from '@storefront-ui/vue';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 const { locale, defaultLocale } = useI18n();
-const { closeDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer, togglePageModal, settingsCategory } = useSiteConfiguration();
 const { loading, hasChanges, save } = useCategorySettingsCollection();
 
 const { contentItems, itemItems, loadingContent, loadingItem, fetchCategories, resetCategories } =
