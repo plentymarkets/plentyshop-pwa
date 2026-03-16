@@ -382,7 +382,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     const migrate = (blocks: Block[], isRootLevel = true) => {
       blocks.forEach((block, index) => {
-        console.log(`Migrating block: ${block.name}, index: ${index}, isRootLevel: ${isRootLevel}`);
         if (block.name === 'Image' && block.content) {
           block.content = migrateImageContent(block.content);
         }
@@ -392,7 +391,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (blocksToMigrateTextContent.includes(block.name) && block.content) {
-          console.table({ blockName: block.name, isrootlevel: isRootLevel, index: index });
           const isFirstBlock = isRootLevel && index === 0;
 
           block.content = migrateTextCardContent(
