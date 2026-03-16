@@ -1,7 +1,4 @@
-import type {
-  UtilityBarContent,
-  UtilityBarSection,
-} from '~/components/blocks/UtilityBar/types';
+import type { UtilityBarContent, UtilityBarSection } from '~/components/blocks/UtilityBar/types';
 
 import {
   createDefaultContent,

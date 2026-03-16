@@ -41,7 +41,12 @@ describe('UtilityBarSectionsList', () => {
       '<button data-testid="visibility-switch-stub" @click="$emit(\'update:model-value\', !modelValue)">{{ modelValue }}</button>',
   });
 
-  const mountComponent = (overrides: Partial<{ openSectionMenuIndex: number | undefined; currentEditingSectionIndex: number | undefined }> = {}) => {
+  const mountComponent = (
+    overrides: Partial<{
+      openSectionMenuIndex: number | undefined;
+      currentEditingSectionIndex: number | undefined;
+    }> = {},
+  ) => {
     return mount(UtilityBarSectionsList, {
       props: {
         sections,

@@ -4,9 +4,8 @@ import { useUtilityBarState } from '../useUtilityBarState';
 
 describe('useUtilityBarState', () => {
   it('should initialize with default content', () => {
-    const { content, paddingStyles, orderedVisibleSections, orderedActions, isFullSearchMode } = useUtilityBarState(
-      'utility-defaults',
-    );
+    const { content, paddingStyles, orderedVisibleSections, orderedActions, isFullSearchMode } =
+      useUtilityBarState('utility-defaults');
 
     expect(content.value.layout).toEqual({
       paddingTop: 20,
@@ -77,9 +76,9 @@ describe('useUtilityBarState', () => {
     });
   });
 
-  
   it('should provide section order and visibility helpers based on current state', () => {
-    const { setContent, orderedVisibleSections, getSectionFlexOrder, isSectionVisible } = useUtilityBarState('utility-sections');
+    const { setContent, orderedVisibleSections, getSectionFlexOrder, isSectionVisible } =
+      useUtilityBarState('utility-sections');
 
     setContent({
       sectionOrder: { sections: ['search', 'logo', 'actions'] },

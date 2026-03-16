@@ -50,9 +50,7 @@ describe('useUtilityBarForm', () => {
   });
 
   it('should return null when selected section has no matching form file', () => {
-    const sections = computed<UtilityBarSection[]>(() => [
-      { id: 'logo', name: 'UtilityBarUnknown', visible: true },
-    ]);
+    const sections = computed<UtilityBarSection[]>(() => [{ id: 'logo', name: 'UtilityBarUnknown', visible: true }]);
     const form = useUtilityBarForm(sections);
 
     form.editingSectionIndex.value = 0;

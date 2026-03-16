@@ -124,6 +124,5 @@ const blockDisplayName = computed(() => {
     return customTitle.value;
   }
   return blockTypeNames[blockType.value] ?? blockType.value;
-
 });
 </script>
