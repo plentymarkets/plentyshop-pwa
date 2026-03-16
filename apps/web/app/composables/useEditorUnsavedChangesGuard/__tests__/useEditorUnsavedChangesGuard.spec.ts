@@ -27,6 +27,7 @@ const { getEditorUITranslation } = vi.hoisted(() => ({
 const { useBlockTemplates } = vi.hoisted(() => ({
   useBlockTemplates: vi.fn(() => ({
     resetFooterToSaved: vi.fn().mockResolvedValue(undefined),
+    resetHeaderToSaved: vi.fn().mockResolvedValue(undefined),
   })),
 }));
 
@@ -53,6 +54,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   let settingsIsDirty: Ref<boolean>;
   let closeDrawer: ReturnType<typeof vi.fn>;
   let resetFooterToSaved: ReturnType<typeof vi.fn>;
+  let resetHeaderToSaved: ReturnType<typeof vi.fn>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
   let routeLeaveCallback: ((to: unknown, from: unknown, next: (value?: unknown) => void) => void) | null = null;
 
@@ -63,6 +65,7 @@ describe('useEditorUnsavedChangesGuard', () => {
     settingsIsDirty = ref<boolean>(false);
     closeDrawer = vi.fn();
     resetFooterToSaved = vi.fn().mockResolvedValue(undefined);
+    resetHeaderToSaved = vi.fn().mockResolvedValue(undefined);
 
     useEditor.mockReturnValue({
       isEditingEnabled,
@@ -78,6 +81,7 @@ describe('useEditorUnsavedChangesGuard', () => {
 
     useBlockTemplates.mockReturnValue({
       resetFooterToSaved,
+      resetHeaderToSaved,
     });
 
     vi.spyOn(window, 'addEventListener').mockImplementation(

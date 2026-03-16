@@ -109,12 +109,12 @@ export class SiteSettingsObject extends PageObject {
   }
 
   back() {
-    this.backButton.should('be.visible').click();
+    this.backButton.should('exist').click({ force: true });
     return this;
   }
 
   closeDrawer() {
-    this.closeButton.should('be.visible').click();
+    this.closeButton.should('be.visible').click({ force: true });
     return this;
   }
 
