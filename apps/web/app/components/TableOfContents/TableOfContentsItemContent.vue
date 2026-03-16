@@ -69,7 +69,7 @@
           class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
           :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
         />
-        <SfTooltip v-else :label="getEditorTranslation('invisible-blocks-info')" placement="left" :show-delay="500">
+        <SfTooltip v-else :label="getEditorTranslation('invisible-blocks-info')" placement="left">
           <SfIconVisibilityOff
             class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
             :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
