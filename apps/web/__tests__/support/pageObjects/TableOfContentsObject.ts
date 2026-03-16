@@ -21,6 +21,10 @@ export class TableOfContentsObject extends PageObject {
     return cy.get('[data-testid^="toc-item-"]');
   }
 
+  get tableOfContentsItemLabel() {
+    return cy.get('[data-testid="toc-label"]');
+  }
+
   get deleteIcons() {
     return cy.get('[data-testid^="toc-delete-"]');
   }
@@ -54,6 +58,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   expandStructureBlock() {
+    this.tableOfContentsItems.its('length').as('tocItemCountBeforeExpand');
     cy.get('[data-testid^="toc-item-"] button').first().click({ force: true });
     cy.wait(300);
     return this;
@@ -71,7 +76,9 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkChildrenHidden() {
-    this.tableOfContentsItems.should('have.length.lessThan', 17);
+    cy.get<number>('@tocItemCountBeforeExpand').then((initialCount) => {
+      this.tableOfContentsItems.should('have.length', initialCount);
+    });
     return this;
   }
 
@@ -92,12 +99,12 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockIsGrayedOut() {
-    this.tableOfContentsItems.eq(1).should('have.class', 'opacity-50');
+    this.tableOfContentsItemLabel.eq(1).should('have.class', 'opacity-50');
     return this;
   }
 
   checkBlockNotVisibleOnPage() {
-    this.tableOfContentsItems.should('have.length.lessThan', 17);
+    cy.get('[data-testid^="banner-image-"]').should('not.exist');
     return this;
   }
 
@@ -107,18 +114,18 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockVisibleOnPage() {
-    this.tableOfContentsItems.should('have.length.greaterThan', 16);
+    cy.get('[data-testid^="banner-image-"]').should('exist');
     return this;
   }
 
   deleteBlockFromToc() {
-    this.deleteIcons.first().click({ force: true });
+    this.deleteIcons.eq(1).click({ force: true });
     cy.wait(500);
     return this;
   }
 
-  checkBlockDeletedFromToc(initialCount: number) {
-    this.tableOfContentsItems.should('have.length', initialCount - 1);
+  checkBlockDeletedFromToc() {
+    this.tableOfContentsItems.should('not.contain', 'Carousel');
     return this;
   }
 
@@ -140,7 +147,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlocksConfigurationDrawerOpen() {
-    cy.getByTestId('block-edit-view').within(() => {
+    this.blocksConfigurationDrawer.within(() => {
       cy.getByTestId('close-editor-button').should('be.visible');
     });
     return this;
@@ -175,9 +182,5 @@ export class TableOfContentsObject extends PageObject {
     this.tableOfContentsDrawer.should('be.visible');
     this.blocksConfigurationDrawer.should('be.visible');
     return this;
-  }
-
-  getBlockCount() {
-    return cy.get('[data-testid^="toc-item-"]').then(($items) => $items.length);
   }
 }

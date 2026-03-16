@@ -3,7 +3,6 @@
     role="button"
     tabindex="0"
     class="flex items-center justify-between cursor-pointer transition-colors gap-1 group"
-    :class="{ 'opacity-50': !isVisible }"
     :data-testid="`toc-item-${item.uuid}`"
     @click="editBlock(item.block)"
     @keydown.enter="editBlock(item.block)"

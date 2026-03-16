@@ -52,12 +52,8 @@ describe('Table of Contents & Double Drawer', () => {
 
   it('should delete block via delete icon', () => {
     toc.openTableOfContents();
-    cy.get('[data-testid^="toc-item-"]').then(($items) => {
-      const initialBlockCount = $items.length;
-      toc.deleteBlockFromToc();
-      toc.checkBlockDeletedFromToc(initialBlockCount);
-      cy.get('[data-testid^="toc-item-"]').should('have.length', initialBlockCount - 1);
-    });
+    toc.deleteBlockFromToc();
+    toc.checkBlockDeletedFromToc();
   });
 
   it('should scroll to block when clicking on it in TOC', () => {

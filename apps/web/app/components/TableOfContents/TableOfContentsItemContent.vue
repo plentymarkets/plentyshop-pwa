@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <span class="truncate text-sm" :class="{ 'opacity-50': !isVisible }" :title="label">
+      <span data-testid="toc-label" class="truncate text-sm" :class="{ 'opacity-50': !isVisible }" :title="label">
         {{ label }}
       </span>
     </div>
