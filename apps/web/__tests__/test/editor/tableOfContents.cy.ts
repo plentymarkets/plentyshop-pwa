@@ -85,4 +85,3 @@ describe('Table of Contents & Double Drawer', () => {
     toc.checkBothDrawersStillVisible();
   });
 });
-

@@ -181,4 +181,3 @@ export class TableOfContentsObject extends PageObject {
     return cy.get('[data-testid^="toc-item-"]').then(($items) => $items.length);
   }
 }
-
