@@ -9,8 +9,7 @@
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
       </template>
-      <!-- TODO: use another check, because with RTE disabled we wouldn't display anything when discription is undefined. we should probalby use a fallback to an empty string here. -->
-      <EditorRichTextEditorForm v-if="recommendedBlock.text.htmlDescription" v-model="recommendedBlock.text.htmlDescription">
+      <EditorRichTextEditorForm :modelValue="recommendedBlock.text.htmlDescription ?? ''" @update:modelValue="recommendedBlock.text.htmlDescription = $event">
         <div v-if="recommendedBlock.text" class="p-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
           <SfInput
