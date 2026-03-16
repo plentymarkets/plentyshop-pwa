@@ -19,7 +19,7 @@
                 <div class="flex items-center gap-3 flex-1">
                   <button
                     class="drag-action-handle cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600"
-                    :aria-label="getEditorTranslation('drag-action-aria')"
+                    :aria-label="getEditorTranslation('drag-action-arial')"
                   >
                     <NuxtImg width="16" height="16" :src="dragIcon" />
                   </button>
@@ -108,7 +108,7 @@ const toggleActionVisibility = (actionId: ActionType, visible: boolean) => {
   "en": {
     "actions-section-label": "Actions Settings",
     "actions-order-label": "Actions Order",
-    "drag-action-aria": "Drag to reorder action",
+    "drag-action-arial": "Drag to reorder action",
     "toggle-action-arial": "Toggle action visibility",
     "language-action-label": "Language Selector",
     "wishlist-action-label": "Wishlist",
@@ -118,7 +118,7 @@ const toggleActionVisibility = (actionId: ActionType, visible: boolean) => {
   "de": {
     "actions-section-label": "Actions Settings",
     "actions-order-label": "Actions Order",
-    "drag-action-aria": "Drag to reorder action",
+    "drag-action-arial": "Drag to reorder action",
     "toggle-action-arial": "Toggle action visibility",
     "language-action-label": "Language Selector",
     "wishlist-action-label": "Wishlist",

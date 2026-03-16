@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editingSectionIndex !== undefined && sections[editingSectionIndex]" class="space-y-0">
+  <div v-if="editingSectionIndex !== undefined && sections[editingSectionIndex] && sectionForm" class="space-y-0">
     <component :is="sectionForm" :uuid="uuid" />
   </div>
 </template>

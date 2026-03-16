@@ -1,6 +1,6 @@
 import type { UtilityBarSection } from '~/components/blocks/UtilityBar/types';
 
-export type UseUtilityBarCommandsOptions = {
+export type UseUtilityBarActionsOptions = {
   sections: { value: UtilityBarSection[] };
   editingSectionIndex: Ref<number | undefined>;
   openSectionMenuIndex: Ref<number | undefined>;

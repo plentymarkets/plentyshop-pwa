@@ -1,7 +1,7 @@
-import type { UseUtilityBarCommandsOptions } from './types';
+import type { UseUtilityBarActionsOptions } from './types';
 import type { SectionType } from '~/components/blocks/UtilityBar/types';
 
-export const useUtilityBarActions = (options: UseUtilityBarCommandsOptions) => {
+export const useUtilityBarActions = (options: UseUtilityBarActionsOptions) => {
   const { sections, editingSectionIndex, openSectionMenuIndex, getEditorTranslation, emit } = options;
 
   const sectionLabels = computed(() => ({
