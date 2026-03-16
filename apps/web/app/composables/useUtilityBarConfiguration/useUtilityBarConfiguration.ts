@@ -1,30 +1,6 @@
 import type { UtilityBarProps } from '~/components/blocks/UtilityBar/types';
 import { deepEqual } from '~/utils/jsonHelper';
-
-const collectUtilityBarBlocks = (blocks: unknown): UtilityBarProps[] => {
-  if (!Array.isArray(blocks)) {
-    return [];
-  }
-
-  const matches: UtilityBarProps[] = [];
-
-  for (const candidate of blocks) {
-    if (!candidate || typeof candidate !== 'object') {
-      continue;
-    }
-
-    const block = candidate as UtilityBarProps;
-    if (block.name === 'UtilityBar') {
-      matches.push(block);
-    }
-
-    if (Array.isArray(block.content)) {
-      matches.push(...collectUtilityBarBlocks(block.content));
-    }
-  }
-
-  return matches;
-};
+import { collectUtilityBarBlocks } from './helpers/collect-utility-bar-blocks';
 
 /**
  * Manages UtilityBar block data retrieval and syncs it to the global state store.

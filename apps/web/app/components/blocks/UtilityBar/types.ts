@@ -47,7 +47,7 @@ export type SectionOrderSettings = {
 export type UtilityBarColor = {
   iconColor: string;
   backgroundColor: string;
-}
+};
 
 export type UtilityBarContent = {
   layout: SpacingSettings;
