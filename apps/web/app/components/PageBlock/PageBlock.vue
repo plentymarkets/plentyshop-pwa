@@ -3,7 +3,7 @@
     v-if="block.meta"
     :key="block.meta.uuid"
     :data-uuid="block.meta.uuid"
-    class="h-full test"
+    class="h-full"
     @mouseenter="onBlockHover"
     @mouseleave="onBlockUnhover"
   >
