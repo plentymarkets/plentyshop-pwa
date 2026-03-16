@@ -37,6 +37,18 @@ export class TableOfContentsObject extends PageObject {
     return cy.getByTestId('toc-add-block');
   }
 
+  get structureBlockButtons() {
+    return cy.get('[data-testid^="toc-item-"] button');
+  }
+
+  get bannerImageBlocks() {
+    return cy.get('[data-testid^="banner-image-"]');
+  }
+
+  get blockPlaceholder() {
+    return cy.getByTestId('block-placeholder');
+  }
+
   openTableOfContents() {
     this.tableOfContentsButton.should('be.visible').click();
     return this;
@@ -53,13 +65,13 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkCollapsibleArrowForStructureBlocks() {
-    cy.get('[data-testid^="toc-item-"] button').should('have.length.greaterThan', 0);
+    this.structureBlockButtons.should('have.length.greaterThan', 0);
     return this;
   }
 
   expandStructureBlock() {
     this.tableOfContentsItems.its('length').as('tocItemCountBeforeExpand');
-    cy.get('[data-testid^="toc-item-"] button').first().click({ force: true });
+    this.structureBlockButtons.first().click({ force: true });
     cy.wait(300);
     return this;
   }
@@ -70,7 +82,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   collapseStructureBlock() {
-    cy.get('[data-testid^="toc-item-"] button').first().click({ force: true });
+    this.structureBlockButtons.first().click({ force: true });
     cy.wait(300);
     return this;
   }
@@ -104,7 +116,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockNotVisibleOnPage() {
-    cy.get('[data-testid^="banner-image-"]').should('not.exist');
+    this.bannerImageBlocks.should('not.exist');
     return this;
   }
 
@@ -114,7 +126,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockVisibleOnPage() {
-    cy.get('[data-testid^="banner-image-"]').should('exist');
+    this.bannerImageBlocks.should('exist');
     return this;
   }
 
@@ -160,7 +172,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkPlaceholderAppears() {
-    cy.getByTestId('block-placeholder').should('be.visible');
+    this.blockPlaceholder.should('be.visible');
     return this;
   }
 
@@ -174,7 +186,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockAdded(initialCount: number) {
-    cy.get('[data-testid^="toc-item-"]').should('have.length', initialCount + 1);
+    this.tableOfContentsItems.should('have.length', initialCount + 1);
     return this;
   }
 
