@@ -3,6 +3,7 @@
     role="button"
     tabindex="0"
     class="flex items-center justify-between cursor-pointer transition-colors gap-1 group"
+    :class="{ 'opacity-50': !isVisible }"
     :data-testid="`toc-item-${item.uuid}`"
     @click="editBlock(item.block)"
     @keydown.enter="editBlock(item.block)"
@@ -43,11 +44,14 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { TableOfContentsItemProps } from './types';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
+import { useBlocksVisibility } from '~/composables/useBlocksVisibility/useBlocksVisibility';
 
 const props = defineProps<TableOfContentsItemProps>();
 
 const { selectedUuid, hoveredUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
   useTableOfContents();
+const { isBlockVisible } = useBlocksVisibility();
 
 const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
+const isVisible = computed(() => isBlockVisible(props.item.block));
 </script>
