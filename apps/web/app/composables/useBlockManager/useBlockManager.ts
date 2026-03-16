@@ -35,9 +35,8 @@ export const useBlockManager = () => {
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
-  const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
+  const { openDrawerWithView, closeBlocksConfigurationDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { isFooterBlock } = useBlockTemplates();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -195,6 +194,12 @@ export const useBlockManager = () => {
     return index === lastNonFooterIndex;
   };
 
+  const isFirstContentBlock = (index: number): boolean => {
+    if (!data.value || data.value.length === 0) return false;
+    const firstContentIndex = data.value.findIndex((block) => !isHeaderContainerBlock(block));
+    return index === firstContentIndex;
+  };
+
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
     for (const [index, block] of blocks.entries()) {
       if (block.meta?.uuid === targetUuid) {
@@ -245,7 +250,7 @@ export const useBlockManager = () => {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-      closeDrawer();
+      closeBlocksConfigurationDrawer();
     }
   };
 
@@ -391,6 +396,7 @@ export const useBlockManager = () => {
     updateBlock,
     changeBlockPosition,
     isLastNonFooterBlock,
+    isFirstContentBlock,
     addNewBlock,
     scrollIntoBlockView,
     handleEdit,

@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
+  <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
     <UiAccordionItem
       v-model="textSettings"
       data-testid="open-layout-settings"

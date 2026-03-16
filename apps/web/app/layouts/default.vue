@@ -1,14 +1,14 @@
 <template>
   <div>
-    <!-- <UiHeader /> -->
+    <UiHeaderBlocks v-if="enableEditableHeader" />
+    <UiHeader v-else />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
     <main>
       <slot />
     </main>
-    <!-- <UiNavbarBottom v-if="viewport.isLessThan('lg')" /> -->
-
+    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
     <UiFooterBlocks />
@@ -20,7 +20,8 @@
 import type { DefaultLayoutProps } from '~/layouts/types';
 
 defineProps<DefaultLayoutProps>();
-// const viewport = useVi ewport();
+
+const { enableEditableHeader } = useRuntimeConfig().public;
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 

@@ -2,6 +2,7 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlockTemplates } from '../useBlockTemplates';
 import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
+import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 
 const mockFooterBlock: FooterBlock = {
@@ -118,6 +119,7 @@ const createMockState = () => ({
 describe('useBlockTemplates', () => {
   let mockStateRef: ReturnType<typeof createMockState>;
   let mockFooterCacheRef: { value: FooterBlock | null };
+  let mockHeaderContainerCacheRef: { value: HeaderContainerBlock | null };
   let mockGetBlocks: ReturnType<typeof vi.fn>;
   let mockDoSaveBlocks: ReturnType<typeof vi.fn>;
   let mockGetCategoryTemplate: ReturnType<typeof vi.fn>;
@@ -128,10 +130,13 @@ describe('useBlockTemplates', () => {
     stateCallCount = 0;
     mockStateRef = createMockState();
     mockFooterCacheRef = { value: null };
+    mockHeaderContainerCacheRef = { value: null };
 
     useState.mockImplementation(() => {
       stateCallCount++;
-      return stateCallCount === 1 ? mockStateRef : mockFooterCacheRef;
+      if (stateCallCount === 1) return mockStateRef;
+      if (stateCallCount === 2) return mockFooterCacheRef;
+      return mockHeaderContainerCacheRef;
     });
 
     mockGetBlocks = vi.fn();
@@ -425,46 +430,50 @@ describe('useBlockTemplates', () => {
   });
 
   describe('setupBlocks', () => {
-    it('should setup blocks in state and automatically add footer', () => {
+    it('should wrap content blocks with HeaderContainer first and Footer last', () => {
       useBlockTemplates().setupBlocks(mockBlocks);
 
-      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
-      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
-      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
-      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
+      expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[2]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[3]?.name).toBe('Footer');
       expect(mockStateRef.value.cleanData).toBeDefined();
     });
 
-    it('should add footer even when no blocks provided', () => {
+    it('should produce only HeaderContainer and Footer when no content blocks are given', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate([]);
       setupBlocks([]);
 
-      expect(mockStateRef.value.data).toHaveLength(1);
-      expect(mockStateRef.value.data[0]?.name).toBe('Footer');
+      expect(mockStateRef.value.data).toHaveLength(2);
+      expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
+      expect(mockStateRef.value.data[1]?.name).toBe('Footer');
     });
 
-    it('should fallback to default template when server returns no content blocks', () => {
+    it('should fall back to the default template when server returns no content blocks', () => {
       const { setupBlocks, setDefaultTemplate } = useBlockTemplates();
       setDefaultTemplate(mockBlocks);
       setupBlocks([]);
 
-      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
-      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
-      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
-      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
+      expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[2]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[3]?.name).toBe('Footer');
     });
 
-    it('should use default footer when cache is empty, ignoring any footer in fetched blocks', () => {
+    it('should replace fetched footer with the default footer when footer cache is empty', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooter = [...mockBlocks, mockFooterBlock];
       useBlockTemplates().setupBlocks(blocksWithFooter);
       expect(mockFooterCacheRef.value).toBeNull();
-      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
-      expect(mockStateRef.value.data[0]).toEqual(mockBlocks[0]);
-      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[1]);
-      expect(mockStateRef.value.data[2]?.name).toBe('Footer');
-      expect(mockStateRef.value.data[2]).not.toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
+      expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
+      expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
+      expect(mockStateRef.value.data[2]).toEqual(mockBlocks[1]);
+      expect(mockStateRef.value.data[3]?.name).toBe('Footer');
+      expect(mockStateRef.value.data[3]).not.toEqual(mockFooterBlock);
     });
 
     it('should not write to footerCache', () => {
@@ -473,7 +482,7 @@ describe('useBlockTemplates', () => {
       expect(mockFooterCacheRef.value).toBeNull();
     });
 
-    it('should prioritize cached footer over footer in fetchedBlocks', () => {
+    it('should use the cached footer instead of the footer from fetched blocks', () => {
       const cachedFooter: FooterBlock = {
         ...mockFooterBlock,
         meta: { uuid: 'cached-uuid', isGlobalTemplate: true },
@@ -496,17 +505,17 @@ describe('useBlockTemplates', () => {
 
       useBlockTemplates().setupBlocks(blocksWithFooter);
       expect(mockFooterCacheRef.value).toEqual(cachedFooter);
-      expect(mockStateRef.value.data[2]).toEqual(cachedFooter);
+      expect(mockStateRef.value.data[3]).toEqual(cachedFooter);
     });
 
-    it('should normalize footer position to the end using cache or default', () => {
+    it('should always place the footer last regardless of its position in the input blocks', () => {
       mockFooterCacheRef.value = null;
       const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
       useBlockTemplates().setupBlocks(blocksWithFooterFirst);
       expect(mockFooterCacheRef.value).toBeNull();
-      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 1);
-      expect(mockStateRef.value.data[mockBlocks.length]?.name).toBe('Footer');
-      expect(mockStateRef.value.data[mockBlocks.length]).not.toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
+      expect(mockStateRef.value.data[mockBlocks.length + 1]?.name).toBe('Footer');
+      expect(mockStateRef.value.data[mockBlocks.length + 1]).not.toEqual(mockFooterBlock);
     });
   });
 

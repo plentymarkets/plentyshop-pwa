@@ -1,7 +1,10 @@
 <template>
   <div
     class="flex items-center justify-between flex-1 px-2 py-1 rounded-md transition-colors hover:bg-editor-toc-highlight hover:text-black"
-    :class="{ 'bg-editor-toc-selected text-white': isSelected }"
+    :class="{
+      'bg-editor-toc-selected text-white': isSelected,
+      'bg-editor-toc-highlight': isHovered && !isSelected,
+    }"
   >
     <div class="flex items-center gap-2 min-w-0 flex-1">
       <slot name="arrow">
@@ -9,7 +12,7 @@
       </slot>
 
       <div class="shrink-0 w-5 h-5 relative">
-        <div class="transition-opacity" :class="{ 'group-hover:opacity-0': isRoot }">
+        <div class="transition-opacity" :class="{ 'group-hover:opacity-0': isRoot && !isFooterBlock(block) }">
           <span
             v-if="getBlockIconSvg(blockName)"
             class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"
@@ -31,7 +34,7 @@
           />
         </div>
         <div
-          v-if="isRoot"
+          v-if="isRoot && !isFooterBlock(block)"
           class="toc-drag-handle absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-grab active:cursor-grabbing transition-opacity"
           @mousedown.stop
         >
@@ -66,11 +69,12 @@
           class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
           :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
         />
-        <SfIconVisibilityOff
-          v-else
-          class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
-          :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
-        />
+        <SfTooltip v-else :label="getEditorTranslation('invisible-blocks-info')" placement="left">
+          <SfIconVisibilityOff
+            class="!w-5 !h-5 text-neutral-600 group-hover:text-black"
+            :class="{ '!text-white': isSelected, 'group-hover:!text-black': isSelected }"
+          />
+        </SfTooltip>
       </button>
     </div>
     <div v-else class="flex items-center gap-1 shrink-0 h-[30px]" />
@@ -78,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconDelete, SfIconVisibility, SfIconVisibilityOff } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconVisibility, SfIconVisibilityOff, SfTooltip } from '@storefront-ui/vue';
 import { getBlockIconSvg } from '~/utils/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import dragIcon from '~/assets/icons/paths/drag.svg';
@@ -87,10 +91,11 @@ import type { TableOfContentsItemContentProps } from './types';
 const props = defineProps<TableOfContentsItemContentProps>();
 
 const { deleteBlock } = useBlockManager();
-const { isFooterBlock } = useBlockTemplates();
 const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
+const { hoveredUuid } = useTableOfContents();
 
 const isVisible = computed(() => isBlockVisible(props.block));
+const isHovered = computed(() => hoveredUuid.value === props.uuid);
 
 const handleToggleVisibility = () => {
   toggleBlockVisibility(props.block);
@@ -106,12 +111,14 @@ const handleDelete = () => {
   "en": {
     "delete-block-label": "Delete block",
     "hide-block-label": "Hide block",
-    "show-block-label": "Show block"
+    "show-block-label": "Show block",
+    "invisible-blocks-info": "Hidden blocks are still loaded. A large number of hidden blocks may affect your shop's performance."
   },
   "de": {
     "delete-block-label": "Delete block",
     "hide-block-label": "Hide block",
-    "show-block-label": "Show block"
+    "show-block-label": "Show block",
+    "invisible-blocks-info": "Hidden blocks are still loaded. A large number of hidden blocks may affect your shop's performance."
   }
 }
 </i18n>

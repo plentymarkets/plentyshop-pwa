@@ -2,6 +2,8 @@ import { PageObject } from './PageObject';
 
 export class RecommendedProductsObject extends PageObject {
   checkIsRecommendedBlockIsVisible = () => {
+    cy.getByTestId('recommended-block').first().scrollIntoView({ duration: 500 });
+    cy.wait(1000);
     cy.getByTestId('recommended-block').should('be.visible');
 
     return this;
