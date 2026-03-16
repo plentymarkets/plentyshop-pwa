@@ -4,7 +4,6 @@
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <!-- TODO: improve if check and give textalignment -->
     <TextContent :text="props.content.text" v-if="useRuntimeConfig().public.enableRichTextEditorV2" />
     <div v-else>
       <h1
