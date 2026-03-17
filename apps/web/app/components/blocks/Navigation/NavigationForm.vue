@@ -169,21 +169,20 @@ const navigationBlock = computed<NavigationContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
   const content = rawContent as Partial<NavigationContent>;
 
-  return {
-    layout: {
-      paddingTop: content.layout?.paddingTop ?? 0,
-      paddingBottom: content.layout?.paddingBottom ?? 0,
-      paddingLeft: content.layout?.paddingLeft ?? 0,
-      paddingRight: content.layout?.paddingRight ?? 0,
-    },
-    text: {
-      textAlignment: content.text?.textAlignment ?? 'left',
-    },
-    color: {
-      backgroundColor: content.color?.backgroundColor ?? '',
-      textColor: content.color?.textColor ?? '',
-    },
-  };
+  if (!content.layout) content.layout = {};
+  content.layout.paddingTop = content.layout.paddingTop ?? 0;
+  content.layout.paddingBottom = content.layout.paddingBottom ?? 0;
+  content.layout.paddingLeft = content.layout.paddingLeft ?? 0;
+  content.layout.paddingRight = content.layout.paddingRight ?? 0;
+
+  if (!content.text) content.text = {};
+  content.text.textAlignment = content.text.textAlignment ?? 'left';
+
+  if (!content.color) content.color = {};
+  content.color.backgroundColor = content.color.backgroundColor ?? '';
+  content.color.textColor = content.color.textColor ?? '';
+
+  return content as NavigationContent;
 });
 </script>
 

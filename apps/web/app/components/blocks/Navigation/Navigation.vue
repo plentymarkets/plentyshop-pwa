@@ -2,7 +2,8 @@
   <div ref="referenceRef" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
-        class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
+        :class="navigationContainerClasses"
+        :style="navigationContainerStyle"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -20,6 +21,7 @@
             :to="localePath(generateCategoryLink(menuNode))"
             data-testid="category-button"
             :class="categoryButtonClasses"
+            :style="categoryButtonStyle"
             tabindex="0"
             aria-haspopup="true"
             :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
@@ -36,6 +38,7 @@
             <SfIconChevronRight
               aria-hidden="true"
               class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+              :style="categoryButtonStyle"
             />
           </NuxtLink>
 
@@ -45,6 +48,7 @@
             :to="localePath(generateCategoryLink(menuNode))"
             data-testid="category-button"
             :class="categoryButtonClasses"
+            :style="categoryButtonStyle"
             tabindex="0"
             @keydown.left="focusPreviousCategory(index)"
             @keydown.right="focusNextCategory(index)"
@@ -210,9 +214,27 @@ import {
 import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
+import type { NavigationProps } from './types';
 
-const props = withDefaults(defineProps<Partial<MegaMenuProps>>(), {
+type NavigationBlockProps = Partial<MegaMenuProps> & Partial<NavigationProps>;
+
+const props = withDefaults(defineProps<NavigationBlockProps>(), {
   categories: () => [],
+  content: () => ({
+    layout: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
+    text: {
+      textAlignment: 'left',
+    },
+    color: {
+      backgroundColor: '',
+      textColor: '',
+    },
+  }),
 });
 const NuxtLink = resolveComponent('NuxtLink');
 
@@ -239,7 +261,7 @@ const triggerReference = ref();
 const tappedCategories = ref<Map<number, boolean>>(new Map());
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
-  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900';
+  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 hover:bg-secondary-100 active:!bg-neutral-300';
 let removeHook: () => void;
 
 const trapFocusOptions = {
@@ -247,6 +269,46 @@ const trapFocusOptions = {
   arrowKeysUpDown: false,
   initialFocus: false,
 } as const;
+
+const resolvedContent = computed(() => ({
+  layout: {
+    paddingTop: props.content?.layout?.paddingTop ?? 0,
+    paddingBottom: props.content?.layout?.paddingBottom ?? 0,
+    paddingLeft: props.content?.layout?.paddingLeft ?? 0,
+    paddingRight: props.content?.layout?.paddingRight ?? 0,
+  },
+  text: {
+    textAlignment: props.content?.text?.textAlignment ?? 'left',
+  },
+  color: {
+    backgroundColor: props.content?.color?.backgroundColor ?? '',
+    textColor: props.content?.color?.textColor ?? '',
+  },
+}));
+
+const navigationContainerClasses = computed(() => {
+  switch (resolvedContent.value.text.textAlignment) {
+    case 'center':
+      return 'flex flex-wrap justify-center border-b border-b-neutral-200 border-b-solid';
+    case 'right':
+      return 'flex flex-wrap justify-end border-b border-b-neutral-200 border-b-solid';
+    default:
+      return 'flex flex-wrap justify-start border-b border-b-neutral-200 border-b-solid';
+  }
+});
+
+const navigationContainerStyle = computed(() => ({
+  backgroundColor: resolvedContent.value.color.backgroundColor || 'transparent',
+  color: resolvedContent.value.color.textColor || undefined,
+  paddingTop: `${resolvedContent.value.layout.paddingTop}px`,
+  paddingBottom: `${resolvedContent.value.layout.paddingBottom}px`,
+  paddingLeft: `${resolvedContent.value.layout.paddingLeft}px`,
+  paddingRight: `${resolvedContent.value.layout.paddingRight}px`,
+}));
+
+const categoryButtonStyle = computed(() => ({
+  color: resolvedContent.value.color.textColor || undefined,
+}));
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
 

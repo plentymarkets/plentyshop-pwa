@@ -90,7 +90,7 @@
       },
       {
         "title": "Navigation Default",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility-bar-thumbnail.svg",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/navigation-thumbnail.svg",
         "template": {
           "en": {
             "name": "Navigation",
@@ -107,8 +107,8 @@
                 "textAlignment": "left"
               },
               "color": {
-                "backgroundColor": "rgb(var(--colors-2-primary-500))",
-                "textColor": "#ffffff"
+                "backgroundColor": "#ffffff",
+                "textColor": "#161A16"
               }
             }
           },
@@ -127,8 +127,8 @@
                 "textAlignment": "left"
               },
               "color": {
-                "backgroundColor": "rgb(var(--colors-2-primary-500))",
-                "textColor": "#ffffff"
+                "backgroundColor": "#ffffff",
+                "textColor": "#161A16"
               }
             }
           }
