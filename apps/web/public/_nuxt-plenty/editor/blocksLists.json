@@ -1,13 +1,13 @@
 {
-  "utility-bar": {
-    "category": "utility-bar",
+  "header": {
+    "category": "header",
     "accessControl": ["content", "productCategory", "product"],
-    "title": "Utility Bar",
-    "blockName": "UtilityBar",
+    "title": "Header",
+    "blockName": "Header",
     "variations": [
       {
         "title": "Utility Bar Default",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility_bar.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility-bar-thumbnail.svg",
         "template": {
           "en": {
             "name": "UtilityBar",
