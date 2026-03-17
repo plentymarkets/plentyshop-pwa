@@ -27,6 +27,8 @@
         :is="currentComponent"
         v-if="currentComponent"
         ref="childComponentRef"
+        :key="blockUuid"
+        @vue:mounted="handleBackClick"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
       />
