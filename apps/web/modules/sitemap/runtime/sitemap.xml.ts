@@ -12,7 +12,6 @@ const applyTrailingSlash = (url: string, mode: string): string => {
   try {
     urlObj = new URL(url);
   } catch {
-    // If the input is not a valid absolute URL, leave it unchanged
     return url;
   }
 
@@ -32,7 +31,7 @@ const applyTrailingSlash = (url: string, mode: string): string => {
       return url;
     case 'never':
       if (pathname.endsWith('/')) {
-        urlObj.pathname = pathname.slice(0, -1) || '/';
+        urlObj.pathname = pathname.slice(0, -1) || '';
         return urlObj.toString();
       }
       return url;
