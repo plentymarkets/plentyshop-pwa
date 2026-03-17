@@ -10,7 +10,7 @@
   },
   "scripts": {
     "docs:dev": "vitepress dev",
-    "docs:build": " vitepress build",
+    "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "format": "prettier .",
     "format:fix": "prettier --write .",
