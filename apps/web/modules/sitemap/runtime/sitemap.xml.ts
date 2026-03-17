@@ -52,9 +52,7 @@ export default defineEventHandler((event) => {
   const urls: SitemapURL[] = [];
   const lastmod = buildTime;
 
-  for (const page of sitemapPages) {
-    const pagePath = page.path === '/' ? '' : page.path;
-
+  for (const pagePath of sitemapPages) {
     if (locales.length > 0) {
       const alternate = locales.map((locale) => {
         const prefix = locale === defaultLocale ? '' : `/${locale}`;

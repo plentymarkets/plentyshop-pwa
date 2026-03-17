@@ -1,5 +1,4 @@
 import { createResolver, defineNuxtModule, addServerHandler } from 'nuxt/kit';
-import type { NuxtPage } from '@nuxt/schema';
 
 export interface ModuleOptions {
   locales?: string[];
@@ -16,7 +15,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {},
   setup(_options, nuxt) {
     const resolver = createResolver(import.meta.url);
-    const sitemapPages: NuxtPage[] = [];
+    const sitemapPages: string[] = [];
     const buildTime = new Date().toISOString();
 
     nuxt.options.runtimeConfig.public.plentySitemap = {
@@ -40,7 +39,7 @@ export default defineNuxtModule<ModuleOptions>({
         });
 
         if (!isExcluded) {
-          sitemapPages.push(page);
+          sitemapPages.push(page.path);
         }
       });
     });
