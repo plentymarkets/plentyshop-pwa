@@ -36,7 +36,6 @@ describe('Table of Contents & Double Drawer', () => {
 
   it('should toggle block visibility with eye icon', () => {
     toc.openTableOfContents();
-    toc.checkDeleteIconExists();
     toc.checkVisibilityIconExists();
     toc.toggleBlockVisibility();
     toc.checkBlockIsGrayedOut();
@@ -48,6 +47,7 @@ describe('Table of Contents & Double Drawer', () => {
 
   it('should delete block via delete icon', () => {
     toc.openTableOfContents();
+    toc.checkDeleteIconExists();
     toc.deleteBlockFromToc();
     toc.checkBlockDeletedFromToc();
   });
