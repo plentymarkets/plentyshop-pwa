@@ -56,6 +56,10 @@ apps/web/cypress.env.json
 # build
 lib/
 
+# docs
+.vitepress/dist
+.vitepress/cache
+
 # docs build
 apps/web/docs/reference/
 apps/web/reference/
