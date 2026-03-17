@@ -23,6 +23,7 @@
       <template v-if="isStructureBlock(item.block)" #arrow>
         <button
           class="shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-editor-icon-hover transition-colors p-0.5 -ml-0.5"
+          :data-testid="`toc-expand-${item.uuid}`"
           @click.stop="toggleBlockExpansion(item.uuid)"
         >
           <SfIconChevronRight
