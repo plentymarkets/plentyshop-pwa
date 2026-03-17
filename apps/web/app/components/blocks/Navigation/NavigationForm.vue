@@ -137,17 +137,19 @@
           />
         </div>
       </div>
-      <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">
-          {{ getEditorTranslation('spacing-around') }}
-        </span>
-      </div>
     </div>
   </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
-import { SfIconArrowUpward, SfIconArrowDownward, SfIconArrowBack, SfIconArrowForward } from '@storefront-ui/vue';
+import {
+  SfIconArrowUpward,
+  SfIconArrowDownward,
+  SfIconArrowBack,
+  SfIconArrowForward,
+  SfInput,
+  SfIconCheck,
+} from '@storefront-ui/vue';
 
 import type { NavigationFormProps, NavigationContent } from './types';
 const props = defineProps<NavigationFormProps>();
@@ -188,54 +190,28 @@ const navigationBlock = computed<NavigationContent>(() => {
 <i18n lang="json">
 {
   "en": {
-    "text-group-label": "Text",
-    "pretitle-label": "Pre-title",
-    "main-title-label": "Main title",
-    "subtitle-label": "Subtitle",
-    "html-description-label": "HTML Description",
     "text-color-label": "Text Color",
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
 
-    "button-group-label": "Button",
-    "button-text-label": "Label",
-    "button-link-label": "Link target",
-    "outline-label": "Outline",
-    "button-variant-primary-label": "Primary",
-    "button-variant-secondary-label": "Secondary",
-
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "Keep background transparent"
+    "spacing-around": "Spacing around the text elements"
   },
   "de": {
-    "text-group-label": "Text",
-    "pretitle-label": "Pre-title",
-    "main-title-label": "Main title",
-    "subtitle-label": "Subtitle",
-    "html-description-label": "HTML Description",
     "text-color-label": "Text Color",
     "text-align-label": "Text alignment",
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
 
-    "button-group-label": "Button",
-    "button-text-label": "Label",
-    "button-link-label": "Link target",
-    "outline-label": "Outline",
-    "button-variant-primary-label": "Primary",
-    "button-variant-secondary-label": "Secondary",
-
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "or keep transparent"
+    "spacing-around": "Spacing around the text elements"
   }
 }
 </i18n>
