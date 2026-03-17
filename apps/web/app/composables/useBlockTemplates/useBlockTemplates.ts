@@ -402,8 +402,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (block.name === 'Banner' && block.content && config.enableRichTextEditorV2) {
-          const content = block.content as BannerProps['content'];
-          const textAlignment = (content?.text as any)?.textAlignment;
+          const content = (block as BannerProps).content;
+          const textAlignment = content.text?.textAlignment;
           if (textAlignment && !content?.button?.alignment) {
             content.button = content.button ?? {};
             content.button.alignment = textAlignment;

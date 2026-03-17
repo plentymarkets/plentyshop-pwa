@@ -10,7 +10,11 @@
       </template>
 
       <div>
-        <EditorRichTextEditorForm :model-value="newsletterBlock.text.htmlDescription ?? ''" :text-align="'center'" @update:model-value="newsletterBlock.text.htmlDescription = $event">
+        <EditorRichTextEditorForm
+          :model-value="newsletterBlock.text.htmlDescription ?? ''"
+          :text-align="'center'"
+          @update:model-value="newsletterBlock.text.htmlDescription = $event"
+        >
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
             <SfInput

@@ -65,9 +65,7 @@ const { hexToRgba, getImageHeight, getTextAlignment, getContentPosition } = useB
 const config = useRuntimeConfig();
 
 const rteAlignment = computed(() =>
-  config.public.enableRichTextEditorV2
-    ? banner.value.button?.alignment
-    : banner.value.text?.textAlignment
+  config.public.enableRichTextEditorV2 ? banner.value.button?.alignment : banner.value.text?.textAlignment,
 );
 
 const getImageUrl = () => {

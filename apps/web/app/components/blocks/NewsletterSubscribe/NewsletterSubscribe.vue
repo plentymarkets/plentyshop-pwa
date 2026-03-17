@@ -4,7 +4,10 @@
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <TextContent v-if="useRuntimeConfig().public.enableRichTextEditorV2" :text="props.content.text" />
+    <TextContent
+      v-if="useRuntimeConfig().public.enableRichTextEditorV2"
+      :text="{ ...props.content.text, textAlignment: props.content.text?.textAlignment ?? 'center' }"
+    />
     <div v-else>
       <h1
         v-if="props.index === 0"
@@ -162,7 +165,6 @@ const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
-props.content.text.textAlignment = props.content.text.textAlignment ?? 'center';
 
 const validationSchema = toTypedSchema(
   object({

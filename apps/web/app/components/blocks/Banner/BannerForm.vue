@@ -72,9 +72,13 @@
         <template #summary>
           <h2 data-testid="slider-text-group-title">{{ getEditorTranslation('text-group-label') }}</h2>
         </template>
-        
+
         <div>
-          <EditorRichTextEditorForm :model-value="banner.content.text.htmlDescription ?? ''" :text-align="banner.content.text.textAlignment" @update:model-value="banner.content.text.htmlDescription = $event">
+          <EditorRichTextEditorForm
+            :model-value="banner.content.text.htmlDescription ?? ''"
+            :text-align="banner.content.text.textAlignment"
+            @update:model-value="banner.content.text.htmlDescription = $event"
+          >
             <div class="mb-6">
               <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
               <SfInput
