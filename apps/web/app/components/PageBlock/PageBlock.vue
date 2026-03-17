@@ -1,15 +1,22 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full">
+  <div
+    v-if="block.meta"
+    :key="block.meta.uuid"
+    :data-uuid="block.meta.uuid"
+    class="h-full"
+    @mouseenter="onBlockHover"
+    @mouseleave="onBlockUnhover"
+  >
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
         'relative block-wrapper h-full',
         {
-          'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
+          'outline outline-4 outline-editor-toc-selected': showOutline && !isDragging,
         },
         {
-          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
+          'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
             clientPreview && enableActions && !isTablet && root && !isDragging,
         },
       ]"
@@ -245,5 +252,19 @@ const getBlockActions = (block: Block) => {
     };
   }
   return undefined;
+};
+
+const { hoveredUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
+
+const onBlockHover = () => {
+  if (props.root) {
+    setHoveredBlock(props.block.meta.uuid);
+  }
+};
+
+const onBlockUnhover = () => {
+  if (props.root && hoveredUuid.value === props.block.meta.uuid) {
+    clearHoveredBlock();
+  }
 };
 </script>

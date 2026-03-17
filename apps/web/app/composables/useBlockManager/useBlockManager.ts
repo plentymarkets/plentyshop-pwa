@@ -35,7 +35,7 @@ export const useBlockManager = () => {
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
-  const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
+  const { openDrawerWithView, closeBlocksConfigurationDrawer } = useSiteConfiguration();
   const { send } = useNotification();
 
   const currentBlock = ref<Block | null>(null);
@@ -250,7 +250,7 @@ export const useBlockManager = () => {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-      closeDrawer();
+      closeBlocksConfigurationDrawer();
     }
   };
 

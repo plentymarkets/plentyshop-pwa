@@ -7,6 +7,8 @@
     @click="editBlock(item.block)"
     @keydown.enter="editBlock(item.block)"
     @keydown.space.prevent="editBlock(item.block)"
+    @mouseenter="hoveredUuid = item.uuid"
+    @mouseleave="hoveredUuid = ''"
   >
     <div v-if="item.depth > 0 && !isStructureBlock(item.block)" class="shrink-0 w-4" />
 
@@ -21,6 +23,7 @@
       <template v-if="isStructureBlock(item.block)" #arrow>
         <button
           class="shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-editor-icon-hover transition-colors p-0.5 -ml-0.5"
+          :data-testid="`toc-expand-${item.uuid}`"
           @click.stop="toggleBlockExpansion(item.uuid)"
         >
           <SfIconChevronRight
@@ -44,7 +47,7 @@ import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfC
 
 const props = defineProps<TableOfContentsItemProps>();
 
-const { selectedUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
+const { selectedUuid, hoveredUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
   useTableOfContents();
 
 const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
