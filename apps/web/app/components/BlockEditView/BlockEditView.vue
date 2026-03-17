@@ -104,9 +104,9 @@ const blockDisplayName = computed(() => {
 });
 
 watch(
-  () => blockDisplayName.value,
-  (newName) => {
-    if (newName && customTitle.value) {
+  () => [blockType.value, blockUuid.value],
+  ([newBlockType, newBlockUuid]) => {
+    if ((newBlockType || newBlockUuid) && customTitle.value) {
       handleBackClick();
     }
   },
