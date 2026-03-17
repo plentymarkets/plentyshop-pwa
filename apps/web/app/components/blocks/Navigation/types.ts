@@ -6,7 +6,7 @@ export type SpacingSettings = {
 };
 
 export type TextSettings = {
-  alignment?: 'left' | 'center' | 'right';
+  textAlignment?: 'left' | 'center' | 'right';
 };
 
 export type ColorSettings = {
