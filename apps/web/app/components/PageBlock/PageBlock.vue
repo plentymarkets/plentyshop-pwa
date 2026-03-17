@@ -1,23 +1,29 @@
 <template>
-  <div v-if="block.meta" :key="block.meta.uuid" :data-uuid="block.meta.uuid" class="h-full">
-    <UiBlockPlaceholder v-if="displayTopPlaceholder(block.meta.uuid)" />
+  <div
+    v-if="block.meta"
+    :key="block.meta.uuid"
+    :data-uuid="block.meta.uuid"
+    class="h-full"
+    @mouseenter="onBlockHover"
+    @mouseleave="onBlockUnhover"
+  >
     <div
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
         'relative block-wrapper h-full',
         {
-          'outline outline-4 outline-[#538AEA]': showOutline && !isDragging,
+          'outline outline-4 outline-editor-toc-selected': showOutline && !isDragging,
         },
         {
-          'hover:outline hover:outline-4 hover:outline-[#538AEA]':
+          'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
             clientPreview && enableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
       <ClientOnly>
         <button
-          v-if="enableActions && clientPreview && root && !isDragging"
+          v-if="showTopAddBlockButton"
           class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[40] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
           :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
           data-testid="top-add-block"
@@ -70,13 +76,7 @@
 
       <ClientOnly>
         <button
-          v-if="
-            enableActions &&
-            clientPreview &&
-            !isDragging &&
-            props.block.name !== 'Footer' &&
-            (root || shouldShowBottomAddInGrid)
-          "
+          v-if="showBottomAddBlockButton"
           :key="isDragging ? 'dragging' : 'not-dragging'"
           class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[
@@ -96,7 +96,6 @@
         </button>
       </ClientOnly>
     </div>
-    <UiBlockPlaceholder v-if="displayBottomPlaceholder(block.meta.uuid)" />
   </div>
 </template>
 
@@ -113,12 +112,11 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
 const route = useRoute();
-const { drawerOpen, drawerView, openDrawerWithView } = useSiteConfiguration();
+const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
-  visiblePlaceholder,
-  togglePlaceholder,
   isDragging,
+  togglePlaceholder,
   multigridColumnUuid,
   lazyLoadStates,
   lazyLoadRefs,
@@ -215,28 +213,6 @@ const showOutline = computed(() => {
   );
 });
 
-const displayTopPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'top' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
-const displayBottomPlaceholder = (uuid: string): boolean => {
-  const visiblePlaceholderState = visiblePlaceholder.value;
-
-  return (
-    visiblePlaceholderState.position === 'bottom' &&
-    visiblePlaceholderState.uuid === uuid &&
-    drawerOpen.value &&
-    drawerView.value === 'blocksList'
-  );
-};
-
 const addNewBlock = (block: Block, position: BlockPosition) => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
@@ -250,10 +226,22 @@ const isEditDisabled = computed(() => {
   return route.fullPath !== homePath;
 });
 
-const { isFooterBlock } = useBlockTemplates();
+const showTopAddBlockButton = computed(
+  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderBlock(props.block),
+);
+
+const showBottomAddBlockButton = computed(
+  () =>
+    props.enableActions &&
+    clientPreview.value &&
+    !isDragging.value &&
+    !isFooterBlock(props.block) &&
+    !isHeaderBlock(props.block) &&
+    (props.root || shouldShowBottomAddInGrid.value),
+);
 
 const getBlockActions = (block: Block) => {
-  if (isFooterBlock(block)) {
+  if (isFooterBlock(block) || isHeaderBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,
@@ -264,5 +252,19 @@ const getBlockActions = (block: Block) => {
     };
   }
   return undefined;
+};
+
+const { hoveredUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
+
+const onBlockHover = () => {
+  if (props.root) {
+    setHoveredBlock(props.block.meta.uuid);
+  }
+};
+
+const onBlockUnhover = () => {
+  if (props.root && hoveredUuid.value === props.block.meta.uuid) {
+    clearHoveredBlock();
+  }
 };
 </script>

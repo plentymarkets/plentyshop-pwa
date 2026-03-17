@@ -62,7 +62,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
   const setStaticPageMeta: StaticPageMeta = () => {
     state.value.loading = true;
 
-    const route = useNuxtApp().$router.currentRoute.value;
+    const route = useRouter().currentRoute.value;
     const runtimeConfig = useRuntimeConfig();
     const localePath = useLocalePath();
     const { defaultLocale } = useI18n();
@@ -111,8 +111,8 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     canonicalOverride?: string,
   ) => {
     state.value.loading = true;
-    const { $i18n, $router } = useNuxtApp();
-    const route = $router.currentRoute.value;
+    const { $i18n } = useNuxtApp();
+    const route = useRouter().currentRoute.value;
     const localePath = useLocalePath();
     const runtimeConfig = useRuntimeConfig();
 

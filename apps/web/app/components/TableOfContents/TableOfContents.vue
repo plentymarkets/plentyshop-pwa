@@ -1,11 +1,11 @@
 <template>
-  <div class="pages-view sticky top-[52px] z-[2]" data-testid="blocks-overview-drawer">
+  <div class="pages-view sticky" data-testid="blocks-overview-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
       </div>
       <div class="flex items-center gap-2">
-        <button data-testid="blocks-overview-close" class="!p-0" @click="closeDrawer">
+        <button data-testid="blocks-overview-close" class="!p-0" @click="closeSiteConfigurationDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -22,13 +22,16 @@
           v-model="draggableData"
           item-key="meta.uuid"
           handle=".toc-drag-handle"
+          ghost-class="toc-drag-ghost"
           tag="ul"
           class="mt-2 mb-4"
           @change="handleDragChange"
         >
-          <template #item="{ element: block }">
+          <template #item="{ element: block, index }">
             <div>
+              <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
               <TableOfContentsItem :item="blockToFlatBlock(block)" />
+              <TableOfContentsInsertBlockLine v-if="index < data.length - 1" :block="block" class="toc-insert-line" />
             </div>
           </template>
         </draggable>
@@ -59,7 +62,7 @@ import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfC
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
-const { closeDrawer } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 
@@ -71,7 +74,6 @@ const draggableData = computed({
 });
 
 const enforceFooterAtBottom = () => {
-  const { isFooterBlock } = useBlockTemplates();
   const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
@@ -113,3 +115,10 @@ const scrollToDraggedBlock = (evt: DragEvent) => {
   }
 }
 </i18n>
+
+<style>
+.toc-drag-ghost .toc-insert-line,
+.sortable-drag .toc-insert-line {
+  display: none !important;
+}
+</style>
