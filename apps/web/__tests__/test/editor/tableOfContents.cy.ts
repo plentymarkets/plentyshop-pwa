@@ -10,6 +10,8 @@ describe('Table of Contents & Double Drawer', () => {
 
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     editor.isToolbarVisible();
