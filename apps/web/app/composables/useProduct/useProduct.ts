@@ -5,6 +5,7 @@ import type { UseProductReturn, UseProductState, FetchProduct } from '~/composab
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
 import { getProductTemplate } from '~/utils/blockTemplates/product';
+import { prepareConfig } from '@vue-storefront/sdk';
 
 const useProductTemplateData = async (locale: string) => await getProductTemplate(locale);
 
@@ -93,7 +94,13 @@ export const useProduct: UseProductReturn = (slug) => {
 
     const { data, error } = await useAsyncData(
       `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
-      () => useSdk().plentysystems.getProduct(params),
+      () =>
+        useSdk().plentysystems.getProduct(
+          params,
+          prepareConfig({
+            method: 'GET',
+          }),
+        ),
     );
     useHandleError(error.value ?? null);
 
