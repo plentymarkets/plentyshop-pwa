@@ -10,6 +10,8 @@ const myAccount = new MyAccountPageObject();
 describe('Smoke: Notify Me', () => {
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ showNotifyMe: true });
     cy.visitAndHydrate('/gear/speaker-flamingo_158');
     bypass.bypassCloudflareTurnstile();
   });
