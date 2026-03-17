@@ -4,6 +4,15 @@ import { BlocksBanner } from '#components';
 
 const bannerBlockUuid = '11111111-1111-4111-8111-111111111111';
 
+const checkElementOrder = (
+  elements: { attributes: (key: string) => string | undefined }[],
+  expectedOrder: string[],
+) => {
+  elements.forEach((element, index) => {
+    expect(element.attributes('data-testid')).toContain(expectedOrder[index]);
+  });
+};
+
 describe('Banner', () => {
   describe('with default settings', () => {
     const wrapper = mount(BlocksBanner, {
@@ -47,11 +56,19 @@ describe('Banner', () => {
     });
 
     it('should render all elements in the correct order', () => {
-      const expectedOrder = ['image', 'overlay', 'content', 'text-content', 'text-pretitle', 'text-title', 'text-subtitle', 'text-html', `banner-button-${bannerBlockUuid}`];
+      const expectedOrder = [
+        'image',
+        'overlay',
+        'content',
+        'text-content',
+        'text-pretitle',
+        'text-title',
+        'text-subtitle',
+        'text-html',
+        `banner-button-${bannerBlockUuid}`,
+      ];
       const elements = wrapper.findAll('[data-testid^="banner-"], [data-testid^="text-"]');
-      elements.forEach((element, index) => {
-        expect(element.attributes('data-testid')).toContain(expectedOrder[index]);
-      });
+      checkElementOrder(elements, expectedOrder);
     });
 
     it('should have an image', () => {
