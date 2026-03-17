@@ -74,7 +74,7 @@
         </template>
         
         <div>
-          <EditorRichTextEditorForm :modelValue="banner.content.text.htmlDescription ?? ''" @update:modelValue="banner.content.text.htmlDescription = $event" :text-align="banner.content.text.textAlignment">
+          <EditorRichTextEditorForm :model-value="banner.content.text.htmlDescription ?? ''" :text-align="banner.content.text.textAlignment" @update:model-value="banner.content.text.htmlDescription = $event">
             <div class="mb-6">
               <UiFormLabel class="mb-1">{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
               <SfInput
@@ -411,7 +411,7 @@
             </div>
           </div>
 
-          <div class="mb-6" v-if="config.public.enableRichTextEditorV2">
+          <div v-if="config.public.enableRichTextEditorV2" class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('button-align-label') }}</UiFormLabel>
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"

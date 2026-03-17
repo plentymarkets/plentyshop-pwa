@@ -9,7 +9,7 @@
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
       </template>
-      <EditorRichTextEditorForm :modelValue="recommendedBlock.text.htmlDescription ?? ''" @update:modelValue="recommendedBlock.text.htmlDescription = $event">
+      <EditorRichTextEditorForm :model-value="recommendedBlock.text.htmlDescription ?? ''" @update:model-value="recommendedBlock.text.htmlDescription = $event">
         <div v-if="recommendedBlock.text" class="p-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
           <SfInput

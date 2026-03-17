@@ -4,7 +4,7 @@
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <TextContent :text="props.content.text" v-if="useRuntimeConfig().public.enableRichTextEditorV2" />
+    <TextContent v-if="useRuntimeConfig().public.enableRichTextEditorV2" :text="props.content.text" />
     <div v-else>
       <h1
         v-if="props.index === 0"
