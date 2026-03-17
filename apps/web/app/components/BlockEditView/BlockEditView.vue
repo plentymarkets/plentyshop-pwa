@@ -103,12 +103,9 @@ const blockDisplayName = computed(() => {
   return getBlockDisplayName(blockType.value);
 });
 
-watch(
-  [blockType, blockUuid],
-  ([newBlockType, newBlockUuid]) => {
-    if (customTitle.value) {
-      handleBackClick();
-    }
-  },
-);
+watch([blockType, blockUuid], () => {
+  if (customTitle.value) {
+    handleBackClick();
+  }
+});
 </script>
