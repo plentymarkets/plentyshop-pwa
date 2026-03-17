@@ -15,6 +15,9 @@ export default defineNuxtModule({
         name: 'e2e',
         path: '/smoke-e2e',
         file: resolve(__dirname, './runtime/smoke-e2e.vue'),
+        meta: {
+          sitemap: false,
+        },
       });
     });
   },
