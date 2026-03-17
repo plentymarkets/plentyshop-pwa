@@ -7,18 +7,35 @@ type SitemapURL = {
 };
 
 const applyTrailingSlash = (url: string, mode: string): string => {
-  const [path, query] = url.split('?');
-  const isRoot = path === '/';
-  const suffix = query ? `?${query}` : '';
+  let urlObj: URL;
 
-  if (isRoot) return url;
-  if (!path) return url;
+  try {
+    urlObj = new URL(url);
+  } catch {
+    // If the input is not a valid absolute URL, leave it unchanged
+    return url;
+  }
+
+  const pathname = urlObj.pathname || '/';
+  const isRoot = pathname === '/';
+
+  if (isRoot) {
+    return url;
+  }
 
   switch (mode) {
     case 'always':
-      return path.endsWith('/') ? url : `${path}/${suffix}`;
+      if (!pathname.endsWith('/')) {
+        urlObj.pathname = `${pathname}/`;
+        return urlObj.toString();
+      }
+      return url;
     case 'never':
-      return path.endsWith('/') ? `${path.slice(0, -1)}${suffix}` : url;
+      if (pathname.endsWith('/')) {
+        urlObj.pathname = pathname.slice(0, -1) || '/';
+        return urlObj.toString();
+      }
+      return url;
     case 'auto':
     default:
       return url;
