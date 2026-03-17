@@ -27,6 +27,8 @@
         :is="currentComponent"
         v-if="currentComponent"
         ref="childComponentRef"
+        :key="blockUuid"
+        @vue:mounted="() => { if (customTitle) handleBackClick() }"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
       />
@@ -101,11 +103,5 @@ const blockDisplayName = computed(() => {
     }
   }
   return getBlockDisplayName(blockType.value);
-});
-
-watch([blockType, blockUuid], () => {
-  if (customTitle.value) {
-    handleBackClick();
-  }
 });
 </script>
