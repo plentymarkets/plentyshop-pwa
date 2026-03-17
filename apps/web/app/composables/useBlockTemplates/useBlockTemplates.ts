@@ -8,6 +8,7 @@ import type {
 } from './types';
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
@@ -398,6 +399,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
             config.enableRichTextEditorV2,
             isFirstBlock,
           );
+        }
+
+        if (block.name === 'Banner' && block.content && config.enableRichTextEditorV2) {
+          const content = block.content as BannerProps['content'];
+          const textAlignment = (content?.text as any)?.textAlignment;
+          if (textAlignment && !content?.button?.alignment) {
+            content.button = content.button ?? {};
+            content.button.alignment = textAlignment;
+          }
         }
 
         if (Array.isArray(block.content)) {

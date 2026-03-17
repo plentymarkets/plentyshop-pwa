@@ -134,6 +134,61 @@
                 </template>
               </EditorColorPicker>
             </div>
+
+            <div class="mb-6">
+              <UiFormLabel class="mb-1">{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
+              <div
+                class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+              >
+                <div
+                  for="text-align-left"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{
+                    'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'left',
+                  }"
+                  data-testid="slider-text-align-left"
+                  @click="banner.content.text.textAlignment = 'left'"
+                >
+                  <SfIconCheck
+                    class="mr-1 w-[1.1rem]"
+                    :class="{ invisible: banner.content.text.textAlignment !== 'left' }"
+                  />
+                  {{ getEditorTranslation('text-align-option-left-label') }}
+                </div>
+
+                <div
+                  for="text-align-center"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{
+                    'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'center',
+                  }"
+                  data-testid="slider-text-align-center"
+                  @click="banner.content.text.textAlignment = 'center'"
+                >
+                  <SfIconCheck
+                    class="mr-1 w-[1.1rem]"
+                    :class="{ invisible: banner.content.text.textAlignment !== 'center' }"
+                  />
+                  {{ getEditorTranslation('text-align-option-center-label') }}
+                </div>
+
+                <div
+                  for="text-align-right"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{
+                    'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'right',
+                  }"
+                  data-testid="slider-text-align-right"
+                  @click="banner.content.text.textAlignment = 'right'"
+                >
+                  <SfIconCheck
+                    class="mr-1 w-[1.1rem]"
+                    :class="{ invisible: banner.content.text.textAlignment !== 'right' }"
+                  />
+                  {{ getEditorTranslation('text-align-option-right-label') }}
+                </div>
+              </div>
+            </div>
           </EditorRichTextEditorForm>
           <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-background-label') }}</UiFormLabel>
@@ -356,7 +411,7 @@
             </div>
           </div>
 
-          <div class="mb-6">
+          <div class="mb-6" v-if="config.public.enableRichTextEditorV2">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('button-align-label') }}</UiFormLabel>
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
@@ -365,14 +420,14 @@
                 for="button-align-left"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'left',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'left',
                 }"
                 data-testid="slider-button-align-left"
-                @click="banner.content.text.textAlignment = 'left'"
+                @click="banner.content.button.alignment = 'left'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.textAlignment !== 'left' }"
+                  :class="{ invisible: banner.content.button.alignment !== 'left' }"
                 />
                 {{ getEditorTranslation('button-align-option-left-label') }}
               </div>
@@ -381,14 +436,14 @@
                 for="button-align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'center',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'center',
                 }"
                 data-testid="slider-button-align-center"
-                @click="banner.content.text.textAlignment = 'center'"
+                @click="banner.content.button.alignment = 'center'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.textAlignment !== 'center' }"
+                  :class="{ invisible: banner.content.button.alignment !== 'center' }"
                 />
                 {{ getEditorTranslation('button-align-option-center-label') }}
               </div>
@@ -397,14 +452,14 @@
                 for="button-align-right"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'right',
+                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'right',
                 }"
                 data-testid="slider-button-align-right"
-                @click="banner.content.text.textAlignment = 'right'"
+                @click="banner.content.button.alignment = 'right'"
               >
                 <SfIconCheck
                   class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.text.textAlignment !== 'right' }"
+                  :class="{ invisible: banner.content.button.alignment !== 'right' }"
                 />
                 {{ getEditorTranslation('button-align-option-right-label') }}
               </div>
@@ -431,6 +486,7 @@ const { data } = useBlockTemplates(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const config = useRuntimeConfig();
 
 const props = defineProps<BannerFormProps>();
 
@@ -517,6 +573,11 @@ input[type='number'] {
     "textbox-align-y-center-label": "Center",
     "textbox-align-y-bottom-label": "Bottom",
 
+    "text-align-label": "Text Alignment (x)",
+    "text-align-option-left-label": "Left",
+    "text-align-option-center-label": "Center",
+    "text-align-option-right-label": "Right",
+
     "button-align-label": "Button Alignment (x)",
     "button-align-option-left-label": "Left",
     "button-align-option-center-label": "Center",
@@ -571,6 +632,11 @@ input[type='number'] {
     "textbox-align-y-top-label": "Top",
     "textbox-align-y-center-label": "Center",
     "textbox-align-y-bottom-label": "Bottom",
+
+    "text-align-label": "Text Alignment (x)",
+    "text-align-option-left-label": "Left",
+    "text-align-option-center-label": "Center",
+    "text-align-option-right-label": "Right",
 
     "button-align-label": "Button Alignment (x)",
     "button-align-option-left-label": "Left",
