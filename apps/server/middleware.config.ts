@@ -17,6 +17,8 @@ const config = {
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
           experimental: {
             allowCacheControl: true,
+            excludeBlocksFromFacets: true,
+            excludeBlocksFromProducts: true,
           },
         },
       },
