@@ -34,14 +34,10 @@ describe('Table of Contents & Double Drawer', () => {
     toc.checkChildrenHidden();
   });
 
-  it('should display delete and visibility icons for blocks', () => {
+  it('should toggle block visibility with eye icon', () => {
     toc.openTableOfContents();
     toc.checkDeleteIconExists();
     toc.checkVisibilityIconExists();
-  });
-
-  it('should toggle block visibility with eye icon', () => {
-    toc.openTableOfContents();
     toc.toggleBlockVisibility();
     toc.checkBlockIsGrayedOut();
     toc.checkBlockNotVisibleOnPage();
@@ -56,15 +52,10 @@ describe('Table of Contents & Double Drawer', () => {
     toc.checkBlockDeletedFromToc();
   });
 
-  it('should scroll to block when clicking on it in TOC', () => {
+  it('should open both drawers and scroll to block when clicking on toc element', () => {
     toc.openTableOfContents();
     toc.clickOnBlockInToc(1);
     toc.checkBlockIsVisibleOnScreen();
-  });
-
-  it('should open double drawer when clicking on block', () => {
-    toc.openTableOfContents();
-    toc.clickOnBlockInToc(0);
     toc.checkBothDrawersVisible();
     toc.checkBlocksConfigurationDrawerOpen();
   });
