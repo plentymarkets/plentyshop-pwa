@@ -17,6 +17,13 @@ export default withMermaid({
   cleanUrls: true,
   ignoreDeadLinks: true,
   lastUpdated: true,
+  srcExclude: [
+    '**/README.md',
+    'api-examples.md',
+    'markdown-examples.md',
+    '_**/_*.md',
+    '**/_*.md',
+  ],
   vite: {
     optimizeDeps: {
       include: ["debug"],
