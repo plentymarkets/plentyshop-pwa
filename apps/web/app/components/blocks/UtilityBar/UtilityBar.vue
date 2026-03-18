@@ -318,7 +318,6 @@ import {
 } from '@storefront-ui/vue';
 import { onClickOutside } from '@vueuse/core';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
-import { getPaletteFromColor } from '~/utils/tailwindHelper';
 
 import type { UtilityBarProps } from './types';
 
@@ -350,44 +349,7 @@ const {
 
 const iconColor = computed(() => content.value?.color?.iconColor || '');
 const headerBackgroundColor = computed(() => content.value?.color?.backgroundColor || '');
-const tailwindShades = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
-
-const getGlobalPaletteType = (value: string): 'primary' | 'secondary' | null => {
-  const paletteTypeMatch = value.match(/--colors-2-(primary|secondary)-500/);
-  const matchedPaletteType = paletteTypeMatch?.[1];
-
-  if (matchedPaletteType === 'primary' || matchedPaletteType === 'secondary') {
-    return matchedPaletteType;
-  }
-
-  return null;
-};
-
-const isHexColor = (value: string): boolean => /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/.test(value);
-
-const headerPaletteStyle = computed<Record<string, string>>(() => {
-  const baseColor = headerBackgroundColor.value;
-  if (!baseColor) {
-    return {};
-  }
-
-  const paletteType = getGlobalPaletteType(baseColor);
-  if (paletteType) {
-    return tailwindShades.reduce<Record<string, string>>((style, shadeWeight) => {
-      style[`--colors-2-header-${shadeWeight}`] = `var(--colors-2-${paletteType}-${shadeWeight})`;
-      return style;
-    }, {});
-  }
-
-  if (!isHexColor(baseColor)) {
-    return {};
-  }
-
-  return getPaletteFromColor('header', baseColor).reduce<Record<string, string>>((style, shade) => {
-    style[`--colors-2-header-${shade.weight}`] = shade.rgb;
-    return style;
-  }, {});
-});
+const headerPaletteStyle = useGenerateTailwindPallete('header', headerBackgroundColor);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();
