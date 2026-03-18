@@ -2,15 +2,15 @@
   <div :style="headerPaletteStyle">
     <header v-if="viewport.isGreaterOrEquals('md')" class="relative w-full md:sticky md:shadow-md z-10">
       <div
-        class="flex justify-between items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
+        class="flex items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
         :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
         data-testid="navbar-top"
       >
-        <div v-if="isSectionVisible('logo')" class="flex items-center" :style="{ order: getSectionFlexOrder('logo') }">
+        <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
           <NuxtLink
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
-            class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="flex shrink-0 w-full lg:w-48 items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
             <UiLogo />
           </NuxtLink>
@@ -19,11 +19,11 @@
         <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
           <div
             ref="iconSearchContainerRef"
-            :style="{ order: getSectionFlexOrder('search') }"
-            :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? 'flex-1' : 'flex-none w-10 shrink-0'"
+            :style="getSectionColumnStyle('search')"
+            :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? '' : 'flex-none w-10 shrink-0'"
           >
             <template v-if="isFullSearchMode">
-              <UiSearch class="hidden md:block w-[99%]" />
+              <UiSearch class="hidden md:block" />
             </template>
 
             <template v-else>
@@ -40,7 +40,7 @@
                 >
                   <UiSearch
                     v-if="isIconSearchExpanded"
-                    class="w-[99%]"
+                    class="w-[100%]"
                     :style="{ transformOrigin: searchExpandOrigin }"
                     :close="collapseIconSearch"
                   />
@@ -62,7 +62,7 @@
         </template>
         <nav
           v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('actions')"
-          :style="{ order: getSectionFlexOrder('actions') }"
+          :style="getSectionColumnStyle('actions')"
           class="hidden md:flex md:flex-row md:flex-nowrap"
         >
           <template v-if="localeCodes.length > 1 && isActionVisible('language')">
@@ -296,7 +296,7 @@
             {{ t('common.actions.search') }}
           </h3>
         </header>
-        <UiSearch class="w-[99%]" :close="searchModalClose" />
+        <UiSearch class="w-[100%]" :close="searchModalClose" />
       </SfModal>
     </NuxtLazyHydrate>
   </div>
@@ -339,6 +339,7 @@ const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
   content,
+  sections,
   paddingStyles,
   isSectionVisible,
   getSectionFlexOrder,
@@ -378,6 +379,30 @@ const isIconSearchExpanded = ref(false);
 const showSearchIcon = ref(true);
 const isSearchClosing = ref(false);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
+
+const visibleSectionsCount = computed(() => sections.value.filter((s) => s.visible).length);
+
+const getSectionColumnStyle = (sectionId: string) => {
+  const order = getSectionFlexOrder(sectionId);
+  const total = visibleSectionsCount.value;
+  const isFirst = order === 0;
+  const isLast = total > 1 && order === total - 1;
+
+  const isSearchActive =
+    sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
+
+  if (isFirst) {
+    return { order, flex: '1', display: 'flex' as const };
+  }
+  if (isLast) {
+    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end' };
+  }
+
+  if (isSearchActive) {
+    return { order, flex: '5' };
+  }
+  return { order };
+};
 
 const searchExpandOrigin = computed(() => {
   const searchOrder = getSectionFlexOrder('search');
@@ -452,3 +477,8 @@ const navigateToLogin = () => {
   }
 };
 </script>
+<style scoped>
+:deep(input[data-testid='search-bar-input']) {
+  min-width: 172px;
+}
+</style>
