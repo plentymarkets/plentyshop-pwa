@@ -31,6 +31,8 @@ describe('Banner Slider Block Form', () => {
     cy.intercept('plentysystems/getStorageMetadata', { statusCode: 200, body: {} }).as('getStorageMetadata');
 
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     openSettingsForBannerSliderBlock();
