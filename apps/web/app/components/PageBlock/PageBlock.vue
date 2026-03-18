@@ -173,6 +173,7 @@ const contentProps = computed(() => {
     ...baseProps,
     enableActions: props.enableActions,
     root: props.root,
+    block: props.block,
   };
 });
 
@@ -227,7 +228,7 @@ const isEditDisabled = computed(() => {
 });
 
 const showTopAddBlockButton = computed(
-  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderBlock(props.block),
+  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderContainerBlock(props.block),
 );
 
 const showBottomAddBlockButton = computed(
@@ -236,12 +237,12 @@ const showBottomAddBlockButton = computed(
     clientPreview.value &&
     !isDragging.value &&
     !isFooterBlock(props.block) &&
-    !isHeaderBlock(props.block) &&
+    !isHeaderContainerBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
 
 const getBlockActions = (block: Block) => {
-  if (isFooterBlock(block) || isHeaderBlock(block)) {
+  if (isFooterBlock(block) || isHeaderContainerBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,

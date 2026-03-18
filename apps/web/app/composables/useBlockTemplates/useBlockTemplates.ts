@@ -484,6 +484,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   /** Updates the blocks in state with new block data */
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
+
+    const headerBlock = blocks.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
+    if (headerBlock) {
+      headerContainerCache.value = headerBlock;
+    }
   };
 
   /** Sets the default template data used when no blocks are fetched */

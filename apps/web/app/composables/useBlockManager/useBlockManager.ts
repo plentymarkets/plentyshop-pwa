@@ -90,7 +90,10 @@ export const useBlockManager = () => {
     }
 
     updateBlocks(copiedData);
-    openDrawerWithView('blocksSettings', newBlock);
+
+    if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
+      openDrawerWithView('blocksSettings', newBlock);
+    }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
@@ -210,6 +213,32 @@ export const useBlockManager = () => {
         if (result) return result;
       }
     }
+    return null;
+  };
+
+  const getRootParent = (blocks: Block[], targetUuid: string): Block | null => {
+    const containsTarget = (block: Block): boolean => {
+      if (block.meta?.uuid === targetUuid) {
+        return true;
+      }
+
+      if (block.type === 'structure' && Array.isArray(block.content)) {
+        for (const child of block.content) {
+          if (containsTarget(child)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
+
+    for (const rootBlock of blocks) {
+      if (containsTarget(rootBlock)) {
+        return rootBlock;
+      }
+    }
+
     return null;
   };
 
@@ -403,6 +432,7 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
+    getRootParent,
     getBlockDepth,
     shouldLazyLoad,
     getLazyLoadKey,

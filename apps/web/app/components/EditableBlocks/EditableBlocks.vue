@@ -29,7 +29,7 @@
               :clicked-block-index="clickedBlockIndex"
               :is-tablet="isTablet"
               :change-block-position="changeBlockPosition"
-              :root="getBlockDepth(block.meta.uuid) === 0"
+              :root="true"
               class="group"
               :class="getBlockClass(block).value"
               data-testid="block-wrapper"

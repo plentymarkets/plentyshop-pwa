@@ -11,7 +11,7 @@
         <template v-else> {{ blockDisplayName }} </template>
       </div>
       <div class="flex items-center space-x-2">
-        <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
+        <div v-if="!isFooterBlock(block) && !isHeaderContainerBlock(block)" class="flex items-center space-x-2">
           <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
             <SfIconDelete />
           </button>
@@ -94,10 +94,12 @@ const getComponent = (name: string) => {
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
+const block = computed(() => findOrDeleteBlockByUuid(data.value, blockUuid.value));
+
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
-    const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
-    const firstChild = (block?.content as Array<{ name: string }>)?.[0];
+
+    const firstChild = (block?.value?.content as Array<{ name: string }>)?.[0];
     if (firstChild?.name) {
       return getBlockDisplayName(firstChild.name);
     }
