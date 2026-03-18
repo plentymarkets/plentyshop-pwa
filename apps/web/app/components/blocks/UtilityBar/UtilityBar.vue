@@ -388,18 +388,16 @@ const getSectionColumnStyle = (sectionId: string) => {
   const isFirst = order === 0;
   const isLast = total > 1 && order === total - 1;
 
-  const isSearchActive = sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
+  const isSearchActive =
+    sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
 
   if (isFirst) {
-    const maxWidth = sectionId === 'search' && !isSearchActive ? '280px' : undefined;
-    return { order, flex: '1', display: 'flex' as const, maxWidth };
+    return { order, flex: '1', display: 'flex' as const };
   }
   if (isLast) {
-    const maxWidth = sectionId === 'search' && !isSearchActive ? '280px' : undefined;
-    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end', maxWidth };
+    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end' };
   }
 
-  // Middle section: search takes most space when active, otherwise natural size (equal space on both sides)
   if (isSearchActive) {
     return { order, flex: '3' };
   }
