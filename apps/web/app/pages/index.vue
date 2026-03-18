@@ -18,7 +18,11 @@ definePageMeta({
   type: 'immutable',
   identifier: 'index',
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
-  skipCookiesSSR: true,
+  cacheControl: {
+    type: 'public',
+    maxAge: 30,
+    staleWhileRevalidate: 900
+  }
 });
 
 const { $i18n } = useNuxtApp();

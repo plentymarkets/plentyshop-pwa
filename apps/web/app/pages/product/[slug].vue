@@ -43,7 +43,11 @@ definePageMeta({
   type: 'product',
   isBlockified: true,
   identifier: 0,
-  skipCookiesSSR: true,
+  cacheControl: {
+    type: 'public',
+    maxAge: 30,
+    staleWhileRevalidate: 900
+  },
 });
 
 const showRecommended = ref(false);
