@@ -1,5 +1,5 @@
 <template>
-  <div ref="referenceRef" class="relative w-full">
+  <div ref="referenceRef" :style="navigationSecondaryPaletteStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
         :class="navigationContainerClasses"
@@ -285,6 +285,9 @@ const resolvedContent = computed(() => ({
     textColor: props.content?.color?.textColor ?? '',
   },
 }));
+
+const navigationBackgroundColor = computed(() => resolvedContent.value.color.backgroundColor || '');
+const navigationSecondaryPaletteStyle = useGenerateTailwindPallete('secondary', navigationBackgroundColor);
 
 const navigationContainerClasses = computed(() => {
   switch (resolvedContent.value.text.textAlignment) {
