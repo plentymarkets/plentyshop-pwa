@@ -12,6 +12,7 @@
       <EditorRichTextEditorForm
         :model-value="recommendedBlock.text.htmlDescription ?? ''"
         @update:model-value="recommendedBlock.text.htmlDescription = $event"
+        :text-align="recommendedBlock.text.textAlignment ?? 'left'"
       >
         <div v-if="recommendedBlock.text" class="p-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
