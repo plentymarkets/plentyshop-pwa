@@ -10,7 +10,7 @@
           <NuxtLink
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
-            class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="flex shrink-0 w-full lg:w-48 items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
             <UiLogo />
           </NuxtLink>
@@ -40,7 +40,7 @@
                 >
                   <UiSearch
                     v-if="isIconSearchExpanded"
-                    class="w-[99%]"
+                    class="w-[100%]"
                     :style="{ transformOrigin: searchExpandOrigin }"
                     :close="collapseIconSearch"
                   />
@@ -296,7 +296,7 @@
             {{ t('common.actions.search') }}
           </h3>
         </header>
-        <UiSearch class="w-[99%]" :close="searchModalClose" />
+        <UiSearch class="w-[100%]" :close="searchModalClose" />
       </SfModal>
     </NuxtLazyHydrate>
   </div>
@@ -399,7 +399,7 @@ const getSectionColumnStyle = (sectionId: string) => {
   }
 
   if (isSearchActive) {
-    return { order, flex: '3' };
+    return { order, flex: '5' };
   }
   return { order };
 };
