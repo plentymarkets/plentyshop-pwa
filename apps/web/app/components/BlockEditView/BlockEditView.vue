@@ -29,6 +29,7 @@
         :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
         :uuid="blockUuid"
+        @vue:mounted="handleBackClick"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
       />
