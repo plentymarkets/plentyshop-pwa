@@ -146,7 +146,7 @@
               >
                 <div
                   for="text-align-left"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
                   :class="{
                     'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'left',
                   }"
@@ -162,7 +162,7 @@
 
                 <div
                   for="text-align-center"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
                   :class="{
                     'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'center',
                   }"
@@ -178,7 +178,7 @@
 
                 <div
                   for="text-align-right"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
                   :class="{
                     'bg-gray-100 text-gray-900 font-semibold': banner.content.text.textAlignment === 'right',
                   }"
@@ -422,7 +422,7 @@
             >
               <div
                 for="button-align-left"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'left',
                 }"
@@ -438,7 +438,7 @@
 
               <div
                 for="button-align-center"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'center',
                 }"
@@ -454,7 +454,7 @@
 
               <div
                 for="button-align-right"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'right',
                 }"

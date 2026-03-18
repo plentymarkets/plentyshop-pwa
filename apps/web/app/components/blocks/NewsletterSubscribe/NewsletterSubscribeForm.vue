@@ -12,7 +12,7 @@
       <div>
         <EditorRichTextEditorForm
           :model-value="newsletterBlock.text.htmlDescription ?? ''"
-          :text-align="'center'"
+          :text-align="newsletterBlock.text.textAlignment ?? 'center'"
           @update:model-value="newsletterBlock.text.htmlDescription = $event"
         >
           <div class="mb-6">
