@@ -237,7 +237,6 @@ const showBottomAddBlockButton = computed(
     clientPreview.value &&
     !isDragging.value &&
     !isFooterBlock(props.block) &&
-    !isHeaderContainerBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
 
