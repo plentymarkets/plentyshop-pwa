@@ -411,8 +411,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (Array.isArray(block.content)) {
-          const nextIsRootLevel = block.type === 'structure' && index === 0;
-          migrate(block.content, nextIsRootLevel);
+          migrate(block.content, false);
         }
       });
     };
