@@ -28,9 +28,10 @@
       </template>
 
       <ul
-        class="-mt-1 z-[300] max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
+        class="-mt-1 z-[300] w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
         role="listbox"
         aria-label="Text style"
+        data-testid="rte-heading-options"
         @click.stop
       >
         <li
@@ -40,9 +41,11 @@
           :aria-selected="option.value === currentBlockType"
         >
           <button
+            :data-testid="`rte-heading-option-${option.value}`"
             type="button"
             class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
             :class="{ 'bg-gray-100 font-semibold': option.value === currentBlockType }"
+            @mousedown.prevent
             @click="selectBlockType(option.value)"
           >
             {{ option.label }}
@@ -84,6 +87,7 @@
         class="-mt-1 z-[300] max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
         role="listbox"
         aria-label="Font size"
+        data-testid="rte-font-size-options"
         @click.stop
       >
         <li
@@ -94,8 +98,10 @@
         >
           <button
             type="button"
+            :data-testid="`rte-font-size-option-${option.value}`"
             class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
             :class="{ 'bg-gray-100 font-semibold': option.value === (currentFontSize || '1rem') }"
+            @mousedown.prevent
             @click="selectFontSize(option.value)"
           >
             {{ option.label }}
