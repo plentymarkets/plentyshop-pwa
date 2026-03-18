@@ -764,7 +764,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Value proposition elements have been updated to receive indication if the image should be on the left or right.
 - Value proposition allows now for multiple entries.
 
-## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
+## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### Migration guide
 
@@ -840,7 +840,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 **Full Changelog**: https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0
 
-## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
+## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 🚀 New
 
