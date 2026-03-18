@@ -15,6 +15,8 @@ describe('Recommended Block Form', () => {
     }).as('getCategoriesSearch');
 
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
 
