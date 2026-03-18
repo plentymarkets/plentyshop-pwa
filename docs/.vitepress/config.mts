@@ -21,7 +21,7 @@ export default withMermaid({
     '**/README.md',
     'api-examples.md',
     'markdown-examples.md',
-    '_**/_*.md',
+    '_**/*.md',
     '**/_*.md',
   ],
   vite: {
