@@ -477,3 +477,8 @@ const navigateToLogin = () => {
   }
 };
 </script>
+<style scoped>
+:deep(input[data-testid='search-bar-input']) {
+  min-width: 172px;
+}
+</style>
