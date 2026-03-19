@@ -1,6 +1,4 @@
-import type { ComputedRef } from 'vue';
 import type { Block } from '@plentymarkets/shop-api';
-import { useSiteSettings } from '~/composables/useSiteSettings/useSiteSettings';
 import { resolveBlockLayoutRule } from '~/configuration/block-layout.config';
 
 const getFullWidthFromObject = (obj: unknown): boolean | undefined => {
