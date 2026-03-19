@@ -3,7 +3,9 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { UiProductCard } from '#components';
 import { ProductMock } from '../../../../../__tests__/__mocks__/product.mock';
 
-const useLazyProductImageMock = vi.fn();
+const { useLazyProductImageMock } = vi.hoisted(() => ({
+  useLazyProductImageMock: vi.fn(),
+}));
 
 mockNuxtImport('useLazyProductImage', () => {
   return useLazyProductImageMock;
