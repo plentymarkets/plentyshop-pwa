@@ -7,6 +7,8 @@
           :is-active="isActive"
           :current-block-type="currentBlockType"
           :on-font-size-change="onFontSizeChange"
+          :current-font-size="currentFontSize"
+          :on-text-size-change="setFontSize"
           :text-color="textColor"
           :set-font-color="setFontColor"
           :toggle-link="toggleLink"
@@ -71,6 +73,8 @@
     :on-font-size-change="onFontSizeChange"
     :text-color="textColor"
     :highlight-color="highlightColor"
+    :current-font-size="currentFontSize"
+    :set-font-size="setFontSize"
     :set-font-color="setFontColor"
     :set-highlight-color="setHighlightColor"
     :set-align="setAlign"
@@ -135,6 +139,8 @@ const {
   toggleLink,
   clearFormatting,
   focus,
+  currentFontSize,
+  setFontSize,
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
   onUpdateModelValue: (v) => emit('update:modelValue', v),

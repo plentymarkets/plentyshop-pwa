@@ -8,7 +8,7 @@ describe('Text Card Block Form', () => {
     cy.get('[data-testid="TextCard-open-editor-button"]').first().should('exist').click({ force: true });
     cy.wait(1000);
 
-    cy.get('[data-testid="text-card-form"]').should('exist');
+    cy.get('[data-testid="text-form"]').should('exist');
   };
 
   const openTextGroup = () => {
@@ -92,6 +92,8 @@ describe('Text Card Block Form', () => {
 
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     openSettingsForTextCardBlock();
