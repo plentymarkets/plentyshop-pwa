@@ -45,8 +45,8 @@
     "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.155.0",
-    "@plentymarkets/shop-core": "^1.21.8",
+    "@plentymarkets/shop-api": "^0.159.1",
+    "@plentymarkets/shop-core": "^1.21.14",
     "@plentymarkets/shop-module-gtag": "^1.2.2",
     "@plentymarkets/shop-module-mollie": "^1.5.1",
     "@tanstack/vue-virtual": "^3.13.18",
@@ -71,7 +71,7 @@
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.4.0",
     "vue-tel-input": "^9.7.1",
-    "vue-tsc": "^3.0.6",
+    "vue-tsc": "^3.2.5",
     "vuedraggable": "^4.1.0",
     "yup": "^1.7.1"
   },

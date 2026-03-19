@@ -54,7 +54,7 @@
         <ProductPrice :product="props.product" />
 
         <div
-          class="mb-4 font-normal typography-text-sm"
+          class="mb-4 font-normal typography-text-sm no-preflight"
           data-testid="product-description"
           v-html="productGetters.getShortDescription(props.product)"
         />

@@ -118,9 +118,6 @@ export default defineNuxtConfig({
   image: {
     provider: 'none',
   },
-  site: {
-    url: '',
-  },
   pages: true,
   runtimeConfig: {
     public: {
@@ -145,7 +142,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
@@ -171,6 +167,25 @@ export default defineNuxtConfig({
       },
     },
   },
+  plentySitemap: {
+    locales: (process.env.LANGUAGELIST || 'en,de').split(','),
+    defaultLocale: nuxtI18nOptions.defaultLocale,
+    exclude: [
+      '/search',
+      '/offline',
+      '/my-account**',
+      '/readonly-checkout',
+      '/set-new-password',
+      '/reset-password-success',
+      '/cart',
+      '/checkout',
+      '/confirmation',
+      '/wishlist',
+      '/login',
+      '/signup',
+      '/reset-password',
+    ],
+  },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
     apiEndpoint: process.env.API_ENDPOINT,
@@ -192,36 +207,6 @@ export default defineNuxtConfig({
     },
   },
   i18n: nuxtI18nOptions,
-  sitemap: {
-    autoLastmod: true,
-    xsl: '/sitemap_style.xsl',
-    xslColumns: [
-      // URL column must always be set, no value needed
-      { label: 'URL', width: '75%' },
-      { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
-    ],
-    sitemaps: {
-      'sitemap/content': {
-        exclude: [
-          `/${nuxtI18nOptions.defaultLocale}/**`,
-          '/search',
-          '/offline',
-          '/my-account/**',
-          '/readonly-checkout',
-          '/set-new-password',
-          '/reset-password-success',
-          '/cart',
-          '/checkout',
-          '/confirmation',
-          '/wishlist',
-          '/login',
-          '/signup',
-          '/reset-password',
-        ],
-        includeAppSources: true,
-      },
-    },
-  },
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
     exposeConfig: true,

@@ -1,43 +1,23 @@
 <template>
-  <Transition :name="placement === 'left' ? 'drawer-left' : ''" appear>
-    <SfDrawer
-      ref="drawerRef"
-      v-model="drawerOpen"
-      :placement="placement as SfDrawerPlacement"
-      :disable-click-away="true"
-      :transition="false"
-      :class="[
-        'bg-neutral-50',
-        'border-0',
-        'border-gray-300',
-        'z-[15]',
-        {
-          'w-1/2 min-w-[50%] lg:w-1/4 lg:min-w-[25%] xl:w-[20%] xl:min-w-[20%]':
-            placement === 'left' || placement === 'right',
-        },
-      ]"
-    >
-      <component :is="getDrawerView(drawerView)" v-if="drawerView" />
+  <Transition name="drawer-left" appear>
+    <div class="flex-shrink-0 w-1/4 min-w-[250px] max-w-[300px] bg-neutral-50 border-0 border-gray-300 z-[15] relative">
+      <component :is="getDrawerView(siteConfigurationDrawerView)" v-if="siteConfigurationDrawerView" />
 
-      <Transition v-else-if="viewComponent" :name="placement === 'left' ? transitionName : ''" mode="out-in" appear>
+      <Transition v-else-if="viewComponent" :name="transitionName" mode="out-in" appear>
         <component :is="viewComponent" :key="viewComponent" />
       </Transition>
-    </SfDrawer>
+    </div>
   </Transition>
 </template>
 
 <script setup lang="ts">
-import type { SfDrawerPlacement } from '@storefront-ui/vue';
-import { SfDrawer } from '@storefront-ui/vue';
-
-const { drawerOpen, drawerView, placement, activeSetting, activeSubCategory } = useSiteConfiguration();
+const { siteConfigurationDrawerView, activeSetting, activeSubCategory } = useSiteConfiguration();
 
 const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
   if (view === 'LocalizationView') return resolveComponent('LocalizationView');
   if (view === 'TableOfContents') return resolveComponent('TableOfContents');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
-  if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };
 
 const viewComponent = computed(() => getViewComponent(activeSetting.value, activeSubCategory.value));

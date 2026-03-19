@@ -260,8 +260,8 @@ const { referenceRef, floatingRef, style } = useDropdown({
   placement: 'bottom-start',
   middleware: [],
 });
-const iconColor = computed(() => getIconColor());
-const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
+const iconColor = computed(() => props.iconColor || getIconColor());
+const headerBackgroundColor = computed(() => props.headerBackgroundColor || getHeaderBackgroundColor());
 
 const isUsingTouch = ref(false);
 const lastTouchTime = ref(0);

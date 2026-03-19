@@ -32,7 +32,7 @@
       >
         <div
           v-if="banner.text.pretitle"
-          class="typography-headline-6 font-bold tracking-widest"
+          class="typography-headline-6 font-bold tracking-widest no-preflight"
           :data-testid="'banner-pretitle-' + meta.uuid"
           v-html="banner.text.pretitle"
         />
@@ -41,7 +41,7 @@
           <h1
             v-if="banner.text.title"
             :id="`carousel_item-${props.slideIndex}_heading`"
-            class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+            class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem] no-preflight"
             :data-testid="'banner-title-' + meta.uuid"
             v-html="banner.text.title"
           />
@@ -51,21 +51,21 @@
           <h2
             v-if="banner.text.title"
             :id="`carousel_item-${props.slideIndex}_heading`"
-            class="text-2xl font-semibold mb-4"
+            class="text-2xl font-semibold mb-4 no-preflight"
             :data-testid="'banner-title-' + meta.uuid"
             v-html="banner.text.title"
           />
         </template>
         <div
           v-if="banner.text.subtitle"
-          class="typography-headline-6 font-bold tracking-widest mb-4"
+          class="typography-headline-6 font-bold tracking-widest mb-4 no-preflight"
           :data-testid="'banner-subtitle-' + meta.uuid"
           v-html="banner.text.subtitle"
         />
 
         <div
           v-if="banner.text.htmlDescription"
-          class="typography-text-sm md:typography-text-lg font-normal"
+          class="typography-text-sm md:typography-text-lg font-normal no-preflight"
           :data-testid="'banner-description-' + meta.uuid"
           v-html="banner.text.htmlDescription"
         />
