@@ -62,7 +62,7 @@
           </div>
           <div
             v-if="column?.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
+            class="custom-html ml-4 text-sm hover:cursor-pointer no-preflight"
             v-html="column.description"
           />
         </div>
@@ -71,7 +71,7 @@
     <div>
       <div
         v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
-        class="text-sm py-10 md:py-6 px-10"
+        class="text-sm py-10 md:py-6 px-10 no-preflight"
         :class="{
           'text-left': resolvedContent.footnoteAlign === 'left',
           'text-center': resolvedContent.footnoteAlign === 'center',
