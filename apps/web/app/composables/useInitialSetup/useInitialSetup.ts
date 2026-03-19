@@ -69,11 +69,8 @@ const setInitialDataSSR: SetInitialData = async () => {
 };
 
 const fetchCacheableInitData: SetInitialData = async () => {
-  const { loading: cartLoading } = useCart();
   const { setRobots } = useRobots();
   const { setInitialData: setInitialAssetsData } = useCustomAssets();
-
-  cartLoading.value = true;
 
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getAssetsAndRobots());
@@ -85,8 +82,6 @@ const fetchCacheableInitData: SetInitialData = async () => {
     }
   } catch (error) {
     useHandleError(error as ApiError);
-  } finally {
-    cartLoading.value = false;
   }
 
   return true;
