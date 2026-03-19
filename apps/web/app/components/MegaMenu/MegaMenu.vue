@@ -31,7 +31,9 @@
     </div>
 
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
+      <MegaMenuSkeleton v-if="categoryTree.length === 0 && route.meta.cacheControl" />
       <ul
+        v-else
         class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
           (event: FocusEvent) => {
