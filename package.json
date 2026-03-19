@@ -27,6 +27,7 @@
     "docs:dev": "npm run turbo:disable-telemetry && npm --prefix docs run docs:dev",
     "docs:build": "npm run turbo:disable-telemetry && npm --prefix docs run docs:build",
     "docs:preview": "npm run turbo:disable-telemetry && npm --prefix docs run docs:preview",
+    "publish-typedoc": "npm run turbo:disable-telemetry && turbo run publish-typedoc",
     "test": "npm run turbo:disable-telemetry && turbo run test",
     "test:watch": "npm run turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "npm run turbo:disable-telemetry && npx turbo run test:coverage",

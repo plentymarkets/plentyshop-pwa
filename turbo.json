@@ -35,6 +35,10 @@
     "docs:preview": {
        "cache": false
     },
+    "publish-typedoc": {
+      "cache": false,
+      "outputs": []
+    },
     "test": {
       "outputs": []
     },
