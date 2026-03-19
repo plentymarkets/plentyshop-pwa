@@ -68,7 +68,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   return true;
 };
 
-const fetchCachableInitData: SetInitialData = async () => {
+const fetchCacheableInitData: SetInitialData = async () => {
   const { loading: cartLoading } = useCart();
   const { setRobots } = useRobots();
   const { setInitialData: setInitialAssetsData } = useCustomAssets();
@@ -122,6 +122,6 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
     setInitialData,
     setInitialDataSSR,
     fetchSettings,
-    fetchCachableInitData,
+    fetchCacheableInitData,
   };
 };
