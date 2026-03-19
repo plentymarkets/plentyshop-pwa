@@ -13,5 +13,8 @@
     "verbatimModuleSyntax": false,
     "noImplicitAny": true
   },
+  "vueCompilerOptions": {
+    "plugins": []
+  },
   "exclude": ["node_modules", "app/mocks", "__tests__", "cypress.config.ts"]
 }
