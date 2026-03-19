@@ -30,7 +30,7 @@ describe('composables index exports', () => {
     'useFullWidthToggle',
     'useRichTextEditor',
     'useHtmlEditorMode',
-    'useGenerateTailwindPallete',
+    'useGenerateTailwindPalette',
   ];
 
   const allFileModules = fs

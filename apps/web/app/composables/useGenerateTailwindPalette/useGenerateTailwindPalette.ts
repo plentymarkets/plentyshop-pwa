@@ -23,7 +23,7 @@ const isHexColor = (value: string): boolean => /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6}
  * Supports either global CSS variables (`--colors-2-primary-500` / `--colors-2-secondary-500`)
  * or a hex color which will be expanded into a full shade palette.
  */
-export const useGenerateTailwindPallete = (
+export const useGenerateTailwindPalette = (
   colorGroup: string,
   baseColor: Ref<string> | ComputedRef<string>,
 ): ComputedRef<Record<string, string>> => {

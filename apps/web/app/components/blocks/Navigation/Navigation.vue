@@ -287,7 +287,7 @@ const resolvedContent = computed(() => ({
 }));
 
 const navigationBackgroundColor = computed(() => resolvedContent.value.color.backgroundColor || '');
-const navigationSecondaryPaletteStyle = useGenerateTailwindPallete('secondary', navigationBackgroundColor);
+const navigationSecondaryPaletteStyle = useGenerateTailwindPalette('secondary', navigationBackgroundColor);
 
 const navigationContainerClasses = computed(() => {
   switch (resolvedContent.value.text.textAlignment) {
