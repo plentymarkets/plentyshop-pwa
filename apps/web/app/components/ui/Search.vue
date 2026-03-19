@@ -96,7 +96,7 @@
                   <div class="text-sm font-medium text-neutral-900">{{ item.label }}</div>
                   <div class="text-sm">
                     <span class="text-gray-900 font-semibold">{{ item.price.formatted }}</span>
-                    <span class="text-neutral-500 ml-2 text-xs line-through">399,99 €</span>
+                    <span v-if="item.crossedPrice && item.crossedPrice !== item.price" class="text-neutral-500 ml-2 text-xs line-through">{{ item.crossedPrice.formatted }}</span>
                   </div>
                 </div>
               </div>
