@@ -71,12 +71,7 @@ const isSafeMode = computed(() => customAssetsSafeMode());
 
 onMounted(async () => {
   if (route.meta.cacheControl) {
-    const { data } = await useSdk().plentysystems.getSession();
-    if (data) {
-      useCustomer().setUser(data.user);
-      useCart().setCart(data.basket);
-      useWishlist().setWishlistItemIds(Object.values(data.basket?.itemWishListIds || []));
-    }
+    useFetchSession().fetchSession();
   }
 });
 
