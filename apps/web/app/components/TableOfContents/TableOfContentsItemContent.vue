@@ -18,7 +18,7 @@
         >
           <span
             v-if="getBlockIconSvg(blockName)"
-            class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"
+            class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all no-preflight"
             :class="{
               '[&>svg]:brightness-0 [&>svg]:invert': isSelected,
               'group-hover:[&>svg]:brightness-100 group-hover:[&>svg]:invert-0': isSelected,

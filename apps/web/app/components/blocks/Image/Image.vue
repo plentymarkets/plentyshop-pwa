@@ -34,7 +34,7 @@
       :style="{ color: props.content.text?.textOverlayColor || '#000' }"
       data-testid="image-overlay-text"
     >
-      <div v-html="props.content.text.textOverlay" />
+      <div class="no-preflight" v-html="props.content.text.textOverlay" />
       <UiButton
         v-if="props.content?.button.label"
         class="cursor-pointer pointer-events-auto"

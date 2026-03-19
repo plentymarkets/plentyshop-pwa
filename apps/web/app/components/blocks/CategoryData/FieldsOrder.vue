@@ -12,18 +12,21 @@
 
       <div
         v-else-if="key === 'description1' && texts.description1"
+        class="no-preflight"
         data-testid="category-description-1"
         v-html="texts.description1"
       />
 
       <div
         v-else-if="key === 'description2' && texts.description2"
+        class="no-preflight"
         data-testid="category-description-2"
         v-html="texts.description2"
       />
 
       <div
         v-else-if="key === 'shortDescription' && texts.shortDescription"
+        class="no-preflight"
         data-testid="category-short-description"
         v-html="texts.shortDescription"
       />
