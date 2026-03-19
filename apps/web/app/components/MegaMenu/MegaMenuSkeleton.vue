@@ -3,7 +3,7 @@
     <div
       v-for="item in items"
       :key="item.id"
-      class="inline-flex items-center py-2 px-4 mr-2 rounded-md bg-gray-200 animate-pulse"
+      class="inline-flex items-center py-2 px-4 mr-2 rounded-md animate-pulse"
     >
       <span :class="['block h-6 rounded bg-gray-300', item.width]" />
     </div>
