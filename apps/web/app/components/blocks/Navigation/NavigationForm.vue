@@ -105,7 +105,7 @@
           <input
             v-model.number="navigationBlock.layout.paddingTop"
             type="number"
-            class="w-12 text-center outline-none"
+            class="w-8 text-center outline-none"
             data-testid="padding-top"
           />
         </div>
@@ -114,7 +114,7 @@
           <input
             v-model.number="navigationBlock.layout.paddingBottom"
             type="number"
-            class="w-12 text-center outline-none"
+            class="w-8 text-center outline-none"
             data-testid="padding-bottom"
           />
         </div>
@@ -123,7 +123,7 @@
           <input
             v-model.number="navigationBlock.layout.paddingLeft"
             type="number"
-            class="w-12 text-center outline-none"
+            class="w-8 text-center outline-none"
             data-testid="padding-left"
           />
         </div>
@@ -132,7 +132,7 @@
           <input
             v-model.number="navigationBlock.layout.paddingRight"
             type="number"
-            class="w-12 text-center outline-none"
+            class="w-8 text-center outline-none"
             data-testid="padding-right"
           />
         </div>
@@ -197,8 +197,7 @@ const navigationBlock = computed<NavigationContent>(() => {
 
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
-    "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements"
+    "padding-label": "Padding"
   },
   "de": {
     "text-color-label": "Text Color",
@@ -209,8 +208,7 @@ const navigationBlock = computed<NavigationContent>(() => {
 
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
-    "padding-label": "Padding",
-    "spacing-around": "Spacing around the text elements"
+    "padding-label": "Padding"
   }
 }
 </i18n>
