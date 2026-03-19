@@ -31,4 +31,3 @@ export const getBlockLoader = (name: string) => {
 export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
 };
-
