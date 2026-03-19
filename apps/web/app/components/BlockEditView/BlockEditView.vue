@@ -40,6 +40,7 @@
 <script setup lang="ts">
 import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue';
 import { getBlockDisplayName } from '~/utils/get-block-display-name';
+import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();
@@ -75,22 +76,16 @@ const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>(
 const getComponent = (name: string) => {
   if (!name) return null;
 
-  const formName = name + 'Form';
-
-  if (componentCache.has(formName)) {
-    return componentCache.get(formName);
+  if (componentCache.has(name)) {
+    return componentCache.get(name);
   }
 
-  const loader = getBlockLoader(formName);
+  const loader = getBlockFormLoader(name);
   if (!loader) return null;
 
-  if (loader) {
-    const component = defineAsyncComponent(loader);
-    componentCache.set(formName, component);
-    return component;
-  }
-
-  return '';
+  const component = defineAsyncComponent(loader);
+  componentCache.set(name, component);
+  return component;
 };
 
 const currentComponent = computed(() => getComponent(blockType.value));

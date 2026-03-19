@@ -40,6 +40,7 @@
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
+import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
@@ -62,19 +63,13 @@ const blockLabels = ref<string[]>([]);
 const currentActiveBlockIndex = ref<number>(-1);
 const layoutOpen = ref(true);
 
-const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
 const blockForm = computed(() => {
   if (editingBlockIndex.value === undefined) return null;
 
   const block = blocks.value[editingBlockIndex.value];
   if (!block) return null;
 
-  const key = Object.keys(blockForms).find((path) => path.endsWith(`/${block.name}Form.vue`));
-  const loader = key ? blockForms[key] : undefined;
+  const loader = getBlockFormLoader(block.name);
   return loader ? defineAsyncComponent(loader) : null;
 });
 
@@ -132,7 +127,7 @@ const exitEditMode = (shouldEmit = true) => {
 
 const addBlock = () => {
   const { openDrawerWithView } = useSiteConfiguration();
-  const { multigridColumnUuid, togglePlaceholder } = useBlockManager();
+  const { togglePlaceholder } = useBlockManager();
 
   const lastChild = headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1];
 
@@ -140,7 +135,6 @@ const addBlock = () => {
 
   togglePlaceholder(lastChild.meta.uuid, 'bottom');
   openDrawerWithView('blocksList');
-  multigridColumnUuid.value = null;
 };
 
 const deleteBlock = async (index: number) => {

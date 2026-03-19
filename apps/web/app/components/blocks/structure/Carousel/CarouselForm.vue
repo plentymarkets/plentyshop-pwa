@@ -68,6 +68,7 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 import type { CarouselStructureProps, SlideBlock } from './types';
+import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { blockUuid } = useSiteConfiguration();
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
@@ -93,19 +94,13 @@ const slideLabels = ref<string[]>([]);
 
 setIndex(blockUuid.value, 0);
 
-const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
 const blockForm = computed(() => {
   if (editingSlideIndex.value === undefined) return null;
 
   const slide = slides.value[editingSlideIndex.value];
   if (!slide) return null;
 
-  const key = Object.keys(blockForms).find((path) => path.endsWith(`/${slide.name}Form.vue`));
-  const loader = key ? blockForms[key] : undefined;
+  const loader = getBlockFormLoader(slide.name);
   return loader ? defineAsyncComponent(loader) : null;
 });
 
