@@ -52,9 +52,7 @@
                 v-for="lang in languages"
                 :key="lang"
                 class="w-64 px-4 py-3 mr-3 font-semibold flex-shrink-0 last:mr-0"
-                :class="{
-                  '!w-[calc(50%-12px)]': selectedLocales.length === 2,
-                }"
+                :class="{ '!w-[calc(50%-12px)]': selectedLocales.length === 2 }"
               >
                 {{ lang }}
               </div>
