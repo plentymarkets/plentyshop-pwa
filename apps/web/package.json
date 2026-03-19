@@ -38,7 +38,6 @@
     "@nuxt/fonts": "^0.14.0",
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@types/js-beautify": "^1.14.3",
-    "@vue-storefront/sdk": "^3.4.2",
     "@vueuse/core": "^14.2.0",
     "axios": "^1.13.5",
     "codemirror": "^6.0.2",

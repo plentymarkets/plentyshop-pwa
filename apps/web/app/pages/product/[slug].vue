@@ -46,7 +46,7 @@ definePageMeta({
   cacheControl: {
     type: 'public',
     maxAge: 30,
-    staleWhileRevalidate: 900
+    staleWhileRevalidate: 900,
   },
 });
 

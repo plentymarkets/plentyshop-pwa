@@ -2,7 +2,6 @@ import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 import { getCategoryTemplate } from '~/utils/blockTemplates/category';
-import { prepareConfig } from '@vue-storefront/sdk';
 import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
 import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
 
@@ -98,12 +97,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     const identifier = category || params.categoryUrlPath || params.categoryId;
 
     const { data } = await useAsyncData(`useProducts-${identifier}-${JSON.stringify(params)}`, () =>
-      useSdk().plentysystems.getFacet(
-        params,
-        prepareConfig({
-          method: 'GET',
-        }),
-      ),
+      useSdk().plentysystems.getFacet(params),
     );
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;

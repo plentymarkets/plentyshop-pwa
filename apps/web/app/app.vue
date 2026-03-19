@@ -86,14 +86,14 @@ const { getAssetsOfType } = useCustomAssets();
 
 const isSafeMode = computed(() => customAssetsSafeMode());
 
-onMounted(async() => {
+onMounted(async () => {
   const { data } = await useSdk().plentysystems.getSession();
   if (data) {
     useCustomer().setUser(data.user);
     useCart().setCart(data.basket);
     useWishlist().setWishlistItemIds(Object.values(data.basket?.itemWishListIds || []));
   }
-})
+});
 
 const getCategoryMetaTitle = () => {
   if (isCategoryPage.value) {
