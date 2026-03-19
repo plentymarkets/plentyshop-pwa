@@ -28,14 +28,23 @@
       </SfInput>
     </form>
 
-    <div v-if="inputModel.length > 1 && searchTerm === inputModel" class="w-full grid md:shadow @2xl:grid-cols-3 @3xl:grid-cols-4 bg-white absolute px-4 pt-4 rounded-b-xl border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-scroll">
+    <div
+      v-if="inputModel.length > 1 && searchTerm === inputModel"
+      class="w-full grid md:shadow @2xl:grid-cols-3 @3xl:grid-cols-4 bg-white absolute px-4 pt-4 rounded-b-xl border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-scroll"
+    >
       <div class="w-full @2xl:col-span-1">
         <div v-if="results?.suggestions?.length" class="mb-8">
-          <NuxtLink v-for="(suggestion, index) in results.suggestions" :to="getSearchPath(suggestion.label)" :key="index" class="flex items-center py-2 px-4 gap-2 text-neutral-500 cursor-pointer hover:bg-neutral-100 transition duration-200 ease-in-out">
+          <NuxtLink
+            v-for="(suggestion, index) in results.suggestions"
+            :key="index"
+            :to="getSearchPath(suggestion.label)"
+            class="flex items-center py-2 px-4 gap-2 text-neutral-500 cursor-pointer hover:bg-neutral-100 transition duration-200 ease-in-out"
+          >
             <SfIconSearch size="sm" />
             <span class="text-black">
               <template v-if="getHighlightParts(suggestion.label).match">
-                {{ getHighlightParts(suggestion.label).before }}<b>{{ getHighlightParts(suggestion.label).match }}</b>{{ getHighlightParts(suggestion.label).after }}
+                {{ getHighlightParts(suggestion.label).before }}<b>{{ getHighlightParts(suggestion.label).match }}</b
+                >{{ getHighlightParts(suggestion.label).after }}
               </template>
               <template v-else>{{ suggestion.label }}</template>
             </span>
@@ -49,7 +58,11 @@
         <div class="@2xl:mb-4">
           <div v-if="results?.categories?.length" class="mt-4 flex flex-wrap gap-1.5 @2xl:flex-col @2xl:items-start">
             <NuxtLink v-for="(category, index) in results.categories" :key="index" :to="category.url">
-              <div class="bg-neutral-100 hover:bg-neutral-200 transition-colors duration-200 text-neutral-800 text-sm px-3 py-1.5 rounded-md">{{ category.label }}</div>
+              <div
+                class="bg-neutral-100 hover:bg-neutral-200 transition-colors duration-200 text-neutral-800 text-sm px-3 py-1.5 rounded-md"
+              >
+                {{ category.label }}
+              </div>
             </NuxtLink>
           </div>
           <div v-else class="text-base mt-4 text-neutral-900">No results found.</div>
@@ -59,7 +72,11 @@
       <div class="w-full @2xl:col-span-2 @3xl:col-span-3 @container/products @2xl:mb-4">
         <div class="flex items-center justify-between gap-2">
           <div class="uppercase tracking-widest text-sm font-bold text-neutral-700 shrink-0">Product Suggestions</div>
-          <NuxtLink v-if="results" :to="getSearchPath(searchTerm)" class="hidden @2xl/search:flex text-neutral-900 text-sm font-medium underline underline-offset-4 min-w-0 shrink">
+          <NuxtLink
+            v-if="results"
+            :to="getSearchPath(searchTerm)"
+            class="hidden @2xl/search:flex text-neutral-900 text-sm font-medium underline underline-offset-4 min-w-0 shrink"
+          >
             <span class="shrink-0">See all {{ results?.total }} results for "</span>
             <span class="truncate">{{ searchTerm }}</span>
             <span class="shrink-0">"</span>
@@ -88,7 +105,11 @@
           <div v-else class="text-base text-neutral-900">No results found.</div>
         </div>
       </div>
-      <NuxtLink v-if="results" :to="getSearchPath(searchTerm)" class="sticky bottom-0 @2xl:hidden px-2 py-4 bg-white text-base underline underline-offset-4  text-neutral-900 flex w-full overflow-hidden">
+      <NuxtLink
+        v-if="results"
+        :to="getSearchPath(searchTerm)"
+        class="sticky bottom-0 @2xl:hidden px-2 py-4 bg-white text-base underline underline-offset-4 text-neutral-900 flex w-full overflow-hidden"
+      >
         <span class="shrink-0">See all {{ results.total }} results for "</span>
         <span class="truncate">{{ searchTerm }}</span>
         <span class="shrink-0">"</span>

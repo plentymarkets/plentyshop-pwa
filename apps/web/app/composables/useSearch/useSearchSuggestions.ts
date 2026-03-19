@@ -1,6 +1,4 @@
-import type {
-  ItemSearchAutocompleteResult,
-} from '@plentymarkets/shop-api';
+import type { ItemSearchAutocompleteResult } from '@plentymarkets/shop-api';
 
 export const useSearchSuggestions = () => {
   const state = useState('useSearchSuggestions', () => ({
@@ -21,7 +19,10 @@ export const useSearchSuggestions = () => {
     }
 
     state.value.loading = true;
-    const { data } = await useSdk().plentysystems.getItemSearchAutocomplete({ query: term, types: ['suggestion', 'category'] });
+    const { data } = await useSdk().plentysystems.getItemSearchAutocomplete({
+      query: term,
+      types: ['suggestion', 'category'],
+    });
     state.value.searchTerm = term;
     state.value.results = data;
     state.value.loading = false;
@@ -31,5 +32,5 @@ export const useSearchSuggestions = () => {
   return {
     searchSuggestions,
     ...toRefs(state.value),
-  }
+  };
 };
