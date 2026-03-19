@@ -119,7 +119,7 @@
             v-if="shortDescription"
             class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
           >
-            <div class="line-clamp-3" v-html="shortDescription" />
+            <div class="line-clamp-3 no-preflight" v-html="shortDescription" />
           </div>
         </template>
         <template v-if="key === 'price' && configuration?.fields?.price">
