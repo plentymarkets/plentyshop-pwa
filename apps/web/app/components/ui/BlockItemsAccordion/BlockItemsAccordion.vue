@@ -50,7 +50,7 @@
               <button
                 :data-testid="`actions-edit-item-${index}`"
                 class="text-gray-500 rounded-full no-drag"
-                :aria-label="getEditorTranslation('edit-block-aria')"
+                :aria-label="getEditorTranslation('edit-element-aria')"
                 @click="$emit('edit-item', index)"
               >
                 <SfIconBase size="xs" viewBox="0 0 18 18">
@@ -204,7 +204,7 @@ onMounted(() => {
     "slide-label": "Slide",
     "add-element-label": "Add Element",
     "drag-reorder-aria": "Drag to reorder slide",
-    "edit-slide-aria": "Edit slide",
+    "edit-element-aria": "Edit slide",
     "back-aria": "Go back to slides list",
     "layout-label": "Layout",
     "controls-group-label": "Controls",
@@ -218,7 +218,7 @@ onMounted(() => {
     "slide-label": "Slide",
     "add-element-label": "Add Element",
     "drag-reorder-aria": "Drag to reorder slide",
-    "edit-slide-aria": "Edit slide",
+    "edit-element-aria": "Edit slide",
     "back-aria": "Go back to slides list",
     "layout-label": "Layout",
     "controls-group-label": "Controls",

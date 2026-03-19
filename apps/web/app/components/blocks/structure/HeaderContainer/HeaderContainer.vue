@@ -1,6 +1,6 @@
 <template>
   <div data-testid="header-container">
-    <div v-for="(contentBlock, index) in content" :key="index">
+    <div v-for="contentBlock in content" :key="contentBlock.meta.uuid">
       <slot name="content" :content-block="contentBlock" />
 
       <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />

@@ -172,8 +172,7 @@ const contentProps = computed(() => {
   return {
     ...baseProps,
     enableActions: props.enableActions,
-    root: props.root,
-    block: props.block,
+    root: props.root
   };
 });
 
