@@ -1,7 +1,11 @@
 <template>
-  <div class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid h-[57px]" aria-hidden="true">
-    <div v-for="item in items" :key="item.id" aria-hidden="true">
-      <div :class="['inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 bg-gray-200 animate-pulse h-[40px]', item.width]" />
+  <div class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid" aria-hidden="true">
+    <div
+      v-for="item in items"
+      :key="item.id"
+      class="inline-flex items-center py-2 px-4 mr-2 rounded-md bg-gray-200 animate-pulse"
+    >
+      <span :class="['block h-6 rounded bg-gray-300', item.width]" />
     </div>
   </div>
 </template>
