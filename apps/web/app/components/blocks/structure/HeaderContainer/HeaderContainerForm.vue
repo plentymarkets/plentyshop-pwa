@@ -44,10 +44,9 @@ import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
-const route = useRoute();
 const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
+  'index',
+  'immutable',
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
