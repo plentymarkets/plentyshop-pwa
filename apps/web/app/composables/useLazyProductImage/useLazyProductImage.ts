@@ -1,4 +1,6 @@
-export const useLazyProductImage = (options: { priority: Ref<boolean>; hoverImageUrl: Ref<string> }) => {
+import type { UseLazyProductImageOptions } from '~/composables/useLazyProductImage/types';
+
+export const useLazyProductImage = (options: UseLazyProductImageOptions) => {
   const imageContainerRef = ref<HTMLElement | null>(null);
   const shouldLoadMainImage = ref(options.priority.value);
   const shouldLoadHoverImage = ref(options.priority.value && !!options.hoverImageUrl.value);
@@ -42,6 +44,11 @@ export const useLazyProductImage = (options: { priority: Ref<boolean>; hoverImag
       return;
     }
 
+    if (typeof globalThis.IntersectionObserver === 'undefined') {
+      enableImageLoading();
+      return;
+    }
+
     const target = imageContainerRef.value;
 
     if (!(target instanceof HTMLElement)) {
@@ -49,7 +56,7 @@ export const useLazyProductImage = (options: { priority: Ref<boolean>; hoverImag
       return;
     }
 
-    observer = new IntersectionObserver(
+    observer = new globalThis.IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
 

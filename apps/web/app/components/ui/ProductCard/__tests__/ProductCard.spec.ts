@@ -1,16 +1,12 @@
 import { mount } from '@vue/test-utils';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { UiProductCard } from '#components';
 import { ProductMock } from '../../../../../__tests__/__mocks__/product.mock';
 
 const useLazyProductImageMock = vi.fn();
 
-vi.mock('#imports', async () => {
-  const actual = await vi.importActual<typeof import('#imports')>('#imports');
-
-  return {
-    ...actual,
-    useLazyProductImage: useLazyProductImageMock,
-  };
+mockNuxtImport('useLazyProductImage', () => {
+  return useLazyProductImageMock;
 });
 
 describe('<ProductCard />', () => {
