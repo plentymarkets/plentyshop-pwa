@@ -1,9 +1,4 @@
-export const useLazyProductImage = (
-  options: {
-    priority: Ref<boolean>;
-    hoverImageUrl: Ref<string>;
-  },
-) => {
+export const useLazyProductImage = (options: { priority: Ref<boolean>; hoverImageUrl: Ref<string> }) => {
   const imageContainerRef = ref<HTMLElement | null>(null);
   const shouldLoadMainImage = ref(options.priority.value);
   const shouldLoadHoverImage = ref(options.priority.value && !!options.hoverImageUrl.value);
