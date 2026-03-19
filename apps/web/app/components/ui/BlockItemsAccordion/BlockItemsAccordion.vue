@@ -156,11 +156,7 @@ const internalItems = computed<Block[]>({
 const openItemMenuIndex = ref<number | undefined>(undefined);
 
 const toggleItemMenu = (index: number) => {
-  if (openItemMenuIndex.value === index) {
-    openItemMenuIndex.value = undefined;
-  } else {
-    openItemMenuIndex.value = index;
-  }
+  openItemMenuIndex.value = openItemMenuIndex.value === index ? undefined : index;
 };
 
 const deleteItem = (index: number) => {

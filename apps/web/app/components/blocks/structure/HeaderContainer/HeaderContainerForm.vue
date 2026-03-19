@@ -112,28 +112,7 @@ const blocks = computed({
 });
 
 const resolveBlockLabels = async () => {
-  blockLabels.value = await Promise.all(blocks.value.map((block, index) => getBlockLabel(block, index)));
-};
-
-const getBlockLabel = async (block: Block, index: number): Promise<string> => {
-  try {
-    const module = await import(`~/components/blocks/${block.name}/defaults.ts`);
-    const fallbackLabel = `${block.name} ${index + 1}`;
-    const label = module.labelPath
-      ? module.labelPath
-          .split('.')
-          .reduce((acc: unknown, key: string) => (acc as Record<string, unknown>)?.[key], block as unknown)
-      : fallbackLabel;
-    const strippedHtml = (() => {
-      const doc = new DOMParser().parseFromString(String(label), 'text/html');
-      return doc.body.textContent?.trim() || '';
-    })();
-    const plainText = decodeHtmlEntities(strippedHtml);
-    if (!plainText) return fallbackLabel;
-    return plainText.length > 30 ? plainText.slice(0, 30) + '…' : plainText;
-  } catch {
-    return `${block.name} ${index + 1}`;
-  }
+  blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
 };
 
 const editBlock = (index: number) => {

@@ -74,7 +74,7 @@ const draggableData = computed({
 });
 
 const enforceHeaderAtTop = () => {
-  const headerIndex = data.value.findIndex((block) => isHeaderBlock(block));
+  const headerIndex = data.value.findIndex((block) => isHeaderContainerBlock(block));
   if (headerIndex !== -1 && headerIndex !== 0) {
     const headerBlock = data.value.splice(headerIndex, 1)[0];
     if (headerBlock) {

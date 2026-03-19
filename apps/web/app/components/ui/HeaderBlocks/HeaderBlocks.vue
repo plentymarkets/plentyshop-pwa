@@ -14,16 +14,10 @@ const { headerContainerCache, fetchHeaderContainerBlock } = useBlockTemplates(
 
 const headerBlock = computed(() => headerContainerCache.value);
 
-const headerBlocksClasses = computed(() => {
-  const isSticky = headerBlock.value?.configuration?.layout?.sticky ?? false;
-  const classes = ['header-blocks'];
-
-  if (isSticky) {
-    classes.push('sticky', 'top-0', 'z-50');
-  }
-
-  return classes;
-});
+const headerBlocksClasses = computed(() => [
+  'header-blocks',
+  { 'sticky top-0 z-50': headerBlock.value?.configuration?.layout?.sticky }
+]);
 
 watch(
   () => nuxtApp.$i18n.locale.value,
