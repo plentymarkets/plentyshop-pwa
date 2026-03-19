@@ -26,8 +26,9 @@
       <component
         :is="currentComponent"
         v-if="currentComponent"
+        :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
-        :key="blockUuid"
+        :uuid="blockUuid"
         @vue:mounted="handleBackClick"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
@@ -101,6 +102,9 @@ const blockDisplayName = computed(() => {
     if (firstChild?.name) {
       return getBlockDisplayName(firstChild.name);
     }
+  }
+  if (blockType.value === 'UtilityBar' && customTitle.value) {
+    return customTitle.value;
   }
   return getBlockDisplayName(blockType.value);
 });
