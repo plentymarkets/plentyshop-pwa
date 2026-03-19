@@ -228,7 +228,12 @@ const isEditDisabled = computed(() => {
 });
 
 const showTopAddBlockButton = computed(
-  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderContainerBlock(props.block),
+  () =>
+    props.enableActions &&
+    clientPreview.value &&
+    props.root &&
+    !isDragging.value &&
+    !isHeaderContainerBlock(props.block),
 );
 
 const showBottomAddBlockButton = computed(

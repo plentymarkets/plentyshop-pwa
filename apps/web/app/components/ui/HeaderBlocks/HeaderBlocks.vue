@@ -1,9 +1,6 @@
 <template>
   <div :class="headerBlocksClasses">
-    <EditableBlocks
-      v-if="headerBlock"
-      :blocks="[headerBlock]"
-    />
+    <EditableBlocks v-if="headerBlock" :blocks="[headerBlock]" />
   </div>
 </template>
 

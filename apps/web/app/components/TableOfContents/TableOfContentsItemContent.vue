@@ -12,7 +12,10 @@
       </slot>
 
       <div class="shrink-0 w-5 h-5 relative">
-        <div class="transition-opacity" :class="{ 'group-hover:opacity-0': isRoot && !isFooterBlock(block) && !isHeaderContainerBlock(block) }">
+        <div
+          class="transition-opacity"
+          :class="{ 'group-hover:opacity-0': isRoot && !isFooterBlock(block) && !isHeaderContainerBlock(block) }"
+        >
           <span
             v-if="getBlockIconSvg(blockName)"
             class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"

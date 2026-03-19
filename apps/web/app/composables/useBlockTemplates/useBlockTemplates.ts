@@ -459,7 +459,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
       }
 
-      if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value) headerContainerCache.value = resolvedHeaderContainer;
+      if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value)
+        headerContainerCache.value = resolvedHeaderContainer;
     }
 
     const mainBlocks = fetchedBlocks.filter(

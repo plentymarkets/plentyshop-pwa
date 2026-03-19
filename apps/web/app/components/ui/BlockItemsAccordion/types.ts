@@ -17,4 +17,3 @@ export interface BlockItemsAccordionEmits {
   'update:items': [items: SlideBlock[]];
   'update:modelValue': [isOpen: boolean];
 }
-

@@ -75,10 +75,12 @@
                   @click.stop
                 >
                   <div class="px-4 py-3 border-b">
-                  <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between">
                       <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
                       <SfSwitch
-                        :model-value="(internalItems[index]?.configuration as Record<string, unknown>)?.visible !== false"
+                        :model-value="
+                          (internalItems[index]?.configuration as Record<string, unknown>)?.visible !== false
+                        "
                         :data-testid="`actions-toggle-visibility-item-${index}`"
                         :aria-label="getEditorTranslation('toggle-visibility-aria')"
                         class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"

@@ -75,7 +75,7 @@ const data = computed({
     const target = props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value;
     const header = target.find((block) => isHeaderContainerBlock(block));
     const rebuilt = header ? [header, ...newValue] : newValue;
-      target.splice(0, target.length, ...rebuilt);
+    target.splice(0, target.length, ...rebuilt);
   },
 });
 

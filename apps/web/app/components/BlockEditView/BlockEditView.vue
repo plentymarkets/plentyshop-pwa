@@ -98,7 +98,6 @@ const block = computed(() => findOrDeleteBlockByUuid(data.value, blockUuid.value
 
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
-
     const firstChild = (block?.value?.content as Array<{ name: string }>)?.[0];
     if (firstChild?.name) {
       return getBlockDisplayName(firstChild.name);

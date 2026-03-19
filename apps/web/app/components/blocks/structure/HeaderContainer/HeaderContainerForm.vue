@@ -112,9 +112,7 @@ const blocks = computed({
 });
 
 const resolveBlockLabels = async () => {
-  blockLabels.value = await Promise.all(
-    blocks.value.map((block, index) => getBlockLabel(block, index)),
-  );
+  blockLabels.value = await Promise.all(blocks.value.map((block, index) => getBlockLabel(block, index)));
 };
 
 const getBlockLabel = async (block: Block, index: number): Promise<string> => {
@@ -217,4 +215,3 @@ defineExpose({
   }
 }
 </i18n>
-
