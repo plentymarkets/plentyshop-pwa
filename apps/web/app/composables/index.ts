@@ -94,7 +94,7 @@ export * from './useImageAdd';
 export * from './useResetPassword';
 export * from './useCustomerClass';
 export * from './useFetchSession';
-export * from './useGenerateTailwindPallete';
+export * from './useGenerateTailwindPalette';
 export * from './useGridSplits';
 export * from './useRegisterForm';
 export * from './useFormLabel';

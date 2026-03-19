@@ -350,7 +350,7 @@ const {
 
 const iconColor = computed(() => content.value?.color?.iconColor || '');
 const headerBackgroundColor = computed(() => content.value?.color?.backgroundColor || '');
-const headerPaletteStyle = useGenerateTailwindPallete('header', headerBackgroundColor);
+const headerPaletteStyle = useGenerateTailwindPalette('header', headerBackgroundColor);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { localeCodes } = useI18n();

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { useGenerateTailwindPallete } from '../useGenerateTailwindPallete';
+import { useGenerateTailwindPalette } from '../useGenerateTailwindPalette';
 
-describe('useGenerateTailwindPallete', () => {
+describe('useGenerateTailwindPalette', () => {
   it('should generate a header palette from a primary global palette reference', () => {
     const baseColor = ref('rgb(var(--colors-2-primary-500))');
-    const palette = useGenerateTailwindPallete('header', baseColor);
+    const palette = useGenerateTailwindPalette('header', baseColor);
 
     expect(palette.value['--colors-2-header-50']).toBe('var(--colors-2-primary-50)');
     expect(palette.value['--colors-2-header-500']).toBe('var(--colors-2-primary-500)');
@@ -13,7 +13,7 @@ describe('useGenerateTailwindPallete', () => {
 
   it('should generate a header palette from a secondary global palette reference', () => {
     const baseColor = ref('rgb(var(--colors-2-secondary-500))');
-    const palette = useGenerateTailwindPallete('header', baseColor);
+    const palette = useGenerateTailwindPalette('header', baseColor);
 
     expect(palette.value['--colors-2-header-100']).toBe('var(--colors-2-secondary-100)');
     expect(palette.value['--colors-2-header-700']).toBe('var(--colors-2-secondary-700)');
@@ -21,7 +21,7 @@ describe('useGenerateTailwindPallete', () => {
 
   it('should generate a palette from a hex color', () => {
     const baseColor = ref('#0c7992');
-    const palette = useGenerateTailwindPallete('header', baseColor);
+    const palette = useGenerateTailwindPalette('header', baseColor);
 
     expect(palette.value['--colors-2-header-50']).toBe('222 247 252');
     expect(palette.value['--colors-2-header-500']).toBe('12 121 146');
@@ -30,14 +30,14 @@ describe('useGenerateTailwindPallete', () => {
 
   it('should return an empty palette when base color is empty', () => {
     const baseColor = ref('');
-    const palette = useGenerateTailwindPallete('header', baseColor);
+    const palette = useGenerateTailwindPalette('header', baseColor);
 
     expect(palette.value).toEqual({});
   });
 
   it('should return an empty palette when base color is not a global palette or hex', () => {
     const baseColor = ref('transparent');
-    const palette = useGenerateTailwindPallete('header', baseColor);
+    const palette = useGenerateTailwindPalette('header', baseColor);
 
     expect(palette.value).toEqual({});
   });
@@ -45,7 +45,7 @@ describe('useGenerateTailwindPallete', () => {
   it('should react to base color changes', () => {
     const baseColor = ref('rgb(var(--colors-2-primary-500))');
     const computedColor = computed(() => baseColor.value);
-    const palette = useGenerateTailwindPallete('header', computedColor);
+    const palette = useGenerateTailwindPalette('header', computedColor);
 
     expect(palette.value['--colors-2-header-500']).toBe('var(--colors-2-primary-500)');
 
