@@ -1,7 +1,7 @@
 <template>
   <div data-testid="header-container-form" class="block-header-edit sticky h-[80vh] overflow-y-auto">
     <div v-if="editingBlockIndex === undefined" class="space-y-0">
-      <UiBlockItemsAccordion
+      <EditorBlockItemsAccordion
         v-model="elementsOpen"
         :items="blocks"
         :item-labels="blockLabels"

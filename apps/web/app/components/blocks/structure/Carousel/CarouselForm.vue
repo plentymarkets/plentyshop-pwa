@@ -1,6 +1,6 @@
 <template>
   <div data-testid="banner-carousel-form" class="block-slider-edit sticky h-[80vh] overflow-y-auto">
-    <UiBlockItemsAccordion
+    <EditorBlockItemsAccordion
       v-if="editingSlideIndex === undefined"
       v-model="elementsOpen"
       :items="slides"
