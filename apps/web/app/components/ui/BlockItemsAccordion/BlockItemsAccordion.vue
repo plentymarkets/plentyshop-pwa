@@ -94,7 +94,7 @@
                     @click="deleteItem(index)"
                   >
                     <SfIconDelete size="sm" />
-                    {{ getEditorTranslation('delete-block-label') }}
+                    {{ getEditorTranslation('delete-label') }}
                   </button>
                 </div>
               </div>
@@ -213,7 +213,7 @@ onMounted(() => {
     "controls-color-label": "Slider Controls Colour",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle slide visibility",
-    "delete-slide-label": "Delete"
+    "delete-label": "Delete"
   },
   "de": {
     "elements-group-label": "Elements",
@@ -227,7 +227,7 @@ onMounted(() => {
     "controls-color-label": "Slider Controls Colour",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle slide visibility",
-    "delete-slide-label": "Delete"
+    "delete-label": "Delete"
   }
 }
 </i18n>
