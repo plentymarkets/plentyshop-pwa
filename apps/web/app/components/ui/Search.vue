@@ -34,26 +34,12 @@
     >
       <div class="w-full @2xl:col-span-1">
         <div v-if="results?.suggestions?.length" class="mb-8">
-          <NuxtLink
-            v-for="(suggestion, index) in results.suggestions"
-            :key="index"
-            :to="getSearchPath(suggestion.label)"
-            class="flex items-center py-2 px-4 gap-2 text-neutral-500 cursor-pointer hover:bg-neutral-100 transition duration-200 ease-in-out"
-          >
-            <SfIconSearch size="sm" />
-            <span class="text-black">
-              <template v-if="getHighlightParts(suggestion.label).match">
-                {{ getHighlightParts(suggestion.label).before }}<b>{{ getHighlightParts(suggestion.label).match }}</b
-                >{{ getHighlightParts(suggestion.label).after }}
-              </template>
-              <template v-else>{{ suggestion.label }}</template>
-            </span>
-
-            <span>({{ suggestion.count }})</span>
-          </NuxtLink>
+          <UiSearchSuggestionItem v-for="(item, index) in results.suggestions" :key="index" :item="item" />
         </div>
 
-        <div class="uppercase tracking-widest text-sm font-bold text-neutral-700">Matching categories</div>
+        <div class="uppercase tracking-widest text-sm font-bold text-neutral-700">
+          {{ t('searchBar.matchingCategories') }}
+        </div>
         <hr class="h-px mt-2 bg-neutral-200 border-0" />
         <div class="@2xl:mb-4">
           <div v-if="results?.categories?.length" class="mt-4 flex flex-wrap gap-1.5 @2xl:flex-col @2xl:items-start">
@@ -65,54 +51,46 @@
               </div>
             </NuxtLink>
           </div>
-          <div v-else class="text-base mt-4 text-neutral-900">No results found.</div>
+          <div v-else class="text-base mt-4 text-neutral-900">{{ t('searchBar.noResultsFound') }}</div>
         </div>
       </div>
 
-      <div class="w-full @2xl:col-span-2 @3xl:col-span-3 @container/products @2xl:mb-4">
+      <div class="w-full @2xl:col-span-2 @3xl:col-span-3 @container/products @2xl:mb-4 overflow-hidden">
         <div class="flex items-center justify-between gap-2">
-          <div class="uppercase tracking-widest text-sm font-bold text-neutral-700 shrink-0">Product Suggestions</div>
+          <div class="uppercase tracking-widest text-sm font-bold text-neutral-700 shrink-0">
+            {{ t('searchBar.productSuggestions') }}
+          </div>
           <NuxtLink
-            v-if="results"
+            v-if="results?.total"
             :to="getSearchPath(searchTerm)"
             class="hidden @2xl/search:flex text-neutral-900 text-sm font-medium underline underline-offset-4 min-w-0 shrink"
           >
-            <span class="shrink-0">See all {{ results?.total }} results for "</span>
-            <span class="truncate">{{ searchTerm }}</span>
-            <span class="shrink-0">"</span>
+            <template v-for="(part, i) in searchLinkParts" :key="i">
+              <span v-if="part === '{{SEARCH_TERM}}'" class="truncate">{{ searchTerm }}</span>
+              <span v-else-if="part === '{{HITS_COUNT}}'" class="shrink-0">{{ results?.total }}</span>
+              <span v-else class="shrink-0 whitespace-pre">{{ part }}</span>
+            </template>
           </NuxtLink>
         </div>
 
         <hr class="h-px mt-2 bg-neutral-200 border-0" />
         <div class="mt-4 gap-4 grid @sm/products:grid-cols-2 @md:grid-cols-3 items-stretch">
           <template v-if="results?.items?.length">
-            <NuxtLink v-for="(item, index) in results.items" :key="index" :to="item.url">
-              <div class="border border-neutral-200 rounded-md h-full">
-                <div class="flex items-center justify-center">
-                  <NuxtImg :src="item.image" :alt="item.imageAlt" class="object-contain rounded-md aspect-[3/2]" />
-                </div>
-                <hr class="h-px bg-neutral-200 border-0" />
-                <div class="p-2">
-                  <div class="text-sm font-medium text-neutral-900">{{ item.label }}</div>
-                  <div class="text-sm">
-                    <span class="text-gray-900 font-semibold">{{ item.price.formatted }}</span>
-                    <span v-if="item.crossedPrice && item.crossedPrice !== item.price" class="text-neutral-500 ml-2 text-xs line-through">{{ item.crossedPrice.formatted }}</span>
-                  </div>
-                </div>
-              </div>
-            </NuxtLink>
+            <UiSearchSuggestionProduct v-for="(item, index) in results.items" :key="index" :item="item" />
           </template>
-          <div v-else class="text-base text-neutral-900">No results found.</div>
+          <div v-else class="text-base text-neutral-900 mb-4 @2xl:mb-0">{{ t('searchBar.noResultsFound') }}</div>
         </div>
       </div>
       <NuxtLink
-        v-if="results"
+        v-if="results?.total"
         :to="getSearchPath(searchTerm)"
         class="sticky bottom-0 @2xl:hidden px-2 py-4 bg-white text-base underline underline-offset-4 text-neutral-900 flex w-full overflow-hidden"
       >
-        <span class="shrink-0">See all {{ results.total }} results for "</span>
-        <span class="truncate">{{ searchTerm }}</span>
-        <span class="shrink-0">"</span>
+        <template v-for="(part, i) in searchLinkParts" :key="i">
+          <span v-if="part === '{{SEARCH_TERM}}'" class="truncate">{{ searchTerm }}</span>
+          <span v-else-if="part === '{{HITS_COUNT}}'" class="shrink-0">{{ results?.total }}</span>
+          <span v-else class="shrink-0 whitespace-pre">{{ part }}</span>
+        </template>
       </NuxtLink>
     </div>
   </div>
@@ -134,26 +112,25 @@ for (let i = 0; i < 3; i++) {
 
 const localePath = useLocalePath();
 const router = useRouter();
+const route = useRoute();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
 const { loading } = useSearch();
 const { results, searchSuggestions, searchTerm, loading: loadingSuggestions } = useSearchSuggestions();
 const { emit } = usePlentyEvent();
+const { t } = useI18n();
+
+const searchLinkParts = computed(() => {
+  const translated = t('searchBar.showAllResults', {
+    searchTerm: '{{SEARCH_TERM}}',
+    hitsCount: '{{HITS_COUNT}}',
+  });
+  return translated.split(/({{SEARCH_TERM}}|{{HITS_COUNT}})/);
+});
 
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
-const getHighlightParts = (text: string) => {
-  if (!inputModel.value) return { before: text, match: '', after: '' };
-  const escaped = inputModel.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const regex = new RegExp(`(${escaped})`, 'i');
-  const parts = text.split(regex);
-  // parts: [before, match, after]
-  return {
-    before: parts[0] ?? '',
-    match: parts[1] ?? '',
-    after: parts[2] ?? '',
-  };
-};
+
 const handleInputFocus = () => {
   const inputElement = unrefElement(inputReference)?.querySelector('input');
   inputElement?.focus();
@@ -174,11 +151,7 @@ const handleSearch = () => {
     searchSuggestions(inputModel.value);
   }
 };
-const debounceInput = debounce(handleSearch, 500);
-
-const getSearchPath = (suggestion: string) => {
-  return `${localePath(paths.search)}?term=${encodeURIComponent(suggestion)}`;
-};
+const debounceInput = debounce(handleSearch, 250);
 
 watch(inputModel, () => {
   if (inputModel.value === '') {
@@ -188,4 +161,11 @@ watch(inputModel, () => {
     debounceInput();
   }
 });
+
+watch(
+  () => route.fullPath,
+  () => {
+    inputModel.value = '';
+  },
+);
 </script>
