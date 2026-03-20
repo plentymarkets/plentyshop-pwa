@@ -487,4 +487,3 @@ const navigateToLogin = () => {
   min-width: 172px;
 }
 </style>
-
