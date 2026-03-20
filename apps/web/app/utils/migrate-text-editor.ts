@@ -1,4 +1,5 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
+import type { TextContentProps } from '../components/TextContent/types';
 
 const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
   if (!content.text) return false;
@@ -67,4 +68,36 @@ export const migrateTextCardContent = (
   migrated.text.subtitle = '';
 
   return migrated;
+};
+
+export const mapToTextContentProps = (mapping: {
+  pretitle?: string;
+  title?: string;
+  subtitle?: string;
+  htmlDescription?: string;
+  color?: string;
+  textAlignment?: 'left' | 'center' | 'right';
+  buttonLabel?: string;
+  buttonLink?: string;
+  buttonVariant?: 'primary' | 'secondary';
+  index?: number;
+}): TextContentProps => {
+  const { pretitle, title, subtitle, htmlDescription, color, textAlignment, buttonLabel, buttonLink, buttonVariant, index } = mapping;
+
+  return {
+    ...(index !== undefined && { index }),
+    text: {
+      pretitle,
+      title,
+      subtitle,
+      htmlDescription,
+      color,
+      textAlignment,
+    },
+    button: {
+      label: buttonLabel,
+      link: buttonLink,
+      variant: buttonVariant,
+    },
+  };
 };
