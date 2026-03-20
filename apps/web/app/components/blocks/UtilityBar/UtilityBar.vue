@@ -11,7 +11,7 @@
             id="blockified-logo"
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
-            class="items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
             <UiLogo />
           </NuxtLink>
