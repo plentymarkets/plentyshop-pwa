@@ -4,10 +4,49 @@ export const useLazyProductImage = (options: UseLazyProductImageOptions) => {
   const imageContainerRef = ref<HTMLElement | null>(null);
   const shouldLoadMainImage = ref(options.priority.value);
   const shouldLoadHoverImage = ref(options.priority.value && !!options.hoverImageUrl.value);
+
+  const mainImageRef = ref<unknown>(null);
+  const hoverImageRef = ref<unknown>(null);
+
   const mainImageLoaded = ref(false);
   const hoverImageLoaded = ref(false);
 
   let observer: IntersectionObserver | null = null;
+
+  const getNativeImg = (value: unknown): HTMLImageElement | null => {
+    if (value instanceof HTMLImageElement) {
+      return value;
+    }
+
+    if (value instanceof HTMLElement) {
+      return value.querySelector('img');
+    }
+
+    if (value && typeof value === 'object' && '$el' in value) {
+      const el = (value as { $el?: unknown }).$el;
+
+      if (el instanceof HTMLImageElement) {
+        return el;
+      }
+
+      if (el instanceof HTMLElement) {
+        return el.querySelector('img');
+      }
+    }
+
+    return null;
+  };
+  const syncLoadedState = async (targetRef: Ref<unknown>, loadedRef: Ref<boolean>) => {
+    await nextTick();
+
+    const img = getNativeImg(targetRef.value);
+    if (img?.complete && img.naturalWidth > 0) {
+      loadedRef.value = true;
+    }
+  };
+
+  const syncMainImageLoadedState = () => syncLoadedState(mainImageRef, mainImageLoaded);
+  const syncHoverImageLoadedState = () => syncLoadedState(hoverImageRef, hoverImageLoaded);
 
   const onMainImageLoad = () => {
     mainImageLoaded.value = true;
@@ -38,30 +77,36 @@ export const useLazyProductImage = (options: UseLazyProductImageOptions) => {
     }
   };
 
-  onMounted(() => {
+  const enableAndSyncImages = async () => {
+    enableImageLoading();
+    await syncMainImageLoadedState();
+    await syncHoverImageLoadedState();
+  };
+
+  onMounted(async () => {
     if (options.priority.value) {
-      enableImageLoading();
+      await enableAndSyncImages();
       return;
     }
 
     if (typeof globalThis.IntersectionObserver === 'undefined') {
-      enableImageLoading();
+      await enableAndSyncImages();
       return;
     }
 
     const target = imageContainerRef.value;
 
     if (!(target instanceof HTMLElement)) {
-      enableImageLoading();
+      await enableAndSyncImages();
       return;
     }
 
     observer = new globalThis.IntersectionObserver(
-      ([entry]) => {
+      async ([entry]) => {
         if (!entry?.isIntersecting) return;
 
-        enableImageLoading();
         disconnectObserver();
+        await enableAndSyncImages();
       },
       {
         root: null,
@@ -72,22 +117,42 @@ export const useLazyProductImage = (options: UseLazyProductImageOptions) => {
 
     observer.observe(target);
   });
-
   onBeforeUnmount(() => {
     disconnectObserver();
   });
 
   watch(
+    () => shouldLoadMainImage.value,
+    async (value) => {
+      if (value) {
+        await syncMainImageLoadedState();
+      }
+    },
+  );
+
+  watch(
+    () => shouldLoadHoverImage.value,
+    async (value) => {
+      if (value) {
+        await syncHoverImageLoadedState();
+      }
+    },
+  );
+
+  watch(
     () => options.hoverImageUrl.value,
-    (value) => {
+    async (value) => {
       if (value && (options.priority.value || shouldLoadMainImage.value)) {
         shouldLoadHoverImage.value = true;
+        await syncHoverImageLoadedState();
       }
     },
   );
 
   return {
     imageContainerRef,
+    mainImageRef,
+    hoverImageRef,
     shouldLoadMainImage,
     shouldLoadHoverImage,
     mainImageLoaded,

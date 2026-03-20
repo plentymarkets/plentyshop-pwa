@@ -28,6 +28,7 @@
 
             <NuxtImg
               v-if="shouldLoadMainImage"
+              ref="mainImageRef"
               :src="imageUrl"
               :alt="imageAlt"
               :title="imageTitle || null"
@@ -48,6 +49,7 @@
 
             <NuxtImg
               v-if="shouldLoadHoverImage && effectiveHoverImageUrl"
+              ref="hoverImageRef"
               :src="effectiveHoverImageUrl"
               :alt="imageAlt"
               :title="imageTitle || null"
@@ -280,9 +282,11 @@ const productPath = computed(() => {
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
 });
 
-const priority = computed(() => (props.index || 0) < 5);
+const priority = computed(() => (props.index ?? 0) < 5);
 const {
   imageContainerRef,
+  mainImageRef,
+  hoverImageRef,
   shouldLoadMainImage,
   shouldLoadHoverImage,
   mainImageLoaded,
