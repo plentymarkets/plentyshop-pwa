@@ -1,7 +1,7 @@
 {
   "header": {
     "category": "header",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Header",
     "blockName": "Header",
     "variations": [
