@@ -131,7 +131,12 @@
       <h2>{{ getEditorTranslation('text-overlay-label') }}</h2>
     </template>
 
-    <EditorRichTextEditorForm :model-value="uiImageTextBlock.text.textOverlay ?? ''" :text-align="uiImageTextBlock.text.textOverlayAlignX" :block-uuid="blockUuid" @update:model-value="uiImageTextBlock.text.textOverlay = $event">
+    <EditorRichTextEditorForm
+      :model-value="uiImageTextBlock.text.textOverlay ?? ''"
+      :text-align="uiImageTextBlock.text.textOverlayAlignX"
+      :block-uuid="blockUuid"
+      @update:model-value="uiImageTextBlock.text.textOverlay = $event"
+    >
       <div class="py-2">
         <UiFormLabel>{{ getEditorTranslation('text-overlay-label') }}</UiFormLabel>
         <SfTextarea

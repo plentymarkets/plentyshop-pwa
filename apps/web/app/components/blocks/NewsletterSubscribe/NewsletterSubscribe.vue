@@ -148,7 +148,7 @@ const textContentProps = computed(() =>
     title: props.content.text?.title,
     htmlDescription: props.content.text?.htmlDescription,
     textAlignment: props.content.text?.textAlignment ?? 'center',
-  })
+  }),
 );
 
 const validationSchema = toTypedSchema(

@@ -26,10 +26,7 @@
         data-testid="image-block-image"
       />
     </component>
-    <div
-      class="absolute inset-0 px-4 flex flex-col"
-      :class="overlayAlignClasses"
-    >
+    <div class="absolute inset-0 px-4 flex flex-col" :class="overlayAlignClasses">
       <TextContent v-bind="textContentProps" />
     </div>
   </div>
@@ -62,7 +59,7 @@ const textContentProps = computed(() =>
     buttonLabel: props.content?.button.label,
     buttonLink: props.content?.button.link,
     buttonVariant: props.content?.button.variant,
-  })
+  }),
 );
 
 const getAspectRatio = () => {

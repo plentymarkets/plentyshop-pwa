@@ -60,7 +60,10 @@
               </SfListItem>
             </ul>
           </div>
-          <TextContent v-if="column?.description" v-bind="mapToTextContentProps({ htmlDescription: column.description })" />
+          <TextContent
+            v-if="column?.description"
+            v-bind="mapToTextContentProps({ htmlDescription: column.description })"
+          />
         </div>
       </div>
     </div>

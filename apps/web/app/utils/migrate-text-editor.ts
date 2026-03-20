@@ -82,7 +82,18 @@ export const mapToTextContentProps = (mapping: {
   buttonVariant?: 'primary' | 'secondary';
   index?: number;
 }): TextContentProps => {
-  const { pretitle, title, subtitle, htmlDescription, color, textAlignment, buttonLabel, buttonLink, buttonVariant, index } = mapping;
+  const {
+    pretitle,
+    title,
+    subtitle,
+    htmlDescription,
+    color,
+    textAlignment,
+    buttonLabel,
+    buttonLink,
+    buttonVariant,
+    index,
+  } = mapping;
 
   return {
     ...(index !== undefined && { index }),
