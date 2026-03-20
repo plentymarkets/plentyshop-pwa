@@ -7,6 +7,7 @@
           type="button"
           data-testid="rte-heading-select"
           class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+          @mousedown.prevent
           @click="onBlockTypeTriggerClick"
         >
           <span>{{ selectedBlockTypeLabel }}</span>
