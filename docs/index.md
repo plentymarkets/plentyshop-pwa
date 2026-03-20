@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "PlentyONE Shop"
-  text: "Documentation"
+  name: 'PlentyONE Shop'
+  text: 'Documentation'
   image:
     src: /logo.png
     alt: PlentyONE Shop

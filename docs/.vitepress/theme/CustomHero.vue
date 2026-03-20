@@ -1,6 +1,6 @@
 <script setup>
-import DefaultTheme from "vitepress/theme";
-import FeedbackWidget from "./components/FeedbackWidget.vue";
+import DefaultTheme from 'vitepress/theme';
+import FeedbackWidget from './components/FeedbackWidget.vue';
 
 const { Layout } = DefaultTheme;
 </script>

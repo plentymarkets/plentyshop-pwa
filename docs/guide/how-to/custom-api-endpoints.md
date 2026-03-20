@@ -15,15 +15,15 @@ Add your custom endpoint in `apps/server/middleware.config.ts`:
 
 const config = {
   logger: {
-    verbosity: process.env.LOG_LEVEL ?? "info",
+    verbosity: process.env.LOG_LEVEL ?? 'info',
   },
   integrations: {
     plentysystems: {
-      location: "@plentymarkets/shop-api/server",
+      location: '@plentymarkets/shop-api/server',
       configuration: {
         api: {
           url: process.env.API_ENDPOINT,
-          securityToken: process.env.API_SECURITY_TOKEN ?? "",
+          securityToken: process.env.API_SECURITY_TOKEN ?? '',
         },
       },
       errorHandler: (error: any, req: any, res: any) => {
@@ -36,7 +36,7 @@ const config = {
       extensions: (extensions: any) => [
         ...extensions,
         {
-          name: "example-extension",
+          name: 'example-extension',
           extendApiMethods: {
             customMethod: async (context: any) => {
               const url = `${process.env.API_ENDPOINT}/rest/myplugin/data`;

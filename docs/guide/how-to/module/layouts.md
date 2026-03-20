@@ -19,9 +19,9 @@ To create a new layout within your module, follow these steps:
 
 addLayout(
   {
-    src: resolve("./runtime/layouts/checkout-2.vue"),
+    src: resolve('./runtime/layouts/checkout-2.vue'),
   },
-  "new-checkout-2",
+  'new-checkout-2',
 ); // Name of the layout
 ```
 
@@ -41,10 +41,10 @@ Example:
 // src/module.ts
 // in the setup function
 
-nuxt.hook("app:resolve", (app) => {
-  app.layouts["checkout"] = {
-    name: "checkout",
-    file: resolve("./runtime/layouts/checkout.vue"),
+nuxt.hook('app:resolve', (app) => {
+  app.layouts['checkout'] = {
+    name: 'checkout',
+    file: resolve('./runtime/layouts/checkout.vue'),
   };
 });
 ```

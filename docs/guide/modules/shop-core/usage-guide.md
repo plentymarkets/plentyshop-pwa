@@ -12,8 +12,7 @@ This guide provides detailed usage examples and explanations for the Shop Core m
 The `useCookieBar` composable manages the cookie consent bar, allowing you to display, update, and persist user cookie preferences. It provides a simple API to control the visibility of the consent bar and to handle user actions regarding cookies.
 
 ```ts
-const { visible, setConsent, setAllCookiesState, initializeCookies } =
-  useCookieBar();
+const { visible, setConsent, setAllCookiesState, initializeCookies } = useCookieBar();
 ```
 
 - `visible`: Whether the cookie bar is visible. Use this to show or hide the consent bar in your UI.
@@ -26,7 +25,7 @@ const { visible, setConsent, setAllCookiesState, initializeCookies } =
 The `useCookieConsent` composable provides a reactive way to manage consent for a specific cookie. This is useful when you need to check or update the consent status for individual cookies throughout your app.
 
 ```ts
-const { consent } = useCookieConsent("cookieName");
+const { consent } = useCookieConsent('cookieName');
 ```
 
 - `consent`: Consent state for the cookie. Use this to reactively check or update consent for a specific cookie.
@@ -38,11 +37,11 @@ The `usePlentyEvent` composable offers an event bus for emitting and listening t
 ```ts
 const { on, emit } = usePlentyEvent();
 
-on("frontend:addToCart", (payload) => {
+on('frontend:addToCart', (payload) => {
   /* Handle cart add event */
 });
 
-emit("frontend:addToCart", { productId: 123 });
+emit('frontend:addToCart', { productId: 123 });
 ```
 
 - `on(event: string, handler: Function)`: Listen to a specific event and execute a handler when it occurs.

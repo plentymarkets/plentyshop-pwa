@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import sdk from "@stackblitz/sdk";
+import { onMounted, ref } from 'vue';
+import sdk from '@stackblitz/sdk';
 
 const props = defineProps<{
   projectId?: string;
@@ -10,7 +10,7 @@ const props = defineProps<{
   height?: number;
   hideExplorer?: boolean;
   hideNavigation?: boolean;
-  view?: "preview" | "editor" | "default";
+  view?: 'preview' | 'editor' | 'default';
 }>();
 
 const container = ref<HTMLDivElement>();
@@ -20,7 +20,7 @@ onMounted(() => {
 
   const embedOptions = {
     openFile: props.openFile,
-    view: props.view || "default",
+    view: props.view || 'default',
     height: props.height || 500,
     hideExplorer: props.hideExplorer,
     hideNavigation: props.hideNavigation,
@@ -34,9 +34,9 @@ onMounted(() => {
     sdk.embedProject(
       container.value,
       {
-        title: props.title || "Nuxt Module Example",
-        description: "Interactive Nuxt Module Demo",
-        template: "node",
+        title: props.title || 'Nuxt Module Example',
+        description: 'Interactive Nuxt Module Demo',
+        template: 'node',
         files: props.files,
       },
       embedOptions,
@@ -52,7 +52,7 @@ onMounted(() => {
 <style scoped>
 .stackblitz-demo {
   width: 100%;
-  min-height: v-bind(height + "px");
+  min-height: v-bind(height + 'px');
   margin: 1rem 0;
   border-radius: 8px;
   overflow: hidden;

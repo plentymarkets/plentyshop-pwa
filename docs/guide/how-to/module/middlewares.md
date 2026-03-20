@@ -18,8 +18,8 @@ To create a new middleware within your module, follow these steps:
 // in the setup function
 
 addRouteMiddleware({
-  name: "example-middleware",
-  path: resolve("./runtime/middleware/example-middleware"),
+  name: 'example-middleware',
+  path: resolve('./runtime/middleware/example-middleware'),
   global: true,
 });
 ```
@@ -42,10 +42,10 @@ Example:
 // src/module.ts
 // in the setup function
 
-nuxt.hook("app:resolve", (app) => {
-  const authMiddleware = app.middleware.find((m) => m.name === "auth-guard");
+nuxt.hook('app:resolve', (app) => {
+  const authMiddleware = app.middleware.find((m) => m.name === 'auth-guard');
   if (authMiddleware) {
-    authMiddleware.path = resolve("./runtime/middleware/example-middleware");
+    authMiddleware.path = resolve('./runtime/middleware/example-middleware');
   }
 });
 ```

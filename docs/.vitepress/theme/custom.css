@@ -84,7 +84,7 @@
 }
 
 span.logo-alokai {
-  content: url("./assets/logo-alokai-black.svg");
+  content: url('./assets/logo-alokai-black.svg');
   line-height: normal;
   padding-left: 1rem;
   vertical-align: middle;
@@ -92,7 +92,7 @@ span.logo-alokai {
 }
 
 .dark span.logo-alokai {
-  content: url("./assets/logo-alokai-white.svg");
+  content: url('./assets/logo-alokai-white.svg');
 }
 
 /*

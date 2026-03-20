@@ -21,10 +21,10 @@ We will use [useHead](https://nuxt.com/docs/api/composables/use-head) from nuxt 
 
 ```typescript
 // runtime/plugins/customCssAndJs.ts
-import { defineNuxtPlugin, useHead } from "nuxt/app";
+import { defineNuxtPlugin, useHead } from 'nuxt/app';
 
 export default defineNuxtPlugin((nuxtApp) => {
-  console.log("Hello from customCssAndJs.ts");
+  console.log('Hello from customCssAndJs.ts');
 
   if (import.meta.client) {
     useHead({
@@ -33,8 +33,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       // adding custom css file to the head as link
       link: [
         {
-          rel: "stylesheet",
-          href: "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/customcss.css",
+          rel: 'stylesheet',
+          href: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/customcss.css',
         },
       ],
       // adding custom css into the head as style tag
@@ -48,10 +48,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     });
 
     // custom code directly in the plugin
-    const body = document.querySelector("body");
+    const body = document.querySelector('body');
 
     if (body) {
-      body.style.backgroundColor = "red";
+      body.style.backgroundColor = 'red';
     }
   }
 });
@@ -61,5 +61,5 @@ register the plugin inside your `module.ts`
 
 ```typescript
 // module.ts
-addPlugin(resolve("./runtime/plugins/customCssAndJs"));
+addPlugin(resolve('./runtime/plugins/customCssAndJs'));
 ```

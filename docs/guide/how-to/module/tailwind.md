@@ -28,12 +28,10 @@ In order to enable the usage of Tailwind classes in your module components, you 
 // src/module.ts
 // in the setup function
 
-nuxt.hook("tailwindcss:config", (config) => {
+nuxt.hook('tailwindcss:config', (config) => {
   if (config.content) {
-    (config.content as string[]).push(
-      resolve("./runtime/components/**/*.{vue,mjs,ts}"),
-    );
-    (config.content as string[]).push(resolve("./runtime/*.{mjs,js,ts}"));
+    (config.content as string[]).push(resolve('./runtime/components/**/*.{vue,mjs,ts}'));
+    (config.content as string[]).push(resolve('./runtime/*.{mjs,js,ts}'));
   }
 });
 ```
@@ -48,9 +46,9 @@ To override the Tailwind configuration, you can hook into the `tailwindcss:confi
 // src/module.ts
 // in the setup function
 
-nuxt.hook("tailwindcss:config", (config) => {
+nuxt.hook('tailwindcss:config', (config) => {
   if (config?.theme?.extend?.colors) {
-    (config.theme.extend.colors as any)["primary"]["500"] = "#000";
+    (config.theme.extend.colors as any)['primary']['500'] = '#000';
   }
 });
 ```

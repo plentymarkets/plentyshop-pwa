@@ -33,12 +33,12 @@ Register a cookie in the cookiebar.
 const { add } = useRegisterCookie();
 
 add({
-  name: "CookieBar.moduleGoogleAnalytics.googleAnalytics",
-  Provider: "CookieBar.moduleGoogleAnalytics.provider",
-  Status: "CookieBar.moduleGoogleAnalytics.status",
-  PrivacyPolicy: "https://policies.google.com/privacy",
-  Lifespan: "Session",
-  cookieNames: ["/^_ga/", "_ga", "_gid", "_gat"],
+  name: 'CookieBar.moduleGoogleAnalytics.googleAnalytics',
+  Provider: 'CookieBar.moduleGoogleAnalytics.provider',
+  Status: 'CookieBar.moduleGoogleAnalytics.status',
+  PrivacyPolicy: 'https://policies.google.com/privacy',
+  Lifespan: 'Session',
+  cookieNames: ['/^_ga/', '_ga', '_gid', '_gat'],
   accepted: false,
 });
 ```
@@ -59,13 +59,11 @@ This composable uses the cookie name that you defined in the `cookie.config.ts` 
 </template>
 
 <script setup lang="ts">
-const { consent: scriptDemoCookie } = useCookieConsent(
-  "CookieBar.moduleGoogleAnalytics.googleAnalytics",
-);
+const { consent: scriptDemoCookie } = useCookieConsent('CookieBar.moduleGoogleAnalytics.googleAnalytics');
 
 watch(scriptDemoCookie, () => {
   reloadScript();
-  console.log("ScriptDemo value", scriptDemoCookie.value);
+  console.log('ScriptDemo value', scriptDemoCookie.value);
   // do something when the cookie changes.
 });
 </script>

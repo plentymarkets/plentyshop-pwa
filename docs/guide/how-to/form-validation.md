@@ -18,7 +18,7 @@ In this scenario, to handle submissions, you can use the `handleSubmit` function
 <template>
   <form @submit.prevent="onSubmit">
     <label>
-      <UiFormLabel>{{ $t("form.emailLabel") }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
       <SfInput
         v-model="email"
         v-bind="emailAttributes"
@@ -31,7 +31,7 @@ In this scenario, to handle submissions, you can use the `handleSubmit` function
     </label>
 
     <label>
-      <UiFormLabel>{{ $t("form.passwordLabel") }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
       <UiFormPasswordInput
         :title="$t('invalidPassword')"
         name="password"
@@ -55,7 +55,7 @@ In this scenario, to handle submissions, you can use the `handleSubmit` function
         <i18n-t keypath="form.privacyPolicyLabel">
           <template #privacyPolicy>
             <SfLink :href="localePath(paths.privacyPolicy)" target="_blank">
-              {{ $t("privacyPolicy") }}
+              {{ $t('privacyPolicy') }}
             </SfLink>
           </template>
         </i18n-t>
@@ -64,20 +64,20 @@ In this scenario, to handle submissions, you can use the `handleSubmit` function
     </div>
 
     <div v-if="Boolean(errors['register.privacyPolicy'])">
-      {{ $t("privacyPolicyRequired") }}
+      {{ $t('privacyPolicyRequired') }}
     </div>
 
     <SfButton type="submit" class="mt-2" :disabled="loading || !meta.valid">
       <SfLoaderCircular v-if="loading" size="base" />
       <span v-else>
-        {{ $t("auth.signup.submitLabel") }}
+        {{ $t('auth.signup.submitLabel') }}
       </span>
     </SfButton>
 
     <div class="text-center">
-      <div>{{ $t("auth.signup.alreadyHaveAccount") }}</div>
+      <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
       <SfLink @click="$emit('change-view')" href="#" variant="primary">
-        {{ $t("auth.signup.logInLinkLabel") }}
+        {{ $t('auth.signup.logInLinkLabel') }}
       </SfLink>
     </div>
   </form>
@@ -89,25 +89,19 @@ In this scenario, to handle submissions, you can use the `handleSubmit` function
 ::: details Validator
 
 ```ts
-import { useForm } from "vee-validate";
-import { object, string, boolean } from "yup";
+import { useForm } from 'vee-validate';
+import { object, string, boolean } from 'yup';
 
 const { t } = useI18n();
 
 const validationSchema = toTypedSchema(
   object({
     register: object({
-      email: string()
-        .email(t("errorMessages.email.valid"))
-        .required(t("errorMessages.email.required"))
-        .default(""),
+      email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
       password: string()
-        .required(t("errorMessages.password.required"))
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/,
-          t("errorMessages.password.valid"),
-        )
-        .default(""),
+        .required(t('errorMessages.password.required'))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
+        .default(''),
       privacyPolicy: boolean().isTrue().required(),
     }),
   }),
@@ -117,37 +111,33 @@ const { errors, meta, defineField, handleSubmit } = useForm({
   validationSchema: validationSchema,
 });
 
-const [email, emailAttributes] = defineField("register.email");
-const [password, passwordAttributes] = defineField("register.password");
-const [privacyPolicy, privacyPolicyAttributes] = defineField(
-  "register.privacyPolicy",
-);
+const [email, emailAttributes] = defineField('register.email');
+const [password, passwordAttributes] = defineField('register.password');
+const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
 const registerUser = async () => {
   const response = await register({
-    email: email.value ?? "",
-    password: password.value ?? "",
+    email: email.value ?? '',
+    password: password.value ?? '',
   });
 
   if (response?.data.code === 1) {
     send({
-      message: t("auth.signup.emailAlreadyExists"),
-      type: "negative",
+      message: t('auth.signup.emailAlreadyExists'),
+      type: 'negative',
     });
     return;
   }
 
   if (response?.data.id) {
     send({
-      message: t("auth.signup.success"),
-      type: "positive",
+      message: t('auth.signup.success'),
+      type: 'positive',
     });
 
-    emits("registered");
+    emits('registered');
 
-    isDesktop.value
-      ? router.push(router.currentRoute.value.path)
-      : router.back();
+    isDesktop.value ? router.push(router.currentRoute.value.path) : router.back();
   }
 };
 
@@ -182,19 +172,11 @@ In the context of the overall validation, every form field identifier has to be 
         {{ productGetters.getName(product) }}
       </h1>
       <div>
-        <WishlistButton
-          v-if="isDesktop"
-          :product="product"
-          :quantity="quantitySelectorValue"
-        >
-          {{ t("addProductToWishlist") }}
+        <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
+          {{ t('addProductToWishlist') }}
         </WishlistButton>
 
-        <WishlistButton
-          v-else
-          :product="product"
-          :quantity="quantitySelectorValue"
-        />
+        <WishlistButton v-else :product="product" :quantity="quantitySelectorValue" />
       </div>
     </div>
 
@@ -204,29 +186,18 @@ In the context of the overall validation, every form field identifier has to be 
       <AttributeSelect v-if="product" :product="product" />
     </div>
 
-    <GraduatedPriceList
-      v-if="product"
-      :product="product"
-      :count="quantitySelectorValue"
-    />
+    <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
 
     <div>
-      <SfButton
-        type="submit"
-        :disabled="loading || !productGetters.isSalable(product)"
-      >
+      <SfButton type="submit" :disabled="loading || !productGetters.isSalable(product)">
         <template #prefix v-if="!loading">
           <SfIconShoppingCart size="sm" />
         </template>
 
-        <SfLoaderCircular
-          v-if="loading"
-          class="flex justify-center items-center"
-          size="sm"
-        />
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
 
         <template v-else>
-          {{ t("addToCart") }}
+          {{ t('addToCart') }}
         </template>
       </SfButton>
     </div>
@@ -234,8 +205,7 @@ In the context of the overall validation, every form field identifier has to be 
 </template>
 
 <script setup lang="ts">
-const { validateAllFields, invalidFields, resetInvalidFields } =
-  useValidatorAggregatorProperties();
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
 const { addToCart } = useCart();
 
 resetInvalidFields();
@@ -246,13 +216,13 @@ const handleAddToCart = async () => {
     const invalidFieldsNames = invalidFields.value.map((field) => field.name);
     send({
       message: [
-        t("errorMessages.missingOrWrongProperties"),
-        "",
+        t('errorMessages.missingOrWrongProperties'),
+        '',
         ...invalidFieldsNames,
-        "",
-        t("errorMessages.pleaseFillOutAllFields"),
+        '',
+        t('errorMessages.pleaseFillOutAllFields'),
       ],
-      type: "negative",
+      type: 'negative',
     });
     return;
   }
@@ -264,7 +234,7 @@ const handleAddToCart = async () => {
   };
 
   if (await addToCart(params)) {
-    send({ message: t("addedToCart"), type: "positive" });
+    send({ message: t('addedToCart'), type: 'positive' });
   }
 };
 </script>
@@ -280,23 +250,11 @@ const handleAddToCart = async () => {
     <label :for="`prop-${orderPropertyId}`">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <template v-if="orderPropertyLabel.surchargeType">
-        ({{ t("orderProperties.vat." + orderPropertyLabel.surchargeType) }}
-        {{
-          n(
-            productPropertyGetters.getOrderPropertySurcharge(productProperty),
-            "currency",
-          )
-        }})
+        ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
+        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
       </template>
       {{ orderPropertyLabel.surchargeIndicator }}
-      <template
-        v-if="
-          orderPropertyLabel.surchargeIndicator &&
-          orderPropertyLabel.requiredIndicator
-        "
-      >
-        ,
-      </template>
+      <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
       {{ orderPropertyLabel.requiredIndicator }}
     </label>
 
@@ -307,8 +265,7 @@ const handleAddToCart = async () => {
         v-model="value"
         v-bind="valueAttributes"
         :class="{
-          '!ring-negative-700 ring-2':
-            isOrderPropertyRequired && Boolean(errors['value']),
+          '!ring-negative-700 ring-2': isOrderPropertyRequired && Boolean(errors['value']),
         }"
       />
       <SfInput
@@ -328,25 +285,21 @@ const handleAddToCart = async () => {
 </template>
 
 <script setup lang="ts">
-import { productPropertyGetters } from "@plentymarkets/shop-sdk";
-import { OrderPropertyInputProps } from "./types";
-import { useForm } from "vee-validate";
-import { object, string } from "yup";
-import { useValidatorAggregatorProperties } from "~/composables/useValidatorAggregator";
+import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { OrderPropertyInputProps } from './types';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
+import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { t, n } = useI18n();
-const { registerValidator, registerInvalidFields } =
-  useValidatorAggregatorProperties();
-const orderPropertyId =
-  productPropertyGetters.getOrderPropertyId(productProperty);
+const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
+const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
-const orderPropertyLabel =
-  productPropertyGetters.getOrderPropertyLabel(productProperty);
-const isOrderPropertyRequired =
-  productPropertyGetters.isOrderPropertyRequired(productProperty);
+const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
+const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
 const isMultiline = productPropertyGetters.isMultiline(productProperty);
 
 const validationSchema = toTypedSchema(
@@ -354,27 +307,26 @@ const validationSchema = toTypedSchema(
     value: string().test((value, context) => {
       if (isOrderPropertyRequired && !value) {
         return context.createError({
-          message: t("errorMessages.requiredField"),
+          message: t('errorMessages.requiredField'),
         });
       }
 
       if (value && value.length > 128) {
         return context.createError({
-          message: t("errorMessages.maxCharacters", { max: 128 }),
+          message: t('errorMessages.maxCharacters', { max: 128 }),
         });
       }
 
       const isInt = productPropertyGetters.isOrderPropertyInt(productProperty);
-      const isFloat =
-        productPropertyGetters.isOrderPropertyFloat(productProperty);
+      const isFloat = productPropertyGetters.isOrderPropertyFloat(productProperty);
 
       if (value && isInt && /\D/.test(value)) {
-        return context.createError({ message: t("errorMessages.wholeNumber") });
+        return context.createError({ message: t('errorMessages.wholeNumber') });
       }
 
       if (value && isFloat && !/^\d+(?:[,.]\d*)?$/.test(value)) {
         return context.createError({
-          message: t("errorMessages.decimalNumber"),
+          message: t('errorMessages.decimalNumber'),
         });
       }
 
@@ -389,7 +341,7 @@ const { errors, defineField, validate, meta } = useForm({
 
 registerValidator(validate);
 
-const [value, valueAttributes] = defineField("value");
+const [value, valueAttributes] = defineField('value');
 
 watch(
   () => meta.value,

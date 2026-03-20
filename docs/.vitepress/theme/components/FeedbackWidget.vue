@@ -1,39 +1,30 @@
 <script setup>
-import {
-  computed,
-  nextTick,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-} from "vue";
-import { useData } from "vitepress";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { useData } from 'vitepress';
 
 const { frontmatter, page, theme } = useData();
 
 const isOpen = ref(false);
 const isSuccess = ref(false);
-const issueType = ref("");
-const comment = ref("");
-const selectedText = ref("");
-const openedIssueUrl = ref("");
-const submitError = ref("");
+const issueType = ref('');
+const comment = ref('');
+const selectedText = ref('');
+const openedIssueUrl = ref('');
+const submitError = ref('');
 const commentTextarea = ref(null);
 const MIN_COMMENT_LENGTH = 8;
 const MAX_COMMENT_LENGTH = 1200;
-const issueTypeDocumentationLabel = "documentation";
+const issueTypeDocumentationLabel = 'documentation';
 
 let successTimer = null;
 
 const issueTypeOptions = [
-  { value: "content", label: "Wrong / Missing Content", labelTag: "bug" },
-  { value: "suggestion", label: "Suggestion", labelTag: "feature" },
+  { value: 'content', label: 'Wrong / Missing Content', labelTag: 'bug' },
+  { value: 'suggestion', label: 'Suggestion', labelTag: 'feature' },
 ];
 
 const issueTypeLabel = computed(
-  () =>
-    issueTypeOptions.find((option) => option.value === issueType.value)
-      ?.labelTag || "feedback",
+  () => issueTypeOptions.find((option) => option.value === issueType.value)?.labelTag || 'feedback',
 );
 
 const issueBaseUrl = computed(() => {
@@ -42,28 +33,20 @@ const issueBaseUrl = computed(() => {
     return normalizeIssueUrl(explicitUrl);
   }
 
-  const githubLink = theme.value?.socialLinks?.find(
-    (link) => link?.icon === "github",
-  )?.link;
+  const githubLink = theme.value?.socialLinks?.find((link) => link?.icon === 'github')?.link;
 
   if (!githubLink) {
-    return "";
+    return '';
   }
 
   return normalizeIssueUrl(githubLink);
 });
 
-const isVisible = computed(
-  () => frontmatter.value?.layout !== "home" && Boolean(issueBaseUrl.value),
-);
+const isVisible = computed(() => frontmatter.value?.layout !== 'home' && Boolean(issueBaseUrl.value));
 
 const canSubmit = computed(() => {
   const length = comment.value.trim().length;
-  return (
-    issueType.value &&
-    length >= MIN_COMMENT_LENGTH &&
-    length <= MAX_COMMENT_LENGTH
-  );
+  return issueType.value && length >= MIN_COMMENT_LENGTH && length <= MAX_COMMENT_LENGTH;
 });
 
 const isCommentTooShort = computed(() => {
@@ -74,7 +57,7 @@ const isCommentTooShort = computed(() => {
 const commentLength = computed(() => comment.value.length);
 
 function normalizeIssueUrl(url) {
-  const trimmed = url.replace(/\/$/, "");
+  const trimmed = url.replace(/\/$/, '');
 
   if (/\/issues\/new(\/)?$/.test(trimmed)) {
     return trimmed;
@@ -95,10 +78,9 @@ function updateSelection() {
   }
 
   const anchorNode = selection.anchorNode;
-  const anchorElement =
-    anchorNode instanceof Element ? anchorNode : anchorNode?.parentElement;
+  const anchorElement = anchorNode instanceof Element ? anchorNode : anchorNode?.parentElement;
 
-  if (anchorElement && !anchorElement.closest(".vp-doc")) {
+  if (anchorElement && !anchorElement.closest('.vp-doc')) {
     return;
   }
 
@@ -107,41 +89,29 @@ function updateSelection() {
     return;
   }
 
-  const compactText = rawText.replaceAll(/\s+/g, " ");
-  selectedText.value =
-    compactText.length > 240 ? `${compactText.slice(0, 240)}…` : compactText;
+  const compactText = rawText.replaceAll(/\s+/g, ' ');
+  selectedText.value = compactText.length > 240 ? `${compactText.slice(0, 240)}…` : compactText;
 }
 
 function buildIssueBody() {
   const pageUrl = globalThis.location.href;
 
-  const bodyParts = [
-    "## Feedback",
-    comment.value.trim(),
-    "",
-    "## Context",
-    `- Page: ${pageUrl}`,
-  ];
+  const bodyParts = ['## Feedback', comment.value.trim(), '', '## Context', `- Page: ${pageUrl}`];
 
   if (selectedText.value) {
-    bodyParts.push("", "## Selected text", `> ${selectedText.value}`);
+    bodyParts.push('', '## Selected text', `> ${selectedText.value}`);
   }
 
-  return bodyParts.join("\n").trim();
+  return bodyParts.join('\n').trim();
 }
 
 function buildIssueUrl() {
-  const issueTitle = `[docs][${issueTypeLabel.value}] ${
-    page.value?.title || page.value?.relativePath || "Feedback"
-  }`;
+  const issueTitle = `[docs][${issueTypeLabel.value}] ${page.value?.title || page.value?.relativePath || 'Feedback'}`;
 
   const params = new URLSearchParams();
-  params.set("title", issueTitle);
-  params.set("body", buildIssueBody());
-  params.set(
-    "labels",
-    `${issueTypeDocumentationLabel},${issueTypeLabel.value}`,
-  );
+  params.set('title', issueTitle);
+  params.set('body', buildIssueBody());
+  params.set('labels', `${issueTypeDocumentationLabel},${issueTypeLabel.value}`);
 
   return `${issueBaseUrl.value}?${params.toString()}`;
 }
@@ -149,13 +119,13 @@ function buildIssueUrl() {
 function closeWidget() {
   isOpen.value = false;
   isSuccess.value = false;
-  submitError.value = "";
+  submitError.value = '';
 }
 
 function openWidget() {
   isOpen.value = true;
   isSuccess.value = false;
-  submitError.value = "";
+  submitError.value = '';
 
   nextTick(() => {
     commentTextarea.value?.focus();
@@ -163,10 +133,10 @@ function openWidget() {
 }
 
 function resetForm() {
-  issueType.value = "";
-  comment.value = "";
-  selectedText.value = "";
-  submitError.value = "";
+  issueType.value = '';
+  comment.value = '';
+  selectedText.value = '';
+  submitError.value = '';
 }
 
 function submitFeedback() {
@@ -175,10 +145,10 @@ function submitFeedback() {
   }
 
   const url = buildIssueUrl();
-  const popup = globalThis.open(url, "_blank", "noopener,noreferrer");
+  const popup = globalThis.open(url, '_blank', 'noopener,noreferrer');
 
   if (!popup) {
-    submitError.value = "Popup blocked. Please allow popups and try again.";
+    submitError.value = 'Popup blocked. Please allow popups and try again.';
     return;
   }
 
@@ -197,7 +167,7 @@ function submitFeedback() {
 }
 
 function handleKeydown(event) {
-  if (event.key === "Escape" && isOpen.value) {
+  if (event.key === 'Escape' && isOpen.value) {
     closeWidget();
   }
 }
@@ -211,13 +181,13 @@ watch(
 );
 
 onMounted(() => {
-  document.addEventListener("selectionchange", updateSelection);
-  document.addEventListener("keydown", handleKeydown);
+  document.addEventListener('selectionchange', updateSelection);
+  document.addEventListener('keydown', handleKeydown);
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener("selectionchange", updateSelection);
-  document.removeEventListener("keydown", handleKeydown);
+  document.removeEventListener('selectionchange', updateSelection);
+  document.removeEventListener('keydown', handleKeydown);
   if (successTimer) {
     globalThis.clearTimeout(successTimer);
   }
@@ -226,13 +196,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div v-if="isVisible" class="feedback-widget" aria-live="polite">
-    <button
-      v-if="!isOpen"
-      type="button"
-      class="feedback-trigger"
-      aria-label="Open feedback form"
-      @click="openWidget"
-    >
+    <button v-if="!isOpen" type="button" class="feedback-trigger" aria-label="Open feedback form" @click="openWidget">
       <span>💬</span>
       <span>Feedback</span>
     </button>
@@ -241,9 +205,7 @@ onBeforeUnmount(() => {
       <header class="feedback-panel__header">
         <h2>Submit feedback</h2>
         <div class="feedback-panel__actions">
-          <button type="button" aria-label="Close" @click="closeWidget">
-            ×
-          </button>
+          <button type="button" aria-label="Close" @click="closeWidget">×</button>
         </div>
       </header>
 
@@ -252,11 +214,7 @@ onBeforeUnmount(() => {
           <span>Issue type</span>
           <select v-model="issueType">
             <option disabled value="">Select type...</option>
-            <option
-              v-for="option in issueTypeOptions"
-              :key="option.value"
-              :value="option.value"
-            >
+            <option v-for="option in issueTypeOptions" :key="option.value" :value="option.value">
               {{ option.label }}
             </option>
           </select>
@@ -283,20 +241,14 @@ onBeforeUnmount(() => {
 
         <div class="feedback-context" :class="{ 'is-active': selectedText }">
           <p>
-            {{
-              selectedText || "Select text on the page to attach more context."
-            }}
+            {{ selectedText || 'Select text on the page to attach more context.' }}
           </p>
         </div>
 
         <div class="feedback-footer">
           <span>GitHub account required</span>
-          <span v-if="submitError" class="feedback-error">{{
-            submitError
-          }}</span>
-          <button type="button" :disabled="!canSubmit" @click="submitFeedback">
-            Open issue on GitHub ↗
-          </button>
+          <span v-if="submitError" class="feedback-error">{{ submitError }}</span>
+          <button type="button" :disabled="!canSubmit" @click="submitFeedback">Open issue on GitHub ↗</button>
         </div>
       </div>
 
@@ -304,9 +256,7 @@ onBeforeUnmount(() => {
         <div class="feedback-success__icon">✓</div>
         <h3>Issue draft opened</h3>
         <p>You can now submit it on GitHub.</p>
-        <a :href="openedIssueUrl" target="_blank" rel="noopener noreferrer"
-          >View draft ↗</a
-        >
+        <a :href="openedIssueUrl" target="_blank" rel="noopener noreferrer">View draft ↗</a>
       </div>
     </dialog>
   </div>
@@ -415,8 +365,7 @@ onBeforeUnmount(() => {
   gap: 0.375rem;
 }
 
-.feedback-panel
-  :is(label > span, .feedback-footer > span, .feedback-context p) {
+.feedback-panel :is(label > span, .feedback-footer > span, .feedback-context p) {
   color: var(--vp-c-text-2);
   font-size: 0.75rem;
 }

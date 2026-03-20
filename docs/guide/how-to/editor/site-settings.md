@@ -59,7 +59,7 @@ When adding your property, keep the following points in mind:
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || "#062633",
+      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
     },
   },
 });
@@ -81,7 +81,7 @@ export interface UseSiteConfigurationState {
 }
 
 export interface UseSiteConfiguration {
-  primaryColor: Readonly<Ref<UseSiteConfigurationState["primaryColor"]>>;
+  primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
 }
 ```
 
@@ -98,7 +98,7 @@ For every setting you want to add, you have to update the following parts in `us
 // apps/web/app/composables/useSiteConfiguration/useSiteConfiguration.ts
 
 export const useSiteConfiguration = () => {
-  const state = useState("siteConfiguration", () => ({
+  const state = useState('siteConfiguration', () => ({
     primaryColor: useRuntimeConfig().public.primaryColor,
     initialData: {
       primaryColor: useRuntimeConfig().public.primaryColor,
@@ -112,7 +112,7 @@ export const useSiteConfiguration = () => {
   const saveSettings = async (): Promise<boolean> => {
     const settings = [
       {
-        key: "primaryColor",
+        key: 'primaryColor',
         value: state.value.primaryColor,
       },
     ];
@@ -141,14 +141,11 @@ To react to changes the user makes in the editor, use a watcher and a correspond
 
 export const useSiteConfiguration = () => {
   const updatePrimaryColor: SetColorPalette = (hexColor: string) => {
-    const tailwindColors: TailwindPalette = getPaletteFromColor(
-      "primary",
-      hexColor,
-    ).map((color) => ({
+    const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
       ...color,
     }));
 
-    setColorProperties("primary", tailwindColors);
+    setColorProperties('primary', tailwindColors);
   };
 
   watch(
@@ -182,10 +179,7 @@ Each view is a form with inputs that are tied to the state property from `useSit
 <!-- apps/web/app/components/DesignView/DesignView.vue -->
 
 <template>
-  <div
-    class="site-settings-view sticky top-[52px]"
-    data-testid="site-settings-drawer"
-  >
+  <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
       <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
@@ -215,29 +209,14 @@ Each view is a form with inputs that are tied to the state property from `useSit
           </SfTooltip>
         </div>
         <label>
-          <SfInput
-            v-model="primaryColor"
-            type="text"
-            data-testid="primary-color-select"
-          >
+          <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
             <template #suffix>
-              <label
-                for="primary-color"
-                :style="{ backgroundColor: primaryColor }"
-                class="rounded-lg cursor-pointer"
-              >
-                <input
-                  id="primary-color"
-                  v-model="primaryColor"
-                  type="color"
-                  class="invisible w-8"
-                />
+              <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
+                <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
-          <span class="typography-text-xs text-neutral-700"
-            >Choose primary color</span
-          >
+          <span class="typography-text-xs text-neutral-700">Choose primary color</span>
         </label>
       </div>
     </UiAccordionItem>
@@ -245,12 +224,7 @@ Each view is a form with inputs that are tied to the state property from `useSit
 </template>
 
 <script setup lang="ts">
-import {
-  SfIconClose,
-  SfIconInfo,
-  SfInput,
-  SfTooltip,
-} from "@storefront-ui/vue";
+import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
 const { closeDrawer, primaryColor } = useSiteConfiguration();
 const colorsOpen = ref(false);
@@ -265,8 +239,8 @@ If you create your own `MyNewView.vue` component, you have to register it in `Si
 
 <script setup lang="ts">
 const getDrawerView = (view: string) => {
-  if (view === "DesignView") return resolveComponent("DesignView");
-  if (view === "MyNewView") return resolveComponent("MyNewView");
+  if (view === 'DesignView') return resolveComponent('DesignView');
+  if (view === 'MyNewView') return resolveComponent('MyNewView');
 };
 </script>
 ```
@@ -301,12 +275,12 @@ Finally, extend the `DrawerView` in `types.ts`.
 // apps/web/app/composables/useSiteConfiguration/types.ts
 
 export type DrawerView =
-  | "MyNewView"
-  | "SettingsView"
-  | "blocksList"
-  | "DesignView"
-  | "SeoView"
-  | "PagesView"
-  | "blocksSettings"
+  | 'MyNewView'
+  | 'SettingsView'
+  | 'blocksList'
+  | 'DesignView'
+  | 'SeoView'
+  | 'PagesView'
+  | 'blocksSettings'
   | null;
 ```

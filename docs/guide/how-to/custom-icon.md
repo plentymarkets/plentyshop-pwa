@@ -30,12 +30,7 @@ To add a new icon to your shop, follow these steps:
 This example demonstrates how to integrate an SVG icon into your shop using the SfIconBase component. Adjust the viewBox, size, and class attributes to suit your needs.
 
 ```html
-<SfIconBase
-  @click="openReviewEdit"
-  viewBox="0 0 32 32"
-  size="xs"
-  class="fill-primary-900 cursor-pointer"
->
+<SfIconBase @click="openReviewEdit" viewBox="0 0 32 32" size="xs" class="fill-primary-900 cursor-pointer">
   <path
     d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 
         0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342

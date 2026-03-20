@@ -18,8 +18,8 @@ To create a new component within your module, follow these steps:
 // in the setup function
 
 await addComponent({
-  name: "ModuleTest",
-  filePath: resolve("./runtime/components/ModuleTest.vue"),
+  name: 'ModuleTest',
+  filePath: resolve('./runtime/components/ModuleTest.vue'),
 });
 ```
 
@@ -41,10 +41,10 @@ Example:
 // src/module.ts
 // in the setup function
 
-nuxt.hook("components:extend", (components) => {
-  const uiButton = components.find((c) => c.pascalName === "UiButton");
+nuxt.hook('components:extend', (components) => {
+  const uiButton = components.find((c) => c.pascalName === 'UiButton');
   if (uiButton) {
-    uiButton.filePath = resolve("./runtime/components/UiButton.vue");
+    uiButton.filePath = resolve('./runtime/components/UiButton.vue');
   }
 });
 ```

@@ -15,14 +15,14 @@ To create a new page within your module, follow these steps:
 
 ```typescript
 // src/module.ts
-import type { NuxtPage } from "@nuxt/schema";
+import type { NuxtPage } from '@nuxt/schema';
 
 // in the setup function
 extendPages((pages: NuxtPage[]) => {
   pages.push({
-    name: "page-name",
-    file: resolve("./runtime/pages/my-page.vue"),
-    path: "/my-path",
+    name: 'page-name',
+    file: resolve('./runtime/pages/my-page.vue'),
+    path: '/my-path',
   });
 });
 ```
@@ -41,19 +41,19 @@ Example:
 
 ```typescript
 // src/module.ts
-import type { NuxtPage } from "@nuxt/schema";
+import type { NuxtPage } from '@nuxt/schema';
 
 // in the setup function
 extendPages((pages: NuxtPage[]) => {
-  const overridePage = pages.find((p) => p.name === "page-to-override");
+  const overridePage = pages.find((p) => p.name === 'page-to-override');
   if (overridePage) {
-    overridePage.file = resolve("./runtime/pages/my-page.vue");
+    overridePage.file = resolve('./runtime/pages/my-page.vue');
   }
 
   // Override the product page
-  const productPage = pages.find((p) => p.name === "product-slug");
+  const productPage = pages.find((p) => p.name === 'product-slug');
   if (productPage) {
-    productPage.file = resolve("./runtime/pages/product/[slug].vue");
+    productPage.file = resolve('./runtime/pages/product/[slug].vue');
   }
 });
 ```
@@ -64,7 +64,7 @@ To make sure you get the correct page name, you can log all pages in the `extend
 
 ```typescript
 // src/module.ts
-import type { NuxtPage } from "@nuxt/schema";
+import type { NuxtPage } from '@nuxt/schema';
 
 // in the setup function
 extendPages((pages: NuxtPage[]) => {

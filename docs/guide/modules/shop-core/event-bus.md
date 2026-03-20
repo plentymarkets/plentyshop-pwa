@@ -24,11 +24,11 @@ The `usePlentyEvent` composable exposes a simple API for working with events:
 ```ts
 const { on, emit } = usePlentyEvent();
 
-on("frontend:addToCart", (payload) => {
+on('frontend:addToCart', (payload) => {
   // Handle event when a product is added to the cart
 });
 
-emit("frontend:addToCart", { productId: 123 });
+emit('frontend:addToCart', { productId: 123 });
 ```
 
 - `on(event: string, handler: Function)`: Listen to a specific event and execute a handler when it occurs.

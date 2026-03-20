@@ -51,17 +51,14 @@ components/
           <SfIconInfo size="sm" />
           <span class="px-2 align-middle font-bold">Global defaults</span>
         </p>
-        <p>
-          The settings below apply to any page without its own, page-specific
-          settings.
-        </p>
+        <p>The settings below apply to any page without its own, page-specific settings.</p>
       </div>
     </template>
   </SiteConfigurationView>
 </template>
 
 <script setup lang="ts">
-import { SfIconInfo } from "@storefront-ui/vue";
+import { SfIconInfo } from '@storefront-ui/vue';
 </script>
 ```
 
@@ -87,13 +84,13 @@ Each time a new setting is plugged in, it needs to be registered manually in the
 
 ```ts
 // modules/my-module/runtime/index.ts
-import { defineNuxtModule, updateRuntimeConfig } from "@nuxt/kit";
+import { defineNuxtModule, updateRuntimeConfig } from '@nuxt/kit';
 
 export default defineNuxtModule({
   setup() {
     updateRuntimeConfig({
       public: {
-        primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || "#062633",
+        primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       },
     });
   },
@@ -104,21 +101,16 @@ To work with the settings in the individual components use a [Writable computed]
 
 ```ts
 // components/settings/design/2.colors/PrimaryColor.vue
-import {
-  getPaletteFromColor,
-  setColorProperties,
-} from "~/utils/tailwindHelper";
+import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 
-const { updateSetting, getSetting } = useSiteSettings("primaryColor");
+const { updateSetting, getSetting } = useSiteSettings('primaryColor');
 
 const updatePrimaryColor = (hexColor: string) => {
-  const tailwindColors = getPaletteFromColor("primary", hexColor).map(
-    (color) => ({
-      ...color,
-    }),
-  );
+  const tailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({
+    ...color,
+  }));
 
-  setColorProperties("primary", tailwindColors);
+  setColorProperties('primary', tailwindColors);
 };
 
 const primaryColor = computed({
@@ -137,10 +129,9 @@ const primaryColor = computed({
 `useSiteSettings.ts` centralises all state management for site-level settings. It exposes a minimal API - staging, reading, dirty-checking, and committing changes - so UI components can update settings without duplicating logic.
 
 ```ts
-const { updateSetting, getSetting, isDirty, saveSiteSettings } =
-  useSiteSettings("primaryColor");
+const { updateSetting, getSetting, isDirty, saveSiteSettings } = useSiteSettings('primaryColor');
 
-updateSetting("#ff0000");
+updateSetting('#ff0000');
 console.log(getSetting()); // → '#ff0000'
 if (isDirty.value) await saveSiteSettings();
 ```

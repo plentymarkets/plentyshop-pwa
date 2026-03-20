@@ -18,8 +18,8 @@ For example, this could look like this:
 // in the setup function
 
 await addComponent({
-  name: "ModuleTest",
-  filePath: resolve("./runtime/components/ModuleTest.vue"),
+  name: 'ModuleTest',
+  filePath: resolve('./runtime/components/ModuleTest.vue'),
   global: true,
 });
 ```
@@ -33,7 +33,7 @@ await addComponent({
 ```ts
 // shop-core.config.ts
 export default defineShopCoreConfig({
-  renderingAreas: ["checkout.afterBuyButton", "cart.empty"] as const,
+  renderingAreas: ['checkout.afterBuyButton', 'cart.empty'] as const,
 });
 ```
 
@@ -52,8 +52,8 @@ Use `addComponent` from the `useModuleRendering` composable to inject components
 ```
 
 ```ts
-const { addComponent } = useModuleRendering("checkout.afterBuyButton");
-addComponent("MyInjectedComponent");
+const { addComponent } = useModuleRendering('checkout.afterBuyButton');
+addComponent('MyInjectedComponent');
 ```
 
 ### Interactive Example:
@@ -91,12 +91,12 @@ Once your component is registered globally (see the Prerequisites section above)
 ```typescript
 // src/runtime/plugins/injectComponents.ts
 
-import { defineNuxtPlugin } from "nuxt/app";
-import { useModuleRendering } from "~/composables/useModuleRendering";
+import { defineNuxtPlugin } from 'nuxt/app';
+import { useModuleRendering } from '~/composables/useModuleRendering';
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const { addComponent } = useModuleRendering("AreaName");
-  addComponent("ComponentName");
+  const { addComponent } = useModuleRendering('AreaName');
+  addComponent('ComponentName');
 });
 ```
 
