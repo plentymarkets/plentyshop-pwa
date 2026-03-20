@@ -8,9 +8,10 @@
       >
         <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
           <NuxtLink
+            id="blockified-logo"
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
-            class="flex shrink-0 w-full lg:w-48 items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
             <UiLogo />
           </NuxtLink>
@@ -382,26 +383,31 @@ const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
 const visibleSectionsCount = computed(() => sections.value.filter((s) => s.visible).length);
 
+const SECTION_GAP = '16px';
+
 const getSectionColumnStyle = (sectionId: string) => {
   const order = getSectionFlexOrder(sectionId);
   const total = visibleSectionsCount.value;
   const isFirst = order === 0;
   const isLast = total > 1 && order === total - 1;
+  const isMiddle = total > 2 && !isFirst && !isLast;
 
   const isSearchActive =
     sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
 
+  const middleMargin = isMiddle ? { marginLeft: SECTION_GAP, marginRight: SECTION_GAP } : {};
+
   if (isFirst) {
-    return { order, flex: '1', display: 'flex' as const };
+    return { order, flex: '1', display: 'flex' as const, ...middleMargin };
   }
   if (isLast) {
-    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end' };
+    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end', ...middleMargin };
   }
 
   if (isSearchActive) {
-    return { order, flex: '5' };
+    return { order, flex: '5', ...middleMargin };
   }
-  return { order };
+  return { order, ...middleMargin };
 };
 
 const searchExpandOrigin = computed(() => {
@@ -480,5 +486,9 @@ const navigateToLogin = () => {
 <style scoped>
 :deep(input[data-testid='search-bar-input']) {
   min-width: 172px;
+}
+
+#blockified-logo :deep(img) {
+  max-width: inherit !important;
 }
 </style>
