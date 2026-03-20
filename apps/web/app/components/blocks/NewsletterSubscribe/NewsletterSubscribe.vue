@@ -4,7 +4,7 @@
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <TextContent :text="textContentProps" />
+    <TextContent v-bind="textContentProps" />
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div
@@ -143,12 +143,13 @@ const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
-const textContentProps = computed(() => {
-  return {
-    ...props.content.text,
+const textContentProps = computed(() =>
+  mapToTextContentProps({
+    title: props.content.text?.title,
+    htmlDescription: props.content.text?.htmlDescription,
     textAlignment: props.content.text?.textAlignment ?? 'center',
-  };
-});
+  })
+);
 
 const validationSchema = toTypedSchema(
   object({
