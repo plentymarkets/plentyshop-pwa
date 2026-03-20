@@ -27,10 +27,10 @@
       />
     </component>
     <div
-      class="absolute inset-0 px-4 pointer-events-none flex flex-col"
+      class="absolute inset-0 px-4 flex flex-col"
       :class="overlayAlignClasses"
     >
-      <TextContent v-bind="textContentProps"/>
+      <TextContent v-bind="textContentProps" />
     </div>
   </div>
 </template>
