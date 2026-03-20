@@ -8,6 +8,7 @@
       >
         <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
           <NuxtLink
+            id="blockified-logo"
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
             class="items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
@@ -485,5 +486,9 @@ const navigateToLogin = () => {
 <style scoped>
 :deep(input[data-testid='search-bar-input']) {
   min-width: 172px;
+}
+
+#blockified-logo :deep(img) {
+  max-width: inherit !important;
 }
 </style>
