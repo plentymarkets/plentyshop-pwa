@@ -63,6 +63,7 @@
           type="button"
           data-testid="rte-font-size-select"
           class="flex h-8 w-[84px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+          @mousedown.prevent
           @click="onFontSizeTriggerClick"
         >
           <span>{{ selectedFontSizeLabel }}</span>
@@ -209,6 +210,13 @@ const onFontSizeTriggerClick = () => {
   isFontSizeOpen.value = !isFontSizeOpen.value;
 };
 
+const onBlockTypeDropdownToggle = (open: boolean) => {
+  isBlockTypeOpen.value = open;
+};
+
+const onFontSizeDropdownToggle = (open: boolean) => {
+  isFontSizeOpen.value = open;
+};
 const selectBlockType = (value: string) => {
   props.onFontSizeChange(value);
   isBlockTypeOpen.value = false;
@@ -217,21 +225,5 @@ const selectBlockType = (value: string) => {
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
   isFontSizeOpen.value = false;
-};
-
-const onBlockTypeDropdownToggle = (open: boolean) => {
-  isBlockTypeOpen.value = open;
-
-  if (!open) {
-    blockTypeTriggerRef.value?.focus();
-  }
-};
-
-const onFontSizeDropdownToggle = (open: boolean) => {
-  isFontSizeOpen.value = open;
-
-  if (!open) {
-    fontSizeTriggerRef.value?.focus();
-  }
 };
 </script>
