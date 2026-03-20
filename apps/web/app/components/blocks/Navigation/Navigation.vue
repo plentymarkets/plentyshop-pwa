@@ -1,5 +1,5 @@
 <template>
-  <div ref="referenceRef" :style="navigationSecondaryPaletteStyle" class="relative w-full">
+  <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
         :class="navigationContainerClasses"
@@ -82,7 +82,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                      class="mb-2 nav-hover-bg rounded font-medium typography-text-base"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -94,7 +94,7 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
+                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid nav-hover-bg rounded whitespace-normal break-words"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
@@ -105,7 +105,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
+                      class="typography-text-sm py-1.5 nav-hover-bg rounded"
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>
@@ -145,7 +145,7 @@
                 size="lg"
                 tag="button"
                 type="button"
-                class="border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
+                class="border-b border-b-neutral-200 border-b-solid nav-hover-bg"
                 :aria-label="t('common.actions.back') + ' - ' + categoryTreeGetters.getName(activeMenu)"
                 @click="goBack()"
               >
@@ -161,7 +161,7 @@
                   size="lg"
                   :tag="NuxtLink"
                   :href="localePath(generateCategoryLink(node))"
-                  class="hover:bg-secondary-100"
+                  class="nav-hover-bg"
                   @click="close()"
                 >
                   <div class="flex items-center">
@@ -171,7 +171,7 @@
                 </SfListItem>
               </li>
               <li v-else>
-                <div class="flex items-center hover:bg-secondary-100">
+                <div class="flex items-center nav-hover-bg">
                   <NuxtLink
                     class="flex-1 m-0 px-4 py-3 text-left"
                     :to="localePath(generateCategoryLink(node))"
@@ -233,6 +233,7 @@ const props = withDefaults(defineProps<NavigationBlockProps>(), {
     color: {
       backgroundColor: '',
       textColor: '',
+      hoverBackgroundColor: '',
     },
   }),
 });
@@ -261,7 +262,7 @@ const triggerReference = ref();
 const tappedCategories = ref<Map<number, boolean>>(new Map());
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
-  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 hover:bg-secondary-100 active:!bg-neutral-300';
+  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 nav-hover-bg active:!bg-neutral-300';
 let removeHook: () => void;
 
 const trapFocusOptions = {
@@ -283,11 +284,13 @@ const resolvedContent = computed(() => ({
   color: {
     backgroundColor: props.content?.color?.backgroundColor ?? '',
     textColor: props.content?.color?.textColor ?? '',
+    hoverBackgroundColor: props.content?.color?.hoverBackgroundColor ?? '',
   },
 }));
 
-const navigationBackgroundColor = computed(() => resolvedContent.value.color.backgroundColor || '');
-const navigationSecondaryPaletteStyle = useGenerateTailwindPalette('secondary', navigationBackgroundColor);
+const navigationRootStyle = computed(() => ({
+  '--nav-hover-bg': resolvedContent.value.color.hoverBackgroundColor || undefined,
+}));
 
 const navigationContainerClasses = computed(() => {
   switch (resolvedContent.value.text.textAlignment) {
@@ -477,3 +480,9 @@ watch(
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
+
+<style scoped>
+.nav-hover-bg:hover {
+  background-color: var(--nav-hover-bg);
+}
+</style>

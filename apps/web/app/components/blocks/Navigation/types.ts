@@ -12,6 +12,7 @@ export type TextSettings = {
 export type ColorSettings = {
   backgroundColor?: string;
   textColor?: string;
+  hoverBackgroundColor?: string;
 };
 
 export type NavigationContent = {

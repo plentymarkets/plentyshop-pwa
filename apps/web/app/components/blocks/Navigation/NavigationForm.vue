@@ -98,6 +98,33 @@
     </div>
 
     <div class="py-2">
+      <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('hover-background-color-label') }}</UiFormLabel>
+      </div>
+      <EditorColorPicker v-model="navigationBlock.color.hoverBackgroundColor" class="w-full">
+        <template #trigger="{ color, toggle }">
+          <label>
+            <SfInput
+              v-model="navigationBlock.color.hoverBackgroundColor"
+              type="text"
+              data-testid="input-hover-background-color"
+            >
+              <template #suffix>
+                <button
+                  type="button"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                  :style="{ backgroundColor: color }"
+                  @mousedown.stop
+                  @click.stop="toggle"
+                />
+              </template>
+            </SfInput>
+          </label>
+        </template>
+      </EditorColorPicker>
+    </div>
+
+    <div class="py-2">
       <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
       <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
@@ -181,6 +208,7 @@ const navigationBlock = computed<NavigationContent>(() => {
   if (!content.color) content.color = {};
   content.color.backgroundColor = content.color.backgroundColor ?? '';
   content.color.textColor = content.color.textColor ?? '';
+  content.color.hoverBackgroundColor = content.color.hoverBackgroundColor ?? '';
 
   return content as NavigationContent;
 });
@@ -197,6 +225,7 @@ const navigationBlock = computed<NavigationContent>(() => {
 
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
+    "hover-background-color-label": "Link Hover Color",
     "padding-label": "Padding"
   },
   "de": {
@@ -208,6 +237,7 @@ const navigationBlock = computed<NavigationContent>(() => {
 
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
+    "hover-background-color-label": "Link Hover Color",
     "padding-label": "Padding"
   }
 }

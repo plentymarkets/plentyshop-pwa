@@ -1,7 +1,7 @@
 {
   "header": {
     "category": "header",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Header",
     "blockName": "Header",
     "variations": [
@@ -98,17 +98,18 @@
             "meta": { "uuid": "87654321-4321-4789-8234-123456789abc" },
             "content": {
               "layout": {
-                "paddingTop": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingTop": 20,
+                "paddingBottom": 20,
+                "paddingLeft": 20,
+                "paddingRight": 20
               },
               "text": {
                 "textAlignment": "left"
               },
               "color": {
                 "backgroundColor": "#ffffff",
-                "textColor": "#161A16"
+                "textColor": "#161A16",
+                "hoverBackgroundColor": "#f5f5f5"
               }
             }
           },
@@ -118,17 +119,18 @@
             "meta": { "uuid": "87654321-4321-4789-8234-123456789abc" },
             "content": {
               "layout": {
-                "paddingTop": 0,
-                "paddingBottom": 0,
-                "paddingLeft": 0,
-                "paddingRight": 0
+                "paddingTop": 20,
+                "paddingBottom": 20,
+                "paddingLeft": 20,
+                "paddingRight": 20
               },
               "text": {
                 "textAlignment": "left"
               },
               "color": {
                 "backgroundColor": "#ffffff",
-                "textColor": "#161A16"
+                "textColor": "#161A16",
+                "hoverBackgroundColor": "#f5f5f5"
               }
             }
           }
