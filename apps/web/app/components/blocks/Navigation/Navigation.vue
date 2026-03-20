@@ -94,7 +94,7 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid nav-hover-bg rounded whitespace-normal break-words"
+                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 nav-hover-bg rounded whitespace-normal break-words"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
@@ -127,7 +127,7 @@
         class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
       >
         <nav>
-          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
+          <div class="flex items-center justify-between p-4">
             <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
             <UiButton
               variant="tertiary"
@@ -145,7 +145,7 @@
                 size="lg"
                 tag="button"
                 type="button"
-                class="border-b border-b-neutral-200 border-b-solid nav-hover-bg"
+                class="nav-hover-bg"
                 :aria-label="t('common.actions.back') + ' - ' + categoryTreeGetters.getName(activeMenu)"
                 @click="goBack()"
               >
@@ -290,16 +290,19 @@ const resolvedContent = computed(() => ({
 
 const navigationRootStyle = computed(() => ({
   '--nav-hover-bg': resolvedContent.value.color.hoverBackgroundColor || undefined,
+  '--nav-border-color': resolvedContent.value.color.textColor
+    ? `color-mix(in srgb, ${resolvedContent.value.color.textColor} 15%, transparent)`
+    : undefined,
 }));
 
 const navigationContainerClasses = computed(() => {
   switch (resolvedContent.value.text.textAlignment) {
     case 'center':
-      return 'flex flex-wrap justify-center border-b border-b-neutral-200 border-b-solid';
+      return 'flex flex-wrap justify-center border-b nav-border border-b-solid';
     case 'right':
-      return 'flex flex-wrap justify-end border-b border-b-neutral-200 border-b-solid';
+      return 'flex flex-wrap justify-end border-b nav-border border-b-solid';
     default:
-      return 'flex flex-wrap justify-start border-b border-b-neutral-200 border-b-solid';
+      return 'flex flex-wrap justify-start border-b nav-border border-b-solid';
   }
 });
 
@@ -484,5 +487,8 @@ useTrapFocus(drawerReference, trapFocusOptions);
 <style scoped>
 .nav-hover-bg:hover {
   background-color: var(--nav-hover-bg);
+}
+.nav-border {
+  border-bottom-color: var(--nav-border-color, rgb(229, 231, 235)); /* neutral-200 fallback */
 }
 </style>
