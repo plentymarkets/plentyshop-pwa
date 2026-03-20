@@ -26,7 +26,11 @@
         data-testid="image-block-image"
       />
     </component>
-    <div class="absolute inset-0 px-4 flex flex-col" :class="overlayAlignClasses">
+    <div
+      class="absolute inset-0 px-4 flex flex-col"
+      :class="overlayAlignClasses"
+      data-testid="image-overlay-wrapper"
+    >
       <TextContent v-bind="textContentProps" />
     </div>
   </div>
@@ -54,7 +58,7 @@ const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//
 const textContentProps = computed(() =>
   mapToTextContentProps({
     htmlDescription: props.content?.text.textOverlay,
-    color: props.content?.text.textOverlayColor,
+    color: props.content?.text.textOverlayColor || '#000',
     textAlignment: props.content?.text.textOverlayAlignX ?? 'center',
     buttonLabel: props.content?.button.label,
     buttonLink: props.content?.button.link,
@@ -112,10 +116,10 @@ const getImageUrl = () => {
 const overlayAlignClasses = computed(() => {
   const vertical =
     props.content?.text.textOverlayAlignY === 'top'
-      ? 'justify-start text-left'
+      ? 'justify-start'
       : props.content?.text.textOverlayAlignY === 'bottom'
-        ? 'justify-end text-right'
-        : 'justify-center text-center';
+        ? 'justify-end'
+        : 'justify-center';
 
   return [vertical];
 });
