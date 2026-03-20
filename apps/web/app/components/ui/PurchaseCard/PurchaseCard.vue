@@ -68,7 +68,7 @@
             <template v-if="key === 'previewText' && configuration?.fields.previewText">
               <div
                 v-if="productGetters.getShortDescription(product).length > 0"
-                class="mb-2 font-normal typography-text-sm whitespace-pre-line break-words"
+                class="mb-2 font-normal typography-text-sm whitespace-pre-line break-words no-preflight"
                 data-testid="product-description"
                 v-html="productGetters.getShortDescription(product)"
               />
