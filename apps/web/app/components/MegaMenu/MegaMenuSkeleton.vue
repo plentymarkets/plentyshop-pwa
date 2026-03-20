@@ -14,8 +14,5 @@
 const items = [
   { id: 1, width: 'w-20' },
   { id: 2, width: 'w-28' },
-  { id: 3, width: 'w-16' },
-  { id: 4, width: 'w-24' },
-  { id: 5, width: 'w-20' },
 ];
 </script>
