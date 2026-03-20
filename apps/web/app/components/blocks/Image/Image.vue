@@ -26,11 +26,7 @@
         data-testid="image-block-image"
       />
     </component>
-    <div
-      class="absolute inset-0 px-4 flex flex-col"
-      :class="overlayAlignClasses"
-      data-testid="image-overlay-wrapper"
-    >
+    <div class="absolute inset-0 px-4 flex flex-col" :class="overlayAlignClasses" data-testid="image-overlay-wrapper">
       <TextContent v-bind="textContentProps" />
     </div>
   </div>
