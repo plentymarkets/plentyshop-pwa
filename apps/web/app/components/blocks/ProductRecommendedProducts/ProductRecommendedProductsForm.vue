@@ -10,6 +10,7 @@
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
       </template>
       <EditorRichTextEditorForm
+        v-if="recommendedBlock.text"
         :model-value="recommendedBlock.text.htmlDescription ?? ''"
         :text-align="recommendedBlock.text.textAlignment ?? 'left'"
         @update:model-value="recommendedBlock.text.htmlDescription = $event"
