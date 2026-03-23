@@ -30,7 +30,7 @@
 
     <div
       v-if="inputModel.length > 1 && searchTerm === inputModel"
-      class="w-full grid md:shadow @2xl:grid-cols-3 @3xl:grid-cols-4 bg-white absolute px-4 pt-4 rounded-b-xl border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-scroll"
+      class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-b-xl border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
       role="region"
       aria-live="polite"
       aria-relevant="all"
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div class="w-full @2xl:col-span-2 @3xl:col-span-3 @container/products @2xl:mb-4 overflow-hidden">
+      <div class="w-full @2xl:col-span-2 @container/products @2xl:mb-4 overflow-hidden">
         <div class="flex items-center justify-between gap-2">
           <h3 class="uppercase tracking-widest text-sm font-bold text-neutral-700 shrink-0">
             {{ t('searchBar.productSuggestions') }}
