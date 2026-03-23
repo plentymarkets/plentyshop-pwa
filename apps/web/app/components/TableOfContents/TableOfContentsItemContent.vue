@@ -90,7 +90,6 @@ import { getBlockIconSvg } from '~/utils/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { TableOfContentsItemContentProps } from './types';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header';
 
 const props = defineProps<TableOfContentsItemContentProps>();
 
