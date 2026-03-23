@@ -74,7 +74,7 @@
         </div>
 
         <hr class="h-px mt-2 bg-neutral-200 border-0" />
-        <div class="mt-4 gap-4 grid @sm/products:grid-cols-2 @md:grid-cols-3 items-stretch">
+        <div class="mt-4 gap-4 grid @sm/products:grid-cols-2 items-stretch">
           <template v-if="results?.items?.length">
             <UiSearchSuggestionProduct v-for="(item, index) in results.items" :key="index" :item="item" />
           </template>
