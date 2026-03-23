@@ -253,6 +253,8 @@
       v-if="viewport.isLessThan('md')"
       :background-color="headerBackgroundColor"
       :icon-color="iconColor"
+      :action-order="content.actions.order"
+      :action-visibility="content.actions.visibility"
     />
     <LanguageSelector />
     <UiModal
