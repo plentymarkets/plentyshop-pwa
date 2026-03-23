@@ -59,6 +59,7 @@ export default defineNuxtConfig({
         '@tiptap/extension-underline',
         '@tiptap/starter-kit',
         '@tiptap/vue-3',
+        '@unleash/proxy-client-vue',
         '@vee-validate/yup',
         '@vue/devtools-core',
         '@vue/devtools-kit',

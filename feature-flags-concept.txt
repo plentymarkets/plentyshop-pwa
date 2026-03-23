@@ -1,0 +1,173 @@
+feature flags
+1
+Tammy Terstegge
+Yesterday
+Feature Flags
+
+Feature flags (also known as feature toggles) are a mechanism to dynamically enable or disable functionality without requiring code changes or redeployment. They allow gradual rollouts, safe experimentation, and operational control over system behaviour at runtime.
+What is Unleash?
+
+Unleash is the open-source feature flag management platform we use to define, manage, and evaluate feature flags across all environments.
+
+Our Unleash instance is hosted at:
+
+    https://unleash.plenty.rocks/
+
+To request access, join the Unleash access group here .
+
+Unleash lets you:
+
+    Define flags and their activation strategies (e.g. by plentyId, contract, cluster, or serverId)
+    Assign variants to flags for gradual rollouts or A/B testing
+    Manage flags across environments (dev / prod) from a single interface
+
+Application-Level Usage (pl/)
+
+In the pl/ application, flags are accessed using the feature_flag() helper:
+
+$enabled = feature_flag('deployWeb', false);
+
+Resolution order
+
+Flags are resolved using the following precedence:
+
+    JSON ConfigMap file (flags.json) — flags synced from Unleash via the ConfigMap pipeline
+    Environment variable (PLENTY_FEATURE_*) — legacy fallback
+    Explicit default value provided by the caller
+
+This ensures backward compatibility while the system migrates to the JSON / Unleash-backed approach.
+Expected JSON format
+
+The ConfigMap file is a flat JSON object with boolean (or string variant) values:
+
+{
+  "backendEnabled": true,
+  "dedicatedRedisEnabled": true,
+  "cronEnabled": true,
+  "deployWeb": true,
+  "tlsTerminationEnabled": true
+}
+
+Requirements:
+
+    Keys must match flag names exactly (case-sensitive)
+    Values must be true, false, or a variant string — flags with a false value are not present in the file; a missing flag means disabled
+    Nested structures are not supported
+    Missing flags fall back to the provided default value
+
+Adding a New Feature Flag
+
+    Log in to https://unleash.plenty.rocks/
+    Create a new flag and configure its activation strategies using the relevant context fields (plentyId, contract, serverId, cluster).
+    Set up the flag in both the dev and prod environments in Unleash.
+    In the pl/ application, access the flag via the feature_flag() helper using the exact flag name as defined in Unleash.
+
+Flag Values and Variants
+
+Flags can resolve to one of three types of value:
+Resolved value 	Meaning
+true 	Flag is enabled for this system (no variant)
+"<variant-name>" 	Flag is enabled and a specific variant is assigned
+(absent) 	Flag is disabled / not applicable; falls back to default
+
+Variants are useful for gradual rollouts or differentiated behaviour (e.g. "new-algorithm" vs. "legacy").
+Evaluation Context
+
+When evaluating flags, microservice-system-information passes the following context to Unleash per system:
+Context key 	Value
+plentyId 	The system's plenty ID
+contract 	The system's currently active contract
+serverId 	The system's server ID
+cluster 	The system's primary EKS cluster
+
+Use these fields to define targeted activation strategies in Unleash (e.g. roll out only to a specific contract type or cluster).
+
+Child systems (those with a parentPlentyID) do not receive individual flag evaluations — they inherit flags from their parent system.
+Unleash Strategy Patterns (Creation, Inclusion, Exclusion)
+
+When creating a flag in Unleash, always start with a clear rollout scope:
+
+    Enable for specific plenty IDs: use constraint plentyId is one of (pid1, pid2, pid3, ...)
+    Exclude specific plenty IDs: use constraint plentyId is not one of (pid1, pid2, ...)
+    Combine technical targeting + business exclusion: add multiple constraints in the same strategy
+
+Example: pluginSdkEnabled
+Strategy A — Gradual rollout: Per Plentymarkets ID
+
+    Constraint: plentyId is one of 57895, 68964, 67899, 57613, 64993, 58085, 70336
+    AND constraint: plentyId is not one of 62274, 67698, 70503, 49768, 17831, 13192, 13441, 38597, 68335, 72911
+    Rollout: 100% of your base who match constraints is included
+
+Strategy B — Gradual rollout: Per Server ID
+
+    Constraint: serverId is one of 114
+    AND constraint: plentyId is not one of 62274, 67698, 70503, 49768, 17831, 13192, 13441, 38597, 68335, 72911
+    Rollout: 100% of your base who match constraints is included
+
+Interpretation:
+
+    Strategy A enables the flag only for an explicit allowlist of plenty IDs, while still excluding blocked IDs.
+    Strategy B enables the flag for all systems on server 114, except the explicitly excluded plenty IDs.
+    Because both strategies use 100% rollout, there is no percentage sampling once constraints match.
+
+Key points
+
+    Prefer allowlists (is one of) for first rollouts to minimize risk.
+    Use denylist constraints (is not one of) to quickly exclude problematic systems without disabling the feature for everyone else.
+    Segments and server-based constraints can be safely combined with plentyId constraints for fine-grained control.
+    Keep strategy definitions aligned between dev and prod unless an environment-specific rollout is intentional.
+
+Architecture Overview
+
+Feature flags flow from Unleash through multiple layers before reaching the application runtime:
+
+Unleash (https://unleash.plenty.rocks/)
+          |
+          |  (SDK polling / server-sent events)
+          ↓
+microservice-system-information
+  - Connects to Unleash
+  - Evaluates flags per system using context:
+      plentyId, contract, serverId, cluster
+  - Writes resolved flags into MongoDB
+          |
+          ↓
+Feature Flag Export / Synchronization (Argo)
+          |
+          ↓
+  JSON ConfigMap (flags.json)
+  [mounted into container filesystem]
+          |
+          ↓
+Application Runtime (pl/)
+  - Reads flags from JSON file or ENV fallback
+  - Exposes via feature_flag() helper
+
+Key components
+
+    microservice-system-information: A Go service that acts as the bridge between Unleash and the application. It maintains two Unleash clients (prod and dev), evaluates all active feature flags for every system using per-system context, and stores the resolved flag values in MongoDB under config.featureFlags. Changes in MongoDB trigger re-evaluation via a change stream, so flag updates propagate automatically without pod restarts.
+
+    Argo (sync): Reads the resolved feature flags from MongoDB and exports them into a Kubernetes ConfigMap (flags.json).
+
+    JSON ConfigMap: A flat JSON file mounted directly into the container filesystem. Kubernetes updates the mounted file automatically when the ConfigMap changes.
+
+    Application (pl/): Reads the JSON file at runtime using the feature_flag() helper.
+
+Runtime Update Propagation
+
+When a flag's state changes in Unleash:
+
+    microservice-system-information detects the change via the Unleash SDK listener.
+    It re-evaluates all affected systems and writes updated values to MongoDB.
+    Argo syncs the updated values into the Kubernetes ConfigMap.
+    Kubernetes automatically updates the mounted flags.json file in running pods.
+    The application reads the updated file on the next access — no pod restart required.
+
+Additionally, any direct changes to a system document in MongoDB (e.g. a contract update) trigger re-evaluation via MongoDB change streams, keeping flags in sync with system state.
+Microservice Usage
+
+Microservices can query feature flag state directly from Unleash via its API. Authentication requires an access token, which must be generated in Unleash and scoped appropriately for the service.
+
+When implementing a feature flag in a microservice, reach out to the Plenty Platform team to have the token generated. Once available, the microservice can call the Unleash API directly to retrieve flag state without going through the MongoDB / ConfigMap pipeline.
+
+Content source: https://github.com/plentymarkets/plenty-in-one/tree/HEAD/docs/featureflags/feature-flags.md
