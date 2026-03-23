@@ -4,8 +4,14 @@ export type HeaderContainerBlock = Block & {
   name: 'HeaderContainer';
   type: 'structure';
   content: Block[];
+  configuration?: {
+    layout?: {
+      sticky?: boolean;
+    };
+  };
 };
 
 export type HeaderContainerProps = {
-  block: HeaderContainerBlock;
+  block?: HeaderContainerBlock;
+  content: Block[];
 };
