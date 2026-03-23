@@ -8,6 +8,7 @@ import type {
 } from './types';
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
@@ -386,6 +387,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   };
 
   const migrateAllBlocks = (blocks: Block[]) => {
+    const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
     const config = useRuntimeConfig().public;
 
     const migrate = (blocks: Block[], isRootLevel = true) => {
@@ -398,7 +400,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
         }
 
-        if (block.name === 'TextCard' && block.content) {
+        if (blocksToMigrateTextContent.includes(block.name) && block.content) {
           const isFirstBlock = isRootLevel && index === 0;
 
           block.content = migrateTextCardContent(
@@ -406,6 +408,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
             config.enableRichTextEditorV2,
             isFirstBlock,
           );
+        }
+
+        if (block.name === 'Banner' && block.content && config.enableRichTextEditorV2) {
+          const content = (block as BannerProps).content;
+          const textAlignment = content.text?.textAlignment;
+          if (textAlignment && !content?.button?.alignment) {
+            content.button = content.button ?? {};
+            content.button.alignment = textAlignment;
+          }
         }
 
         if (Array.isArray(block.content)) {
