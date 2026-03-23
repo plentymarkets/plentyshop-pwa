@@ -38,7 +38,7 @@ fetchCrossSelling({
 
 ### Fetch multiple cross-selling lists by relation type
 
-The svailable `crossSellingRelation` types are:
+The available `crossSellingRelation` types are:
 `Accessory`, `ReplacementPart`, `Similar`, `Bundle`
 
 ```ts

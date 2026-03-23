@@ -69,7 +69,7 @@ This disables the CAPTCHA validation.
 
 ### Shop
 
-Remove the sitekey from the apps's `apps/web/.env` file. This removes the widget in the shop.
+Remove the sitekey from the app's `apps/web/.env` file. This removes the widget in the shop.
 
 ## CAPTCHA protected features
 

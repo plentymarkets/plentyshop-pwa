@@ -159,7 +159,7 @@ In this scenario, you validate form fields by using the `useValidatorAggregator`
 In `PurchaseCard`, `validateAllFields` registers the form field validator of the `prop-${orderPropertyId}` field from `OrderPropertyInput`. If you have form fields in multiple child components, you can register them all in the same way.
 
 ::: info Unique field identifier
-In the context of the overall validation, every form field identifier has to be unique. In other words, even if your template is distributed across multiple child components, you have to choose different identifers for each form field.
+In the context of the overall validation, every form field identifier has to be unique. In other words, even if your template is distributed across multiple child components, you have to choose different identifiers for each form field.
 :::
 
 ::: details PurchaseCard component

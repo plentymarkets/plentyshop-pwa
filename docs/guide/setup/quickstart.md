@@ -25,7 +25,7 @@ We recommend working with a fork of the [shop repository](https://github.com/ple
 2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
 
 ::: warning :warning: Repository visibility
-GitHub forks are always publicy visible.
+GitHub forks are always publicly visible.
 If you want to maintain a private repository that's still connected to the main project, refer to our [guide on update strategies](../how-to/project-update-strategies.md).
 :::
 
