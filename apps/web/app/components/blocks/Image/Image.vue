@@ -27,7 +27,7 @@
       />
     </component>
     <div class="absolute inset-0 px-4 flex flex-col" :class="overlayAlignClasses" data-testid="image-overlay-wrapper">
-      <TextContent v-bind="textContentProps" :test-id="'image-overlay'"/>
+      <TextContent v-bind="textContentProps" :test-id="'image-overlay'" />
     </div>
   </div>
 </template>

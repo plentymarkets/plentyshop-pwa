@@ -4,7 +4,7 @@
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <TextContent v-bind="textContentProps" :test-id="'newsletter'"/>
+    <TextContent v-bind="textContentProps" :test-id="'newsletter'" />
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div
