@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
-import type { FieldToggleProps } from './types';
+import type { FieldToggleProps } from '~/components/ui/FieldToggle/types';
 
 defineProps<FieldToggleProps>();
 
