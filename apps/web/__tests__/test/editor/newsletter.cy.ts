@@ -28,6 +28,8 @@ describe('Newsletter Block Form', () => {
       case 'button':
         cy.getByTestId('newsletter-button').should('have.text', text);
         break;
+      default:
+        throw new Error(`Unknown newsletter field: ${field}`);
     }
   };
 
