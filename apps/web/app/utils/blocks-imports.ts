@@ -27,3 +27,7 @@ Object.entries(customerBlocks).forEach(([path, loader]) => (blockLoaders[normali
 export const getBlockLoader = (name: string) => {
   return blockLoaders[name];
 };
+
+export const getBlockFormLoader = (name: string) => {
+  return blockLoaders[name + 'Form'];
+};

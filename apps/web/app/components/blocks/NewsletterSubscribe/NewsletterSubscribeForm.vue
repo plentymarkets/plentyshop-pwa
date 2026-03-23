@@ -10,27 +10,33 @@
       </template>
 
       <div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-          <SfInput
-            v-model="newsletterBlock.text.title"
-            name="maintitle"
-            type="text"
-            :placeholder="getEditorTranslation('main-title-placeholder')"
-            data-testid="newsletter-form-title"
-          />
-        </div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
-          <SfTextarea
-            v-model="newsletterBlock.text.htmlDescription"
-            name="description"
-            type="text"
-            class="w-full min-h-[232px]"
-            :placeholder="getEditorTranslation('description-placeholder')"
-            data-testid="newsletter-form-description"
-          />
-        </div>
+        <EditorRichTextEditorForm
+          :model-value="newsletterBlock.text.htmlDescription ?? ''"
+          :text-align="newsletterBlock.text.textAlignment ?? 'center'"
+          @update:model-value="newsletterBlock.text.htmlDescription = $event"
+        >
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
+            <SfInput
+              v-model="newsletterBlock.text.title"
+              name="maintitle"
+              type="text"
+              :placeholder="getEditorTranslation('main-title-placeholder')"
+              data-testid="newsletter-form-title"
+            />
+          </div>
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
+            <SfTextarea
+              v-model="newsletterBlock.text.htmlDescription"
+              name="description"
+              type="text"
+              class="w-full min-h-[232px]"
+              :placeholder="getEditorTranslation('description-placeholder')"
+              data-testid="newsletter-form-description"
+            />
+          </div>
+        </EditorRichTextEditorForm>
         <div class="mb-4">
           <UiFormLabel class="mb-1">{{ getEditorTranslation('ask-name-label') }}</UiFormLabel>
         </div>

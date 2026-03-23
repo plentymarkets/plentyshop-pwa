@@ -4,23 +4,7 @@
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <h1
-      v-if="props.index === 0"
-      class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem] no-preflight"
-      data-testid="newsletter-title"
-      v-html="props.content.text?.title ?? t('newsletter.heading')"
-    />
-    <h2
-      v-if="props.index !== 0"
-      class="typography-headline-4 sm:typography-headline-3 font-bold mb-2 no-preflight"
-      data-testid="newsletter-title"
-      v-html="props.content.text?.title ?? t('newsletter.heading')"
-    />
-    <p
-      class="typography-text-sm sm:typography-text-base my-2 mb-4 no-preflight"
-      data-testid="newsletter-description"
-      v-html="props.content.text?.htmlDescription ?? t('newsletter.info')"
-    />
+    <TextContent v-bind="textContentProps" :test-id="'newsletter'" />
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div
@@ -159,6 +143,13 @@ const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
+const textContentProps = computed(() =>
+  mapToTextContentProps({
+    title: props.content.text?.title,
+    htmlDescription: props.content.text?.htmlDescription,
+    textAlignment: props.content.text?.textAlignment ?? 'center',
+  }),
+);
 
 const validationSchema = toTypedSchema(
   object({

@@ -37,6 +37,7 @@ describe('composables index exports', () => {
     'useBlockIsFake',
     'useIsUsingFakeData',
     'useShouldShow',
+    'useLazyProductImage',
   ];
 
   const allFileModules = fs

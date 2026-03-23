@@ -27,10 +27,10 @@ describe('Banner text', () => {
       },
     });
 
-    expect(wrapper.find(`[data-testid="banner-pretitle-${bannerBlockUuid}"]`).exists()).toBe(false);
-    expect(wrapper.find(`[data-testid="banner-title-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-subtitle-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-description-${bannerBlockUuid}"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(false);
+    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(true);
   });
 
   it('should not render a title if no title is provided', () => {
@@ -55,10 +55,10 @@ describe('Banner text', () => {
       },
     });
 
-    expect(wrapper.find(`[data-testid="banner-pretitle-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-title-${bannerBlockUuid}"]`).exists()).toBe(false);
-    expect(wrapper.find(`[data-testid="banner-subtitle-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-description-${bannerBlockUuid}"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(false);
+    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(true);
   });
 
   it('should not render a subtitle if no subtitle is provided', () => {
@@ -83,10 +83,10 @@ describe('Banner text', () => {
       },
     });
 
-    expect(wrapper.find(`[data-testid="banner-pretitle-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-title-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-subtitle-${bannerBlockUuid}"]`).exists()).toBe(false);
-    expect(wrapper.find(`[data-testid="banner-description-${bannerBlockUuid}"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(false);
+    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(true);
   });
 
   it('should not render a description if no description is provided', () => {
@@ -111,10 +111,10 @@ describe('Banner text', () => {
       },
     });
 
-    expect(wrapper.find(`[data-testid="banner-pretitle-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-title-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-subtitle-${bannerBlockUuid}"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="banner-description-${bannerBlockUuid}"]`).exists()).toBe(false);
+    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(true);
+    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(false);
   });
 
   it('should set the given text color', () => {

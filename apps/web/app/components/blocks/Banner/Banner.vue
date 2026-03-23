@@ -17,7 +17,7 @@
       :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': banner.text.bgcolor }]"
       :style="{
         color: banner.text.color,
-        textAlign: getTextAlignment(banner.text?.textAlignment ?? ''),
+        textAlign: getTextAlignment(rteAlignment ?? ''),
         alignItems: getContentPosition(banner.text.align ?? ''),
         justifyContent: getContentPosition(banner.text.justify ?? ''),
       }"
@@ -30,46 +30,7 @@
         }"
         :data-testid="'banner-content-' + meta.uuid"
       >
-        <div
-          v-if="banner.text.pretitle"
-          class="typography-headline-6 font-bold tracking-widest no-preflight"
-          :data-testid="'banner-pretitle-' + meta.uuid"
-          v-html="banner.text.pretitle"
-        />
-
-        <template v-if="!props.index">
-          <h1
-            v-if="banner.text.title"
-            :id="`carousel_item-${props.slideIndex}_heading`"
-            class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem] no-preflight"
-            :data-testid="'banner-title-' + meta.uuid"
-            v-html="banner.text.title"
-          />
-        </template>
-
-        <template v-else>
-          <h2
-            v-if="banner.text.title"
-            :id="`carousel_item-${props.slideIndex}_heading`"
-            class="text-2xl font-semibold mb-4 no-preflight"
-            :data-testid="'banner-title-' + meta.uuid"
-            v-html="banner.text.title"
-          />
-        </template>
-        <div
-          v-if="banner.text.subtitle"
-          class="typography-headline-6 font-bold tracking-widest mb-4 no-preflight"
-          :data-testid="'banner-subtitle-' + meta.uuid"
-          v-html="banner.text.subtitle"
-        />
-
-        <div
-          v-if="banner.text.htmlDescription"
-          class="typography-text-sm md:typography-text-lg font-normal no-preflight"
-          :data-testid="'banner-description-' + meta.uuid"
-          v-html="banner.text.htmlDescription"
-        />
-
+        <TextContent :text="banner.text" :index="props.slideIndex" />
         <UiButton
           v-if="banner.button && banner.button.label && banner.button.link"
           class="flex flex-col md:flex-row gap-4 mt-6"
@@ -100,6 +61,12 @@ const props = defineProps<BannerProps & { slideIndex?: number }>();
 
 const banner = computed(() => props.content);
 const { hexToRgba, getImageHeight, getTextAlignment, getContentPosition } = useBlockContentHelper();
+
+const config = useRuntimeConfig();
+
+const rteAlignment = computed(() =>
+  config.public.enableRichTextEditorV2 ? banner.value.button?.alignment : banner.value.text?.textAlignment,
+);
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {

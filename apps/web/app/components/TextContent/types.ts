@@ -1,5 +1,6 @@
 export type TextContentProps = {
   index?: number;
+  testId?: string;
   text?: {
     pretitle?: string;
     title?: string;
