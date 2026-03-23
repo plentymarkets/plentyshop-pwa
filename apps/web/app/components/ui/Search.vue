@@ -41,7 +41,6 @@
           <h3 class="sr-only uppercase tracking-widest text-sm font-bold text-neutral-700">
             {{ t('searchBar.searchSuggestions') }}
           </h3>
-          <hr class="sr-only h-px mt-2 bg-neutral-200 border-0" />
           <ul>
             <UiSearchSuggestionItem v-for="(item, index) in results.suggestions" :key="index" :item="item" />
           </ul>
@@ -53,13 +52,15 @@
         <hr class="h-px mt-2 bg-neutral-200 border-0" />
         <div class="@2xl:mb-4">
           <ul v-if="results?.categories?.length" class="mt-4 flex flex-wrap gap-1.5 @2xl:flex-col @2xl:items-start">
-            <NuxtLink v-for="(category, index) in results.categories" :key="index" :to="category.url">
-              <div
-                class="bg-neutral-100 hover:bg-neutral-200 transition-colors duration-200 text-neutral-800 text-sm px-3 py-1.5 rounded-md"
-              >
-                {{ category.label }}
-              </div>
-            </NuxtLink>
+            <li v-for="(category, index) in results.categories" :key="index">
+              <NuxtLink :to="category.url">
+                <div
+                  class="bg-neutral-100 hover:bg-neutral-200 transition-colors duration-200 text-neutral-800 text-sm px-3 py-1.5 rounded-md"
+                >
+                  {{ category.label }}
+                </div>
+              </NuxtLink>
+            </li>
           </ul>
           <div v-else class="text-base mt-4 text-neutral-900">{{ t('searchBar.noResultsFound') }}</div>
         </div>
@@ -84,12 +85,10 @@
         </div>
 
         <hr class="h-px mt-2 bg-neutral-200 border-0" />
-        <div class="mt-4">
-          <ul v-if="results?.items?.length" class="gap-4 grid @sm/products:grid-cols-2 items-stretch">
-            <UiSearchSuggestionProduct v-for="(item, index) in results.items" :key="index" :item="item" />
-          </ul>
-          <div v-else class="text-base text-neutral-900 mb-4 @2xl:mb-0">{{ t('searchBar.noResultsFound') }}</div>
-        </div>
+        <ul v-if="results?.items?.length" class="mt-4 gap-4 grid @sm/products:grid-cols-2 items-stretch">
+          <UiSearchSuggestionProduct v-for="(item, index) in results.items" :key="index" :item="item" />
+        </ul>
+        <div v-else class="mt-4 text-base text-neutral-900 mb-4 @2xl:mb-0">{{ t('searchBar.noResultsFound') }}</div>
       </div>
       <NuxtLink
         v-if="results?.total"

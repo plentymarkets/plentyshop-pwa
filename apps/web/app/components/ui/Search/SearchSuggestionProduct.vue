@@ -1,6 +1,6 @@
 <template>
-  <NuxtLink :to="item.url">
-    <div class="border border-neutral-200 rounded-md h-full flex flex-col justify-between">
+  <li>
+    <NuxtLink :to="item.url" class="border border-neutral-200 rounded-md h-full flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-center aspect-[3/2]">
           <NuxtImg :src="item.image" :alt="item.imageAlt" class="object-contain rounded-md w-full h-full" />
@@ -18,8 +18,8 @@
           >{{ item.crossedPrice.formatted }}</span
         >
       </div>
-    </div>
-  </NuxtLink>
+    </NuxtLink>
+  </li>
 </template>
 
 <script setup lang="ts">
