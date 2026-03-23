@@ -1,0 +1,42 @@
+name: K6 Load Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        type: choice
+        description: 'Test Strategy'
+        options:
+          - drop
+          - stress
+        default: 'drop'
+      domain:
+        description: 'Target Domain (e.g., https://mevofvd5omld.c01-14.plentymarkets.com'
+        required: true
+        default: 'https://mevofvd5omld.c01-14.plentymarkets.com'
+      max_vus:
+        description: 'Maximum Virtual Users'
+        required: true
+        default: '100'
+
+jobs:
+  k6_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Script from Secrets
+        run: |
+          echo "${{ secrets.K6_CORE_ENGINE }}" > load-test.js
+          if [ "${{ github.event.inputs.test_type }}" == "drop" ]; then
+            echo "${{ secrets.K6_SCENARIO_DROP }}" >> load-test.js
+          else
+            echo "${{ secrets.K6_SCENARIO_STRESS }}" >> load-test.js
+          fi
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Run k6
+        run: |
+          k6 run --quiet load-test.js \
+          -e DOMAIN=${{ github.event.inputs.domain }} \
+          -e MAX_VUS=${{ github.event.inputs.max_vus }}
