@@ -29,7 +29,7 @@
                 : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
             "
           >
-            <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4">
+            <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4 cursor-pointer" @click="selectItem(index)">
               <div class="flex items-center gap-3 flex-1 min-w-0">
                 <button
                   class="drag-items-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
@@ -157,6 +157,10 @@ const openItemMenuIndex = ref<number | undefined>(undefined);
 
 const toggleItemMenu = (index: number) => {
   openItemMenuIndex.value = openItemMenuIndex.value === index ? undefined : index;
+};
+
+const selectItem = (index: number) => {
+  emit('select-item', index);
 };
 
 const deleteItem = (index: number) => {

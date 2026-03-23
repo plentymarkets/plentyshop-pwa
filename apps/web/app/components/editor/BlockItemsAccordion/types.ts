@@ -11,6 +11,7 @@ export interface BlockItemsAccordionProps {
 
 export interface BlockItemsAccordionEmits {
   'edit-item': [index: number];
+  'select-item': [index: number];
   'add-item': [];
   'delete-item': [index: number];
   'toggle-item-visibility': [index: number];

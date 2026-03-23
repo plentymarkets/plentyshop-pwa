@@ -7,6 +7,7 @@
       :item-labels="slideLabels"
       :current-active-index="currentActiveSlideIndex"
       :min-items="1"
+      @select-item="selectSlide"
       @edit-item="editSlide"
       @add-item="addSlide"
       @delete-item="deleteSlide"
@@ -133,6 +134,10 @@ const slides = computed({
 
 const resolveSlideLabels = async () => {
   slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
+};
+
+const selectSlide = (index: number) => {
+  setIndex(blockUuid.value, index);
 };
 
 const editSlide = (index: number) => {
