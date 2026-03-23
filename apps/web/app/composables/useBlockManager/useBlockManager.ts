@@ -219,9 +219,11 @@ export const useBlockManager = () => {
   const blockContainsUuid = (block: Block, targetUuid: string): boolean => {
     if (block.meta?.uuid === targetUuid) return true;
 
-    return block.type === 'structure' &&
+    return (
+      block.type === 'structure' &&
       Array.isArray(block.content) &&
-      block.content.some((child) => blockContainsUuid(child, targetUuid));
+      block.content.some((child) => blockContainsUuid(child, targetUuid))
+    );
   };
 
   const getRootParent = (blocks: Block[], targetUuid: string): Block | null => {
