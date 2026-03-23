@@ -11,7 +11,7 @@
         <template v-else> {{ blockDisplayName }} </template>
       </div>
       <div class="flex items-center space-x-2">
-        <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
+        <div v-if="!isGlobalBlock(block)" class="flex items-center space-x-2">
           <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
             <SfIconDelete />
           </button>
@@ -39,7 +39,6 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue';
-import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();
@@ -75,30 +74,25 @@ const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>(
 const getComponent = (name: string) => {
   if (!name) return null;
 
-  const formName = name + 'Form';
-
-  if (componentCache.has(formName)) {
-    return componentCache.get(formName);
+  if (componentCache.has(name)) {
+    return componentCache.get(name);
   }
 
-  const loader = getBlockLoader(formName);
+  const loader = getBlockFormLoader(name);
   if (!loader) return null;
 
-  if (loader) {
-    const component = defineAsyncComponent(loader);
-    componentCache.set(formName, component);
-    return component;
-  }
-
-  return '';
+  const component = defineAsyncComponent(loader);
+  componentCache.set(name, component);
+  return component;
 };
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
+const block = computed(() => findOrDeleteBlockByUuid(data.value, blockUuid.value));
+
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
-    const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
-    const firstChild = (block?.content as Array<{ name: string }>)?.[0];
+    const firstChild = (block?.value?.content as Array<{ name: string }>)?.[0];
     if (firstChild?.name) {
       return getBlockDisplayName(firstChild.name);
     }

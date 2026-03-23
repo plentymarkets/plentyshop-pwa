@@ -124,6 +124,15 @@ export const isHeaderBlock = (block: Block | null | undefined): block is HeaderB
   return block?.name === HEADER_BLOCK_NAME;
 };
 
+/**
+ * Check if a block is global (i.e., a system/global block like Footer or HeaderContainer)
+ * @param block - The block to check
+ * @returns true if the block is global, false if it's a regular/persistent block
+ */
+export const isGlobalBlock = (block: Block | null | undefined): boolean => {
+  return isFooterBlock(block) || isHeaderContainerBlock(block);
+};
+
 const createFooterBlockHelper = (
   content: FooterContent,
   meta?: { uuid?: string; isGlobalTemplate?: boolean },
@@ -470,7 +479,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
       }
 
-      if (resolvedHeaderContainer.content.length > 0) headerContainerCache.value = resolvedHeaderContainer;
+      if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value)
+        headerContainerCache.value = resolvedHeaderContainer;
     }
 
     const mainBlocks = fetchedBlocks.filter(
@@ -495,6 +505,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   /** Updates the blocks in state with new block data */
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
+
+    const headerBlock = blocks.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
+    if (headerBlock) {
+      headerContainerCache.value = headerBlock;
+    }
   };
 
   /** Sets the default template data used when no blocks are fetched */

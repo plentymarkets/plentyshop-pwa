@@ -2,18 +2,18 @@ import { PageObject } from './PageObject';
 
 export class EditorObject extends PageObject {
   get pretitle() {
-    return cy.get('[data-testid^="banner-pretitle-"]').first();
+    return cy.get('[data-testid^="text-pretitle"]').first();
   }
   get title() {
-    return cy.get('[data-testid^="banner-title-"]').first();
+    return cy.get('[data-testid^="text-title"]').first();
   }
 
   get subtitle() {
-    return cy.get('[data-testid^="banner-subtitle-"]').first();
+    return cy.get('[data-testid^="text-subtitle"]').first();
   }
 
   get description() {
-    return cy.get('[data-testid^="banner-description-"]').first();
+    return cy.get('[data-testid^="text-html"]').first();
   }
 
   get editorToolbar() {

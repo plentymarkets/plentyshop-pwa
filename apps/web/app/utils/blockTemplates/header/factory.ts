@@ -19,6 +19,11 @@ export function createHeaderContainerBlock(
       isGlobalTemplate: meta?.isGlobalTemplate ?? true,
     },
     content,
+    configuration: {
+      layout: {
+        sticky: false,
+      },
+    },
   };
 }
 

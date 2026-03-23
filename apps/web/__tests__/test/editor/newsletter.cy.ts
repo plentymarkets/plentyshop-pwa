@@ -18,7 +18,19 @@ describe('Newsletter Block Form', () => {
   };
 
   const checkIfNewsletterBlockHasText = (field: string, text: string) => {
-    cy.getByTestId(`newsletter-${field}`).should('have.text', text);
+    switch (field) {
+      case 'title':
+        cy.getByTestId('text-title-newsletter').should('have.text', text);
+        break;
+      case 'description':
+        cy.getByTestId('text-html-newsletter').should('have.text', text);
+        break;
+      case 'button':
+        cy.getByTestId('newsletter-button').should('have.text', text);
+        break;
+      default:
+        throw new Error(`Unknown newsletter field: ${field}`);
+    }
   };
 
   const removeNameInputFromForm = () => {
