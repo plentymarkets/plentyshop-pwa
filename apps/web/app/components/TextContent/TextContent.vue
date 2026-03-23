@@ -55,7 +55,7 @@
       :to="localePath(props.button.link)"
       :variant="props.button.variant ?? 'primary'"
       data-testid="text-button"
-      class="mt-3 px-4 py-2"
+      class="mt-3 px-4 py-2 cursor-pointer"
     >
       {{ props.button.label }}
     </UiButton>

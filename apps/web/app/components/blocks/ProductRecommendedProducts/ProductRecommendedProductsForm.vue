@@ -9,101 +9,107 @@
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
       </template>
-
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
-        <SfInput
-          v-model="recommendedBlock.text.pretitle"
-          data-testid="recommended-form-pretitle"
-          name="preTitle"
-          type="text"
-          :placeholder="getEditorTranslation('pretitle-placeholder')"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-        <SfInput
-          v-model="recommendedBlock.text.title"
-          data-testid="recommended-form-title"
-          name="Title"
-          type="text"
-          :placeholder="getEditorTranslation('main-title-placeholder')"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
-        <SfInput
-          v-model="recommendedBlock.text.subtitle"
-          data-testid="recommended-form-subtitle"
-          name="Subtitle"
-          type="text"
-          :placeholder="getEditorTranslation('subtitle-placeholder')"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="recommendedBlock.text.htmlDescription"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('description-placeholder')"
-          data-testid="recommended-form-html"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-        <EditorColorPicker v-model="recommendedBlock.text.color" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </template>
-        </EditorColorPicker>
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
-        <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="text-align-left"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('left') }"
-            data-testid="recommended-form-text-align-left"
-            @click="recommendedBlock.text.textAlignment = 'left'"
-          >
-            <SfIconCheck :class="{ invisible: !isTextAlignSelected('left') }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-left-label') }}
-          </div>
-          <div
-            for="text-align-center"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('center') }"
-            data-testid="recommended-form-text-align-center"
-            @click="recommendedBlock.text.textAlignment = 'center'"
-          >
-            <SfIconCheck :class="{ invisible: !isTextAlignSelected('center') }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-center-label') }}
-          </div>
-          <div
-            for="text-align-right"
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('right') }"
-            data-testid="recommended-form-text-align-right"
-            @click="recommendedBlock.text.textAlignment = 'right'"
-          >
-            <SfIconCheck :class="{ invisible: !isTextAlignSelected('right') }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('text-align-option-right-label') }}
+      <EditorRichTextEditorForm
+        v-if="recommendedBlock.text"
+        :model-value="recommendedBlock.text.htmlDescription ?? ''"
+        :text-align="recommendedBlock.text.textAlignment ?? 'left'"
+        @update:model-value="recommendedBlock.text.htmlDescription = $event"
+      >
+        <div v-if="recommendedBlock.text" class="p-2">
+          <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
+          <SfInput
+            v-model="recommendedBlock.text.pretitle"
+            data-testid="recommended-form-pretitle"
+            name="preTitle"
+            type="text"
+            :placeholder="getEditorTranslation('pretitle-placeholder')"
+          />
+        </div>
+        <div v-if="recommendedBlock.text" class="p-2">
+          <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
+          <SfInput
+            v-model="recommendedBlock.text.title"
+            data-testid="recommended-form-title"
+            name="Title"
+            type="text"
+            :placeholder="getEditorTranslation('main-title-placeholder')"
+          />
+        </div>
+        <div v-if="recommendedBlock.text" class="p-2">
+          <UiFormLabel>{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
+          <SfInput
+            v-model="recommendedBlock.text.subtitle"
+            data-testid="recommended-form-subtitle"
+            name="Subtitle"
+            type="text"
+            :placeholder="getEditorTranslation('subtitle-placeholder')"
+          />
+        </div>
+        <div v-if="recommendedBlock.text" class="p-2">
+          <UiFormLabel>{{ getEditorTranslation('description-label') }}</UiFormLabel>
+          <SfTextarea
+            v-model="recommendedBlock.text.htmlDescription"
+            name="description"
+            type="text"
+            class="w-full min-h-[232px]"
+            :placeholder="getEditorTranslation('description-placeholder')"
+            data-testid="recommended-form-html"
+          />
+        </div>
+        <div v-if="recommendedBlock.text" class="p-2">
+          <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
+          <EditorColorPicker v-model="recommendedBlock.text.color" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </template>
+          </EditorColorPicker>
+        </div>
+        <div v-if="recommendedBlock.text" class="p-2">
+          <UiFormLabel>{{ getEditorTranslation('text-align-label') }}</UiFormLabel>
+          <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+            <div
+              for="text-align-left"
+              class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+              :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('left') }"
+              data-testid="recommended-form-text-align-left"
+              @click="recommendedBlock.text.textAlignment = 'left'"
+            >
+              <SfIconCheck :class="{ invisible: !isTextAlignSelected('left') }" class="mr-1 w-[1.1rem]" />
+              {{ getEditorTranslation('text-align-option-left-label') }}
+            </div>
+            <div
+              for="text-align-center"
+              class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
+              :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('center') }"
+              data-testid="recommended-form-text-align-center"
+              @click="recommendedBlock.text.textAlignment = 'center'"
+            >
+              <SfIconCheck :class="{ invisible: !isTextAlignSelected('center') }" class="mr-1 w-[1.1rem]" />
+              {{ getEditorTranslation('text-align-option-center-label') }}
+            </div>
+            <div
+              for="text-align-right"
+              class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
+              :class="{ 'bg-gray-100 text-gray-900 font-semibold': isTextAlignSelected('right') }"
+              data-testid="recommended-form-text-align-right"
+              @click="recommendedBlock.text.textAlignment = 'right'"
+            >
+              <SfIconCheck :class="{ invisible: !isTextAlignSelected('right') }" class="mr-1 w-[1.1rem]" />
+              {{ getEditorTranslation('text-align-option-right-label') }}
+            </div>
           </div>
         </div>
-      </div>
+      </EditorRichTextEditorForm>
     </UiAccordionItem>
 
     <UiAccordionItem
