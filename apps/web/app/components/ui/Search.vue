@@ -11,8 +11,8 @@
         @focus="open"
       >
         <template #prefix>
-          <SfLoaderCircular v-if="loading || loadingSuggestions" />
-          <SfIconSearch v-else />
+          <SfLoaderCircular v-if="loading || loadingSuggestions" class="shrink-0" />
+          <SfIconSearch v-else class="shrink-0" />
         </template>
         <template #suffix>
           <button

@@ -1,5 +1,9 @@
 import type { ItemSearchAutocompleteResult } from '@plentymarkets/shop-api';
 
+const CATEGORY_LIMIT = 5;
+const SUGGESTIONS_LIMIT = 5;
+const ITEMS_LIMIT = 4;
+
 export const useSearchSuggestions = () => {
   const state = useState('useSearchSuggestions', () => ({
     results: null as ItemSearchAutocompleteResult | null,
@@ -23,6 +27,13 @@ export const useSearchSuggestions = () => {
       query: term,
       types: ['suggestion', 'category'],
     });
+
+    if (data) {
+      data.categories = data?.categories?.splice(0, CATEGORY_LIMIT) ?? [];
+      data.suggestions = data?.suggestions?.splice(0, SUGGESTIONS_LIMIT) ?? [];
+      data.items = data?.items?.splice(0, ITEMS_LIMIT) ?? [];
+    }
+
     state.value.searchTerm = term;
     state.value.results = data;
     state.value.loading = false;

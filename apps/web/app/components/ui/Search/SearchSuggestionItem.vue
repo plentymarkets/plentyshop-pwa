@@ -1,9 +1,9 @@
 <template>
   <NuxtLink
     :to="getSearchPath(item.label)"
-    class="flex items-center py-2 px-4 gap-2 text-neutral-500 cursor-pointer hover:bg-neutral-100 transition duration-200 ease-in-out"
+    class="flex py-2 px-4 gap-2 text-neutral-500 cursor-pointer hover:bg-neutral-100 transition duration-200 ease-in-out"
   >
-    <SfIconSearch size="sm" />
+    <SfIconSearch class="mt-0.5 shrink-0" size="sm" />
     <span class="text-black">
       <template v-if="match">
         {{ parsedText.before }}<b>{{ parsedText.match }}</b
