@@ -481,6 +481,15 @@ watch(
   { immediate: true },
 );
 
+watch(
+  isOpen,
+  (isDrawerOpen) => {
+    if (isDrawerOpen && !category.value && categoryTree.value.length > 0) {
+      setCategory(categoryTree.value);
+    }
+  },
+);
+
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
 
