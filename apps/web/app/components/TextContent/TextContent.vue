@@ -1,6 +1,6 @@
 <template>
   <div
-    data-testid="text-content"
+    :data-testid="props.testId ? 'text-content-' + props.testId : 'text-content'"
     class="w-full"
     :style="{ color: props.text?.color }"
     :class="['space-y-4', textAlignmentClass]"
@@ -15,35 +15,35 @@
     <template v-else>
       <div
         v-if="props.text?.pretitle"
-        data-testid="text-pretitle"
+        :data-testid="props.testId ? 'text-pretitle-' + props.testId : 'text-pretitle'"
         class="text-xl font-bold mb-2 no-preflight"
         v-html="renderedPretitle"
       />
 
       <h1
         v-if="props.text?.title && props.index === 0"
-        data-testid="text-title"
+        :data-testid="props.testId ? 'text-title-' + props.testId : 'text-title'"
         class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem] no-preflight"
         v-html="renderedTitle"
       />
 
       <h2
         v-else-if="props.text?.title"
-        data-testid="text-title"
+        :data-testid="props.testId ? 'text-title-' + props.testId : 'text-title'"
         class="text-2xl font-semibold mb-4 no-preflight"
         v-html="renderedTitle"
       />
 
       <div
         v-if="props.text?.subtitle"
-        data-testid="text-subtitle"
+        :data-testid="props.testId ? 'text-subtitle-' + props.testId : 'text-subtitle'"
         class="text-lg font-semibold no-preflight"
         v-html="renderedSubtitle"
       />
 
       <div
         v-if="props.text?.htmlDescription"
-        data-testid="text-html"
+        :data-testid="props.testId ? 'text-html-' + props.testId : 'text-html'"
         class="text-base no-preflight"
         v-html="renderedHtmlDescription"
       />
@@ -54,7 +54,7 @@
       :tag="NuxtLink"
       :to="localePath(props.button.link)"
       :variant="props.button.variant ?? 'primary'"
-      data-testid="text-button"
+      :data-testid="props.testId ? 'text-button-' + props.testId : 'text-button'"
       class="mt-3 px-4 py-2 cursor-pointer"
     >
       {{ props.button.label }}
