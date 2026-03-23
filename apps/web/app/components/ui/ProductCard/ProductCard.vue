@@ -12,43 +12,63 @@
         :use-availability="isFromWishlist"
       />
 
-      <SfLink
-        :tag="NuxtLink"
-        rel="preload"
-        :to="productPath"
-        :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
-        as="image"
-        data-testid="product-card-link"
-      >
-        <NuxtImg
-          :src="imageUrl"
-          :alt="imageAlt"
-          :title="imageTitle ? imageTitle : null"
-          :loading="lazy && !priority ? 'lazy' : 'eager'"
-          :fetchpriority="priority ? 'high' : 'auto'"
-          :preload="priority || false"
-          :width="getWidth()"
-          :height="getHeight()"
-          :class="[
-            'object-contain rounded-md aspect-square w-full transition-opacity duration-300',
-            effectiveHoverImageUrl ? 'group-hover/image:opacity-0' : '',
-          ]"
-          data-testid="image-slot"
-        />
-        <NuxtImg
-          v-if="effectiveHoverImageUrl"
-          :src="effectiveHoverImageUrl"
-          :alt="imageAlt"
-          :title="imageTitle ? imageTitle : null"
-          :loading="lazy && !priority ? 'lazy' : 'eager'"
-          fetchpriority="auto"
-          :preload="false"
-          :width="getWidth()"
-          :height="getHeight()"
-          class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/image:opacity-100 object-contain rounded-md w-full h-full"
-          data-testid="hover-image-slot"
-        />
-      </SfLink>
+      <div ref="imageContainerRef" :class="[{ 'size-48': isFromSlider }, 'relative']">
+        <SfLink
+          :tag="NuxtLink"
+          :to="productPath"
+          class="relative group/image flex items-center justify-center"
+          data-testid="product-card-link"
+        >
+          <div class="relative w-full aspect-square">
+            <div
+              v-if="!mainImageLoaded"
+              class="absolute inset-0 rounded-md bg-neutral-100 animate-pulse"
+              aria-hidden="true"
+            />
+
+            <NuxtImg
+              v-if="shouldLoadMainImage"
+              ref="mainImageRef"
+              :src="imageUrl"
+              :alt="imageAlt"
+              :title="imageTitle || null"
+              :loading="priority || lazy === false ? 'eager' : 'lazy'"
+              :fetchpriority="priority ? 'high' : 'auto'"
+              :preload="priority"
+              :width="getWidth()"
+              :height="getHeight()"
+              :class="[
+                'object-contain rounded-md aspect-square w-full h-full transition-opacity duration-300',
+                mainImageLoaded ? 'opacity-100' : 'opacity-0',
+                effectiveHoverImageUrl && hoverImageLoaded ? 'group-hover/image:opacity-0' : '',
+              ]"
+              data-testid="image-slot"
+              @load="onMainImageLoad"
+              @error="onMainImageError"
+            />
+
+            <NuxtImg
+              v-if="shouldLoadHoverImage && effectiveHoverImageUrl"
+              ref="hoverImageRef"
+              :src="effectiveHoverImageUrl"
+              :alt="imageAlt"
+              :title="imageTitle || null"
+              :loading="lazy === false ? 'eager' : 'lazy'"
+              fetchpriority="auto"
+              :preload="false"
+              :width="getWidth()"
+              :height="getHeight()"
+              :class="[
+                'absolute inset-0 object-contain rounded-md w-full h-full opacity-0 transition-opacity duration-300',
+                hoverImageLoaded ? 'group-hover/image:opacity-100' : '',
+              ]"
+              data-testid="hover-image-slot"
+              @load="onHoverImageLoad"
+              @error="onHoverImageError"
+            />
+          </div>
+        </SfLink>
+      </div>
 
       <template v-if="configuration?.showWishlistButton">
         <slot name="wishlistButton">
@@ -101,7 +121,7 @@
             v-if="shortDescription"
             class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
           >
-            <div class="line-clamp-3" v-html="shortDescription" />
+            <div class="line-clamp-3 no-preflight" v-html="shortDescription" />
           </div>
         </template>
         <template v-if="key === 'price' && configuration?.fields?.price">
@@ -262,8 +282,23 @@ const productPath = computed(() => {
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
 });
 
-const priority = ref((props.index || 0) < 5);
-const lazy = ref(props.lazy || false);
+const priority = computed(() => (props.index ?? 0) < 5);
+const {
+  imageContainerRef,
+  mainImageRef,
+  hoverImageRef,
+  shouldLoadMainImage,
+  shouldLoadHoverImage,
+  mainImageLoaded,
+  hoverImageLoaded,
+  onMainImageLoad,
+  onMainImageError,
+  onHoverImageLoad,
+  onHoverImageError,
+} = useLazyProductImage({
+  priority,
+  hoverImageUrl: effectiveHoverImageUrl,
+});
 const isFromWishlist = ref(props.isFromWishlist || false);
 const isFromSlider = ref(props.isFromSlider || false);
 
