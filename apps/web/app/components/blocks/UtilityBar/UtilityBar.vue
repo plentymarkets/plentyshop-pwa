@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header v-if="viewport.isGreaterOrEquals('md')" class="relative w-full md:sticky md:shadow-md z-10">
+    <header class="relative w-full md:sticky md:shadow-md z-10">
       <div
         class="flex items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
         :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
@@ -27,6 +27,33 @@
           >
             <UiLogo />
           </NuxtLink>
+        </div>
+
+        <div v-if="viewport.isLessThan('md')" class="ml-auto flex gap-2 md:hidden">
+          <UiButton
+            v-if="localeCodes.length > 1 && isActionVisible('language')"
+            variant="tertiary"
+            class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md"
+            square
+            data-testid="open-languageselect-button"
+            :style="{ color: iconColor }"
+            :aria-label="t('common.navigation.languageSelector')"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
+          >
+            <SfIconLanguage />
+          </UiButton>
+          <UiButton
+            v-if="isSectionVisible('search')"
+            variant="tertiary"
+            class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md"
+            square
+            :style="{ color: iconColor }"
+            :aria-label="t('common.navigation.openSearchModal')"
+            @click="searchModalOpen"
+          >
+            <SfIconSearch />
+          </UiButton>
         </div>
 
         <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
@@ -222,38 +249,6 @@
         </nav>
       </div>
     </header>
-
-    <MegaMenu
-      v-if="viewport.isLessThan('md')"
-      :categories="categoryTree"
-      :icon-color="iconColor"
-      :header-background-color="headerBackgroundColor"
-    >
-      <div>
-        <UiButton
-          variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-          square
-          data-testid="open-languageselect-button"
-          :style="{ color: iconColor }"
-          :aria-label="t('common.navigation.languageSelector')"
-          :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-          @click="toggleLanguageSelect()"
-        >
-          <SfIconLanguage />
-        </UiButton>
-        <UiButton
-          variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-          square
-          :style="{ color: iconColor }"
-          :aria-label="t('common.navigation.openSearchModal')"
-          @click="searchModalOpen"
-        >
-          <SfIconSearch />
-        </UiButton>
-      </div>
-    </MegaMenu>
     <BlocksNavbarBottom
       v-if="viewport.isLessThan('md')"
       :background-color="headerBackgroundColor"
