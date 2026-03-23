@@ -11,7 +11,7 @@
         <template v-else> {{ blockDisplayName }} </template>
       </div>
       <div class="flex items-center space-x-2">
-        <div v-if="!isFooterBlock(block) && !isHeaderContainerBlock(block)" class="flex items-center space-x-2">
+        <div v-if="!isGlobalBlock(block)" class="flex items-center space-x-2">
           <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
             <SfIconDelete />
           </button>

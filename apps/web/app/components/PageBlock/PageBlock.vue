@@ -245,7 +245,7 @@ const showBottomAddBlockButton = computed(
 );
 
 const getBlockActions = (block: Block) => {
-  if (isFooterBlock(block) || isHeaderContainerBlock(block)) {
+  if (isGlobalBlock(block)) {
     return {
       isEditable: !isEditDisabled.value,
       isMovable: false,

@@ -123,6 +123,15 @@ export const isHeaderBlock = (block: Block | null | undefined): block is HeaderB
   return block?.name === HEADER_BLOCK_NAME;
 };
 
+/**
+ * Check if a block is global (i.e., a system/global block like Footer or HeaderContainer)
+ * @param block - The block to check
+ * @returns true if the block is global, false if it's a regular/persistent block
+ */
+export const isGlobalBlock = (block: Block | null | undefined): boolean => {
+  return isFooterBlock(block) || isHeaderContainerBlock(block);
+};
+
 const createFooterBlockHelper = (
   content: FooterContent,
   meta?: { uuid?: string; isGlobalTemplate?: boolean },

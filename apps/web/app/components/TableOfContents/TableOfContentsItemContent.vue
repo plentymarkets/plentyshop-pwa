@@ -14,7 +14,7 @@
       <div class="shrink-0 w-5 h-5 relative">
         <div
           class="transition-opacity"
-          :class="{ 'group-hover:opacity-0': isRoot && !isFooterBlock(block) && !isHeaderContainerBlock(block) }"
+          :class="{ 'group-hover:opacity-0': isRoot && !isGlobalBlock(block) }"
         >
           <span
             v-if="getBlockIconSvg(blockName)"
@@ -37,7 +37,7 @@
           />
         </div>
         <div
-          v-if="isRoot && !isFooterBlock(block) && !isHeaderContainerBlock(block)"
+          v-if="isRoot && !isGlobalBlock(block)"
           class="toc-drag-handle absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-grab active:cursor-grabbing transition-opacity"
           @mousedown.stop
         >
@@ -50,7 +50,7 @@
       </span>
     </div>
 
-    <div v-if="!isFooterBlock(block) && !isHeaderContainerBlock(block)" class="flex items-center gap-1 shrink-0">
+    <div v-if="!isGlobalBlock(block)" class="flex items-center gap-1 shrink-0">
       <button
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover group-hover:text-black"
         :class="{ 'text-white': isSelected }"
