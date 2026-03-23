@@ -1,6 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { FlatBlock } from '~/components/TableOfContents/types';
-import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 export const useTableOfContents = () => {
   const { setIndex } = useCarousel();

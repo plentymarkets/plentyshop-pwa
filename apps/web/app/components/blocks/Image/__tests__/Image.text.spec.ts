@@ -57,7 +57,7 @@ describe('Image block text', () => {
 
   it('should render text overlay with correct color and alignment', () => {
     const wrapper = mount(Image, { props: mockImageBlock });
-    const textContent = wrapper.find('[data-testid="text-content"]');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
     expect(textContent.attributes('style')).toContain(`color: ${mockImageBlock.content.text.textOverlayColor}`);
     const overlayWrapper = wrapper.find('[data-testid="image-overlay-wrapper"]');
     const classes = overlayWrapper.classes();
@@ -66,7 +66,7 @@ describe('Image block text', () => {
 
   it('should render overlay text when present', () => {
     const wrapper = mount(Image, { props: mockImageBlock });
-    const textHtml = wrapper.find('[data-testid="text-html"]');
+    const textHtml = wrapper.find('[data-testid="text-html-image-overlay"]');
     expect(textHtml.text()).toBe(mockImageBlock.content.text.textOverlay);
   });
 
@@ -76,7 +76,7 @@ describe('Image block text', () => {
       content: { ...mockImageBlock.content, text: { ...mockImageBlock.content.text, textOverlayColor: undefined } },
     };
     const wrapper = mount(Image, { props: block });
-    const textContent = wrapper.find('[data-testid="text-content"]');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
     expect(textContent.attributes('style')).toContain('color:');
   });
 
@@ -128,7 +128,7 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const textContent = wrapper.find('[data-testid="text-content"]');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
     expect(textContent.classes()).toContain('text-left');
   });
 
@@ -141,7 +141,7 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const textContent = wrapper.find('[data-testid="text-content"]');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
     expect(textContent.classes()).toContain('text-center');
   });
 
@@ -154,7 +154,7 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const textContent = wrapper.find('[data-testid="text-content"]');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
     expect(textContent.classes()).toContain('text-right');
   });
 
@@ -165,7 +165,7 @@ describe('Image block text', () => {
       content: { ...mockImageBlock.content, text: { ...mockImageBlock.content.text, textOverlay: longText } },
     };
     const wrapper = mount(Image, { props: block });
-    const textHtml = wrapper.find('[data-testid="text-html"]');
+    const textHtml = wrapper.find('[data-testid="text-html-image-overlay"]');
     expect(textHtml.text()).toBe(longText);
   });
 });

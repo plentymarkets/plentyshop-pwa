@@ -73,6 +73,16 @@ const draggableData = computed({
   },
 });
 
+const enforceHeaderAtTop = () => {
+  const headerIndex = data.value.findIndex((block) => isHeaderContainerBlock(block));
+  if (headerIndex !== -1 && headerIndex !== 0) {
+    const headerBlock = data.value.splice(headerIndex, 1)[0];
+    if (headerBlock) {
+      data.value.unshift(headerBlock);
+    }
+  }
+};
+
 const enforceFooterAtBottom = () => {
   const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
   const lastIndex = data.value.length - 1;
@@ -85,6 +95,7 @@ const enforceFooterAtBottom = () => {
 };
 
 const handleDragChange = (evt: DragEvent) => {
+  enforceHeaderAtTop();
   enforceFooterAtBottom();
   scrollToDraggedBlock(evt);
 };
