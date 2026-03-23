@@ -18,6 +18,7 @@
         handle=".drag-items-handle"
         class=""
         :filter="'.no-drag'"
+        @end="onDragEnd"
       >
         <template #item="{ element: item, index }">
           <div
@@ -164,6 +165,10 @@ const toggleItemMenu = (index: number) => {
 
 const selectItem = (index: number) => {
   emit('select-item', index);
+};
+
+const onDragEnd = (event: { newIndex: number }) => {
+  selectItem(event.newIndex);
 };
 
 const deleteItem = (index: number) => {
