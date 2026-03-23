@@ -11,7 +11,7 @@ on:
           - stress
         default: 'drop'
       domain:
-        description: 'Target Domain (e.g., https://mevofvd5omld.c01-14.plentymarkets.com'
+        description: 'Target Domain (e.g., https://mevofvd5omld.c01-14.plentymarkets.com)'
         required: true
         default: 'https://mevofvd5omld.c01-14.plentymarkets.com'
       max_vus:
@@ -22,6 +22,9 @@ on:
 jobs:
   k6_test:
     runs-on: ubuntu-latest
+    concurrency:
+      group: k6-load-test-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Build Script from Secrets
         run: |
