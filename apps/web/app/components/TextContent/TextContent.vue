@@ -7,7 +7,7 @@
   >
     <div
       v-if="config.enableRichTextEditorV2 && props.text?.htmlDescription"
-      class="rte-prose rte-prose--render no-preflight"
+      class="rte-prose rte-prose--render"
       :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
       v-html="renderedHtmlDescription"
     />
@@ -16,35 +16,35 @@
       <div
         v-if="props.text?.pretitle"
         data-testid="text-pretitle"
-        class="text-xl font-bold mb-2 no-preflight"
+        class="text-xl font-bold mb-2"
         v-html="renderedPretitle"
       />
 
       <h1
         v-if="props.text?.title && props.index === 0"
         data-testid="text-title"
-        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem] no-preflight"
+        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
         v-html="renderedTitle"
       />
 
       <h2
         v-else-if="props.text?.title"
         data-testid="text-title"
-        class="text-2xl font-semibold mb-4 no-preflight"
+        class="text-2xl font-semibold mb-4"
         v-html="renderedTitle"
       />
 
       <div
         v-if="props.text?.subtitle"
         data-testid="text-subtitle"
-        class="text-lg font-semibold no-preflight"
+        class="text-lg font-semibold"
         v-html="renderedSubtitle"
       />
 
       <div
         v-if="props.text?.htmlDescription"
         data-testid="text-html"
-        class="text-base no-preflight"
+        class="text-base"
         v-html="renderedHtmlDescription"
       />
     </template>
