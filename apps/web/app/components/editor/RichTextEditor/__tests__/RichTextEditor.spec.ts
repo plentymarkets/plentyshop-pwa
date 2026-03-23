@@ -35,6 +35,7 @@ describe('RichTextEditor', () => {
         modelValue: expect.objectContaining({ value: '' }),
         expanded: expect.objectContaining({ value: false }),
         textAlign: expect.objectContaining({ value: 'left' }),
+        placeholder: expect.objectContaining({ value: 'Enter text here...' }),
       }),
     );
 
@@ -75,6 +76,7 @@ describe('RichTextEditor', () => {
         modelValue: expect.objectContaining({ value: '<p>Hello</p>' }),
         expanded: expect.objectContaining({ value: true }),
         textAlign: expect.objectContaining({ value: 'center' }),
+        placeholder: expect.objectContaining({ value: 'Enter text here...' }),
       }),
     );
 

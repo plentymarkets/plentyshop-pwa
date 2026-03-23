@@ -58,7 +58,7 @@
       <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="openModal" />
     </div>
 
-    <div class="p-2.5 editor-parent" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
+    <div   class="p-2.5 editor-parent border border-gray-300 rounded-b-md bg-white" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
       <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
     </div>
   </div>
@@ -102,6 +102,7 @@ const props = withDefaults(
     expandable?: boolean;
     expanded?: boolean;
     textAlign?: RteAlign;
+    placeholder?: string;
   }>(),
   {
     modelValue: '',
@@ -109,6 +110,7 @@ const props = withDefaults(
     expandable: true,
     expanded: false,
     textAlign: 'left',
+    placeholder: 'Enter text here...',
   },
 );
 
@@ -147,6 +149,7 @@ const {
   expanded: toRef(props, 'expanded'),
   onUpdateExpanded: (v) => emit('update:expanded', v),
   textAlign: toRef(props, 'textAlign'),
+  placeholder: toRef(props, 'placeholder'),
 });
 
 const editorStyle = computed(() => ({
