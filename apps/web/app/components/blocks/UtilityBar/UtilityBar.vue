@@ -6,6 +6,18 @@
         :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
         data-testid="navbar-top"
       >
+        <UiButton
+          v-if="viewport.isLessThan('lg')"
+          variant="tertiary"
+          square
+          :aria-label="t('common.navigation.openMenu')"
+          class="mr-2 hover:!bg-header-400"
+          :style="{ color: iconColor }"
+          @click="openMegaMenu"
+        >
+          <SfIconMenu aria-hidden="true" />
+        </UiButton>
+
         <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
           <NuxtLink
             id="blockified-logo"
@@ -242,7 +254,6 @@
         </UiButton>
       </div>
     </MegaMenu>
-
     <BlocksNavbarBottom
       v-if="viewport.isLessThan('md')"
       :background-color="headerBackgroundColor"
@@ -266,6 +277,7 @@
           <SfIconClose />
         </UiButton>
       </header>
+
       <LoginComponent
         v-if="isLogin"
         :is-modal="true"
@@ -309,6 +321,7 @@ import {
   SfDropdown,
   SfIconClose,
   SfIconLanguage,
+  SfIconMenu,
   SfIconPerson,
   SfIconSearch,
   SfIconShoppingCart,
@@ -336,6 +349,7 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
+const { open: openMegaMenu } = useMegaMenu();
 const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
