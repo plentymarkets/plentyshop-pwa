@@ -1130,6 +1130,7 @@
     "searchResults": "Search results for \"{phrase}\""
   },
   "searchBar": {
+    "searchSuggestions": "Search Suggestions",
     "productSuggestions": "Product Suggestions",
     "matchingCategories": "Matched Categories",
     "showAllResults": "See all results for \"{searchTerm}\" ({hitsCount})",
