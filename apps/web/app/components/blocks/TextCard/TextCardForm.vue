@@ -9,7 +9,11 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <EditorRichTextEditorForm v-model="contentModel" :text-align="textCardBlock.text.textAlignment"  :placeholder="getEditorTranslation('placeholder')" >
+    <EditorRichTextEditorForm
+      v-model="contentModel"
+      :text-align="textCardBlock.text.textAlignment"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>

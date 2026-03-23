@@ -8,7 +8,6 @@ export type UseRichTextEditorArgs = {
   onUpdateExpanded?: (v: boolean) => void;
   textAlign?: Ref<RteAlign | undefined>;
   placeholder?: Ref<string | undefined>;
-
 };
 export type RteCommand =
   | 'toggleBold'
