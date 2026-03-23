@@ -2,9 +2,9 @@
   <div class="py-2">
     <div class="flex items-center justify-between">
       <UiFormLabel class="mb-1 flex items-center gap-1">
-        {{ getEditorTranslation('full-width') }}
+        {{ label || getEditorTranslation('full-width') }}
         <template v-if="!isTopLevel">
-          <SfTooltip :label="getEditorTranslation('full-width-tooltip')" placement="top">
+          <SfTooltip :label="tooltip || getEditorTranslation('full-width-tooltip')" placement="top">
             <SfIconInfo size="base" class="text-gray-500 align-middle" />
           </SfTooltip>
         </template>
