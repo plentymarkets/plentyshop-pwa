@@ -39,8 +39,6 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue';
-import { getBlockDisplayName } from '~/utils/get-block-display-name';
-import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();

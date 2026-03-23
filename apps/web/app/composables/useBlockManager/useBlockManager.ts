@@ -216,30 +216,16 @@ export const useBlockManager = () => {
     return null;
   };
 
+  const blockContainsUuid = (block: Block, targetUuid: string): boolean => {
+    if (block.meta?.uuid === targetUuid) return true;
+
+    return block.type === 'structure' &&
+      Array.isArray(block.content) &&
+      block.content.some((child) => blockContainsUuid(child, targetUuid));
+  };
+
   const getRootParent = (blocks: Block[], targetUuid: string): Block | null => {
-    const containsTarget = (block: Block): boolean => {
-      if (block.meta?.uuid === targetUuid) {
-        return true;
-      }
-
-      if (block.type === 'structure' && Array.isArray(block.content)) {
-        for (const child of block.content) {
-          if (containsTarget(child)) {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    };
-
-    for (const rootBlock of blocks) {
-      if (containsTarget(rootBlock)) {
-        return rootBlock;
-      }
-    }
-
-    return null;
+    return blocks.find((rootBlock) => blockContainsUuid(rootBlock, targetUuid)) ?? null;
   };
 
   const setUuid = (blocks: Block[]) => {

@@ -68,7 +68,6 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 import type { CarouselStructureProps, SlideBlock } from './types';
-import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { blockUuid } = useSiteConfiguration();
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();

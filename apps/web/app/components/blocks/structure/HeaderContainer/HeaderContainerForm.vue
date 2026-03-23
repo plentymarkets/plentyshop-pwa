@@ -40,7 +40,6 @@
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
-import { getBlockFormLoader } from '~/utils/blocks-imports';
 
 const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
