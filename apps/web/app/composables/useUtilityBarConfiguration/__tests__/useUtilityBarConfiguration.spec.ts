@@ -41,7 +41,7 @@ const createUtilityBarBlock = (uuid: string, content = createContent()): Utility
   name: 'UtilityBar',
   type: 'content',
   content,
-  meta: { uuid },
+  meta: { uuid }
 });
 
 mockNuxtImport('useSiteConfiguration', () => () => ({
