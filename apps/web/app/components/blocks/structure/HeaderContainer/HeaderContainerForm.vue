@@ -22,10 +22,7 @@
         <template #summary>
           <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
         </template>
-        <UiFieldToggle
-          v-model="isStickyToggle"
-          :label="getEditorTranslation('is-sticky-label')"
-        />
+        <UiFieldToggle v-model="isStickyToggle" :label="getEditorTranslation('is-sticky-label')" />
       </UiAccordionItem>
     </div>
 
