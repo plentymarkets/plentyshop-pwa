@@ -30,7 +30,10 @@
                   : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
               "
             >
-              <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4">
+              <div
+                class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4 cursor-pointer"
+                @click="selectSlide(index)"
+              >
                 <div class="flex items-center gap-3 flex-1 min-w-0">
                   <button
                     class="drag-slides-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
@@ -198,7 +201,11 @@ const layoutOpen = ref(true);
 const controlsOpen = ref(true);
 const slideLabels = ref<string[]>([]);
 
-setIndex(blockUuid.value, 0);
+const selectSlide = (index: number) => {
+  setIndex(blockUuid.value, index);
+};
+
+selectSlide(0);
 
 const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
   string,
@@ -249,7 +256,7 @@ const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   openSlideMenuIndex.value = undefined;
   // Scroll the swiper to this slide
-  setIndex(blockUuid.value, index);
+  selectSlide(index);
   emit('set-edit-title', slideLabels.value[index]!);
 };
 
