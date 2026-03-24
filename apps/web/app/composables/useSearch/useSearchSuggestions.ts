@@ -9,17 +9,19 @@ export const useSearchSuggestions = () => {
     results: null as ItemSearchAutocompleteResult | null,
     searchTerm: '',
     loading: false,
+    currentRequestId: 0,
   }));
 
   const searchSuggestions = async (text: string) => {
+    const requestId = ++state.value.currentRequestId;
     const term = text.trim();
 
     if (term.length < 2) {
       state.value.results = null;
-      return null;
+      return;
     }
     if (state.value.searchTerm === term) {
-      return state.value.results;
+      return;
     }
 
     state.value.loading = true;
@@ -28,16 +30,17 @@ export const useSearchSuggestions = () => {
       types: ['suggestion', 'category'],
     });
 
-    if (data) {
+    if (data && requestId === state.value.currentRequestId) {
       data.categories = data?.categories?.splice(0, CATEGORY_LIMIT) ?? [];
       data.suggestions = data?.suggestions?.splice(0, SUGGESTIONS_LIMIT) ?? [];
       data.items = data?.items?.splice(0, ITEMS_LIMIT) ?? [];
+      state.value.searchTerm = term;
+      state.value.results = data;
     }
 
-    state.value.searchTerm = term;
-    state.value.results = data;
-    state.value.loading = false;
-    return data;
+    if (requestId === state.value.currentRequestId) {
+      state.value.loading = false;
+    }
   };
 
   return {
