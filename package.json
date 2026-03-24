@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "predev": "node ./scripts/prepare-vue-tsc.js",
     "postinstall": "node ./scripts/postinstall.js",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
@@ -108,7 +109,8 @@
     "typedoc-vitepress-theme": "1.1.2",
     "typescript": "5.9.3",
     "vitest": "^3.2.4",
-    "wait-on": "^8.0.5"
+    "wait-on": "^8.0.5",
+    "vite-plugin-checker": "^0.12.0"
   },
   "overrides": {
     "@vue-storefront/eslint-config": {
@@ -119,7 +121,8 @@
     "giget": "2.0.0",
     "c12": "3.3.3",
     "unimport": "5.6.0",
-    "vue-router": "^5.0.3"
+    "vue-router": "^5.0.3",
+    "vite-plugin-checker": "^0.12.0"
   },
   "engines": {
     "node": ">=24.0.0"
