@@ -21,7 +21,7 @@ describe('Table of Contents & Double Drawer', () => {
     toc.openTableOfContents();
     toc.checkTableOfContentsVisible();
     toc.checkBlocksExist();
-    toc.checkBlockIconsAreVisible();
+    toc.checkBlockIconsExist();
   });
 
   it('should show collapsible arrows for structure blocks', () => {

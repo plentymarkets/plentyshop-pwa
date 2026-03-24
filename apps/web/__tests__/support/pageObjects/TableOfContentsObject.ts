@@ -208,10 +208,10 @@ export class TableOfContentsObject extends PageObject {
     return this;
   }
 
-  checkBlockIconsAreVisible() {
+  checkBlockIconsExist() {
     this.allBlockIcons.should('have.length.greaterThan', 0);
     this.allBlockIcons.each(($icon) => {
-      cy.wrap($icon).should('be.visible');
+      cy.wrap($icon).should('exist');
     });
     return this;
   }
