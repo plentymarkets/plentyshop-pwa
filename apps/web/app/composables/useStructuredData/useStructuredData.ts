@@ -91,7 +91,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: productGetters.getName(product),
-      ...(categoryTree && { 'category': categoryTreeGetters.getName(categoryTree) }),
+      ...(categoryTree && { category: categoryTreeGetters.getName(categoryTree) }),
       releaseDate: '',
       image: productGetters.getCoverImage(product),
       identifier: productGetters.getId(product),
