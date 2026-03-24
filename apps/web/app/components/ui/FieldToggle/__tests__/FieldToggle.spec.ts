@@ -47,7 +47,7 @@ describe('<FieldToggle />', () => {
     });
 
     const switchComponent = wrapper.findComponent({ name: 'SfSwitch' });
-    expect(switchComponent.props('disabled')).toBe(true);
+    expect(switchComponent.attributes('disabled')).toBeDefined();
   });
 
   it('should emit update:modelValue when switch changes', async () => {
