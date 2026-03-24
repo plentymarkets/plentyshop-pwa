@@ -43,7 +43,7 @@ describe('CategorySorting', () => {
       )
       .checkTooltip(
         'default-sorting-tooltip',
-        'Which sorting option do you want to preselect by default for the category view?',
+        'Which sorting option do you want to preselect by default for the category page?',
       )
       .closeDrawer();
 
