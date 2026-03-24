@@ -82,15 +82,21 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('column-2-description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="footerContent.column2.description"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('column-2-description-placeholder')"
-          data-testid="input-text-column-2"
-        />
+        <EditorRichTextEditorForm
+          :model-value="footerContent.column2.description ?? ''"
+          :block-uuid="blockUuid"
+          @update:model-value="footerContent.column2.description = $event"
+        >
+          <UiFormLabel>{{ getEditorTranslation('column-2-description-label') }}</UiFormLabel>
+          <SfTextarea
+            v-model="footerContent.column2.description"
+            name="description"
+            type="text"
+            class="w-full min-h-[232px]"
+            :placeholder="getEditorTranslation('column-2-description-placeholder')"
+            data-testid="input-text-column-2"
+          />
+        </EditorRichTextEditorForm>
       </div>
     </UiAccordionItem>
 
@@ -124,15 +130,21 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('column-3-description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="footerContent.column3.description"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('column-3-description-placeholder')"
-          data-testid="input-text-column-3"
-        />
+        <EditorRichTextEditorForm
+          :model-value="footerContent.column3.description ?? ''"
+          :block-uuid="blockUuid"
+          @update:model-value="footerContent.column3.description = $event"
+        >
+          <UiFormLabel>{{ getEditorTranslation('column-3-description-label') }}</UiFormLabel>
+          <SfTextarea
+            v-model="footerContent.column3.description"
+            name="description"
+            type="text"
+            class="w-full min-h-[232px]"
+            :placeholder="getEditorTranslation('column-3-description-placeholder')"
+            data-testid="input-text-column-3"
+          />
+        </EditorRichTextEditorForm>
       </div>
     </UiAccordionItem>
 
@@ -166,15 +178,21 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('column-4-description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="footerContent.column4.description"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('column-4-description-placeholder')"
-          data-testid="input-text-column-4"
-        />
+        <EditorRichTextEditorForm
+          :model-value="footerContent.column4.description ?? ''"
+          :block-uuid="blockUuid"
+          @update:model-value="footerContent.column4.description = $event"
+        >
+          <UiFormLabel>{{ getEditorTranslation('column-4-description-label') }}</UiFormLabel>
+          <SfTextarea
+            v-model="footerContent.column4.description"
+            name="description"
+            type="text"
+            class="w-full min-h-[232px]"
+            :placeholder="getEditorTranslation('column-4-description-placeholder')"
+            data-testid="input-text-column-4"
+          />
+        </EditorRichTextEditorForm>
       </div>
     </UiAccordionItem>
 

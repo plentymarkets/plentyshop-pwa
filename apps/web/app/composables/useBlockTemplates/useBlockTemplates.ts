@@ -8,6 +8,7 @@ import type {
 } from './types';
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
@@ -121,6 +122,15 @@ export const isFooterBlock = (block: Block | null | undefined): block is FooterB
 
 export const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock => {
   return block?.name === HEADER_BLOCK_NAME;
+};
+
+/**
+ * Check if a block is global (i.e., a system/global block like Footer or HeaderContainer)
+ * @param block - The block to check
+ * @returns true if the block is global, false if it's a regular/persistent block
+ */
+export const isGlobalBlock = (block: Block | null | undefined): boolean => {
+  return isFooterBlock(block) || isHeaderContainerBlock(block);
 };
 
 const createFooterBlockHelper = (
@@ -377,6 +387,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   };
 
   const migrateAllBlocks = (blocks: Block[]) => {
+    const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
     const config = useRuntimeConfig().public;
 
     const migrate = (blocks: Block[], isRootLevel = true) => {
@@ -389,7 +400,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
         }
 
-        if (block.name === 'TextCard' && block.content) {
+        if (blocksToMigrateTextContent.includes(block.name) && block.content) {
           const isFirstBlock = isRootLevel && index === 0;
 
           block.content = migrateTextCardContent(
@@ -397,6 +408,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
             config.enableRichTextEditorV2,
             isFirstBlock,
           );
+        }
+
+        if (block.name === 'Banner' && block.content && config.enableRichTextEditorV2) {
+          const content = (block as BannerProps).content;
+          const textAlignment = content.text?.textAlignment;
+          if (textAlignment && !content?.button?.alignment) {
+            content.button = content.button ?? {};
+            content.button.alignment = textAlignment;
+          }
         }
 
         if (Array.isArray(block.content)) {
@@ -459,7 +479,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
       }
 
-      if (resolvedHeaderContainer.content.length > 0) headerContainerCache.value = resolvedHeaderContainer;
+      if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value)
+        headerContainerCache.value = resolvedHeaderContainer;
     }
 
     const mainBlocks = fetchedBlocks.filter(
@@ -484,6 +505,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   /** Updates the blocks in state with new block data */
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
+
+    const headerBlock = blocks.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
+    if (headerBlock) {
+      headerContainerCache.value = headerBlock;
+    }
   };
 
   /** Sets the default template data used when no blocks are fetched */

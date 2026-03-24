@@ -1,30 +1,22 @@
 <template>
   <div data-testid="header-container">
-    <PageBlock
-      v-for="(childBlock, index) in block.content"
-      :key="childBlock.meta.uuid"
-      :index="index"
-      :block="childBlock"
-      :enable-actions="enableActions"
-      :is-clicked="isClicked"
-      :clicked-block-index="clickedBlockIndex"
-      :is-tablet="isTablet"
-      :change-block-position="() => {}"
-      :root="true"
-      class="group"
-      @click="tabletEdit(index)"
-    />
+    <div v-for="contentBlock in content" :key="contentBlock.meta.uuid">
+      <slot name="content" :content-block="contentBlock" />
+
+      <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { HeaderContainerProps } from '~/components/blocks/structure/HeaderContainer/types';
 
-const { block } = defineProps<HeaderContainerProps>();
+const { content } = defineProps<HeaderContainerProps>();
 
-const { shouldShowEditorUI } = useEditorState();
-const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const { isClicked, clickedBlockIndex, isTablet, tabletEdit } = useBlockManager();
+const { shouldDisplayPlaceholder } = useBlockManager();
 
-const enableActions = computed(() => shouldShowEditorUI.value && !localizationDrawerOpen.value);
+const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
+
+const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
+const drawerView = computed(() => siteConfigurationDrawerView.value);
 </script>
