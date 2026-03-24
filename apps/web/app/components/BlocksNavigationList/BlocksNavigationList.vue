@@ -75,7 +75,7 @@ const isForbiddenBlock = (category: BlockListCategory, uuid: string) => {
   return ['BannerCarousel', 'ImageText'].includes(category.blockName) && getBlockDepth(uuid) > 0;
 };
 const isSingleInstanceBlock = (blockName: string) => {
-  return ['SortFilter', 'ItemGrid'].includes(blockName);
+  return ['SortFilter', 'ItemGrid', 'Navigation'].includes(blockName);
 };
 const isSingleInstanceOnPage = (blockName: string) => {
   return isSingleInstanceBlock(blockName) && blockExistsOnPage(blockName);

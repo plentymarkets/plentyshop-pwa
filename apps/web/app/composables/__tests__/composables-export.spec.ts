@@ -30,6 +30,7 @@ describe('composables index exports', () => {
     'useFullWidthToggle',
     'useRichTextEditor',
     'useHtmlEditorMode',
+    'useGenerateTailwindPalette',
     'useUtilityBarForm',
     'useUtilityBarConfiguration',
     'useUtilityBarActions',
