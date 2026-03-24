@@ -1,4 +1,4 @@
-import type { SfScrollable } from '@storefront-ui/vue';
+import SfScrollable from '@storefront-ui/vue';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import type { Product } from '@plentymarkets/shop-api';
 
