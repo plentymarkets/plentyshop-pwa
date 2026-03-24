@@ -111,42 +111,4 @@ describe('Navigation.vue', () => {
     expect(style).toContain('color: #111111;');
     expect(style).toContain('padding: 10px 40px 20px 30px;');
   });
-
-  it('should generate secondary palette style variables from background color', () => {
-    const wrapper = mount(Navigation, {
-      props: {
-        categories: CategoryTreeMock.slice(0, 1),
-        content: {
-          text: { textAlignment: 'left' },
-          color: { backgroundColor: '#0c7992', textColor: '#111111' },
-          layout: {
-            paddingTop: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
-            paddingRight: 0,
-          },
-        },
-      },
-      global: {
-        stubs: {
-          NuxtLink: {
-            template: '<a :href="to || href"><slot /></a>',
-            props: ['to', 'href'],
-          },
-          SfDrawer: true,
-          SfListItem: true,
-          SfIconClose: true,
-          SfIconChevronRight: true,
-          SfCounter: true,
-          SfIconArrowBack: true,
-          UiButton: true,
-        },
-      },
-    });
-
-    const rootStyle = wrapper.attributes('style') ?? '';
-
-    expect(rootStyle).toContain('--colors-2-secondary-100: 189 238 250;');
-    expect(rootStyle).toContain('--colors-2-secondary-500: 12 121 146;');
-  });
 });

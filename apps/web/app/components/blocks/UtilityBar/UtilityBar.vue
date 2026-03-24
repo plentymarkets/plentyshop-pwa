@@ -2,9 +2,61 @@
   <div :style="headerPaletteStyle">
     <header class="relative w-full md:sticky md:shadow-md z-10">
       <div
-        class="flex items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
+        class="flex md:hidden items-center w-full"
+        :style="{ backgroundColor: headerBackgroundColor }"
+        data-testid="navbar-top-mobile"
+      >
+        <div class="flex items-center flex-1 gap-2">
+          <UiButton
+            variant="tertiary"
+            square
+            :aria-label="t('common.navigation.openMenu')"
+            class="hover:!bg-header-400"
+            :style="{ color: iconColor }"
+            @click="openMegaMenu"
+          >
+            <SfIconMenu aria-hidden="true" />
+          </UiButton>
+          <NuxtLink
+            id="blockified-logo-mobile"
+            :to="localePath(paths.home)"
+            :aria-label="t('common.actions.goToHomepage')"
+            class="focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          >
+            <UiLogo />
+          </NuxtLink>
+        </div>
+        <div class="flex items-center gap-2">
+          <UiButton
+            v-if="localeCodes.length > 1"
+            variant="tertiary"
+            class="relative hover:!bg-header-400 active:!bg-header-400 rounded-md"
+            square
+            data-testid="open-languageselect-button"
+            :style="{ color: iconColor }"
+            :aria-label="t('common.navigation.languageSelector')"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
+          >
+            <SfIconLanguage />
+          </UiButton>
+          <UiButton
+            variant="tertiary"
+            class="relative hover:!bg-header-400 active:!bg-header-400 rounded-md"
+            square
+            :style="{ color: iconColor }"
+            :aria-label="t('common.navigation.openSearchModal')"
+            @click="searchModalOpen"
+          >
+            <SfIconSearch />
+          </UiButton>
+        </div>
+      </div>
+
+      <div
+        class="hidden md:flex items-center flex-nowrap w-full border-0 border-neutral-200"
         :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
-        data-testid="navbar-top"
+        data-testid="navbar-top-desktop"
       >
         <UiButton
           v-if="viewport.isLessThan('lg')"
@@ -29,45 +81,18 @@
           </NuxtLink>
         </div>
 
-        <div v-if="viewport.isLessThan('md')" class="ml-auto flex gap-2 md:hidden">
-          <UiButton
-            v-if="localeCodes.length > 1 && isActionVisible('language')"
-            variant="tertiary"
-            class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md"
-            square
-            data-testid="open-languageselect-button"
-            :style="{ color: iconColor }"
-            :aria-label="t('common.navigation.languageSelector')"
-            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-            @click="toggleLanguageSelect()"
-          >
-            <SfIconLanguage />
-          </UiButton>
-          <UiButton
-            v-if="isSectionVisible('search')"
-            variant="tertiary"
-            class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md"
-            square
-            :style="{ color: iconColor }"
-            :aria-label="t('common.navigation.openSearchModal')"
-            @click="searchModalOpen"
-          >
-            <SfIconSearch />
-          </UiButton>
-        </div>
-
-        <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
+        <template v-if="isSectionVisible('search')">
           <div
             ref="iconSearchContainerRef"
             :style="getSectionColumnStyle('search')"
             :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? '' : 'flex-none w-10 shrink-0'"
           >
             <template v-if="isFullSearchMode">
-              <UiSearch class="hidden md:block" />
+              <UiSearch />
             </template>
 
             <template v-else>
-              <div class="hidden md:block relative">
+              <div class="relative">
                 <Transition
                   mode="out-in"
                   enter-active-class="transition-opacity duration-120 ease-out"
@@ -101,9 +126,9 @@
           </div>
         </template>
         <nav
-          v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('actions')"
+          v-if="isSectionVisible('actions')"
           :style="getSectionColumnStyle('actions')"
-          class="hidden md:flex md:flex-row md:flex-nowrap"
+          class="flex flex-row flex-nowrap"
         >
           <template v-if="localeCodes.length > 1 && isActionVisible('language')">
             <UiButton

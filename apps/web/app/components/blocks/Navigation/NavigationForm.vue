@@ -64,6 +64,7 @@
                   type="button"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
                   :style="{ backgroundColor: color }"
+                  :aria-label="getEditorTranslation('open-background-color-picker-label')"
                   @mousedown.stop
                   @click.stop="toggle"
                 />
@@ -87,6 +88,7 @@
                   type="button"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
                   :style="{ backgroundColor: color }"
+                  :aria-label="getEditorTranslation('open-text-color-picker-label')"
                   @mousedown.stop
                   @click.stop="toggle"
                 />
@@ -114,6 +116,7 @@
                   type="button"
                   class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
                   :style="{ backgroundColor: color }"
+                  :aria-label="getEditorTranslation('open-hover-background-color-picker-label')"
                   @mousedown.stop
                   @click.stop="toggle"
                 />
@@ -226,7 +229,10 @@ const navigationBlock = computed<NavigationContent>(() => {
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "hover-background-color-label": "Link Hover Color",
-    "padding-label": "Padding"
+    "padding-label": "Padding",
+    "open-background-color-picker-label": "Open background color picker",
+    "open-text-color-picker-label": "Open text color picker",
+    "open-hover-background-color-picker-label": "Open hover background color picker"
   },
   "de": {
     "text-color-label": "Text Color",
@@ -238,7 +244,10 @@ const navigationBlock = computed<NavigationContent>(() => {
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
     "hover-background-color-label": "Link Hover Color",
-    "padding-label": "Padding"
+    "padding-label": "Padding",
+    "open-background-color-picker-label": "Open background color picker",
+    "open-text-color-picker-label": "Open text color picker",
+    "open-hover-background-color-picker-label": "Open hover background color picker"
   }
 }
 </i18n>
