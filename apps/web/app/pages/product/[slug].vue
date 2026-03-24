@@ -111,16 +111,10 @@ watch(
   () => categoryTree.value,
   (categoriesTree) => {
     setProductCanonicalMetaData(product.value);
-    const productCategoryId = productGetters.getParentCategoryId(product.value);
-    if (categoriesTree.length > 0 && productCategoryId) {
-      const categoryTree = categoriesTree.find(
-        (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
-      );
-      if (categoryTree) {
-        setProductMetaData(product.value, categoryTree);
-        setProductRobotsMetaData(product.value);
-      }
-    }
+    const productCategoryId = productGetters.getCategoryId(product.value);
+    const category = categoryTreeGetters.findCategoryById(categoriesTree, productCategoryId) || undefined;
+    setProductMetaData(product.value, category);
+    setProductRobotsMetaData(product.value);
   },
   { immediate: true },
 );

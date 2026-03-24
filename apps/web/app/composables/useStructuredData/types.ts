@@ -3,7 +3,7 @@ export interface UseStructuredDataState {
   loading: boolean;
 }
 
-export type SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => void;
+export type SetProductMetaData = (product: Product, category?: CategoryTreeItem) => void;
 export type SetLogoMeta = () => void;
 export type SetProductRobotsMetaData = (product: Product) => void;
 export type SetProductCanonicalMetaData = (product: Product) => void;
