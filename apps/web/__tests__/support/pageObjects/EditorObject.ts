@@ -174,10 +174,11 @@ export class EditorObject extends PageObject {
   }
 
   toggleCategorySettings() {
-    this.categorySettingsButton.should('be.visible')
-        .click()
-        .trigger('mouseout', { force: true })
-        .trigger('mouseleave', { force: true });
+    this.categorySettingsButton
+      .should('be.visible')
+      .click()
+      .trigger('mouseout', { force: true })
+      .trigger('mouseleave', { force: true });
     return this;
   }
 
@@ -187,10 +188,11 @@ export class EditorObject extends PageObject {
   }
 
   toggleGeneralSettings() {
-    this.generalSettingsButton.should('be.visible')
-        .click()
-        .trigger('mouseout', { force: true })
-        .trigger('mouseleave', { force: true });
+    this.generalSettingsButton
+      .should('be.visible')
+      .click()
+      .trigger('mouseout', { force: true })
+      .trigger('mouseleave', { force: true });
     return this;
   }
 
