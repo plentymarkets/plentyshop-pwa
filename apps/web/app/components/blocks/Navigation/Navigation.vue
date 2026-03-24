@@ -67,7 +67,10 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="{ ...style, backgroundColor: resolvedContent.color.backgroundColor || 'white' }"
-            class="hidden md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
+            :class="[
+              'hidden md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
+              submenuGridAlignmentClass,
+            ]"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
@@ -82,7 +85,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="mb-2 nav-hover-bg rounded font-medium typography-text-base"
+                      :class="['mb-2 nav-hover-bg rounded font-medium typography-text-base', submenuTextAlignmentClass]"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -94,7 +97,10 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 nav-hover-bg rounded whitespace-normal break-words"
+                  :class="[
+                    'typography-text-base font-medium text-neutral-900 px-4 py-1.5 nav-hover-bg rounded whitespace-normal break-words',
+                    submenuTextAlignmentClass,
+                  ]"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
@@ -105,7 +111,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 nav-hover-bg rounded"
+                      :class="['typography-text-sm py-1.5 nav-hover-bg rounded', submenuTextAlignmentClass]"
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>
@@ -319,6 +325,28 @@ const categoryButtonStyle = computed(() => ({
   color: resolvedContent.value.color.textColor || undefined,
 }));
 
+const submenuTextAlignmentClass = computed(() => {
+  switch (resolvedContent.value.text.textAlignment) {
+    case 'center':
+      return 'text-center';
+    case 'right':
+      return 'text-right';
+    default:
+      return 'text-left';
+  }
+});
+
+const submenuGridAlignmentClass = computed(() => {
+  switch (resolvedContent.value.text.textAlignment) {
+    case 'center':
+      return 'justify-items-center';
+    case 'right':
+      return 'justify-items-end';
+    default:
+      return 'justify-items-start';
+  }
+});
+
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
@@ -481,14 +509,11 @@ watch(
   { immediate: true },
 );
 
-watch(
-  isOpen,
-  (isDrawerOpen) => {
-    if (isDrawerOpen && !category.value && categoryTree.value.length > 0) {
-      setCategory(categoryTree.value);
-    }
-  },
-);
+watch(isOpen, (isDrawerOpen) => {
+  if (isDrawerOpen && !category.value && categoryTree.value.length > 0) {
+    setCategory(categoryTree.value);
+  }
+});
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
@@ -498,6 +523,6 @@ useTrapFocus(drawerReference, trapFocusOptions);
   background-color: var(--nav-hover-bg);
 }
 .nav-border {
-  border-bottom-color: var(--nav-border-color, rgb(229, 231, 235)); /* neutral-200 fallback */
+  border-bottom-color: var(--nav-border-color, rgb(229, 231, 235));
 }
 </style>
