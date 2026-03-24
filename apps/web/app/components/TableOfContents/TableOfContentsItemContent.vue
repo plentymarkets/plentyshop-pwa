@@ -15,6 +15,7 @@
         <div class="transition-opacity" :class="{ 'group-hover:opacity-0': isRoot && !isGlobalBlock(block) }">
           <span
             v-if="getBlockIconSvg(blockName)"
+            :data-testid="`toc-block-icon-${uuid}`"
             class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"
             :class="{
               '[&>svg]:brightness-0 [&>svg]:invert': isSelected,
@@ -25,6 +26,7 @@
           />
           <NuxtImg
             v-else
+            :data-testid="`toc-block-icon-${uuid}`"
             :src="defaultBlockIcon"
             class="w-5 h-5 transition-all"
             :class="{
