@@ -74,3 +74,15 @@
 .editor-parent .ProseMirror {
   padding: 0.25rem;
 }
+.rte__content .ProseMirror {
+  position: relative;
+}
+
+.rte__content .ProseMirror p.is-editor-empty:first-child::before,
+.rte__content .ProseMirror .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
