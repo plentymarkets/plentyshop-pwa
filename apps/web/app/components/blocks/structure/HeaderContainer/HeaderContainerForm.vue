@@ -75,7 +75,7 @@ const isStickyToggle = computed({
         visible: true
       };
     }
-    if (!headerContainerStructure.value.configuration.layout) {
+    if (!headerContainerStructure.value.configuration?.layout) {
       headerContainerStructure.value.configuration.layout = {};
     }
     headerContainerStructure.value.configuration.layout.sticky = value;
