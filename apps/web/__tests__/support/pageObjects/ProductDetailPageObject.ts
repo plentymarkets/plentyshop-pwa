@@ -74,6 +74,22 @@ export class ProductDetailPageObject extends PageObject {
     return this;
   }
 
+  assertProductStructuredDataExists() {
+    cy.document().then((doc) => {
+      const scripts = [...doc.querySelectorAll('script[type="application/ld+json"]')];
+      const hasProductData = scripts.some((script) => {
+        try {
+          const data = JSON.parse(script.innerHTML);
+          return data['@type'] === 'Product' && data['@context'] === 'https://schema.org';
+        } catch {
+          return false;
+        }
+      });
+      expect(hasProductData, 'Product JSON-LD structured data should be present').to.be.true;
+    });
+    return this;
+  }
+
   assertStructuredData() {
     cy.document().then((doc) => {
       const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
