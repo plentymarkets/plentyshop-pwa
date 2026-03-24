@@ -151,10 +151,10 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkNewTexts() {
-    cy.get('[data-testid^="banner-pretitle-"]').first().should('have.text', 'New Pre-Title');
-    cy.get('[data-testid^="banner-title-"]').first().should('have.text', 'New Title');
-    cy.get('[data-testid^="banner-subtitle-"]').first().should('have.text', 'New Subtitle');
-    cy.get('[data-testid^="banner-description-"]').first().should('have.text', 'New Text Content');
+    cy.get('[data-testid^="text-pretitle"]').first().should('have.text', 'New Pre-Title');
+    cy.get('[data-testid^="text-title"]').first().should('have.text', 'New Title');
+    cy.get('[data-testid^="text-subtitle"]').first().should('have.text', 'New Subtitle');
+    cy.get('[data-testid^="text-html"]').first().should('have.text', 'New Text Content');
   }
 
   scrollFormDown() {
