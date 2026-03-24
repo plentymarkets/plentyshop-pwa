@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { PageObject } from './PageObject';
 
 export class ProductDetailPageObject extends PageObject {
@@ -75,11 +76,10 @@ export class ProductDetailPageObject extends PageObject {
   }
 
   assertProductStructuredDataExists() {
-    cy.document().then((doc) => {
-      const scripts = [...doc.querySelectorAll('script[type="application/ld+json"]')];
-      const hasProductData = scripts.some((script) => {
+    cy.get('script[type="application/ld+json"]').should((scripts) => {
+      const hasProductData = [...scripts].some((script) => {
         try {
-          const data = JSON.parse(script.innerHTML);
+          const data = JSON.parse(script.innerHTML) as Record<string, unknown>;
           return data['@type'] === 'Product' && data['@context'] === 'https://schema.org';
         } catch {
           return false;
@@ -91,21 +91,18 @@ export class ProductDetailPageObject extends PageObject {
   }
 
   assertStructuredData() {
-    cy.document().then((doc) => {
-      const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
-      const jsonLdItems: object[] = [];
+    cy.get('script[type="application/ld+json"]').should((scripts) => {
+      const jsonLdItems: Record<string, unknown>[] = [];
 
-      scripts.forEach((script) => {
+      [...scripts].forEach((script) => {
         try {
-          jsonLdItems.push(JSON.parse(script.innerHTML));
+          jsonLdItems.push(JSON.parse(script.innerHTML) as Record<string, unknown>);
         } catch {
           // ignore malformed scripts
         }
       });
 
-      const productData = jsonLdItems.find((item: any) => item['@type'] === 'Product') as
-        | Record<string, unknown>
-        | undefined;
+      const productData = jsonLdItems.find((item) => item['@type'] === 'Product');
 
       expect(productData, 'Product structured data should be present').to.not.be.undefined;
 
@@ -122,7 +119,7 @@ export class ProductDetailPageObject extends PageObject {
 
       // Reviews array
       expect(productData).to.have.property('review').and.be.an('array');
-      const reviews = productData!['review'] as Record<string, unknown>[];
+      const reviews = (productData?.['review'] ?? []) as Record<string, unknown>[];
       reviews.forEach((review) => {
         expect(review).to.have.property('@type', 'Review');
         expect(review).to.have.nested.property('reviewRating.@type', 'Rating');
@@ -142,9 +139,9 @@ export class ProductDetailPageObject extends PageObject {
       expect(productData).to.have.nested.property('offers.priceCurrency').and.be.a('string').and.not.be.empty;
       expect(productData).to.have.nested.property('offers.itemCondition').and.be.a('string');
 
-      const offers = productData!['offers'] as Record<string, unknown>;
+      const offers = (productData?.['offers'] ?? {}) as Record<string, unknown>;
       expect(offers).to.have.property('priceSpecification').and.be.an('array').and.have.length.gte(1);
-      const priceSpecs = offers['priceSpecification'] as Record<string, unknown>[];
+      const priceSpecs = (offers['priceSpecification'] ?? []) as Record<string, unknown>[];
       priceSpecs.forEach((spec) => {
         expect(spec).to.have.property('@type', 'UnitPriceSpecification');
         expect(spec).to.have.property('price').and.be.a('number');
