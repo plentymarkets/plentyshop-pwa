@@ -3,7 +3,7 @@
     class="flex items-center justify-between flex-1 px-2 py-1 rounded-md transition-colors hover:bg-editor-toc-highlight hover:text-black"
     :class="{
       'bg-editor-toc-selected text-white': isSelected,
-      'bg-editor-toc-highlight': isHovered && !isSelected,
+      'bg-editor-toc-hover': isHovered && !isSelected,
     }"
   >
     <div class="flex items-center gap-2 min-w-0 flex-1">
