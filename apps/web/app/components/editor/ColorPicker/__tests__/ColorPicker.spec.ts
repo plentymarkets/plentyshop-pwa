@@ -13,7 +13,7 @@ mockNuxtImport('useSiteSettings', () => useSiteSettings);
 const createWrapper = (
   props?: Partial<{
     modelValue: string | undefined;
-    dropdownAlign?: 'default' | 'rte' | 'ctr';
+    dropdownAlign?: 'default' | 'rte' | 'top-editor';
     showShopColors?: boolean;
   }>,
 ) => {
