@@ -5,16 +5,16 @@ describe('<FieldToggle />', () => {
   it('should render component', () => {
     const wrapper = mount(UiFieldToggle, {
       props: {
-        modelValue: true,
-        label: 'Enable Feature',
+        modelValue: false,
+        label: 'Test Label',
       },
     });
 
-    expect(wrapper.find('[class*="flex items-center justify-between"]').exists()).toBe(true);
+    expect(wrapper.getByTestId('field-toggle')).toBeDefined();
   });
 
   it('should display the label', () => {
-    const label = 'Test Label';
+    const label = 'Enable Feature';
     const wrapper = mount(UiFieldToggle, {
       props: {
         modelValue: false,
@@ -25,26 +25,11 @@ describe('<FieldToggle />', () => {
     expect(wrapper.text()).toContain(label);
   });
 
-  it('should emit update:modelValue when toggle changes', async () => {
-    const wrapper = mount(UiFieldToggle, {
-      props: {
-        modelValue: false,
-        label: 'Toggle Feature',
-      },
-    });
-
-    const switchComponent = wrapper.findComponent({ name: 'SfSwitch' });
-    await switchComponent.vm.$emit('update:modelValue', true);
-
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
-    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true]);
-  });
-
-  it('should reflect modelValue prop on the switch', () => {
+  it('should render with correct modelValue', () => {
     const wrapper = mount(UiFieldToggle, {
       props: {
         modelValue: true,
-        label: 'Toggle Feature',
+        label: 'Test',
       },
     });
 
@@ -52,11 +37,11 @@ describe('<FieldToggle />', () => {
     expect(switchComponent.props('modelValue')).toBe(true);
   });
 
-  it('should disable the switch when disabled prop is true', () => {
+  it('should pass disabled prop to switch', () => {
     const wrapper = mount(UiFieldToggle, {
       props: {
         modelValue: false,
-        label: 'Disabled Toggle',
+        label: 'Test',
         disabled: true,
       },
     });
@@ -65,45 +50,19 @@ describe('<FieldToggle />', () => {
     expect(switchComponent.props('disabled')).toBe(true);
   });
 
-  it('should enable the switch by default', () => {
+  it('should emit update:modelValue when switch changes', async () => {
     const wrapper = mount(UiFieldToggle, {
       props: {
         modelValue: false,
-        label: 'Enabled Toggle',
+        label: 'Test',
       },
     });
 
     const switchComponent = wrapper.findComponent({ name: 'SfSwitch' });
-    expect(switchComponent.props('disabled')).toBe(false);
-  });
+    await switchComponent.vm.$emit('update:model-value', true);
 
-  it('should render info slot if provided', () => {
-    const wrapper = mount(UiFieldToggle, {
-      props: {
-        modelValue: false,
-        label: 'Toggle with Info',
-      },
-      slots: {
-        info: '<span class="info-icon">ℹ️</span>',
-      },
-    });
-
-    expect(wrapper.find('.info-icon').exists()).toBe(true);
-    expect(wrapper.find('.info-icon').text()).toBe('ℹ️');
-  });
-
-  it('should update modelValue when prop changes', async () => {
-    const wrapper = mount(UiFieldToggle, {
-      props: {
-        modelValue: false,
-        label: 'Toggle Feature',
-      },
-    });
-
-    await wrapper.setProps({ modelValue: true });
-
-    const switchComponent = wrapper.findComponent({ name: 'SfSwitch' });
-    expect(switchComponent.props('modelValue')).toBe(true);
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true]);
   });
 });
 

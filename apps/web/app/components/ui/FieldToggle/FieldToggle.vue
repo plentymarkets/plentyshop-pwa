@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="py-2" data-testid="field-toggle">
     <div class="flex items-center justify-between">
       <UiFormLabel class="mb-1 flex items-center gap-1">
         <span>{{ label }}</span>
