@@ -9,7 +9,11 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <EditorRichTextEditorForm v-model="contentModel" :text-align="textCardBlock.text.textAlignment">
+    <EditorRichTextEditorForm
+      v-model="contentModel"
+      :text-align="textCardBlock.text.textAlignment"
+      :placeholder="getEditorTranslation('placeholder')"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
@@ -384,6 +388,7 @@ watch([isTransparent, backgroundColor], () => {
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
+    "placeholder": "Enter text here...",
 
     "button-group-label": "Button",
     "button-text-label": "Label",
@@ -409,6 +414,7 @@ watch([isTransparent, backgroundColor], () => {
     "text-align-option-left-label": "Left",
     "text-align-option-center-label": "Center",
     "text-align-option-right-label": "Right",
+    "placeholder": "Hier Text eingeben...",
 
     "button-group-label": "Button",
     "button-text-label": "Label",
