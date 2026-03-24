@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableEditorItemURLScheme" class="py-2 mb-2">
+  <div class="py-2 mb-2">
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
 
@@ -82,19 +82,10 @@
       </p>
     </div>
   </div>
-
-  <div v-else>
-    <div class="rounded-md bg-amber-50 p-4 shadow-sm">
-      <p class="text-sm text-center font-medium text-amber-800">
-        {{ getEditorTranslation('info-text') }}
-      </p>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
 import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
-const runtimeConfig = useRuntimeConfig().public;
 
 const { updateSetting, getSetting } = useSiteSettings('enableSingleProductUrlScheme');
 
@@ -111,49 +102,47 @@ const urlScheme = computed({
 {
   "en": {
     "label": "Item URL Scheme",
-    "tooltip": "Defines whether item variants get their own URL or share the same URL",
-    "button-modern-label": "Unique Variant URLs",
+    "tooltip": "Defines whether item variations get their own URL or share the same URL",
+    "button-modern-label": "Unique Variation URLs",
     "button-legacy-label": "Single Product URL",
 
-    "description-modern-code": "Example: /item-name_itemID_variantID",
-    "description-modern-body-one": "Recommended if you use price comparison platforms like Google Shopping or want variants to be individually discoverable.",
-    "description-modern-body-list-line-one": "Each variant gets its own URL",
-    "description-modern-body-list-line-two": "Enables direct linking to specific variants",
-    "description-modern-body-list-line-three": "Supports variant-level SEO potential",
-    "description-modern-body-list-line-four": "Safer when variants have different prices",
-    "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variant links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variants differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variant.",
+    "description-modern-code": "Example: /item-name_itemID_variationID",
+    "description-modern-body-one": "Recommended if you use price comparison platforms like Google Shopping or want variations to be individually discoverable.",
+    "description-modern-body-list-line-one": "Each variation gets its own URL",
+    "description-modern-body-list-line-two": "Enables direct linking to specific variations",
+    "description-modern-body-list-line-three": "Supports variation-level SEO potential",
+    "description-modern-body-list-line-four": "Safer when variations have different prices",
+    "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variation links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variations differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variation.",
 
     "description-legacy-code": "Example: /item-name/a-itemID",
-    "description-legacy-body-one": "Use with caution if variants have different prices.",
-    "description-legacy-body-list-line-one": "One shared URL for all variants",
+    "description-legacy-body-one": "Use with caution if variations have different prices.",
+    "description-legacy-body-list-line-one": "One shared URL for all variations",
     "description-legacy-body-list-line-two": "Prevents duplicate or near-identical pages",
     "description-legacy-body-list-line-three": "Consolidates SEO signals to a single product page",
     "description-legacy-body-list-line-four": "Simplifies analytics and maintenance",
-    "description-legacy-body-footer": "Since the page loads one default variant, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variants differ. This can lead to price mismatch errors or product disapprovals. Best suited when variants are mostly cosmetic or share the same price.",
-    "info-text": "This setting is currently under development"
+    "description-legacy-body-footer": "Since the page loads one default variation, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variations differ. This can lead to price mismatch errors or product disapprovals. Best suited when variations are mostly cosmetic or share the same price."
   },
   "de": {
     "label": "Item URL Scheme",
-    "tooltip": "Defines whether item variants get their own URL or share the same URL",
-    "button-modern-label": "Unique Variant URLs",
+    "tooltip": "Defines whether item variations get their own URL or share the same URL",
+    "button-modern-label": "Unique Variation URLs",
     "button-legacy-label": "Single Product URL",
 
-    "description-modern-code": "Example: /item-name_itemID_variantID",
-    "description-modern-body-one": "Recommended if you use price comparison platforms like Google Shopping or want variants to be individually discoverable.",
-    "description-modern-body-list-line-one": "Each variant gets its own URL",
-    "description-modern-body-list-line-two": "Enables direct linking to specific variants",
-    "description-modern-body-list-line-three": "Supports variant-level SEO potential",
-    "description-modern-body-list-line-four": "Safer when variants have different prices",
-    "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variant links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variants differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variant.",
+    "description-modern-code": "Example: /item-name_itemID_variationID",
+    "description-modern-body-one": "Recommended if you use price comparison platforms like Google Shopping or want variations to be individually discoverable.",
+    "description-modern-body-list-line-one": "Each variation gets its own URL",
+    "description-modern-body-list-line-two": "Enables direct linking to specific variations",
+    "description-modern-body-list-line-three": "Supports variation-level SEO potential",
+    "description-modern-body-list-line-four": "Safer when variations have different prices",
+    "description-modern-body-footer": "Price comparison platforms expect the landing page price to match the submitted feed price. With separate URLs, each variation links directly to the correct price — avoiding mismatches and potential product disapprovals. Best suited when variations differ meaningfully (e.g. price, features, texts, images) or when users and search engines should land on a preselected variation.",
 
     "description-legacy-code": "Example: /item-name/a-itemID",
-    "description-legacy-body-one": "Use with caution if variants have different prices.",
-    "description-legacy-body-list-line-one": "One shared URL for all variants",
+    "description-legacy-body-one": "Use with caution if variations have different prices.",
+    "description-legacy-body-list-line-one": "One shared URL for all variations",
     "description-legacy-body-list-line-two": "Prevents duplicate or near-identical pages",
     "description-legacy-body-list-line-three": "Consolidates SEO signals to a single product page",
     "description-legacy-body-list-line-four": "Simplifies analytics and maintenance",
-    "description-legacy-body-footer": "Since the page loads one default variant, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variants differ. This can lead to price mismatch errors or product disapprovals. Best suited when variants are mostly cosmetic or share the same price.",
-    "info-text": "This setting is currently under development"
+    "description-legacy-body-footer": "Since the page loads one default variation, price comparison platforms like Google Shopping may see a different price than the one submitted in your feed if variations differ. This can lead to price mismatch errors or product disapprovals. Best suited when variations are mostly cosmetic or share the same price."
   }
 }
 </i18n>

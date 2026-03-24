@@ -60,10 +60,9 @@
               </SfListItem>
             </ul>
           </div>
-          <div
+          <TextContent
             v-if="column?.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
-            v-html="column.description"
+            v-bind="mapToTextContentProps({ htmlDescription: column.description })"
           />
         </div>
       </div>
@@ -71,7 +70,7 @@
     <div>
       <div
         v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
-        class="text-sm py-10 md:py-6 px-10"
+        class="text-sm py-10 md:py-6 px-10 no-preflight"
         :class="{
           'text-left': resolvedContent.footnoteAlign === 'left',
           'text-center': resolvedContent.footnoteAlign === 'center',
@@ -123,14 +122,3 @@ const getColumnSwitches = (column: FooterColumn) => {
   }));
 };
 </script>
-
-<style scoped>
-::v-deep(.custom-html li) {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-::v-deep(.custom-html li:hover) {
-  text-decoration: underline;
-}
-</style>

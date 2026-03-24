@@ -8,7 +8,7 @@ describe('Text Card Block Form', () => {
     cy.get('[data-testid="TextCard-open-editor-button"]').first().should('exist').click({ force: true });
     cy.wait(1000);
 
-    cy.get('[data-testid="text-card-form"]').should('exist');
+    cy.get('[data-testid="text-form"]').should('exist');
   };
 
   const openTextGroup = () => {
@@ -48,7 +48,11 @@ describe('Text Card Block Form', () => {
   const changeTextColor = () => {
     cy.get('[data-testid="input-text-color"]').should('exist').clear().type('rgb(121, 12, 12)', { delay: 0 });
     cy.wait(1000);
-    cy.get('[data-testid="text-content"]').should('have.css', 'color', 'rgb(121, 12, 12)');
+    cy.get('[data-testid="text-card"]')
+      .first()
+      .within(() => {
+        cy.get('[data-testid="text-content"]').should('have.css', 'color', 'rgb(121, 12, 12)');
+      });
   };
   const changeTextAlignment = () => {
     cy.get('[data-testid="text-align-center"]').should('exist').click({ force: true });
@@ -92,6 +96,8 @@ describe('Text Card Block Form', () => {
 
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
     openSettingsForTextCardBlock();

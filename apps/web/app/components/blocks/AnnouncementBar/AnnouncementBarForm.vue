@@ -1,24 +1,30 @@
 <template>
   <UiAccordionItem
-    :model-value="true"
+    :model-value="expandedTextSettings"
     summary-active-class="bg-neutral-100"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
     <template #summary>
       <h2>{{ getEditorTranslation('text-label') }}</h2>
     </template>
-    <div class="py-2 px-2">
-      <EditorRichTextEditor
-        v-model="editingText"
-        v-model:expanded="expandedToolbar"
-        :min-height="100"
-        :expandable="true"
-      />
-    </div>
+
+    <EditorRichTextEditorForm v-model="editingText" :text-align="'center'">
+      <div class="py-2">
+        <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
+        <SfTextarea
+          id="text-html-description"
+          v-model="editingText"
+          data-testid="textarea-description"
+          name="text-html-description"
+          rows="3"
+          class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
+        />
+      </div>
+    </EditorRichTextEditorForm>
   </UiAccordionItem>
 
   <UiAccordionItem
-    v-model="expandedSettings"
+    v-model="expandedLayoutSettings"
     summary-active-class="bg-neutral-100"
     summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
@@ -48,7 +54,7 @@
 
 <script setup lang="ts">
 import type { AnnouncementBarProps, AnnouncementBarFormProps } from './types';
-import { SfInput } from '@storefront-ui/vue';
+import { SfInput, SfTextarea } from '@storefront-ui/vue';
 
 const props = defineProps<AnnouncementBarFormProps>();
 
@@ -60,17 +66,17 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const expandedToolbar = ref(true);
-const expandedSettings = ref(true);
+const expandedLayoutSettings = ref(true);
+const expandedTextSettings = ref(true);
 
 const block = computed(
   () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as AnnouncementBarProps,
 );
 
 const editingText = computed({
-  get: () => block.value.content.text ?? '',
-  set: (val) => {
-    block.value.content.text = val;
+  get: () => decodeHtmlEntities(block.value.content.text ?? ''),
+  set: (val: string) => {
+    block.value.content.text = val ?? '';
   },
 });
 
@@ -87,12 +93,14 @@ const editingBackgroundColor = computed({
   "en": {
     "text-label": "Text",
     "layout-label": "Layout settings",
-    "background-color-label": "Background color"
+    "background-color-label": "Background color",
+    "html-description-label": "HTML Description"
   },
   "de": {
     "text-label": "Text",
     "layout-label": "Layout-Einstellungen",
-    "background-color-label": "Hintergrundfarbe"
+    "background-color-label": "Hintergrundfarbe",
+    "html-description-label": "HTML Beschreibung"
   }
 }
 </i18n>

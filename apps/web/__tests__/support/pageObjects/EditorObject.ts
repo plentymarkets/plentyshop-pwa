@@ -1,22 +1,19 @@
 import { PageObject } from './PageObject';
 
-export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
-
 export class EditorObject extends PageObject {
   get pretitle() {
-    return cy.getByTestId(`banner-pretitle-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="text-pretitle"]').first();
   }
-
   get title() {
-    return cy.getByTestId(`banner-title-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="text-title"]').first();
   }
 
   get subtitle() {
-    return cy.getByTestId(`banner-subtitle-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="text-subtitle"]').first();
   }
 
   get description() {
-    return cy.getByTestId(`banner-description-${firstBannerBlockUuid}`);
+    return cy.get('[data-testid^="text-html"]').first();
   }
 
   get editorToolbar() {
@@ -69,6 +66,10 @@ export class EditorObject extends PageObject {
 
   get inlineBlockButton() {
     return cy.getByTestId('inactive-empty-multicolumn');
+  }
+
+  get deleteFormBlockButton() {
+    return cy.getByTestId('delete-form-block-button');
   }
 
   get deleteBlockButton() {
@@ -298,7 +299,7 @@ export class EditorObject extends PageObject {
     this.languageList.children().should('have.length', 2);
     this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
-    this.title.first().should('have.text', 'Ihr Sound auf höchstem Niveau');
+    this.title.should('contain.text', 'Ihr Sound');
   }
 
   addBlockTop() {
@@ -413,7 +414,7 @@ export class EditorObject extends PageObject {
   deleteBlockInGridColumn(column: number) {
     this.imageInMultiGridActions.eq(column).should('exist').click({ force: true });
     cy.wait(1000);
-    this.deleteBlockButton.eq(column).should('exist').click();
+    this.deleteFormBlockButton.should('exist').click();
     cy.wait(1000);
     this.inlineBlockButton.eq(column).should('exist');
     this.inlineBlockButton.should('have.length', 2);

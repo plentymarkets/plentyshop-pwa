@@ -21,7 +21,7 @@
                 'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
               }"
               @click="
-                drawerOpen = false;
+                closeSiteConfigurationDrawer();
                 addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
               "
             >
@@ -64,7 +64,7 @@ const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList()
 
 await getBlocksLists();
 
-const { drawerOpen } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
 
 const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
@@ -75,7 +75,7 @@ const isForbiddenBlock = (category: BlockListCategory, uuid: string) => {
   return ['BannerCarousel', 'ImageText'].includes(category.blockName) && getBlockDepth(uuid) > 0;
 };
 const isSingleInstanceBlock = (blockName: string) => {
-  return ['SortFilter', 'ItemGrid'].includes(blockName);
+  return ['SortFilter', 'ItemGrid', 'Navigation'].includes(blockName);
 };
 const isSingleInstanceOnPage = (blockName: string) => {
   return isSingleInstanceBlock(blockName) && blockExistsOnPage(blockName);

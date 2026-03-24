@@ -35,9 +35,8 @@ export const useBlockManager = () => {
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
-  const { openDrawerWithView, closeDrawer } = useSiteConfiguration();
+  const { openDrawerWithView, closeBlocksConfigurationDrawer } = useSiteConfiguration();
   const { send } = useNotification();
-  const { isFooterBlock } = useBlockTemplates();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -91,18 +90,54 @@ export const useBlockManager = () => {
     }
 
     updateBlocks(copiedData);
-    openDrawerWithView('blocksSettings', newBlock);
+
+    if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
+      openDrawerWithView('blocksSettings', newBlock);
+    }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
-    scrollIntoBlockView(newBlock);
+    scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
+
+    const { enableTableOfContents } = useRuntimeConfig().public;
+    if (enableTableOfContents) {
+      const { selectedUuid } = useTableOfContents();
+      selectedUuid.value = newBlock.meta.uuid;
+      openDrawerWithView('TableOfContents');
+    }
   };
 
-  const scrollIntoBlockView = (block: Block) => {
+  const scrollIntoBlockView = (
+    block: Block,
+    scrollToPlaceholder: boolean = false,
+    position?: 'top' | 'bottom',
+    behaviour: 'auto' | 'instant' | 'smooth' = 'smooth',
+  ) => {
     setTimeout(() => {
-      const el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
-      if (el) el.scrollIntoView({ behavior: 'auto', block: 'center' });
+      let el: Element | null = null;
+
+      if (scrollToPlaceholder && position) {
+        const blockEl = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+        if (blockEl) {
+          const parentWrapper = blockEl.closest('div');
+          if (parentWrapper) {
+            const placeholder = parentWrapper.querySelector('[data-testid="block-placeholder"]');
+            if (placeholder) {
+              el = placeholder;
+            }
+          }
+        }
+        if (!el) {
+          el = document.querySelector('[data-testid="block-placeholder"]');
+        }
+      } else {
+        el = document.querySelector(`[data-uuid="${block.meta.uuid}"]`);
+      }
+
+      if (el) {
+        el.scrollIntoView({ behavior: behaviour, block: 'center' });
+      }
     }, 100);
   };
 
@@ -162,6 +197,12 @@ export const useBlockManager = () => {
     return index === lastNonFooterIndex;
   };
 
+  const isFirstContentBlock = (index: number): boolean => {
+    if (!data.value || data.value.length === 0) return false;
+    const firstContentIndex = data.value.findIndex((block) => !isHeaderContainerBlock(block));
+    return index === firstContentIndex;
+  };
+
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
     for (const [index, block] of blocks.entries()) {
       if (block.meta?.uuid === targetUuid) {
@@ -173,6 +214,20 @@ export const useBlockManager = () => {
       }
     }
     return null;
+  };
+
+  const blockContainsUuid = (block: Block, targetUuid: string): boolean => {
+    if (block.meta?.uuid === targetUuid) return true;
+
+    return (
+      block.type === 'structure' &&
+      Array.isArray(block.content) &&
+      block.content.some((child) => blockContainsUuid(child, targetUuid))
+    );
+  };
+
+  const getRootParent = (blocks: Block[], targetUuid: string): Block | null => {
+    return blocks.find((rootBlock) => blockContainsUuid(rootBlock, targetUuid)) ?? null;
   };
 
   const setUuid = (blocks: Block[]) => {
@@ -212,7 +267,7 @@ export const useBlockManager = () => {
         findOrDeleteBlockByUuid(data.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-      closeDrawer();
+      closeBlocksConfigurationDrawer();
     }
   };
 
@@ -326,6 +381,20 @@ export const useBlockManager = () => {
     return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
   };
 
+  const shouldDisplayPlaceholder = (
+    uuid: string,
+    position: 'top' | 'bottom',
+    drawerOpen: boolean | Ref<boolean>,
+    drawerView: string | null | Ref<string | null>,
+  ): boolean => {
+    return (
+      visiblePlaceholder.value.position === position &&
+      visiblePlaceholder.value.uuid === uuid &&
+      unref(drawerOpen) &&
+      unref(drawerView) === 'blocksList'
+    );
+  };
+
   return {
     currentBlock,
     currentBlockUuid,
@@ -344,11 +413,14 @@ export const useBlockManager = () => {
     updateBlock,
     changeBlockPosition,
     isLastNonFooterBlock,
+    isFirstContentBlock,
     addNewBlock,
+    scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
+    getRootParent,
     getBlockDepth,
     shouldLazyLoad,
     getLazyLoadKey,
@@ -357,5 +429,6 @@ export const useBlockManager = () => {
     showBottomAddInGrid,
     blockExistsOnPage,
     isStructureBlock,
+    shouldDisplayPlaceholder,
   };
 };

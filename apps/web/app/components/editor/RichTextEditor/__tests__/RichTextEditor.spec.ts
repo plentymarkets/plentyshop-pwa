@@ -35,6 +35,7 @@ describe('RichTextEditor', () => {
         modelValue: expect.objectContaining({ value: '' }),
         expanded: expect.objectContaining({ value: false }),
         textAlign: expect.objectContaining({ value: 'left' }),
+        placeholder: expect.objectContaining({ value: 'Enter text here...' }),
       }),
     );
 
@@ -75,6 +76,7 @@ describe('RichTextEditor', () => {
         modelValue: expect.objectContaining({ value: '<p>Hello</p>' }),
         expanded: expect.objectContaining({ value: true }),
         textAlign: expect.objectContaining({ value: 'center' }),
+        placeholder: expect.objectContaining({ value: 'Enter text here...' }),
       }),
     );
 
@@ -172,5 +174,61 @@ describe('RichTextEditor', () => {
 
     expect(undo).toHaveBeenCalledTimes(1);
     expect(redo).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call onFontSizeChange when block type dropdown option is clicked', async () => {
+    const onFontSizeChange = vi.fn();
+
+    useRichTextEditor.mockReturnValue(
+      createMockUseRichTextEditor({
+        onFontSizeChange,
+      }),
+    );
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+        },
+      },
+    });
+
+    const blockTypeTrigger = wrapper.get('[data-testid="rte-heading-select"]');
+    await blockTypeTrigger.trigger('click');
+    await nextTick();
+
+    const h4Option = wrapper.get('[data-testid="rte-heading-option-h4"]');
+    await h4Option.trigger('click');
+
+    expect(onFontSizeChange).toHaveBeenCalledWith('h4');
+  });
+  it('should call setFontSize when font size dropdown option is clicked', async () => {
+    const setFontSize = vi.fn();
+
+    useRichTextEditor.mockReturnValue(
+      createMockUseRichTextEditor({
+        currentFontSize: ref(''),
+        setFontSize,
+      }),
+    );
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+        },
+      },
+    });
+
+    const fontSizeTrigger = wrapper.get('[data-testid="rte-font-size-select"]');
+    await fontSizeTrigger.trigger('click');
+    await nextTick();
+
+    const option = wrapper.get('[data-testid="rte-font-size-option-1.5rem"]');
+    await option.trigger('click');
+
+    expect(setFontSize).toHaveBeenCalledWith('1.5rem');
   });
 });

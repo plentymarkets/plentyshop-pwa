@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px]" data-testid="block-edit-view">
+  <div class="site-settings-view sticky" data-testid="block-edit-view">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div data-testid="view-title" class="flex items-center text-xl font-bold gap-3 flex-1 min-w-0">
         <template v-if="customTitle">
@@ -11,13 +11,13 @@
         <template v-else> {{ blockDisplayName }} </template>
       </div>
       <div class="flex items-center space-x-2">
-        <div v-if="blockType !== 'Footer'" class="flex items-center space-x-2">
-          <button data-testid="delete-block-button" @click="deleteBlock(blockUuid)">
+        <div v-if="!isGlobalBlock(block)" class="flex items-center space-x-2">
+          <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
             <SfIconDelete />
           </button>
           <div class="w-px h-4 bg-gray-300" />
         </div>
-        <button data-testid="close-editor-button" @click="drawerOpen = false">
+        <button data-testid="close-editor-button" @click="closeBlocksConfigurationDrawer">
           <SfIconClose />
         </button>
       </div>
@@ -26,7 +26,10 @@
       <component
         :is="currentComponent"
         v-if="currentComponent"
+        :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
+        :uuid="blockUuid"
+        @vue:mounted="handleBackClick"
         @set-edit-title="handleSetEditTitle"
         @clear-edit-title="clearCustomTitle"
       />
@@ -45,7 +48,7 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 
-const { drawerOpen, blockType, blockUuid } = useSiteConfiguration();
+const { closeBlocksConfigurationDrawer, blockType, blockUuid } = useSiteConfiguration();
 const { deleteBlock } = useBlockManager();
 
 const customTitle = ref<string | null>(null);
@@ -66,11 +69,6 @@ const handleBackClick = () => {
   clearCustomTitle();
 };
 
-const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
-
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
 
 const getComponent = (name: string) => {
@@ -80,45 +78,28 @@ const getComponent = (name: string) => {
     return componentCache.get(name);
   }
 
-  const regex = new RegExp(`${name}Form\\.vue$`, 'i');
-  const matched = Object.keys(modules).find((path) => regex.test(path));
+  const loader = getBlockFormLoader(name);
+  if (!loader) return null;
 
-  if (matched && modules[matched]) {
-    const component = defineAsyncComponent(modules[matched]);
-    componentCache.set(name, component);
-    return component;
-  }
-
-  return '';
+  const component = defineAsyncComponent(loader);
+  componentCache.set(name, component);
+  return component;
 };
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
-const blockTypeNames: Record<string, string> = {
-  Carousel: 'Carousel',
-  NewsletterSubscribe: 'Newsletter',
-  ProductRecommendedProducts: 'Product Gallery',
-  TextCard: 'Rich Text',
-  AnnouncementBar: 'Announcement Bar',
-  CustomerReview: 'Customer reviews',
-  ProductLegalInformation: 'Legal Information',
-  MultiGrid: 'Layout',
-  Footer: 'Footer',
-  ItemText: 'Item Details',
-  CategoryData: 'Category Data',
-  TechnicalData: 'Technical Data',
-  ItemData: 'Item Data',
-  Banner: 'Image Banner',
-};
+const block = computed(() => findOrDeleteBlockByUuid(data.value, blockUuid.value));
 
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {
-    const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
-    const firstChild = (block?.content as Array<{ name: string }>)?.[0];
+    const firstChild = (block?.value?.content as Array<{ name: string }>)?.[0];
     if (firstChild?.name) {
-      return blockTypeNames[firstChild.name] ?? firstChild.name;
+      return getBlockDisplayName(firstChild.name);
     }
   }
-  return blockTypeNames[blockType.value] ?? blockType.value;
+  if (blockType.value === 'UtilityBar' && customTitle.value) {
+    return customTitle.value;
+  }
+  return getBlockDisplayName(blockType.value);
 });
 </script>

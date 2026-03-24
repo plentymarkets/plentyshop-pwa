@@ -7,6 +7,8 @@
           :is-active="isActive"
           :current-block-type="currentBlockType"
           :on-font-size-change="onFontSizeChange"
+          :current-font-size="currentFontSize"
+          :on-text-size-change="setFontSize"
           :text-color="textColor"
           :set-font-color="setFontColor"
           :toggle-link="toggleLink"
@@ -56,7 +58,11 @@
       <EditorRichTextEditorMenuButton icon-name="fullscreen" @click="openModal" />
     </div>
 
-    <div class="p-2.5 editor-parent" data-testid="rte-editor" @mousedown="editor?.chain().focus().run()">
+    <div
+      class="p-2.5 editor-parent border border-gray-300 rounded-b-md bg-white"
+      data-testid="rte-editor"
+      @mousedown="editor?.chain().focus().run()"
+    >
       <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
     </div>
   </div>
@@ -71,6 +77,8 @@
     :on-font-size-change="onFontSizeChange"
     :text-color="textColor"
     :highlight-color="highlightColor"
+    :current-font-size="currentFontSize"
+    :set-font-size="setFontSize"
     :set-font-color="setFontColor"
     :set-highlight-color="setHighlightColor"
     :set-align="setAlign"
@@ -98,6 +106,7 @@ const props = withDefaults(
     expandable?: boolean;
     expanded?: boolean;
     textAlign?: RteAlign;
+    placeholder?: string;
   }>(),
   {
     modelValue: '',
@@ -105,6 +114,7 @@ const props = withDefaults(
     expandable: true,
     expanded: false,
     textAlign: 'left',
+    placeholder: 'Enter text here...',
   },
 );
 
@@ -135,12 +145,15 @@ const {
   toggleLink,
   clearFormatting,
   focus,
+  currentFontSize,
+  setFontSize,
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
   onUpdateModelValue: (v) => emit('update:modelValue', v),
   expanded: toRef(props, 'expanded'),
   onUpdateExpanded: (v) => emit('update:expanded', v),
   textAlign: toRef(props, 'textAlign'),
+  placeholder: toRef(props, 'placeholder'),
 });
 
 const editorStyle = computed(() => ({

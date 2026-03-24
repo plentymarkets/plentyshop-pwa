@@ -26,27 +26,8 @@
         data-testid="image-block-image"
       />
     </component>
-
-    <div
-      v-if="props.content?.text?.textOverlay || props.content?.button.label"
-      class="absolute inset-0 px-4 pointer-events-none flex flex-col"
-      :class="overlayAlignClasses"
-      :style="{ color: props.content.text?.textOverlayColor || '#000' }"
-      data-testid="image-overlay-text"
-    >
-      <div v-html="props.content.text.textOverlay" />
-      <UiButton
-        v-if="props.content?.button.label"
-        class="cursor-pointer pointer-events-auto"
-        :tag="NuxtLink"
-        :to="localePath(props.content.button.link ?? '')"
-        :variant="props.content.button.variant ?? 'primary'"
-        size="lg"
-        :data-testid="'image-button-' + (meta?.uuid ?? '')"
-        v-bind="isExternalLink(props.content.button.link) ? { target: '_blank', rel: 'noopener' } : {}"
-      >
-        {{ props.content.button.label }}
-      </UiButton>
+    <div class="absolute inset-0 px-4 flex flex-col" :class="overlayAlignClasses" data-testid="image-overlay-wrapper">
+      <TextContent v-bind="textContentProps" :test-id="'image-overlay'" />
     </div>
   </div>
 </template>
@@ -69,6 +50,17 @@ const linkTag = computed(() => (linkTarget.value ? NuxtLink : 'div'));
 const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
 
 const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
+
+const textContentProps = computed(() =>
+  mapToTextContentProps({
+    htmlDescription: props.content?.text.textOverlay,
+    color: props.content?.text.textOverlayColor || '#000',
+    textAlignment: props.content?.text.textOverlayAlignX ?? 'center',
+    buttonLabel: props.content?.button.label,
+    buttonLink: props.content?.button.link,
+    buttonVariant: props.content?.button.variant,
+  }),
+);
 
 const getAspectRatio = () => {
   switch (viewport.breakpoint.value) {
@@ -120,19 +112,12 @@ const getImageUrl = () => {
 const overlayAlignClasses = computed(() => {
   const vertical =
     props.content?.text.textOverlayAlignY === 'top'
-      ? 'items-start'
+      ? 'justify-start'
       : props.content?.text.textOverlayAlignY === 'bottom'
-        ? 'items-end'
-        : 'items-center';
+        ? 'justify-end'
+        : 'justify-center';
 
-  const horizontal =
-    props.content?.text.textOverlayAlignX === 'left'
-      ? 'justify-start text-left'
-      : props.content?.text.textOverlayAlignX === 'right'
-        ? 'justify-end text-right'
-        : 'justify-center text-center';
-
-  return [vertical, horizontal];
+  return [vertical];
 });
 const getImageDimensions = (): ImageDimensions => {
   switch (viewport.breakpoint.value) {

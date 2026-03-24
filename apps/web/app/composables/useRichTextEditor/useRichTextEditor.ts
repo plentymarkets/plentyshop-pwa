@@ -7,13 +7,16 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
-import type { UseRichTextEditorArgs, RteCommand } from '~/composables/useRichTextEditor/types';
+import type { RteCommand, UseRichTextEditorArgs } from '~/composables/useRichTextEditor/types';
 import { setupRichTextEditorExpansion } from './helpers/expansion';
 import { setupRichTextEditorBlocks } from './helpers/blocks';
 import { setupRichTextEditorColors } from './helpers/colors';
 import { setupRichTextEditorAlignment } from './helpers/alignment';
 import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
+import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
+import { FontSize } from './helpers/fontSizeExtension';
+import Placeholder from '@tiptap/extension-placeholder';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -29,12 +32,21 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         linkOnPaste: true,
       }),
       TextStyle,
+      FontSize,
       Color,
       Highlight.configure({ multicolor: true }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
+      Placeholder.configure({
+        placeholder: args.placeholder?.value ?? 'Enter text here...',
+      }),
     ],
+    editorProps: {
+      transformPastedHTML: (html) => {
+        return stripInlineFontSizesFromHtml(html);
+      },
+    },
     onUpdate: ({ editor }: { editor: Editor }) => {
       args.onUpdateModelValue(editor.getHTML());
     },
@@ -69,6 +81,16 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     editor as Ref<Editor | null> | null,
     focusChain,
   );
+  const currentFontSize = computed(() => editor.value?.getAttributes('textStyle')?.fontSize ?? '');
+
+  const setFontSize = (value: string) => {
+    const normalizedFontSize = (value ?? '').trim();
+    editor.value
+      ?.chain()
+      .focus()
+      .setFontSize(normalizedFontSize || null)
+      .run();
+  };
   const { textColor, highlightColor, setFontColor, setHighlightColor } = setupRichTextEditorColors(
     editor as Ref<Editor | null> | null,
     focusChain,
@@ -90,6 +112,8 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     isActive,
     currentBlockType,
     onFontSizeChange,
+    currentFontSize,
+    setFontSize,
     textColor,
     highlightColor,
     setFontColor,
