@@ -65,5 +65,3 @@ describe('<FieldToggle />', () => {
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true]);
   });
 });
-
-

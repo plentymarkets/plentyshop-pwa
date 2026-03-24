@@ -72,7 +72,7 @@ const isStickyToggle = computed({
   set: (value: boolean) => {
     if (!headerContainerStructure.value.configuration) {
       headerContainerStructure.value.configuration = {
-        visible: true
+        visible: true,
       };
     }
     if (!headerContainerStructure.value.configuration?.layout) {
