@@ -29,7 +29,7 @@
     </form>
 
     <div
-      v-if="inputModel.length > 1 && searchTerm === inputModel"
+      v-if="inputModel.trim().length > 1 && searchTerm === inputModel.trim()"
       class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-b-xl border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
       role="region"
       aria-live="polite"
