@@ -24,6 +24,11 @@ describe('Smoke: Product Detail Page', () => {
     productDetailPage.assertModernImageFormat();
   });
 
+  it('[feature] should have valid Product structured data', () => {
+    cy.visitAndHydrate('/backpack-gaia_164');
+    productDetailPage.assertStructuredData();
+  });
+
   describe('should validate product url params', () => {
     it('should succeed to validate product url params with one valid params', () => {
       cy.request({

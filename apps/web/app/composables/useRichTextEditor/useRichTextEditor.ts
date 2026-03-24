@@ -16,6 +16,7 @@ import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { FontSize } from './helpers/fontSizeExtension';
+import Placeholder from '@tiptap/extension-placeholder';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -36,6 +37,9 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       Highlight.configure({ multicolor: true }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
+      }),
+      Placeholder.configure({
+        placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
     ],
     editorProps: {

@@ -58,11 +58,11 @@ export const useStructuredData: useStructuredDataReturn = () => {
    * ``` ts
    * setSingleItemMeta({
    *  product: Product,
-   *  categoryTree: CategoryTreeItem
+   *  category: CategoryTreeItem
    * })
    * ```
    */
-  const setProductMetaData: SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => {
+  const setProductMetaData: SetProductMetaData = (product: Product, category?: CategoryTreeItem) => {
     state.value.loading = true;
     const { price, crossedPrice } = useProductPrice(product);
     const productId = Number(productGetters.getItemId(product));
@@ -91,7 +91,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: productGetters.getName(product),
-      category: categoryTreeGetters.getName(categoryTree),
+      ...(category && { category: categoryTreeGetters.getName(category) }),
       releaseDate: '',
       image: productGetters.getCoverImage(product),
       identifier: productGetters.getId(product),
