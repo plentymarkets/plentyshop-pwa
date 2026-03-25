@@ -11,7 +11,6 @@
       :edit-section="editSection"
       :toggle-section-menu="toggleSectionMenu"
       :toggle-section-visibility="toggleSectionVisibility"
-      @update:sections="sections = $event"
     />
 
     <BlocksUtilityBarPartialsUtilityBarSectionEditor
