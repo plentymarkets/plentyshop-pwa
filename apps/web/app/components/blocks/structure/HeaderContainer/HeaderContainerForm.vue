@@ -31,7 +31,13 @@
     </div>
 
     <div v-else-if="blocks[editingBlockIndex]" class="space-y-0">
-      <component :is="blockForm" :uuid="blocks[editingBlockIndex]!.meta.uuid" />
+      <component
+        :is="blockForm"
+        ref="innerFormRef"
+        :uuid="blocks[editingBlockIndex]!.meta.uuid"
+        @set-edit-title="handleInnerSetEditTitle"
+        @clear-edit-title="handleInnerClearEditTitle"
+      />
     </div>
   </div>
 </template>
@@ -50,6 +56,9 @@ const emit = defineEmits<{
   'set-edit-title': [title: string];
   'clear-edit-title': [];
 }>();
+
+const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void } | null>(null);
+const isInnerFormSubEditing = ref(false);
 
 const elementsOpen = ref(true);
 const editingBlockIndex = ref<number | undefined>(undefined);
@@ -105,18 +114,37 @@ const resolveBlockLabels = async () => {
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
+  isInnerFormSubEditing.value = false;
   currentActiveBlockIndex.value = index;
   emit('set-edit-title', blockLabels.value[index]!);
 };
 
-const exitEditMode = (shouldEmit = true) => {
+const handleInnerSetEditTitle = (title: string) => {
+  isInnerFormSubEditing.value = true;
+  emit('set-edit-title', title);
+};
+
+const handleInnerClearEditTitle = () => {
+  isInnerFormSubEditing.value = false;
+  const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
+  if (blockLabel) emit('set-edit-title', blockLabel);
+};
+
+const exitEditMode = (shouldEmit = true): boolean => {
+  if (isInnerFormSubEditing.value && innerFormRef.value?.exitEditMode) {
+    innerFormRef.value.exitEditMode(false);
+    isInnerFormSubEditing.value = false;
+    const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
+    if (blockLabel) emit('set-edit-title', blockLabel);
+    return false;
+  }
+
   editingBlockIndex.value = undefined;
   editingBlockName.value = undefined;
   currentActiveBlockIndex.value = -1;
-  if (shouldEmit) {
-    emit('clear-edit-title');
-  }
+  if (shouldEmit) emit('clear-edit-title');
   resolveBlockLabels();
+  return true;
 };
 
 const addBlock = () => {
