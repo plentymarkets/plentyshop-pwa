@@ -41,7 +41,7 @@ export type CreateHeaderContainerBlock = (
   content: Block[],
   meta?: { uuid?: string; isGlobalTemplate?: boolean },
 ) => HeaderContainerBlock;
-export type CreateDefaultHeaderContainerBlock = () => HeaderContainerBlock;
+export type CreateDefaultHeaderContainerBlock = (backgroundColor?: string) => HeaderContainerBlock;
 export type ClearHeaderContainerCache = () => void;
 export type UpdateHeaderContainerCache = (block: HeaderContainerBlock) => void;
 export type IsHeaderContainerBlock = (block: Block | null | undefined) => block is HeaderContainerBlock;

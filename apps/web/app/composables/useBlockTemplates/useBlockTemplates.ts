@@ -234,8 +234,10 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
   const clearHeaderContainerCache = () => (headerContainerCache.value = null);
   const updateHeaderContainerCache = (block: HeaderContainerBlock) => (headerContainerCache.value = block);
+  const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+
   const getHeaderContainerBlock = (): HeaderContainerBlock =>
-    headerContainerCache.value || createDefaultHeaderContainerBlock();
+    headerContainerCache.value || createDefaultHeaderContainerBlock(getHeaderBackgroundColor() || undefined);
 
   const createFooterBlock = createFooterBlockHelper;
   const createDefaultFooterBlock = createDefaultFooterBlockHelper;
@@ -270,11 +272,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
         headerContainerCache.value = headerBlock;
       } else {
-        headerContainerCache.value = createDefaultHeaderContainerBlock();
+        headerContainerCache.value = createDefaultHeaderContainerBlock(getHeaderBackgroundColor() || undefined);
       }
     } catch (error) {
       console.warn('Failed to reset header to saved:', error);
-      headerContainerCache.value = createDefaultHeaderContainerBlock();
+      headerContainerCache.value = createDefaultHeaderContainerBlock(getHeaderBackgroundColor() || undefined);
     }
 
     const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));

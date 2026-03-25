@@ -27,11 +27,11 @@ export function createHeaderContainerBlock(
   };
 }
 
-export function createDefaultHeaderContainerBlock(): HeaderContainerBlock {
-  return createHeaderContainerBlock([createUtilityBar(), createNavigation()]);
+export function createDefaultHeaderContainerBlock(backgroundColor?: string): HeaderContainerBlock {
+  return createHeaderContainerBlock([createUtilityBar(backgroundColor), createNavigation()]);
 }
 
-export function createUtilityBar(): Block {
+export function createUtilityBar(backgroundColor?: string): Block {
   return {
     name: 'UtilityBar',
     type: 'content',
@@ -56,7 +56,7 @@ export function createUtilityBar(): Block {
       },
       color: {
         iconColor: '#ffffff',
-        backgroundColor: 'rgb(var(--colors-2-primary-500))',
+        backgroundColor: backgroundColor || 'rgb(var(--colors-2-primary-500))',
       },
       search: {
         displayMode: 'full',
