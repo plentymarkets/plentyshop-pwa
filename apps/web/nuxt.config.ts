@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/richtext.css'],
   typescript: {
-    typeCheck: 'build',
+    typeCheck: true,
   },
   app: appConfiguration,
   experimental: {
