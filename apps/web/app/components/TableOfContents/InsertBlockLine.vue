@@ -13,7 +13,7 @@
       />
       <button
         ref="addBlockButton"
-        class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-none transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-editor-toc-selected"
+        class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-2 border-white transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-editor-toc-selected"
         :class="showLine ? 'opacity-100' : 'opacity-0 pointer-events-none'"
         :aria-label="getEditorTranslation('add-block-label')"
         @click="handleAddBlock"
