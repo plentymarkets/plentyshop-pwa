@@ -4,6 +4,7 @@ import { useBlockTemplates } from '../useBlockTemplates';
 import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
+import type { TextCardContent } from '~/components/blocks/TextCard/types';
 
 const mockFooterBlock: FooterBlock = {
   name: 'Footer',
@@ -516,6 +517,82 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
       expect(mockStateRef.value.data[mockBlocks.length + 1]?.name).toBe('Footer');
       expect(mockStateRef.value.data[mockBlocks.length + 1]).not.toEqual(mockFooterBlock);
+    });
+
+    it('should set h1 on the first Banner inside a Carousel when Carousel is the first content block', () => {
+      useRuntimeConfig.mockReturnValue({
+        public: { enableRichTextEditorV2: true },
+      });
+
+      const firstBanner: Block = {
+        name: 'Banner',
+        type: 'content',
+        meta: { uuid: 'banner-first' },
+        content: { text: { title: 'First Banner', pretitle: 'Pre', subtitle: '' } },
+      };
+
+      const secondBanner: Block = {
+        name: 'Banner',
+        type: 'content',
+        meta: { uuid: 'banner-second' },
+        content: { text: { title: 'Second Banner', pretitle: 'Pre', subtitle: '' } },
+      };
+
+      const blocks: Block[] = [
+        {
+          name: 'HeaderContainer',
+          type: 'structure',
+          meta: { uuid: 'header-1' },
+          content: [],
+        },
+        {
+          name: 'Carousel',
+          type: 'structure',
+          meta: { uuid: 'carousel-1' },
+          content: [firstBanner, secondBanner],
+        },
+      ];
+
+      useBlockTemplates().setupBlocks(blocks);
+
+      expect((firstBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
+      expect((secondBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h2>');
+      expect((secondBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+    });
+
+    it('should not set h1 on blocks inside the HeaderContainer', () => {
+      useRuntimeConfig.mockReturnValue({
+        public: { enableRichTextEditorV2: true },
+      });
+
+      const headerInnerBlock: Block = {
+        name: 'TextCard',
+        type: 'content',
+        meta: { uuid: 'textcard-in-header' },
+        content: { text: { title: 'Header Text', pretitle: '', subtitle: '' } },
+      };
+
+      const firstContentBlock: Block = {
+        name: 'TextCard',
+        type: 'content',
+        meta: { uuid: 'textcard-first' },
+        content: { text: { title: 'First Content', pretitle: '', subtitle: '' } },
+      };
+
+      const blocks: Block[] = [
+        {
+          name: 'HeaderContainer',
+          type: 'structure',
+          meta: { uuid: 'header-1' },
+          content: [headerInnerBlock],
+        },
+        firstContentBlock,
+      ];
+
+      useBlockTemplates().setupBlocks(blocks);
+
+      expect((headerInnerBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((firstContentBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
     });
   });
 
