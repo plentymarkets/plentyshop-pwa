@@ -1,7 +1,7 @@
 {
   "header": {
     "category": "header",
-    "accessControl": [],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Header",
     "blockName": "Header",
     "variations": [
@@ -138,7 +138,7 @@
       },
       {
         "title": "Announcement Bar",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement_bar.png",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement-bar.svg",
         "template": {
           "en": {
             "name": "Carousel",
