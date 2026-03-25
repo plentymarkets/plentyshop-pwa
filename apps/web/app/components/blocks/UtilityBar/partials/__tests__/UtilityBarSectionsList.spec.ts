@@ -15,19 +15,6 @@ describe('UtilityBarSectionsList', () => {
   const toggleSectionMenu = vi.fn();
   const toggleSectionVisibility = vi.fn();
 
-  const DraggableStub = defineComponent({
-    name: 'draggable',
-    props: {
-      modelValue: {
-        type: Array,
-        required: true,
-      },
-    },
-    emits: ['update:model-value'],
-    template:
-      '<div data-testid="draggable-stub"><slot name="item" v-for="(element, index) in modelValue" :element="element" :index="index" :key="element.id" /></div>',
-  });
-
   const SfSwitchStub = defineComponent({
     name: 'SfSwitch',
     props: {
@@ -67,8 +54,6 @@ describe('UtilityBarSectionsList', () => {
           UiFormLabel: {
             template: '<label><slot /></label>',
           },
-          NuxtImg: true,
-          draggable: DraggableStub,
           SfSwitch: SfSwitchStub,
           SfIconMoreVert: true,
           SfIconBase: true,
@@ -88,21 +73,6 @@ describe('UtilityBarSectionsList', () => {
 
     expect(labelTexts).toEqual(['logo-label', 'search-label', 'actions-label']);
     expect(getSectionLabel).toHaveBeenCalledTimes(3);
-  });
-
-  it('should emit update:sections when draggable emits update:model-value', async () => {
-    const wrapper = mountComponent();
-    const reordered: UtilityBarSection[] = [
-      { id: 'actions', name: 'UtilityBarActions', visible: true },
-      { id: 'logo', name: 'UtilityBarLogo', visible: true },
-      { id: 'search', name: 'UtilityBarSearch', visible: false },
-    ];
-
-    const draggable = wrapper.getComponent(DraggableStub);
-    draggable.vm.$emit('update:model-value', reordered);
-    await nextTick();
-
-    expect(wrapper.emitted('update:sections')).toEqual([[reordered]]);
   });
 
   it('should call editSection and toggleSectionMenu with matching indices', async () => {
