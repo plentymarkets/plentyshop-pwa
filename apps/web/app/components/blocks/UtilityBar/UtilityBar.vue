@@ -417,7 +417,7 @@ const showSearchIcon = ref(true);
 const isSearchClosing = ref(false);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
-const visibleSectionsCount = computed(() => sections.value.filter((s) => s.visible).length);
+const visibleSectionsCount = computed(() => sections.value.filter((section) => section.visible).length);
 
 const SECTION_GAP = '16px';
 
@@ -434,10 +434,10 @@ const getSectionColumnStyle = (sectionId: string) => {
   const middleMargin = isMiddle ? { marginLeft: SECTION_GAP, marginRight: SECTION_GAP } : {};
 
   if (isFirst) {
-    return { order, flex: '1', display: 'flex' as const, ...middleMargin };
+    return { order, flex: '1', display: 'flex', ...middleMargin };
   }
   if (isLast) {
-    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end', ...middleMargin };
+    return { order, flex: '1', display: 'flex', justifyContent: 'flex-end', ...middleMargin };
   }
 
   if (isSearchActive) {
