@@ -30,15 +30,15 @@ export class BannerSliderObject extends PageObject {
   }
 
   openSlideActions() {
-    cy.get(`[data-testid="actions-menu-slide-0"]`).click();
+    cy.get(`[data-testid="actions-menu-item-0"]`).click();
   }
 
   openSlideOneSettings() {
-    cy.get('[data-testid="actions-edit-slide-0"]').click();
+    cy.get('[data-testid="actions-edit-item-0"]').click();
   }
 
   openSlideTwoSettings() {
-    cy.get('[data-testid="actions-edit-slide-1"]').click();
+    cy.get('[data-testid="actions-edit-item-1"]').click();
   }
 
   goBackToElementList() {
@@ -50,7 +50,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   deleteSlide() {
-    cy.get('[data-testid="actions-delete-slide-0"]').click();
+    cy.get('[data-testid="actions-delete-item-0"]').click();
   }
 
   checkIfSlideIsDeleted() {
@@ -63,7 +63,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   quickAddSlide() {
-    cy.get('[data-testid="actions-add-slide-button"]').click();
+    cy.get('[data-testid="actions-add-block-button"]').click();
   }
 
   checkSlideSettings(index: number) {
