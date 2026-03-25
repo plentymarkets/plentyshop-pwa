@@ -2,7 +2,7 @@ import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderC
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 
-export const HEADER_CONTAINER_BLOCK_NAME = 'HeaderContainer' as const;
+export const HEADER_CONTAINER_BLOCK_NAME = 'HeaderContainer';
 
 export const isHeaderContainerBlock = (block: Block | null | undefined): block is HeaderContainerBlock =>
   block?.name === HEADER_CONTAINER_BLOCK_NAME;
@@ -27,11 +27,11 @@ export function createHeaderContainerBlock(
   };
 }
 
-export function createDefaultHeaderContainerBlock(backgroundColor?: string): HeaderContainerBlock {
-  return createHeaderContainerBlock([createUtilityBar(backgroundColor), createNavigation()]);
+export function createDefaultHeaderContainerBlock(backgroundColor?: string, iconColor?: string): HeaderContainerBlock {
+  return createHeaderContainerBlock([createUtilityBar(backgroundColor, iconColor), createNavigation()]);
 }
 
-export function createUtilityBar(backgroundColor?: string): Block {
+export function createUtilityBar(backgroundColor?: string, iconColor?: string): Block {
   return {
     name: 'UtilityBar',
     type: 'content',
@@ -55,7 +55,7 @@ export function createUtilityBar(backgroundColor?: string): Block {
         actions: true,
       },
       color: {
-        iconColor: '#ffffff',
+        iconColor: iconColor || '#ffffff',
         backgroundColor: backgroundColor || 'rgb(var(--colors-2-primary-500))',
       },
       search: {
@@ -95,7 +95,7 @@ export function createNavigation(): Block {
       color: {
         backgroundColor: '#ffffff',
         textColor: '#161A16',
-        hoverBackgroundColor: '#f5f5f5',
+        hoverBackgroundColor: 'rgb(var(--colors-secondary-100))',
       },
     },
   };
