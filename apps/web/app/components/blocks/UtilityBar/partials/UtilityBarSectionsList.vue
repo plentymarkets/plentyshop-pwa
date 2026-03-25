@@ -103,7 +103,6 @@ const isOpen = defineModel<boolean>('open', { default: true });
   "en": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "logo-section-label": "Logo",
@@ -113,7 +112,6 @@ const isOpen = defineModel<boolean>('open', { default: true });
   "de": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "logo-section-label": "Logo",
