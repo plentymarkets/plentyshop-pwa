@@ -3,7 +3,7 @@
     class="flex items-center justify-between flex-1 px-2 py-1 rounded-md transition-colors hover:bg-editor-toc-highlight hover:text-black"
     :class="{
       'bg-editor-toc-selected text-white': isSelected,
-      'bg-editor-toc-highlight': isHovered && !isSelected,
+      'bg-editor-toc-hover': isHovered && !isSelected,
     }"
   >
     <div class="flex items-center gap-2 min-w-0 flex-1">
@@ -15,7 +15,8 @@
         <div class="transition-opacity" :class="{ 'group-hover:opacity-0': isRoot && !isGlobalBlock(block) }">
           <span
             v-if="getBlockIconSvg(blockName)"
-            class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all no-preflight"
+            :data-testid="`toc-block-icon-${uuid}`"
+            class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full transition-all"
             :class="{
               '[&>svg]:brightness-0 [&>svg]:invert': isSelected,
               'group-hover:[&>svg]:brightness-100 group-hover:[&>svg]:invert-0': isSelected,
@@ -25,6 +26,7 @@
           />
           <NuxtImg
             v-else
+            :data-testid="`toc-block-icon-${uuid}`"
             :src="defaultBlockIcon"
             class="w-5 h-5 transition-all"
             :class="{
