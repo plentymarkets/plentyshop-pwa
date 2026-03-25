@@ -1129,6 +1129,13 @@
     "numberOfProducts": "{count} Artikel von {total} Artikeln",
     "searchResults": "Suchergebnisse für \"{phrase}\""
   },
+  "searchBar": {
+    "searchSuggestions": "Suchvorschläge",
+    "productSuggestions": "Produktvorschläge",
+    "matchingCategories": "Passende Kategorien",
+    "showAllResults": "Alle Ergebnisse für „{searchTerm}“ anzeigen ({hitsCount})",
+    "noResultsFound": "Es wurden keine Ergebnisse gefunden."
+  },
   "sessionLifetime": {
     "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
     "oneHour": "Eine Stunde, auch wenn der Browser geschlossen wird",
