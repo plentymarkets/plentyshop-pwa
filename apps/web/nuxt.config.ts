@@ -14,11 +14,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/richtext.css'],
   typescript: {
-    typeCheck: {
-      vueTsc: {
-        tsconfigPath: 'tsconfig.typecheck.json',
-      },
-    },
+    typeCheck: 'build',
   },
   app: appConfiguration,
   experimental: {
