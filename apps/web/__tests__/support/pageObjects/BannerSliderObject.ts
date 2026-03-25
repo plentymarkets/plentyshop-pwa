@@ -45,10 +45,6 @@ export class BannerSliderObject extends PageObject {
     cy.get('[data-testid="view-title"] button').first().click();
   }
 
-  addSlide() {
-    cy.get('[data-testid="actions-add-slide-button"]').click();
-  }
-
   deleteSlide() {
     cy.get('[data-testid="actions-delete-item-0"]').click();
   }
