@@ -14,6 +14,7 @@ const blockTypeNames: Record<string, string> = {
   ItemData: 'Item Data',
   Banner: 'Image Banner',
   UtilityBar: 'Utility Bar',
+  HeaderContainer: 'Header Container',
 };
 
 export const getBlockDisplayName = (blockName: string): string => {

@@ -15,6 +15,7 @@ const routeRef = ref({
 const localeRef = ref('en');
 const blockUuidRef = ref<string | undefined>(undefined);
 const templatesRef = ref<Block[]>([]);
+const headerContainerCacheRef = ref<{ content: Block[] } | null>(null);
 
 const findOrDeleteBlockByUuid = vi.fn();
 const setContent = vi.fn();
@@ -58,6 +59,7 @@ mockNuxtImport('useNuxtApp', () => () => ({
 
 mockNuxtImport('useBlockTemplates', () => () => ({
   data: templatesRef,
+  headerContainerCache: headerContainerCacheRef,
 }));
 
 mockNuxtImport('useBlockManager', () => () => ({
@@ -98,6 +100,7 @@ describe('useUtilityBarConfiguration', () => {
     });
 
     findOrDeleteBlockByUuid.mockReturnValue(null);
+    headerContainerCacheRef.value = null;
   });
 
   it('should use block resolved by uuid and sync block content into state', () => {
@@ -140,6 +143,25 @@ describe('useUtilityBarConfiguration', () => {
     const { utilityBarBlock } = useUtilityBarConfiguration();
 
     expect(utilityBarBlock.value).toBeNull();
+  });
+
+  it('should resolve block from headerContainerCache when uuid is not found in data', () => {
+    const block = createUtilityBarBlock('header-uuid', {
+      ...createContent(),
+      search: { displayMode: 'icon-only' },
+    });
+
+    blockUuidRef.value = 'header-uuid';
+    templatesRef.value = [];
+    headerContainerCacheRef.value = { content: [block] };
+
+    findOrDeleteBlockByUuid.mockReturnValueOnce(null).mockReturnValueOnce(block);
+
+    const { utilityBarBlock, content } = useUtilityBarConfiguration();
+
+    expect(utilityBarBlock.value).toBe(block);
+    expect(setContent).toHaveBeenCalledWith(block.content);
+    expect(content.value.search.displayMode).toBe('icon-only');
   });
 
   it('should expose utility bar state helpers from useUtilityBarState', () => {

@@ -10,27 +10,34 @@
       :aria-labelledby="ariaLabelledBy"
       :aria-label="ariaLabelResolved"
     >
-      <button
+      <label
         v-for="(opt, idx) in options"
         :key="String(opt.value)"
-        type="button"
         :data-testid="opt.testId ?? `${testIdPrefix}-${String(opt.value)}`"
-        class="flex items-center justify-center px-4 py-2 text-sm"
+        class="flex items-center justify-center px-4 py-2 text-sm cursor-pointer select-none"
         :class="itemClass(opt.value, Number(idx))"
-        role="radio"
-        :aria-checked="modelValue === opt.value"
-        @click="onSelect(opt.value)"
       >
+        <input
+          type="radio"
+          class="sr-only"
+          :name="groupName"
+          :value="String(opt.value)"
+          :checked="modelValue === opt.value"
+          @change="onSelect(opt.value)"
+        />
         <SfIconCheck :class="{ invisible: modelValue !== opt.value }" class="mr-1 w-[1.1rem]" />
-        {{ resolveLabel(opt) }}
-      </button>
+        <span class="flex flex-col items-center">
+          <span>{{ resolveLabel(opt) }}</span>
+          <span v-if="opt.subLabel" class="text-xs font-normal text-gray-500">{{ opt.subLabel }}</span>
+        </span>
+      </label>
     </div>
   </fieldset>
 </template>
 
-<script setup lang="ts" generic="T extends OptionValue">
+<script setup lang="ts" generic="T extends string | number">
 import { SfIconCheck } from '@storefront-ui/vue';
-import type { Option, OptionValue } from './types';
+import type { Option } from './types';
 
 const props = withDefaults(
   defineProps<{
@@ -47,12 +54,13 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: T): void;
+  'update:modelValue': [value: T];
 }>();
 
 const { modelValue, options, legend, ariaLabel, testIdPrefix } = toRefs(props);
 
 const legendId = `options-tabs-legend-${useId()}`;
+const groupName = `options-tabs-group-${useId()}`;
 
 const ariaLabelledBy = computed<string | undefined>(() => (legend.value ? legendId : undefined));
 
@@ -78,8 +86,7 @@ const itemClass = (value: T, idx: number) => {
     'w-1/2': options.value.length === 2,
     'w-1/3': options.value.length === 3,
     'flex-1': options.value.length !== 2 && options.value.length !== 3,
-    'cursor-pointer': true,
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-inset': true,
+    'has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary-700 has-[:focus-visible]:ring-inset': true,
     'hover:bg-gray-50': !isActive,
   };
 };

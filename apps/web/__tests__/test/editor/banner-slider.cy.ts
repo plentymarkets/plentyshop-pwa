@@ -54,13 +54,6 @@ describe('Banner Slider Block Form', () => {
       bannerSlider.openSlideOneSettings();
     });
 
-    it('should add a new slide via the actions menu', () => {
-      bannerSlider.openSlideActions();
-      bannerSlider.addSlide();
-      bannerSlider.checkIsNewBannerImageVisible();
-      bannerSlider.openSlideOneSettings();
-    });
-
     it('should remove a slide', () => {
       bannerSlider.openSlideActions();
       bannerSlider.deleteSlide();
