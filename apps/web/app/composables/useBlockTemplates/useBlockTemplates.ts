@@ -390,7 +390,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
     const config = useRuntimeConfig().public;
 
-    const h1Block = (() => {
+    const firstTextContentBlock = (() => {
       for (const block of blocks) {
         if (isHeaderContainerBlock(block) || isHeaderBlock(block)) continue;
         if (blocksToMigrateTextContent.includes(block.name)) return block;
@@ -416,7 +416,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           block.content = migrateTextCardContent(
             block.content as Partial<TextCardContent>,
             config.enableRichTextEditorV2,
-            block === h1Block,
+            block === firstTextContentBlock,
           );
         }
 
