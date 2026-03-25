@@ -53,6 +53,14 @@ export class TableOfContentsObject extends PageObject {
     return cy.getByTestId('block-placeholder');
   }
 
+  getBlockIcon(uuid: string) {
+    return cy.getByTestId(`toc-block-icon-${uuid}`);
+  }
+
+  get allBlockIcons() {
+    return cy.get('[data-testid^="toc-block-icon-"]');
+  }
+
   openTableOfContents() {
     this.tableOfContentsButton.should('be.visible').click();
     return this;
@@ -197,6 +205,14 @@ export class TableOfContentsObject extends PageObject {
   checkBothDrawersStillVisible() {
     this.tableOfContentsDrawer.should('be.visible');
     this.blocksConfigurationDrawer.should('be.visible');
+    return this;
+  }
+
+  checkBlockIconsExist() {
+    this.allBlockIcons.should('have.length.greaterThan', 0);
+    this.allBlockIcons.each(($icon) => {
+      cy.wrap($icon).should('exist');
+    });
     return this;
   }
 }
