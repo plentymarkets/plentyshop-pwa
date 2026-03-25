@@ -10,19 +10,10 @@
     </template>
 
     <div>
-      <draggable
-        v-if="sections.length"
-        :model-value="sections"
-        item-key="id"
-        handle=".drag-sections-handle"
-        class=""
-        :filter="'.no-drag'"
-        @update:model-value="$emit('update:sections', $event)"
-      >
-        <template #item="{ element: section, index }">
+      <div v-if="sections.length" class="space-y-0">
+        <template v-for="(section, index) in sections" :key="section.id">
           <div
-            :key="section.id"
-            class="mb-3 flex items-center justify-between transition-colors"
+            class="flex items-center justify-between transition-colors"
             :style="
               currentEditingSectionIndex === index
                 ? { backgroundColor: 'rgba(83, 138, 234, 0.1)', borderLeft: '4px solid #538AEA' }
@@ -31,14 +22,6 @@
           >
             <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4">
               <div class="flex items-center gap-3 flex-1 min-w-0">
-                <button
-                  class="drag-sections-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
-                  :aria-label="getEditorTranslation('drag-reorder-aria')"
-                  :data-testid="`actions-drag-section-handle-${index}`"
-                >
-                  <NuxtImg width="18" height="18" :src="dragIcon" />
-                </button>
-
                 <span
                   class="text-sm font-medium truncate"
                   :class="section.visible !== false ? 'text-gray-700' : 'text-gray-400'"
@@ -91,15 +74,13 @@
             </div>
           </div>
         </template>
-      </draggable>
+      </div>
     </div>
   </UiAccordionItem>
 </template>
 
 <script setup lang="ts">
 import { SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
-import draggable from 'vuedraggable/src/vuedraggable';
-import dragIcon from '~/assets/icons/paths/drag.svg';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { UtilityBarSection, SectionType } from '../types';
 
@@ -114,10 +95,6 @@ defineProps<{
   toggleSectionVisibility: (index: number) => void;
 }>();
 
-defineEmits<{
-  'update:sections': [sections: UtilityBarSection[]];
-}>();
-
 const isOpen = defineModel<boolean>('open', { default: true });
 </script>
 
@@ -126,7 +103,6 @@ const isOpen = defineModel<boolean>('open', { default: true });
   "en": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "logo-section-label": "Logo",
@@ -136,7 +112,6 @@ const isOpen = defineModel<boolean>('open', { default: true });
   "de": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "logo-section-label": "Logo",
