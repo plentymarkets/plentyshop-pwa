@@ -53,17 +53,15 @@ const emit = defineEmits<{
 
 const elementsOpen = ref(true);
 const editingBlockIndex = ref<number | undefined>(undefined);
+const editingBlockName = ref<string | undefined>(undefined);
 const blockLabels = ref<string[]>([]);
 const currentActiveBlockIndex = ref<number>(-1);
 const layoutOpen = ref(true);
 
 const blockForm = computed(() => {
-  if (editingBlockIndex.value === undefined) return null;
+  if (!editingBlockName.value) return null;
 
-  const block = blocks.value[editingBlockIndex.value];
-  if (!block) return null;
-
-  const loader = getBlockFormLoader(block.name);
+  const loader = getBlockFormLoader(editingBlockName.value);
   return loader ? defineAsyncComponent(loader) : null;
 });
 
@@ -106,12 +104,14 @@ const resolveBlockLabels = async () => {
 
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
+  editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
   currentActiveBlockIndex.value = index;
   emit('set-edit-title', blockLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true) => {
   editingBlockIndex.value = undefined;
+  editingBlockName.value = undefined;
   currentActiveBlockIndex.value = -1;
   if (shouldEmit) {
     emit('clear-edit-title');
