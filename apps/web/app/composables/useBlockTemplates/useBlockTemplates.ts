@@ -390,8 +390,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
     const config = useRuntimeConfig().public;
 
-    const migrate = (blocks: Block[], isRootLevel = true) => {
+    const isRootLevelTextContent = (currentBlock: Block) => {
+      if(isHeaderContainerBlock(currentBlock) || isHeaderBlock(currentBlock)) return false;
+      
+      return true;
+    }
+
+    const migrate = (blocks: Block[]) => {
       blocks.forEach((block, index) => {
+        console.table({ blockName: block.name, blockType: block.type, isRootLevelTextContent: isRootLevelTextContent(block), index });
         if (block.name === 'Image' && block.content) {
           block.content = migrateImageContent(block.content);
         }
@@ -401,12 +408,10 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (blocksToMigrateTextContent.includes(block.name) && block.content) {
-          const isFirstBlock = isRootLevel && index === 0;
-
           block.content = migrateTextCardContent(
             block.content as Partial<TextCardContent>,
             config.enableRichTextEditorV2,
-            isFirstBlock,
+            isRootLevelTextContent(block),
           );
         }
 
@@ -420,7 +425,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (Array.isArray(block.content)) {
-          migrate(block.content, false);
+          migrate(block.content);
         }
       });
     };
