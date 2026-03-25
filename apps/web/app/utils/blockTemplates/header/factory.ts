@@ -95,7 +95,7 @@ export function createNavigation(): Block {
       color: {
         backgroundColor: '#ffffff',
         textColor: '#161A16',
-        hoverBackgroundColor: 'rgb(var(--colors-secondary-100))',
+        hoverBackgroundColor: 'rgb(var(--colors-2-secondary-100) / var(--tw-bg-opacity, 1))',
       },
     },
   };
