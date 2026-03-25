@@ -13,16 +13,16 @@
       <label
         v-for="(opt, idx) in options"
         :key="String(opt.value)"
-        class="flex items-center justify-center px-4 py-2 text-sm cursor-pointer"
+        :data-testid="opt.testId ?? `${testIdPrefix}-${String(opt.value)}`"
+        class="flex items-center justify-center px-4 py-2 text-sm cursor-pointer select-none"
         :class="itemClass(opt.value, Number(idx))"
       >
         <input
           type="radio"
           class="sr-only"
-          :name="props.testIdPrefix"
+          :name="groupName"
           :value="String(opt.value)"
           :checked="modelValue === opt.value"
-          :data-testid="opt.testId ?? `${testIdPrefix}-${String(opt.value)}`"
           @change="onSelect(opt.value)"
         />
         <SfIconCheck :class="{ invisible: modelValue !== opt.value }" class="mr-1 w-[1.1rem]" />
@@ -60,6 +60,7 @@ const emit = defineEmits<{
 const { modelValue, options, legend, ariaLabel, testIdPrefix } = toRefs(props);
 
 const legendId = `options-tabs-legend-${useId()}`;
+const groupName = `options-tabs-group-${useId()}`;
 
 const ariaLabelledBy = computed<string | undefined>(() => (legend.value ? legendId : undefined));
 

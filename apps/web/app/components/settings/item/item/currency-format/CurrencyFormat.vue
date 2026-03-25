@@ -10,24 +10,26 @@
 </template>
 
 <script setup lang="ts">
+import type { CurrencyFormat } from './types';
+
 const { updateSetting, getSetting } = useSiteSettings('shopCurrencyFormat');
 
 const currencyFormatOptions = computed(() => [
   {
-    value: 'symbol',
+    value: 'symbol' as CurrencyFormat,
     label: getEditorTranslation('option-symbol-label'),
     subLabel: getEditorTranslation('option-symbol-sublabel'),
   },
   {
-    value: 'code',
+    value: 'code' as CurrencyFormat,
     label: getEditorTranslation('option-iso-code-label'),
     subLabel: getEditorTranslation('option-iso-code-sublabel'),
   },
 ]);
 
-const currencyFormat = computed({
-  get: () => getSetting(),
-  set: (value) => updateSetting(value),
+const currencyFormat = computed<CurrencyFormat>({
+  get: () => (getSetting() as CurrencyFormat) || 'symbol',
+  set: (value: CurrencyFormat) => updateSetting(value),
 });
 </script>
 
