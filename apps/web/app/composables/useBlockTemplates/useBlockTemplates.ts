@@ -390,8 +390,27 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
     const config = useRuntimeConfig().public;
 
-    const migrate = (blocks: Block[], isRootLevel = true) => {
-      blocks.forEach((block, index) => {
+    const firstTextContentBlock = (() => {
+      let headerContainerBlock: Block = {} as Block;
+      for (const block of blocks) {
+        if (isHeaderContainerBlock(block)) headerContainerBlock = block;
+        if (
+          (Array.isArray(headerContainerBlock.content) && headerContainerBlock?.content.includes(block)) ||
+          isHeaderBlock(block) ||
+          isHeaderContainerBlock(block)
+        )
+          continue;
+        if (blocksToMigrateTextContent.includes(block.name)) return block;
+        if (Array.isArray(block.content)) {
+          const firstChild = block.content.find((child) => blocksToMigrateTextContent.includes(child.name));
+          if (firstChild) return firstChild;
+        }
+      }
+      return undefined;
+    })();
+
+    const migrate = (blocks: Block[]) => {
+      blocks.forEach((block) => {
         if (block.name === 'Image' && block.content) {
           block.content = migrateImageContent(block.content);
         }
@@ -401,12 +420,12 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (blocksToMigrateTextContent.includes(block.name) && block.content) {
-          const isFirstBlock = isRootLevel && index === 0;
+          const isFirstTextContentBlock = block === firstTextContentBlock;
 
           block.content = migrateTextCardContent(
             block.content as Partial<TextCardContent>,
             config.enableRichTextEditorV2,
-            isFirstBlock,
+            isFirstTextContentBlock,
           );
         }
 
@@ -420,7 +439,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (Array.isArray(block.content)) {
-          migrate(block.content, false);
+          migrate(block.content);
         }
       });
     };

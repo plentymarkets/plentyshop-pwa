@@ -117,7 +117,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   toggleBlockVisibility() {
-    this.visibilityIcons.eq(1).click({ force: true });
+    this.visibilityIcons.eq(0).click({ force: true });
     cy.wait(800);
     return this;
   }
@@ -143,7 +143,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   deleteBlockFromToc() {
-    this.deleteIcons.eq(1).click({ force: true });
+    this.deleteIcons.eq(0).click({ force: true });
     cy.wait(500);
     return this;
   }
