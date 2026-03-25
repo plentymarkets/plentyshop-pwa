@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@plentymarkets/shop-api": "^0.161.0",
-    "@plentymarkets/shop-core": "^1.21.14",
+    "@plentymarkets/shop-core": "^1.22.3",
     "@plentymarkets/shop-module-gtag": "^1.2.2",
     "@plentymarkets/shop-module-mollie": "^1.5.1",
     "@tanstack/vue-virtual": "^3.13.18",
