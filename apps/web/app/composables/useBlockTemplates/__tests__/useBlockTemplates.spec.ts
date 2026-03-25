@@ -4,6 +4,7 @@ import { useBlockTemplates } from '../useBlockTemplates';
 import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
+import type { TextCardContent } from '~/components/blocks/TextCard/types';
 
 const mockFooterBlock: FooterBlock = {
   name: 'Footer',
@@ -554,9 +555,9 @@ describe('useBlockTemplates', () => {
 
       useBlockTemplates().setupBlocks(blocks);
 
-      expect((firstBanner.content as any)?.text?.htmlDescription).toContain('<h1>');
-      expect((secondBanner.content as any)?.text?.htmlDescription).toContain('<h2>');
-      expect((secondBanner.content as any)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((firstBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
+      expect((secondBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h2>');
+      expect((secondBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
     });
 
     it('should not set h1 on blocks inside the HeaderContainer', () => {
@@ -590,8 +591,8 @@ describe('useBlockTemplates', () => {
 
       useBlockTemplates().setupBlocks(blocks);
 
-      expect((headerInnerBlock.content as any)?.text?.htmlDescription).not.toContain('<h1>');
-      expect((firstContentBlock.content as any)?.text?.htmlDescription).toContain('<h1>');
+      expect((headerInnerBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((firstContentBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
     });
   });
 
