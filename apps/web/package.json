@@ -53,6 +53,7 @@
     "@nuxtjs/i18n": "^10.2.3",
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@savvywombat/tailwindcss-grid-areas": "^3.1.0",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@storefront-ui/typography": "^2.6.1",
     "@storefront-ui/vue": "^2.6.3",
     "@types/node": "^24.9.1",
