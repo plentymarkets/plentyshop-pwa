@@ -413,10 +413,12 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         }
 
         if (blocksToMigrateTextContent.includes(block.name) && block.content) {
+          const isFirstTextContentBlock = block === firstTextContentBlock;
+
           block.content = migrateTextCardContent(
             block.content as Partial<TextCardContent>,
             config.enableRichTextEditorV2,
-            block === firstTextContentBlock,
+            isFirstTextContentBlock,
           );
         }
 
