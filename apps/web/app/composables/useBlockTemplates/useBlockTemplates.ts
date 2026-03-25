@@ -390,15 +390,20 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
     const config = useRuntimeConfig().public;
 
-    const isRootLevelTextContent = (currentBlock: Block) => {
-      if(isHeaderContainerBlock(currentBlock) || isHeaderBlock(currentBlock)) return false;
-      
-      return true;
-    }
+    const h1Block = (() => {
+      for (const block of blocks) {
+        if (isHeaderContainerBlock(block) || isHeaderBlock(block)) continue;
+        if (blocksToMigrateTextContent.includes(block.name)) return block;
+        if (Array.isArray(block.content)) {
+          const firstChild = block.content.find((child) => blocksToMigrateTextContent.includes(child.name));
+          if (firstChild) return firstChild;
+        }
+      }
+      return undefined;
+    })();
 
     const migrate = (blocks: Block[]) => {
-      blocks.forEach((block, index) => {
-        console.table({ blockName: block.name, blockType: block.type, isRootLevelTextContent: isRootLevelTextContent(block), index });
+      blocks.forEach((block) => {
         if (block.name === 'Image' && block.content) {
           block.content = migrateImageContent(block.content);
         }
@@ -411,7 +416,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           block.content = migrateTextCardContent(
             block.content as Partial<TextCardContent>,
             config.enableRichTextEditorV2,
-            isRootLevelTextContent(block),
+            block === h1Block,
           );
         }
 
