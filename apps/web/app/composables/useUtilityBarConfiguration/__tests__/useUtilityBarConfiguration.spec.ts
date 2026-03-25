@@ -155,8 +155,6 @@ describe('useUtilityBarConfiguration', () => {
     templatesRef.value = [];
     headerContainerCacheRef.value = { content: [block] };
 
-    // First call: search in data.value → not found
-    // Second call: search in headerContainerCache.value.content → found
     findOrDeleteBlockByUuid.mockReturnValueOnce(null).mockReturnValueOnce(block);
 
     const { utilityBarBlock, content } = useUtilityBarConfiguration();
