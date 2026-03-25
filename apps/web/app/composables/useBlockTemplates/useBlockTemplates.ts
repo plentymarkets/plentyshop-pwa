@@ -394,7 +394,12 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       let headerContainerBlock: Block = {} as Block;
       for (const block of blocks) {
         if (isHeaderContainerBlock(block)) headerContainerBlock = block;
-        if((Array.isArray(headerContainerBlock.content) && headerContainerBlock?.content.includes(block)) || isHeaderBlock(block) || isHeaderContainerBlock(block)) continue;
+        if (
+          (Array.isArray(headerContainerBlock.content) && headerContainerBlock?.content.includes(block)) ||
+          isHeaderBlock(block) ||
+          isHeaderContainerBlock(block)
+        )
+          continue;
         if (blocksToMigrateTextContent.includes(block.name)) return block;
         if (Array.isArray(block.content)) {
           const firstChild = block.content.find((child) => blocksToMigrateTextContent.includes(child.name));
