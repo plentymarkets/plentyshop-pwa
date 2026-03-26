@@ -100,7 +100,7 @@ export const useBlockManager = () => {
 
     scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
 
-    const { selectedUuid } = useTableOfContents();
+    const selectedUuid = useState<string>('toc-selected-uuid');
     selectedUuid.value = newBlock.meta.uuid;
     openDrawerWithView('TableOfContents');
   };
