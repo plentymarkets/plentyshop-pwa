@@ -117,17 +117,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.siteConfigurationDrawerOpen = true;
     state.value.siteConfigurationDrawerView = null;
   };
-  if (import.meta.client) {
-    const route = useRoute();
-    watch(
-      () => route.fullPath,
-      () => {
-        if (state.value.blocksConfigurationDrawerView === 'blocksSettings') {
-          closeBlocksConfigurationDrawer();
-        }
-      },
-    );
-  }
 
   return {
     ...toRefs(state.value),
