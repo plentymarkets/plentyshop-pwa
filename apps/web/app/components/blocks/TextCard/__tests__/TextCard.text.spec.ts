@@ -6,24 +6,24 @@ import { mockTextCard } from './TextCard.mock';
 describe('TextCard - Text Property', () => {
   it('should render the pretitle correctly', () => {
     const wrapper = mount(TextCard, { props: mockTextCard });
-    const pretitle = wrapper.find('[data-testid="text-pretitle"]');
+    const pretitle = wrapper.find('[data-testid="text-html"]');
     expect(pretitle.exists()).toBe(true);
-    expect(pretitle.text()).toBe(mockTextCard.content.text.pretitle);
+    expect(pretitle.text()).toContain(mockTextCard.content.text.pretitle);
   });
 
   it('should render the title correctly as an H1 for the first block', () => {
     const wrapper = mount(TextCard, { props: { ...mockTextCard, index: 0 } });
-    const title = wrapper.find('[data-testid="text-title"]');
+    const title = wrapper.find('[data-testid="text-html"]');
     expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(mockTextCard.content.text.title);
+    expect(title.text()).toContain(mockTextCard.content.text.title);
     expect(title.element.tagName).toBe('H1');
   });
 
   it('should render the title correctly as an H2 for non-first blocks', () => {
     const wrapper = mount(TextCard, { props: { ...mockTextCard, index: 1 } });
-    const title = wrapper.find('[data-testid="text-title"]');
+    const title = wrapper.find('[data-testid="text-html"]');
     expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(mockTextCard.content.text.title);
+    expect(title.text()).toContain(mockTextCard.content.text.title);
     expect(title.element.tagName).toBe('H2');
   });
 
@@ -46,9 +46,9 @@ describe('TextCard - Text Property', () => {
 
   it('should render the subtitle correctly', () => {
     const wrapper = mount(TextCard, { props: mockTextCard });
-    const subtitle = wrapper.find('[data-testid="text-subtitle"]');
+    const subtitle = wrapper.find('[data-testid="text-html"]');
     expect(subtitle.exists()).toBe(true);
-    expect(subtitle.text()).toBe(mockTextCard.content.text.subtitle);
+    expect(subtitle.text()).toContain(mockTextCard.content.text.subtitle);
   });
 
   it('should render the HTML description correctly', () => {

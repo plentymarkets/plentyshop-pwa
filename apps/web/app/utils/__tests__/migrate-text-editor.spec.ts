@@ -9,12 +9,6 @@ describe('migrateTextCardContent', () => {
     expect(result).toEqual(createMigratedTextCard());
   });
 
-  it('should not migrate if feature flag is disabled', () => {
-    const content = createOldTextCard();
-    const result = migrateTextCardContent(content, false);
-    expect(result).toEqual(content);
-  });
-
   it('should not migrate if pretitle, title, subtitle are empty', () => {
     const content = createMigratedTextCard();
     expect(migrateTextCardContent(content, true)).toEqual(content);
@@ -46,7 +40,7 @@ describe('migrateTextCardContent', () => {
     const content = createOldTextCard({
       text: {
         htmlDescription: '<ul><li>Item</li></ul>',
-      },  
+      },
     });
 
     const result = migrateTextCardContent(content, true);

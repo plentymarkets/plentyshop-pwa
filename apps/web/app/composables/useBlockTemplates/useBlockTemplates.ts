@@ -421,10 +421,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (blocksToMigrateTextContent.includes(block.name) && block.content) {
           const isFirstTextContentBlock = block === firstTextContentBlock;
 
-          block.content = migrateTextCardContent(
-            block.content as Partial<TextCardContent>,
-            isFirstTextContentBlock,
-          );
+          block.content = migrateTextCardContent(block.content as Partial<TextCardContent>, isFirstTextContentBlock);
         }
 
         if (block.name === 'Banner' && block.content) {

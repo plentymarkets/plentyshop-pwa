@@ -30,6 +30,7 @@
         }"
         :data-testid="'banner-content-' + meta.uuid"
       >
+        {{ banner.text }}
         <TextContent :text="banner.text" :index="props.slideIndex" />
         <UiButton
           v-if="banner.button && banner.button.label && banner.button.link"
@@ -62,9 +63,7 @@ const props = defineProps<BannerProps & { slideIndex?: number }>();
 const banner = computed(() => props.content);
 const { hexToRgba, getImageHeight, getTextAlignment, getContentPosition } = useBlockContentHelper();
 
-const rteAlignment = computed(() =>
-  banner.value.button?.alignment,
-);
+const rteAlignment = computed(() => banner.value.button?.alignment);
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
