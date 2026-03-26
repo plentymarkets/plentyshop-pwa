@@ -17,7 +17,7 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     nuxtApp.$i18n.locale.value,
   );
 
-  const { headerContainerBlock } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
+  const { headerContainerBlock } = useHeaderBlock(nuxtApp.$i18n.locale.value);
   const { findOrDeleteBlockByUuid } = useBlockManager();
 
   const targetUuid = computed(() => uuid || blockUuid.value);

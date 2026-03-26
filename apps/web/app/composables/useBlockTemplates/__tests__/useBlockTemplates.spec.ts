@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlockTemplates } from '../useBlockTemplates';
-import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
+import type { FooterBlock, FooterContent } from '~/components/blocks/Footer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 
@@ -144,103 +144,6 @@ describe('useBlockTemplates', () => {
       data: { value: null },
       error: { value: null },
     }));
-  });
-
-  describe('extractFooterContentFromBlocks', () => {
-    it.each([
-      {
-        name: 'should extract footer content from valid JSON blocks array',
-        input: JSON.stringify([
-          { name: 'Header', content: { title: 'Header' } },
-          { name: 'Footer', content: mockFooterBlock.content },
-          { name: 'Content', content: { body: 'Content' } },
-        ]),
-        expected: mockFooterBlock.content,
-      },
-      {
-        name: 'should return null if no footer block is found',
-        input: JSON.stringify([
-          { name: 'Header', content: { title: 'Header' } },
-          { name: 'Content', content: { body: 'Content' } },
-        ]),
-        expected: null,
-      },
-      {
-        name: 'should return null if blocks is not an array',
-        input: JSON.stringify({ name: 'Footer', content: mockFooterBlock.content }),
-        expected: null,
-      },
-      {
-        name: 'should return null if footer block has no content',
-        input: JSON.stringify([{ name: 'Footer' }]),
-        expected: null,
-      },
-    ])('$name', ({ input, expected }) => {
-      const { extractFooterContentFromBlocks } = useBlockTemplates();
-      expect(extractFooterContentFromBlocks(input)).toEqual(expected);
-    });
-
-    it('should return null and log warning for invalid JSON', () => {
-      const consoleSpy = setupConsoleSpy();
-      const { extractFooterContentFromBlocks } = useBlockTemplates();
-
-      expect(extractFooterContentFromBlocks('invalid json')).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to extract footer from blocks:', expect.any(Error));
-      consoleSpy.mockRestore();
-    });
-  });
-
-  describe('factory functions', () => {
-    it('createFooterBlock - should create a footer block with provided content', () => {
-      const content = mockFooterBlock.content as FooterContent;
-      const result = useBlockTemplates().createFooterBlock(content);
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-      expect(result.content).toBe(content);
-    });
-
-    it('createFooterBlock - should create a footer block with custom meta', () => {
-      const content = mockFooterBlock.content as FooterContent;
-      const meta = { uuid: 'custom-uuid', isGlobalTemplate: false };
-      const result = useBlockTemplates().createFooterBlock(content, meta);
-      expect(result.meta.uuid).toBe('custom-uuid');
-      expect(result.meta.isGlobalTemplate).toBe(false);
-    });
-
-    it('createDefaultFooterBlock - should create a default footer block', () => {
-      const result = useBlockTemplates().createDefaultFooterBlock();
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-      expect(result.meta.isGlobalTemplate).toBe(true);
-    });
-  });
-
-  describe('block operations', () => {
-    it('mapFooterData - should map block to footer block with defaults', () => {
-      const inputBlock: Block = {
-        name: 'Footer',
-        type: 'content',
-        meta: { uuid: 'test-uuid' },
-        content: { column1: { title: 'Custom Legal' } },
-      };
-      const result = useBlockTemplates().mapFooterData(inputBlock);
-      expect(result.name).toBe('Footer');
-      expect((result.content as FooterContent).column1.title).toBe('Custom Legal');
-      expect((result.content as FooterContent).column2).toBeDefined();
-    });
-
-    it('mapFooterData - should return default footer if input is null', () => {
-      const result = useBlockTemplates().mapFooterData(null);
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-    });
-  });
-
-  it('FOOTER_SWITCH_DEFINITIONS - should expose footer switch definitions', () => {
-    const { FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates();
-    expect(FOOTER_SWITCH_DEFINITIONS).toBeDefined();
-    expect(Array.isArray(FOOTER_SWITCH_DEFINITIONS)).toBe(true);
-    expect(FOOTER_SWITCH_DEFINITIONS.length).toBeGreaterThan(0);
   });
 
   describe('getBlocksServer', () => {
@@ -476,13 +379,12 @@ describe('useBlockTemplates', () => {
 
   describe('State management', () => {
     it('should expose readonly refs for state properties', () => {
-      const { data, cleanData, loading, categoryTemplateData, headerContainerBlock, footerBlock } = useBlockTemplates();
+      const { data, cleanData, loading, categoryTemplateData, replaceBlock } = useBlockTemplates();
       expect(data).toBeDefined();
       expect(cleanData).toBeDefined();
       expect(loading).toBeDefined();
       expect(categoryTemplateData).toBeDefined();
-      expect(headerContainerBlock).toBeDefined();
-      expect(footerBlock).toBeDefined();
+      expect(replaceBlock).toBeDefined();
     });
 
     it('should create unique state per identifier-type-locale combination', () => {

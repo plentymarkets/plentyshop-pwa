@@ -5,199 +5,36 @@ import type {
   UseBlockTemplatesState,
   GetBlocks,
   SaveBlocks,
+  ReplaceBlock,
 } from './types';
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
-import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
+import type { FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { HeaderBlock } from '~/components/blocks/Header/types';
 import {
   HEADER_CONTAINER_BLOCK_NAME,
   isHeaderContainerBlock,
-  createHeaderContainerBlock,
   createDefaultHeaderContainerBlock,
 } from '~/utils/blockTemplates/header/factory';
-import { v4 as uuid } from 'uuid';
+import {
+  FOOTER_BLOCK_NAME,
+  isFooterBlock,
+  createDefaultFooterBlock,
+} from '~/utils/blockTemplates/footer/factory';
 
-const FOOTER_BLOCK_NAME = 'Footer' as const;
+export { isFooterBlock } from '~/utils/blockTemplates/footer/factory';
+export { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
+
 const HEADER_BLOCK_NAME = 'Header' as const;
 
-const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
-  {
-    columnGroup: 'legal',
-    key: 'showTermsAndConditions',
-    shopTranslationKey: 'legal.termsAndConditions',
-    editorTranslationKey: 'column-1-terms-and-conditions-label',
-    link: paths.termsAndConditions,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showCancellationRights',
-    shopTranslationKey: 'legal.cancellationRights',
-    editorTranslationKey: 'column-1-cancellation-rights-label',
-    link: paths.cancellationRights,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showCancellationForm',
-    shopTranslationKey: 'legal.cancellationForm',
-    editorTranslationKey: 'column-1-cancellation-form-label',
-    link: paths.cancellationForm,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showLegalDisclosure',
-    shopTranslationKey: 'legal.legalDisclosure',
-    editorTranslationKey: 'column-1-legal-disclosure-label',
-    link: paths.legalDisclosure,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showPrivacyPolicy',
-    shopTranslationKey: 'legal.privacyPolicy',
-    editorTranslationKey: 'column-1-privacy-policy-label',
-    link: paths.privacyPolicy,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showDeclarationOfAccessibility',
-    shopTranslationKey: 'legal.declarationOfAccessibility',
-    editorTranslationKey: 'column-1-declaration-of-accessibility-label',
-    link: paths.declarationOfAccessibility,
-  },
-  {
-    columnGroup: 'services',
-    key: 'showContactLink',
-    shopTranslationKey: 'footer.contact.label',
-    editorTranslationKey: 'column-2-contact-label',
-    link: paths.contact,
-  },
-  {
-    columnGroup: 'services',
-    key: 'showRegisterLink',
-    shopTranslationKey: 'footer.register.label',
-    editorTranslationKey: 'column-2-register-label',
-    link: paths.register,
-  },
-];
+export const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock =>
+  block?.name === HEADER_BLOCK_NAME;
 
-const createDefaultFooterContent = (): FooterContent => {
-  const runtimeConfig = useRuntimeConfig();
-
-  return {
-    column1: {
-      title: t('footer.legal.label'),
-      showTermsAndConditions: true,
-      showCancellationRights: true,
-      showCancellationForm: true,
-      showLegalDisclosure: true,
-      showPrivacyPolicy: true,
-      showDeclarationOfAccessibility: true,
-    },
-    column2: {
-      title: t('footer.services.label'),
-      description: '',
-      showContactLink: true,
-      showRegisterLink: true,
-    },
-    column3: { title: '', description: '' },
-    column4: { title: '', description: '' },
-    footnote: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
-    footnoteAlign: 'right',
-    colors: {
-      background: '#cfe4ec',
-      text: '#1c1c1c',
-      footnoteBackground: '#161a16',
-      footnoteText: '#959795',
-    },
-  };
-};
-
-export const isFooterBlock = (block: Block | null | undefined): block is FooterBlock => {
-  return block?.name === FOOTER_BLOCK_NAME;
-};
-
-export const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock => {
-  return block?.name === HEADER_BLOCK_NAME;
-};
-
-/**
- * Check if a block is global (i.e., a system/global block like Footer or HeaderContainer)
- * @param block - The block to check
- * @returns true if the block is global, false if it's a regular/persistent block
- */
-export const isGlobalBlock = (block: Block | null | undefined): boolean => {
-  return isFooterBlock(block) || isHeaderContainerBlock(block);
-};
-
-const createFooterBlockHelper = (
-  content: FooterContent,
-  meta?: { uuid?: string; isGlobalTemplate?: boolean },
-): FooterBlock => {
-  return {
-    name: FOOTER_BLOCK_NAME,
-    type: 'content',
-    meta: {
-      uuid: meta?.uuid || uuid(),
-      isGlobalTemplate: meta?.isGlobalTemplate ?? true,
-    },
-    content,
-  };
-};
-
-const createDefaultFooterBlockHelper = (): FooterBlock => createFooterBlockHelper(createDefaultFooterContent());
-
-const extractFooterContentFromBlocksHelper = (content: string): FooterContent | null => {
-  try {
-    const blocks = JSON.parse(content);
-    const footerBlock = Array.isArray(blocks) ? blocks.find((block: Block) => isFooterBlock(block)) : null;
-
-    return footerBlock?.content || null;
-  } catch (error) {
-    console.warn('Failed to extract footer from blocks:', error);
-    return null;
-  }
-};
-
-const mapFooterDataHelper = (data: Block | null): FooterBlock => {
-  if (!data) return createDefaultFooterBlockHelper();
-
-  const defaultContent = createDefaultFooterContent();
-  const dataContent = data.content as FooterContent | undefined;
-
-  return createFooterBlockHelper(
-    {
-      ...defaultContent,
-      ...dataContent,
-      column1: {
-        ...defaultContent.column1,
-        ...dataContent?.column1,
-      },
-      column2: {
-        ...defaultContent.column2,
-        ...dataContent?.column2,
-      },
-      column3: {
-        ...defaultContent.column3,
-        ...dataContent?.column3,
-      },
-      column4: {
-        ...defaultContent.column4,
-        ...dataContent?.column4,
-      },
-      colors: {
-        ...defaultContent.colors,
-        ...dataContent?.colors,
-      },
-    },
-    {
-      uuid: data.meta?.uuid,
-      isGlobalTemplate: data.meta?.isGlobalTemplate,
-    },
-  );
-};
+export const isGlobalBlock = (block: Block | null | undefined): boolean =>
+  isFooterBlock(block) || isHeaderContainerBlock(block);
 
 export const useBlockTemplates: UseBlockTemplatesReturn = (
   identifier: string = 'unknown',
@@ -213,73 +50,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     loading: false,
   }));
 
-  const createFooterBlock = createFooterBlockHelper;
-  const createDefaultFooterBlock = createDefaultFooterBlockHelper;
-  const extractFooterContentFromBlocks = extractFooterContentFromBlocksHelper;
-  const mapFooterData = mapFooterDataHelper;
-
-  /** Derived header container block from state data — single source of truth */
-  const headerContainerBlock = computed<HeaderContainerBlock | null>(
-    () => (state.value.data.find(isHeaderContainerBlock) as HeaderContainerBlock | undefined) ?? null,
-  );
-
-  /** Derived footer block from state data — single source of truth */
-  const footerBlock = computed<FooterBlock | null>(
-    () => (state.value.data.find(isFooterBlock) as FooterBlock | undefined) ?? null,
-  );
-
-  /** Resets the footer block in data to the saved state, discarding unsaved changes */
-  const resetFooterToSaved = async () => {
-    try {
-      const response = await useSdk().plentysystems.getBlocks({
-        identifier: 'index',
-        type: 'immutable',
-        blocks: FOOTER_BLOCK_NAME,
-      });
-
-      const fetched = response?.data?.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
-      const footerIndex = state.value.data.findIndex((block) => isFooterBlock(block));
-
-      if (footerIndex !== -1) {
-        state.value.data[footerIndex] = fetched
-          ? JSON.parse(JSON.stringify(fetched))
-          : createDefaultFooterBlockHelper();
-      }
-    } catch (error) {
-      console.warn('Failed to reset footer to saved:', error);
-      const footerIndex = state.value.data.findIndex((block) => isFooterBlock(block));
-      if (footerIndex !== -1) {
-        state.value.data[footerIndex] = createDefaultFooterBlockHelper();
-      }
-    }
-  };
-
-  const resetHeaderToSaved = async () => {
-    try {
-      const response = await useSdk().plentysystems.getBlocks({
-        identifier: 'index',
-        type: 'immutable',
-        blocks: HEADER_CONTAINER_BLOCK_NAME,
-      });
-
-      const headerBlock = response?.data?.find((block) => isHeaderContainerBlock(block)) as
-        | HeaderContainerBlock
-        | undefined;
-
-      const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));
-      if (headerIndex !== -1) {
-        if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
-          state.value.data[headerIndex] = JSON.parse(JSON.stringify(headerBlock));
-        } else {
-          state.value.data[headerIndex] = createDefaultHeaderContainerBlock();
-        }
-      }
-    } catch (error) {
-      console.warn('Failed to reset header to saved:', error);
-      const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));
-      if (headerIndex !== -1) {
-        state.value.data[headerIndex] = createDefaultHeaderContainerBlock();
-      }
+  /** Replaces the first block in data that matches the predicate with a new block */
+  const replaceBlock: ReplaceBlock = (predicate, newBlock) => {
+    const index = state.value.data.findIndex(predicate);
+    if (index !== -1) {
+      state.value.data[index] = newBlock;
     }
   };
 
@@ -378,7 +153,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   };
 
   /**
-   * Sets up blocks in state. This is the single gatekeeper for applying defaults.
+   * Sets up blocks in state. Single gatekeeper for applying defaults.
    * Always derives header container and footer from fetched blocks; falls back to defaults if not found.
    */
   const setupBlocks = (fetchedBlocks: Block[]) => {
@@ -390,24 +165,20 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     migrateAllBlocks(fetchedBlocks);
 
     // Extract header container and handle legacy flat header migration
-    let headerContainerToUse = fetchedBlocks.find((block) => isHeaderContainerBlock(block)) as
-      | HeaderContainerBlock
-      | undefined;
+    let headerContainerToUse = fetchedBlocks.find(isHeaderContainerBlock) as HeaderContainerBlock | undefined;
 
     if (headerContainerToUse && Array.isArray(headerContainerToUse.content) && headerContainerToUse.content.length === 0) {
-      const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
+      const flatHeader = fetchedBlocks.find(isHeaderBlock);
       if (flatHeader) headerContainerToUse = { ...headerContainerToUse, content: [flatHeader] } as HeaderContainerBlock;
     }
 
     const finalHeaderContainer =
-      headerContainerToUse &&
-      Array.isArray(headerContainerToUse.content) &&
-      headerContainerToUse.content.length > 0
+      headerContainerToUse && Array.isArray(headerContainerToUse.content) && headerContainerToUse.content.length > 0
         ? headerContainerToUse
         : createDefaultHeaderContainerBlock();
 
-    const fetchedFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
-    const finalFooter = fetchedFooter ?? createDefaultFooterBlockHelper();
+    const fetchedFooter = fetchedBlocks.find(isFooterBlock) as FooterBlock | undefined;
+    const finalFooter = fetchedFooter ?? createDefaultFooterBlock();
 
     const mainBlocks = fetchedBlocks.filter(
       (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
@@ -486,22 +257,13 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     updateBlocks,
     setupBlocks,
     setDefaultTemplate,
-    resetFooterToSaved,
-    resetHeaderToSaved,
-    createDefaultFooterBlock,
-    createFooterBlock,
-    extractFooterContentFromBlocks,
-    mapFooterData,
+    replaceBlock,
     isFooterBlock,
-    FOOTER_BLOCK_NAME,
-    FOOTER_SWITCH_DEFINITIONS,
-    headerContainerBlock,
-    footerBlock,
-    createHeaderContainerBlock,
-    createDefaultHeaderContainerBlock,
     isHeaderContainerBlock,
-    HEADER_CONTAINER_BLOCK_NAME,
     isHeaderBlock,
+    isGlobalBlock,
+    FOOTER_BLOCK_NAME,
+    HEADER_CONTAINER_BLOCK_NAME,
     HEADER_BLOCK_NAME,
     data: computed(() => state.value.data),
     renderableBlocks: computed(() => state.value.data.filter((block) => !isHeaderContainerBlock(block))),

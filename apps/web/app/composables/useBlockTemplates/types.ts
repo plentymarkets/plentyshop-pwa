@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
-import type { FooterBlock, FooterContent, FooterSwitchDefinition } from '~/components/blocks/Footer/types';
+import type { FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { HeaderBlock } from '~/components/blocks/Header/types';
 
@@ -18,18 +18,9 @@ export type GetBlocks = (identifier: number | string, type: string, block?: stri
 export type UpdateBlocks = (blocks: Block[]) => void;
 export type SetupBlocks = (blocks: Block[]) => void;
 export type SetDefaultTemplate = (blocks: Block[]) => void;
-export type ResetFooterToSaved = () => Promise<void>;
-export type ResetHeaderToSaved = () => Promise<void>;
-export type ExtractFooterContentFromBlocks = (content: string) => FooterContent | null;
-export type MapFooterData = (data: Block | null) => FooterBlock;
+export type ReplaceBlock = (predicate: (block: Block) => boolean, newBlock: Block) => void;
 export type IsFooterBlock = (block: Block | null | undefined) => block is FooterBlock;
 export type IsHeaderBlock = (block: Block | null | undefined) => block is HeaderBlock;
-
-export type CreateHeaderContainerBlock = (
-  content: Block[],
-  meta?: { uuid?: string; isGlobalTemplate?: boolean },
-) => HeaderContainerBlock;
-export type CreateDefaultHeaderContainerBlock = () => HeaderContainerBlock;
 export type IsHeaderContainerBlock = (block: Block | null | undefined) => block is HeaderContainerBlock;
 
 export interface UseBlockTemplates {
@@ -38,10 +29,6 @@ export interface UseBlockTemplates {
   cleanData: Readonly<Ref<UseBlockTemplatesState['cleanData']>>;
   categoryTemplateData: Readonly<Ref<UseBlockTemplatesState['categoryTemplateData']>>;
   loading: Readonly<Ref<boolean>>;
-  /** Derived header container block from state data */
-  headerContainerBlock: Readonly<Ref<HeaderContainerBlock | null>>;
-  /** Derived footer block from state data */
-  footerBlock: Readonly<Ref<FooterBlock | null>>;
   fetchCategoryTemplate: FetchCategoryTemplate;
   saveBlocks: SaveBlocks;
   getBlocks: GetBlocks;
@@ -49,20 +36,14 @@ export interface UseBlockTemplates {
   updateBlocks: UpdateBlocks;
   setupBlocks: SetupBlocks;
   setDefaultTemplate: SetDefaultTemplate;
-  resetFooterToSaved: ResetFooterToSaved;
-  resetHeaderToSaved: ResetHeaderToSaved;
-  createDefaultFooterBlock: () => FooterBlock;
-  createFooterBlock: (content: FooterContent, meta?: { uuid?: string; isGlobalTemplate?: boolean }) => FooterBlock;
-  extractFooterContentFromBlocks: ExtractFooterContentFromBlocks;
-  mapFooterData: MapFooterData;
+  /** Replaces the first block matching predicate in state data */
+  replaceBlock: ReplaceBlock;
   isFooterBlock: IsFooterBlock;
-  FOOTER_BLOCK_NAME: 'Footer';
-  FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
-  createHeaderContainerBlock: CreateHeaderContainerBlock;
-  createDefaultHeaderContainerBlock: CreateDefaultHeaderContainerBlock;
   isHeaderContainerBlock: IsHeaderContainerBlock;
-  HEADER_CONTAINER_BLOCK_NAME: 'HeaderContainer';
   isHeaderBlock: IsHeaderBlock;
+  isGlobalBlock: (block: Block | null | undefined) => boolean;
+  FOOTER_BLOCK_NAME: 'Footer';
+  HEADER_CONTAINER_BLOCK_NAME: 'HeaderContainer';
   HEADER_BLOCK_NAME: 'Header';
 }
 

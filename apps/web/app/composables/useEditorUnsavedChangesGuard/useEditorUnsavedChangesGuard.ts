@@ -14,11 +14,9 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const { settingsIsDirty } = useSiteSettings();
   const { closeDrawer } = useSiteConfiguration();
   const route = useRoute();
-  const { resetFooterToSaved, resetHeaderToSaved } = useBlockTemplates(
-    (route.meta.identifier as string) ?? 'unknown',
-    (route.meta.type as string) ?? 'unknown',
-    useNuxtApp().$i18n.locale.value,
-  );
+  const locale = useNuxtApp().$i18n.locale.value;
+  const { resetHeaderToSaved } = useHeaderBlock(locale);
+  const { resetFooterToSaved } = useFooterBlock(locale);
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);

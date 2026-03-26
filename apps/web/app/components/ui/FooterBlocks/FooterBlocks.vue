@@ -4,5 +4,5 @@
 
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
-const { footerBlock } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
+const { footerBlock } = useFooterBlock(nuxtApp.$i18n.locale.value);
 </script>
