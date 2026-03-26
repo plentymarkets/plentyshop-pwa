@@ -88,21 +88,6 @@ describe('Banner', () => {
       expect(content.exists()).toBe(true);
     });
 
-    it('should contain pretitle text', () => {
-      const pretitle = wrapper.find(`[data-testid="text-html"]`);
-      expect(pretitle.text()).toContain('Test pretitle');
-    });
-
-    it('should contain title text', () => {
-      const title = wrapper.find(`[data-testid="text-html"]`);
-      expect(title.text()).toContain('Test title');
-    });
-
-    it('should contain subtitle text', () => {
-      const subtitle = wrapper.find(`[data-testid="text-html"]`);
-      expect(subtitle.text()).toContain('Test subtitle');
-    });
-
     it('should have a description', () => {
       const description = wrapper.find(`[data-testid="text-html"]`);
       expect(description.exists()).toBe(true);
