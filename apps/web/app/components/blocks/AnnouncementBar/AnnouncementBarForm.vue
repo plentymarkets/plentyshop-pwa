@@ -8,19 +8,7 @@
       <h2>{{ getEditorTranslation('text-label') }}</h2>
     </template>
 
-    <EditorRichTextEditorForm v-model="editingText" :text-align="'center'">
-      <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
-        <SfTextarea
-          id="text-html-description"
-          v-model="editingText"
-          data-testid="textarea-description"
-          name="text-html-description"
-          rows="3"
-          class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
-        />
-      </div>
-    </EditorRichTextEditorForm>
+    <EditorRichTextEditorForm v-model="editingText" :text-align="'center'" />
   </UiAccordionItem>
 
   <UiAccordionItem
