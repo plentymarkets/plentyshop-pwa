@@ -68,8 +68,9 @@
 
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
-import type { CarouselStructureProps, SlideBlock } from './types';
+import type { CarouselStructureProps, SlideBlock, CarouselFormProps } from './types';
 
+const props = defineProps<CarouselFormProps>();
 const { blockUuid } = useSiteConfiguration();
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
 const { toggleBlockVisibility } = useBlocksVisibility();
@@ -105,7 +106,7 @@ const blockForm = computed(() => {
 });
 
 const carouselStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
+  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as CarouselStructureProps,
 );
 
 const { isFullWidth } = useFullWidthToggleForConfig(
