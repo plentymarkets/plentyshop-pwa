@@ -31,7 +31,11 @@
             <div>
               <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
               <TableOfContentsItem :item="blockToFlatBlock(block)" />
-              <TableOfContentsInsertBlockLine v-if="index < filteredDataForDisplay.length - 1" :block="block" class="toc-insert-line" />
+              <TableOfContentsInsertBlockLine
+                v-if="index < filteredDataForDisplay.length - 1"
+                :block="block"
+                class="toc-insert-line"
+              />
             </div>
           </template>
         </draggable>
