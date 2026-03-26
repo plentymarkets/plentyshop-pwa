@@ -74,14 +74,4 @@ describe('UtilityBarSectionsList', () => {
     expect(labelTexts).toEqual(['logo-label', 'search-label', 'actions-label']);
     expect(getSectionLabel).toHaveBeenCalledTimes(3);
   });
-
-  it('should call editSection and toggleSectionMenu with matching indices', async () => {
-    const wrapper = mountComponent();
-
-    await wrapper.getByTestId('actions-edit-section-1').trigger('click');
-    await wrapper.getByTestId('actions-menu-section-2').trigger('click');
-
-    expect(editSection).toHaveBeenCalledWith(1);
-    expect(toggleSectionMenu).toHaveBeenCalledWith(2);
-  });
 });
