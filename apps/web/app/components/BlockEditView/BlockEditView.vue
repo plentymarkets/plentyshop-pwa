@@ -48,7 +48,16 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 
-const { closeBlocksConfigurationDrawer, blockType, blockUuid } = useSiteConfiguration();
+const { closeBlocksConfigurationDrawer, blocksConfigurationDrawerView, blockType, blockUuid } = useSiteConfiguration();
+
+watch(
+  () => route.fullPath,
+  () => {
+    if (blocksConfigurationDrawerView.value === 'blocksSettings') {
+      closeBlocksConfigurationDrawer();
+    }
+  },
+);
 const { deleteBlock } = useBlockManager();
 
 const customTitle = ref<string | null>(null);
