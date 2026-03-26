@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
-const { headerContainerCache, fetchHeaderContainerBlock } = useBlockTemplates(
+const { headerContainerCache, updateBlocks } = useBlockTemplates(
   'index',
   'immutable',
   nuxtApp.$i18n.locale.value,
@@ -21,8 +21,16 @@ const headerBlocksClasses = computed(() => [
 
 watch(
   () => nuxtApp.$i18n.locale.value,
-  async () => {
-    await fetchHeaderContainerBlock(true);
+  async (newLocale) => {
+    const { getBlocks, data: newLocaleData } = useBlockTemplates('index', 'immutable', newLocale);
+    try {
+      await getBlocks('index', 'immutable');
+      if (newLocaleData.value.length > 0) {
+        updateBlocks(newLocaleData.value);
+      }
+    } catch (error) {
+      console.warn('Failed to fetch blocks for new locale:', error);
+    }
   },
 );
 </script>

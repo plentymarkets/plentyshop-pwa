@@ -315,39 +315,37 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const fetchHeaderContainerBlock = async (force = false): Promise<HeaderContainerBlock> => {
     if (!force && headerContainerCache.value) return headerContainerCache.value;
 
-    return callWithNuxt(nuxtApp, async () => {
-      try {
-        const { data } = await useAsyncData(`header-container-block-${nuxtApp.$i18n.locale.value}`, () =>
-          useSdk().plentysystems.getBlocks({
-            identifier: 'index',
-            type: 'immutable',
-          }),
-        );
+    try {
+      const response = await useSdk().plentysystems.getBlocks({
+        identifier: 'index',
+        type: 'immutable',
+      });
 
-        const allBlocks = data.value?.data ?? [];
-        const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
+      const allBlocks = response?.data ?? [];
+      const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block)) as
+        | HeaderContainerBlock
+        | undefined;
 
-        let resolvedHeaderBlock = headerBlock;
-        if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
-          const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
-          if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] };
-        }
-
-        if (
-          resolvedHeaderBlock &&
-          Array.isArray(resolvedHeaderBlock.content) &&
-          resolvedHeaderBlock.content.length > 0
-        ) {
-          headerContainerCache.value = resolvedHeaderBlock;
-          return headerContainerCache.value;
-        }
-      } catch (error) {
-        console.warn('Failed to fetch header container block, using defaults:', error);
+      let resolvedHeaderBlock: HeaderContainerBlock | undefined = headerBlock;
+      if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
+        const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
+        if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] } as HeaderContainerBlock;
       }
 
-      headerContainerCache.value = getHeaderContainerBlock();
-      return headerContainerCache.value;
-    });
+      if (
+        resolvedHeaderBlock &&
+        Array.isArray(resolvedHeaderBlock.content) &&
+        resolvedHeaderBlock.content.length > 0
+      ) {
+        headerContainerCache.value = resolvedHeaderBlock;
+        return headerContainerCache.value;
+      }
+    } catch (error) {
+      console.warn('Failed to fetch header container block, using defaults:', error);
+    }
+
+    headerContainerCache.value = getHeaderContainerBlock();
+    return headerContainerCache.value;
   };
 
   const fetchGlobalBlocks = async (): Promise<void> => {
@@ -507,6 +505,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     );
 
     const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
+    headerContainerCache.value = headerContainerToUse;
     const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       mainBlocks.length > 0
