@@ -109,6 +109,7 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
 });
 
+const route = useRoute();
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
 const { openDrawerWithView } = useSiteConfiguration();
@@ -221,7 +222,6 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 
 const isEditDisabled = () => {
-  const route = useRoute();
   return route.fullPath !== getHomePath(locale.value);
 };
 
