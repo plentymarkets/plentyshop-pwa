@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
+import { SfIconBase } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { UtilityBarSection, SectionType } from '../types';
 

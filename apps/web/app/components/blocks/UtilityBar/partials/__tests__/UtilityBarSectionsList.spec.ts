@@ -84,13 +84,4 @@ describe('UtilityBarSectionsList', () => {
     expect(editSection).toHaveBeenCalledWith(1);
     expect(toggleSectionMenu).toHaveBeenCalledWith(2);
   });
-
-  it('should render visibility menu for open section and toggle visibility handler', async () => {
-    const wrapper = mountComponent({ openSectionMenuIndex: 1 });
-
-    const visibilityToggle = wrapper.getByTestId('actions-toggle-visibility-section-1');
-    await visibilityToggle.trigger('click');
-
-    expect(toggleSectionVisibility).toHaveBeenCalledWith(1);
-  });
 });
