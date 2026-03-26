@@ -219,7 +219,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   const headerContainerCache = useState<HeaderContainerBlock | null>(
-    `header-container-cache-${nuxtApp.$i18n.locale.value}`,
+    `header-container-cache`,
     () => null,
   );
 
@@ -325,9 +325,10 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const fetchHeaderContainerBlock = async (force = false): Promise<HeaderContainerBlock> => {
     if (!force && headerContainerCache.value) return headerContainerCache.value;
 
+    console.log('Fetching header container block from server...');
     return callWithNuxt(nuxtApp, async () => {
       try {
-        const { data } = await useAsyncData(`header-container-block-${nuxtApp.$i18n.locale.value}`, () =>
+        const { data } = await useAsyncData(`header-container-block`, () =>
           useSdk().plentysystems.getBlocks({
             identifier: 'index',
             type: 'immutable',
@@ -336,13 +337,15 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
         const allBlocks = data.value?.data ?? [];
         const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
+        console.log('allBlocks:', allBlocks);
+        console.log('Fetched header block:', headerBlock);
 
         let resolvedHeaderBlock = headerBlock;
         if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
           const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
           if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] };
         }
-
+        console.log('resolvedHeaderBlock header block:', resolvedHeaderBlock);
         if (
           resolvedHeaderBlock &&
           Array.isArray(resolvedHeaderBlock.content) &&
@@ -376,6 +379,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           footerCache.value = footerBlock ? (footerBlock as FooterBlock) : createDefaultFooterBlockHelper();
         }
 
+        console.log('Preloaded global blocks, header container cache:', headerContainerCache.value);
         if (!headerContainerCache.value) {
           const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
           let resolvedHeaderBlock = headerBlock;
@@ -508,6 +512,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
       }
 
+      console.log('Resolved header container block:', resolvedHeaderContainer);
       if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value)
         headerContainerCache.value = resolvedHeaderContainer;
     }
@@ -515,8 +520,10 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const mainBlocks = fetchedBlocks.filter(
       (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
     );
-
+    console.log('headerContainerCache.value: ', headerContainerCache.value)
     const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
+
+    console.log('headerContainerToUse: ', headerContainerToUse)
     const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       mainBlocks.length > 0
@@ -526,6 +533,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
+      console.log('Updating blocks in state with fetched data');
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(finalBlocks)));
