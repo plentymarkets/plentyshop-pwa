@@ -516,7 +516,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
     );
 
-    const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
+    const headerContainerToUse = getHeaderContainerBlock();
     const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       mainBlocks.length > 0
