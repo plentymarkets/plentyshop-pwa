@@ -42,35 +42,6 @@
                   </svg>
                 </SfIconBase>
               </button>
-
-              <div :key="`menu-${index}`" class="relative">
-                <button
-                  :data-testid="`actions-menu-section-${index}`"
-                  class="text-gray-500 rounded-full no-drag"
-                  @click="toggleSectionMenu(index)"
-                >
-                  <SfIconMoreVert />
-                </button>
-
-                <div
-                  v-if="openSectionMenuIndex === index"
-                  class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
-                  @click.stop
-                >
-                  <div class="px-4 py-3 border-b">
-                    <div class="flex items-center justify-between">
-                      <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
-                      <SfSwitch
-                        :model-value="sections[index]?.visible !== false"
-                        :data-testid="`actions-toggle-visibility-section-${index}`"
-                        :aria-label="getEditorTranslation('toggle-visibility-aria')"
-                        class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-                        @update:model-value="toggleSectionVisibility(index)"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </template>
@@ -91,8 +62,6 @@ defineProps<{
   getSectionLabel: (sectionId: SectionType) => string;
   getEditorTranslation: (key: string) => string;
   editSection: (index: number) => void;
-  toggleSectionMenu: (index: number) => void;
-  toggleSectionVisibility: (index: number) => void;
 }>();
 
 const isOpen = defineModel<boolean>('open', { default: true });

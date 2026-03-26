@@ -9,8 +9,6 @@
       :get-section-label="getSectionLabel"
       :get-editor-translation="getEditorTranslation"
       :edit-section="editSection"
-      :toggle-section-menu="toggleSectionMenu"
-      :toggle-section-visibility="toggleSectionVisibility"
     />
 
     <BlocksUtilityBarPartialsUtilityBarSectionEditor
@@ -44,7 +42,7 @@ const { sections } = useUtilityBarConfiguration(props.uuid);
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
   useUtilityBarForm(sections);
 
-const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSectionVisibility } = useUtilityBarActions(
+const { getSectionLabel, editSection, exitEditMode } = useUtilityBarActions(
   {
     sections,
     editingSectionIndex,
