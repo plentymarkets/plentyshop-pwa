@@ -28,5 +28,5 @@ export type CarouselStructureProps = {
 };
 
 export type CarouselFormProps = {
-  uuid: string;
+  uuid?: string;
 };
