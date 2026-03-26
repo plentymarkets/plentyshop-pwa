@@ -388,7 +388,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
   const migrateAllBlocks = (blocks: Block[]) => {
     const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
-    const config = useRuntimeConfig().public;
 
     const firstTextContentBlock = (() => {
       let headerContainerBlock: Block = {} as Block;
@@ -424,12 +423,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
           block.content = migrateTextCardContent(
             block.content as Partial<TextCardContent>,
-            config.enableRichTextEditorV2,
             isFirstTextContentBlock,
           );
         }
 
-        if (block.name === 'Banner' && block.content && config.enableRichTextEditorV2) {
+        if (block.name === 'Banner' && block.content) {
           const content = (block as BannerProps).content;
           const textAlignment = content.text?.textAlignment;
           if (textAlignment && !content?.button?.alignment) {

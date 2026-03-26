@@ -415,7 +415,7 @@
             </div>
           </div>
 
-          <div v-if="config.public.enableRichTextEditorV2" class="mb-6">
+          <div class="mb-6">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('button-align-label') }}</UiFormLabel>
             <div
               class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"

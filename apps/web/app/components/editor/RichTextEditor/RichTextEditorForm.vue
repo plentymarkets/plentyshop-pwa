@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-form-v2">
+  <div data-testid="text-form-v2">
     <EditorOptionsTabs
       :model-value="editorMode"
       test-id-prefix="mode"
@@ -68,10 +68,6 @@
       @switch-to-wysiwyg="handleSwitchToWysiwygFromModal"
       @close="toggleModal"
     />
-  </div>
-
-  <div v-else data-testid="text-form">
-    <slot />
   </div>
 </template>
 
