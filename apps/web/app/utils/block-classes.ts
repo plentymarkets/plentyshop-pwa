@@ -27,7 +27,7 @@ export const buildBlockClasses = (
 
   const horizontalClass = getHorizontalClass(!fullWidth && !isContainerExcluded ? horizontalSpacing : undefined);
   const verticalClass = getVerticalClass(verticalSpacing);
-  const shouldApplyVerticalSpacing = block.name !== 'MultiGrid' && block.name !== 'UtilityBar' && isRootNonFooter;
+  const shouldApplyVerticalSpacing = block.name !== 'MultiGrid' && block.name !== 'HeaderContainer' && isRootNonFooter;
 
   return {
     [horizontalClass]: !fullWidth && !isContainerExcluded,

@@ -25,7 +25,7 @@
             :key="item.meta.uuid"
             class="mb-3 flex items-center justify-between transition-colors"
             :style="
-              currentActiveIndex === index
+              currentActiveIndex === index && isBannerBlock(item)
                 ? { backgroundColor: 'rgba(83, 138, 234, 0.1)', borderLeft: '4px solid #538AEA' }
                 : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
             "
