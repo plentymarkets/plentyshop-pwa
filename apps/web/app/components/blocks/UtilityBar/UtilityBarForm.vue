@@ -42,15 +42,13 @@ const { sections } = useUtilityBarConfiguration(props.uuid);
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
   useUtilityBarForm(sections);
 
-const { getSectionLabel, editSection, exitEditMode } = useUtilityBarActions(
-  {
-    sections,
-    editingSectionIndex,
-    openSectionMenuIndex,
-    getEditorTranslation,
-    emit,
-  },
-);
+const { getSectionLabel, editSection, exitEditMode } = useUtilityBarActions({
+  sections,
+  editingSectionIndex,
+  openSectionMenuIndex,
+  getEditorTranslation,
+  emit,
+});
 
 defineExpose({
   exitEditMode,
