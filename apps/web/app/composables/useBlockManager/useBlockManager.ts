@@ -100,12 +100,9 @@ export const useBlockManager = () => {
 
     scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
 
-    const { enableTableOfContents } = useRuntimeConfig().public;
-    if (enableTableOfContents) {
-      const { selectedUuid } = useTableOfContents();
-      selectedUuid.value = newBlock.meta.uuid;
-      openDrawerWithView('TableOfContents');
-    }
+    const { selectedUuid } = useTableOfContents();
+    selectedUuid.value = newBlock.meta.uuid;
+    openDrawerWithView('TableOfContents');
   };
 
   const scrollIntoBlockView = (

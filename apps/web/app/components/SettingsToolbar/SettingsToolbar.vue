@@ -30,7 +30,6 @@
         </button>
       </SfTooltip>
       <SfTooltip
-        v-if="enableTableOfContents"
         :label="tableOfContentsLabel"
         placement="right"
         :show-arrow="true"
@@ -79,9 +78,6 @@ const {
   setActiveSetting,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const {
-  public: { enableTableOfContents },
-} = useRuntimeConfig();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
