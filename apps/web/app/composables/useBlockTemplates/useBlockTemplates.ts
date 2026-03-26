@@ -20,7 +20,6 @@ import {
   createDefaultHeaderContainerBlock,
 } from '~/utils/blockTemplates/header/factory';
 import { v4 as uuid } from 'uuid';
-import { callWithNuxt } from '#app';
 
 const FOOTER_BLOCK_NAME = 'Footer' as const;
 const HEADER_BLOCK_NAME = 'Header' as const;
@@ -206,8 +205,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   locale: string = 'locale',
   blocks: string = 'all',
 ) => {
-  const nuxtApp = useNuxtApp();
-
   const state = useState<UseBlockTemplatesState>(`useBlockTemplates-${identifier}-${type}-${locale}-${blocks}`, () => ({
     data: [],
     cleanData: [],
@@ -216,46 +213,48 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     loading: false,
   }));
 
-  const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
-
-  const headerContainerCache = useState<HeaderContainerBlock | null>(
-    `header-container-cache-${nuxtApp.$i18n.locale.value}`,
-    () => null,
-  );
-
-  /** Clears the cached footer block, forcing a fresh fetch on next access */
-  const clearFooterCache = () => (footerCache.value = null);
-
-  /** Updates the cached footer block with a new footer configuration */
-  const updateFooterCache = (newFooterBlock: FooterBlock) => (footerCache.value = newFooterBlock);
-
-  /** Returns the cached footer block or creates a default one if cache is empty */
-  const getFooterBlock = (): FooterBlock => footerCache.value || createDefaultFooterBlockHelper();
-
-  const clearHeaderContainerCache = () => (headerContainerCache.value = null);
-  const updateHeaderContainerCache = (block: HeaderContainerBlock) => (headerContainerCache.value = block);
-  const getHeaderContainerBlock = (): HeaderContainerBlock =>
-    headerContainerCache.value || createDefaultHeaderContainerBlock();
-
   const createFooterBlock = createFooterBlockHelper;
   const createDefaultFooterBlock = createDefaultFooterBlockHelper;
   const extractFooterContentFromBlocks = extractFooterContentFromBlocksHelper;
   const mapFooterData = mapFooterDataHelper;
 
-  /** Resets the footer block in data to the saved/cached state, discarding unsaved changes */
-  const resetFooterToSaved = async () => {
-    footerCache.value = null;
-    await fetchFooterBlock();
+  /** Derived header container block from state data — single source of truth */
+  const headerContainerBlock = computed<HeaderContainerBlock | null>(
+    () => (state.value.data.find(isHeaderContainerBlock) as HeaderContainerBlock | undefined) ?? null,
+  );
 
-    const footerIndex = state.value.data.findIndex((block) => isFooterBlock(block));
-    if (footerIndex !== -1 && footerCache.value) {
-      state.value.data[footerIndex] = JSON.parse(JSON.stringify(footerCache.value));
+  /** Derived footer block from state data — single source of truth */
+  const footerBlock = computed<FooterBlock | null>(
+    () => (state.value.data.find(isFooterBlock) as FooterBlock | undefined) ?? null,
+  );
+
+  /** Resets the footer block in data to the saved state, discarding unsaved changes */
+  const resetFooterToSaved = async () => {
+    try {
+      const response = await useSdk().plentysystems.getBlocks({
+        identifier: 'index',
+        type: 'immutable',
+        blocks: FOOTER_BLOCK_NAME,
+      });
+
+      const fetched = response?.data?.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
+      const footerIndex = state.value.data.findIndex((block) => isFooterBlock(block));
+
+      if (footerIndex !== -1) {
+        state.value.data[footerIndex] = fetched
+          ? JSON.parse(JSON.stringify(fetched))
+          : createDefaultFooterBlockHelper();
+      }
+    } catch (error) {
+      console.warn('Failed to reset footer to saved:', error);
+      const footerIndex = state.value.data.findIndex((block) => isFooterBlock(block));
+      if (footerIndex !== -1) {
+        state.value.data[footerIndex] = createDefaultFooterBlockHelper();
+      }
     }
   };
 
   const resetHeaderToSaved = async () => {
-    headerContainerCache.value = null;
-
     try {
       const response = await useSdk().plentysystems.getBlocks({
         identifier: 'index',
@@ -267,121 +266,21 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         | HeaderContainerBlock
         | undefined;
 
-      if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
-        headerContainerCache.value = headerBlock;
-      } else {
-        headerContainerCache.value = createDefaultHeaderContainerBlock();
+      const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));
+      if (headerIndex !== -1) {
+        if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
+          state.value.data[headerIndex] = JSON.parse(JSON.stringify(headerBlock));
+        } else {
+          state.value.data[headerIndex] = createDefaultHeaderContainerBlock();
+        }
       }
     } catch (error) {
       console.warn('Failed to reset header to saved:', error);
-      headerContainerCache.value = createDefaultHeaderContainerBlock();
+      const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));
+      if (headerIndex !== -1) {
+        state.value.data[headerIndex] = createDefaultHeaderContainerBlock();
+      }
     }
-
-    const headerIndex = state.value.data.findIndex((block) => isHeaderContainerBlock(block));
-    if (headerIndex !== -1 && headerContainerCache.value) {
-      state.value.data[headerIndex] = JSON.parse(JSON.stringify(headerContainerCache.value));
-    }
-  };
-
-  /** Fetches the footer block from the server or returns cached version */
-  const fetchFooterBlock = async (): Promise<FooterBlock> => {
-    if (footerCache.value) return footerCache.value;
-
-    return callWithNuxt(nuxtApp, async () => {
-      try {
-        const { data } = await useAsyncData(`footer-block-${nuxtApp.$i18n.locale.value}`, () =>
-          useSdk().plentysystems.getBlocks({
-            identifier: 'index',
-            type: 'immutable',
-            blocks: FOOTER_BLOCK_NAME,
-          }),
-        );
-
-        const footerBlock = data.value?.data?.find((block) => isFooterBlock(block));
-
-        if (footerBlock) {
-          footerCache.value = footerBlock as FooterBlock;
-          return footerCache.value;
-        }
-      } catch (error) {
-        console.warn('Failed to fetch footer block, using defaults:', error);
-      }
-
-      footerCache.value = getFooterBlock();
-      return footerCache.value;
-    });
-  };
-
-  const fetchHeaderContainerBlock = async (force = false): Promise<HeaderContainerBlock> => {
-    if (!force && headerContainerCache.value) return headerContainerCache.value;
-
-    try {
-      const response = await useSdk().plentysystems.getBlocks({
-        identifier: 'index',
-        type: 'immutable',
-      });
-
-      const allBlocks = response?.data ?? [];
-      const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block)) as
-        | HeaderContainerBlock
-        | undefined;
-
-      let resolvedHeaderBlock: HeaderContainerBlock | undefined = headerBlock;
-      if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
-        const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
-        if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] } as HeaderContainerBlock;
-      }
-
-      if (
-        resolvedHeaderBlock &&
-        Array.isArray(resolvedHeaderBlock.content) &&
-        resolvedHeaderBlock.content.length > 0
-      ) {
-        headerContainerCache.value = resolvedHeaderBlock;
-        return headerContainerCache.value;
-      }
-    } catch (error) {
-      console.warn('Failed to fetch header container block, using defaults:', error);
-    }
-
-    headerContainerCache.value = getHeaderContainerBlock();
-    return headerContainerCache.value;
-  };
-
-  const fetchGlobalBlocks = async (): Promise<void> => {
-    if (footerCache.value && headerContainerCache.value) return;
-
-    await callWithNuxt(nuxtApp, async () => {
-      try {
-        const { data } = await useAsyncData(`global-blocks-${nuxtApp.$i18n.locale.value}`, () =>
-          useSdk().plentysystems.getBlocks({ identifier: 'index', type: 'immutable' }),
-        );
-
-        const allBlocks = data.value?.data ?? [];
-
-        if (!footerCache.value) {
-          const footerBlock = allBlocks.find((block) => isFooterBlock(block));
-          footerCache.value = footerBlock ? (footerBlock as FooterBlock) : createDefaultFooterBlockHelper();
-        }
-
-        if (!headerContainerCache.value) {
-          const headerBlock = allBlocks.find((block) => isHeaderContainerBlock(block));
-          let resolvedHeaderBlock = headerBlock;
-          if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length === 0) {
-            const flatHeader = allBlocks.find((block) => isHeaderBlock(block));
-            if (flatHeader) resolvedHeaderBlock = { ...headerBlock, content: [flatHeader] };
-          }
-          headerContainerCache.value =
-            resolvedHeaderBlock && Array.isArray(resolvedHeaderBlock.content) && resolvedHeaderBlock.content.length > 0
-              ? resolvedHeaderBlock
-              : getHeaderContainerBlock();
-        }
-      } catch (error) {
-        console.warn('Failed to preload global blocks, using defaults:', error);
-        if (!footerCache.value) footerCache.value = createDefaultFooterBlockHelper();
-        if (!headerContainerCache.value) headerContainerCache.value = getHeaderContainerBlock();
-      }
-    });
   };
 
   const migrateAllBlocks = (blocks: Block[]) => {
@@ -478,7 +377,10 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     setupBlocks(data ?? []);
   };
 
-  /** Sets up blocks in state, applying migrations and extracting footer and header container from response */
+  /**
+   * Sets up blocks in state. This is the single gatekeeper for applying defaults.
+   * Always derives header container and footer from fetched blocks; falls back to defaults if not found.
+   */
   const setupBlocks = (fetchedBlocks: Block[]) => {
     if (!Array.isArray(fetchedBlocks)) {
       console.warn('Invalid blocks data received');
@@ -487,32 +389,36 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     migrateAllBlocks(fetchedBlocks);
 
-    const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
+    // Extract header container and handle legacy flat header migration
+    let headerContainerToUse = fetchedBlocks.find((block) => isHeaderContainerBlock(block)) as
+      | HeaderContainerBlock
+      | undefined;
 
-    if (fetchedHeaderContainer && Array.isArray(fetchedHeaderContainer.content)) {
-      let resolvedHeaderContainer = fetchedHeaderContainer;
-      if (fetchedHeaderContainer.content.length === 0) {
-        const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
-        if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
-      }
-
-      if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value)
-        headerContainerCache.value = resolvedHeaderContainer;
+    if (headerContainerToUse && Array.isArray(headerContainerToUse.content) && headerContainerToUse.content.length === 0) {
+      const flatHeader = fetchedBlocks.find((block) => isHeaderBlock(block));
+      if (flatHeader) headerContainerToUse = { ...headerContainerToUse, content: [flatHeader] } as HeaderContainerBlock;
     }
+
+    const finalHeaderContainer =
+      headerContainerToUse &&
+      Array.isArray(headerContainerToUse.content) &&
+      headerContainerToUse.content.length > 0
+        ? headerContainerToUse
+        : createDefaultHeaderContainerBlock();
+
+    const fetchedFooter = fetchedBlocks.find((block) => isFooterBlock(block)) as FooterBlock | undefined;
+    const finalFooter = fetchedFooter ?? createDefaultFooterBlockHelper();
 
     const mainBlocks = fetchedBlocks.filter(
       (block) => !isHeaderContainerBlock(block) && !isFooterBlock(block) && !isHeaderBlock(block),
     );
 
-    const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
-    headerContainerCache.value = headerContainerToUse;
-    const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       mainBlocks.length > 0
         ? mainBlocks
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
-    const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
+    const finalBlocks = [finalHeaderContainer, ...blocksToUse, finalFooter];
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
@@ -523,11 +429,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   /** Updates the blocks in state with new block data */
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
-
-    const headerBlock = blocks.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
-    if (headerBlock) {
-      headerContainerCache.value = headerBlock;
-    }
   };
 
   /** Sets the default template data used when no blocks are fetched */
@@ -554,37 +455,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
-  const syncHeaderCacheAfterSave = (content: string) => {
-    if (!content.includes(`"name":"${HEADER_CONTAINER_BLOCK_NAME}"`)) return;
-    try {
-      const parsed: Block[] = JSON.parse(content);
-      const headerBlock = parsed.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
-      if (headerBlock && Array.isArray(headerBlock.content) && headerBlock.content.length > 0) {
-        updateHeaderContainerCache(headerBlock);
-      } else {
-        clearHeaderContainerCache();
-      }
-    } catch {
-      clearHeaderContainerCache();
-    }
-  };
-
-  const syncFooterCacheAfterSave = async (content: string) => {
-    if (!content.includes(`"name":"${FOOTER_BLOCK_NAME}"`)) return;
-    const footerSettings = extractFooterContentFromBlocks(content);
-    if (footerSettings) {
-      updateFooterCache(createFooterBlock(footerSettings));
-    } else {
-      clearFooterCache();
-      try {
-        await fetchFooterBlock();
-      } catch (error) {
-        console.warn('Failed to refresh footer block after save:', error);
-      }
-    }
-  };
-
-  /** Saves blocks to the server and updates footer/header caches if those blocks are included */
+  /** Saves blocks to the server and updates state via setupBlocks */
   const saveBlocks: SaveBlocks = async (identifier: string | number, type: string, content: string) => {
     try {
       state.value.loading = true;
@@ -596,8 +467,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       });
 
       setupBlocks(response?.data ?? state.value.data);
-      syncHeaderCacheAfterSave(content);
-      await syncFooterCacheAfterSave(content);
 
       return true;
     } catch (error) {
@@ -617,28 +486,19 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     updateBlocks,
     setupBlocks,
     setDefaultTemplate,
-    fetchFooterBlock,
     resetFooterToSaved,
-    getFooterBlock,
+    resetHeaderToSaved,
     createDefaultFooterBlock,
     createFooterBlock,
-    clearFooterCache,
-    updateFooterCache,
     extractFooterContentFromBlocks,
     mapFooterData,
     isFooterBlock,
     FOOTER_BLOCK_NAME,
     FOOTER_SWITCH_DEFINITIONS,
-    footerCache: readonly(footerCache),
-    headerContainerCache,
-    resetHeaderToSaved,
-    fetchHeaderContainerBlock,
-    fetchGlobalBlocks,
-    getHeaderContainerBlock,
+    headerContainerBlock,
+    footerBlock,
     createHeaderContainerBlock,
     createDefaultHeaderContainerBlock,
-    clearHeaderContainerCache,
-    updateHeaderContainerCache,
     isHeaderContainerBlock,
     HEADER_CONTAINER_BLOCK_NAME,
     isHeaderBlock,

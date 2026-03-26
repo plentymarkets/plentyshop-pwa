@@ -17,7 +17,7 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
     nuxtApp.$i18n.locale.value,
   );
 
-  const { headerContainerCache } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
+  const { headerContainerBlock } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
   const { findOrDeleteBlockByUuid } = useBlockManager();
 
   const targetUuid = computed(() => uuid || blockUuid.value);
@@ -38,9 +38,9 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
       const blockByUuid = findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null;
       if (blockByUuid) return blockByUuid;
 
-      if (headerContainerCache.value?.content) {
+      if (headerContainerBlock.value?.content) {
         const blockInHeader = findOrDeleteBlockByUuid(
-          headerContainerCache.value.content,
+          headerContainerBlock.value.content,
           targetUuid.value,
         ) as UtilityBarProps | null;
         if (blockInHeader) return blockInHeader;

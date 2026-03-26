@@ -6,13 +6,13 @@
 
 <script setup lang="ts">
 const nuxtApp = useNuxtApp();
-const { headerContainerCache, updateBlocks } = useBlockTemplates(
+const { headerContainerBlock, updateBlocks } = useBlockTemplates(
   'index',
   'immutable',
   nuxtApp.$i18n.locale.value,
 );
 
-const headerBlock = computed(() => headerContainerCache.value);
+const headerBlock = computed(() => headerContainerBlock.value);
 
 const headerBlocksClasses = computed(() => [
   'header-blocks',
