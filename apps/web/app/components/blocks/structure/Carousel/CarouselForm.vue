@@ -93,7 +93,9 @@ const layoutOpen = ref(true);
 const controlsOpen = ref(true);
 const slideLabels = ref<string[]>([]);
 
-setIndex(blockUuid.value, 0);
+const usingUuid = computed(() => props.uuid || blockUuid.value);
+
+setIndex(usingUuid.value, 0);
 
 const blockForm = computed(() => {
   if (editingSlideIndex.value === undefined) return null;
@@ -106,7 +108,7 @@ const blockForm = computed(() => {
 });
 
 const carouselStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value) || {}) as CarouselStructureProps,
+  () => (findOrDeleteBlockByUuid(data.value, usingUuid.value) || {}) as CarouselStructureProps,
 );
 
 const { isFullWidth } = useFullWidthToggleForConfig(
@@ -116,7 +118,7 @@ const { isFullWidth } = useFullWidthToggleForConfig(
 
 const controls = computed(() => carouselStructure.value.configuration.controls);
 
-const currentActiveSlideIndex = computed(() => activeSlideIndex.value[blockUuid.value]);
+const currentActiveSlideIndex = computed(() => activeSlideIndex.value[usingUuid.value]);
 
 const slides = computed({
   get: () => {
@@ -130,7 +132,7 @@ const slides = computed({
       },
     }));
   },
-  set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
+  set: (value: SlideBlock[]) => updateCarouselItems(value, usingUuid.value),
 });
 
 const resolveSlideLabels = async () => {
@@ -138,12 +140,12 @@ const resolveSlideLabels = async () => {
 };
 
 const selectSlide = (index: number) => {
-  setIndex(blockUuid.value, index);
+  setIndex(usingUuid.value, index);
 };
 
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
-  setIndex(blockUuid.value, index);
+  setIndex(usingUuid.value, index);
   emit('set-edit-title', slideLabels.value[index]!);
 };
 
@@ -171,13 +173,13 @@ const addSlide = async () => {
 
   await nextTick();
 
-  setIndex(blockUuid.value, slides.value.length - 1);
+  setIndex(usingUuid.value, slides.value.length - 1);
 };
 
 const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
   slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
-  setIndex(blockUuid.value, 0);
+  setIndex(usingUuid.value, 0);
   await nextTick();
   if (editingSlideIndex.value === index) {
     exitEditMode();
