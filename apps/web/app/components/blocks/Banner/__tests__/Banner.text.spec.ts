@@ -141,7 +141,7 @@ describe('Banner text', () => {
       });
 
       const overlay = wrapper.find(`[data-testid="text-html"]`);
-      expect(overlay.attributes('style')).toContain('text-align: left');
+      expect(overlay.html()).toContain('text-align: left');
     });
 
     it('should align text to the center', () => {
@@ -169,7 +169,7 @@ describe('Banner text', () => {
       });
 
       const overlay = wrapper.find(`[data-testid="text-html"]`);
-      expect(overlay.attributes('style')).toContain('text-align: center');
+      expect(overlay.html()).toContain('text-align: center');
     });
 
     it('should align text to the right', () => {
@@ -197,7 +197,7 @@ describe('Banner text', () => {
       });
 
       const overlay = wrapper.find(`[data-testid="text-html"]`);
-      expect(overlay.attributes('style')).toContain('text-align: right');
+      expect(overlay.html()).toContain('text-align: right');
     });
   });
 

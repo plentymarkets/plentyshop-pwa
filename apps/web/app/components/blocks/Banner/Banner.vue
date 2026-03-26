@@ -30,7 +30,6 @@
         }"
         :data-testid="'banner-content-' + meta.uuid"
       >
-        {{ banner.text }}
         <TextContent :text="banner.text" :index="props.slideIndex" />
         <UiButton
           v-if="banner.button && banner.button.label && banner.button.link"
