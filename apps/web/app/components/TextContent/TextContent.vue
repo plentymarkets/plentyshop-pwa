@@ -43,7 +43,6 @@ const textAlignmentClass = computed(() => {
       return 'text-left items-start';
   }
 });
-const config = useRuntimeConfig().public;
 
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

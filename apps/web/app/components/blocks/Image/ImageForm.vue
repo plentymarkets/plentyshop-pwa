@@ -364,7 +364,6 @@
 import {
   SfInput,
   SfIconCheck,
-  SfTextarea,
   SfIconArrowBack,
   SfIconArrowUpward,
   SfIconArrowDownward,

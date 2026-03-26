@@ -114,7 +114,7 @@
 
 <script setup lang="ts">
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
-import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfIconCheck } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
@@ -159,10 +159,6 @@ const debouncedFn = useDebounceFn((event: Event) => {
   const target = event.target as HTMLInputElement;
   recommendedBlock.value.source.itemId = target.value.toString();
 }, 1000);
-
-const isTextAlignSelected = (align: 'left' | 'center' | 'right') => {
-  return (recommendedBlock.value.text.textAlignment || 'left') === align;
-};
 
 const sourceOpen = ref(false);
 const textsOpen = ref(false);

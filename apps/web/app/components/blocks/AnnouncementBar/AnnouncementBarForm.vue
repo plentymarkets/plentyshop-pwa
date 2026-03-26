@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import type { AnnouncementBarProps, AnnouncementBarFormProps } from './types';
-import { SfInput, SfTextarea } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 
 const props = defineProps<AnnouncementBarFormProps>();
 

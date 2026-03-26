@@ -134,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { NewsletterSubscribeContent } from './types';
 import { initializeNewsletterContent } from './utils';
 

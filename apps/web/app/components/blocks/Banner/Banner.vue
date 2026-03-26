@@ -62,8 +62,6 @@ const props = defineProps<BannerProps & { slideIndex?: number }>();
 const banner = computed(() => props.content);
 const { hexToRgba, getImageHeight, getTextAlignment, getContentPosition } = useBlockContentHelper();
 
-const config = useRuntimeConfig();
-
 const rteAlignment = computed(() =>
   banner.value.button?.alignment,
 );

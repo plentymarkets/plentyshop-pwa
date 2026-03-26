@@ -332,7 +332,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();

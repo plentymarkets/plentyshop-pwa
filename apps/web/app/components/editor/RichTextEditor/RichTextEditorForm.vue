@@ -83,7 +83,6 @@ const emit = defineEmits<{
   'update:modelValue': [value: string];
 }>();
 
-const runtimeConfig = useRuntimeConfig().public;
 const modalOpen = ref(false);
 const expandedToolbars = ref(true);
 const contentRichTextEditor = ref<{ openModal: () => void } | null>(null);
