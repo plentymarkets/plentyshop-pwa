@@ -219,7 +219,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   const footerCache = useState<FooterBlock | null>(`footer-block-cache-${nuxtApp.$i18n.locale.value}`, () => null);
 
   const headerContainerCache = useState<HeaderContainerBlock | null>(
-    `header-container-cache`,
+    `header-container-cache-${nuxtApp.$i18n.locale.value}`,
     () => null,
   );
 
