@@ -49,6 +49,13 @@ const { data } = useBlockTemplates(
 );
 
 const { closeBlocksConfigurationDrawer, blockType, blockUuid } = useSiteConfiguration();
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeBlocksConfigurationDrawer();
+  },
+);
 const { deleteBlock } = useBlockManager();
 
 const customTitle = ref<string | null>(null);
