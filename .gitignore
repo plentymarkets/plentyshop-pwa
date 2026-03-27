@@ -69,6 +69,6 @@ apps/web/reference/
 
 # copilot experiments
 .github/agents/experimental-*.md
-.github/instructions/experimental-*.instruction.md
+.github/instructions/experimental-*.instructions.md
 .github/skills/experimental-*/SKILL.md
 .github/skills/experimental-*/*.sh
