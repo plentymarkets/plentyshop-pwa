@@ -553,6 +553,7 @@ describe('useBlockTemplates', () => {
         },
       ];
 
+      const { data } = useBlockTemplates();
       useBlockTemplates().setupBlocks(blocks);
 
       expect((firstBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
@@ -589,10 +590,18 @@ describe('useBlockTemplates', () => {
         firstContentBlock,
       ];
 
+      const { data } = useBlockTemplates();
       useBlockTemplates().setupBlocks(blocks);
 
-      expect((headerInnerBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
-      expect((firstContentBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
+      const resultData = data.value;
+      const resultHeaderContainer = resultData.find((b) => b.name === 'HeaderContainer');
+      const resultHeaderInner = (resultHeaderContainer?.content as Block[])?.find(
+        (b) => b.meta?.uuid === 'textcard-in-header',
+      );
+      const resultFirstContent = resultData.find((b) => b.meta?.uuid === 'textcard-first');
+
+      expect((resultHeaderInner?.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((resultFirstContent?.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
     });
   });
 
