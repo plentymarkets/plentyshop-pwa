@@ -591,7 +591,7 @@ describe('useBlockTemplates', () => {
 
       useBlockTemplates().setupBlocks(blocks);
 
-      expect((headerInnerBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((headerInnerBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h2>');
       expect((firstContentBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
     });
   });

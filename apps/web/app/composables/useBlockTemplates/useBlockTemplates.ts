@@ -511,9 +511,9 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         ? mainBlocks
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
-    migrateAllBlocks(blocksToUse);
-
     const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
+
+    migrateAllBlocks(finalBlocks);
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
