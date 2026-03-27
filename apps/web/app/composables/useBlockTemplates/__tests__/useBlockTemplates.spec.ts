@@ -553,17 +553,11 @@ describe('useBlockTemplates', () => {
         },
       ];
 
-      const { data } = useBlockTemplates();
       useBlockTemplates().setupBlocks(blocks);
 
-      const resultCarousel = data.value.find((b) => b.meta?.uuid === 'carousel-1');
-      const resultBanners = resultCarousel?.content as Block[];
-      const resultFirstBanner = resultBanners?.find((b) => b.meta?.uuid === 'banner-first');
-      const resultSecondBanner = resultBanners?.find((b) => b.meta?.uuid === 'banner-second');
-
-      expect((resultFirstBanner?.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
-      expect((resultSecondBanner?.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h2>');
-      expect((resultSecondBanner?.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((firstBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
+      expect((secondBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h2>');
+      expect((secondBanner.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
     });
 
     it('should not set h1 on blocks inside the HeaderContainer', () => {
@@ -595,19 +589,10 @@ describe('useBlockTemplates', () => {
         firstContentBlock,
       ];
 
-      const { data } = useBlockTemplates();
       useBlockTemplates().setupBlocks(blocks);
 
-      const resultData = data.value;
-
-      const resultHeaderContainer = resultData.find((b) => b.name === 'HeaderContainer');
-      const resultHeaderInner = (resultHeaderContainer?.content as Block[])?.find(
-        (b) => b.meta?.uuid === 'textcard-in-header',
-      );
-      const resultFirstContent = resultData.find((b) => b.meta?.uuid === 'textcard-first');
-
-      expect((resultHeaderInner?.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
-      expect((resultFirstContent?.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
+      expect((headerInnerBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).not.toContain('<h1>');
+      expect((firstContentBlock.content as Partial<TextCardContent>)?.text?.htmlDescription).toContain('<h1>');
     });
   });
 
