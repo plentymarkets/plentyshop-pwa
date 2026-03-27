@@ -109,9 +109,9 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
 });
 
+const route = useRoute();
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
-const route = useRoute();
 const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
@@ -221,10 +221,9 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
 
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 
-const isEditDisabled = computed(() => {
-  const homePath = getHomePath(locale.value);
-  return route.fullPath !== homePath;
-});
+const isEditDisabled = () => {
+  return route.fullPath !== getHomePath(locale.value);
+};
 
 const showTopAddBlockButton = computed(
   () =>
@@ -247,7 +246,7 @@ const showBottomAddBlockButton = computed(
 const getBlockActions = (block: Block) => {
   if (isGlobalBlock(block)) {
     return {
-      isEditable: !isEditDisabled.value,
+      isEditable: !isEditDisabled(),
       isMovable: false,
       isDeletable: false,
       classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],

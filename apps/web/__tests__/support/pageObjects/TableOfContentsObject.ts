@@ -123,7 +123,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockIsGrayedOut() {
-    this.tableOfContentsItemLabel.eq(1).should('have.class', 'opacity-50');
+    this.tableOfContentsItemLabel.eq(0).should('have.class', 'opacity-50');
     return this;
   }
 
@@ -133,7 +133,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockIsNotGrayedOut() {
-    this.tableOfContentsItems.eq(1).should('not.have.class', 'opacity-50');
+    this.tableOfContentsItems.eq(0).should('not.have.class', 'opacity-50');
     return this;
   }
 
