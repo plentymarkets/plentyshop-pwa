@@ -55,7 +55,7 @@ labels:
         any:
           - '.github/copilot-instructions.md'
           - '.github/agents/*.md'
-          - '.github/instructions/*.instruction.md'
+          - '.github/instructions/*.instructions.md'
           - '.github/skills/**/SKILL.md'
           - '.github/skills/**/*.sh'
           
