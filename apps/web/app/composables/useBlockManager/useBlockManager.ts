@@ -68,6 +68,7 @@ export const useBlockManager = () => {
     const copiedData = JSON.parse(JSON.stringify(data.value));
     const parentInfo = findBlockParent(copiedData, targetUuid);
 
+    // parentInfo can be null if the targetUuid is not found in the blocks, in that case we will add the new block to the beginning of the blocks array
     const parent = parentInfo?.parent ?? copiedData;
     const index = parentInfo?.index ?? 0;
 
