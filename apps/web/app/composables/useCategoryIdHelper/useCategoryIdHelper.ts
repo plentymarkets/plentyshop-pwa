@@ -73,10 +73,58 @@ export const useCategoryIdHelper = () => {
   const getCategoryPreviewPath = computed(() => {
     const previewUrl = currentCategoryPreviewUrl.value;
     if (!previewUrl) return '/';
-    const firstSlashIndex = previewUrl.indexOf('/', 8);
-    return firstSlashIndex !== -1 ? previewUrl.slice(firstSlashIndex) : '/';
+    const correctedPreviewUrl = getCorrectPreviewPathWithLocale(previewUrl);
+    const firstSlashIndex = correctedPreviewUrl.indexOf('/', 8);
+    return firstSlashIndex !== -1 ? correctedPreviewUrl.slice(firstSlashIndex) : '/';
   });
   const getCategoryDetails = computed(() => currentCategoryDetails.value);
+
+  /**
+   * @description Function for creating the correct category URL based on the preview URL and the current locale.
+   * @param path  e.g. '/login'
+   * @returns string  e.g. '/de/login'
+   * Category Preview Path is based on the default language of Plentymarkets, and is not correct if the website has a different default Language. 
+   * -- For example, if the default language in Plentymarkets system is “en”, the preview URLs will have the format /[English name of the category] and /de/[German name of the category]. 
+   * -- If we want the website to use German as the default language, the URLs should have the format /[German name of the category] and /en/[English name of the category]. 
+   * We need to convert it to the correct URL based on the current locale and the strategy we use for our locales.
+   * 
+   * The `getCorrectPreviewPathWithLocale` function always generates the correct URL based on the current language setting and the preview URL.
+  */
+  const getCorrectPreviewPathWithLocale = (path: string): string => {
+    const parts = path.split('/');
+    const { $i18n } = useNuxtApp();
+    const { locale, defaultLocale, strategy } = $i18n;
+
+    // remove all locales that may exist in our path
+    const localeIndex = parts.indexOf(locale.value);
+    if (localeIndex !== -1) {
+      parts.splice(localeIndex, 1);
+    }
+
+    // check if we should add the correct locale
+    const shouldAddLocale = (strategy: string, locale: string, defaultLocale: string) => {
+      if (strategy === 'prefix') {
+        return true;
+      }
+
+      if (strategy === 'prefix_except_default') {
+        return locale !== defaultLocale;
+      }
+
+      if (strategy === 'prefix_and_default') {
+        return true;
+      }
+
+      return false;
+    };
+
+    // Add the correct locale if necessary
+    if (shouldAddLocale(strategy, locale.value, defaultLocale)) {
+      parts.splice(1, 0, locale.value); // Add locale.value at the first position of the array 
+    }
+
+    return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
+  };
 
   return {
     setCategoryId,
@@ -93,5 +141,6 @@ export const useCategoryIdHelper = () => {
     getParentName,
     getCategoryPreviewPath,
     getCategoryDetails,
+    getCorrectPreviewPathWithLocale,
   };
 };

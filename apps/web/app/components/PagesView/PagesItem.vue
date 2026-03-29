@@ -26,7 +26,7 @@
       </span>
       <router-link
         v-if="!isTablet && !hasEmptyDetails"
-        :to="pagePath"
+        :to="localePagePath"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
         <span v-if="props.icon">
@@ -136,6 +136,12 @@ const pagePath = computed(() => {
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
   return firstSlashIndex !== -1 ? (item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/') : '/';
 });
+
+// Category Preview Path is based on the default language of Plentymarkets, 
+// and is not correct if the website has a different default Language.
+const { getCorrectPreviewPathWithLocale } = useCategoryIdHelper();
+const localePagePath = getCorrectPreviewPathWithLocale(pagePath.value);
+
 
 const currentGeneralPageId = ref<number | null>(null);
 const open = ref(false);
