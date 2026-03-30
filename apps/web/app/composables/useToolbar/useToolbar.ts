@@ -15,11 +15,10 @@ export const useToolbar = () => {
 
     const handleSave = async (saveFunction: () => Promise<boolean>, successMessage?: string) => {
       saved = await saveFunction();
-
       if (saved) {
+        closeDrawer();
         if (successMessage) {
           messageList.push(successMessage);
-          closeDrawer();
         }
       } else {
         hasError = true;
