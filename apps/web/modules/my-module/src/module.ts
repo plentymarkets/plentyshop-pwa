@@ -1,0 +1,36 @@
+import { defineNuxtModule, addPlugin, addComponent, extendPages, createResolver } from '@nuxt/kit'
+
+// Module options TypeScript interface definition
+export interface ModuleOptions {}
+
+export default defineNuxtModule<ModuleOptions>({
+  meta: {
+    name: 'my-module',
+    configKey: 'myModule',
+  },
+  // Default configuration options of the Nuxt module
+  defaults: {},
+  setup(_options, _nuxt) {
+    const resolver = createResolver(import.meta.url)
+
+    // Ensure the Nuxt pages/router system is active even if the host app
+    // has no pages/ directory of its own.
+    _nuxt.options.pages = true
+
+    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
+    addPlugin(resolver.resolve('./runtime/plugin'))
+
+    addComponent({
+      name: 'StoreCard',
+      filePath: resolver.resolve('./runtime/components/StoreCard.vue'),
+    })
+
+    extendPages((pages) => {
+      pages.push({
+        name: 'store',
+        path: '/store',
+        file: resolver.resolve('./runtime/pages/store.vue'),
+      })
+    })
+  },
+})
