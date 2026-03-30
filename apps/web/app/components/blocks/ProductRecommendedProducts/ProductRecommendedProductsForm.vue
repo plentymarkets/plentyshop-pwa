@@ -209,28 +209,6 @@ const selectCategoryTab = async () => {
 <i18n lang="json">
 {
   "en": {
-    "pretitle-label": "Pre-title",
-    "pretitle-placeholder": "PreTitle",
-
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "Title",
-
-    "subtitle-label": "Subtitle",
-    "subtitle-placeholder": "Subtitle",
-
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
-
-    "category-id-label": "Category ID",
-    "category-id-placeholder": "Enter Category Id",
-
-    "text-color-label": "Text Colour",
-
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
-
     "texts-label": "Texts",
     "source-label": "Source",
     "source-type-label": "Choose source",
@@ -247,28 +225,7 @@ const selectCategoryTab = async () => {
     "cross-selling-relation-bundle": "Item bundle"
   },
   "de": {
-    "pretitle-label": "Pre-title",
-    "pretitle-placeholder": "PreTitle",
-
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "Title",
-
-    "subtitle-label": "Subtitle",
-    "subtitle-placeholder": "Subtitle",
-
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
-
-    "category-id-label": "Category ID",
-    "category-id-placeholder": "Enter Category Id",
-
-    "text-color-label": "Text Colour",
     "layout-label": "Layout",
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
-
     "texts-label": "Texts",
     "source-label": "Source",
     "source-type-label": "Choose source",

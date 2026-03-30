@@ -81,14 +81,12 @@ const editingBackgroundColor = computed({
   "en": {
     "text-label": "Text",
     "layout-label": "Layout settings",
-    "background-color-label": "Background color",
-    "html-description-label": "HTML Description"
+    "background-color-label": "Background color"
   },
   "de": {
     "text-label": "Text",
     "layout-label": "Layout-Einstellungen",
-    "background-color-label": "Hintergrundfarbe",
-    "html-description-label": "HTML Beschreibung"
+    "background-color-label": "Hintergrundfarbe"
   }
 }
 </i18n>

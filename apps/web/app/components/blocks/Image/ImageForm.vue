@@ -167,7 +167,7 @@
             :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'center' }"
             class="w-[1.1rem] shrink-0 mr-1"
           />
-          {{ getEditorTranslation('text-overlay-align-x-center') }}
+          {{ getEditorTranslation('text-overlay-align-y-center') }}
         </div>
 
         <div
@@ -466,18 +466,6 @@ const clampBrightness = (event: Event, type: string) => {
   "en": {
     "images-group-label": "Images",
 
-    "image-xl-label": "Image XL (Desktop)",
-    "image-xl-hint": "Recommended dimensions: 1920 × 1080 px",
-
-    "image-l-label": "Image L (Desktop)",
-    "image-l-hint": "Recommended dimensions: 1024 × 576 px",
-
-    "image-m-label": "Image M (Laptop)",
-    "image-m-hint": "Recommended dimensions: 768 × 432 px",
-
-    "image-s-label": "Image S (Mobile)",
-    "image-s-hint": "Recommended dimensions: 320 × 320 px",
-
     "image-scalling-label": "Image Scaling",
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
@@ -487,17 +475,9 @@ const clampBrightness = (event: Event, type: string) => {
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
-    "image-align-option-left-label": "Left",
-    "image-align-option-right-label": "Right",
 
     "text-overlay-label": "Text",
-    "text-overlay-placeholder": "Text that supports HTML formatting",
-    "text-overlay-color-label": "Text Color",
 
-    "text-overlay-align-x-label": "Horizontal Alignment (x)",
-    "text-overlay-align-x-left": "Left",
-    "text-overlay-align-x-center": "Center",
-    "text-overlay-align-x-right": "Right",
     "background-color-label": "Background Color",
 
     "keep-transparent-label": "Keep background transparent",
@@ -518,19 +498,7 @@ const clampBrightness = (event: Event, type: string) => {
   "de": {
     "images-group-label": "Images",
 
-    "image-xl-label": "Image XL (Desktop)",
-    "image-xl-hint": "Recommended dimensions: 1920 × 1080 px",
-
-    "image-l-label": "Image L (Desktop)",
-    "image-l-hint": "Recommended dimensions: 1024 × 576 px",
-
-    "image-m-label": "Image M (Laptop)",
-    "image-m-hint": "Recommended dimensions: 768 × 432 px",
-
-    "image-s-label": "Image S (Mobile)",
-    "image-s-hint": "Recommended dimensions: 320 × 320 px",
-
-    "image-scaling-label": "Image Scaling",
+    "image-scalling-label": "Image Scaling",
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
     "background-color-label": "Background Color",
@@ -540,21 +508,14 @@ const clampBrightness = (event: Event, type: string) => {
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
-    "image-align-option-left-label": "Left",
-    "image-align-option-right-label": "Right",
     "keep-transparent-label": "Keep background transparent",
 
     "text-overlay-label": "Text",
-    "text-overlay-placeholder": "Enter text (HTML allowed)",
-    "text-overlay-color-label": "Text Color",
-    "text-overlay-align-x-label": "Horizontal Alignment (x)",
-    "text-overlay-align-x-left": "Left",
-    "text-overlay-align-x-center": "Center",
-    "text-overlay-align-x-right": "Right",
 
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
+    "text-overlay-align-y-bottom": "Bottom",
     "button-group-label": "Button",
     "button-text-label": "Label",
     "button-text-placeholder": "Button",

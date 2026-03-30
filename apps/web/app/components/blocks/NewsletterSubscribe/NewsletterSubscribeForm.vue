@@ -165,10 +165,6 @@ const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
 {
   "en": {
     "text-group-label": "Text",
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "maintitle",
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
@@ -183,10 +179,6 @@ const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
   },
   "de": {
     "text-group-label": "Text",
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "maintitle",
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",

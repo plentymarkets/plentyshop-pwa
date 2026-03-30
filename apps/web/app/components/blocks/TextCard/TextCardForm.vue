@@ -256,15 +256,6 @@ watch([isTransparent, backgroundColor], () => {
 {
   "en": {
     "text-group-label": "Text",
-    "pretitle-label": "Pre-title",
-    "main-title-label": "Main title",
-    "subtitle-label": "Subtitle",
-    "html-description-label": "HTML Description",
-    "text-color-label": "Text Color",
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
     "placeholder": "Enter text here...",
 
     "button-group-label": "Button",
@@ -282,15 +273,6 @@ watch([isTransparent, backgroundColor], () => {
   },
   "de": {
     "text-group-label": "Text",
-    "pretitle-label": "Pre-title",
-    "main-title-label": "Main title",
-    "subtitle-label": "Subtitle",
-    "html-description-label": "HTML Description",
-    "text-color-label": "Text Color",
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
     "placeholder": "Hier Text eingeben...",
 
     "button-group-label": "Button",
