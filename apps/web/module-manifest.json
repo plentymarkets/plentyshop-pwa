@@ -1,0 +1,24 @@
+{
+  "modules": [
+    {
+      "package": "@plentymarkets/shop-core",
+      "version": "^1.0.0",
+      "nuxtModule": "@plentymarkets/shop-core"
+    },
+    {
+      "package": "@plentymarkets/shop-module-mollie",
+      "version": "^1.5.0",
+      "nuxtModule": "@plentymarkets/shop-module-mollie"
+    },
+    {
+      "package": "@plentymarkets/shop-module-gtag",
+      "version": "^1.2.2",
+      "nuxtModule": "@plentymarkets/shop-module-gtag"
+    },
+    {
+      "package": "@nuxtjs/kinde",
+      "version": "0.4.0",
+      "nuxtModule": "@nuxtjs/kinde"
+    }
+  ]
+}
