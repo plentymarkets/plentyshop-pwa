@@ -26,55 +26,42 @@ fi
 
 echo "Reading manifest file: $MANIFEST_FILE"
 
-mapfile -t PACKAGES < <(
-  MANIFEST_FILE="$MANIFEST_FILE" node << 'EOF'
+echo "Checking for conflicts in nuxt.config.ts..."
+
+mapfile -t PACKAGES_TO_INSTALL < <(
+  MANIFEST_FILE="$MANIFEST_FILE" NUXT_CONFIG="$NUXT_CONFIG" node << 'EOF'
     const fs = require('fs');
     const manifest = JSON.parse(fs.readFileSync(process.env.MANIFEST_FILE, 'utf8'));
-    if (!manifest.modules || !Array.isArray(manifest.modules)) {
-      console.error('Invalid manifest: "modules" must be an array');
-      process.exit(1);
-    }
-    for (const mod of manifest.modules) {
-      if (!mod.package) {
-        console.error('Invalid manifest: each module must have a "package" field');
-        process.exit(1);
+    const config = fs.readFileSync(process.env.NUXT_CONFIG, 'utf8');
+
+    const conflicts = [];
+    const toInstall = [];
+
+    for (const m of manifest.modules) {
+      if (m.nuxtModule && config.includes("'" + m.nuxtModule + "'")) {
+        conflicts.push(m.nuxtModule);
+      } else {
+        toInstall.push(m.version ? `${m.package}@${m.version}` : m.package);
       }
-      console.log(mod.version ? `${mod.package}@${mod.version}` : mod.package);
     }
+
+    if (conflicts.length > 0) {
+      conflicts.forEach(m => process.stderr.write('Warning: "' + m + '" is already registered in nuxt.config.ts — skipping.\n'));
+    }
+
+    toInstall.forEach(p => process.stdout.write(p + '\n'));
 EOF
 )
 
-if [[ ${#PACKAGES[@]} -eq 0 ]]; then
-    echo "No packages found in manifest. Aborting."
-    exit 1
+if [[ ${#PACKAGES_TO_INSTALL[@]} -eq 0 ]]; then
+    echo "All modules from manifest are already registered in nuxt.config.ts. Nothing to do."
+    exit 0
 fi
 
-echo "Checking for conflicts in nuxt.config.ts..."
-
-MANIFEST_FILE="$MANIFEST_FILE" NUXT_CONFIG="$NUXT_CONFIG" node << 'EOF'
-  const fs = require('fs');
-  const manifest = JSON.parse(fs.readFileSync(process.env.MANIFEST_FILE, 'utf8'));
-  const config = fs.readFileSync(process.env.NUXT_CONFIG, 'utf8');
-
-  const conflicts = manifest.modules
-    .filter(m => m.nuxtModule)
-    .map(m => m.nuxtModule)
-    .filter(m => config.includes("'" + m + "'"));
-
-  if (conflicts.length > 0) {
-    console.error('Error: the following modules are already registered in nuxt.config.ts:');
-    conflicts.forEach(m => console.error('  - ' + m));
-    console.error('Remove them from nuxt.config.ts before running this script.');
-    process.exit(1);
-  }
-
-  console.log('No conflicts found.');
-EOF
-
 echo "Installing packages:"
-printf ' - %s\n' "${PACKAGES[@]}"
+printf ' - %s\n' "${PACKAGES_TO_INSTALL[@]}"
 
-npm install "${PACKAGES[@]}"
+npm install "${PACKAGES_TO_INSTALL[@]}"
 
 echo "Updating nuxt.config.ts..."
 
@@ -84,21 +71,17 @@ MANIFEST_FILE="$MANIFEST_FILE" NUXT_CONFIG="$NUXT_CONFIG" node << 'EOF'
   const configPath = process.env.NUXT_CONFIG;
   let config = fs.readFileSync(configPath, 'utf8');
 
-  const nuxtModules = manifest.modules
-    .filter(m => m.nuxtModule)
-    .map(m => m.nuxtModule);
-
-  const toInsert = nuxtModules
-    .filter(m => !config.includes("'" + m + "'"))
-    .map(m => "    '" + m + "',")
+  const toInsert = manifest.modules
+    .filter(m => m.nuxtModule && !config.includes("'" + m.nuxtModule + "'"))
+    .map(m => "    '" + m.nuxtModule + "',")
     .join('\n');
 
   if (toInsert) {
     config = config.replace('modules: [', 'modules: [\n' + toInsert);
     fs.writeFileSync(configPath, config);
-    console.log('Added to nuxt.config.ts modules: ' + nuxtModules.join(', '));
+    console.log('nuxt.config.ts updated successfully.');
   } else {
-    console.log('All modules already present in nuxt.config.ts — skipping.');
+    console.log('nuxt.config.ts already up to date — skipping.');
   }
 EOF
 

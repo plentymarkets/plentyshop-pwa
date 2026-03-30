@@ -134,10 +134,10 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@plentymarkets/shop-core',
-    '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
     '@nuxtjs/kinde',
+    '@plentymarkets/shop-core',
+    '@plentymarkets/shop-module-mollie',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
