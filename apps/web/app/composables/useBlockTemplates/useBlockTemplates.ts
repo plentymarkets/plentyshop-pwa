@@ -595,7 +595,7 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         entityType: type,
         blocks: content,
       });
-      
+
       setupBlocks(response?.data ?? state.value.data);
       syncHeaderCacheAfterSave(content);
       await syncFooterCacheAfterSave(content);
