@@ -64,7 +64,6 @@ const {
   data: templateData,
   renderableBlocks,
   getBlocksServer,
-  isFooterBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));

@@ -1,8 +1,7 @@
 /* eslint-disable max-lines */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlockTemplates } from '../useBlockTemplates';
-import type { FooterContent, FooterBlock } from '~/components/blocks/Footer/types';
-import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
+import type { FooterBlock, FooterContent } from '~/components/blocks/Footer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 
@@ -119,26 +118,15 @@ const createMockState = () => ({
 
 describe('useBlockTemplates', () => {
   let mockStateRef: ReturnType<typeof createMockState>;
-  let mockFooterCacheRef: { value: FooterBlock | null };
-  let mockHeaderContainerCacheRef: { value: HeaderContainerBlock | null };
   let mockGetBlocks: ReturnType<typeof vi.fn>;
   let mockDoSaveBlocks: ReturnType<typeof vi.fn>;
   let mockGetCategoryTemplate: ReturnType<typeof vi.fn>;
-  let stateCallCount: number;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    stateCallCount = 0;
     mockStateRef = createMockState();
-    mockFooterCacheRef = { value: null };
-    mockHeaderContainerCacheRef = { value: null };
 
-    useState.mockImplementation(() => {
-      stateCallCount++;
-      if (stateCallCount === 1) return mockStateRef;
-      if (stateCallCount === 2) return mockFooterCacheRef;
-      return mockHeaderContainerCacheRef;
-    });
+    useState.mockImplementation(() => mockStateRef);
 
     mockGetBlocks = vi.fn();
     mockDoSaveBlocks = vi.fn();
@@ -156,182 +144,6 @@ describe('useBlockTemplates', () => {
       data: { value: null },
       error: { value: null },
     }));
-  });
-
-  describe('extractFooterContentFromBlocks', () => {
-    it.each([
-      {
-        name: 'should extract footer content from valid JSON blocks array',
-        input: JSON.stringify([
-          { name: 'Header', content: { title: 'Header' } },
-          { name: 'Footer', content: mockFooterBlock.content },
-          { name: 'Content', content: { body: 'Content' } },
-        ]),
-        expected: mockFooterBlock.content,
-      },
-      {
-        name: 'should return null if no footer block is found',
-        input: JSON.stringify([
-          { name: 'Header', content: { title: 'Header' } },
-          { name: 'Content', content: { body: 'Content' } },
-        ]),
-        expected: null,
-      },
-      {
-        name: 'should return null if blocks is not an array',
-        input: JSON.stringify({ name: 'Footer', content: mockFooterBlock.content }),
-        expected: null,
-      },
-      {
-        name: 'should return null if footer block has no content',
-        input: JSON.stringify([{ name: 'Footer' }]),
-        expected: null,
-      },
-    ])('$name', ({ input, expected }) => {
-      const { extractFooterContentFromBlocks } = useBlockTemplates();
-      expect(extractFooterContentFromBlocks(input)).toEqual(expected);
-    });
-
-    it('should return null and log warning for invalid JSON', () => {
-      const consoleSpy = setupConsoleSpy();
-      const { extractFooterContentFromBlocks } = useBlockTemplates();
-
-      expect(extractFooterContentFromBlocks('invalid json')).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to extract footer from blocks:', expect.any(Error));
-      consoleSpy.mockRestore();
-    });
-  });
-
-  describe('fetchFooterBlock', () => {
-    it('should return cached footer if available', async () => {
-      mockFooterCacheRef.value = mockFooterBlock;
-      const result = await useBlockTemplates().fetchFooterBlock();
-      expect(result).toBe(mockFooterBlock);
-      expect(mockGetBlocks).not.toHaveBeenCalled();
-    });
-
-    it('should fetch from API and cache successful response', async () => {
-      setupApiResponse({ data: [{ name: 'Header', content: { title: 'Header' } }, mockFooterBlock] });
-      const { fetchFooterBlock } = useBlockTemplates();
-      const { $i18n } = useNuxtApp();
-
-      const result = await fetchFooterBlock();
-
-      expect(useAsyncData).toHaveBeenCalledWith(`footer-block-${$i18n.locale.value}`, expect.any(Function));
-      expect(result).toEqual(mockFooterBlock);
-      expect(mockFooterCacheRef.value).toBe(mockFooterBlock);
-    });
-
-    it('should call SDK getBlocks with correct parameters', async () => {
-      setupApiCall();
-      await useBlockTemplates().fetchFooterBlock();
-      expect(mockGetBlocks).toHaveBeenCalledWith({ identifier: 'index', type: 'immutable', blocks: 'Footer' });
-    });
-
-    it('should return defaults if no footer block found in API response', async () => {
-      setupApiResponse({ data: [{ name: 'Header' }, { name: 'Content' }] });
-      const result = await useBlockTemplates().fetchFooterBlock();
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-      expect(mockFooterCacheRef.value).toEqual(result);
-    });
-
-    it('should handle API errors gracefully and return defaults', async () => {
-      const consoleSpy = setupConsoleSpy();
-      const throwError = () => {
-        throw new Error('API Error');
-      };
-      useAsyncData.mockImplementation(throwError);
-
-      const result = await useBlockTemplates().fetchFooterBlock();
-
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-      expect(mockFooterCacheRef.value).toEqual(result);
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch footer block, using defaults:', expect.any(Error));
-      consoleSpy.mockRestore();
-    });
-  });
-
-  describe('cache management', () => {
-    it('getFooterBlock - should return cached footer if available', () => {
-      mockFooterCacheRef.value = mockFooterBlock;
-      expect(useBlockTemplates().getFooterBlock()).toBe(mockFooterBlock);
-    });
-
-    it('getFooterBlock - should return default block if cache is empty', () => {
-      const result = useBlockTemplates().getFooterBlock();
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-    });
-
-    it('clearFooterCache - should clear the cached footer', () => {
-      mockFooterCacheRef.value = mockFooterBlock;
-      useBlockTemplates().clearFooterCache();
-      expect(mockFooterCacheRef.value).toBeNull();
-    });
-
-    it('updateFooterCache - should update the cached footer block', () => {
-      const newBlock: FooterBlock = {
-        ...mockFooterBlock,
-        content: { ...(mockFooterBlock.content as FooterContent), footnote: '© Updated Company 2024' },
-      };
-      useBlockTemplates().updateFooterCache(newBlock);
-      expect(mockFooterCacheRef.value).toBe(newBlock);
-    });
-  });
-
-  describe('factory functions', () => {
-    it('createFooterBlock - should create a footer block with provided content', () => {
-      const content = mockFooterBlock.content as FooterContent;
-      const result = useBlockTemplates().createFooterBlock(content);
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-      expect(result.content).toBe(content);
-    });
-
-    it('createFooterBlock - should create a footer block with custom meta', () => {
-      const content = mockFooterBlock.content as FooterContent;
-      const meta = { uuid: 'custom-uuid', isGlobalTemplate: false };
-      const result = useBlockTemplates().createFooterBlock(content, meta);
-      expect(result.meta.uuid).toBe('custom-uuid');
-      expect(result.meta.isGlobalTemplate).toBe(false);
-    });
-
-    it('createDefaultFooterBlock - should create a default footer block', () => {
-      const result = useBlockTemplates().createDefaultFooterBlock();
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-      expect(result.meta.isGlobalTemplate).toBe(true);
-    });
-  });
-
-  describe('block operations', () => {
-    it('mapFooterData - should map block to footer block with defaults', () => {
-      const inputBlock: Block = {
-        name: 'Footer',
-        type: 'content',
-        meta: { uuid: 'test-uuid' },
-        content: { column1: { title: 'Custom Legal' } },
-      };
-      const result = useBlockTemplates().mapFooterData(inputBlock);
-      expect(result.name).toBe('Footer');
-      expect((result.content as FooterContent).column1.title).toBe('Custom Legal');
-      expect((result.content as FooterContent).column2).toBeDefined();
-    });
-
-    it('mapFooterData - should return default footer if input is null', () => {
-      const result = useBlockTemplates().mapFooterData(null);
-      expect(result.name).toBe('Footer');
-      expect(result.type).toBe('content');
-    });
-  });
-
-  it('FOOTER_SWITCH_DEFINITIONS - should expose footer switch definitions', () => {
-    const { FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates();
-    expect(FOOTER_SWITCH_DEFINITIONS).toBeDefined();
-    expect(Array.isArray(FOOTER_SWITCH_DEFINITIONS)).toBe(true);
-    expect(FOOTER_SWITCH_DEFINITIONS.length).toBeGreaterThan(0);
   });
 
   describe('getBlocksServer', () => {
@@ -391,10 +203,11 @@ describe('useBlockTemplates', () => {
       expect(result).toBe(true);
     });
 
-    it('should update footer cache when saving footer block', async () => {
-      mockDoSaveBlocks.mockResolvedValue({ success: true });
-      await useBlockTemplates().saveBlocks('test-id', 'category', JSON.stringify([...mockBlocks, mockFooterBlock]));
-      expect(mockFooterCacheRef.value).toBeDefined();
+    it('should call setupBlocks with response data after save', async () => {
+      const savedBlocks = [...mockBlocks, mockFooterBlock];
+      mockDoSaveBlocks.mockResolvedValue({ data: savedBlocks });
+      await useBlockTemplates().saveBlocks('test-id', 'category', JSON.stringify(savedBlocks));
+      expect(mockStateRef.value.data.at(-1)?.name).toBe('Footer');
     });
 
     it('should handle save errors', async () => {
@@ -464,59 +277,27 @@ describe('useBlockTemplates', () => {
       expect(mockStateRef.value.data[3]?.name).toBe('Footer');
     });
 
-    it('should replace fetched footer with the default footer when footer cache is empty', () => {
-      mockFooterCacheRef.value = null;
+    it('should use the fetched footer block from the API response', () => {
       const blocksWithFooter = [...mockBlocks, mockFooterBlock];
       useBlockTemplates().setupBlocks(blocksWithFooter);
-      expect(mockFooterCacheRef.value).toBeNull();
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
       expect(mockStateRef.value.data[0]?.name).toBe('HeaderContainer');
       expect(mockStateRef.value.data[1]).toEqual(mockBlocks[0]);
       expect(mockStateRef.value.data[2]).toEqual(mockBlocks[1]);
-      expect(mockStateRef.value.data[3]?.name).toBe('Footer');
-      expect(mockStateRef.value.data[3]).not.toEqual(mockFooterBlock);
+      expect(mockStateRef.value.data[3]).toEqual(mockFooterBlock);
     });
 
-    it('should not write to footerCache', () => {
-      mockFooterCacheRef.value = null;
-      useBlockTemplates().setupBlocks([...mockBlocks, mockFooterBlock]);
-      expect(mockFooterCacheRef.value).toBeNull();
-    });
-
-    it('should use the cached footer instead of the footer from fetched blocks', () => {
-      const cachedFooter: FooterBlock = {
-        ...mockFooterBlock,
-        meta: { uuid: 'cached-uuid', isGlobalTemplate: true },
-        content: {
-          ...(mockFooterBlock.content as FooterContent),
-          footnote: '© Cached Footer 2024',
-        },
-      };
-      mockFooterCacheRef.value = cachedFooter;
-
-      const differentFooter: FooterBlock = {
-        ...mockFooterBlock,
-        meta: { uuid: 'different-uuid', isGlobalTemplate: true },
-        content: {
-          ...(mockFooterBlock.content as FooterContent),
-          footnote: '© Different Footer 2024',
-        },
-      };
-      const blocksWithFooter = [...mockBlocks, differentFooter];
-
-      useBlockTemplates().setupBlocks(blocksWithFooter);
-      expect(mockFooterCacheRef.value).toEqual(cachedFooter);
-      expect(mockStateRef.value.data[3]).toEqual(cachedFooter);
+    it('should use a default footer when no footer is in the fetched blocks', () => {
+      useBlockTemplates().setupBlocks(mockBlocks);
+      expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
+      expect(mockStateRef.value.data[mockBlocks.length + 1]?.name).toBe('Footer');
     });
 
     it('should always place the footer last regardless of its position in the input blocks', () => {
-      mockFooterCacheRef.value = null;
       const blocksWithFooterFirst = [mockFooterBlock, ...mockBlocks];
       useBlockTemplates().setupBlocks(blocksWithFooterFirst);
-      expect(mockFooterCacheRef.value).toBeNull();
       expect(mockStateRef.value.data).toHaveLength(mockBlocks.length + 2);
       expect(mockStateRef.value.data[mockBlocks.length + 1]?.name).toBe('Footer');
-      expect(mockStateRef.value.data[mockBlocks.length + 1]).not.toEqual(mockFooterBlock);
     });
 
     it('should set h1 on the first Banner inside a Carousel when Carousel is the first content block', () => {
@@ -598,12 +379,12 @@ describe('useBlockTemplates', () => {
 
   describe('State management', () => {
     it('should expose readonly refs for state properties', () => {
-      const { data, cleanData, loading, categoryTemplateData, footerCache } = useBlockTemplates();
+      const { data, cleanData, loading, categoryTemplateData, replaceBlock } = useBlockTemplates();
       expect(data).toBeDefined();
       expect(cleanData).toBeDefined();
       expect(loading).toBeDefined();
       expect(categoryTemplateData).toBeDefined();
-      expect(footerCache).toBeDefined();
+      expect(replaceBlock).toBeDefined();
     });
 
     it('should create unique state per identifier-type-locale combination', () => {
