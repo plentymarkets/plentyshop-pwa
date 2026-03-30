@@ -595,7 +595,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         entityType: type,
         blocks: content,
       });
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+      
+      setupBlocks(response?.data ?? state.value.data);
       syncHeaderCacheAfterSave(content);
       await syncFooterCacheAfterSave(content);
 
