@@ -137,7 +137,7 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
-    './modules/my-module/src/module.ts',
+  // Option A - Direct Path  './modules/my-module/src/module.ts',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
