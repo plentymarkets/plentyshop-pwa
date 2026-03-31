@@ -299,11 +299,28 @@ const {
   priority,
   hoverImageUrl: effectiveHoverImageUrl,
 });
-const isFromWishlist = ref(props.isFromWishlist || false);
-const isFromSlider = ref(props.isFromSlider || false);
-const externalImagePermission = computed(() => props.shouldLoadImage);
-const canLoadMainImage = computed(() => externalImagePermission.value && shouldLoadMainImage.value);
-const canLoadHoverImage = computed(() => externalImagePermission.value && shouldLoadHoverImage.value);
+const isFromWishlist = computed(() => props.isFromWishlist);
+const isFromSlider = computed(() => props.isFromSlider);
+
+const externalImagePermission = computed(() => {
+  if (!isFromSlider.value) return true;
+  return props.shouldLoadImage;
+});
+const canLoadMainImage = computed(() => {
+  if (!externalImagePermission.value) return false;
+
+  if (isFromSlider.value) return true;
+
+  return shouldLoadMainImage.value;
+});
+
+const canLoadHoverImage = computed(() => {
+  if (!externalImagePermission.value || !effectiveHoverImageUrl.value) return false;
+
+  if (isFromSlider.value) return true;
+
+  return shouldLoadHoverImage.value;
+});
 const getWidth = () => {
   if (imageWidth.value && imageWidth.value > 0 && imageUrl.value.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth.value;
