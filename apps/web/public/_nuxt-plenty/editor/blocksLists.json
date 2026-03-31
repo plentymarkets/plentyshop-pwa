@@ -415,7 +415,6 @@
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -423,7 +422,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -447,7 +447,6 @@
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -455,7 +454,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -491,7 +491,6 @@
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
                     "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -499,7 +498,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -523,7 +523,6 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -531,7 +530,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -572,14 +572,14 @@
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "right"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -603,14 +603,14 @@
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "right"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -646,14 +646,14 @@
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
                     "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "right"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -677,14 +677,14 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "left"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -725,14 +725,14 @@
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
                     "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -756,14 +756,14 @@
                     "pretitle": "Pretitle",
                     "title": "h1 title",
                     "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -799,14 +799,14 @@
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
                     "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -830,14 +830,14 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
