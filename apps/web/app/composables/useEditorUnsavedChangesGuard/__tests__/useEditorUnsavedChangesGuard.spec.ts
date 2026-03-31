@@ -37,9 +37,7 @@ mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
 mockNuxtImport('useBlockTemplates', () => useBlockTemplates);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
 
-let mockOnBeforeRouteLeave:
-    | ((callback: () => Promise<boolean | void>) => void)
-  | null = null;
+let mockOnBeforeRouteLeave: ((callback: () => Promise<boolean | void>) => void) | null = null;
 
 vi.mock('vue-router', () => ({
   onBeforeRouteLeave: (callback: () => Promise<boolean | void>) => {
