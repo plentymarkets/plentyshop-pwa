@@ -232,7 +232,7 @@ const onFontSizeDropdownToggle = (open: boolean) => {
   isFontSizeOpen.value = open;
 };
 const selectBlockType = (value: string) => {
-  if(value === props.currentBlockType) {
+  if (value === props.currentBlockType) {
     isBlockTypeOpen.value = false;
     return;
   }
