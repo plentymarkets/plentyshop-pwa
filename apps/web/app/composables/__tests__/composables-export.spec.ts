@@ -40,7 +40,7 @@ describe('composables index exports', () => {
     'useShouldShow',
     'useLazyProductImage',
     'useSliderImagePreload',
-    'useNearViewport'
+    'useNearViewport',
   ];
 
   const allFileModules = fs

@@ -1,6 +1,5 @@
 import type { UseSliderImagePreloadOptions } from '~/composables/useSliderImagePreload/types';
 
-
 export const useSliderImagePreload = (options: UseSliderImagePreloadOptions) => {
   const sliderRootRef = ref<HTMLElement | null>(null);
   const scrollContainerRef = ref<HTMLElement | null>(null);
@@ -33,11 +32,9 @@ export const useSliderImagePreload = (options: UseSliderImagePreloadOptions) => 
   const resolveScrollContainer = () => {
     if (!sliderRootRef.value) return null;
 
-    return (
-      sliderRootRef.value.querySelector('[data-testid="product-slider"] [class*="overflow-x-auto"]') ||
+    return (sliderRootRef.value.querySelector('[data-testid="product-slider"] [class*="overflow-x-auto"]') ||
       sliderRootRef.value.querySelector('[data-testid="product-slider"] .sf-scrollable__wrapper') ||
-      sliderRootRef.value.querySelector('[data-testid="product-slider"]')
-    ) as HTMLElement | null;
+      sliderRootRef.value.querySelector('[data-testid="product-slider"]')) as HTMLElement | null;
   };
 
   onMounted(async () => {

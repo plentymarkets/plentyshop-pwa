@@ -1,4 +1,3 @@
-
 export const useNearViewport = (
   target: Ref<HTMLElement | null>,
   options?: {

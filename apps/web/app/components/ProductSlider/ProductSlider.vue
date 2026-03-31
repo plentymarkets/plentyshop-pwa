@@ -1,21 +1,21 @@
 <template>
   <div ref="sliderRootRef">
-  <SfScrollable
+    <SfScrollable
       buttons-placement="floating"
-    class="pb-4 scrollbar-hidden"
-    :wrapper-class="wrapperClass"
-    data-testid="product-slider"
-  >
-    <UiProductCard
-      v-for="(product, index) in items"
-      :key="productGetters.getId(product)"
-      :product="product"
-      :should-load-image="shouldLoadImage(index)"
-      :index="index"
-      is-from-slider
-      class="w-48 max-w-48 shrink-0"
-    />
-  </SfScrollable>
+      class="pb-4 scrollbar-hidden"
+      :wrapper-class="wrapperClass"
+      data-testid="product-slider"
+    >
+      <UiProductCard
+        v-for="(product, index) in items"
+        :key="productGetters.getId(product)"
+        :product="product"
+        :should-load-image="shouldLoadImage(index)"
+        :index="index"
+        is-from-slider
+        class="w-48 max-w-48 shrink-0"
+      />
+    </SfScrollable>
   </div>
   <div class="mt-4 typography-text-xs flex gap-1">
     <span>{{ t('common.labels.asterisk') }}</span>

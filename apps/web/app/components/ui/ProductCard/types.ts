@@ -9,5 +9,4 @@ export type ProductCardProps = {
   isFromSlider?: boolean;
   lazy?: boolean;
   shouldLoadImage?: boolean;
-
 };
