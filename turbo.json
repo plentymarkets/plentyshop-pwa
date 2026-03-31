@@ -26,6 +26,19 @@
     "dev": {
       "cache": false
     },
+    "docs:dev": {
+      "cache": false
+    },
+    "docs:build": {
+      "outputs": ["docs/.vitepress/dist/**"]
+    },
+    "docs:preview": {
+       "cache": false
+    },
+    "publish-typedoc": {
+      "cache": false,
+      "outputs": []
+    },
     "test": {
       "outputs": []
     },
