@@ -2,6 +2,10 @@ import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 import { createFooter } from '../footer/factory';
 
+export const BANNER_BLOCK_NAME = 'Banner';
+
+export const isBannerBlock = (block: Block | null | undefined) => block?.name === BANNER_BLOCK_NAME;
+
 export function createHomepage(): Block[] {
   const banner1Pretitle = t('defaultTemplate.homepage.carousel.banner1.pretitle');
   const banner1Title = t('defaultTemplate.homepage.carousel.banner1.title');

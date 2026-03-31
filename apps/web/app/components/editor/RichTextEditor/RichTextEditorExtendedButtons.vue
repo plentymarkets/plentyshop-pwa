@@ -5,7 +5,7 @@
   <EditorColorPicker
     data-testid="rte-highlight-color"
     :model-value="highlightColor"
-    dropdown-align="ctr"
+    dropdown-align="rte"
     @update:model-value="setHighlightColor($event)"
   >
     <template #trigger="{ color, toggle }">

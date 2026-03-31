@@ -1,0 +1,14 @@
+[
+  {
+    "text": "Data flow",
+    "link": "https://docs.alokai.com/general/basics/data-flow"
+  },
+  {
+    "text": "Nuxt directory structure",
+    "link": "https://nuxt.com/docs/4.x/directory-structure"
+  },
+  {
+    "text": "Composable‑Centric Data Fetching",
+    "link": "/guide/concept/composable-centric-data-fetching"
+  }
+]

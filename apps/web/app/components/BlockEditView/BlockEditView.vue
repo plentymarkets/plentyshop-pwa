@@ -48,11 +48,20 @@ const { data } = useBlockTemplates(
   useNuxtApp().$i18n.locale.value,
 );
 
-const { closeBlocksConfigurationDrawer, blockType, blockUuid } = useSiteConfiguration();
+const { closeBlocksConfigurationDrawer, blocksConfigurationDrawerView, blockType, blockUuid } = useSiteConfiguration();
+
+watch(
+  () => route.fullPath,
+  () => {
+    if (blocksConfigurationDrawerView.value === 'blocksSettings') {
+      closeBlocksConfigurationDrawer();
+    }
+  },
+);
 const { deleteBlock } = useBlockManager();
 
 const customTitle = ref<string | null>(null);
-const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void } | null>(null);
+const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
 
 const handleSetEditTitle = (title: string) => {
   customTitle.value = title;
@@ -61,12 +70,13 @@ const handleSetEditTitle = (title: string) => {
 const clearCustomTitle = () => {
   customTitle.value = null;
 };
-
 const handleBackClick = () => {
   if (childComponentRef.value?.exitEditMode) {
-    childComponentRef.value.exitEditMode(false);
+    const fullyExited = childComponentRef.value.exitEditMode(false);
+    if (fullyExited !== false) clearCustomTitle();
+  } else {
+    clearCustomTitle();
   }
-  clearCustomTitle();
 };
 
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();

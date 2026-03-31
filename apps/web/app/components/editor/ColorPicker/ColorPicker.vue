@@ -30,7 +30,7 @@
 const props = withDefaults(
   defineProps<{
     modelValue: string | undefined;
-    dropdownAlign?: 'default' | 'rte' | 'ctr';
+    dropdownAlign?: 'default' | 'rte' | 'top-editor';
     showShopColors?: boolean;
   }>(),
   {
@@ -53,6 +53,9 @@ const activeId = useState<string | null>('editorColorPickerActiveId', () => null
 const dropdownPositionClass = computed(() => {
   if (props.dropdownAlign === 'rte') {
     return 'right-0 translate-x-1/2';
+  }
+  if (props.dropdownAlign === 'top-editor') {
+    return 'right-0 translate-x-[30%]';
   }
   return '';
 });

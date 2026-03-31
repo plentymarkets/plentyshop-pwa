@@ -48,3 +48,14 @@ labels:
           - '.github/workflows/*.yaml'
           - '.github/actions/*.yml'
           - '.github/actions/*.yaml'
+  - label: 'ai-tool'
+    sync: true
+    matcher:
+      files:
+        any:
+          - '.github/copilot-instructions.md'
+          - '.github/agents/*.md'
+          - '.github/instructions/*.instructions.md'
+          - '.github/skills/**/SKILL.md'
+          - '.github/skills/**/*.sh'
+          
