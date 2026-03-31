@@ -37,10 +37,10 @@ mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
 mockNuxtImport('useBlockTemplates', () => useBlockTemplates);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
 
-let mockOnBeforeRouteLeave: ((callback: () => Promise<boolean | void>) => void) | null = null;
+let mockOnBeforeRouteLeave: ((callback: () => Promise<boolean | undefined>) => void) | null = null;
 
 vi.mock('vue-router', () => ({
-  onBeforeRouteLeave: (callback: () => Promise<boolean | void>) => {
+  onBeforeRouteLeave: (callback: () => Promise<boolean | undefined>) => {
     if (mockOnBeforeRouteLeave) {
       mockOnBeforeRouteLeave(callback);
     }
@@ -54,7 +54,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   let resetFooterToSaved: ReturnType<typeof vi.fn>;
   let resetHeaderToSaved: ReturnType<typeof vi.fn>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
-  let routeLeaveCallback: (() => Promise<boolean | void>) | null = null;
+  let routeLeaveCallback: (() => Promise<boolean | undefined>) | null = null;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -308,8 +308,6 @@ describe('useEditorUnsavedChangesGuard', () => {
       };
 
       mount(TestComponent);
-
-      const next = vi.fn();
 
       isEditingEnabled.value = false;
       settingsIsDirty.value = true;
