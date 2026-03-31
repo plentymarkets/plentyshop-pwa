@@ -53,6 +53,7 @@ export function createHomepage(): Block[] {
         uuid: uuid(),
       },
       configuration: {
+        visible: true,
         controls: {
           displayArrows: true,
           color: '#a39f9f',
@@ -179,6 +180,7 @@ export function createHomepage(): Block[] {
         isGlobalTemplate: false,
       },
       configuration: {
+        visible: true,
         columnWidths: [6, 6],
       },
       content: [
