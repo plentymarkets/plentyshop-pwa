@@ -9,9 +9,9 @@
   >
     <header class="flex items-center justify-between mb-2">
       <div class="flex items-center text-xl font-bold">Add page</div>
-      <button class="absolute right-2 top-2 px-4 py-4" @click="closeModal">
+      <UiButton variant="tertiary" square class="absolute right-2 top-2" @click="closeModal">
         <SfIconClose />
-      </button>
+      </UiButton>
     </header>
 
     <p class="mb-6">Add name and type in order to add a new page</p>
@@ -75,35 +75,34 @@
       </div>
 
       <div class="actions grid gap-4 grid-cols-2">
-        <button
-          type="button"
-          data-testid="block-spacing-btn"
-          class="border border-editor-button w-full py-2 rounded-md flex align-center justify-center text-editor-button"
-          @click="closeModal"
-        >
+        <UiButton type="button" variant="secondary" data-testid="block-spacing-btn" @click="closeModal">
           Cancel
-        </button>
-        <button
+        </UiButton>
+        <UiButton
           type="submit"
+          variant="primary"
           data-testid="block-spacing-btn"
-          class="border border-editor-button bg-editor-button w-full py-2 rounded-md flex align-center justify-center text-white"
           :class="{ 'opacity-50 cursor-not-allowed': !isValidParentPage() }"
-          :disabled="!isValidParentPage()"
+          :disabled="!isValidParentPage() || _isLoading"
         >
-          Add page
-        </button>
+          <template v-if="_isLoading">
+            <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+          </template>
+          <template v-else>Add page</template>
+        </UiButton>
       </div>
     </form>
   </UiModal>
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconWarning, SfInput } from '@storefront-ui/vue';
+import { SfIconClose, SfIconWarning, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
 import { ErrorMessage } from 'vee-validate';
 
 const {
   _isReady,
+  _isLoading,
   pageModalOpen,
   pageType,
   pageTypes,
