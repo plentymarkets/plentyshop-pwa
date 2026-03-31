@@ -487,8 +487,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       return;
     }
 
-    migrateAllBlocks(fetchedBlocks);
-
     const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
 
     if (fetchedHeaderContainer && Array.isArray(fetchedHeaderContainer.content)) {
@@ -514,6 +512,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
     const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
+
+    migrateAllBlocks(finalBlocks);
 
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);

@@ -5,7 +5,8 @@
   "license": "BSD-3-Clause",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "docs"
   ],
   "scripts": {
     "predev": "node ./scripts/prepare-vue-tsc.js",
@@ -24,6 +25,10 @@
     "clean": "npx rimraf ./**/node_modules && rm package-lock.json",
     "clean:hard": "npx rimraf ./**/node_modules && npx rimraf ./**/lib && rm package-lock.json && npx rimraf ./**/.turbo && npx rimraf ./**/.nuxt",
     "clean:logs": "npx rimraf ./**/*.log",
+    "docs:dev": "npm run turbo:disable-telemetry && npm --prefix docs run docs:dev",
+    "docs:build": "npm run turbo:disable-telemetry && npm --prefix docs run docs:build",
+    "docs:preview": "npm run turbo:disable-telemetry && npm --prefix docs run docs:preview",
+    "publish-typedoc": "npm run turbo:disable-telemetry && turbo run publish-typedoc",
     "test": "npm run turbo:disable-telemetry && turbo run test",
     "test:watch": "npm run turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "npm run turbo:disable-telemetry && npx turbo run test:coverage",
@@ -93,7 +98,7 @@
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
     "eslint-module-utils": "^2.12.1",
-    "happy-dom": "^20.6.1",
+    "happy-dom": "^20.8.9",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^16.2.7",

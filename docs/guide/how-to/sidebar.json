@@ -1,0 +1,126 @@
+[
+  {
+    "text": "Project update strategies",
+    "link": "/guide/how-to/project-update-strategies.md"
+  },
+  {
+    "text": "App configuration",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Middleware",
+        "link": "/guide/how-to/middleware.md"
+      },
+      {
+        "text": "i18n",
+        "link": "/guide/how-to/i18n.md"
+      },
+      {
+        "text": "Theme",
+        "link": "/guide/how-to/theme.md"
+      },
+      {
+        "text": "PWA",
+        "link": "/guide/how-to/pwa.md"
+      },
+      {
+        "text": "Cookie consent",
+        "link": "/guide/how-to/cookie.md"
+      },
+      {
+        "text": "Bot protection",
+        "link": "/guide/how-to/bot-protection.md"
+      }
+    ]
+  },
+  {
+    "text": "Cookbook",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Product Cross-Selling",
+        "link": "/guide/how-to/cross-selling.md"
+      },
+      {
+        "text": "Variation properties",
+        "link": "/guide/how-to/variation-property.md"
+      },
+      {
+        "text": "Form validation",
+        "link": "/guide/how-to/form-validation.md"
+      },
+      {
+        "text": "Custom Icon",
+        "link": "/guide/how-to/custom-icon.md"
+      },
+      {
+        "text": "Currency Formatter",
+        "link": "/guide/how-to/currency-formatter.md"
+      },
+      {
+        "text": "Custom API Endpoints",
+        "link": "/guide/how-to/custom-api-endpoints.md"
+      }
+    ]
+  },
+  {
+    "text": "Editor",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Get started",
+        "link": "/guide/how-to/editor/index.md"
+      },
+      {
+        "text": "Site settings",
+        "link": "/guide/how-to/editor/site-settings.md"
+      }
+    ]
+  },
+  {
+    "text": "Module",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Get started",
+        "link": "/guide/how-to/module/index.md"
+      },
+      {
+        "text": "Components",
+        "link": "/guide/how-to/module/components.md"
+      },
+      {
+        "text": "Layouts",
+        "link": "/guide/how-to/module/layouts.md"
+      },
+      {
+        "text": "Pages",
+        "link": "/guide/how-to/module/pages.md"
+      },
+      {
+        "text": "Middlewares",
+        "link": "/guide/how-to/module/middlewares.md"
+      },
+      {
+        "text": "i18n",
+        "link": "/guide/how-to/module/i18n.md"
+      },
+      {
+        "text": "Tailwind",
+        "link": "/guide/how-to/module/tailwind.md"
+      },
+      {
+        "text": "Custom JS & CSS",
+        "link": "/guide/how-to/module/custom-js-css.md"
+      },
+      {
+        "text": "Inject components into shop areas",
+        "link": "/guide/how-to/module/inject-components.md"
+      },
+      {
+        "text": "Extensible Site‑Settings",
+        "link": "/guide/how-to/module/site-settings-architecture.md"
+      }
+    ]
+  }
+]
