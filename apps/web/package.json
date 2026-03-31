@@ -6,7 +6,8 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "install-modules": "bash install-modules.sh && npm install",
-    "build": "tsx ./build/index.ts && nuxt build",
+    "generate-extensions-manifest": "tsx ./build/generate-extensions-manifest.ts",
+    "build": "tsx ./build/generate-extensions-manifest.ts && tsx ./build/index.ts && nuxt build",
     "dev": "tsx ./build/index.ts && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
