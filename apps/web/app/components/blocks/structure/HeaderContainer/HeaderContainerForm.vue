@@ -22,11 +22,7 @@
         <template #summary>
           <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
         </template>
-        <EditorFullWidthToggle
-          v-model="isStickyToggle"
-          :label="getEditorTranslation('is-sticky-label')"
-          :block-uuid="blockUuid"
-        />
+        <UiFieldToggle v-model="isStickyToggle" :label="getEditorTranslation('is-sticky-label')" />
       </UiAccordionItem>
     </div>
 
@@ -82,9 +78,11 @@ const isStickyToggle = computed({
   get: () => headerContainerStructure.value.configuration?.layout?.sticky ?? false,
   set: (value: boolean) => {
     if (!headerContainerStructure.value.configuration) {
-      headerContainerStructure.value.configuration = {};
+      headerContainerStructure.value.configuration = {
+        visible: true,
+      };
     }
-    if (!headerContainerStructure.value.configuration.layout) {
+    if (!headerContainerStructure.value.configuration?.layout) {
       headerContainerStructure.value.configuration.layout = {};
     }
     headerContainerStructure.value.configuration.layout.sticky = value;

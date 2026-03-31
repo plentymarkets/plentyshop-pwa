@@ -71,7 +71,9 @@ export const useBlocksVisibility: UseBlocksVisibilityReturn = () => {
     if (!block) return;
 
     if (!block.configuration) {
-      block.configuration = {};
+      block.configuration = {
+        visible: true,
+      };
     }
 
     const blockConfig = block.configuration as Record<string, unknown>;

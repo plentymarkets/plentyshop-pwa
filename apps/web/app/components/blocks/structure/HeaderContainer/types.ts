@@ -5,6 +5,7 @@ export type HeaderContainerBlock = Block & {
   type: 'structure';
   content: Block[];
   configuration?: {
+    visible: boolean;
     layout?: {
       sticky?: boolean;
     };
