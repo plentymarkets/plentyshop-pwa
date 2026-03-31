@@ -1,0 +1,8 @@
+[
+  {
+    "id": "mollie",
+    "entry": "@plentymarkets/shop-module-mollie",
+    "priority": 10,
+    "settings": {}
+  }
+]
