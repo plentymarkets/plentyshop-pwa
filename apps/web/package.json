@@ -5,6 +5,7 @@
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
+    "install-modules": "bash install-modules.sh && npm install",
     "build": "tsx ./build/index.ts && nuxt build",
     "dev": "tsx ./build/index.ts && nuxt dev",
     "start": "nuxt start",
@@ -43,7 +44,9 @@
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "@plentymarkets/shop-module-mollie": "^1.5.0",
+    "nuxt-charts": "^2.1.4"
   },
   "devDependencies": {
     "@mdi/js": "^7.4.47",
