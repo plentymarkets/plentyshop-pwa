@@ -68,21 +68,22 @@ export const useBlockManager = () => {
     const copiedData = JSON.parse(JSON.stringify(data.value));
     const parentInfo = findBlockParent(copiedData, targetUuid);
 
-    if (!parentInfo) {
-      console.error('block not found');
-      return;
-    }
-
-    const { parent, index } = parentInfo;
-    const targetBlock = parent[index];
-    if (!targetBlock) return;
-
-    newBlock.parent_slot = targetBlock.parent_slot;
-
-    if (position === 'inside') {
-      insertIntoColumn(targetBlock, newBlock, parent);
+    if (targetUuid === '0' || !parentInfo) {
+      const footerIndex = copiedData.findIndex((block: Block) => isFooterBlock(block));
+      const insertIndex = position === 'top' ? 0 : (footerIndex !== -1 ? footerIndex : copiedData.length);
+      copiedData.splice(insertIndex, 0, newBlock);
     } else {
-      insertNextToBlock(parent, index, newBlock, position);
+      const { parent, index } = parentInfo;
+      const targetBlock = parent[index];
+      if (!targetBlock) return;
+
+      newBlock.parent_slot = targetBlock.parent_slot;
+
+      if (position === 'inside') {
+        insertIntoColumn(targetBlock, newBlock, parent);
+      } else {
+        insertNextToBlock(parent, index, newBlock, position);
+      }
     }
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
@@ -241,6 +242,7 @@ export const useBlockManager = () => {
     targetUuid: string,
     deleteBlock = false,
   ) => {
+    console.log(blocks);
     for (const [index, block] of blocks.entries()) {
       if (block.meta && block.meta.uuid === targetUuid) {
         if (deleteBlock) {
