@@ -86,9 +86,3 @@ MANIFEST_FILE="$MANIFEST_FILE" NUXT_CONFIG="$NUXT_CONFIG" node << 'EOF'
 EOF
 
 echo "Done."
-
-
-
-
-
-

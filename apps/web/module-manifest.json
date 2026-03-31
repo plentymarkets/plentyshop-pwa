@@ -19,6 +19,11 @@
       "package": "@nuxtjs/kinde",
       "version": "0.4.0",
       "nuxtModule": "@nuxtjs/kinde"
+    },
+    {
+      "package": "nuxt-charts",
+      "version": "^2.1.4",
+      "nuxtModule": "nuxt-charts"
     }
   ]
 }

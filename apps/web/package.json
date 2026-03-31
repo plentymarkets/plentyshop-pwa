@@ -47,6 +47,7 @@
     "axios": "^1.13.5",
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
+    "nuxt-charts": "^2.1.4",
     "nuxt-lazy-hydrate": "^1.0.0",
     "uuid": "^13.0.0"
   },
