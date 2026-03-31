@@ -304,7 +304,7 @@ const isFromSlider = computed(() => props.isFromSlider);
 
 const externalImagePermission = computed(() => {
   if (!isFromSlider.value) return true;
-  return props.shouldLoadImage;
+  return props.shouldLoadImage ?? true;
 });
 const canLoadMainImage = computed(() => {
   if (!externalImagePermission.value) return false;

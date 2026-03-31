@@ -20,6 +20,7 @@ const { currentProduct } = useProducts();
 const blockRef = ref<HTMLElement | null>(null);
 const { isNearViewport } = useNearViewport(blockRef, {
   rootMargin: '200px 0px 200px 0px',
+  once: true,
 });
 const itemId = computed(() =>
   Object.keys(currentProduct.value).length

@@ -9,9 +9,14 @@ export const useNearViewport = (
   let observer: IntersectionObserver | null = null;
 
   onMounted(() => {
+    if (typeof globalThis === 'undefined' || !('IntersectionObserver' in globalThis)) {
+      isNearViewport.value = true;
+      return;
+    }
+
     if (!target.value) return;
 
-    observer = new IntersectionObserver(
+    observer = new globalThis.IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (!entry) return;
