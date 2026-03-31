@@ -21,8 +21,6 @@ import Placeholder from '@tiptap/extension-placeholder';
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
 
-  const editorFocused = ref(false);
-
   const editor = useEditor({
     content: args.modelValue.value ?? '',
     extensions: [
@@ -48,12 +46,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       transformPastedHTML: (html) => {
         return stripInlineFontSizesFromHtml(html);
       },
-    },
-    onFocus: () => {
-      editorFocused.value = true;
-    },
-    onBlur: () => {
-      editorFocused.value = false;
     },
     onUpdate: ({ editor }: { editor: Editor }) => {
       args.onUpdateModelValue(editor.getHTML());
@@ -107,7 +99,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     editor as Ref<Editor | null> | null,
     focusChain,
     args.textAlign,
-    editorFocused,
   );
   const { canUndo, canRedo, undo, redo } = setupRichTextEditorHistory(editor as Ref<Editor | null> | null, focusChain);
   const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(editor as Ref<Editor | null> | null);
