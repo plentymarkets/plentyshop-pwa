@@ -14,16 +14,18 @@ export const useSearchSuggestions: UseSearchSuggestionsReturn = () => {
   }));
 
   const searchSuggestions = async (text: string) => {
-    const requestId = ++state.value.currentRequestId;
     const term = text.trim().slice(0, 80);
 
     if (term.length < 2) {
+      state.value.currentRequestId++;
       state.value.results = null;
+      state.value.loading = false;
       return;
     }
 
     if (state.value.searchTerm === term) return;
 
+    const requestId = ++state.value.currentRequestId;
     state.value.loading = true;
     try {
       const { data } = await useSdk().plentysystems.getItemSearchAutocomplete({
@@ -46,8 +48,10 @@ export const useSearchSuggestions: UseSearchSuggestionsReturn = () => {
   };
 
   const resetSuggestions = () => {
+    state.value.currentRequestId++;
     state.value.results = null;
     state.value.searchTerm = '';
+    state.value.loading = false;
   };
 
   return {

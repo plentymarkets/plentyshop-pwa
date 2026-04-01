@@ -21,8 +21,8 @@ export const debounce = <T extends (...args: any[]) => void>(
       }
     };
 
-    const callNow = immediate && !timeout;
-    if (timeout) {
+    const callNow = immediate && timeout === null;
+    if (timeout !== null) {
       clearTimeout(timeout);
     }
     timeout = setTimeout(later, wait);
@@ -33,7 +33,7 @@ export const debounce = <T extends (...args: any[]) => void>(
   };
 
   debounced.cancel = () => {
-    if (timeout) {
+    if (timeout !== null) {
       clearTimeout(timeout);
       timeout = null;
     }

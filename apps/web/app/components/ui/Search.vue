@@ -29,7 +29,7 @@
     </form>
 
     <section
-      v-if="inputModel.trim().length > 1 && searchTerm === inputModel.trim()"
+      v-if="inputModel.trim().slice(0, 80).length > 1 && searchTerm === inputModel.trim().slice(0, 80)"
       class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-md border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
       aria-live="polite"
       aria-relevant="all"
