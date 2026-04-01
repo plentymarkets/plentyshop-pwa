@@ -11,9 +11,12 @@ export default defineNuxtModule({
   },
   defaults: {},
   async setup(_options, nuxt) {
-    const manifestPath = resolve(nuxt.options.rootDir, 'extensions-manifest.json');
+    const manifestPath =
+      [resolve(nuxt.options.rootDir, 'extensions-manifest.json'), resolve(nuxt.options.rootDir, 'build/extensions-manifest.json')].find(
+        existsSync,
+      ) ?? null;
 
-    if (!existsSync(manifestPath)) {
+    if (!manifestPath) {
       console.log('[plenty-loader] No extensions-manifest.json found — skipping.');
       return;
     }
