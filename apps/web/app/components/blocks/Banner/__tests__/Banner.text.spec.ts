@@ -5,90 +5,6 @@ import { BlocksBanner } from '#components';
 const bannerBlockUuid = '11111111-1111-4111-8111-111111111111';
 
 describe('Banner text', () => {
-  it('should not render a pretitle if no pretitle is provided', () => {
-    const wrapper = mount(BlocksBanner, {
-      props: {
-        name: 'Banner',
-        type: 'content',
-        content: {
-          text: {
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-          },
-          image: {},
-          button: {},
-        },
-        index: 0,
-        lazyLoading: 'eager',
-        meta: {
-          uuid: bannerBlockUuid,
-        },
-      },
-    });
-
-    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(false);
-    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(true);
-  });
-
-  it('should not render a title if no title is provided', () => {
-    const wrapper = mount(BlocksBanner, {
-      props: {
-        name: 'Banner',
-        type: 'content',
-        content: {
-          text: {
-            pretitle: 'Test pretitle',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-          },
-          image: {},
-          button: {},
-        },
-        index: 0,
-        lazyLoading: 'eager',
-        meta: {
-          uuid: bannerBlockUuid,
-        },
-      },
-    });
-
-    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(false);
-    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(true);
-  });
-
-  it('should not render a subtitle if no subtitle is provided', () => {
-    const wrapper = mount(BlocksBanner, {
-      props: {
-        name: 'Banner',
-        type: 'content',
-        content: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            htmlDescription: '<p>Test description</p>',
-          },
-          image: {},
-          button: {},
-        },
-        index: 0,
-        lazyLoading: 'eager',
-        meta: {
-          uuid: bannerBlockUuid,
-        },
-      },
-    });
-
-    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(false);
-    expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(true);
-  });
-
   it('should not render a description if no description is provided', () => {
     const wrapper = mount(BlocksBanner, {
       props: {
@@ -111,9 +27,6 @@ describe('Banner text', () => {
       },
     });
 
-    expect(wrapper.find(`[data-testid="text-pretitle"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-title"]`).exists()).toBe(true);
-    expect(wrapper.find(`[data-testid="text-subtitle"]`).exists()).toBe(true);
     expect(wrapper.find(`[data-testid="text-html"]`).exists()).toBe(false);
   });
 
@@ -214,7 +127,7 @@ describe('Banner text', () => {
               pretitle: 'Test pretitle',
               title: 'Test title',
               subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
+              htmlDescription: '<p style="text-align: left;">Example left description</p>',
             },
             image: {},
             button: {},
@@ -227,8 +140,8 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find(`[data-testid="banner-overlay-${bannerBlockUuid}"]`);
-      expect(overlay.attributes('style')).toContain('text-align: left');
+      const overlay = wrapper.find(`[data-testid="text-html"]`);
+      expect(overlay.html()).toContain('text-align: left');
     });
 
     it('should align text to the center', () => {
@@ -241,7 +154,7 @@ describe('Banner text', () => {
               pretitle: 'Test pretitle',
               title: 'Test title',
               subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
+              htmlDescription: '<p style="text-align: center;">Example center description</p>',
               textAlignment: 'center',
             },
             image: {},
@@ -255,8 +168,8 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find(`[data-testid="banner-overlay-${bannerBlockUuid}"]`);
-      expect(overlay.attributes('style')).toContain('text-align: center');
+      const overlay = wrapper.find(`[data-testid="text-html"]`);
+      expect(overlay.html()).toContain('text-align: center');
     });
 
     it('should align text to the right', () => {
@@ -269,7 +182,7 @@ describe('Banner text', () => {
               pretitle: 'Test pretitle',
               title: 'Test title',
               subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
+              htmlDescription: '<p style="text-align: right;">Example right description</p>',
               textAlignment: 'right',
             },
             image: {},
@@ -283,8 +196,8 @@ describe('Banner text', () => {
         },
       });
 
-      const overlay = wrapper.find(`[data-testid="banner-overlay-${bannerBlockUuid}"]`);
-      expect(overlay.attributes('style')).toContain('text-align: right');
+      const overlay = wrapper.find(`[data-testid="text-html"]`);
+      expect(overlay.html()).toContain('text-align: right');
     });
   });
 

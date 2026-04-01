@@ -86,17 +86,7 @@
           :model-value="footerContent.column2.description ?? ''"
           :block-uuid="blockUuid"
           @update:model-value="footerContent.column2.description = $event"
-        >
-          <UiFormLabel>{{ getEditorTranslation('column-2-description-label') }}</UiFormLabel>
-          <SfTextarea
-            v-model="footerContent.column2.description"
-            name="description"
-            type="text"
-            class="w-full min-h-[232px]"
-            :placeholder="getEditorTranslation('column-2-description-placeholder')"
-            data-testid="input-text-column-2"
-          />
-        </EditorRichTextEditorForm>
+        />
       </div>
     </UiAccordionItem>
 
@@ -134,17 +124,7 @@
           :model-value="footerContent.column3.description ?? ''"
           :block-uuid="blockUuid"
           @update:model-value="footerContent.column3.description = $event"
-        >
-          <UiFormLabel>{{ getEditorTranslation('column-3-description-label') }}</UiFormLabel>
-          <SfTextarea
-            v-model="footerContent.column3.description"
-            name="description"
-            type="text"
-            class="w-full min-h-[232px]"
-            :placeholder="getEditorTranslation('column-3-description-placeholder')"
-            data-testid="input-text-column-3"
-          />
-        </EditorRichTextEditorForm>
+        />
       </div>
     </UiAccordionItem>
 
@@ -182,17 +162,7 @@
           :model-value="footerContent.column4.description ?? ''"
           :block-uuid="blockUuid"
           @update:model-value="footerContent.column4.description = $event"
-        >
-          <UiFormLabel>{{ getEditorTranslation('column-4-description-label') }}</UiFormLabel>
-          <SfTextarea
-            v-model="footerContent.column4.description"
-            name="description"
-            type="text"
-            class="w-full min-h-[232px]"
-            :placeholder="getEditorTranslation('column-4-description-placeholder')"
-            data-testid="input-text-column-4"
-          />
-        </EditorRichTextEditorForm>
+        />
       </div>
     </UiAccordionItem>
 
@@ -362,7 +332,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();
@@ -435,29 +405,15 @@ watch(
   "en": {
     "column-1-group-label": "First column",
     "column-1-title-label": "Title",
-    "column-1-terms-and-conditions-label": "Show Terms and Conditions link",
-    "column-1-cancellation-rights-label": "Show Cancellation Rights link",
-    "column-1-cancellation-form-label": "Show Cancellation Form link",
-    "column-1-legal-disclosure-label": "Show Legal Disclosure link",
-    "column-1-privacy-policy-label": "Show Privacy Policy link",
-    "column-1-declaration-of-accessibility-label": "Show Declaration of Accessibility link",
 
     "column-2-group-label": "Second column",
     "column-2-title-label": "Title",
-    "column-2-contact-label": "Show Contact link",
-    "column-2-register-label": "Show Register link",
-    "column-2-description-label": "Description",
-    "column-2-description-placeholder": "Description text for the second column",
 
     "column-3-group-label": "Third column",
     "column-3-title-label": "Title",
-    "column-3-description-label": "Description",
-    "column-3-description-placeholder": "Description text for the third column",
 
     "column-4-group-label": "Fourth column",
     "column-4-title-label": "Title",
-    "column-4-description-label": "Description",
-    "column-4-description-placeholder": "Description text for the fourth column",
 
     "footnotes-group-label": "Footnotes",
     "footnotes-text-label": "Footnotes text",
@@ -475,29 +431,15 @@ watch(
   "de": {
     "column-1-group-label": "First column",
     "column-1-title-label": "Title",
-    "column-1-terms-and-conditions-label": "Show the link to Terms and Conditions",
-    "column-1-cancellation-rights-label": "Show the link to Cancellation Rights",
-    "column-1-cancellation-form-label": "Show the link to Cancellation Form",
-    "column-1-legal-disclosure-label": "Show the link to Legal Disclosure",
-    "column-1-privacy-policy-label": "Show the link to Privacy Policy",
-    "column-1-declaration-of-accessibility-label": "Show the link to Declaration of Accessibility",
 
     "column-2-group-label": "Second column",
     "column-2-title-label": "Title",
-    "column-2-show-contact-link-label": "Show the link to contact form",
-    "column-2-show-register-link-label": "Show the link to register form",
-    "column-2-description-label": "Description",
-    "column-2-description-placeholder": "Description text for the second column",
 
     "column-3-group-label": "Third column",
     "column-3-title-label": "Title",
-    "column-3-description-label": "Description",
-    "column-3-description-placeholder": "Description text for the third column",
 
     "column-4-group-label": "Fourth column",
     "column-4-title-label": "Title",
-    "column-4-description-label": "Description",
-    "column-4-description-placeholder": "Description text for the fourth column",
 
     "footnotes-group-label": "Footnotes",
     "footnotes-text-label": "Footnotes text",
