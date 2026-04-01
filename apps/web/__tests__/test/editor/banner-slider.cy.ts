@@ -38,44 +38,44 @@ describe('Banner Slider Block Form', () => {
     openSettingsForBannerSliderBlock();
   });
 
-  // describe('Slide Settings', () => {
-  //   it('should display the slide whose settings are open', () => {
-  //     bannerSlider.checkIsBannerImageVisible(0);
-  //     bannerSlider.openSlideOneSettings();
-  //     bannerSlider.checkIsBannerImageVisible(0);
-  //     bannerSlider.goBackToElementList();
-  //     bannerSlider.openSlideTwoSettings();
-  //     bannerSlider.checkIsBannerImageVisible(1);
-  //   });
+  describe('Slide Settings', () => {
+    it('should display the slide whose settings are open', () => {
+      bannerSlider.checkIsBannerImageVisible(0);
+      bannerSlider.openSlideOneSettings();
+      bannerSlider.checkIsBannerImageVisible(0);
+      bannerSlider.goBackToElementList();
+      bannerSlider.openSlideTwoSettings();
+      bannerSlider.checkIsBannerImageVisible(1);
+    });
 
-  //   it('should add a new slide via quick add', () => {
-  //     bannerSlider.quickAddSlide();
-  //     bannerSlider.checkIsNewBannerImageVisible();
-  //     bannerSlider.openSlideOneSettings();
-  //   });
+    it('should add a new slide via quick add', () => {
+      bannerSlider.quickAddSlide();
+      bannerSlider.checkIsNewBannerImageVisible();
+      bannerSlider.openSlideOneSettings();
+    });
 
-  //   it('should remove a slide', () => {
-  //     bannerSlider.openSlideActions();
-  //     bannerSlider.deleteSlide();
-  //     bannerSlider.checkIfSlideIsDeleted();
-  //   });
+    it('should remove a slide', () => {
+      bannerSlider.openSlideActions();
+      bannerSlider.deleteSlide();
+      bannerSlider.checkIfSlideIsDeleted();
+    });
 
-  //   it('should not show the actions menu if only 1 slide exists', () => {
-  //     bannerSlider.openSlideActions();
-  //     bannerSlider.deleteSlide();
-  //     bannerSlider.checkIfSlideActionsAreVisible();
-  //   });
-  // });
+    it('should not show the actions menu if only 1 slide exists', () => {
+      bannerSlider.openSlideActions();
+      bannerSlider.deleteSlide();
+      bannerSlider.checkIfSlideActionsAreVisible();
+    });
+  });
 
-  // describe('Image Settings', () => {
-  //   it('should open the image settings', () => {
-  //     bannerSlider.openSlideOneSettings();
-  //     bannerSlider.openImageGroup();
-  //     bannerSlider.openImageSelector('wideScreen');
-  //     bannerSlider.selectImage();
-  //     bannerSlider.checkNewBannerImage();
-  //   });
-  // });
+  describe('Image Settings', () => {
+    it('should open the image settings', () => {
+      bannerSlider.openSlideOneSettings();
+      bannerSlider.openImageGroup();
+      bannerSlider.openImageSelector('wideScreen');
+      bannerSlider.selectImage();
+      bannerSlider.checkNewBannerImage();
+    });
+  });
 
   describe('Text Settings', () => {
     it('should change the texts', () => {
