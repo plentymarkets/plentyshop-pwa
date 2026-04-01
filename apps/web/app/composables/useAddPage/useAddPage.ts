@@ -1,7 +1,7 @@
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
-import type { CategoryEntry, CategoryTreeItem, CategoryDetails } from '@plentymarkets/shop-api';
+import type { CategoryEntry, CategoryTreeItem, CategoryDetails, ApiError } from '@plentymarkets/shop-api';
 import { categoryEntryGetters } from '@plentymarkets/shop-api';
 
 export const useAddPageModal = () => {
@@ -20,6 +20,7 @@ export const useAddPageModal = () => {
   const { data: newCategory, addCategory } = useCategoryManagement();
 
   const _isReady = ref(false);
+  const _isLoading = ref(false);
 
   const pageTypes = ref([
     { label: 'Content', value: 'content' },
@@ -168,16 +169,24 @@ export const useAddPageModal = () => {
     if (!meta.value.valid) return;
     if (!pageType.value) return;
 
-    await addCategory({
-      name: pageName?.value || '',
-      type: pageType.value.value,
-      parentCategoryId: categoryEntryGetters.getId(parentPage.value) || null,
-      sitemap: 'Y',
-      metaRobots: 'ALL',
-    });
+    _isLoading.value = true;
 
-    addNewPageToTree(newCategory.value);
-    await redirectToNewPage(newCategory.value);
+    try {
+      await addCategory({
+        name: pageName?.value || '',
+        type: pageType.value.value,
+        parentCategoryId: categoryEntryGetters.getId(parentPage.value) || null,
+        sitemap: 'Y',
+        metaRobots: 'ALL',
+      });
+
+      addNewPageToTree(newCategory.value);
+      await redirectToNewPage(newCategory.value);
+    } catch (e) {
+      useHandleError(e as ApiError);
+    } finally {
+      _isLoading.value = false;
+    }
   };
 
   const redirectToNewPage = async (newCategory: CategoryEntry) => {
@@ -228,6 +237,7 @@ export const useAddPageModal = () => {
     pageTypes,
     categoriesWithFallback,
     _isReady,
+    _isLoading,
     errors,
     noneCategoryItem,
     onSubmit,
