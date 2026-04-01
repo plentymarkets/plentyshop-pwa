@@ -414,7 +414,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -446,7 +446,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -490,7 +490,7 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -522,7 +522,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -571,7 +571,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
                   },
@@ -602,7 +602,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
                   },
@@ -645,7 +645,7 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "right"
                   },
@@ -676,7 +676,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left"
                   },
@@ -724,7 +724,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
                   },
@@ -755,7 +755,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 title",
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
                   },
@@ -798,7 +798,7 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "center"
                   },
@@ -829,7 +829,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "center"
                   },
@@ -970,7 +970,7 @@
                 "parent_slot": 1,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "title": "h2 heading",
                     "subtitle": "subtitle",
                     "textAlignment": "left",
@@ -1038,7 +1038,7 @@
                 "parent_slot": 1,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "title": "h2 Titel",
                     "subtitle": "Untertitel",
                     "textAlignment": "left",
@@ -1075,7 +1075,7 @@
                 "parent_slot": 0,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "title": "h2 heading",
                     "subtitle": "Subtitle",
                     "textAlignment": "right",
@@ -1135,7 +1135,7 @@
                 "parent_slot": 0,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "title": "h2 Titel",
                     "subtitle": "Untertitel",
                     "textAlignment": "left",
@@ -1199,7 +1199,7 @@
             "meta": { "uuid": "01020304-0506-4070-8090-0a0b0c0d0e0f" },
             "content": {
               "text": {
-                "htmlDescription": "Text that supports HTML formatting",
+                "htmlDescription": "<p style=\"text-align: center;\">Text that supports HTML formatting</p>",
                 "pretitle": "Pretitle",
                 "title": "h2 heading",
                 "subtitle": "Subtitle",
@@ -1222,7 +1222,7 @@
             "meta": { "uuid": "1a2b3c4d-5e6f-4111-8abc-1234567890ab" },
             "content": {
               "text": {
-                "htmlDescription": "Text mit HTML-Formatierung",
+                "htmlDescription": "<p style=\"text-align: center;\">Text mit HTML-Formatierung</p>",
                 "pretitle": "Vortitel",
                 "title": "h2 Titel",
                 "subtitle": "Untertitel",
@@ -1262,7 +1262,7 @@
                 "pretitle": "Pretitle",
                 "title": "h2 heading",
                 "subtitle": "Subtitle.",
-                "htmlDescription": "Text that supports HTML formatting"
+                "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>"
               },
               "layout": {
                 "fullWidth": false
@@ -1283,7 +1283,7 @@
                 "pretitle": "Vortitel",
                 "title": "h2 Titel",
                 "subtitle": "Untertitel",
-                "htmlDescription": "Text mit HTML-Formatierung"
+                "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>"
               },
               "layout": {
                 "fullWidth": false
@@ -1675,7 +1675,7 @@
               "text": {
                 "bgColor": "#f5f5f5",
                 "title": "Newsletter",
-                "htmlDescription": "Text that supports HTML formatting"
+                "htmlDescription": "<p style=\"text-align: center;\">Text that supports HTML formatting</p>"
               },
               "input": {
                 "displayNameInput": true,
@@ -1700,7 +1700,7 @@
               "text": {
                 "bgColor": "#f5f5f5",
                 "title": "Abonnieren Sie unseren Newsletter",
-                "htmlDescription": "Text mit HTML-Formatierung"
+                "htmlDescription": "<p style=\"text-align: center;\">Text mit HTML-Formatierung</p>"
               },
               "input": {
                 "displayNameInput": true,
