@@ -26,14 +26,30 @@
 
   <span class="w-px h-5 bg-gray-200 mx-0.5" />
 
-  <EditorRichTextEditorMenuButton :active="isActiveAlign('left')" icon-name="alignLeft" @click="setAlign('left')" />
   <EditorRichTextEditorMenuButton
+    data-testid="rte-align-left"
+    :active="isActiveAlign('left')"
+    icon-name="alignLeft"
+    @click="setAlign('left')"
+  />
+  <EditorRichTextEditorMenuButton
+    data-testid="rte-align-center"
     :active="isActiveAlign('center')"
     icon-name="alignCenter"
     @click="setAlign('center')"
   />
-  <EditorRichTextEditorMenuButton :active="isActiveAlign('right')" icon-name="alignRight" @click="setAlign('right')" />
-  <EditorRichTextEditorMenuButton :active="isActiveAlign('justify')" icon-name="block" @click="setAlign('justify')" />
+  <EditorRichTextEditorMenuButton
+    data-testid="rte-align-right"
+    :active="isActiveAlign('right')"
+    icon-name="alignRight"
+    @click="setAlign('right')"
+  />
+  <EditorRichTextEditorMenuButton
+    data-testid="rte-align-justify"
+    :active="isActiveAlign('justify')"
+    icon-name="block"
+    @click="setAlign('justify')"
+  />
 
   <span class="w-px h-5 bg-gray-200 mx-0.5" />
 

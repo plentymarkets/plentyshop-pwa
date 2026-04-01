@@ -31,9 +31,14 @@ export class RecommendedProductsObject extends PageObject {
     return this;
   };
 
-  typeInRecommendedForm = (field: string, value: string) => {
-    cy.getByTestId(`recommended-form-${field}`).clear().type(value);
-
+  typeInRecommendedForm = (value: string) => {
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .wait(200)
+      .type('{selectall}{del}', { delay: 50 })
+      .type(value, { delay: 0 });
     return this;
   };
 
@@ -41,39 +46,55 @@ export class RecommendedProductsObject extends PageObject {
     cy.getByTestId('recommended-form-categories').should('exist').click();
     cy.get('.multiselect__content-wrapper').contains(categoryName).click();
     cy.wait('@getFacet');
+    return this;
+  };
+
+  checkIfRecommendedBlockHasText = (text: string) => {
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("' + text + '")')
+      .should('exist');
+    return this;
+  };
+
+  changeTextColor = (hex: string) => {
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}');
+
+    cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
+
+    cy.get('#HEX').clear().type(`#${hex}{enter}`, { delay: 0 });
+
+    cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
 
     return this;
   };
 
-  checkIfRecommendedBlockHasText = (field: string, text: string) => {
-    cy.getByTestId('recommended-block').find(`[data-testid="text-${field}"]`).last().should('have.text', text);
+  checkTextColor = (color: string) => {
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("New description")')
+      .find('span')
+      .should('have.css', 'color', color);
 
     return this;
   };
 
-  changeTextAlignment = (value: string) => {
-    cy.getByTestId(`recommended-form-text-align-${value}`).should('exist').click();
+  changeTextAlignment = (align: string) => {
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}');
 
-    return this;
-  };
+    cy.get(`[data-testid="rte-align-${align}"]`).filter(':visible').click();
 
-  changeColor = (value: string) => {
-    cy.getByTestId(`recommended-form-color`).clear().type(value);
-
-    return this;
-  };
-
-  checkClassOnRecommendedBlock = (className: string) => {
-    cy.getByTestId('recommended-block').should('have.class', className);
-
-    return this;
-  };
-
-  checkStyleOnRecommendedBlock = () => {
-    cy.getByTestId('recommended-block')
-      .find(`[data-testid="text-title"]`)
-      .last()
-      .should('have.css', 'color', 'rgb(0, 255, 0)');
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("New description")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', align);
 
     return this;
   };
