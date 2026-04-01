@@ -42,7 +42,7 @@ export class CategorySettingsObject extends PageObject {
   }
 
   checkCategoryOptions() {
-    const expectedAvailableSortingOptions = 19;
+    const expectedAvailableSortingOptions = 20;
     const expectedSelectSortByOptions = 1;
     cy.get('@availableSorting')
       .click()
