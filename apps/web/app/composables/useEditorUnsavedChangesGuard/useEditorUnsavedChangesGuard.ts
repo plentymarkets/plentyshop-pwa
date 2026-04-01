@@ -23,7 +23,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
 
-  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  const handleBeforeUnload = (event: Event) => {
     if (!hasUnsavedChanges()) return;
     event.preventDefault();
   };
@@ -49,18 +49,16 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     window.removeEventListener('beforeunload', handleBeforeUnload);
   });
 
-  onBeforeRouteLeave(async (to, from, next) => {
+  onBeforeRouteLeave(async () => {
     if (hasUnsavedChanges()) {
       const confirmation = window.confirm(confirmMessage);
 
       if (confirmation) {
         await handleConfirmLeave();
-        next();
+        return true;
       } else {
-        next(false);
+        return false;
       }
-    } else {
-      next();
     }
   });
 };
