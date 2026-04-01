@@ -37,12 +37,10 @@ mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
 mockNuxtImport('useBlockTemplates', () => useBlockTemplates);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
 
-let mockOnBeforeRouteLeave:
-  | ((callback: (to: unknown, from: unknown, next: (value?: unknown) => void) => void) => void)
-  | null = null;
+let mockOnBeforeRouteLeave: ((callback: () => Promise<boolean | undefined>) => void) | null = null;
 
 vi.mock('vue-router', () => ({
-  onBeforeRouteLeave: (callback: (to: unknown, from: unknown, next: (value?: unknown) => void) => void) => {
+  onBeforeRouteLeave: (callback: () => Promise<boolean | undefined>) => {
     if (mockOnBeforeRouteLeave) {
       mockOnBeforeRouteLeave(callback);
     }
@@ -56,7 +54,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   let resetFooterToSaved: ReturnType<typeof vi.fn>;
   let resetHeaderToSaved: ReturnType<typeof vi.fn>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
-  let routeLeaveCallback: ((to: unknown, from: unknown, next: (value?: unknown) => void) => void) | null = null;
+  let routeLeaveCallback: (() => Promise<boolean | undefined>) | null = null;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -238,7 +236,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   });
 
   describe('route leave guard', () => {
-    it('should allow navigation when there are no changes', () => {
+    it('should allow navigation when there are no changes', async () => {
       const TestComponent = {
         setup() {
           useEditorUnsavedChangesGuard();
@@ -248,15 +246,12 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = false;
       settingsIsDirty.value = false;
 
-      routeLeaveCallback?.({}, {}, next);
+      const result = await routeLeaveCallback?.();
 
-      expect(next).toHaveBeenCalledWith();
-      expect(next).not.toHaveBeenCalledWith(false);
+      expect(result).toBeUndefined();
     });
 
     it('should show confirmation and allow navigation when user confirms', async () => {
@@ -271,19 +266,17 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = true;
 
-      await routeLeaveCallback?.({}, {}, next);
+      const result = await routeLeaveCallback?.();
 
       expect(confirmSpy).toHaveBeenCalledWith('Translated: unsaved-changes-confirm');
       expect(resetFooterToSaved).toHaveBeenCalled();
-      expect(next).toHaveBeenCalledWith();
+      expect(result).toBe(true);
       expect(closeDrawer).toHaveBeenCalled();
     });
 
-    it('should show confirmation and prevent navigation when user cancels', () => {
+    it('should show confirmation and prevent navigation when user cancels', async () => {
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false);
 
       const TestComponent = {
@@ -295,18 +288,16 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = true;
 
-      routeLeaveCallback?.({}, {}, next);
+      const result = await routeLeaveCallback?.();
 
       expect(confirmSpy).toHaveBeenCalledWith('Translated: unsaved-changes-confirm');
-      expect(next).toHaveBeenCalledWith(false);
+      expect(result).toBe(false);
       expect(closeDrawer).not.toHaveBeenCalled();
     });
 
-    it('should check for unsaved changes when settings are dirty', () => {
+    it('should check for unsaved changes when settings are dirty', async () => {
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
       const TestComponent = {
@@ -318,17 +309,15 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = false;
       settingsIsDirty.value = true;
 
-      routeLeaveCallback?.({}, {}, next);
+      await routeLeaveCallback?.();
 
       expect(confirmSpy).toHaveBeenCalled();
     });
 
-    it('should use custom hasUnsavedChanges for route leave', () => {
+    it('should use custom hasUnsavedChanges for route leave', async () => {
       const customHasUnsavedChanges = vi.fn(() => true);
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
@@ -341,12 +330,10 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = false;
       settingsIsDirty.value = false;
 
-      routeLeaveCallback?.({}, {}, next);
+      await routeLeaveCallback?.();
 
       expect(customHasUnsavedChanges).toHaveBeenCalled();
       expect(confirmSpy).toHaveBeenCalled();
@@ -367,11 +354,9 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = true;
 
-      await routeLeaveCallback?.({}, {}, next);
+      await routeLeaveCallback?.();
 
       expect(confirmSpy).toHaveBeenCalled();
       expect(resetFooterToSaved).toHaveBeenCalled();
@@ -381,7 +366,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   });
 
   describe('edge cases', () => {
-    it('should handle both editing and dirty settings simultaneously', () => {
+    it('should handle both editing and dirty settings simultaneously', async () => {
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
       const TestComponent = {
@@ -395,7 +380,6 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       const event = new Event('beforeunload') as BeforeUnloadEvent;
       const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
-      const next = vi.fn();
 
       isEditingEnabled.value = true;
       settingsIsDirty.value = true;
@@ -403,7 +387,7 @@ describe('useEditorUnsavedChangesGuard', () => {
       beforeUnloadHandler?.(event);
       expect(preventDefaultSpy).toHaveBeenCalled();
 
-      routeLeaveCallback?.({}, {}, next);
+      await routeLeaveCallback?.();
       expect(confirmSpy).toHaveBeenCalled();
     });
 
