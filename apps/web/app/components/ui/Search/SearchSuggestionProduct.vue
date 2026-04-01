@@ -11,11 +11,11 @@
         </div>
       </div>
       <div class="text-sm px-2 pb-2 flex flex-wrap gap-x-2 items-center">
-        <span class="text-gray-900 font-semibold">{{ item.price.formatted }}</span>
+        <span class="text-gray-900 font-semibold">{{ item.price?.price.formatted }}</span>
         <span
-          v-if="item.crossedPrice && item.crossedPrice !== item.price && item.crossedPrice.value !== 0"
+          v-if="item.crossedPrice && item.crossedPrice !== item.price && item.crossedPrice.price.value !== 0"
           class="text-neutral-500 text-xs line-through"
-          >{{ item.crossedPrice.formatted }}</span
+          >{{ item.crossedPrice.price.formatted }}</span
         >
       </div>
     </NuxtLink>

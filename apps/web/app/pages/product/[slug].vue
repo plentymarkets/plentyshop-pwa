@@ -108,12 +108,10 @@ watch(
 );
 
 watch(
-  () => categoryTree.value,
+  () => product.value,
   (categoriesTree) => {
     setProductCanonicalMetaData(product.value);
-    const productCategoryId = productGetters.getCategoryId(product.value);
-    const category = categoryTreeGetters.findCategoryById(categoriesTree, productCategoryId) || undefined;
-    setProductMetaData(product.value, category);
+    setProductMetaData(product.value);
     setProductRobotsMetaData(product.value);
   },
   { immediate: true },
