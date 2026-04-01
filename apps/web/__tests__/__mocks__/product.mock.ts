@@ -2,6 +2,7 @@ export const ProductMock = {
   defaultCategories: [
     {
       id: 73,
+      name: 'Wear',
       parentCategoryId: null,
       level: 1,
       type: 'item',
