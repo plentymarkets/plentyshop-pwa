@@ -35,9 +35,7 @@ describe('Image Text Block Form', () => {
       .clear()
       .type('New image text', { delay: 0 });
 
-    cy.get('[data-testid^="text-html"]')
-      .filter(':contains("New image text")')
-      .should('exist');
+    cy.get('[data-testid^="text-html"]').filter(':contains("New image text")').should('exist');
   };
 
   const changeTextColor = () => {
@@ -49,9 +47,7 @@ describe('Image Text Block Form', () => {
 
     cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
 
-    cy.get('#HEX')
-      .clear()
-      .type('#790C0C{enter}', { delay: 0 });
+    cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
 
     cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
 
@@ -71,19 +67,22 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', 'center');
 
     cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', 'right');
 
     cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', 'left');
   };
 

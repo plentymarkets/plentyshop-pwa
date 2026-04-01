@@ -128,9 +128,9 @@ export class BannerSliderObject extends PageObject {
       .scrollIntoView()
       .should('be.visible')
       .find('[contenteditable="true"]')
-    .click()
-    .clear()
-    .type('New Pre-Title', { delay: 0 });
+      .click()
+      .clear()
+      .type('New Pre-Title', { delay: 0 });
   }
 
   checkNewTexts() {
@@ -172,10 +172,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   textAlignCenter() {
-    cy.get('[data-testid="rte-editor"]')
-      .find('[contenteditable="true"]')
-      .click()
-      .type('{selectall}');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
     cy.get('[data-testid="rte-align-center"]').click();
     cy.get('[data-testid="rte-editor"]')
       .find('[contenteditable="true"] p')
@@ -184,10 +181,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   textAlignRight() {
-    cy.get('[data-testid="rte-editor"]')
-      .find('[contenteditable="true"]')
-      .click()
-      .type('{selectall}');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
     cy.get('[data-testid="rte-align-right"]').click();
     cy.get('[data-testid="rte-editor"]')
       .find('[contenteditable="true"] p')
@@ -196,10 +190,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   textAlignLeft() {
-    cy.get('[data-testid="rte-editor"]')
-      .find('[contenteditable="true"]')
-      .click()
-      .type('{selectall}');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
     cy.get('[data-testid="rte-align-left"]').click();
     cy.get('[data-testid="rte-editor"]')
       .find('[contenteditable="true"] p')

@@ -21,9 +21,7 @@ describe('Text Card Block Form', () => {
       .type('{selectall}{del}', { delay: 50 })
       .type('Edited HTML Description', { delay: 0 });
 
-    cy.get('[data-testid^="text-html"]')
-      .filter(':contains("Edited HTML Description")')
-      .should('exist');
+    cy.get('[data-testid^="text-html"]').filter(':contains("Edited HTML Description")').should('exist');
   };
 
   const changeTextColor = () => {
@@ -35,9 +33,7 @@ describe('Text Card Block Form', () => {
 
     cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
 
-    cy.get('#HEX')
-      .clear()
-      .type('#790C0C{enter}', { delay: 0 });
+    cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
 
     cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
 
@@ -57,19 +53,22 @@ describe('Text Card Block Form', () => {
     cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', 'center');
 
     cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', 'right');
 
     cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', 'left');
   };
 

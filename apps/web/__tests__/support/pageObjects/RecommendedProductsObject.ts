@@ -65,9 +65,7 @@ export class RecommendedProductsObject extends PageObject {
 
     cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
 
-    cy.get('#HEX')
-      .clear()
-      .type(`#${hex}{enter}`, { delay: 0 });
+    cy.get('#HEX').clear().type(`#${hex}{enter}`, { delay: 0 });
 
     cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
 
@@ -94,7 +92,8 @@ export class RecommendedProductsObject extends PageObject {
 
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New description")')
-      .find('p').first()
+      .find('p')
+      .first()
       .should('have.css', 'text-align', align);
 
     return this;

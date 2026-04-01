@@ -23,8 +23,7 @@ describe('Newsletter Block Form', () => {
   };
 
   const checkDescription = (text: string) => {
-    cy.get('[data-testid="text-html-newsletter"]')
-      .should('contain.text', text);
+    cy.get('[data-testid="text-html-newsletter"]').should('contain.text', text);
   };
 
   const changeButtonText = (value: string) => {
