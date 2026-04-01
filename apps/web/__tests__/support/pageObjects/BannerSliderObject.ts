@@ -124,33 +124,17 @@ export class BannerSliderObject extends PageObject {
   }
 
   changeTexts() {
-    cy.get('[data-testid="banner-input-pre-title"]')
+    cy.get('[data-testid="rte-editor"]')
       .scrollIntoView()
       .should('be.visible')
+      .find('[contenteditable="true"]')
+      .click()
       .clear()
       .type('New Pre-Title', { delay: 0 });
-    cy.get('[data-testid="banner-input-title"]')
-      .scrollIntoView()
-      .should('be.visible')
-      .clear()
-      .type('New Title', { delay: 0 });
-    cy.get('[data-testid="banner-input-sub-title"]')
-      .scrollIntoView()
-      .should('be.visible')
-      .clear()
-      .type('New Subtitle', { delay: 0 });
-    cy.get('[data-testid="banner-text-content"]')
-      .scrollIntoView()
-      .should('be.visible')
-      .clear()
-      .type('New Text Content', { delay: 0 });
   }
 
   checkNewTexts() {
-    cy.get('[data-testid^="text-pretitle"]').first().should('have.text', 'New Pre-Title');
-    cy.get('[data-testid^="text-title"]').first().should('have.text', 'New Title');
-    cy.get('[data-testid^="text-subtitle"]').first().should('have.text', 'New Subtitle');
-    cy.get('[data-testid^="text-html"]').first().should('have.text', 'New Text Content');
+    cy.get('[data-testid^="text-html"]').first().should('have.text', 'New Pre-Title');
   }
 
   scrollFormDown() {
@@ -188,18 +172,30 @@ export class BannerSliderObject extends PageObject {
   }
 
   textAlignCenter() {
-    cy.get('[data-testid="slider-text-align-center"]').should('exist').click();
-    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'text-align', 'center');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
+    cy.get('[data-testid="rte-align-center"]').click();
+    cy.get('[data-testid="rte-editor"]')
+      .find('[contenteditable="true"] p')
+      .first()
+      .should('have.css', 'text-align', 'center');
   }
 
   textAlignRight() {
-    cy.get('[data-testid="slider-text-align-right"]').should('exist').click();
-    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'text-align', 'right');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
+    cy.get('[data-testid="rte-align-right"]').click();
+    cy.get('[data-testid="rte-editor"]')
+      .find('[contenteditable="true"] p')
+      .first()
+      .should('have.css', 'text-align', 'right');
   }
 
   textAlignLeft() {
-    cy.get('[data-testid="slider-text-align-left"]').should('exist').click();
-    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'text-align', 'left');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
+    cy.get('[data-testid="rte-align-left"]').click();
+    cy.get('[data-testid="rte-editor"]')
+      .find('[contenteditable="true"] p')
+      .first()
+      .should('have.css', 'text-align', 'left');
   }
 
   closeTextGroup() {
