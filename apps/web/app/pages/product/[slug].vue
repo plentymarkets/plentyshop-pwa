@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
 import type { WatchStopHandle } from 'vue';
-import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -26,7 +26,6 @@ const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcru
 const product = productForEditor;
 const { disableActions } = useEditor();
 const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
-const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
@@ -109,7 +108,7 @@ watch(
 
 watch(
   () => product.value,
-  (categoriesTree) => {
+  () => {
     setProductCanonicalMetaData(product.value);
     setProductMetaData(product.value);
     setProductRobotsMetaData(product.value);

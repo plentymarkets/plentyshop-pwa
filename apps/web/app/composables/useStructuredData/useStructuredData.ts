@@ -6,8 +6,8 @@ import type {
   SetProductCanonicalMetaData,
   UseStructuredDataState,
 } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
-import type { CategoryTreeItem, Product, CanonicalAlternate } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
+import type { Product, CanonicalAlternate } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing meta data
