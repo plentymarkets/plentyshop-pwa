@@ -299,17 +299,17 @@ const {
   priority,
   hoverImageUrl: effectiveHoverImageUrl,
 });
-const isFromWishlist = computed(() => props.isFromWishlist);
-const isFromSlider = computed(() => props.isFromSlider);
+// const isFromWishlist = computed(() => props.isFromWishlist);
+// const isFromSlider = computed(() => props.isFromSlider);
 
 const externalImagePermission = computed(() => {
-  if (!isFromSlider.value) return true;
+  if (!props.isFromSlider) return true;
   return props.shouldLoadImage ?? true;
 });
 const canLoadMainImage = computed(() => {
   if (!externalImagePermission.value) return false;
 
-  if (isFromSlider.value) return true;
+  if (props.isFromSlider) return true;
 
   return shouldLoadMainImage.value;
 });
@@ -317,7 +317,7 @@ const canLoadMainImage = computed(() => {
 const canLoadHoverImage = computed(() => {
   if (!externalImagePermission.value || !effectiveHoverImageUrl.value) return false;
 
-  if (isFromSlider.value) return true;
+  if (props.isFromSlider) return true;
 
   return shouldLoadHoverImage.value;
 });

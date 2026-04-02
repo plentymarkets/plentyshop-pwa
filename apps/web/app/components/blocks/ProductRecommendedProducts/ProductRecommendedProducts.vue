@@ -1,10 +1,7 @@
 <template>
   <div ref="blockRef" v-bind="$attrs">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
-    <ProductSlider
-      v-if="isNearViewport && recommendedProducts?.length && (shouldRender || shouldRenderAfterUpdate)"
-      :items="recommendedProducts"
-    />
+    <ProductSlider v-if="shouldShowSlider" :items="recommendedProducts" />
   </div>
 </template>
 
@@ -35,6 +32,12 @@ const shouldRenderAfterUpdate = ref(false);
 
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.meta.uuid);
 
+const shouldShowSlider = computed(
+  () =>
+    isNearViewport.value &&
+    !!recommendedProducts.value?.length &&
+    (shouldRender.value || shouldRenderAfterUpdate.value),
+);
 const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);

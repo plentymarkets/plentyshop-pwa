@@ -8,8 +8,19 @@ export const useNearViewport = (
   const isNearViewport = ref(false);
   let observer: IntersectionObserver | null = null;
 
+  const handleVisibilityChange = (visible: boolean) => {
+    if (!visible && options?.once) return;
+
+    isNearViewport.value = visible;
+
+    if (visible && options?.once) {
+      observer?.disconnect();
+      observer = null;
+    }
+  };
+
   onMounted(() => {
-    if (typeof globalThis === 'undefined' || !('IntersectionObserver' in globalThis)) {
+    if (!('IntersectionObserver' in globalThis)) {
       isNearViewport.value = true;
       return;
     }
@@ -22,17 +33,7 @@ export const useNearViewport = (
         if (!entry) return;
 
         const visible = entry.isIntersecting || entry.intersectionRatio > 0;
-
-        if (visible) {
-          isNearViewport.value = true;
-
-          if (options?.once) {
-            observer?.disconnect();
-            observer = null;
-          }
-        } else if (!options?.once) {
-          isNearViewport.value = false;
-        }
+        handleVisibilityChange(visible);
       },
       {
         root: null,
