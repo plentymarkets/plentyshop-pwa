@@ -1,5 +1,5 @@
 <template>
-  <div class="relative py-1 z-[200] @container/search">
+  <div ref="rootRef" class="relative py-1 z-[200] @container/search">
     <form ref="referenceRef" role="search" class="px-px" @submit.prevent="handleSubmit">
       <SfInput
         id="search-bar"
@@ -8,7 +8,7 @@
         data-testid="search-bar-input"
         :aria-label="t('common.actions.search')"
         :placeholder="t('common.actions.search')"
-        @focus="open"
+        @focus="handleOpen"
       >
         <template #prefix>
           <SfLoaderCircular v-if="loading || loadingSuggestions" class="shrink-0" aria-hidden="true" />
@@ -29,7 +29,7 @@
     </form>
 
     <section
-      v-if="inputModel.trim().slice(0, 80).length > 1 && searchTerm === inputModel.trim().slice(0, 80)"
+      v-if="isDropdownVisible"
       class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-md border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
       aria-live="polite"
       aria-relevant="all"
@@ -109,8 +109,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconCancel, SfIconSearch, SfInput, useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
-import { unrefElement } from '@vueuse/core';
+import { SfIconCancel, SfIconSearch, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { onClickOutside, unrefElement } from '@vueuse/core';
 import { debounce } from '~/utils/debounce';
 
 const props = defineProps<{
@@ -120,9 +120,11 @@ const props = defineProps<{
 const localePath = useLocalePath();
 const router = useRouter();
 const route = useRoute();
-const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
 const { loading } = useSearch();
+const rootRef = ref<HTMLElement | null>(null);
+const isOpen = ref(false);
+
 const {
   results,
   searchSuggestions,
@@ -144,6 +146,11 @@ const searchLinkParts = computed(() => {
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
 
+const isDropdownVisible = computed(() => {
+  const value = inputModel.value.trim().slice(0, 80);
+
+  return isOpen.value && value.length > 1 && searchTerm.value === value;
+});
 const handleInputFocus = () => {
   const inputElement = unrefElement(inputReference)?.querySelector('input');
   inputElement?.focus();
@@ -153,6 +160,7 @@ const handleReset = () => {
   handleInputFocus();
 };
 const handleSubmit = () => {
+  handleClose();
   props.close?.();
   updateSearchTerm(inputModel.value);
   emit('frontend:searchProduct', inputModel.value);
@@ -161,14 +169,28 @@ const handleSubmit = () => {
 };
 const handleSearch = () => {
   if (inputModel.value.length > 1) {
+    handleOpen();
     searchSuggestions(inputModel.value);
   }
 };
 const debounceInput = debounce(handleSearch, 250);
 
+const handleOpen = () => {
+  isOpen.value = true;
+};
+
+const handleClose = () => {
+  isOpen.value = false;
+};
+
+onClickOutside(rootRef, () => {
+  handleClose();
+});
+
 watch(inputModel, () => {
   if (inputModel.value === '') {
     resetSuggestions();
+    handleClose();
     return;
   }
   if (inputModel.value.length > 1) {
@@ -181,6 +203,7 @@ watch(
   () => {
     inputModel.value = '';
     resetSuggestions();
+    handleClose();
   },
 );
 

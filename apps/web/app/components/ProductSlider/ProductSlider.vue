@@ -1,18 +1,22 @@
 <template>
-  <SfScrollable
-    buttons-placement="floating"
-    class="pb-4 scrollbar-hidden"
-    :wrapper-class="wrapperClass"
-    data-testid="product-slider"
-  >
-    <UiProductCard
-      v-for="product in items"
-      :key="productGetters.getId(product)"
-      :product="product"
-      is-from-slider
-      class="max-w-48"
-    />
-  </SfScrollable>
+  <div ref="sliderRootRef">
+    <SfScrollable
+      buttons-placement="floating"
+      class="pb-4 scrollbar-hidden"
+      :wrapper-class="wrapperClass"
+      data-testid="product-slider"
+    >
+      <UiProductCard
+        v-for="(product, index) in items"
+        :key="productGetters.getId(product)"
+        :product="product"
+        :should-load-image="shouldLoadImage(index)"
+        :index="index"
+        is-from-slider
+        class="w-48 max-w-48 shrink-0"
+      />
+    </SfScrollable>
+  </div>
   <div class="mt-4 typography-text-xs flex gap-1">
     <span>{{ t('common.labels.asterisk') }}</span>
     <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
@@ -41,4 +45,10 @@ const { showNetPrices } = useCart();
 const localePath = useLocalePath();
 
 defineProps<ProductSliderProps>();
+
+const { sliderRootRef, shouldLoadImage } = useSliderImagePreload({
+  itemWidth: 192,
+  itemGap: 16,
+  preloadBuffer: 2,
+});
 </script>
