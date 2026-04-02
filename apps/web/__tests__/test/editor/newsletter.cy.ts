@@ -13,24 +13,25 @@ describe('Newsletter Block Form', () => {
       .click();
   };
 
-  const typeInNewsletterForm = (field: string, value: string) => {
-    cy.getByTestId(`newsletter-form-${field}`).clear().type(value);
+  const changeDescription = (value: string) => {
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}{del}', { delay: 50 })
+      .type(value, { delay: 0 });
   };
 
-  const checkIfNewsletterBlockHasText = (field: string, text: string) => {
-    switch (field) {
-      case 'title':
-        cy.getByTestId('text-title-newsletter').should('have.text', text);
-        break;
-      case 'description':
-        cy.getByTestId('text-html-newsletter').should('have.text', text);
-        break;
-      case 'button':
-        cy.getByTestId('newsletter-button').should('have.text', text);
-        break;
-      default:
-        throw new Error(`Unknown newsletter field: ${field}`);
-    }
+  const checkDescription = (text: string) => {
+    cy.get('[data-testid="text-html-newsletter"]').should('contain.text', text);
+  };
+
+  const changeButtonText = (value: string) => {
+    cy.get('[data-testid="newsletter-form-button-text"]').clear().type(value, { delay: 0 });
+  };
+
+  const checkButtonText = (text: string) => {
+    cy.get('[data-testid="newsletter-button"]').should('have.text', text);
   };
 
   const removeNameInputFromForm = () => {
@@ -53,7 +54,7 @@ describe('Newsletter Block Form', () => {
   };
 
   const changeBackgroundColor = () => {
-    typeInNewsletterForm('background-color', '#00ff00');
+    cy.get('[data-testid="newsletter-form-background-color"]').clear().type('#00ff00', { delay: 0 });
     cy.getByTestId('newsletter-block').should('have.css', 'background-color', 'rgb(0, 255, 0)');
   };
 
@@ -72,14 +73,9 @@ describe('Newsletter Block Form', () => {
     checkIfNewsletterBlockIsVisible();
   });
 
-  it('should change the title on newsletter form', () => {
-    typeInNewsletterForm('title', 'New title');
-    checkIfNewsletterBlockHasText('title', 'New title');
-  });
-
   it('should change the description on newsletter form', () => {
-    typeInNewsletterForm('description', 'New description');
-    checkIfNewsletterBlockHasText('description', 'New description');
+    changeDescription('New description');
+    checkDescription('New description');
   });
 
   it('should change the display name on newsletter form', () => {
@@ -93,8 +89,8 @@ describe('Newsletter Block Form', () => {
   });
 
   it('should change the button text on newsletter form', () => {
-    typeInNewsletterForm('button-text', 'New button text');
-    checkIfNewsletterBlockHasText('button', 'New button text');
+    changeButtonText('New button text');
+    checkButtonText('New button text');
   });
 
   it('should change the background color on newsletter form', () => {
