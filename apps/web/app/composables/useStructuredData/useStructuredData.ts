@@ -6,8 +6,8 @@ import type {
   SetProductCanonicalMetaData,
   UseStructuredDataState,
 } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
-import type { CategoryTreeItem, Product, CanonicalAlternate } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
+import type { Product, CanonicalAlternate } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing meta data
@@ -62,7 +62,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
    * })
    * ```
    */
-  const setProductMetaData: SetProductMetaData = (product: Product, category?: CategoryTreeItem) => {
+  const setProductMetaData: SetProductMetaData = (product: Product) => {
     state.value.loading = true;
     const { price, crossedPrice } = useProductPrice(product);
     const productId = Number(productGetters.getItemId(product));
@@ -91,7 +91,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: productGetters.getName(product),
-      ...(category && { category: categoryTreeGetters.getName(category) }),
+      category: productGetters.getCategoryName(product),
       releaseDate: '',
       image: productGetters.getCoverImage(product),
       identifier: productGetters.getId(product),
