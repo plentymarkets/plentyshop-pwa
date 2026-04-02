@@ -126,6 +126,6 @@ export const useCategoryIdHelper = () => {
     getParentName,
     getCategoryPreviewPath,
     getCategoryDetails,
-    getCorrectPreviewPathWithLocale
+    getCorrectPreviewPathWithLocale,
   };
 };
