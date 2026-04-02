@@ -1,4 +1,5 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
+import type { TextContentProps } from '../components/TextContent/types';
 
 const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
   if (!content.text) return false;
@@ -26,10 +27,8 @@ const escapeHtml = (text: string): string => {
 
 export const migrateTextCardContent = (
   content: Partial<TextCardContent>,
-  enableRichTextEditorV2: boolean,
-  isFirstBlock: boolean,
+  isFirstTextContentBlock: boolean,
 ): Partial<TextCardContent> => {
-  if (!enableRichTextEditorV2) return content;
   if (!hasOldStructure(content)) return content;
 
   const migrated = {
@@ -47,7 +46,7 @@ export const migrateTextCardContent = (
   }
 
   if (title?.trim()) {
-    const titleTag = isFirstBlock ? 'h1' : 'h2';
+    const titleTag = isFirstTextContentBlock ? 'h1' : 'h2';
     parts.push(`<${titleTag}>${escapeHtml(title.trim())}</${titleTag}>`);
   }
 
@@ -67,4 +66,47 @@ export const migrateTextCardContent = (
   migrated.text.subtitle = '';
 
   return migrated;
+};
+
+export const mapToTextContentProps = (mapping: {
+  pretitle?: string;
+  title?: string;
+  subtitle?: string;
+  htmlDescription?: string;
+  color?: string;
+  textAlignment?: 'left' | 'center' | 'right';
+  buttonLabel?: string;
+  buttonLink?: string;
+  buttonVariant?: 'primary' | 'secondary';
+  index?: number;
+}): TextContentProps => {
+  const {
+    pretitle,
+    title,
+    subtitle,
+    htmlDescription,
+    color,
+    textAlignment,
+    buttonLabel,
+    buttonLink,
+    buttonVariant,
+    index,
+  } = mapping;
+
+  return {
+    ...(index !== undefined && { index }),
+    text: {
+      pretitle,
+      title,
+      subtitle,
+      htmlDescription,
+      color,
+      textAlignment,
+    },
+    button: {
+      label: buttonLabel,
+      link: buttonLink,
+      variant: buttonVariant,
+    },
+  };
 };

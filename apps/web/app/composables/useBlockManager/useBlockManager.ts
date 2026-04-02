@@ -90,19 +90,19 @@ export const useBlockManager = () => {
     }
 
     updateBlocks(copiedData);
-    openDrawerWithView('blocksSettings', newBlock);
+
+    if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
+      openDrawerWithView('blocksSettings', newBlock);
+    }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
     isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
 
     scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
 
-    const { enableTableOfContents } = useRuntimeConfig().public;
-    if (enableTableOfContents) {
-      const { selectedUuid } = useTableOfContents();
-      selectedUuid.value = newBlock.meta.uuid;
-      openDrawerWithView('TableOfContents');
-    }
+    const selectedUuid = useState<string>('toc-selected-uuid');
+    selectedUuid.value = newBlock.meta.uuid;
+    openDrawerWithView('TableOfContents');
   };
 
   const scrollIntoBlockView = (
@@ -211,6 +211,20 @@ export const useBlockManager = () => {
       }
     }
     return null;
+  };
+
+  const blockContainsUuid = (block: Block, targetUuid: string): boolean => {
+    if (block.meta?.uuid === targetUuid) return true;
+
+    return (
+      block.type === 'structure' &&
+      Array.isArray(block.content) &&
+      block.content.some((child) => blockContainsUuid(child, targetUuid))
+    );
+  };
+
+  const getRootParent = (blocks: Block[], targetUuid: string): Block | null => {
+    return blocks.find((rootBlock) => blockContainsUuid(rootBlock, targetUuid)) ?? null;
   };
 
   const setUuid = (blocks: Block[]) => {
@@ -403,6 +417,7 @@ export const useBlockManager = () => {
     visiblePlaceholder,
     togglePlaceholder,
     findOrDeleteBlockByUuid,
+    getRootParent,
     getBlockDepth,
     shouldLazyLoad,
     getLazyLoadKey,

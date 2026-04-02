@@ -109,9 +109,9 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
 });
 
+const route = useRoute();
 const { isInEditorClient } = useEditorState();
 const { locale, defaultLocale } = useI18n();
-const route = useRoute();
 const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
@@ -221,13 +221,17 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
 
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 
-const isEditDisabled = computed(() => {
-  const homePath = getHomePath(locale.value);
-  return route.fullPath !== homePath;
-});
+const isEditDisabled = () => {
+  return route.fullPath !== getHomePath(locale.value);
+};
 
 const showTopAddBlockButton = computed(
-  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderBlock(props.block),
+  () =>
+    props.enableActions &&
+    clientPreview.value &&
+    props.root &&
+    !isDragging.value &&
+    !isHeaderContainerBlock(props.block),
 );
 
 const showBottomAddBlockButton = computed(
@@ -236,14 +240,13 @@ const showBottomAddBlockButton = computed(
     clientPreview.value &&
     !isDragging.value &&
     !isFooterBlock(props.block) &&
-    !isHeaderBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
 
 const getBlockActions = (block: Block) => {
-  if (isFooterBlock(block) || isHeaderBlock(block)) {
+  if (isGlobalBlock(block)) {
     return {
-      isEditable: !isEditDisabled.value,
+      isEditable: !isEditDisabled(),
       isMovable: false,
       isDeletable: false,
       classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],

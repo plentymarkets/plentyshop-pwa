@@ -4,6 +4,15 @@ import { BlocksBanner } from '#components';
 
 const bannerBlockUuid = '11111111-1111-4111-8111-111111111111';
 
+const checkElementOrder = (
+  elements: { attributes: (key: string) => string | undefined }[],
+  expectedOrder: string[],
+) => {
+  elements.forEach((element, index) => {
+    expect(element.attributes('data-testid')).toContain(expectedOrder[index]);
+  });
+};
+
 describe('Banner', () => {
   describe('with default settings', () => {
     const wrapper = mount(BlocksBanner, {
@@ -47,12 +56,16 @@ describe('Banner', () => {
     });
 
     it('should render all elements in the correct order', () => {
-      const expectedOrder = ['image', 'overlay', 'content', 'pretitle', 'title', 'subtitle', 'description', 'button'];
-      const elements = wrapper.findAll('[data-testid^="banner-"]');
-      // eslint-disable-next-line max-nested-callbacks
-      elements.forEach((element, index) => {
-        expect(element.attributes('data-testid')).toContain(expectedOrder[index]);
-      });
+      const expectedOrder = [
+        'image',
+        'overlay',
+        'content',
+        'text-content',
+        'text-html',
+        `banner-button-${bannerBlockUuid}`,
+      ];
+      const elements = wrapper.findAll('[data-testid^="banner-"], [data-testid^="text-"]');
+      checkElementOrder(elements, expectedOrder);
     });
 
     it('should have an image', () => {
@@ -75,29 +88,10 @@ describe('Banner', () => {
       expect(content.exists()).toBe(true);
     });
 
-    it('should have a pretitle', () => {
-      const pretitle = wrapper.find(`[data-testid="banner-pretitle-${bannerBlockUuid}"]`);
-      expect(pretitle.exists()).toBe(true);
-      expect(pretitle.text()).toBe('Test pretitle');
-    });
-
-    it('should have a title', () => {
-      const title = wrapper.find(`[data-testid="banner-title-${bannerBlockUuid}"]`);
-      expect(title.exists()).toBe(true);
-      expect(title.text()).toBe('Test title');
-    });
-
-    it('should have a subtitle', () => {
-      const subtitle = wrapper.find(`[data-testid="banner-subtitle-${bannerBlockUuid}"]`);
-      expect(subtitle.exists()).toBe(true);
-      expect(subtitle.text()).toBe('Test subtitle');
-    });
-
     it('should have a description', () => {
-      const description = wrapper.find(`[data-testid="banner-description-${bannerBlockUuid}"]`);
+      const description = wrapper.find(`[data-testid="text-html"]`);
       expect(description.exists()).toBe(true);
-      expect(description.text()).toBe('Test description');
-      expect(description.html()).toContain('<p>Test description</p>');
+      expect(description.text()).toContain('Test description');
     });
 
     it('should have a button', () => {

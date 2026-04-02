@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-form-v2">
+  <div data-testid="text-form-v2">
     <EditorOptionsTabs
       :model-value="editorMode"
       test-id-prefix="mode"
@@ -69,10 +69,6 @@
       @close="toggleModal"
     />
   </div>
-
-  <div v-else data-testid="text-form">
-    <slot />
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -87,7 +83,6 @@ const emit = defineEmits<{
   'update:modelValue': [value: string];
 }>();
 
-const runtimeConfig = useRuntimeConfig().public;
 const modalOpen = ref(false);
 const expandedToolbars = ref(true);
 const contentRichTextEditor = ref<{ openModal: () => void } | null>(null);

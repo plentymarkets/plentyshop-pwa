@@ -11,7 +11,6 @@
       :edit-section="editSection"
       :toggle-section-menu="toggleSectionMenu"
       :toggle-section-visibility="toggleSectionVisibility"
-      @update:sections="sections = $event"
     />
 
     <BlocksUtilityBarPartialsUtilityBarSectionEditor
@@ -65,7 +64,6 @@ defineExpose({
   "en": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "layout-label": "Layout",
@@ -81,7 +79,6 @@ defineExpose({
   "de": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
-    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "layout-label": "Layout",

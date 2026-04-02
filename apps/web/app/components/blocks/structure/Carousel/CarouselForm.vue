@@ -1,121 +1,19 @@
 <template>
   <div data-testid="banner-carousel-form" class="block-slider-edit sticky h-[80vh] overflow-y-auto">
-    <UiAccordionItem
+    <EditorBlockItemsAccordion
       v-if="editingSlideIndex === undefined"
       v-model="elementsOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      content-padding-class="py-4"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('elements-group-label') }}</h2>
-      </template>
-
-      <div>
-        <draggable
-          v-if="slides.length"
-          v-model="slides"
-          item-key="meta.uuid"
-          handle=".drag-slides-handle"
-          class=""
-          :filter="'.no-drag'"
-        >
-          <template #item="{ element: slide, index }">
-            <div
-              :key="slide.meta.uuid"
-              class="mb-3 flex items-center justify-between transition-colors"
-              :style="
-                currentActiveSlideIndex === index
-                  ? { backgroundColor: 'rgba(83, 138, 234, 0.1)', borderLeft: '4px solid #538AEA' }
-                  : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
-              "
-            >
-              <div class="flex items-center justify-between w-full py-[0.6rem] pl-2 pr-4">
-                <div class="flex items-center gap-3 flex-1 min-w-0">
-                  <button
-                    class="drag-slides-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
-                    :aria-label="getEditorTranslation('drag-reorder-aria')"
-                    :data-testid="`actions-drag-slide-handle-${index}`"
-                  >
-                    <NuxtImg width="18" height="18" :src="dragIcon" />
-                  </button>
-
-                  <span
-                    class="text-sm font-medium truncate"
-                    :class="slide.configuration?.visible !== false ? 'text-gray-700' : 'text-gray-400'"
-                  >
-                    {{ slideLabels[index] }}
-                  </span>
-                </div>
-
-                <button
-                  :data-testid="`actions-edit-slide-${index}`"
-                  class="text-gray-500 rounded-full no-drag"
-                  :aria-label="getEditorTranslation('edit-slide-aria')"
-                  @click="editSlide(index)"
-                >
-                  <SfIconBase size="xs" viewBox="0 0 18 18">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path :d="editPath" fill="currentColor" />
-                    </svg>
-                  </SfIconBase>
-                </button>
-
-                <div :key="`menu-${index}`" class="relative">
-                  <button
-                    :data-testid="`actions-menu-slide-${index}`"
-                    class="text-gray-500 rounded-full no-drag"
-                    @click="toggleSlideMenu(index)"
-                  >
-                    <SfIconMoreVert />
-                  </button>
-
-                  <div
-                    v-if="openSlideMenuIndex === index"
-                    class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
-                    @click.stop
-                  >
-                    <div class="px-4 py-3 border-b">
-                      <div class="flex items-center justify-between">
-                        <UiFormLabel class="mb-0">{{ getEditorTranslation('visibility-label') }}</UiFormLabel>
-                        <SfSwitch
-                          :model-value="slides[index]?.configuration?.visible !== false"
-                          :data-testid="`actions-toggle-visibility-slide-${index}`"
-                          :aria-label="getEditorTranslation('toggle-visibility-aria')"
-                          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-                          @update:model-value="toggleSlideVisibility(index)"
-                        />
-                      </div>
-                    </div>
-
-                    <button
-                      :data-testid="`actions-delete-slide-${index}`"
-                      class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
-                      :disabled="slides.length === 1"
-                      @click="deleteSlide(index)"
-                    >
-                      <SfIconDelete size="sm" />
-                      {{ getEditorTranslation('delete-slide-label') }}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </draggable>
-
-        <div class="pt-4 px-4">
-          <button
-            data-testid="actions-add-slide-button"
-            class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
-            @click="addSlide"
-          >
-            <SfIconAdd />
-            {{ getEditorTranslation('add-element-label') }}
-          </button>
-        </div>
-      </div>
-    </UiAccordionItem>
+      :items="slides"
+      :item-labels="slideLabels"
+      :current-active-index="currentActiveSlideIndex"
+      :min-items="1"
+      @select-item="selectSlide"
+      @edit-item="editSlide"
+      @add-item="addSlide"
+      @delete-item="deleteSlide"
+      @toggle-item-visibility="toggleSlideVisibility"
+      @update:items="updateBlocks"
+    />
 
     <div v-else-if="slides[editingSlideIndex]" class="space-y-0">
       <component :is="blockForm" :uuid="slides[editingSlideIndex]!.meta.uuid" />
@@ -169,11 +67,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconDelete, SfInput, SfIconAdd, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import type { CarouselStructureProps, SlideBlock } from './types';
-import draggable from 'vuedraggable/src/vuedraggable';
-import dragIcon from '~/assets/icons/paths/drag.svg';
-import { editPath } from '~/assets/icons/paths/edit';
 
 const { blockUuid } = useSiteConfiguration();
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
@@ -193,17 +88,11 @@ const emit = defineEmits<{
 
 const elementsOpen = ref(true);
 const editingSlideIndex = ref<number | undefined>(undefined);
-const openSlideMenuIndex = ref<number | undefined>(undefined);
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
 const slideLabels = ref<string[]>([]);
 
 setIndex(blockUuid.value, 0);
-
-const blockForms = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
-  string,
-  () => Promise<{ default: unknown }>
->;
 
 const blockForm = computed(() => {
   if (editingSlideIndex.value === undefined) return null;
@@ -211,17 +100,19 @@ const blockForm = computed(() => {
   const slide = slides.value[editingSlideIndex.value];
   if (!slide) return null;
 
-  const key = Object.keys(blockForms).find((path) => path.endsWith(`/${slide.name}Form.vue`));
-  const loader = key ? blockForms[key] : undefined;
+  const loader = getBlockFormLoader(slide.name);
   return loader ? defineAsyncComponent(loader) : null;
 });
+
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
 );
+
 const { isFullWidth } = useFullWidthToggleForConfig(
   computed(() => carouselStructure.value.configuration),
   { fullWidth: true },
 );
+
 const controls = computed(() => carouselStructure.value.configuration.controls);
 
 const currentActiveSlideIndex = computed(() => activeSlideIndex.value[blockUuid.value]);
@@ -245,29 +136,22 @@ const resolveSlideLabels = async () => {
   slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
 };
 
+const selectSlide = (index: number) => {
+  setIndex(blockUuid.value, index);
+};
+
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
-  openSlideMenuIndex.value = undefined;
-  // Scroll the swiper to this slide
   setIndex(blockUuid.value, index);
   emit('set-edit-title', slideLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true) => {
   editingSlideIndex.value = undefined;
-  openSlideMenuIndex.value = undefined;
   if (shouldEmit) {
     emit('clear-edit-title');
   }
   resolveSlideLabels();
-};
-
-const toggleSlideMenu = (index: number) => {
-  if (openSlideMenuIndex.value === index) {
-    openSlideMenuIndex.value = undefined;
-  } else {
-    openSlideMenuIndex.value = index;
-  }
 };
 
 watch(
@@ -278,36 +162,6 @@ watch(
   { immediate: true },
 );
 
-// Handle click outside to close popover
-onMounted(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (openSlideMenuIndex.value === undefined) return;
-
-    const target = event.target as HTMLElement;
-    // Get the currently open menu and button
-    const openMenuButton = document.querySelector(`[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`);
-    const openMenu = document
-      .querySelector(`[data-testid="actions-menu-slide-${openSlideMenuIndex.value}"]`)
-      ?.parentElement?.querySelector('.absolute.right-0');
-
-    // Check if click is outside both the button and the menu
-    if (openMenuButton && openMenu) {
-      const isClickOnButton = openMenuButton.contains(target);
-      const isClickOnMenu = openMenu.contains(target);
-
-      if (!isClickOnButton && !isClickOnMenu) {
-        openSlideMenuIndex.value = undefined;
-      }
-    }
-  };
-
-  document.addEventListener('click', handleClickOutside);
-
-  onBeforeUnmount(() => {
-    document.removeEventListener('click', handleClickOutside);
-  });
-});
-
 const addSlide = async () => {
   const slideType = slides.value[0]?.name ?? 'Banner';
   const newSlide = await createSlide(slideType, slides.value.length);
@@ -316,7 +170,6 @@ const addSlide = async () => {
 
   await nextTick();
 
-  openSlideMenuIndex.value = undefined;
   setIndex(blockUuid.value, slides.value.length - 1);
 };
 
@@ -325,7 +178,6 @@ const deleteSlide = async (index: number) => {
   slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
   setIndex(blockUuid.value, 0);
   await nextTick();
-  openSlideMenuIndex.value = undefined;
   if (editingSlideIndex.value === index) {
     exitEditMode();
   }
@@ -341,6 +193,10 @@ const toggleSlideVisibility = (index: number) => {
 
   toggleBlockVisibility(slideToUpdate);
   slides.value = updatedSlides;
+};
+
+const updateBlocks = (newBlocks: SlideBlock[]) => {
+  slides.value = newBlocks;
 };
 
 defineExpose({
@@ -363,32 +219,20 @@ input[type='number'] {
 <i18n lang="json">
 {
   "en": {
-    "elements-group-label": "Elements",
     "slide-label": "Slide",
-    "add-element-label": "Add Element",
-    "drag-reorder-aria": "Drag to reorder slide",
-    "edit-slide-aria": "Edit slide",
-    "back-aria": "Go back to slides list",
     "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour",
-    "visibility-label": "Visibility",
-    "toggle-visibility-aria": "Toggle slide visibility",
-    "delete-slide-label": "Delete"
+    "full-width": "Enable full width",
+    "full-width-tooltip": "Full width is only available for top-level blocks. This option is disabled for nested blocks (e.g., inside MultiGrid)."
   },
   "de": {
-    "elements-group-label": "Elements",
     "slide-label": "Slide",
-    "add-element-label": "Add Element",
-    "drag-reorder-aria": "Drag to reorder slide",
-    "edit-slide-aria": "Edit slide",
-    "back-aria": "Go back to slides list",
     "layout-label": "Layout",
     "controls-group-label": "Controls",
     "controls-color-label": "Slider Controls Colour",
-    "visibility-label": "Visibility",
-    "toggle-visibility-aria": "Toggle slide visibility",
-    "delete-slide-label": "Delete"
+    "full-width": "Enable full width",
+    "full-width-tooltip": "Full width is only available for top-level blocks. This option is disabled for nested blocks (e.g., inside MultiGrid)."
   }
 }
 </i18n>

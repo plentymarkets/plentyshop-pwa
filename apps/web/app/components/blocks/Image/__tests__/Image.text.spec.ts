@@ -57,18 +57,17 @@ describe('Image block text', () => {
 
   it('should render text overlay with correct color and alignment', () => {
     const wrapper = mount(Image, { props: mockImageBlock });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.attributes('style')).toContain(`color: ${mockImageBlock.content.text.textOverlayColor}`);
-    const classes = overlay.classes();
-    expect(classes).toContain('items-center');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
+    expect(textContent.attributes('style')).toContain(`color: ${mockImageBlock.content.text.textOverlayColor}`);
+    const overlayWrapper = wrapper.find('[data-testid="image-overlay-wrapper"]');
+    const classes = overlayWrapper.classes();
     expect(classes).toContain('justify-center');
-    expect(classes).toContain('text-center');
   });
 
   it('should render overlay text when present', () => {
     const wrapper = mount(Image, { props: mockImageBlock });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.text()).toBe(mockImageBlock.content.text.textOverlay);
+    const textHtml = wrapper.find('[data-testid="text-html-image-overlay"]');
+    expect(textHtml.text()).toBe(mockImageBlock.content.text.textOverlay);
   });
 
   it('should apply default color if textOverlayColor is missing', () => {
@@ -77,8 +76,8 @@ describe('Image block text', () => {
       content: { ...mockImageBlock.content, text: { ...mockImageBlock.content.text, textOverlayColor: undefined } },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.attributes('style')).toContain('color:');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
+    expect(textContent.attributes('style')).toContain('color:');
   });
 
   it('should apply top vertical alignment', () => {
@@ -90,8 +89,8 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.classes()).toContain('items-start');
+    const overlayWrapper = wrapper.find('[data-testid="image-overlay-wrapper"]');
+    expect(overlayWrapper.classes()).toContain('justify-start');
   });
 
   it('should apply center vertical alignment', () => {
@@ -103,8 +102,8 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.classes()).toContain('items-center');
+    const overlayWrapper = wrapper.find('[data-testid="image-overlay-wrapper"]');
+    expect(overlayWrapper.classes()).toContain('justify-center');
   });
 
   it('should apply bottom vertical alignment', () => {
@@ -116,8 +115,8 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.classes()).toContain('items-end');
+    const overlayWrapper = wrapper.find('[data-testid="image-overlay-wrapper"]');
+    expect(overlayWrapper.classes()).toContain('justify-end');
   });
 
   it('should apply left horizontal alignment', () => {
@@ -129,8 +128,8 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.classes()).toContain('justify-start');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
+    expect(textContent.classes()).toContain('text-left');
   });
 
   it('should apply center horizontal alignment', () => {
@@ -142,8 +141,8 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.classes()).toContain('justify-center');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
+    expect(textContent.classes()).toContain('text-center');
   });
 
   it('should apply right horizontal alignment', () => {
@@ -155,8 +154,8 @@ describe('Image block text', () => {
       },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.classes()).toContain('justify-end');
+    const textContent = wrapper.find('[data-testid="text-content-image-overlay"]');
+    expect(textContent.classes()).toContain('text-right');
   });
 
   it('should handle long overlay text', () => {
@@ -166,7 +165,7 @@ describe('Image block text', () => {
       content: { ...mockImageBlock.content, text: { ...mockImageBlock.content.text, textOverlay: longText } },
     };
     const wrapper = mount(Image, { props: block });
-    const overlay = wrapper.find('[data-testid="image-overlay-text"]');
-    expect(overlay.text()).toBe(longText);
+    const textHtml = wrapper.find('[data-testid="text-html-image-overlay"]');
+    expect(textHtml.text()).toBe(longText);
   });
 });

@@ -8,6 +8,7 @@ import type {
 } from './types';
 import type { ApiError, Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
+import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
@@ -121,6 +122,15 @@ export const isFooterBlock = (block: Block | null | undefined): block is FooterB
 
 export const isHeaderBlock = (block: Block | null | undefined): block is HeaderBlock => {
   return block?.name === HEADER_BLOCK_NAME;
+};
+
+/**
+ * Check if a block is global (i.e., a system/global block like Footer or HeaderContainer)
+ * @param block - The block to check
+ * @returns true if the block is global, false if it's a regular/persistent block
+ */
+export const isGlobalBlock = (block: Block | null | undefined): boolean => {
+  return isFooterBlock(block) || isHeaderContainerBlock(block);
 };
 
 const createFooterBlockHelper = (
@@ -377,10 +387,29 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   };
 
   const migrateAllBlocks = (blocks: Block[]) => {
-    const config = useRuntimeConfig().public;
+    const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
 
-    const migrate = (blocks: Block[], isRootLevel = true) => {
-      blocks.forEach((block, index) => {
+    const firstTextContentBlock = (() => {
+      let headerContainerBlock: Block = {} as Block;
+      for (const block of blocks) {
+        if (isHeaderContainerBlock(block)) headerContainerBlock = block;
+        if (
+          (Array.isArray(headerContainerBlock.content) && headerContainerBlock?.content.includes(block)) ||
+          isHeaderBlock(block) ||
+          isHeaderContainerBlock(block)
+        )
+          continue;
+        if (blocksToMigrateTextContent.includes(block.name)) return block;
+        if (Array.isArray(block.content)) {
+          const firstChild = block.content.find((child) => blocksToMigrateTextContent.includes(child.name));
+          if (firstChild) return firstChild;
+        }
+      }
+      return undefined;
+    })();
+
+    const migrate = (blocks: Block[]) => {
+      blocks.forEach((block) => {
         if (block.name === 'Image' && block.content) {
           block.content = migrateImageContent(block.content);
         }
@@ -389,18 +418,23 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
           block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
         }
 
-        if (block.name === 'TextCard' && block.content) {
-          const isFirstBlock = isRootLevel && index === 0;
+        if (blocksToMigrateTextContent.includes(block.name) && block.content) {
+          const isFirstTextContentBlock = block === firstTextContentBlock;
 
-          block.content = migrateTextCardContent(
-            block.content as Partial<TextCardContent>,
-            config.enableRichTextEditorV2,
-            isFirstBlock,
-          );
+          block.content = migrateTextCardContent(block.content as Partial<TextCardContent>, isFirstTextContentBlock);
+        }
+
+        if (block.name === 'Banner' && block.content) {
+          const content = (block as BannerProps).content;
+          const textAlignment = content.text?.textAlignment;
+          if (textAlignment && !content?.button?.alignment) {
+            content.button = content.button ?? {};
+            content.button.alignment = textAlignment;
+          }
         }
 
         if (Array.isArray(block.content)) {
-          migrate(block.content, false);
+          migrate(block.content);
         }
       });
     };
@@ -448,8 +482,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
       return;
     }
 
-    migrateAllBlocks(fetchedBlocks);
-
     const fetchedHeaderContainer = fetchedBlocks.find((block) => isHeaderContainerBlock(block));
 
     if (fetchedHeaderContainer && Array.isArray(fetchedHeaderContainer.content)) {
@@ -459,7 +491,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (flatHeader) resolvedHeaderContainer = { ...fetchedHeaderContainer, content: [flatHeader] };
       }
 
-      if (resolvedHeaderContainer.content.length > 0) headerContainerCache.value = resolvedHeaderContainer;
+      if (resolvedHeaderContainer.content.length > 0 && !headerContainerCache.value)
+        headerContainerCache.value = resolvedHeaderContainer;
     }
 
     const mainBlocks = fetchedBlocks.filter(
@@ -475,6 +508,8 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
 
     const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
 
+    migrateAllBlocks(finalBlocks);
+
     if (JSON.stringify(state.value.data) !== JSON.stringify(finalBlocks)) {
       state.value.data.splice(0, state.value.data.length, ...finalBlocks);
     }
@@ -484,6 +519,11 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
   /** Updates the blocks in state with new block data */
   const updateBlocks: UpdateBlocks = (blocks) => {
     state.value.data = blocks;
+
+    const headerBlock = blocks.find((block) => isHeaderContainerBlock(block)) as HeaderContainerBlock | undefined;
+    if (headerBlock) {
+      headerContainerCache.value = headerBlock;
+    }
   };
 
   /** Sets the default template data used when no blocks are fetched */

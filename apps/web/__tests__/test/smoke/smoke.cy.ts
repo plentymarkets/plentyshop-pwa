@@ -45,6 +45,7 @@ describe('Smoke Tests', () => {
     productDetailPage
       .assertProductDetailPageElements()
       .assertBlockTemplate()
+      .assertProductStructuredDataExists()
       .addToCart(2);
 
     // prettier-ignore

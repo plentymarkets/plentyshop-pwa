@@ -3,6 +3,7 @@ export const useToolbar = () => {
   const { send } = useNotification();
 
   const { settingsIsDirty, dirtyKeys, saveSiteSettings } = useSiteSettings();
+  const { closeDrawer } = useSiteConfiguration();
   const { assetsIsDirty, saveCustomAssets } = useCustomAssets();
   const { updatePageTemplate } = useUpdatePageTemplate();
   const { data: dataProduct } = useProducts();
@@ -16,6 +17,7 @@ export const useToolbar = () => {
       saved = await saveFunction();
 
       if (saved) {
+        closeDrawer();
         if (successMessage) {
           messageList.push(successMessage);
         }

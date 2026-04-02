@@ -18,7 +18,7 @@
 
       <div class="px-2">
         <draggable
-          v-if="data.length"
+          v-if="filteredDataForDisplay.length"
           v-model="draggableData"
           item-key="meta.uuid"
           handle=".toc-drag-handle"
@@ -31,7 +31,11 @@
             <div>
               <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
               <TableOfContentsItem :item="blockToFlatBlock(block)" />
-              <TableOfContentsInsertBlockLine v-if="index < data.length - 1" :block="block" class="toc-insert-line" />
+              <TableOfContentsInsertBlockLine
+                v-if="index < filteredDataForDisplay.length - 1"
+                :block="block"
+                class="toc-insert-line"
+              />
             </div>
           </template>
         </draggable>
@@ -40,7 +44,7 @@
           {{ getEditorTranslation('empty') }}
         </div>
 
-        <div v-if="data.length" class="px-2 mb-4">
+        <div v-if="filteredDataForDisplay.length" class="px-2 mb-4">
           <button
             class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
             data-testid="toc-add-block"
@@ -66,12 +70,29 @@ const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 
+const filteredDataForDisplay = computed(() => {
+  if (useRuntimeConfig().public.enableEditableHeader) {
+    return data.value;
+  }
+  return data.value.filter((block: Block) => !isHeaderContainerBlock(block));
+});
+
 const draggableData = computed({
-  get: () => data.value,
+  get: () => filteredDataForDisplay.value,
   set: (newValue: Block[]) => {
     data.value.splice(0, data.value.length, ...newValue);
   },
 });
+
+const enforceHeaderAtTop = () => {
+  const headerIndex = data.value.findIndex((block) => isHeaderContainerBlock(block));
+  if (headerIndex !== -1 && headerIndex !== 0) {
+    const headerBlock = data.value.splice(headerIndex, 1)[0];
+    if (headerBlock) {
+      data.value.unshift(headerBlock);
+    }
+  }
+};
 
 const enforceFooterAtBottom = () => {
   const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
@@ -85,6 +106,7 @@ const enforceFooterAtBottom = () => {
 };
 
 const handleDragChange = (evt: DragEvent) => {
+  enforceHeaderAtTop();
   enforceFooterAtBottom();
   scrollToDraggedBlock(evt);
 };

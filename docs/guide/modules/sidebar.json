@@ -1,0 +1,36 @@
+[
+  {
+    "text": "Shop Core",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Get Started",
+        "link": "/guide/modules/shop-core/index.md"
+      },
+      {
+        "text": "Usage Guide",
+        "link": "/guide/modules/shop-core/usage-guide.md"
+      },
+      {
+        "text": "Cookie Consent System",
+        "link": "/guide/modules/shop-core/cookie-consent.md"
+      },
+      {
+        "text": "Event Bus",
+        "link": "/guide/modules/shop-core/event-bus.md"
+      },
+      {
+        "text": "Error Handling",
+        "link": "/guide/modules/shop-core/error-handling.md"
+      }
+    ]
+  },
+  {
+    "text": "Google Analytics",
+    "link": "/guide/modules/google-analytics"
+  },
+  {
+    "text": "Mollie",
+    "link": "/guide/modules/mollie"
+  }
+]
