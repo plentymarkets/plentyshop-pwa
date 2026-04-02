@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef"  class="relative py-1 z-[200] @container/search">
+  <div ref="rootRef" class="relative py-1 z-[200] @container/search">
     <form ref="referenceRef" role="search" class="px-px" @submit.prevent="handleSubmit">
       <SfInput
         id="search-bar"
