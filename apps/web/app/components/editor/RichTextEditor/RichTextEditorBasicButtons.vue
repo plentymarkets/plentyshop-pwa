@@ -96,13 +96,13 @@
           v-for="option in fontSizeOptions"
           :key="option.value"
           role="option"
-          :aria-selected="option.value === (currentFontSize || '1rem')"
+          :aria-selected="option.value === effectiveFontSize"
         >
           <button
             type="button"
             :data-testid="`rte-font-size-option-${option.value}`"
             class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
-            :class="{ 'bg-gray-100 font-semibold': option.value === (currentFontSize || '1rem') }"
+            :class="{ 'bg-gray-100 font-semibold': option.value === effectiveFontSize }"
             @mousedown.prevent
             @click="selectFontSize(option.value)"
           >
@@ -195,14 +195,27 @@ const fontSizeOptions = [
   { value: '4.5rem', label: '72px' },
 ];
 
+const headingFontSizeMap: Record<string, string> = {
+  paragraph: '1rem',
+  h1: '3.75rem',
+  h2: '1.5rem',
+  h3: '1.25rem',
+  h4: '1.125rem',
+  h5: '1rem',
+  h6: '0.875rem',
+};
+
 const selectedBlockTypeLabel = computed(() => {
   return blockTypeOptions.find((option) => option.value === props.currentBlockType)?.label ?? 'Normal';
 });
 
-const selectedFontSizeLabel = computed(() => {
-  return fontSizeOptions.find((option) => option.value === (props.currentFontSize || '1rem'))?.label ?? '16px';
+const effectiveFontSize = computed(() => {
+  return props.currentFontSize || headingFontSizeMap[props.currentBlockType] || '1rem';
 });
 
+const selectedFontSizeLabel = computed(() => {
+  return fontSizeOptions.find((option) => option.value === effectiveFontSize.value)?.label ?? '16px';
+});
 const onBlockTypeTriggerClick = () => {
   isBlockTypeOpen.value = !isBlockTypeOpen.value;
 };
@@ -219,7 +232,17 @@ const onFontSizeDropdownToggle = (open: boolean) => {
   isFontSizeOpen.value = open;
 };
 const selectBlockType = (value: string) => {
+  if (value === props.currentBlockType) {
+    isBlockTypeOpen.value = false;
+    return;
+  }
   props.onFontSizeChange(value);
+
+  const defaultFontSize = headingFontSizeMap[value];
+  if (defaultFontSize) {
+    props.onTextSizeChange(defaultFontSize);
+  }
+
   isBlockTypeOpen.value = false;
 };
 

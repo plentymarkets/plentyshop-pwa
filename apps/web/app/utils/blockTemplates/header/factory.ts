@@ -20,6 +20,7 @@ export function createHeaderContainerBlock(
     },
     content,
     configuration: {
+      visible: true,
       layout: {
         sticky: false,
       },
