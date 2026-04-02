@@ -68,12 +68,9 @@ export const useBlockManager = () => {
     const copiedData = JSON.parse(JSON.stringify(data.value));
     const parentInfo = findBlockParent(copiedData, targetUuid);
 
-    if (!parentInfo) {
-      console.error('block not found');
-      return;
-    }
+    const parent = parentInfo?.parent ?? copiedData;
+    const index = parentInfo?.index ?? 0;
 
-    const { parent, index } = parentInfo;
     const targetBlock = parent[index];
     if (!targetBlock) return;
 
