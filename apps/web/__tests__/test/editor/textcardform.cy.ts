@@ -4,11 +4,8 @@ import { paths } from '../../../app/utils/paths';
 describe('Text Card Block Form', () => {
   const openSettingsForTextCardBlock = () => {
     cy.get('[data-testid="TextCard-open-editor-button"]').should('have.length.at.least', 2);
-
     cy.get('[data-testid="TextCard-open-editor-button"]').first().should('exist').click({ force: true });
     cy.wait(1000);
-
-    cy.get('[data-testid="text-form"]').should('exist');
   };
 
   const openTextGroup = () => {
@@ -16,60 +13,65 @@ describe('Text Card Block Form', () => {
   };
 
   const editText = () => {
-    const textInputs = [
-      { selector: 'input-pretitle', text: 'Edited Pre-title' },
-      { selector: 'input-main-title', text: 'Edited Main Title' },
-      { selector: 'input-subtitle', text: 'Edited Subtitle' },
-      { selector: 'textarea-description', text: 'Edited HTML Description' },
-    ];
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .wait(200)
+      .type('{selectall}{del}', { delay: 50 })
+      .type('Edited HTML Description', { delay: 0 });
 
-    textInputs.forEach(({ selector, text }) => {
-      cy.get(`[data-testid="${selector}"]`)
-        .should('exist')
-        .clear({ force: true })
-        .type(text, { delay: 0, force: true });
-    });
-    cy.get('[data-testid="text-card"]').first().scrollIntoView().should('exist');
-    cy.get('[data-testid="text-card"]')
-      .first()
-      .within(() => {
-        const expectedTexts = [
-          { selector: 'text-pretitle', text: 'Edited Pre-title' },
-          { selector: 'text-title', text: 'Edited Main Title' },
-          { selector: 'text-subtitle', text: 'Edited Subtitle' },
-          { selector: 'text-html', text: 'Edited HTML Description' },
-        ];
-
-        expectedTexts.forEach(({ selector, text }) => {
-          cy.get(`[data-testid="${selector}"]`).should('have.text', text);
-        });
-      });
+    cy.get('[data-testid^="text-html"]').filter(':contains("Edited HTML Description")').should('exist');
   };
+
   const changeTextColor = () => {
-    cy.get('[data-testid="input-text-color"]').should('exist').clear().type('rgb(121, 12, 12)', { delay: 0 });
-    cy.wait(1000);
-    cy.get('[data-testid="text-card"]')
-      .first()
-      .within(() => {
-        cy.get('[data-testid="text-content"]').should('have.css', 'color', 'rgb(121, 12, 12)');
-      });
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}');
+
+    cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
+
+    cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
+
+    cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
+
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("Edited HTML Description")')
+      .find('span')
+      .should('have.css', 'color', 'rgb(121, 12, 12)');
   };
+
   const changeTextAlignment = () => {
-    cy.get('[data-testid="text-align-center"]').should('exist').click({ force: true });
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}');
 
-    cy.get('[data-testid="text-content"]').should('have.class', 'text-center');
+    cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("Edited HTML Description")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', 'center');
 
-    cy.wait(500);
-    cy.get('[data-testid="text-align-right"]').should('exist').click({ force: true });
+    cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("Edited HTML Description")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', 'right');
 
-    cy.get('[data-testid="text-content"]').should('have.class', 'text-right');
-
-    cy.wait(500);
-
-    cy.get('[data-testid="text-align-left"]').should('exist').click({ force: true });
-
-    cy.get('[data-testid="text-content"]').should('have.class', 'text-left');
+    cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("Edited HTML Description")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', 'left');
   };
+
   const openButtonGroup = () => {
     cy.get('[data-testid="button-settings"]').should('exist').click();
   };
@@ -81,7 +83,6 @@ describe('Text Card Block Form', () => {
 
   const changeButtonLabel = () => {
     cy.get('[data-testid="input-button-label"]').should('exist').clear().type('New Button Label', { delay: 0 });
-
     cy.get('[data-testid="text-button"]').first().should('have.text', 'New Button Label');
   };
 

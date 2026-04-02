@@ -1,5 +1,5 @@
 <template>
-  <div class="relative py-1 z-[200] @container/search">
+  <div ref="rootRef" class="relative py-1 z-[200] @container/search">
     <form ref="referenceRef" role="search" class="px-px" @submit.prevent="handleSubmit">
       <SfInput
         id="search-bar"
@@ -8,7 +8,7 @@
         data-testid="search-bar-input"
         :aria-label="t('common.actions.search')"
         :placeholder="t('common.actions.search')"
-        @focus="open"
+        @focus="handleOpen"
       >
         <template #prefix>
           <SfLoaderCircular v-if="loading || loadingSuggestions" class="shrink-0" aria-hidden="true" />
@@ -28,10 +28,9 @@
       </SfInput>
     </form>
 
-    <div
-      v-if="inputModel.trim().length > 1 && searchTerm === inputModel.trim()"
-      class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-b-xl border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
-      role="region"
+    <section
+      v-if="isDropdownVisible"
+      class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-md border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
       aria-live="polite"
       aria-relevant="all"
       :aria-label="t('searchBar.searchSuggestions')"
@@ -42,7 +41,9 @@
             {{ t('searchBar.searchSuggestions') }}
           </h3>
           <ul>
-            <UiSearchSuggestionItem v-for="(item, index) in results.suggestions" :key="index" :item="item" />
+            <li v-for="(item, index) in results.suggestions" :key="index">
+              <UiSearchSuggestionItem :item="item" />
+            </li>
           </ul>
         </div>
 
@@ -86,7 +87,9 @@
 
         <hr class="h-px mt-2 bg-neutral-200 border-0" />
         <ul v-if="results?.items?.length" class="mt-4 gap-4 grid @sm/products:grid-cols-2 items-stretch">
-          <UiSearchSuggestionProduct v-for="(item, index) in results.items" :key="index" :item="item" />
+          <li v-for="(item, index) in results.items" :key="index">
+            <UiSearchSuggestionProduct :item="item" />
+          </li>
         </ul>
         <div v-else class="mt-4 text-base text-neutral-900 mb-4 @2xl:mb-0">{{ t('searchBar.noResultsFound') }}</div>
       </div>
@@ -101,13 +104,13 @@
           <span v-else class="shrink-0 whitespace-pre">{{ part }}</span>
         </template>
       </NuxtLink>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconCancel, SfIconSearch, SfInput, useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
-import { unrefElement } from '@vueuse/core';
+import { SfIconCancel, SfIconSearch, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { onClickOutside, unrefElement } from '@vueuse/core';
 import { debounce } from '~/utils/debounce';
 
 const props = defineProps<{
@@ -117,10 +120,18 @@ const props = defineProps<{
 const localePath = useLocalePath();
 const router = useRouter();
 const route = useRoute();
-const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
 const { loading } = useSearch();
-const { results, searchSuggestions, searchTerm, loading: loadingSuggestions } = useSearchSuggestions();
+const rootRef = ref<HTMLElement | null>(null);
+const isOpen = ref(false);
+
+const {
+  results,
+  searchSuggestions,
+  searchTerm,
+  loading: loadingSuggestions,
+  resetSuggestions,
+} = useSearchSuggestions();
 const { emit } = usePlentyEvent();
 const { t } = useI18n();
 
@@ -135,6 +146,11 @@ const searchLinkParts = computed(() => {
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
 
+const isDropdownVisible = computed(() => {
+  const value = inputModel.value.trim().slice(0, 80);
+
+  return isOpen.value && value.length > 1 && searchTerm.value === value;
+});
 const handleInputFocus = () => {
   const inputElement = unrefElement(inputReference)?.querySelector('input');
   inputElement?.focus();
@@ -144,6 +160,7 @@ const handleReset = () => {
   handleInputFocus();
 };
 const handleSubmit = () => {
+  handleClose();
   props.close?.();
   updateSearchTerm(inputModel.value);
   emit('frontend:searchProduct', inputModel.value);
@@ -152,14 +169,29 @@ const handleSubmit = () => {
 };
 const handleSearch = () => {
   if (inputModel.value.length > 1) {
+    handleOpen();
     searchSuggestions(inputModel.value);
   }
 };
 const debounceInput = debounce(handleSearch, 250);
 
+const handleOpen = () => {
+  isOpen.value = true;
+};
+
+const handleClose = () => {
+  isOpen.value = false;
+};
+
+onClickOutside(rootRef, () => {
+  handleClose();
+});
+
 watch(inputModel, () => {
   if (inputModel.value === '') {
-    handleReset();
+    resetSuggestions();
+    handleClose();
+    return;
   }
   if (inputModel.value.length > 1) {
     debounceInput();
@@ -170,6 +202,10 @@ watch(
   () => route.fullPath,
   () => {
     inputModel.value = '';
+    resetSuggestions();
+    handleClose();
   },
 );
+
+onUnmounted(() => debounceInput.cancel());
 </script>
