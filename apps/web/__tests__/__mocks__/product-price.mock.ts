@@ -13,6 +13,7 @@ export const ProductPriceFixture: Product = {
       updatedAt: '2020-12-18T14:47:12+01:00',
       manually: false,
       plentyId: 51188,
+      name: 'Category',
     },
   ],
   filter: {

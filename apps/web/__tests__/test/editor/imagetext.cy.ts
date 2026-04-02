@@ -27,54 +27,63 @@ describe('Image Text Block Form', () => {
   };
 
   const changeText = () => {
-    const textInputs = [
-      { selector: 'input-pretitle', text: 'New Pre title' },
-      { selector: 'input-main-title', text: 'New title' },
-      { selector: 'input-subtitle', text: 'New sub title' },
-      { selector: 'textarea-description', text: 'New Text Area Content' },
-    ];
+    cy.get('[data-testid="rte-editor"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .clear()
+      .type('New image text', { delay: 0 });
 
-    textInputs.forEach(({ selector, text }) => {
-      cy.get(`[data-testid="${selector}"]`)
-        .should('exist')
-        .clear({ force: true })
-        .type(text, { delay: 0, force: true });
-    });
-    cy.get('[data-testid="multi-grid-structure"]').scrollIntoView().should('exist');
-    cy.get('[data-testid="multi-grid-structure"]').within(() => {
-      const expectedTexts = [
-        { selector: 'text-pretitle', text: 'New Pre title' },
-        { selector: 'text-title', text: 'New title' },
-        { selector: 'text-subtitle', text: 'New sub title' },
-        { selector: 'text-html', text: 'New Text Area Content' },
-      ];
-
-      expectedTexts.forEach(({ selector, text }) => {
-        cy.get(`[data-testid="${selector}"]`).should('have.text', text);
-      });
-    });
+    cy.get('[data-testid^="text-html"]').filter(':contains("New image text")').should('exist');
   };
 
   const changeTextColor = () => {
-    cy.get('[data-testid="input-text-color"]').should('exist').clear().type('rgb(121, 12, 12)', { delay: 0 });
-    cy.wait(1000);
-    cy.getByTestId('multi-grid-structure').within(() =>
-      cy.getByTestId('text-content').should('have.css', 'color', 'rgb(121, 12, 12)'),
-    );
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}');
+
+    cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
+
+    cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
+
+    cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
+
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("New image text")')
+      .find('span')
+      .should('have.css', 'color', 'rgb(121, 12, 12)');
   };
 
   const changeTextAlignment = () => {
-    cy.get('[data-testid="text-align-center"]').should('exist').click();
+    cy.get('[data-testid="rte-editor"]')
+      .filter(':visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .type('{selectall}');
 
-    cy.get('[data-testid="text-content"]').should('have.class', 'text-center');
+    cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("New image text")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', 'center');
 
-    cy.get('[data-testid="text-align-right"]').should('exist').click();
+    cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("New image text")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', 'right');
 
-    cy.get('[data-testid="text-content"]').should('have.class', 'text-right');
-
-    cy.get('[data-testid="text-align-left"]').should('exist').click();
-
-    cy.get('[data-testid="text-content"]').should('have.class', 'text-left');
+    cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
+    cy.get('[data-testid^="text-html"]')
+      .filter(':contains("New image text")')
+      .find('p')
+      .first()
+      .should('have.css', 'text-align', 'left');
   };
 
   const openButtonGroup = () => {

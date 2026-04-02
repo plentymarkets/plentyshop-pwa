@@ -29,19 +29,13 @@ describe('Recommended Block Form', () => {
   it('should change the texts on recommended form', () => {
     recommendedProducts
       .openTextFormSection()
-      .typeInRecommendedForm('pretitle', 'Pretitle')
-      .typeInRecommendedForm('title', 'New title')
-      .typeInRecommendedForm('subtitle', 'New subtitle')
-      .typeInRecommendedForm('html', 'New description')
-      .changeColor('#00ff00')
+      .typeInRecommendedForm('New description')
+      .checkIfRecommendedBlockHasText('New description')
+      .changeTextColor('790C0C')
+      .checkTextColor('rgb(121, 12, 12)')
+      .changeTextAlignment('center')
       .changeTextAlignment('right')
-
-      .checkIfRecommendedBlockHasText('pretitle', 'Pretitle')
-      .checkIfRecommendedBlockHasText('title', 'New title')
-      .checkIfRecommendedBlockHasText('subtitle', 'New subtitle')
-      .checkIfRecommendedBlockHasText('html', 'New description')
-      .checkStyleOnRecommendedBlock()
-      .checkClassOnRecommendedBlock('text-right');
+      .changeTextAlignment('left');
   });
 
   it('should change the source on recommended form', () => {

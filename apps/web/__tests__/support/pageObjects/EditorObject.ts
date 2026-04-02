@@ -1,17 +1,6 @@
 import { PageObject } from './PageObject';
 
 export class EditorObject extends PageObject {
-  get pretitle() {
-    return cy.get('[data-testid^="text-pretitle"]').first();
-  }
-  get title() {
-    return cy.get('[data-testid^="text-title"]').first();
-  }
-
-  get subtitle() {
-    return cy.get('[data-testid^="text-subtitle"]').first();
-  }
-
   get description() {
     return cy.get('[data-testid^="text-html"]').first();
   }
@@ -174,7 +163,11 @@ export class EditorObject extends PageObject {
   }
 
   toggleCategorySettings() {
-    this.categorySettingsButton.should('be.visible').click();
+    this.categorySettingsButton
+      .should('be.visible')
+      .click()
+      .trigger('mouseout', { force: true })
+      .trigger('mouseleave', { force: true });
     return this;
   }
 
@@ -184,7 +177,11 @@ export class EditorObject extends PageObject {
   }
 
   toggleGeneralSettings() {
-    this.generalSettingsButton.should('be.visible').click();
+    this.generalSettingsButton
+      .should('be.visible')
+      .click()
+      .trigger('mouseout', { force: true })
+      .trigger('mouseleave', { force: true });
     return this;
   }
 
@@ -239,9 +236,6 @@ export class EditorObject extends PageObject {
 
   checkEditorChanges() {
     this.exitEditorButton.get('#close').click({ force: true });
-    this.pretitle.should('have.text', 'New pretitle from cypress');
-    this.title.should('have.text', 'New title from cypress');
-    this.subtitle.should('not.exist');
     this.description.should('have.text', 'Description from cypress.');
   }
 
@@ -299,7 +293,7 @@ export class EditorObject extends PageObject {
     this.languageList.children().should('have.length', 2);
     this.languageOptionGerman.should('be.visible').click();
     cy.wait(['@getSession', '@getCategoryTree', '@getBlocks']);
-    this.title.should('contain.text', 'Ihr Sound');
+    this.description.should('contain.text', 'Ihr Sound');
   }
 
   addBlockTop() {

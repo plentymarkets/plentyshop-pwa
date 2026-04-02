@@ -27,7 +27,7 @@
             />
 
             <NuxtImg
-              v-if="shouldLoadMainImage"
+              v-if="canLoadMainImage"
               ref="mainImageRef"
               :src="imageUrl"
               :alt="imageAlt"
@@ -48,7 +48,7 @@
             />
 
             <NuxtImg
-              v-if="shouldLoadHoverImage && effectiveHoverImageUrl"
+              v-if="canLoadHoverImage && effectiveHoverImageUrl"
               ref="hoverImageRef"
               :src="effectiveHoverImageUrl"
               :alt="imageAlt"
@@ -282,7 +282,7 @@ const productPath = computed(() => {
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
 });
 
-const priority = computed(() => (props.index ?? 0) < 5);
+const priority = computed(() => !props.isFromSlider && (props.index ?? 0) < 5);
 const {
   imageContainerRef,
   mainImageRef,
@@ -299,9 +299,26 @@ const {
   priority,
   hoverImageUrl: effectiveHoverImageUrl,
 });
-const isFromWishlist = ref(props.isFromWishlist || false);
-const isFromSlider = ref(props.isFromSlider || false);
 
+const externalImagePermission = computed(() => {
+  if (!props.isFromSlider) return true;
+  return props.shouldLoadImage ?? true;
+});
+const canLoadMainImage = computed(() => {
+  if (!externalImagePermission.value) return false;
+
+  if (props.isFromSlider) return true;
+
+  return shouldLoadMainImage.value;
+});
+
+const canLoadHoverImage = computed(() => {
+  if (!externalImagePermission.value || !effectiveHoverImageUrl.value) return false;
+
+  if (props.isFromSlider) return true;
+
+  return shouldLoadHoverImage.value;
+});
 const getWidth = () => {
   if (imageWidth.value && imageWidth.value > 0 && imageUrl.value.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth.value;

@@ -27,10 +27,8 @@ const escapeHtml = (text: string): string => {
 
 export const migrateTextCardContent = (
   content: Partial<TextCardContent>,
-  enableRichTextEditorV2: boolean,
   isFirstTextContentBlock: boolean,
 ): Partial<TextCardContent> => {
-  if (!enableRichTextEditorV2) return content;
   if (!hasOldStructure(content)) return content;
 
   const migrated = {

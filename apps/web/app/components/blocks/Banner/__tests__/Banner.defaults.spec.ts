@@ -61,9 +61,6 @@ describe('Banner', () => {
         'overlay',
         'content',
         'text-content',
-        'text-pretitle',
-        'text-title',
-        'text-subtitle',
         'text-html',
         `banner-button-${bannerBlockUuid}`,
       ];
@@ -91,29 +88,10 @@ describe('Banner', () => {
       expect(content.exists()).toBe(true);
     });
 
-    it('should have a pretitle', () => {
-      const pretitle = wrapper.find(`[data-testid="text-pretitle"]`);
-      expect(pretitle.exists()).toBe(true);
-      expect(pretitle.text()).toBe('Test pretitle');
-    });
-
-    it('should have a title', () => {
-      const title = wrapper.find(`[data-testid="text-title"]`);
-      expect(title.exists()).toBe(true);
-      expect(title.text()).toBe('Test title');
-    });
-
-    it('should have a subtitle', () => {
-      const subtitle = wrapper.find(`[data-testid="text-subtitle"]`);
-      expect(subtitle.exists()).toBe(true);
-      expect(subtitle.text()).toBe('Test subtitle');
-    });
-
     it('should have a description', () => {
       const description = wrapper.find(`[data-testid="text-html"]`);
       expect(description.exists()).toBe(true);
-      expect(description.text()).toBe('Test description');
-      expect(description.html()).toContain('<p>Test description</p>');
+      expect(description.text()).toContain('Test description');
     });
 
     it('should have a button', () => {
