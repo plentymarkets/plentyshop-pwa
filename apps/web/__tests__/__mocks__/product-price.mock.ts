@@ -4,7 +4,6 @@ export const ProductPriceFixture: Product = {
   defaultCategories: [
     {
       id: 31,
-
       parentCategoryId: null,
       level: 1,
       type: 'item',
