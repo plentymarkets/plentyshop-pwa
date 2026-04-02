@@ -8,4 +8,5 @@ export type ProductCardProps = {
   isFromWishlist?: boolean;
   isFromSlider?: boolean;
   lazy?: boolean;
+  shouldLoadImage?: boolean;
 };
