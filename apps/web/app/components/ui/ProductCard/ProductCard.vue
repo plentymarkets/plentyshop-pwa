@@ -299,8 +299,6 @@ const {
   priority,
   hoverImageUrl: effectiveHoverImageUrl,
 });
-// const isFromWishlist = computed(() => props.isFromWishlist);
-// const isFromSlider = computed(() => props.isFromSlider);
 
 const externalImagePermission = computed(() => {
   if (!props.isFromSlider) return true;
