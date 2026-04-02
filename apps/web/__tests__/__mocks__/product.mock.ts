@@ -12,6 +12,7 @@ export const ProductMock = {
       updatedAt: '2022-04-27T18:12:56+02:00',
       manually: true,
       plentyId: 60796,
+      name: 'Category',
     },
   ],
   filter: {
