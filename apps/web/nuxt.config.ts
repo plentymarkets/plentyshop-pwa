@@ -112,7 +112,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=86400` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
     '/favicon.ico': { redirect: { to: '/_nuxt-plenty/favicon.ico', statusCode: 301 } },
   },
