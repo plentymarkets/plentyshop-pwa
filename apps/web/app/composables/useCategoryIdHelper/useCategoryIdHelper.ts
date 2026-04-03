@@ -103,9 +103,8 @@ export const useCategoryIdHelper = () => {
       return false;
     };
 
-    // Add the correct locale if necessary
     if (shouldAddLocale(strategy, locale.value, defaultLocale)) {
-      parts.splice(1, 0, locale.value); // Add locale.value at the first position of the array
+      parts.splice(1, 0, locale.value);
     }
 
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
