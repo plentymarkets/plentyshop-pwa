@@ -25,7 +25,7 @@ export const usePayUponInvoice = () => {
   const state = useState<PayUponInvoiceState>('usePayUponInvoice', initState);
   const resetState = () => Object.assign(state.value, initState());
 
-  const currency = computed(() => cartGetters.getCurrency(cart.value) || useAppConfig().fallbackCurrency);
+  const currency = computed(() => (cartGetters.getCurrency(cart.value) as string) || useAppConfig().fallbackCurrency);
   const defaultCountry = computed(() =>
     billingAddress.value?.country ? getCountryIsoCode(billingAddress.value.country) : '',
   );
