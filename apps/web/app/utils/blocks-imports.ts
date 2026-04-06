@@ -6,6 +6,10 @@ const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/bloc
   import: 'default',
 }) as Record<string, Loader>;
 
+const customerBlocksDist = import.meta.glob('/node_modules/*/dist/runtime/components/blocks/**/*.vue', {
+  import: 'default',
+}) as Record<string, Loader>;
+
 const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
 }) as Record<string, Loader>;
@@ -23,6 +27,7 @@ export const blockLoaders: Record<string, Loader> = {};
 Object.entries(coreBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(nuxtModuleBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(customerBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
+Object.entries(customerBlocksDist).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 
 export const getBlockLoader = (name: string) => {
   return blockLoaders[name];
