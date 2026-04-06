@@ -4,6 +4,7 @@ import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/compo
 import { getCategoryTemplate } from '~/utils/blockTemplates/category';
 import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
 import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
+import { normalizeFacetProductNames, normalizeProductName } from '~/utils/product-name-normalizer';
 
 const useBlockTemplatesData = async (locale: string) => await getCategoryTemplate(locale);
 
@@ -104,7 +105,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = data.value.data;
+      state.value.data = normalizeFacetProductNames(data.value.data);
       handlePreviewProducts(state, $i18n.locale.value);
 
       const defaultData =
@@ -129,7 +130,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const setCurrentProduct: SetCurrentProduct = async (product: Product) => {
     state.value.loading = true;
 
-    state.value.currentProduct = product;
+    state.value.currentProduct = normalizeProductName(product);
 
     state.value.loading = false;
   };
