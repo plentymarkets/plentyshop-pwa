@@ -5,6 +5,7 @@ type BlockActionOptions = {
   isMovable?: boolean;
   isDeletable?: boolean;
   classes?: string[];
+
   buttonClasses: string[];
   hoverBackground: string[];
 };
@@ -12,5 +13,6 @@ type BlockActionOptions = {
 export interface BlockActionsProps {
   index: number;
   block: Block;
+  readOnly?: boolean;
   actions?: BlockActionOptions;
 }

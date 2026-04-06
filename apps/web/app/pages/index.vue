@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EditableBlocks :identifier="'index'" :type="'immutable'" />
+    <EditableBlocks :identifier="'index'" :type="'immutable'" :is-root="true" />
   </div>
 </template>
 

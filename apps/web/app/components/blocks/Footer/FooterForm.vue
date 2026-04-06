@@ -336,14 +336,15 @@ import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 const route = useRoute();
-const { data, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
+const { mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
   route?.meta?.identifier as string,
   route.meta.type as string,
   useNuxtApp().$i18n.locale.value,
 );
+
+const { footer } = useBlocks();
+
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
-const props = defineProps<{ uuid?: string }>();
 
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
@@ -352,12 +353,8 @@ const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
 
-const getSourceBlock = (): Block | null => {
-  return findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
-};
 
-const sourceBlock = getSourceBlock();
-const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
+const footerBlock = ref<FooterBlock>(mapFooterData(footer.value || null));
 const footerContent = computed(() => footerBlock.value.content as FooterContent);
 
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
@@ -386,17 +383,6 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
       },
     }),
   }),
-);
-
-watch(
-  footerBlock,
-  (updatedFooterBlock) => {
-    const block = getSourceBlock();
-    if (block) {
-      block.content = updatedFooterBlock.content;
-    }
-  },
-  { deep: true },
 );
 </script>
 

@@ -19,6 +19,7 @@ export interface DragEvent<T = Block> {
 export type EditableBlocksProps = {
   identifier?: string | number;
   type?: string;
+  isRoot?: boolean;
   hasEnabledActions?: boolean;
   preventBlocksRequest?: boolean;
   readOnly?: boolean;

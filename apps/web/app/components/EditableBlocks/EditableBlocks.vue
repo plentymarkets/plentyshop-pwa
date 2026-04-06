@@ -29,7 +29,8 @@
               :clicked-block-index="clickedBlockIndex"
               :is-tablet="isTablet"
               :change-block-position="changeBlockPosition"
-              :root="getBlockDepth(block.meta.uuid) === 0"
+              :root="isRoot"
+              :read-only="readOnly"
               class="group"
               :class="getBlockClass(block).value"
               data-testid="block-wrapper"
@@ -47,6 +48,7 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent, EditableBlocksProps } from './types';
+import { useBlocks } from '~/composables/useBlocks';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
@@ -54,6 +56,7 @@ const { isInEditor, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
   identifier: 'index',
   type: 'immutable',
+  isRoot: false,
   hasEnabledActions: true,
   preventBlocksRequest: false,
   readOnly: false,
@@ -67,10 +70,12 @@ const {
   isFooterBlock,
 } = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
 
+const { blocks } = useBlocks()
+
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
 
 const data = computed({
-  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value),
+  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : blocks.value),
   set: (newValue: Block[]) => {
     const target = props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value;
     const header = target.find((block) => isHeaderContainerBlock(block));
@@ -140,7 +145,7 @@ const drawerOpen = computed<boolean>(() => siteConfigurationDrawerOpenRef.value)
 const drawerView = computed<string | null>(() => siteConfigurationDrawerViewRef.value);
 
 const enabledActions = computed(
-  () => !props.readOnly && shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
+  () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 
 useEditorUnsavedChangesGuard({

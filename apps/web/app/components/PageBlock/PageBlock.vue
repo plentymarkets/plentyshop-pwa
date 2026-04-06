@@ -50,6 +50,7 @@
           :index="index"
           :block="block"
           :actions="getBlockActions(block)"
+          :read-only="readOnly"
           @change-position="changeBlockPosition"
         />
       </ClientOnly>
@@ -107,6 +108,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
+  readOnly: false,
 });
 
 const route = useRoute();
@@ -244,16 +246,16 @@ const showBottomAddBlockButton = computed(
 );
 
 const getBlockActions = (block: Block) => {
-  if (isGlobalBlock(block)) {
-    return {
-      isEditable: !isEditDisabled(),
-      isMovable: false,
-      isDeletable: false,
-      classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
-      buttonClasses: [],
-      hoverBackground: ['hover:bg-gray-100'],
-    };
-  }
+  // if (isGlobalBlock(block)) {
+  //   return {
+  //     isEditable: !isEditDisabled(),
+  //     isMovable: false,
+  //     isDeletable: false,
+  //     classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+  //     buttonClasses: [],
+  //     hoverBackground: ['hover:bg-gray-100'],
+  //   };
+  // }
   return undefined;
 };
 

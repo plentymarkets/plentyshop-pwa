@@ -1,9 +1,8 @@
 <template>
-  <EditableBlocks v-if="!$route.meta.isBlockified && footerBlock" :blocks="[footerBlock]" read-only />
+  <EditableBlocks v-if="footer" :blocks="[footer]" read-only is-root />
 </template>
 
 <script setup lang="ts">
-const nuxtApp = useNuxtApp();
-const { getFooterBlock } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
-const footerBlock = computed(() => getFooterBlock());
+const { footer } = useBlocks();
+const footerBlock = computed(() => footer.value);
 </script>

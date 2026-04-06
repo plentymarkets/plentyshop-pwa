@@ -5,24 +5,12 @@
 </template>
 
 <script setup lang="ts">
-const nuxtApp = useNuxtApp();
-const { headerContainerCache, fetchHeaderContainerBlock } = useBlockTemplates(
-  'index',
-  'immutable',
-  nuxtApp.$i18n.locale.value,
-);
+const { headerContainer } = useBlocks();
 
-const headerBlock = computed(() => headerContainerCache.value);
+const headerBlock = computed(() => headerContainer.value);
 
 const headerBlocksClasses = computed(() => [
   'header-blocks',
-  { 'sticky top-0 z-50': headerBlock.value?.configuration?.layout?.sticky },
+  { 'sticky top-0 z-50': (headerBlock.value?.configuration as Record<string, any>)?.layout?.sticky },
 ]);
-
-watch(
-  () => nuxtApp.$i18n.locale.value,
-  async () => {
-    await fetchHeaderContainerBlock(true);
-  },
-);
 </script>

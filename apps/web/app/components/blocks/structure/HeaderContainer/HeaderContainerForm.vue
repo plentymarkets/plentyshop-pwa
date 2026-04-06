@@ -45,7 +45,7 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
-const { data } = useBlockTemplates('index', 'immutable', useNuxtApp().$i18n.locale.value);
+const { header: data } = useBlocks()
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const emit = defineEmits<{
