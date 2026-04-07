@@ -27,6 +27,7 @@ import type {
  * ```
  */
 export const useWishlist: UseWishlistReturn = () => {
+  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
@@ -47,7 +48,7 @@ export const useWishlist: UseWishlistReturn = () => {
     return await useSdk()
       .plentysystems.getWishlist()
       .then(({ data }) => {
-        state.value.data = normalizeWishlistProductNames(data ?? state.value.data);
+        state.value.data = normalizeWishlistProductNames(data ?? state.value.data, getVariationTitlePropertySetting());
         state.value.loading = false;
         return state.value.data;
       });

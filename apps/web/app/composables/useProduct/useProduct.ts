@@ -20,6 +20,7 @@ const useProductTemplateData = async (locale: string) => await getProductTemplat
  */
 export const useProduct: UseProductReturn = (slug) => {
   const properties = useProductOrderProperties();
+  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: {} as Product,
     fakeData: {} as Product,
@@ -104,7 +105,7 @@ export const useProduct: UseProductReturn = (slug) => {
     );
 
     properties.setProperties(data.value?.data.properties ?? []);
-    state.value.data = normalizeProductName(data.value?.data ?? ({} as Product));
+    state.value.data = normalizeProductName(data.value?.data ?? ({} as Product), getVariationTitlePropertySetting());
     handlePreviewProduct(state, $i18n.locale.value, true);
     state.value.loading = false;
     return state.value.data;

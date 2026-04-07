@@ -17,6 +17,7 @@ const useBlockTemplatesData = async (locale: string) => await getCategoryTemplat
  * ```
  */
 export const useProducts: UseProductsReturn = (category = '') => {
+  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
   const state = useState<UseProductsState>(`useProducts${category}`, () => ({
     data: {} as Facet,
     loading: false,
@@ -105,7 +106,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = normalizeFacetProductNames(data.value.data);
+      state.value.data = normalizeFacetProductNames(data.value.data, getVariationTitlePropertySetting());
       handlePreviewProducts(state, $i18n.locale.value);
 
       const defaultData =
@@ -130,7 +131,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const setCurrentProduct: SetCurrentProduct = async (product: Product) => {
     state.value.loading = true;
 
-    state.value.currentProduct = normalizeProductName(product);
+    state.value.currentProduct = normalizeProductName(product, getVariationTitlePropertySetting());
 
     state.value.loading = false;
   };

@@ -12,6 +12,7 @@ import { normalizeItemSearchResultProductNames } from '~/utils/product-name-norm
  * ```
  */
 export const useSearch: UseSearchReturn = () => {
+  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
   const state = useState<UseSearchState>('search', () => ({
     data: {} as ItemSearchResult,
     loading: false,
@@ -38,7 +39,7 @@ export const useSearch: UseSearchReturn = () => {
       const { data } = await useSdk().plentysystems.getSearch(params);
       state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
       if (data) data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = normalizeItemSearchResultProductNames(data);
+      state.value.data = normalizeItemSearchResultProductNames(data, getVariationTitlePropertySetting());
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

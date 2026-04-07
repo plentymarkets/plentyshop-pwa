@@ -7,7 +7,10 @@ type ProductNameSource = {
   variationProperties?: Array<{
     name: string | null;
     properties: Array<{
+      id?: number;
+      cast?: string;
       names: {
+        propertyId?: number;
         name: string | null;
       };
       values: {
@@ -21,29 +24,46 @@ const isProductNameSource = (value: unknown): value is ProductNameSource => {
   return typeof value === 'object' && value !== null;
 };
 
-const VARIATION_TEXTS_GROUP_NAME = 'Variation Texts';
-const VARIATION_TITLE_NAME = 'Variation Title';
+const getVariationTitleSettingPropertyId = (settingValue = ''): number | null => {
+  const propertyId = Number.parseInt(settingValue, 10);
+
+  return Number.isNaN(propertyId) ? null : propertyId;
+};
+
+const getDefaultProductName = (product: ProductNameSource): string => {
+  return product.texts?.name1?.trim() || '';
+};
 
 /**
  * Returns the custom variation title used as the canonical storefront product name.
  */
-export const getNormalizedProductName = (product?: unknown | null): string => {
+export const getNormalizedProductName = (product?: unknown | null, settingValue = ''): string => {
   if (!isProductNameSource(product)) {
     return '';
   }
 
-  const variationTitle = product?.variationProperties
-    ?.find((propertyGroup) => propertyGroup.name === VARIATION_TEXTS_GROUP_NAME)
-    ?.properties?.find((property) => property.names.name === VARIATION_TITLE_NAME)
-    ?.values.value;
+  const propertyId = getVariationTitleSettingPropertyId(settingValue);
 
-  return variationTitle?.trim() ?? '';
+  if (!propertyId) {
+    return getDefaultProductName(product);
+  }
+
+  const variationProperties = product.variationProperties ?? [];
+  const configuredVariationTitle = variationProperties
+    .flatMap((propertyGroup) => propertyGroup.properties ?? [])
+    .find((property) => property.names.propertyId === propertyId || property.id === propertyId);
+
+  if (!configuredVariationTitle || configuredVariationTitle.cast !== 'text') {
+    return getDefaultProductName(product);
+  }
+
+  return configuredVariationTitle.values.value?.trim() || getDefaultProductName(product);
 };
 
 /**
  * Rewrites the product name in-place so existing product getters resolve the normalized name.
  */
-export const normalizeProductName = <T>(product?: T | null): T => {
+export const normalizeProductName = <T>(product?: T | null, settingValue = ''): T => {
   if (!product) {
     return {} as T;
   }
@@ -52,7 +72,7 @@ export const normalizeProductName = <T>(product?: T | null): T => {
     return product;
   }
 
-  const normalizedName = getNormalizedProductName(product);
+  const normalizedName = getNormalizedProductName(product, settingValue);
 
   if (!normalizedName) {
     return product;
@@ -69,12 +89,12 @@ export const normalizeProductName = <T>(product?: T | null): T => {
 /**
  * Normalizes all product names in a product collection.
  */
-export const normalizeProductCollection = (products?: Product[] | null): Product[] => {
+export const normalizeProductCollection = (products?: Product[] | null, settingValue = ''): Product[] => {
   if (!products?.length) {
     return products ?? [];
   }
 
-  products.forEach((product) => normalizeProductName(product));
+  products.forEach((product) => normalizeProductName(product, settingValue));
 
   return products;
 };
@@ -82,13 +102,13 @@ export const normalizeProductCollection = (products?: Product[] | null): Product
 /**
  * Normalizes product names in facet responses.
  */
-export const normalizeFacetProductNames = (facet?: Facet | null): Facet => {
+export const normalizeFacetProductNames = (facet?: Facet | null, settingValue = ''): Facet => {
   if (!facet) {
     return {} as Facet;
   }
 
   if (facet.products) {
-    normalizeProductCollection(facet.products);
+    normalizeProductCollection(facet.products, settingValue);
   }
 
   return facet;
@@ -97,13 +117,13 @@ export const normalizeFacetProductNames = (facet?: Facet | null): Facet => {
 /**
  * Normalizes product names in search responses.
  */
-export const normalizeItemSearchResultProductNames = (result?: ItemSearchResult | null): ItemSearchResult => {
+export const normalizeItemSearchResultProductNames = (result?: ItemSearchResult | null, settingValue = ''): ItemSearchResult => {
   if (!result) {
     return {} as ItemSearchResult;
   }
 
   if (result.products) {
-    normalizeProductCollection(result.products);
+    normalizeProductCollection(result.products, settingValue);
   }
 
   return result;
@@ -112,12 +132,12 @@ export const normalizeItemSearchResultProductNames = (result?: ItemSearchResult 
 /**
  * Normalizes product names for cart item variations.
  */
-export const normalizeCartProductNames = (cart?: Cart | null): Cart => {
+export const normalizeCartProductNames = (cart?: Cart | null, settingValue = ''): Cart => {
   if (!cart) {
     return {} as Cart;
   }
 
-  cart.items?.forEach((item) => normalizeProductName(item.variation));
+  cart.items?.forEach((item) => normalizeProductName(item.variation, settingValue));
 
   return cart;
 };
@@ -125,16 +145,16 @@ export const normalizeCartProductNames = (cart?: Cart | null): Cart => {
 /**
  * Normalizes product names for wishlist item variations.
  */
-export const normalizeWishlistProductNames = (wishlistItems?: WishlistItem[] | null): WishlistItem[] => {
+export const normalizeWishlistProductNames = (wishlistItems?: WishlistItem[] | null, settingValue = ''): WishlistItem[] => {
   if (!wishlistItems?.length) {
     return wishlistItems ?? [];
   }
 
   wishlistItems.forEach((wishlistItem) => {
-    normalizeProductName(wishlistItem);
+    normalizeProductName(wishlistItem, settingValue);
 
     if ('variation' in wishlistItem) {
-      normalizeProductName(wishlistItem.variation);
+      normalizeProductName(wishlistItem.variation, settingValue);
     }
   });
 

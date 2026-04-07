@@ -16,6 +16,7 @@ import { normalizeProductCollection } from '~/utils/product-name-normalizer';
  * ```
  */
 export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
+  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
   const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
     data: [],
     loading: false,
@@ -53,7 +54,10 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
     );
 
     useHandleError(error.value ?? null);
-    state.value.data = normalizeProductCollection(data?.value?.data?.products ?? state.value.data);
+    state.value.data = normalizeProductCollection(
+      data?.value?.data?.products ?? state.value.data,
+      getVariationTitlePropertySetting(),
+    );
     state.value.loading = false;
     return state.value.data;
   };

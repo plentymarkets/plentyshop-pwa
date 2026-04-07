@@ -48,6 +48,7 @@ const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
  */
 export const useCart = () => {
   const { emit } = usePlentyEvent();
+  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
   const state = useState('useCart', () => ({
     data: {} as Cart,
     useAsShippingAddress: true,
@@ -65,7 +66,7 @@ export const useCart = () => {
    */
   const setCart = (data: Cart) => {
     const { setPattern } = usePriceFormatter();
-    state.value.data = normalizeCartProductNames(data);
+    state.value.data = normalizeCartProductNames(data, getVariationTitlePropertySetting());
     setPattern(data.currencyPattern);
     useWishlist().setWishlistItemIds(Object.values(data?.itemWishListIds || []));
   };
@@ -121,7 +122,7 @@ export const useCart = () => {
       const { data } = await useSdk().plentysystems.doAddCartItem(params);
 
       state.value.data = data
-        ? normalizeCartProductNames(migrateVariationData(state.value.data, data))
+        ? normalizeCartProductNames(migrateVariationData(state.value.data, data), getVariationTitlePropertySetting())
         : state.value.data;
 
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
@@ -145,7 +146,7 @@ export const useCart = () => {
         state.value.data = normalizeCartProductNames({
           ...errorEvents.AfterBasketChanged.basket,
           items: errorEvents.AfterBasketChanged.basketItems,
-        });
+        }, getVariationTitlePropertySetting());
       }
       useHandleError(apiError);
     } finally {
@@ -172,7 +173,9 @@ export const useCart = () => {
     try {
       const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
-      state.value.data = normalizeCartProductNames(migrateVariationData(state.value.data, data)) ?? state.value.data;
+      state.value.data =
+        normalizeCartProductNames(migrateVariationData(state.value.data, data), getVariationTitlePropertySetting()) ??
+        state.value.data;
 
       params.forEach((param) => {
         const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
@@ -196,7 +199,7 @@ export const useCart = () => {
         state.value.data = normalizeCartProductNames({
           ...errorEvents.AfterBasketChanged.basket,
           items: errorEvents.AfterBasketChanged.basketItems,
-        });
+        }, getVariationTitlePropertySetting());
       }
       useHandleError(apiError);
     } finally {
@@ -233,7 +236,11 @@ export const useCart = () => {
 
         send({ message: t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
       } else {
-        state.value.data = migrateVariationData(state.value.data, data as Cart) ?? state.value.data;
+        state.value.data =
+          normalizeCartProductNames(
+            migrateVariationData(state.value.data, data as Cart),
+            getVariationTitlePropertySetting(),
+          ) ?? state.value.data;
         // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
         if (state.value.data?.apiEvents) {
           // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
