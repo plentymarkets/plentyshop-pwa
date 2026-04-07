@@ -68,10 +68,19 @@ const {
   fetchBlocks,
 } = useBlocks();
 
+const frozenBlocks = shallowRef<Block[] | null>(null);
+
+onBeforeRouteLeave(() => {
+  frozenBlocks.value = renderableBlocks.value;
+});
+
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
 const data = computed({
-  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value),
+  get: () => {
+    if (frozenBlocks.value) return frozenBlocks.value;
+    return props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value;
+  },
   set: (newValue: Block[]) => {
     const target = props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value;
     const header = target.find((block) => isHeaderContainerBlock(block));
@@ -84,13 +93,9 @@ const getRawIndex = (block: Block) => rawData.value.indexOf(block);
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
-const isContentEmptyInEditor = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0]) && isInEditor.value),
-);
+const isContentEmptyInEditor = computed(() => dataIsEmpty.value && isInEditor.value);
 
-const isContentEmptyInLive = computed(
-  () => dataIsEmpty.value || (data.value.length === 1 && isFooterBlock(data.value[0])),
-);
+const isContentEmptyInLive = computed(() => dataIsEmpty.value);
 
 if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
   await fetchBlocks(props.identifier, props.type);

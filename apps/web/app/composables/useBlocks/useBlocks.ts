@@ -175,7 +175,7 @@ export const useBlocks: UseBlocksReturn = () => {
     blocks: computed(() =>
       state.value.data.filter((b) => !isHeaderContainerBlock(b) && !isFooterBlock(b) && !isHeaderBlock(b)),
     ),
-    renderableBlocks: computed(() => state.value.data.filter((b) => !isHeaderContainerBlock(b))),
+    renderableBlocks: computed(() => state.value.data.filter((b) => !isGlobalBlock(b))),
     headerContainer: computed(() => state.value.data.find((b) => isHeaderContainerBlock(b))),
     footer: computed(() => state.value.data.find((b) => isFooterBlock(b))),
     loading: computed(() => state.value.loading),
