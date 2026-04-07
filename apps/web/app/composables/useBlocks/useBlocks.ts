@@ -6,6 +6,7 @@ import { createHomepage, getHomepageTemplate } from '~/utils/blockTemplates/home
 import { createCategory, getCategoryTemplate } from '~/utils/blockTemplates/category';
 import { createProduct, getProductTemplate } from '~/utils/blockTemplates/product';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
+import { migrateAllBlocks } from '~/utils/migrate-blocks';
 
 const FOOTER_BLOCK_NAME = 'Footer';
 
@@ -90,6 +91,8 @@ export const useBlocks: UseBlocksReturn = () => {
       Array.isArray(response.blocks) && response.blocks.length > 0
         ? response.blocks
         : getDefaultPageBlocks(type, locale);
+
+    migrateAllBlocks([headerContainer, ...blocks, footer]);
 
     state.value.data = { blocks, HeaderContainer: headerContainer, Footer: footer };
 

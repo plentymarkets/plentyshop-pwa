@@ -7,9 +7,6 @@ import type {
   SaveBlocks,
 } from './types';
 import type { ApiError, Block } from '@plentymarkets/shop-api';
-import type { TextCardContent } from '~/components/blocks/TextCard/types';
-import type { BannerProps } from '~/components/blocks/Banner/types';
-import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { FooterContent, FooterSwitchDefinition, FooterBlock } from '~/components/blocks/Footer/types';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { HeaderBlock } from '~/components/blocks/Header/types';
@@ -20,6 +17,7 @@ import {
   createDefaultHeaderContainerBlock,
 } from '~/utils/blockTemplates/header/factory';
 import { createDefaultFooterContent } from '~/utils/blockTemplates/footer/factory';
+import { migrateAllBlocks } from '~/utils/migrate-blocks';
 import { v4 as uuid } from 'uuid';
 import { callWithNuxt } from '#app';
 
@@ -353,62 +351,6 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
         if (!headerContainerCache.value) headerContainerCache.value = getHeaderContainerBlock();
       }
     });
-  };
-
-  const migrateAllBlocks = (blocks: Block[]) => {
-    const blocksToMigrateTextContent = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
-
-    const firstTextContentBlock = (() => {
-      let headerContainerBlock: Block = {} as Block;
-      for (const block of blocks) {
-        if (isHeaderContainerBlock(block)) headerContainerBlock = block;
-        if (
-          (Array.isArray(headerContainerBlock.content) && headerContainerBlock?.content.includes(block)) ||
-          isHeaderBlock(block) ||
-          isHeaderContainerBlock(block)
-        )
-          continue;
-        if (blocksToMigrateTextContent.includes(block.name)) return block;
-        if (Array.isArray(block.content)) {
-          const firstChild = block.content.find((child) => blocksToMigrateTextContent.includes(child.name));
-          if (firstChild) return firstChild;
-        }
-      }
-      return undefined;
-    })();
-
-    const migrate = (blocks: Block[]) => {
-      blocks.forEach((block) => {
-        if (block.name === 'Image' && block.content) {
-          block.content = migrateImageContent(block.content);
-        }
-
-        if (block.name === 'ProductRecommendedProducts' && block.content) {
-          block.content = migrateRecommendedContent(block.content as OldContent | ProductRecommendedProductsContent);
-        }
-
-        if (blocksToMigrateTextContent.includes(block.name) && block.content) {
-          const isFirstTextContentBlock = block === firstTextContentBlock;
-
-          block.content = migrateTextCardContent(block.content as Partial<TextCardContent>, isFirstTextContentBlock);
-        }
-
-        if (block.name === 'Banner' && block.content) {
-          const content = (block as BannerProps).content;
-          const textAlignment = content.text?.textAlignment;
-          if (textAlignment && !content?.button?.alignment) {
-            content.button = content.button ?? {};
-            content.button.alignment = textAlignment;
-          }
-        }
-
-        if (Array.isArray(block.content)) {
-          migrate(block.content);
-        }
-      });
-    };
-
-    migrate(blocks);
   };
 
   /** Fetches blocks from server using useAsyncData with Nuxt caching */
