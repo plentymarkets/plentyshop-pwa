@@ -1,4 +1,4 @@
-import type { ApiError, Block } from '@plentymarkets/shop-api';
+import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { UseBlocksState, UseBlocksReturn } from './types';
 import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
 import { createDefaultHeaderContainerBlock } from '~/utils/blockTemplates/header';
@@ -35,8 +35,8 @@ const isHeaderEmpty = (block: Block | null | undefined): boolean => {
 
 const normalizeFooter = (block: Block): Block => {
   const defaultBlock = createFooter();
-  const defaults = defaultBlock.content as Record<string, any>;
-  const content = (block.content ?? {}) as Record<string, any>;
+  const defaults = defaultBlock.content as Record<string, unknown>;
+  const content = (block.content ?? {}) as Record<string, unknown>;
 
   block.meta = { ...defaultBlock.meta, ...block.meta };
   block.content = {
@@ -65,7 +65,7 @@ const getDefaultPageBlocks = (type: string): Block[] => {
   }
 };
 
-const assembleBlocks = (raw: any, type: string): Block[] => {
+const assembleBlocks = (raw: GetBlocksResponse, type: string): Block[] => {
   let headerContainer: Block;
   let footer: Block;
   let pageBlocks: Block[];
@@ -176,8 +176,8 @@ export const useBlocks: UseBlocksReturn = () => {
       state.value.data.filter((b) => !isHeaderContainerBlock(b) && !isFooterBlock(b) && !isHeaderBlock(b)),
     ),
     renderableBlocks: computed(() => state.value.data.filter((b) => !isHeaderContainerBlock(b))),
-    headerContainer: computed(() => state.value.data.find((b) => isHeaderContainerBlock(b)) ?? null),
-    footer: computed(() => state.value.data.find((b) => isFooterBlock(b)) ?? null),
+    headerContainer: computed(() => state.value.data.find((b) => isHeaderContainerBlock(b))),
+    footer: computed(() => state.value.data.find((b) => isFooterBlock(b))),
     loading: computed(() => state.value.loading),
     defaultTemplateData: computed(() => state.value.defaultTemplateData),
     fetchBlocks,

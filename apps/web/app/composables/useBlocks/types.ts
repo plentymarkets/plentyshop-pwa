@@ -1,4 +1,4 @@
-import type { Block, CategoryTemplate } from '@plentymarkets/shop-api';
+import type { Block } from '@plentymarkets/shop-api';
 import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
 
 export interface UseBlocksState {
@@ -13,8 +13,8 @@ export interface UseBlocks {
   cleanData: Readonly<Ref<Block[]>>;
   blocks: Readonly<Ref<Block[]>>;
   renderableBlocks: Readonly<Ref<Block[]>>;
-  headerContainer: Readonly<Ref<Block | null>>;
-  footer: Readonly<Ref<Block | null>>;
+  headerContainer: Readonly<Ref<Block>>;
+  footer: Readonly<Ref<Block>>;
   loading: Readonly<Ref<boolean>>;
   defaultTemplateData: Readonly<Ref<Block[]>>;
   fetchBlocks: (identifier: string | number, type: string) => Promise<void>;
