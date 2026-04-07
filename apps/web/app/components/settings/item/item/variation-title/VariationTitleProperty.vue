@@ -38,18 +38,18 @@ const variationTitlePropertyId = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Variation title property",
-    "description": "Enter the variation property ID that should be used as the storefront item title. When set, the matching property value replaces the default item name wherever the normalized item name is used.",
-    "tooltip": "Use the variation property ID from the backend. Leave this empty to fall back to the default Variation Texts / Variation Title mapping.",
+    "label": "Variation title property ID",
+    "description": "Enter the variation property ID that should be used as the storefront item title. When set, the matching property value replaces the default item name.",
+    "tooltip": "Use the variation property ID from the backend. Leave this empty to fall back to the default Title.",
     "placeholder": "Enter variation property ID",
-    "hint": "Leave the field empty to use the default Variation Texts / Variation Title mapping."
+    "hint": "Leave the field empty to use the default Title."
   },
   "de": {
-    "label": "Variation title property",
-    "description": "Enter the variation property ID that should be used as the storefront item title. When set, the matching property value replaces the default item name wherever the normalized item name is used.",
-    "tooltip": "Use the variation property ID from the backend. Leave this empty to fall back to the default Variation Texts / Variation Title mapping.",
+    "label": "Variation title property ID",
+    "description": "Enter the variation property ID that should be used as the storefront item title. When set, the matching property value replaces the default item name.",
+    "tooltip": "Use the variation property ID from the backend. Leave this empty to fall back to the default Title.",
     "placeholder": "Enter variation property ID",
-    "hint": "Leave the field empty to use the default Variation Texts / Variation Title mapping."
+    "hint": "Leave the field empty to use the default Title."
   }
 }
 </i18n>
