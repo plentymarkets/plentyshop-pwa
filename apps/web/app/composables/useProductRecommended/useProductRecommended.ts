@@ -4,7 +4,6 @@ import type {
   FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
 import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
-import { normalizeProductCollection } from '~/utils/product-name-normalizer';
 
 /**
  * Composable for managing recommended products data
@@ -16,7 +15,7 @@ import { normalizeProductCollection } from '~/utils/product-name-normalizer';
  * ```
  */
 export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
-  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
+  const { normalizeProductCollection } = useProductNameNormalizer();
   const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
     data: [],
     loading: false,
@@ -54,10 +53,7 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
     );
 
     useHandleError(error.value ?? null);
-    state.value.data = normalizeProductCollection(
-      data?.value?.data?.products ?? state.value.data,
-      getVariationTitlePropertySetting(),
-    );
+    state.value.data = normalizeProductCollection(data?.value?.data?.products ?? state.value.data);
     state.value.loading = false;
     return state.value.data;
   };

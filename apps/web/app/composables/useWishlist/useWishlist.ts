@@ -4,7 +4,6 @@ import type {
   AddWishlistItemParams,
   DeleteWishlistItemParams,
 } from '@plentymarkets/shop-api';
-import { normalizeWishlistProductNames } from '~/utils/product-name-normalizer';
 import type {
   FetchWishlist,
   UseWishlistReturn,
@@ -27,7 +26,7 @@ import type {
  * ```
  */
 export const useWishlist: UseWishlistReturn = () => {
-  const { getSetting: getVariationTitlePropertySetting } = useSiteSettings('variationTitleProperty');
+  const { normalizeWishlistProductNames } = useProductNameNormalizer();
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
@@ -48,7 +47,7 @@ export const useWishlist: UseWishlistReturn = () => {
     return await useSdk()
       .plentysystems.getWishlist()
       .then(({ data }) => {
-        state.value.data = normalizeWishlistProductNames(data ?? state.value.data, getVariationTitlePropertySetting());
+        state.value.data = normalizeWishlistProductNames(data ?? state.value.data);
         state.value.loading = false;
         return state.value.data;
       });
