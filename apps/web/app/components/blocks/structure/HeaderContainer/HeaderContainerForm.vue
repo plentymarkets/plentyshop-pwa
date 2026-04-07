@@ -45,7 +45,7 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
-const { headerContainer: data } = useBlocks()
+const { headerContainer } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const emit = defineEmits<{
@@ -71,7 +71,7 @@ const blockForm = computed(() => {
 });
 
 const headerContainerStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as HeaderContainerBlock,
+  () => (headerContainer.value ?? {}) as HeaderContainerBlock,
 );
 
 const isStickyToggle = computed({

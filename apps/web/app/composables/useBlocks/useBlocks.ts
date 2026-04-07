@@ -35,8 +35,8 @@ const isHeaderEmpty = (block: Block | null | undefined): boolean => {
 
 const normalizeFooter = (block: Block): Block => {
   const defaultBlock = createFooter();
-  const defaults = defaultBlock.content as Record<string, unknown>;
-  const content = (block.content ?? {}) as Record<string, unknown>;
+  const defaults = defaultBlock.content as Record<string, Record<string, unknown>>;
+  const content = (block.content ?? {}) as Record<string, Record<string, unknown>>;
 
   block.meta = { ...defaultBlock.meta, ...block.meta };
   block.content = {
@@ -65,7 +65,7 @@ const getDefaultPageBlocks = (type: string): Block[] => {
   }
 };
 
-const assembleBlocks = (raw: GetBlocksResponse, type: string): Block[] => {
+const assembleBlocks = (raw: Block[] | GetBlocksResponse | null | undefined, type: string): Block[] => {
   let headerContainer: Block;
   let footer: Block;
   let pageBlocks: Block[];
@@ -77,7 +77,7 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string): Block[] => {
   } else if (raw && typeof raw === 'object') {
     headerContainer = isHeaderEmpty(raw.HeaderContainer)
       ? createDefaultHeaderContainerBlock()
-      : raw.HeaderContainer;
+      : raw.HeaderContainer!;
     footer = normalizeFooter(raw.Footer ?? createFooter());
     pageBlocks =
       Array.isArray(raw.blocks) && raw.blocks.length > 0

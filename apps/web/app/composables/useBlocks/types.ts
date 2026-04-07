@@ -13,8 +13,8 @@ export interface UseBlocks {
   cleanData: Readonly<Ref<Block[]>>;
   blocks: Readonly<Ref<Block[]>>;
   renderableBlocks: Readonly<Ref<Block[]>>;
-  headerContainer: Readonly<Ref<Block>>;
-  footer: Readonly<Ref<Block>>;
+  headerContainer: Readonly<Ref<Block | undefined>>;
+  footer: Readonly<Ref<Block | undefined>>;
   loading: Readonly<Ref<boolean>>;
   defaultTemplateData: Readonly<Ref<Block[]>>;
   fetchBlocks: (identifier: string | number, type: string) => Promise<void>;
