@@ -92,12 +92,7 @@ const productLegalDrawerRef = ref();
 const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
 
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { data } = useBlocks();
 
 const productLegalBlock = computed(() => {
   if (!openedBlockUuid.value) return null;

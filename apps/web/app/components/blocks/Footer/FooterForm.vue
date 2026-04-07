@@ -335,13 +335,7 @@
 import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
 
-const { FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
-  'index',
-  'immutable',
-  useNuxtApp().$i18n.locale.value,
-);
-
-const { footer } = useBlocks();
+const { footer, FOOTER_SWITCH_DEFINITIONS } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 

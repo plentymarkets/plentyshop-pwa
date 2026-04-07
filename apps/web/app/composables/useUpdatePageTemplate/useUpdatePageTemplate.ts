@@ -4,11 +4,7 @@ export const useUpdatePageTemplate = () => {
     const { send } = useNotification();
     const route = useRoute();
 
-    const { saveBlocks, data } = useBlockTemplates(
-      route?.meta?.identifier as string,
-      route.meta.type as string,
-      useNuxtApp().$i18n.locale.value,
-    );
+    const { saveBlocks, data } = useBlocks();
 
     const { data: dataProducts } = useProducts();
 

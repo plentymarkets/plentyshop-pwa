@@ -8,12 +8,7 @@ export const useCarousel: UseCarouselReturn = () => {
   }));
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
-  const route = useRoute();
-  const { data } = useBlockTemplates(
-    route?.meta?.identifier as string,
-    route.meta.type as string,
-    useNuxtApp().$i18n.locale.value,
-  );
+  const { data } = useBlocks();
 
   const createSlide = async (type: string, index: number): Promise<SlideBlock> => {
     const module = await import(`~/components/blocks/${type}/defaults.ts`);

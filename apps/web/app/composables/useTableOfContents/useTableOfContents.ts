@@ -10,7 +10,7 @@ export const useTableOfContents = () => {
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
 
-  const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+  const { data } = useBlocks();
 
   watch(
     () => route.fullPath,

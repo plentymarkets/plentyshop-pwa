@@ -42,11 +42,7 @@ import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { data } = useBlocks();
 
 const { closeBlocksConfigurationDrawer, blocksConfigurationDrawerView, blockType, blockUuid } = useSiteConfiguration();
 
