@@ -30,22 +30,18 @@ const getVariationTitleSettingPropertyId = (settingValue = ''): number | null =>
   return Number.isNaN(propertyId) ? null : propertyId;
 };
 
-const getDefaultProductName = (product: ProductNameSource): string => {
-  return product.texts?.name1?.trim() || '';
-};
-
 /**
  * Returns the custom variation title used as the canonical storefront product name.
  */
-export const getNormalizedProductName = (product?: unknown | null, settingValue = ''): string => {
+export const getNormalizedProductName = (product?: unknown | null, settingValue = ''): string | null => {
   if (!isProductNameSource(product)) {
-    return '';
+    return null;
   }
 
   const propertyId = getVariationTitleSettingPropertyId(settingValue);
 
   if (!propertyId) {
-    return getDefaultProductName(product);
+    return null;
   }
 
   const variationProperties = product.variationProperties ?? [];
@@ -54,10 +50,10 @@ export const getNormalizedProductName = (product?: unknown | null, settingValue 
     .find((property) => property.names.propertyId === propertyId || property.id === propertyId);
 
   if (!configuredVariationTitle || configuredVariationTitle.cast !== 'text') {
-    return getDefaultProductName(product);
+    return null;
   }
 
-  return configuredVariationTitle.values.value?.trim() || getDefaultProductName(product);
+  return configuredVariationTitle.values.value?.trim() || null;
 };
 
 /**

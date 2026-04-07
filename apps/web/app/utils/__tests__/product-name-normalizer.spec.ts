@@ -32,8 +32,8 @@ const createProduct = (): Product =>
   }) as Product;
 
 describe('product name normalizer', () => {
-  it('should return the default product name when no property id is configured', () => {
-    expect(getNormalizedProductName(createProduct())).toBe('Original Name');
+  it('should return null when no property id is configured', () => {
+    expect(getNormalizedProductName(createProduct())).toBeNull();
   });
 
   it('should extract a configured variation property as normalized product name', () => {
@@ -64,11 +64,11 @@ describe('product name normalizer', () => {
     expect(getNormalizedProductName(product, '42')).toBe('Configured Name');
   });
 
-  it('should return the default product name when the configured property id does not exist', () => {
-    expect(getNormalizedProductName(createProduct(), '999')).toBe('Original Name');
+  it('should return null when the configured property id does not exist', () => {
+    expect(getNormalizedProductName(createProduct(), '999')).toBeNull();
   });
 
-  it('should return the default product name when the configured property is not text', () => {
+  it('should return null when the configured property is not text', () => {
     const product = {
       texts: {
         name1: 'Original Name',
@@ -93,7 +93,14 @@ describe('product name normalizer', () => {
       ],
     } as Product;
 
-    expect(getNormalizedProductName(product, '42')).toBe('Original Name');
+    expect(getNormalizedProductName(product, '42')).toBeNull();
+  });
+
+  it('should keep the original product name when no valid replacement is resolved', () => {
+    const product = createProduct();
+
+    expect(normalizeProductName(product).texts?.name1).toBe('Original Name');
+    expect(normalizeProductName(createProduct(), '999').texts?.name1).toBe('Original Name');
   });
 
   it('should overwrite product texts.name1 with the normalized name', () => {
