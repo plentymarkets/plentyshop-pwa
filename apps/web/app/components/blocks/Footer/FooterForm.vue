@@ -334,11 +334,10 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
-import type { Block } from '@plentymarkets/shop-api';
-const route = useRoute();
-const { mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
+
+const { FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
+  'index',
+  'immutable',
   useNuxtApp().$i18n.locale.value,
 );
 
@@ -353,19 +352,19 @@ const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
 
-
-const footerBlock = ref<FooterBlock>(mapFooterData(footer.value || null));
-const footerContent = computed(() => footerBlock.value.content as FooterContent);
+const footerBlock = computed(() => footer.value as FooterBlock);
+const footerContent = computed(() => footerBlock.value?.content as FooterContent);
 
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
   (switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
-      get: () => footerContent.value.column1[switchConfig.key] as boolean,
+      get: () => footerContent.value?.column1[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterContent;
-        content.column1[switchConfig.key] = value;
+        if (footerBlock.value?.content) {
+          (footerBlock.value.content as FooterContent).column1[switchConfig.key] = value;
+        }
       },
     }),
   }),
@@ -376,10 +375,11 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
-      get: () => footerContent.value.column2[switchConfig.key] as boolean,
+      get: () => footerContent.value?.column2[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterContent;
-        content.column2[switchConfig.key] = value;
+        if (footerBlock.value?.content) {
+          (footerBlock.value.content as FooterContent).column2[switchConfig.key] = value;
+        }
       },
     }),
   }),

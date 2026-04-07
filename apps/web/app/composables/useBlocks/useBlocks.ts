@@ -1,7 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksPageResponse, UseBlocksReturn } from './types';
 import { createDefaultHeaderContainerBlock, getHeaderContainerTemplate } from '~/utils/blockTemplates/header';
-import { createFooter, getFooterTemplate } from '~/utils/blockTemplates/footer';
+import { createFooter, createDefaultFooterContent, getFooterTemplate } from '~/utils/blockTemplates/footer';
 import { createHomepage, getHomepageTemplate } from '~/utils/blockTemplates/homepage';
 import { createCategory, getCategoryTemplate } from '~/utils/blockTemplates/category';
 import { createProduct, getProductTemplate } from '~/utils/blockTemplates/product';
@@ -14,6 +14,23 @@ const isFooterBlock = (block: Block): boolean => block?.name === FOOTER_BLOCK_NA
 const isHeaderEmpty = (block: Block | null | undefined): boolean => {
   if (!block) return true;
   return !Array.isArray(block.content) || block.content.length === 0;
+};
+
+const normalizeFooter = (block: Block): Block => {
+  const defaults = createDefaultFooterContent() as Record<string, any>;
+  const content = (block.content ?? {}) as Record<string, any>;
+
+  block.content = {
+    ...defaults,
+    ...content,
+    column1: { ...defaults.column1, ...content.column1 },
+    column2: { ...defaults.column2, ...content.column2 },
+    column3: { ...defaults.column3, ...content.column3 },
+    column4: { ...defaults.column4, ...content.column4 },
+    colors: { ...defaults.colors, ...content.colors },
+  };
+
+  return block;
 };
 
 const getDefaultPageBlocks = (type: string, locale: string): Block[] => {
@@ -61,7 +78,7 @@ export const useBlocks: UseBlocksReturn = () => {
       ? createDefaultHeaderContainerBlock()
       : response.HeaderContainer!;
 
-    const footer = response.Footer ?? createFooter();
+    const footer = normalizeFooter(response.Footer ?? createFooter());
 
     const blocks =
       Array.isArray(response.blocks) && response.blocks.length > 0
