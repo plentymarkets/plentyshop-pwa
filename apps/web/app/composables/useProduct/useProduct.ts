@@ -60,20 +60,15 @@ export const useProduct: UseProductReturn = (slug) => {
     const {
       data: blockData,
       setupBlocks,
-      getBlocksServer,
-      isFooterBlock,
-    } = useBlockTemplates(
-      route?.meta?.identifier as string,
-      route.meta.type as string,
-      useNuxtApp().$i18n.locale.value,
-    );
+      fetchBlocks,
+    } = useBlocks();
 
     state.value.loading = true;
 
     if (isGlobalProductDetailsTemplate.value && isInEditor.value) {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
-      await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
+      await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
 
       const hasContentBlocks = blockData.value?.some((block) => !isFooterBlock(block));
       const blocks = hasContentBlocks ? blockData.value : await useProductTemplateData($i18n.locale.value);
@@ -83,7 +78,7 @@ export const useProduct: UseProductReturn = (slug) => {
         ...fakeProduct,
       };
 
-      setupBlocks(blocks);
+      setupBlocks(blocks, 'product');
 
       handlePreviewProduct(state, $i18n.locale.value, false);
 
@@ -100,6 +95,7 @@ export const useProduct: UseProductReturn = (slug) => {
     const fetchedBlocks = data.value?.data.blocks;
     setupBlocks(
       fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : await useProductTemplateData($i18n.locale.value),
+      'product',
     );
 
     properties.setProperties(data.value?.data.properties ?? []);

@@ -77,30 +77,7 @@ const { hasChanges: localizationHasChanges } = useEditorLocalizationKeys();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
-const route = useRoute();
-const initial = shallowRef(
-  useBlockTemplates(
-    String(route.meta?.identifier ?? ''),
-    String(route.meta?.type ?? ''),
-    useNuxtApp().$i18n.locale.value,
-  ),
-);
-
-watch(
-  () => [route.meta?.identifier, route.meta?.type],
-  () => {
-    initial.value = useBlockTemplates(
-      String(route.meta?.identifier ?? ''),
-      String(route.meta?.type ?? ''),
-      useNuxtApp().$i18n.locale.value,
-    );
-  },
-  { immediate: true },
-);
-
-const data = computed(() => initial.value.data.value);
-const loading = computed(() => initial.value.loading.value);
-const cleanData = computed(() => initial.value.cleanData.value);
+const { data, loading, cleanData } = useBlocks();
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();

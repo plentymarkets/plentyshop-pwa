@@ -48,7 +48,6 @@
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent, EditableBlocksProps } from './types';
-import { useBlocks } from '~/composables/useBlocks';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
@@ -64,20 +63,17 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
 });
 
 const {
-  data: templateData,
+  data: allBlocks,
   renderableBlocks,
-  getBlocksServer,
-  isFooterBlock,
-} = useBlockTemplates(props.identifier.toString(), props.type.toString(), useNuxtApp().$i18n.locale.value);
+  fetchBlocks,
+} = useBlocks();
 
-const { blocks } = useBlocks()
-
-const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value));
+const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
 const data = computed({
-  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : blocks.value),
+  get: () => (props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value),
   set: (newValue: Block[]) => {
-    const target = props.blocks && props.blocks.length > 0 ? props.blocks : templateData.value;
+    const target = props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value;
     const header = target.find((block) => isHeaderContainerBlock(block));
     const rebuilt = header ? [header, ...newValue] : newValue;
     target.splice(0, target.length, ...rebuilt);
@@ -97,7 +93,7 @@ const isContentEmptyInLive = computed(
 );
 
 if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
-  await getBlocksServer(props.identifier, props.type);
+  await fetchBlocks(props.identifier, props.type);
 }
 
 const {
@@ -113,12 +109,12 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = templateData.value.findIndex((block: Block) => isFooterBlock(block));
-  const lastIndex = templateData.value.length - 1;
+  const footerIndex = allBlocks.value.findIndex((block: Block) => isFooterBlock(block));
+  const lastIndex = allBlocks.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
-    const footerBlock = templateData.value.splice(footerIndex, 1)[0];
+    const footerBlock = allBlocks.value.splice(footerIndex, 1)[0];
     if (footerBlock) {
-      templateData.value.push(footerBlock);
+      allBlocks.value.push(footerBlock);
     }
   }
 

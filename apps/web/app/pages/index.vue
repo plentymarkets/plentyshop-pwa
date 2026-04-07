@@ -23,12 +23,7 @@ definePageMeta({
 const { $i18n } = useNuxtApp();
 
 const { setPageMeta } = usePageMeta();
-const route = useRoute();
-const { setDefaultTemplate } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { setDefaultTemplate } = useBlocks();
 
 const icon = 'home';
 setPageMeta(t('homepage.title'), icon);

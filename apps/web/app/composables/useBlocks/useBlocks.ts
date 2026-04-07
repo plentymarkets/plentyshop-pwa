@@ -1,16 +1,32 @@
-import type { Block } from '@plentymarkets/shop-api';
-import type { BlocksPageResponse, UseBlocksReturn } from './types';
-import { createDefaultHeaderContainerBlock, getHeaderContainerTemplate } from '~/utils/blockTemplates/header';
+import type { ApiError, Block } from '@plentymarkets/shop-api';
+import type { UseBlocksState, UseBlocksReturn } from './types';
+import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
+import { createDefaultHeaderContainerBlock } from '~/utils/blockTemplates/header';
 import { createFooter, createDefaultFooterContent } from '~/utils/blockTemplates/footer';
-import { createHomepage, getHomepageTemplate } from '~/utils/blockTemplates/homepage';
-import { createCategory, getCategoryTemplate } from '~/utils/blockTemplates/category';
-import { createProduct, getProductTemplate } from '~/utils/blockTemplates/product';
+import { createHomepage } from '~/utils/blockTemplates/homepage';
+import { createCategory } from '~/utils/blockTemplates/category';
+import { createProduct } from '~/utils/blockTemplates/product';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateAllBlocks } from '~/utils/migrate-blocks';
 
 const FOOTER_BLOCK_NAME = 'Footer';
+const HEADER_BLOCK_NAME = 'Header';
 
-const isFooterBlock = (block: Block): boolean => block?.name === FOOTER_BLOCK_NAME;
+export const isFooterBlock = (block: Block | null | undefined): boolean => block?.name === FOOTER_BLOCK_NAME;
+export const isHeaderBlock = (block: Block | null | undefined): boolean => block?.name === HEADER_BLOCK_NAME;
+export const isGlobalBlock = (block: Block | null | undefined): boolean =>
+  isFooterBlock(block) || isHeaderContainerBlock(block);
+
+export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
+  { columnGroup: 'legal', key: 'showTermsAndConditions', shopTranslationKey: 'legal.termsAndConditions', editorTranslationKey: 'column-1-terms-and-conditions-label', link: paths.termsAndConditions },
+  { columnGroup: 'legal', key: 'showCancellationRights', shopTranslationKey: 'legal.cancellationRights', editorTranslationKey: 'column-1-cancellation-rights-label', link: paths.cancellationRights },
+  { columnGroup: 'legal', key: 'showCancellationForm', shopTranslationKey: 'legal.cancellationForm', editorTranslationKey: 'column-1-cancellation-form-label', link: paths.cancellationForm },
+  { columnGroup: 'legal', key: 'showLegalDisclosure', shopTranslationKey: 'legal.legalDisclosure', editorTranslationKey: 'column-1-legal-disclosure-label', link: paths.legalDisclosure },
+  { columnGroup: 'legal', key: 'showPrivacyPolicy', shopTranslationKey: 'legal.privacyPolicy', editorTranslationKey: 'column-1-privacy-policy-label', link: paths.privacyPolicy },
+  { columnGroup: 'legal', key: 'showDeclarationOfAccessibility', shopTranslationKey: 'legal.declarationOfAccessibility', editorTranslationKey: 'column-1-declaration-of-accessibility-label', link: paths.declarationOfAccessibility },
+  { columnGroup: 'services', key: 'showContactLink', shopTranslationKey: 'footer.contact.label', editorTranslationKey: 'column-2-contact-label', link: paths.contact },
+  { columnGroup: 'services', key: 'showRegisterLink', shopTranslationKey: 'footer.register.label', editorTranslationKey: 'column-2-register-label', link: paths.register },
+];
 
 const isHeaderEmpty = (block: Block | null | undefined): boolean => {
   if (!block) return true;
@@ -22,11 +38,7 @@ const normalizeFooter = (block: Block): Block => {
   const defaults = defaultBlock.content as Record<string, any>;
   const content = (block.content ?? {}) as Record<string, any>;
 
-  block.meta = {
-    ...defaultBlock.meta,
-    ...block.meta,
-  };
-
+  block.meta = { ...defaultBlock.meta, ...block.meta };
   block.content = {
     ...defaults,
     ...content,
@@ -40,32 +52,59 @@ const normalizeFooter = (block: Block): Block => {
   return block;
 };
 
-const getDefaultPageBlocks = (type: string, locale: string): Block[] => {
-  let blocks: Block[];
-
+const getDefaultPageBlocks = (type: string): Block[] => {
   switch (type) {
     case 'immutable':
-      blocks = createHomepage();
-      break;
+      return createHomepage();
     case 'category':
-      blocks = createCategory();
-      break;
+      return createCategory();
     case 'product':
-      blocks = createProduct();
-      break;
+      return createProduct();
     default:
       return [];
   }
+};
 
-  return blocks;
+const assembleBlocks = (raw: any, type: string): Block[] => {
+  let headerContainer: Block;
+  let footer: Block;
+  let pageBlocks: Block[];
+
+  if (Array.isArray(raw)) {
+    headerContainer = raw.find((b: Block) => isHeaderContainerBlock(b)) ?? createDefaultHeaderContainerBlock();
+    footer = normalizeFooter(raw.find((b: Block) => isFooterBlock(b)) ?? createFooter());
+    pageBlocks = raw.filter((b: Block) => !isHeaderContainerBlock(b) && !isFooterBlock(b) && !isHeaderBlock(b));
+  } else if (raw && typeof raw === 'object') {
+    headerContainer = isHeaderEmpty(raw.HeaderContainer)
+      ? createDefaultHeaderContainerBlock()
+      : raw.HeaderContainer;
+    footer = normalizeFooter(raw.Footer ?? createFooter());
+    pageBlocks =
+      Array.isArray(raw.blocks) && raw.blocks.length > 0
+        ? raw.blocks
+        : getDefaultPageBlocks(type);
+  } else {
+    headerContainer = createDefaultHeaderContainerBlock();
+    footer = normalizeFooter(createFooter());
+    pageBlocks = getDefaultPageBlocks(type);
+  }
+
+  if (pageBlocks.length === 0) {
+    pageBlocks = getDefaultPageBlocks(type);
+  }
+
+  const allBlocks = [headerContainer, ...pageBlocks, footer];
+  migrateAllBlocks(allBlocks);
+  return allBlocks;
 };
 
 export const useBlocks: UseBlocksReturn = () => {
   const { $i18n } = useNuxtApp();
 
-  const state = useState(`useBlocks-${$i18n.locale.value}`, () => ({
-    data: {} as BlocksPageResponse,
-    cleanData: {} as BlocksPageResponse,
+  const state = useState<UseBlocksState>(`useBlocks-${$i18n.locale.value}`, () => ({
+    data: [],
+    cleanData: [],
+    defaultTemplateData: [],
     loading: false,
   }));
 
@@ -74,38 +113,78 @@ export const useBlocks: UseBlocksReturn = () => {
 
     const locale = $i18n.locale.value;
 
-    const { data } = await useAsyncData(`blocks-${locale}-${type}-${identifier}`, () =>
+    const { data, error } = await useAsyncData(`blocks-${locale}-${type}-${identifier}`, () =>
       useSdk().plentysystems.getBlocks({ identifier, type, enableGlobalBlocks: true }),
     );
 
-    const raw = data.value?.data;
-    const response = (Array.isArray(raw) ? {} : raw ?? {}) as Partial<BlocksPageResponse>;
+    if (error.value) {
+      console.warn('Failed to fetch blocks:', error.value.message);
+    }
 
-    const headerContainer = isHeaderEmpty(response.HeaderContainer)
-      ? createDefaultHeaderContainerBlock()
-      : response.HeaderContainer!;
+    const allBlocks = assembleBlocks(data.value?.data, type);
 
-    const footer = normalizeFooter(response.Footer ?? createFooter());
-
-    const blocks =
-      Array.isArray(response.blocks) && response.blocks.length > 0
-        ? response.blocks
-        : getDefaultPageBlocks(type, locale);
-
-    migrateAllBlocks([headerContainer, ...blocks, footer]);
-
-    state.value.data = { blocks, HeaderContainer: headerContainer, Footer: footer };
-
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+    state.value.data = allBlocks;
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
     state.value.loading = false;
   };
 
+  const saveBlocks = async (identifier: string | number, type: string, content: string): Promise<boolean> => {
+    try {
+      state.value.loading = true;
+
+      const response = await useSdk().plentysystems.doSaveBlocks({
+        identifier,
+        entityType: type,
+        blocks: content,
+      });
+
+      const allBlocks = assembleBlocks(response?.data ?? state.value.data, type);
+      state.value.data = allBlocks;
+      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+
+      return true;
+    } catch (error) {
+      useHandleError(error as ApiError);
+      console.error('Error saving blocks:', error);
+      return false;
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
+  const setupBlocks = (rawBlocks: Block[], type: string = 'immutable') => {
+    const allBlocks = assembleBlocks(rawBlocks, type);
+    state.value.data = allBlocks;
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+  };
+
+  const updateBlocks = (blocks: Block[]) => {
+    state.value.data = blocks;
+  };
+
+  const setDefaultTemplate = (blocks: Block[]) => {
+    state.value.defaultTemplateData = blocks;
+  };
+
   return {
-    blocks: computed(() => (state.value.data?.blocks ?? []) as Block[]),
-    cleanData: computed(() => (state.value.data?.cleanData ?? []) as Block[]),
-    headerContainer: computed(() => (state.value.data?.HeaderContainer ?? null) as Block | null),
-    footer: computed(() => (state.value.data?.Footer ?? null) as Block | null),
+    data: computed({
+      get: () => state.value.data,
+      set: (val: Block[]) => { state.value.data = val; },
+    }),
+    cleanData: computed(() => state.value.cleanData),
+    blocks: computed(() =>
+      state.value.data.filter((b) => !isHeaderContainerBlock(b) && !isFooterBlock(b) && !isHeaderBlock(b)),
+    ),
+    renderableBlocks: computed(() => state.value.data.filter((b) => !isHeaderContainerBlock(b))),
+    headerContainer: computed(() => state.value.data.find((b) => isHeaderContainerBlock(b)) ?? null),
+    footer: computed(() => state.value.data.find((b) => isFooterBlock(b)) ?? null),
     loading: computed(() => state.value.loading),
+    defaultTemplateData: computed(() => state.value.defaultTemplateData),
     fetchBlocks,
+    saveBlocks,
+    setupBlocks,
+    updateBlocks,
+    setDefaultTemplate,
+    FOOTER_SWITCH_DEFINITIONS,
   };
 };

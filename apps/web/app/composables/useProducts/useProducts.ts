@@ -57,9 +57,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
     const {
       data: blockData,
       setupBlocks,
-      getBlocksServer,
-      isFooterBlock,
-    } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+      fetchBlocks,
+    } = useBlocks();
 
     state.value.loading = true;
 
@@ -68,9 +67,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
-      await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
+      await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
 
-      const hasContentBlocks = blockData.value?.some((block) => !isFooterBlock(block));
+      const hasContentBlocks = blockData.value?.some((block: Block) => !isFooterBlock(block));
       const fakeBlocks = hasContentBlocks ? blockData.value : await useBlockTemplatesData($i18n.locale.value);
 
       state.value.data = {
@@ -87,7 +86,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
         },
       } as Facet;
 
-      setupBlocks(fakeBlocks);
+      setupBlocks(fakeBlocks, 'category');
       handlePreviewProducts(state, $i18n.locale.value);
 
       state.value.loading = false;
@@ -110,7 +109,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
       const defaultData =
         state.value.data.category.type === 'item' ? await useBlockTemplatesData($i18n.locale.value) : [];
 
-      setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[]);
+      setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[], 'category');
     }
 
     state.value.loading = false;
