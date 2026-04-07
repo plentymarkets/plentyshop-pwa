@@ -7,6 +7,7 @@
           type="button"
           data-testid="rte-heading-select"
           class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+          @mousedown.prevent
           @click="onBlockTypeTriggerClick"
         >
           <span>{{ selectedBlockTypeLabel }}</span>
@@ -63,6 +64,7 @@
           type="button"
           data-testid="rte-font-size-select"
           class="flex h-8 w-[84px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+          @mousedown.prevent
           @click="onFontSizeTriggerClick"
         >
           <span>{{ selectedFontSizeLabel }}</span>
@@ -94,13 +96,13 @@
           v-for="option in fontSizeOptions"
           :key="option.value"
           role="option"
-          :aria-selected="option.value === (currentFontSize || '1rem')"
+          :aria-selected="option.value === effectiveFontSize"
         >
           <button
             type="button"
             :data-testid="`rte-font-size-option-${option.value}`"
             class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
-            :class="{ 'bg-gray-100 font-semibold': option.value === (currentFontSize || '1rem') }"
+            :class="{ 'bg-gray-100 font-semibold': option.value === effectiveFontSize }"
             @mousedown.prevent
             @click="selectFontSize(option.value)"
           >
@@ -128,7 +130,7 @@
   <EditorColorPicker
     data-testid="rte-font-color"
     :model-value="textColor"
-    dropdown-align="rte"
+    dropdown-align="top-editor"
     @update:model-value="setFontColor($event)"
   >
     <template #trigger="{ color, toggle }">
@@ -193,14 +195,27 @@ const fontSizeOptions = [
   { value: '4.5rem', label: '72px' },
 ];
 
+const headingFontSizeMap: Record<string, string> = {
+  paragraph: '1rem',
+  h1: '3.75rem',
+  h2: '1.5rem',
+  h3: '1.25rem',
+  h4: '1.125rem',
+  h5: '1rem',
+  h6: '0.875rem',
+};
+
 const selectedBlockTypeLabel = computed(() => {
   return blockTypeOptions.find((option) => option.value === props.currentBlockType)?.label ?? 'Normal';
 });
 
-const selectedFontSizeLabel = computed(() => {
-  return fontSizeOptions.find((option) => option.value === (props.currentFontSize || '1rem'))?.label ?? '16px';
+const effectiveFontSize = computed(() => {
+  return props.currentFontSize || headingFontSizeMap[props.currentBlockType] || '1rem';
 });
 
+const selectedFontSizeLabel = computed(() => {
+  return fontSizeOptions.find((option) => option.value === effectiveFontSize.value)?.label ?? '16px';
+});
 const onBlockTypeTriggerClick = () => {
   isBlockTypeOpen.value = !isBlockTypeOpen.value;
 };
@@ -209,29 +224,30 @@ const onFontSizeTriggerClick = () => {
   isFontSizeOpen.value = !isFontSizeOpen.value;
 };
 
+const onBlockTypeDropdownToggle = (open: boolean) => {
+  isBlockTypeOpen.value = open;
+};
+
+const onFontSizeDropdownToggle = (open: boolean) => {
+  isFontSizeOpen.value = open;
+};
 const selectBlockType = (value: string) => {
+  if (value === props.currentBlockType) {
+    isBlockTypeOpen.value = false;
+    return;
+  }
   props.onFontSizeChange(value);
+
+  const defaultFontSize = headingFontSizeMap[value];
+  if (defaultFontSize) {
+    props.onTextSizeChange(defaultFontSize);
+  }
+
   isBlockTypeOpen.value = false;
 };
 
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
   isFontSizeOpen.value = false;
-};
-
-const onBlockTypeDropdownToggle = (open: boolean) => {
-  isBlockTypeOpen.value = open;
-
-  if (!open) {
-    blockTypeTriggerRef.value?.focus();
-  }
-};
-
-const onFontSizeDropdownToggle = (open: boolean) => {
-  isFontSizeOpen.value = open;
-
-  if (!open) {
-    fontSizeTriggerRef.value?.focus();
-  }
 };
 </script>

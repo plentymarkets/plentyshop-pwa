@@ -19,18 +19,85 @@ export function createHeaderContainerBlock(
       isGlobalTemplate: meta?.isGlobalTemplate ?? true,
     },
     content,
+    configuration: {
+      visible: true,
+      layout: {
+        sticky: false,
+      },
+    },
   };
 }
 
 export function createDefaultHeaderContainerBlock(): HeaderContainerBlock {
-  return createHeaderContainerBlock([createHeader()]);
+  return createHeaderContainerBlock([createUtilityBar(), createNavigation()]);
 }
 
-export function createHeader(): Block {
+export function createUtilityBar(): Block {
   return {
-    name: 'Header',
+    name: 'UtilityBar',
     type: 'content',
-    meta: { uuid: uuid() },
-    content: { backgroundColor: '', iconColor: '' },
+    meta: {
+      uuid: uuid(),
+      isGlobalTemplate: true,
+    },
+    content: {
+      layout: {
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 40,
+        paddingRight: 40,
+      },
+      sectionOrder: {
+        sections: ['logo', 'search', 'actions'],
+      },
+      sectionVisibility: {
+        logo: true,
+        search: true,
+        actions: true,
+      },
+      color: {
+        iconColor: '#ffffff',
+        backgroundColor: 'rgb(var(--colors-2-primary-500))',
+      },
+      search: {
+        displayMode: 'full',
+      },
+      actions: {
+        order: ['language', 'wishlist', 'cart', 'account'],
+        visibility: {
+          language: true,
+          wishlist: true,
+          cart: true,
+          account: true,
+        },
+      },
+    },
+  };
+}
+
+export function createNavigation(): Block {
+  return {
+    name: 'Navigation',
+    type: 'content',
+    meta: {
+      uuid: uuid(),
+      isGlobalTemplate: true,
+    },
+    content: {
+      layout: {
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+      },
+      text: {
+        textAlignment: 'left',
+      },
+      color: {
+        backgroundColor: '#ffffff',
+        textColor: '#161A16',
+        hoverBackgroundColor: '#f5f5f5',
+      },
+    },
   };
 }

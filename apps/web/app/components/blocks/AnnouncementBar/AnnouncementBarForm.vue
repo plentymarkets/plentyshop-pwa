@@ -8,19 +8,7 @@
       <h2>{{ getEditorTranslation('text-label') }}</h2>
     </template>
 
-    <EditorRichTextEditorForm v-model="editingText" :text-align="'center'">
-      <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
-        <SfTextarea
-          id="text-html-description"
-          v-model="editingText"
-          data-testid="textarea-description"
-          name="text-html-description"
-          rows="3"
-          class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
-        />
-      </div>
-    </EditorRichTextEditorForm>
+    <EditorRichTextEditorForm v-model="editingText" :text-align="'center'" />
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -54,7 +42,7 @@
 
 <script setup lang="ts">
 import type { AnnouncementBarProps, AnnouncementBarFormProps } from './types';
-import { SfInput, SfTextarea } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 
 const props = defineProps<AnnouncementBarFormProps>();
 
@@ -93,14 +81,12 @@ const editingBackgroundColor = computed({
   "en": {
     "text-label": "Text",
     "layout-label": "Layout settings",
-    "background-color-label": "Background color",
-    "html-description-label": "HTML Description"
+    "background-color-label": "Background color"
   },
   "de": {
     "text-label": "Text",
     "layout-label": "Layout-Einstellungen",
-    "background-color-label": "Hintergrundfarbe",
-    "html-description-label": "HTML Beschreibung"
+    "background-color-label": "Hintergrundfarbe"
   }
 }
 </i18n>

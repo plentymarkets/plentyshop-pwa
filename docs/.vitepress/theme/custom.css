@@ -1,0 +1,106 @@
+/* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
+:root {
+  --vp-c-bg: #f6f2ed;
+  --vp-c-bg-alt: #cec2b3;
+  --vp-c-bg-soft: #e9dfd3;
+  --vp-code-block-bg: #fff;
+
+  --vp-c-text-1: #062633;
+  --vp-c-text-2: #062633;
+  --vp-c-text-3: #062633;
+
+  --vp-c-gray-1: #839ba8;
+  --vp-c-gray-2: #aec5d0;
+  --vp-c-gray-3: #d8e4eb;
+  --vp-c-gray-soft: rgba(43, 59, 63, 0.14);
+
+  --vp-c-brand-1: #062633;
+  --vp-c-brand-2: #31687d;
+  --vp-c-brand-3: #062633;
+  --vp-c-brand-soft: rgba(0, 153, 190, 0.14);
+}
+
+.dark {
+  --vp-c-bg: #062633;
+  --vp-c-bg-alt: #31687d;
+  --vp-c-bg-soft: #31687d;
+  --vp-code-block-bg: #000;
+
+  --vp-c-text-1: #ffffff;
+  --vp-c-text-2: #ffffff;
+  --vp-c-text-3: #ffffff;
+
+  --vp-button-brand-text: #062633;
+  --vp-button-brand-hover-text: #062633;
+
+  --vp-c-gray-1: #5f767f;
+  --vp-c-gray-2: #374d55;
+  --vp-c-gray-3: #2b3b3f;
+  --vp-c-gray-soft: rgba(216, 228, 235, 0.16);
+
+  --vp-c-brand-1: #d5effa;
+  --vp-c-brand-2: #fbffe2;
+  --vp-c-brand-3: #edff6c;
+  --vp-c-brand-soft: rgba(1, 46, 53, 0.16);
+}
+
+/*
+    Adds Alokai logo to hero tagline
+    Tagline styling taken from https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/components/VPHero.vue
+*/
+
+.tagline {
+  padding-top: 8px;
+  max-width: 392px;
+  line-height: 28px;
+  font-size: 18px;
+  font-weight: 500;
+  white-space: pre-wrap;
+  color: var(--vp-c-text-2);
+}
+
+.VPHero.has-image .tagline {
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .tagline {
+    padding-top: 12px;
+    max-width: 576px;
+    line-height: 32px;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 960px) {
+  .tagline {
+    line-height: 36px;
+    font-size: 24px;
+  }
+
+  .VPHero.has-image .tagline {
+    margin: 0;
+  }
+}
+
+span.logo-alokai {
+  content: url('./assets/logo-alokai-black.svg');
+  line-height: normal;
+  padding-left: 1rem;
+  vertical-align: middle;
+  width: 20%;
+}
+
+.dark span.logo-alokai {
+  content: url('./assets/logo-alokai-white.svg');
+}
+
+/*
+    Hides the caret icon on collapsible sections without child items.
+    Required because TypeDoc doesn't cover this use case in its auto-generated sidebar.
+*/
+.VPSidebarItem.collapsible.is-link {
+  .caret-icon {
+    display: none;
+  }
+}

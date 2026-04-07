@@ -29,13 +29,7 @@
           <SfIconLanguage width="24" height="24px" />
         </button>
       </SfTooltip>
-      <SfTooltip
-        v-if="enableTableOfContents"
-        :label="tableOfContentsLabel"
-        placement="right"
-        :show-arrow="true"
-        class="inline-grid font-editor"
-      >
+      <SfTooltip :label="tableOfContentsLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
@@ -79,9 +73,6 @@ const {
   setActiveSetting,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const {
-  public: { enableTableOfContents },
-} = useRuntimeConfig();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';

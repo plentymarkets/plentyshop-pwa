@@ -1,33 +1,98 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header v-if="viewport.isGreaterOrEquals('md')" class="relative w-full md:sticky md:shadow-md z-10">
+    <header class="relative w-full md:sticky md:shadow-md z-10">
       <div
-        class="flex items-center flex-wrap md:flex-nowrap w-full border-0 border-neutral-200"
-        :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
-        data-testid="navbar-top"
+        class="flex md:hidden items-center w-full"
+        :style="{ backgroundColor: headerBackgroundColor }"
+        data-testid="navbar-top-mobile"
       >
-        <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
+        <div class="flex items-center flex-1 gap-2">
+          <UiButton
+            variant="tertiary"
+            square
+            :aria-label="t('common.navigation.openMenu')"
+            class="hover:!bg-header-400"
+            :style="{ color: iconColor }"
+            @click="openMegaMenu"
+          >
+            <SfIconMenu aria-hidden="true" />
+          </UiButton>
           <NuxtLink
+            id="blockified-logo-mobile"
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
-            class="flex shrink-0 w-full lg:w-48 items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          >
+            <UiLogo />
+          </NuxtLink>
+        </div>
+        <div class="flex items-center gap-2">
+          <UiButton
+            v-if="localeCodes.length > 1"
+            variant="tertiary"
+            class="relative hover:!bg-header-400 active:!bg-header-400 rounded-md"
+            square
+            data-testid="open-languageselect-button"
+            :style="{ color: iconColor }"
+            :aria-label="t('common.navigation.languageSelector')"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
+          >
+            <SfIconLanguage />
+          </UiButton>
+          <UiButton
+            variant="tertiary"
+            class="relative hover:!bg-header-400 active:!bg-header-400 rounded-md"
+            square
+            :style="{ color: iconColor }"
+            :aria-label="t('common.navigation.openSearchModal')"
+            @click="searchModalOpen"
+          >
+            <SfIconSearch />
+          </UiButton>
+        </div>
+      </div>
+
+      <div
+        class="hidden md:flex items-center flex-nowrap w-full border-0 border-neutral-200"
+        :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
+        data-testid="navbar-top-desktop"
+      >
+        <UiButton
+          v-if="viewport.isLessThan('lg')"
+          variant="tertiary"
+          square
+          :aria-label="t('common.navigation.openMenu')"
+          class="mr-2 hover:!bg-header-400"
+          :style="{ color: iconColor }"
+          @click="openMegaMenu"
+        >
+          <SfIconMenu aria-hidden="true" />
+        </UiButton>
+
+        <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
+          <NuxtLink
+            id="blockified-logo"
+            :to="localePath(paths.home)"
+            :aria-label="t('common.actions.goToHomepage')"
+            class="text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
             <UiLogo />
           </NuxtLink>
         </div>
 
-        <template v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('search')">
+        <template v-if="isSectionVisible('search')">
           <div
             ref="iconSearchContainerRef"
             :style="getSectionColumnStyle('search')"
             :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? '' : 'flex-none w-10 shrink-0'"
           >
             <template v-if="isFullSearchMode">
-              <UiSearch class="hidden md:block" />
+              <UiSearch />
             </template>
 
             <template v-else>
-              <div class="hidden md:block relative">
+              <div class="relative">
                 <Transition
                   mode="out-in"
                   enter-active-class="transition-opacity duration-120 ease-out"
@@ -61,9 +126,9 @@
           </div>
         </template>
         <nav
-          v-if="viewport.isGreaterOrEquals('md') && isSectionVisible('actions')"
+          v-if="isSectionVisible('actions')"
           :style="getSectionColumnStyle('actions')"
-          class="hidden md:flex md:flex-row md:flex-nowrap"
+          class="flex flex-row flex-nowrap"
         >
           <template v-if="localeCodes.length > 1 && isActionVisible('language')">
             <UiButton
@@ -209,43 +274,12 @@
         </nav>
       </div>
     </header>
-
-    <MegaMenu
-      v-if="viewport.isLessThan('md')"
-      :categories="categoryTree"
-      :icon-color="iconColor"
-      :header-background-color="headerBackgroundColor"
-    >
-      <div>
-        <UiButton
-          variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-          square
-          data-testid="open-languageselect-button"
-          :style="{ color: iconColor }"
-          :aria-label="t('common.navigation.languageSelector')"
-          :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-          @click="toggleLanguageSelect()"
-        >
-          <SfIconLanguage />
-        </UiButton>
-        <UiButton
-          variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:!bg-header-400 active:!bg-header-400 rounded-md md:hidden"
-          square
-          :style="{ color: iconColor }"
-          :aria-label="t('common.navigation.openSearchModal')"
-          @click="searchModalOpen"
-        >
-          <SfIconSearch />
-        </UiButton>
-      </div>
-    </MegaMenu>
-
     <BlocksNavbarBottom
       v-if="viewport.isLessThan('md')"
       :background-color="headerBackgroundColor"
       :icon-color="iconColor"
+      :action-order="content.actions.order"
+      :action-visibility="content.actions.visibility"
     />
     <LanguageSelector />
     <UiModal
@@ -265,6 +299,7 @@
           <SfIconClose />
         </UiButton>
       </header>
+
       <LoginComponent
         v-if="isLogin"
         :is-modal="true"
@@ -308,6 +343,7 @@ import {
   SfDropdown,
   SfIconClose,
   SfIconLanguage,
+  SfIconMenu,
   SfIconPerson,
   SfIconSearch,
   SfIconShoppingCart,
@@ -335,6 +371,7 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
+const { open: openMegaMenu } = useMegaMenu();
 const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
@@ -380,28 +417,33 @@ const showSearchIcon = ref(true);
 const isSearchClosing = ref(false);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
-const visibleSectionsCount = computed(() => sections.value.filter((s) => s.visible).length);
+const visibleSectionsCount = computed(() => sections.value.filter((section) => section.visible).length);
+
+const SECTION_GAP = '16px';
 
 const getSectionColumnStyle = (sectionId: string) => {
   const order = getSectionFlexOrder(sectionId);
   const total = visibleSectionsCount.value;
   const isFirst = order === 0;
   const isLast = total > 1 && order === total - 1;
+  const isMiddle = total > 2 && !isFirst && !isLast;
 
   const isSearchActive =
     sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
 
+  const middleMargin = isMiddle ? { marginLeft: SECTION_GAP, marginRight: SECTION_GAP } : {};
+
   if (isFirst) {
-    return { order, flex: '1', display: 'flex' as const };
+    return { order, flex: '1', display: 'flex', ...middleMargin };
   }
   if (isLast) {
-    return { order, flex: '1', display: 'flex' as const, justifyContent: 'flex-end' };
+    return { order, flex: '1', display: 'flex', justifyContent: 'flex-end', ...middleMargin };
   }
 
   if (isSearchActive) {
-    return { order, flex: '5' };
+    return { order, flex: '5', ...middleMargin };
   }
-  return { order };
+  return { order, ...middleMargin };
 };
 
 const searchExpandOrigin = computed(() => {
@@ -480,5 +522,9 @@ const navigateToLogin = () => {
 <style scoped>
 :deep(input[data-testid='search-bar-input']) {
   min-width: 172px;
+}
+
+#blockified-logo :deep(img) {
+  max-width: inherit !important;
 }
 </style>

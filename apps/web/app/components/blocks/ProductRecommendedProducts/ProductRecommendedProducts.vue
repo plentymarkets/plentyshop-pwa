@@ -1,10 +1,7 @@
 <template>
-  <div v-bind="$attrs">
+  <div ref="blockRef" v-bind="$attrs">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
-    <ProductSlider
-      v-if="recommendedProducts?.length && (shouldRender || shouldRenderAfterUpdate)"
-      :items="recommendedProducts"
-    />
+    <ProductSlider v-if="shouldShowSlider" :items="recommendedProducts" />
   </div>
 </template>
 
@@ -17,7 +14,11 @@ const props = withDefaults(defineProps<ProductRecommendedProductsProps>(), { sho
 const { locale } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const { currentProduct } = useProducts();
-
+const blockRef = ref<HTMLElement | null>(null);
+const { isNearViewport } = useNearViewport(blockRef, {
+  rootMargin: '200px 0px 200px 0px',
+  once: true,
+});
 const itemId = computed(() =>
   Object.keys(currentProduct.value).length
     ? productGetters.getItemId(currentProduct.value)
@@ -31,11 +32,18 @@ const shouldRenderAfterUpdate = ref(false);
 
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.meta.uuid);
 
+const shouldShowSlider = computed(
+  () =>
+    isNearViewport.value &&
+    !!recommendedProducts.value?.length &&
+    (shouldRender.value || shouldRenderAfterUpdate.value),
+);
 const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
-const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
-
+const shouldFetch = computed(() => {
+  return isNearViewport.value && shouldRender.value && (isCategory.value || isProduct.value);
+});
 const getContentSource = () => {
   return {
     ...props.content.source,
@@ -49,8 +57,10 @@ const getContentSource = () => {
 watch(
   shouldFetch,
   (visible) => {
-    if (visible) fetchProductRecommended(getContentSource());
-    shouldRenderAfterUpdate.value = true;
+    if (visible) {
+      fetchProductRecommended(getContentSource());
+      shouldRenderAfterUpdate.value = true;
+    }
   },
   { immediate: true },
 );

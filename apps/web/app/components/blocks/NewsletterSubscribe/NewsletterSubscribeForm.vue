@@ -10,27 +10,11 @@
       </template>
 
       <div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-          <SfInput
-            v-model="newsletterBlock.text.title"
-            name="maintitle"
-            type="text"
-            :placeholder="getEditorTranslation('main-title-placeholder')"
-            data-testid="newsletter-form-title"
-          />
-        </div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('description-label') }}</UiFormLabel>
-          <SfTextarea
-            v-model="newsletterBlock.text.htmlDescription"
-            name="description"
-            type="text"
-            class="w-full min-h-[232px]"
-            :placeholder="getEditorTranslation('description-placeholder')"
-            data-testid="newsletter-form-description"
-          />
-        </div>
+        <EditorRichTextEditorForm
+          :model-value="newsletterBlock.text.htmlDescription ?? ''"
+          :text-align="newsletterBlock.text.textAlignment ?? 'center'"
+          @update:model-value="newsletterBlock.text.htmlDescription = $event"
+        />
         <div class="mb-4">
           <UiFormLabel class="mb-1">{{ getEditorTranslation('ask-name-label') }}</UiFormLabel>
         </div>
@@ -150,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { NewsletterSubscribeContent } from './types';
 import { initializeNewsletterContent } from './utils';
 
@@ -181,10 +165,6 @@ const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
 {
   "en": {
     "text-group-label": "Text",
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "maintitle",
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",
@@ -199,10 +179,6 @@ const { isFullWidth } = useFullWidthToggleForContent(newsletterBlock);
   },
   "de": {
     "text-group-label": "Text",
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "maintitle",
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
     "ask-name-label": "Ask for subscriber's name",
     "display-name-input-label": "Display name input",
     "name-required-label": "Input is required",

@@ -5,9 +5,11 @@
   "license": "BSD-3-Clause",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "docs"
   ],
   "scripts": {
+    "predev": "node ./scripts/prepare-vue-tsc.js",
     "postinstall": "node ./scripts/postinstall.js",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
@@ -23,6 +25,10 @@
     "clean": "npx rimraf ./**/node_modules && rm package-lock.json",
     "clean:hard": "npx rimraf ./**/node_modules && npx rimraf ./**/lib && rm package-lock.json && npx rimraf ./**/.turbo && npx rimraf ./**/.nuxt",
     "clean:logs": "npx rimraf ./**/*.log",
+    "docs:dev": "npm run turbo:disable-telemetry && npm --prefix docs run docs:dev",
+    "docs:build": "npm run turbo:disable-telemetry && npm --prefix docs run docs:build",
+    "docs:preview": "npm run turbo:disable-telemetry && npm --prefix docs run docs:preview",
+    "publish-typedoc": "npm run turbo:disable-telemetry && turbo run publish-typedoc",
     "test": "npm run turbo:disable-telemetry && turbo run test",
     "test:watch": "npm run turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "npm run turbo:disable-telemetry && npx turbo run test:coverage",
@@ -45,14 +51,15 @@
     "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.159.1",
-    "@plentymarkets/shop-core": "^1.21.14",
-    "@plentymarkets/shop-module-gtag": "^1.2.2",
-    "@plentymarkets/shop-module-mollie": "^1.5.1",
+    "@plentymarkets/shop-api": "^0.164.0",
+    "@plentymarkets/shop-core": "^1.23.2",
+    "@plentymarkets/shop-module-gtag": "^1.3.0",
+    "@plentymarkets/shop-module-mollie": "^1.6.0",
     "@tanstack/vue-virtual": "^3.13.18",
     "@tiptap/extension-color": "^3.16.0",
     "@tiptap/extension-highlight": "^3.16.0",
     "@tiptap/extension-link": "^3.16.0",
+    "@tiptap/extension-placeholder": "^3.20.4",
     "@tiptap/extension-text-align": "^3.16.0",
     "@tiptap/extension-text-style": "^3.16.0",
     "@tiptap/extension-underline": "^3.16.0",
@@ -70,6 +77,7 @@
     "nuxt-color-picker": "^1.2.8",
     "nuxt-swiper": "^1.2.2",
     "vue-multiselect": "^3.4.0",
+    "vue-router": "^5.0.4",
     "vue-tel-input": "^9.7.1",
     "vue-tsc": "^3.2.5",
     "vuedraggable": "^4.1.0",
@@ -91,11 +99,11 @@
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
     "eslint-module-utils": "^2.12.1",
-    "happy-dom": "^20.6.1",
+    "happy-dom": "^20.8.9",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^16.2.7",
-    "nuxt": "4.1.3",
+    "nuxt": "^4.4.2",
     "nuxt-security": "2.5.1",
     "nuxt-viewport": "^2.3.1",
     "playwright-core": "^1.58.2",
@@ -107,6 +115,7 @@
     "typedoc-plugin-markdown": "^4.10.0",
     "typedoc-vitepress-theme": "1.1.2",
     "typescript": "5.9.3",
+    "vite-plugin-checker": "^0.12.0",
     "vitest": "^3.2.4",
     "wait-on": "^8.0.5"
   },
@@ -118,7 +127,9 @@
     "tar": "7.5.3",
     "giget": "2.0.0",
     "c12": "3.3.3",
-    "unimport": "5.6.0"
+    "unimport": "5.6.0",
+    "vue-router": "^5.0.4",
+    "vite-plugin-checker": "^0.12.0"
   },
   "engines": {
     "node": ">=24.0.0"
