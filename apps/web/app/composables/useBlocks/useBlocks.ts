@@ -1,7 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksPageResponse, UseBlocksReturn } from './types';
 import { createDefaultHeaderContainerBlock, getHeaderContainerTemplate } from '~/utils/blockTemplates/header';
-import { createFooter, createDefaultFooterContent, getFooterTemplate } from '~/utils/blockTemplates/footer';
+import { createFooter, createDefaultFooterContent } from '~/utils/blockTemplates/footer';
 import { createHomepage, getHomepageTemplate } from '~/utils/blockTemplates/homepage';
 import { createCategory, getCategoryTemplate } from '~/utils/blockTemplates/category';
 import { createProduct, getProductTemplate } from '~/utils/blockTemplates/product';
@@ -17,8 +17,14 @@ const isHeaderEmpty = (block: Block | null | undefined): boolean => {
 };
 
 const normalizeFooter = (block: Block): Block => {
-  const defaults = createDefaultFooterContent() as Record<string, any>;
+  const defaultBlock = createFooter();
+  const defaults = defaultBlock.content as Record<string, any>;
   const content = (block.content ?? {}) as Record<string, any>;
+
+  block.meta = {
+    ...defaultBlock.meta,
+    ...block.meta,
+  };
 
   block.content = {
     ...defaults,
