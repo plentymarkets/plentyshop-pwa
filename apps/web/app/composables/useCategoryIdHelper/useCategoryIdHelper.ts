@@ -73,10 +73,42 @@ export const useCategoryIdHelper = () => {
   const getCategoryPreviewPath = computed(() => {
     const previewUrl = currentCategoryPreviewUrl.value;
     if (!previewUrl) return '/';
-    const firstSlashIndex = previewUrl.indexOf('/', 8);
-    return firstSlashIndex !== -1 ? previewUrl.slice(firstSlashIndex) : '/';
+    const correctedPreviewUrl = getCorrectPreviewPathWithLocale(previewUrl);
+    const firstSlashIndex = correctedPreviewUrl.indexOf('/', 8);
+    return firstSlashIndex !== -1 ? correctedPreviewUrl.slice(firstSlashIndex) : '/';
   });
   const getCategoryDetails = computed(() => currentCategoryDetails.value);
+  const getCorrectPreviewPathWithLocale = (path: string): string => {
+    const parts = path.split('/');
+    const { $i18n } = useNuxtApp();
+    const { locale, defaultLocale, strategy } = $i18n;
+    const localeIndex = parts.indexOf(locale.value);
+    if (localeIndex !== -1) {
+      parts.splice(localeIndex, 1);
+    }
+
+    const shouldAddLocale = (strategy: string, locale: string, defaultLocale: string) => {
+      if (strategy === 'prefix') {
+        return true;
+      }
+
+      if (strategy === 'prefix_except_default') {
+        return locale !== defaultLocale;
+      }
+
+      if (strategy === 'prefix_and_default') {
+        return true;
+      }
+
+      return false;
+    };
+
+    if (shouldAddLocale(strategy, locale.value, defaultLocale)) {
+      parts.splice(1, 0, locale.value);
+    }
+
+    return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
+  };
 
   return {
     setCategoryId,
@@ -93,5 +125,6 @@ export const useCategoryIdHelper = () => {
     getParentName,
     getCategoryPreviewPath,
     getCategoryDetails,
+    getCorrectPreviewPathWithLocale,
   };
 };
