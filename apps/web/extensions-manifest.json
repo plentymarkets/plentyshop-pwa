@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mollie",
+    "entry": "@plentymarkets/shop-module-mollie",
+    "version": "^1.5.0",
+    "priority": 10,
+    "settings": {}
+  },
+  {
+    "id": "charts",
+    "entry": "nuxt-charts",
+    "version": "^2.1.4",
+    "priority": 20,
+    "settings": {}
+  }
+]
