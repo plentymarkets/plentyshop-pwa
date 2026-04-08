@@ -119,7 +119,10 @@ export const usePreferredDelivery = () => {
         postalcode: shippingAddress.value.zipCode,
       });
 
-      if (!data) return;
+      if (!data) {
+        return;
+      }
+
       state.value.data.additionalCharge = data.additionalCharge;
 
       if (typeof data.preferredDay !== 'boolean') {
