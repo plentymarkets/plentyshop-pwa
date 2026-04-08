@@ -60,17 +60,17 @@ export const useFetchAddressesData = () => {
         lang: locale.value,
       });
 
-      if (!data) return;
-      processAddresses(data.addresses);
-
-      if (data.countries) {
-        setCountries(data.countries.default, data.countries.geoRegulated);
+      if (data?.addresses) {
+        processAddresses(data.addresses);
       }
 
-      state.value.loading = false;
+      if (data?.countries) {
+        setCountries(data.countries.default, data.countries.geoRegulated);
+      }
     } catch (error: unknown) {
       useHandleError(error as ApiError);
       setAddresses([], []);
+    } finally {
       state.value.loading = false;
     }
   };
