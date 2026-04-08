@@ -1,0 +1,23 @@
+[
+  {
+    "id": "mollie",
+    "entry": "@plentymarkets/shop-module-mollie",
+    "version": "^1.5.0",
+    "priority": 20,
+    "settings": {
+      "locale": "en"
+    },
+    "privateSettings": {
+      "apiKey": "test_live_xxx—replace-with-real-key"
+    },
+    "enabled": true
+  },
+  {
+    "id": "plenty-products-module",
+    "entry": "plenty-products-module",
+    "version": "^1.0.8",
+    "priority": 10,
+    "settings": {},
+    "enabled": true
+  }
+]
