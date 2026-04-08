@@ -37,7 +37,7 @@ export const useSearch: UseSearchReturn = () => {
       const { data } = await useSdk().plentysystems.getSearch(params);
       state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
       if (data) data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = data;
+      state.value.data = data ?? state.value.data;
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

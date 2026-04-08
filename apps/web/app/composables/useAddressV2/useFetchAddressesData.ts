@@ -60,6 +60,7 @@ export const useFetchAddressesData = () => {
         lang: locale.value,
       });
 
+      if (!data) return;
       processAddresses(data.addresses);
 
       if (data.countries) {
@@ -85,12 +86,13 @@ export const useFetchAddressesData = () => {
     );
     useHandleError(error.value ?? null);
 
-    if (data.value?.data.addresses) {
-      processAddresses(data.value.data.addresses);
+    const responseData = data.value?.data;
+    if (responseData?.addresses) {
+      processAddresses(responseData.addresses);
     }
 
-    if (data.value?.data.countries) {
-      setCountries(data.value.data.countries.default, data.value.data.countries.geoRegulated);
+    if (responseData?.countries) {
+      setCountries(responseData.countries.default, responseData.countries.geoRegulated);
     }
 
     state.value.loading = false;

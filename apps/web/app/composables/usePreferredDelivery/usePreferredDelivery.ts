@@ -104,7 +104,7 @@ export const usePreferredDelivery = () => {
   const getPreferredProfiles = async () => {
     try {
       const { data } = await useSdk().plentysystems.getPreferredDeliveryShippingProfiles();
-      state.value.data.preferredProfiles = data;
+      state.value.data.preferredProfiles = data ?? state.value.data.preferredProfiles;
     } catch (error: unknown) {
       useHandleError(error as ApiError);
     }
@@ -119,6 +119,7 @@ export const usePreferredDelivery = () => {
         postalcode: shippingAddress.value.zipCode,
       });
 
+      if (!data) return;
       state.value.data.additionalCharge = data.additionalCharge;
 
       if (typeof data.preferredDay !== 'boolean') {

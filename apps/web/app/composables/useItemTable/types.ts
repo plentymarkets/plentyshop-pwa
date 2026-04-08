@@ -16,7 +16,7 @@ export interface UseItemTableTemplate {
   uploadStorageItem: (file: File, filePath: string) => Promise<StorageObject | null>;
   bytesToMB: (bytes: string | number) => string;
   formatDate: (dateString: string) => string;
-  getStorageMetadata: (key: string) => Promise<StorageMetadataData>;
+  getStorageMetadata: (key: string) => Promise<StorageMetadataData | null>;
   folders: Readonly<Ref<string[]>>;
   revokeAllBlobUrls: () => void;
   registerBlobUrl: RegisterBlobUrl;
