@@ -47,6 +47,7 @@ const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
  */
 export const useCart = () => {
   const { emit } = usePlentyEvent();
+  const { normalizeCartProductNames } = useProductNameNormalizer();
   const state = useState('useCart', () => ({
     data: {} as Cart,
     useAsShippingAddress: true,
@@ -64,7 +65,7 @@ export const useCart = () => {
    */
   const setCart = (data: Cart) => {
     const { setPattern } = usePriceFormatter();
-    state.value.data = data;
+    state.value.data = normalizeCartProductNames(data);
     setPattern(data.currencyPattern);
     useWishlist().setWishlistItemIds(Object.values(data?.itemWishListIds || []));
   };
@@ -119,7 +120,7 @@ export const useCart = () => {
     try {
       const { data } = await useSdk().plentysystems.doAddCartItem(params);
 
-      state.value.data = data ? migrateVariationData(state.value.data, data) : state.value.data;
+      state.value.data = data ? normalizeCartProductNames(migrateVariationData(state.value.data, data)) : state.value.data;
 
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
 
@@ -139,10 +140,10 @@ export const useCart = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorEvents = apiError.events as any;
       if (errorEvents?.AfterBasketChanged?.basket) {
-        state.value.data = {
+        state.value.data = normalizeCartProductNames({
           ...errorEvents.AfterBasketChanged.basket,
           items: errorEvents.AfterBasketChanged.basketItems,
-        };
+        });
       }
       useHandleError(apiError);
     } finally {
@@ -169,7 +170,7 @@ export const useCart = () => {
     try {
       const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
-      state.value.data = migrateVariationData(state.value.data, data ?? undefined) ?? state.value.data;
+      state.value.data = normalizeCartProductNames(migrateVariationData(state.value.data, data)) ?? state.value.data;
 
       params.forEach((param) => {
         const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
@@ -190,10 +191,10 @@ export const useCart = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorEvents = apiError.events as any;
       if (errorEvents?.AfterBasketChanged?.basket) {
-        state.value.data = {
+        state.value.data = normalizeCartProductNames({
           ...errorEvents.AfterBasketChanged.basket,
           items: errorEvents.AfterBasketChanged.basketItems,
-        };
+        });
       }
       useHandleError(apiError);
     } finally {
@@ -230,7 +231,7 @@ export const useCart = () => {
 
         send({ message: t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
       } else {
-        state.value.data = migrateVariationData(state.value.data, data as Cart) ?? state.value.data;
+        state.value.data = normalizeCartProductNames(migrateVariationData(state.value.data, data as Cart)) ?? state.value.data;
         // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
         if (state.value.data?.apiEvents) {
           // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
@@ -268,7 +269,7 @@ export const useCart = () => {
         cartItemId: cartItem.id,
       });
 
-      state.value.data = migrateVariationData(state.value.data, data ?? undefined) ?? state.value.data;
+      state.value.data = normalizeCartProductNames(migrateVariationData(state.value.data, data)) ?? state.value.data;
       emit('frontend:removeFromCart', {
         deleteItemParams: { cartItemId: cartItem.id },
         cart: state.value.data,

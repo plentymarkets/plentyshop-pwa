@@ -19,6 +19,7 @@ const useProductTemplateData = async (locale: string) => await getProductTemplat
  */
 export const useProduct: UseProductReturn = (slug) => {
   const properties = useProductOrderProperties();
+  const { normalizeProductName } = useProductNameNormalizer();
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: {} as Product,
     fakeData: {} as Product,
@@ -102,8 +103,8 @@ export const useProduct: UseProductReturn = (slug) => {
       fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : await useProductTemplateData($i18n.locale.value),
     );
 
-    properties.setProperties(data.value?.data?.properties ?? []);
-    state.value.data = data.value?.data ?? ({} as Product);
+    properties.setProperties(data.value?.data.properties ?? []);
+    state.value.data = normalizeProductName(data.value?.data ?? ({} as Product));
     handlePreviewProduct(state, $i18n.locale.value, true);
     state.value.loading = false;
     return state.value.data;

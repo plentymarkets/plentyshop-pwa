@@ -15,6 +15,7 @@ import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
  * ```
  */
 export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
+  const { normalizeProductCollection } = useProductNameNormalizer();
   const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
     data: [],
     loading: false,
@@ -52,7 +53,7 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
     );
 
     useHandleError(error.value ?? null);
-    state.value.data = data?.value?.data?.products ?? state.value.data;
+    state.value.data = normalizeProductCollection(data?.value?.data?.products ?? state.value.data);
     state.value.loading = false;
     return state.value.data;
   };
