@@ -29,7 +29,7 @@
               :clicked-block-index="clickedBlockIndex"
               :is-tablet="isTablet"
               :change-block-position="changeBlockPosition"
-              :root="isRoot"
+              root
               :read-only="readOnly"
               class="group"
               :class="getBlockClass(block).value"
@@ -62,24 +62,30 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   blocks: () => [],
 });
 
-const {
-  data: allBlocks,
-  renderableBlocks,
-  fetchBlocks,
-} = useBlocks();
+const { data: allBlocks, renderableBlocks, fetchBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
+onBeforeRouteUpdate(() => {
+  if (!frozenBlocks.value) {
+    frozenBlocks.value = renderableBlocks.value;
+  }
+});
+
 onBeforeRouteLeave(() => {
-  frozenBlocks.value = renderableBlocks.value;
+  if (!frozenBlocks.value) {
+    frozenBlocks.value = renderableBlocks.value;
+  }
 });
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
 const data = computed({
   get: () => {
-    if (frozenBlocks.value) return frozenBlocks.value;
-    return props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value;
+    if (frozenBlocks.value) {
+      return frozenBlocks.value;
+    }
+   return  props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value;
   },
   set: (newValue: Block[]) => {
     const target = props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value;
@@ -99,6 +105,9 @@ const isContentEmptyInLive = computed(() => dataIsEmpty.value);
 
 if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
   await fetchBlocks(props.identifier, props.type);
+  if (frozenBlocks.value) {
+    frozenBlocks.value = null;
+  }
 }
 
 const {

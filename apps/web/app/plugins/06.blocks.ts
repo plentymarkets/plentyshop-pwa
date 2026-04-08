@@ -7,7 +7,7 @@ export default defineNuxtPlugin({
 
     const fetchForRoute = async () => {
       const { meta } = router.currentRoute.value;
-      const hasBlockIdentifier = meta.isBlockified && meta.identifier;
+      const hasBlockIdentifier = meta.isBlockified && meta.identifier !== undefined;
       const identifier = (hasBlockIdentifier ? meta.identifier : 'index') as string | number;
       const type = (hasBlockIdentifier && meta.type ? meta.type : 'immutable') as string;
 
@@ -17,7 +17,7 @@ export default defineNuxtPlugin({
     await fetchForRoute();
 
     router.afterEach(async (to) => {
-      if (to.meta.isBlockified) return;
+      // if (to.meta.isBlockified) return;
       await fetchForRoute();
     });
   },

@@ -60,14 +60,14 @@ export const useProducts: UseProductsReturn = (category = '') => {
       fetchBlocks,
     } = useBlocks();
 
-    state.value.loading = true;
+      state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 
     if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
-      await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
+      // await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
 
       const hasContentBlocks = blockData.value?.some((block: Block) => !isFooterBlock(block));
       const fakeBlocks = hasContentBlocks ? blockData.value : await useBlockTemplatesData($i18n.locale.value);

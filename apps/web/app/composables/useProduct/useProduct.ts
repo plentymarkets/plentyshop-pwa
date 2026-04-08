@@ -68,7 +68,7 @@ export const useProduct: UseProductReturn = (slug) => {
     if (isGlobalProductDetailsTemplate.value && isInEditor.value) {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
-      await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
+      // await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
 
       const hasContentBlocks = blockData.value?.some((block) => !isFooterBlock(block));
       const blocks = hasContentBlocks ? blockData.value : await useProductTemplateData($i18n.locale.value);
