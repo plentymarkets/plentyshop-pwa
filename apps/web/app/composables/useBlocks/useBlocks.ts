@@ -162,7 +162,6 @@ export const useBlocks: UseBlocksReturn = () => {
   return {
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
-    blocks: computed(() => state.value.data.blocks),
     pageBlocks: computed(() => state.value.data.blocks),
     headerContainer,
     footer,

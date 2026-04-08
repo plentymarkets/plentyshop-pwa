@@ -11,7 +11,6 @@ export interface UseBlocksState {
 export interface UseBlocks {
   data: Ref<GetBlocksResponse>;
   cleanData: Readonly<Ref<GetBlocksResponse>>;
-  blocks: Readonly<Ref<Block[]>>;
   pageBlocks: Readonly<Ref<Block[]>>;
   headerContainer: Readonly<Ref<Block | undefined>>;
   footer: Readonly<Ref<Block | undefined>>;
