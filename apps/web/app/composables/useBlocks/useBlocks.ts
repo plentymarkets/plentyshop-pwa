@@ -88,13 +88,13 @@ export const useBlocks: UseBlocksReturn = () => {
 
   const state = useState<UseBlocksState>(`useBlocks-${$i18n.locale.value}`, () => ({
     data: {} as GetBlocksResponse,
-    cleanData: [],
-    defaultTemplateData: [],
+    cleanData: {} as GetBlocksResponse,
+    defaultTemplateData: [] as Block[],
     loading: false,
   }));
 
-  const headerContainer = computed(() => state.value.data.find((b) => isHeaderContainerBlock(b)));
-  const footer = computed(() => state.value.data.find((b) => isFooterBlock(b)));
+  const headerContainer = computed(() => state.value.data.HeaderContainer);
+  const footer = computed(() => state.value.data.Footer);
 
   const fetchBlocks = async (identifier: string | number, type: string) => {
     state.value.loading = true;
@@ -126,7 +126,7 @@ export const useBlocks: UseBlocksReturn = () => {
         blocks: content,
       });
 
-      const allBlocks = assembleBlocks(response?.data as GetBlocksResponse ?? state.value.data as GetBlocksResponse, type);
+      const allBlocks = assembleBlocks((response?.data as unknown as GetBlocksResponse) ?? state.value.data, type);
       state.value.data = allBlocks;
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
 
@@ -162,6 +162,7 @@ export const useBlocks: UseBlocksReturn = () => {
   return {
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
+    blocks: computed(() => state.value.data.blocks),
     pageBlocks: computed(() => state.value.data.blocks),
     headerContainer,
     footer,
