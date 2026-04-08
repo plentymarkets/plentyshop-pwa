@@ -167,10 +167,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   return {
-    data: computed({
-      get: () => state.value.data,
-      set: (val: Block[]) => { state.value.data = val; },
-    }),
+    data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
     blocks: computed(() =>
       state.value.data.filter((b) => !isHeaderContainerBlock(b) && !isFooterBlock(b) && !isHeaderBlock(b)),

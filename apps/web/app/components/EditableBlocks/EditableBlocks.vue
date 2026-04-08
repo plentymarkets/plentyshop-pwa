@@ -87,12 +87,7 @@ const data = computed({
     }
    return  props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value;
   },
-  set: (newValue: Block[]) => {
-    const target = props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value;
-    const header = target.find((block) => isHeaderContainerBlock(block));
-    const rebuilt = header ? [header, ...newValue] : newValue;
-    target.splice(0, target.length, ...rebuilt);
-  },
+  set: (newValue: Block[]) => {},
 });
 
 const getRawIndex = (block: Block) => rawData.value.indexOf(block);

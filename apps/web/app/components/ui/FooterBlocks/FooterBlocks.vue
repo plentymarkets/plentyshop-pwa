@@ -4,5 +4,4 @@
 
 <script setup lang="ts">
 const { footer } = useBlocks();
-const footerBlock = computed(() => footer.value);
 </script>

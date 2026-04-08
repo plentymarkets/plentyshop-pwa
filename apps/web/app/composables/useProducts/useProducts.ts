@@ -51,13 +51,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
    * ```
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
-    const route = useRoute();
     const { $i18n } = useNuxtApp();
     const { isInEditor } = useEditorState();
     const {
       data: blockData,
       setupBlocks,
-      fetchBlocks,
     } = useBlocks();
 
       state.value.loading = true;
@@ -66,8 +64,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
-
-      // await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
 
       const hasContentBlocks = blockData.value?.some((block: Block) => !isFooterBlock(block));
       const fakeBlocks = hasContentBlocks ? blockData.value : await useBlockTemplatesData($i18n.locale.value);
@@ -105,11 +101,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
       handlePreviewProducts(state, $i18n.locale.value);
-
-      const defaultData =
-        state.value.data.category.type === 'item' ? await useBlockTemplatesData($i18n.locale.value) : [];
-
-      setupBlocks((state.value.data?.blocks?.length ? state.value.data.blocks : defaultData) as Block[], 'category');
     }
 
     state.value.loading = false;

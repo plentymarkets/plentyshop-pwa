@@ -23,7 +23,8 @@ export const buildBlockClasses = (
   const { fullWidth, rule, horizontalSpacing, verticalSpacing } = opts;
   const isContainerExcluded = rule.container === false;
   const isPaddingExcluded = rule.padding === false;
-  const isRootNonFooter = getBlockDepth(block.meta.uuid) === 0 && block.name !== 'Footer';
+  const depth = getBlockDepth(block.meta.uuid);
+  const isRootNonFooter = (depth === 0 || depth === -1) && block.name !== 'Footer';
 
   const horizontalClass = getHorizontalClass(!fullWidth && !isContainerExcluded ? horizontalSpacing : undefined);
   const verticalClass = getVerticalClass(verticalSpacing);
