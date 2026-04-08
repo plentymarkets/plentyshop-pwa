@@ -60,15 +60,12 @@ export const useProduct: UseProductReturn = (slug) => {
     const {
       data: blockData,
       setupBlocks,
-      fetchBlocks,
     } = useBlocks();
 
     state.value.loading = true;
 
     if (isGlobalProductDetailsTemplate.value && isInEditor.value) {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
-
-      // await fetchBlocks(route.meta.identifier as string | number, route.meta.type as string);
 
       const hasContentBlocks = blockData.value?.some((block) => !isFooterBlock(block));
       const blocks = hasContentBlocks ? blockData.value : await useProductTemplateData($i18n.locale.value);
@@ -91,12 +88,6 @@ export const useProduct: UseProductReturn = (slug) => {
       () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value ?? null);
-
-    const fetchedBlocks = data.value?.data.blocks;
-    setupBlocks(
-      fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : await useProductTemplateData($i18n.locale.value),
-      'product',
-    );
 
     properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
