@@ -1,25 +1,25 @@
-import type { Block } from '@plentymarkets/shop-api';
+import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
 
 export interface UseBlocksState {
-  data: Block[];
-  cleanData: Block[];
+  data: GetBlocksResponse;
+  cleanData: GetBlocksResponse;
   defaultTemplateData: Block[];
   loading: boolean;
 }
 
 export interface UseBlocks {
-  data: Ref<Block[]>;
-  cleanData: Readonly<Ref<Block[]>>;
+  data: Ref<GetBlocksResponse>;
+  cleanData: Readonly<Ref<GetBlocksResponse>>;
   blocks: Readonly<Ref<Block[]>>;
-  renderableBlocks: Readonly<Ref<Block[]>>;
+  pageBlocks: Readonly<Ref<Block[]>>;
   headerContainer: Readonly<Ref<Block | undefined>>;
   footer: Readonly<Ref<Block | undefined>>;
   loading: Readonly<Ref<boolean>>;
   defaultTemplateData: Readonly<Ref<Block[]>>;
   fetchBlocks: (identifier: string | number, type: string) => Promise<void>;
   saveBlocks: (identifier: string | number, type: string, content: string) => Promise<boolean>;
-  setupBlocks: (rawBlocks: Block[], type?: string) => void;
+  setupFakeBlocks: (rawBlocks: Block[], type?: string) => void;
   updateBlocks: (blocks: Block[]) => void;
   setDefaultTemplate: (blocks: Block[]) => void;
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];

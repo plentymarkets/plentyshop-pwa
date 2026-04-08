@@ -54,8 +54,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
     const { $i18n } = useNuxtApp();
     const { isInEditor } = useEditorState();
     const {
-      data: blockData,
-      setupBlocks,
+      pageBlocks,
+      setupFakeBlocks,
     } = useBlocks();
 
       state.value.loading = true;
@@ -65,8 +65,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
-      const hasContentBlocks = blockData.value?.some((block: Block) => !isFooterBlock(block));
-      const fakeBlocks = hasContentBlocks ? blockData.value : await useBlockTemplatesData($i18n.locale.value);
+      const fakeBlocks = pageBlocks.value.length ? pageBlocks.value : await useBlockTemplatesData($i18n.locale.value);
 
       state.value.data = {
         category: fakeFacet['data'].category,
@@ -82,7 +81,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
         },
       } as Facet;
 
-      setupBlocks(fakeBlocks, 'category');
+      setupFakeBlocks(fakeBlocks, 'category');
       handlePreviewProducts(state, $i18n.locale.value);
 
       state.value.loading = false;

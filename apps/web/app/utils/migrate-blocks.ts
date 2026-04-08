@@ -17,6 +17,7 @@ const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NA
  * Call this once after fetching / assembling the full block tree.
  */
 export function migrateAllBlocks(blocks: Block[]): void {
+  //TODO: wtf is this logic?
   const firstTextContentBlock = (() => {
     let headerContainerBlock: Block = {} as Block;
     for (const block of blocks) {

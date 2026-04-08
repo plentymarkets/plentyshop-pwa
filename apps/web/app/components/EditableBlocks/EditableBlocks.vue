@@ -62,19 +62,19 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   blocks: () => [],
 });
 
-const { data: allBlocks, renderableBlocks, fetchBlocks } = useBlocks();
+const { data: allBlocks, pageBlocks, fetchBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
 onBeforeRouteUpdate(() => {
   if (!frozenBlocks.value) {
-    frozenBlocks.value = renderableBlocks.value;
+    frozenBlocks.value = pageBlocks.value;
   }
 });
 
 onBeforeRouteLeave(() => {
   if (!frozenBlocks.value) {
-    frozenBlocks.value = renderableBlocks.value;
+    frozenBlocks.value = pageBlocks.value;
   }
 });
 
@@ -85,7 +85,7 @@ const data = computed({
     if (frozenBlocks.value) {
       return frozenBlocks.value;
     }
-   return  props.blocks && props.blocks.length > 0 ? props.blocks : renderableBlocks.value;
+   return  props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
   },
   set: (newValue: Block[]) => {},
 });
@@ -113,17 +113,16 @@ const {
   changeBlockPosition,
   handleDragStart,
   handleDragEnd,
-  getBlockDepth,
   shouldDisplayPlaceholder,
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = allBlocks.value.findIndex((block: Block) => isFooterBlock(block));
-  const lastIndex = allBlocks.value.length - 1;
+  const footerIndex = pageBlocks.value.findIndex((block: Block) => isFooterBlock(block));
+  const lastIndex = pageBlocks.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
-    const footerBlock = allBlocks.value.splice(footerIndex, 1)[0];
+    const footerBlock = pageBlocks.value.splice(footerIndex, 1)[0];
     if (footerBlock) {
-      allBlocks.value.push(footerBlock);
+      pageBlocks.value.push(footerBlock);
     }
   }
 
