@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   blocks: () => [],
 });
 
-const { data: allBlocks, pageBlocks, fetchBlocks } = useBlocks();
+const { allBlocks, pageBlocks, fetchBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 

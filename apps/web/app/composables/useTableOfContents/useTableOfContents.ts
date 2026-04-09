@@ -4,13 +4,12 @@ import type { FlatBlock } from '~/components/TableOfContents/types';
 export const useTableOfContents = () => {
   const { setIndex } = useCarousel();
   const route = useRoute();
-  const { $i18n } = useNuxtApp();
   const { isStructureBlock } = useBlockManager();
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
 
-  const { data } = useBlocks();
+  const { allBlocks: data } = useBlocks();
 
   watch(
     () => route.fullPath,

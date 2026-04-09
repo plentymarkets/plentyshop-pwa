@@ -92,11 +92,11 @@ const productLegalDrawerRef = ref();
 const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
 
-const { data } = useBlocks();
+const { allBlocks } = useBlocks();
 
 const productLegalBlock = computed(() => {
   if (!openedBlockUuid.value) return null;
-  return data.value
+  return allBlocks.value
     .flatMap((block) => (Array.isArray(block.content) ? block.content : [block]))
     .find((block) => block.meta?.uuid === openedBlockUuid.value);
 });
