@@ -3,7 +3,7 @@ import { categoryGetters, type Category, type CategoryDetails } from '@plentymar
 import type { CategoryDataContent, CategoryDataFieldKey } from '~/components/blocks/CategoryData/types';
 
 export const useCategoryData = () => {
-  const { data } = useBlocks();
+  const { allBlocks } = useBlocks();
 
   const { blockUuid } = useSiteConfiguration();
   const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -13,7 +13,7 @@ export const useCategoryData = () => {
   const learnMoreTextUrl: string = 'https://knowledge.plentymarkets.com/en-gb/manual/main/item/categories.html#800';
 
   const categoryDataBlock = computed(() => {
-    const block = findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content as CategoryDataContent;
+    const block = findOrDeleteBlockByUuid(allBlocks.value, blockUuid.value)?.content as CategoryDataContent;
     if (block?.image && typeof block.image.fillMode === 'undefined') {
       block.image.fillMode = 'fill';
     }

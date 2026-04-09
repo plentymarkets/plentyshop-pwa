@@ -95,6 +95,12 @@ export const useBlocks: UseBlocksReturn = () => {
 
   const headerContainer = computed(() => state.value.data.HeaderContainer);
   const footer = computed(() => state.value.data.Footer);
+  const pageBlocks = computed(() => state.value.data.blocks ?? []);
+  const allBlocks = computed(() => [
+    ...(headerContainer.value ? [headerContainer.value] : []),
+    ...(pageBlocks.value),
+    ...(footer.value ? [footer.value] : []),
+  ]);
 
   const fetchBlocks = async (identifier: string | number, type: string) => {
     state.value.loading = true;
@@ -162,7 +168,9 @@ export const useBlocks: UseBlocksReturn = () => {
   return {
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
-    pageBlocks: computed(() => state.value.data.blocks),
+    pageBlocks,
+    blocks: pageBlocks,
+    allBlocks,
     headerContainer,
     footer,
     loading: computed(() => state.value.loading),

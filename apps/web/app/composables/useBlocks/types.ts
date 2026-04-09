@@ -12,6 +12,9 @@ export interface UseBlocks {
   data: Ref<GetBlocksResponse>;
   cleanData: Readonly<Ref<GetBlocksResponse>>;
   pageBlocks: Readonly<Ref<Block[]>>;
+  /** @deprecated Use `pageBlocks` instead */
+  blocks: Readonly<Ref<Block[]>>;
+  allBlocks: Readonly<Ref<Block[]>>;
   headerContainer: Readonly<Ref<Block | undefined>>;
   footer: Readonly<Ref<Block | undefined>>;
   loading: Readonly<Ref<boolean>>;

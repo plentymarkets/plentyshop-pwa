@@ -26,7 +26,7 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
-  const { data, cleanData, updateBlocks } = useBlocks();
+  const { data, cleanData, pageBlocks, allBlocks, updateBlocks } = useBlocks();
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
@@ -48,19 +48,18 @@ export const useBlockManager = () => {
   };
 
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
-    if (!data.value) return;
+    if (!pageBlocks.value) return;
 
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    const nonFooterBlocks = data.value.filter((block: Block) => !isFooterBlock(block));
-    if (nonFooterBlocks.length === 0) {
-      updateBlocks([newBlock, ...data.value.filter((block: Block) => isFooterBlock(block))]);
+    if (pageBlocks.value.length === 0) {
+      updateBlocks([newBlock]);
       openDrawerWithView('blocksSettings', newBlock);
       return;
     }
 
-    const copiedData = JSON.parse(JSON.stringify(data.value));
+    const copiedData: Block[] = JSON.parse(JSON.stringify(pageBlocks.value));
     const parentInfo = findBlockParent(copiedData, targetUuid);
 
     const parent = parentInfo?.parent ?? copiedData;
@@ -88,7 +87,7 @@ export const useBlockManager = () => {
     }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
-    isEditingEnabled.value = !deepEqual(cleanData.value, copiedData);
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
 
     scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
 
@@ -156,7 +155,7 @@ export const useBlockManager = () => {
   };
 
   const changeBlockPosition = (index: number, position: number) => {
-    const updatedBlocks = [...data.value];
+    const updatedBlocks = [...pageBlocks.value];
     const newIndex = index + position;
 
     if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
@@ -180,16 +179,12 @@ export const useBlockManager = () => {
   };
 
   const isLastNonFooterBlock = (index: number) => {
-    if (!data.value || data.value.length === 0) return false;
-    const hasFooter = data.value.length > 0 && isFooterBlock(data.value[data.value.length - 1]);
-    const lastNonFooterIndex = hasFooter ? data.value.length - 2 : data.value.length - 1;
-    return index === lastNonFooterIndex;
+    if (!pageBlocks.value || pageBlocks.value.length === 0) return false;
+    return index === pageBlocks.value.length - 1;
   };
 
   const isFirstContentBlock = (index: number): boolean => {
-    if (!data.value || data.value.length === 0) return false;
-    const firstContentIndex = data.value.findIndex((block) => !isHeaderContainerBlock(block));
-    return index === firstContentIndex;
+    return index === 0;
   };
 
   const findBlockParent = (blocks: Block[], targetUuid: string): { parent: Block[]; index: number } | null => {
@@ -249,11 +244,11 @@ export const useBlockManager = () => {
   };
 
   const deleteBlock = async (uuid: string) => {
-    if (data.value && uuid !== null) {
+    if (pageBlocks.value && uuid !== null) {
       if (getBlockDepth(uuid) > 0) {
         await deleteBlockFromColumn(uuid);
       } else {
-        findOrDeleteBlockByUuid(data.value, uuid, true);
+        findOrDeleteBlockByUuid(pageBlocks.value, uuid, true);
       }
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
       closeBlocksConfigurationDrawer();
@@ -268,15 +263,15 @@ export const useBlockManager = () => {
   };
 
   const handleEdit = (uuid: string) => {
-    if (data.value) {
+    if (allBlocks.value) {
       currentBlockUuid.value = uuid;
-      currentBlock.value = findOrDeleteBlockByUuid(data.value, uuid);
+      currentBlock.value = findOrDeleteBlockByUuid(allBlocks.value, uuid);
       isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
     }
   };
 
   const deleteBlockFromColumn = async (blockUuid: string) => {
-    const parentInfo = findBlockParent(data.value, blockUuid);
+    const parentInfo = findBlockParent(pageBlocks.value, blockUuid);
     if (parentInfo) {
       const { parent, index } = parentInfo;
       const layoutTemplate = await getBlockTemplateByLanguage('layout', 0, $i18n.locale.value);
@@ -298,8 +293,8 @@ export const useBlockManager = () => {
     }
   };
   const updateBlock = (index: number, updatedBlock: Block) => {
-    if (data.value && index !== null && index < data.value.length) {
-      data.value[index] = updatedBlock;
+    if (pageBlocks.value && index !== null && index < pageBlocks.value.length) {
+      pageBlocks.value[index] = updatedBlock;
     }
   };
 
@@ -322,7 +317,7 @@ export const useBlockManager = () => {
       }
       return -1;
     };
-    return Array.isArray(data.value) ? search(data.value, uuid, 0) : -1;
+    return Array.isArray(pageBlocks.value) ? search(pageBlocks.value, uuid, 0) : -1;
   };
 
   const shouldLazyLoad = (blockName: string): boolean => {
@@ -363,7 +358,7 @@ export const useBlockManager = () => {
   const blockExistsOnPage = (blockName: string): boolean => {
     const checkBlocks = (blocks: Block[]): boolean =>
       blocks.some((block) => block.name === blockName || (Array.isArray(block.content) && checkBlocks(block.content)));
-    return checkBlocks(data.value);
+    return checkBlocks(allBlocks.value);
   };
 
   const isStructureBlock = (block: Block): boolean => {
