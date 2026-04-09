@@ -98,13 +98,6 @@ const isContentEmptyInEditor = computed(() => dataIsEmpty.value && isInEditor.va
 
 const isContentEmptyInLive = computed(() => dataIsEmpty.value);
 
-if (!props.preventBlocksRequest && !props.readOnly && (!props.blocks || props.blocks.length === 0)) {
-  await fetchBlocks(props.identifier, props.type);
-  if (frozenBlocks.value) {
-    frozenBlocks.value = null;
-  }
-}
-
 const {
   isClicked,
   clickedBlockIndex,

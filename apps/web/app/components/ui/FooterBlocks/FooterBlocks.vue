@@ -1,5 +1,5 @@
 <template>
-  <EditableBlocks v-if="footer" :blocks="[footer]" read-only is-root />
+  <EditableBlocks v-if="footer" :blocks="[footer]" read-only />
 </template>
 
 <script setup lang="ts">

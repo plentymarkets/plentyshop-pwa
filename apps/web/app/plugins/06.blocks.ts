@@ -16,9 +16,10 @@ export default defineNuxtPlugin({
 
     await fetchForRoute();
 
-    router.afterEach(async (to) => {
-      // if (to.meta.isBlockified) return;
-      await fetchForRoute();
-    });
+    if (import.meta.client) {
+      router.afterEach(async () => {
+        await fetchForRoute();
+      });
+    }
   },
 });
