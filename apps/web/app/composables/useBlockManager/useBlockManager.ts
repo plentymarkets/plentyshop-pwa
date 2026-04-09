@@ -2,6 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
+import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
@@ -26,7 +27,7 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
-  const { data, cleanData, pageBlocks, allBlocks, updateBlocks } = useBlocks();
+  const { data, cleanData, pageBlocks, allBlocks, headerContainer, updateBlocks } = useBlocks();
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
@@ -53,37 +54,75 @@ export const useBlockManager = () => {
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    if (pageBlocks.value.length === 0) {
-      updateBlocks([newBlock]);
-      openDrawerWithView('blocksSettings', newBlock);
-      return;
-    }
+    const targetInHeader = headerContainer.value && findBlockParent(
+      Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [],
+      targetUuid
+    );
 
-    const copiedData: Block[] = JSON.parse(JSON.stringify(pageBlocks.value));
-    const parentInfo = findBlockParent(copiedData, targetUuid);
+    if (targetInHeader) {
+      if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
 
-    const parent = parentInfo?.parent ?? copiedData;
-    const index = parentInfo?.index ?? 0;
+      const headerCopy = JSON.parse(JSON.stringify(headerContainer.value)) as Block;
+      const parentInfo = findBlockParent([headerCopy], targetUuid);
 
-    const targetBlock = parent[index];
-    if (!targetBlock) return;
+      if (parentInfo) {
+        const { parent, index } = parentInfo;
+        const targetBlock = parent[index];
+        if (!targetBlock) return;
 
-    newBlock.parent_slot = targetBlock.parent_slot;
+        newBlock.parent_slot = targetBlock.parent_slot;
 
-    if (position === 'inside') {
-      insertIntoColumn(targetBlock, newBlock, parent);
+        if (position === 'inside') {
+          insertIntoColumn(targetBlock, newBlock, parent);
+        } else {
+          insertNextToBlock(parent, index, newBlock, position);
+        }
+
+        if (Array.isArray(newBlock.content) && newBlock.content.length) {
+          setUuid(newBlock.content as Block[]);
+        }
+
+        headerContainer.value.content = headerCopy.content;
+      }
     } else {
-      insertNextToBlock(parent, index, newBlock, position);
-    }
+      if (!pageBlocks.value) return;
 
-    if (Array.isArray(newBlock.content) && newBlock.content.length) {
-      setUuid(newBlock.content as Block[]);
-    }
+      if (pageBlocks.value.length === 0) {
+        updateBlocks([newBlock]);
+        openDrawerWithView('blocksSettings', newBlock);
+        return;
+      }
 
-    updateBlocks(copiedData);
+      const copiedData: Block[] = JSON.parse(JSON.stringify(pageBlocks.value));
+      const parentInfo = findBlockParent(copiedData, targetUuid);
 
-    if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
-      openDrawerWithView('blocksSettings', newBlock);
+      console.warn('parentInfo: ', parentInfo);
+
+      const parent = parentInfo?.parent ?? copiedData;
+      const index = parentInfo?.index ?? 0;
+
+      const targetBlock = parent[index];
+      if (!targetBlock) return;
+
+      newBlock.parent_slot = targetBlock.parent_slot;
+
+      if (position === 'inside') {
+        insertIntoColumn(targetBlock, newBlock, parent);
+      } else {
+        insertNextToBlock(parent, index, newBlock, position);
+      }
+
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
+
+      console.warn('copiedData: ', copiedData);
+
+      updateBlocks(copiedData);
+
+      if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
+        openDrawerWithView('blocksSettings', newBlock);
+      }
     }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
