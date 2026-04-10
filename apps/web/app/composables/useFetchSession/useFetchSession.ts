@@ -24,8 +24,10 @@ export const useFetchSession = () => {
       const { data } = await useSdk().plentysystems.getSession();
       const { setCart } = useCart();
       const { setUser } = useCustomer();
-      setCart(data.basket);
-      setUser(data.user);
+      if (data) {
+        setCart(data.basket);
+        setUser(data.user);
+      }
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

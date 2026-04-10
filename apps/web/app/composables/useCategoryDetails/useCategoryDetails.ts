@@ -12,7 +12,7 @@ export const useCategoryDetails: UseCategoryDetailsReturn = () => {
       const data = await useSdk().plentysystems.getCategoryById({ categoryId, with: 'details,clients' });
       const result = data.data;
       state.value.data = result ?? state.value.data;
-      return result;
+      return result ?? state.value.data;
     } catch (error) {
       console.error('getCategory error:', error);
     } finally {

@@ -13,7 +13,7 @@ export const useCreateAddress = (type: AddressType) => {
       state.value.loading = true;
       state.value.invalidVAT = false;
       const data = await useSdk().plentysystems.doSaveAddress({ typeId: type, addressData: address });
-      useAddressStore(type).set(data.data);
+      useAddressStore(type).set(data.data ?? []);
       state.value.loading = false;
       return Promise.resolve(true);
     } catch (error: unknown) {
