@@ -1,6 +1,7 @@
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
-import { object, string } from 'yup';
+import { object } from 'yup';
+import { pageNameSchema } from './validation';
 import type { CategoryEntry, CategoryTreeItem, CategoryDetails, ApiError } from '@plentymarkets/shop-api';
 import { categoryEntryGetters } from '@plentymarkets/shop-api';
 
@@ -138,7 +139,7 @@ export const useAddPageModal = () => {
 
   const validationSchema = toTypedSchema(
     object({
-      pageName: string().required('Enter a page name').default(''),
+      pageName: pageNameSchema,
     }),
   );
 
