@@ -79,35 +79,22 @@ export const useCategoryIdHelper = () => {
   });
   const getCategoryDetails = computed(() => currentCategoryDetails.value);
   const getCorrectPreviewPathWithLocale = (path: string): string => {
-    const parts = path.split('/');
     const { $i18n } = useNuxtApp();
     const { locale, defaultLocale, strategy } = $i18n;
-    const localeIndex = parts.indexOf(locale.value);
-    if (localeIndex !== -1) {
-      parts.splice(localeIndex, 1);
-    }
+    const localeIndex = path.indexOf(locale.value);
 
     const shouldAddLocale = (strategy: string, locale: string, defaultLocale: string) => {
-      if (strategy === 'prefix') {
-        return true;
-      }
-
-      if (strategy === 'prefix_except_default') {
-        return locale !== defaultLocale;
-      }
-
-      if (strategy === 'prefix_and_default') {
-        return true;
-      }
-
+      if (strategy === 'prefix') return true;
+      if (strategy === 'prefix_except_default') return locale !== defaultLocale;
+      if (strategy === 'prefix_and_default') return true;
       return false;
     };
 
     if (shouldAddLocale(strategy, locale.value, defaultLocale)) {
-      parts.splice(1, 0, locale.value);
+      return path.slice(localeIndex - 1);
     }
 
-    return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
+    return path.slice(localeIndex + locale.value.length);
   };
 
   return {
