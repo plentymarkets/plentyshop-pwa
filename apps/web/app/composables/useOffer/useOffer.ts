@@ -21,8 +21,9 @@ export const useOffer: UseOfferReturn = () => {
   }));
 
   const checkForErrorData = async (data: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null>) => {
-    if (typeof data.value?.data === 'object' && 'error' in data.value.data) {
-      const errorData = data.value?.data as GetOfferError;
+    const innerData = data.value?.data;
+    if (typeof innerData === 'object' && innerData && 'error' in innerData) {
+      const errorData = innerData as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
       state.value.hasError = true;
       if (import.meta.client) {
@@ -56,8 +57,9 @@ export const useOffer: UseOfferReturn = () => {
   const fetchOffer: FetchOffer = async (params: OfferSearchParams) => {
     const { data } = await handleApiCall(() => useSdk().plentysystems.getOffer(params));
 
-    if (typeof data.value?.data === 'object' && 'order' in data.value.data) {
-      const offerData = data.value?.data as Offer;
+    const offerInnerData = data.value?.data;
+    if (typeof offerInnerData === 'object' && offerInnerData && 'order' in offerInnerData) {
+      const offerData = offerInnerData as Offer;
       state.value.data = offerData?.order ? offerData : ({} as Offer);
       state.value.error = null;
       state.value.hasError = false;

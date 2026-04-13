@@ -60,16 +60,17 @@ export const useFetchAddressesData = () => {
         lang: locale.value,
       });
 
-      processAddresses(data.addresses);
-
-      if (data.countries) {
-        setCountries(data.countries.default, data.countries.geoRegulated);
+      if (data?.addresses) {
+        processAddresses(data.addresses);
       }
 
-      state.value.loading = false;
+      if (data?.countries) {
+        setCountries(data.countries.default, data.countries.geoRegulated);
+      }
     } catch (error: unknown) {
       useHandleError(error as ApiError);
       setAddresses([], []);
+    } finally {
       state.value.loading = false;
     }
   };
@@ -85,12 +86,13 @@ export const useFetchAddressesData = () => {
     );
     useHandleError(error.value ?? null);
 
-    if (data.value?.data.addresses) {
-      processAddresses(data.value.data.addresses);
+    const responseData = data.value?.data;
+    if (responseData?.addresses) {
+      processAddresses(responseData.addresses);
     }
 
-    if (data.value?.data.countries) {
-      setCountries(data.value.data.countries.default, data.value.data.countries.geoRegulated);
+    if (responseData?.countries) {
+      setCountries(responseData.countries.default, responseData.countries.geoRegulated);
     }
 
     state.value.loading = false;
