@@ -108,7 +108,7 @@ export const useBlocks: UseBlocksReturn = () => {
     const locale = $i18n.locale.value;
 
     const { data, error } = await useAsyncData(`blocks-${locale}-${type}-${identifier}`, () =>
-      useSdk().plentysystems.getBlocks({ identifier, type, enableGlobalBlocks: true }),
+      useSdk().plentysystems.getBlocksWithGlobalBlocks({ identifier, type, enableGlobalBlocks: true }),
     );
 
     if (error.value) {
