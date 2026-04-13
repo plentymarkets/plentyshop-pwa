@@ -10,4 +10,14 @@ describe('pageNameSchema', () => {
     expect(await pageNameSchema.isValid('My Page')).toBe(true);
     expect(await pageNameSchema.isValid('Page123')).toBe(true);
   });
+
+  it('should reject numbers with spaces', async () => {
+    const result = await pageNameSchema.isValid(' 12345 ');
+    expect(result).toBe(false);
+  });
+
+  it('should reject empty names', async () => {
+    const result = await pageNameSchema.isValid('');
+    expect(result).toBe(false);
+  });
 });
