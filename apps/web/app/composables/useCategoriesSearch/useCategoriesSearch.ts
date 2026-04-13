@@ -141,7 +141,8 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
       );
 
       const result: CategoryData = data.value?.data ?? createEmptyCategoryData();
-      state.value[itemsKey].push(...filterNewlyAddedPages(result.entries));
+      const newEntries = filterTopLevelOnly(filterNewlyAddedPages(result.entries));
+      state.value[itemsKey].push(...newEntries);
       state.value[hasMoreKey] = !result.isLastPage;
       state.value[pageKey] = currentPage + 1;
     } catch (error) {
@@ -175,6 +176,10 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
   const filterNewlyAddedPages = (entries: CategoryEntry[]) => {
     return entries.filter((entry) => !state.value.newPages.includes(entry.id));
+  };
+
+  const filterTopLevelOnly = (entries: CategoryEntry[]) => {
+    return entries.filter((entry) => !entry.parentCategoryId);
   };
 
   const usePaginatedChildren = (category: CategoryEntry) => {
