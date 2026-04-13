@@ -73,28 +73,50 @@ export const useCategoryIdHelper = () => {
   const getCategoryPreviewPath = computed(() => {
     const previewUrl = currentCategoryPreviewUrl.value;
     if (!previewUrl) return '/';
-    const correctedPreviewUrl = getCorrectPreviewPathWithLocale(previewUrl);
-    const firstSlashIndex = correctedPreviewUrl.indexOf('/', 8);
-    return firstSlashIndex !== -1 ? correctedPreviewUrl.slice(firstSlashIndex) : '/';
+    return getCorrectPreviewPathWithLocale(previewUrl);
   });
   const getCategoryDetails = computed(() => currentCategoryDetails.value);
   const getCorrectPreviewPathWithLocale = (path: string): string => {
     const { $i18n } = useNuxtApp();
-    const { locale, defaultLocale, strategy } = $i18n;
-    const localeIndex = path.indexOf(locale.value);
+    const { locale, defaultLocale, strategy, locales } = $i18n;
 
-    const shouldAddLocale = (strategy: string, locale: string, defaultLocale: string) => {
+    const shouldAddLocale = (() => {
       if (strategy === 'prefix') return true;
-      if (strategy === 'prefix_except_default') return locale !== defaultLocale;
       if (strategy === 'prefix_and_default') return true;
+      if (strategy === 'prefix_except_default') return locale.value !== defaultLocale;
       return false;
-    };
+    })();
 
-    if (shouldAddLocale(strategy, locale.value, defaultLocale)) {
-      return path.slice(localeIndex - 1);
+    let pathname: string;
+    let search = '';
+    let hash = '';
+    try {
+      const normalized = path.startsWith('//') ? `https:${path}` : path;
+      const url = new URL(normalized, 'https://placeholder.local');
+      pathname = url.pathname;
+      search = url.search;
+      hash = url.hash;
+    } catch {
+      pathname = path.startsWith('/') ? path : `/${path}`;
     }
 
-    return path.slice(localeIndex + locale.value.length);
+    const localesList = unref(locales);
+    const localeCodes = (Array.isArray(localesList) ? localesList : [])
+      .map((l: unknown) => (typeof l === 'string' ? l : (l as { code: string }).code))
+      .filter(Boolean);
+
+    const segments = pathname.split('/').filter(Boolean);
+    const first = segments[0];
+    if (first && localeCodes.includes(first)) {
+      segments.shift();
+    }
+
+    if (shouldAddLocale) {
+      segments.unshift(locale.value);
+    }
+
+    const trailing = pathname.endsWith('/') && segments.length ? '/' : '';
+    return '/' + segments.join('/') + trailing + search + hash;
   };
 
   return {
