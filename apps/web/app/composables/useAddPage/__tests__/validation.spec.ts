@@ -1,3 +1,5 @@
+import { pageNameSchema } from '../validation';
+
 describe('pageNameSchema', () => {
   it('should reject names consisting only of numbers', async () => {
     const result = await pageNameSchema.isValid('12345');
