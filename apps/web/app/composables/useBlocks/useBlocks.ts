@@ -83,8 +83,9 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse
   return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
 };
 
-export const useBlocks: UseBlocksReturn = () => {
+export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
   const { $i18n } = useNuxtApp();
+  const locale = localeOverride ?? $i18n.locale.value;
 
   const state = useState<UseBlocksState>(`useBlocks-${$i18n.locale.value}`, () => ({
     data: {} as GetBlocksResponse,
@@ -105,9 +106,9 @@ export const useBlocks: UseBlocksReturn = () => {
   const fetchBlocks = async (identifier: string | number, type: string) => {
     state.value.loading = true;
 
-    const locale = $i18n.locale.value;
+    const key = `blocks-${locale}-${type}-${identifier}`;
 
-    const { data, error } = await useAsyncData(`blocks-${locale}-${type}-${identifier}`, () =>
+    const { data, error } = await useAsyncData(key, () =>
       useSdk().plentysystems.getBlocksWithGlobalBlocks({ identifier, type, enableGlobalBlocks: true }),
     );
 

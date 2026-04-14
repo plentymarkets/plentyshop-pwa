@@ -27,4 +27,4 @@ export interface UseBlocks {
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
 }
 
-export type UseBlocksReturn = () => UseBlocks;
+export type UseBlocksReturn = (localeOverride?: string) => UseBlocks;
