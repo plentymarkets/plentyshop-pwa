@@ -126,10 +126,11 @@ export const useBlocks: UseBlocksReturn = () => {
     try {
       state.value.loading = true;
 
-      const response = await useSdk().plentysystems.doSaveBlocks({
+      const response = await useSdk().plentysystems.doSaveBlocksWithGlobalBlocks({
         identifier,
         entityType: type,
         blocks: content,
+        enableGlobalBlocks: true,
       });
 
       const allBlocks = assembleBlocks((response?.data as unknown as GetBlocksResponse) ?? state.value.data, type);
