@@ -66,12 +66,14 @@ const getDefaultPageBlocks = (type: string): Block[] => {
   }
 };
 
-const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse => {
+const assembleBlocks = (raw: GetBlocksResponse, type: string, existing?: GetBlocksResponse): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
-    ? createDefaultHeaderContainerBlock()
+    ? (existing?.HeaderContainer ?? createDefaultHeaderContainerBlock())
     : raw?.HeaderContainer;
 
-  const Footer = normalizeFooter(raw?.Footer ?? createFooter());
+  const Footer = raw?.Footer
+    ? normalizeFooter(raw.Footer)
+    : (existing?.Footer ?? normalizeFooter(createFooter()));
 
   const pageBlocks =
     Array.isArray(raw?.blocks) && raw?.blocks.length > 0
@@ -116,7 +118,7 @@ export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const allBlocks = assembleBlocks(data.value?.data || {} as GetBlocksResponse, type);
+    const allBlocks = assembleBlocks(data.value?.data || {} as GetBlocksResponse, type, state.value.data);
 
     state.value.data = allBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
@@ -163,6 +165,10 @@ export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
     state.value.data.blocks = blocks;
   };
 
+  const discardChanges = () => {
+    state.value.data = JSON.parse(JSON.stringify(state.value.cleanData));
+  };
+
   const setDefaultTemplate = (blocks: Block[]) => {
     state.value.defaultTemplateData = blocks;
   };
@@ -181,6 +187,7 @@ export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
     saveBlocks,
     setupFakeBlocks,
     updateBlocks,
+    discardChanges,
     setDefaultTemplate,
     FOOTER_SWITCH_DEFINITIONS,
   };

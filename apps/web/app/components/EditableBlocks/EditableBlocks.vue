@@ -67,13 +67,13 @@ const { allBlocks, pageBlocks } = useBlocks();
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
 onBeforeRouteUpdate(() => {
-  if (!frozenBlocks.value) {
+  if (!frozenBlocks.value && !props.readOnly) {
     frozenBlocks.value = pageBlocks.value;
   }
 });
 
 onBeforeRouteLeave(() => {
-  if (!frozenBlocks.value) {
+  if (!frozenBlocks.value && !props.readOnly) {
     frozenBlocks.value = pageBlocks.value;
   }
 });

@@ -13,7 +13,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const { isEditingEnabled } = useEditor();
   const { settingsIsDirty } = useSiteSettings();
   const { closeDrawer } = useSiteConfiguration();
-  const { cleanData, updateBlocks } = useBlocks();
+  const { discardChanges } = useBlocks();
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
@@ -25,8 +25,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
 
   const handleConfirmLeave = async () => {
     if (isEditingEnabled.value) {
-
-      updateBlocks(JSON.parse(JSON.stringify(cleanData.value)));
+      discardChanges();
       isEditingEnabled.value = false;
     }
 

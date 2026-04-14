@@ -23,6 +23,7 @@ export interface UseBlocks {
   saveBlocks: (identifier: string | number, type: string, content: string) => Promise<boolean>;
   setupFakeBlocks: (rawBlocks: Block[], type?: string) => void;
   updateBlocks: (blocks: Block[]) => void;
+  discardChanges: () => void;
   setDefaultTemplate: (blocks: Block[]) => void;
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
 }
