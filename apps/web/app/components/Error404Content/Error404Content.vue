@@ -49,7 +49,9 @@ onMounted(async () => {
       itemsPerPage: 20,
     });
 
-    products.value = data.data.products;
+    if (data.data) {
+      products.value = data.data.products;
+    }
   } catch (error) {
     useHandleError(error as ApiError);
   }

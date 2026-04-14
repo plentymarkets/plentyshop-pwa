@@ -31,7 +31,7 @@ export const usePackstationFinder = () => {
   const getShippingProfilesData = async () => {
     try {
       const { data } = await useSdk().plentysystems.getPreferredDeliveryLocationShippingProfiles();
-      state.value.data.preferredProfilesData = data;
+      state.value.data.preferredProfilesData = data ?? state.value.data.preferredProfilesData;
     } catch (error: unknown) {
       useHandleError(error as ApiError);
     }
@@ -69,7 +69,7 @@ export const usePackstationFinder = () => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.getPackstations(state.value.data.searchParams);
-      state.value.data.packstations = data;
+      state.value.data.packstations = data ?? state.value.data.packstations;
       state.value.loading = false;
     } catch (error: unknown) {
       useHandleError(error as ApiError);

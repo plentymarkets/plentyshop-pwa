@@ -87,7 +87,7 @@ export const useProduct: UseProductReturn = (slug) => {
     );
     useHandleError(error.value ?? null);
 
-    properties.setProperties(data.value?.data.properties ?? []);
+    properties.setProperties(data.value?.data?.properties ?? []);
     state.value.data = data.value?.data ?? ({} as Product);
     handlePreviewProduct(state, $i18n.locale.value, true);
     state.value.loading = false;

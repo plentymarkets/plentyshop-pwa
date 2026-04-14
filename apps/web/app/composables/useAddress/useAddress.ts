@@ -157,7 +157,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
         addressData: address,
       });
 
-      if (data.length > 0 && data[0]) {
+      if (data && data.length > 0 && data[0]) {
         const createdAddress = data[0];
         setDisplayAddress(createdAddress);
         if (combineShippingBilling) {
@@ -195,7 +195,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     });
 
     state.value.loading = false;
-    state.value.data = data;
+    state.value.data = data ?? state.value.data;
 
     return state.value.data;
   };
