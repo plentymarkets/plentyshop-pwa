@@ -132,7 +132,6 @@ const itemTextBlock = computed<ItemTextContent>(() => {
   return content as ItemTextContent;
 });
 
-console.log('itemTextBlock: ', itemTextBlock.value)
 
 const { isFullWidth } = useFullWidthToggleForContent(itemTextBlock);
 

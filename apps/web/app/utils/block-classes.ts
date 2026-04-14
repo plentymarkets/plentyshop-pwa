@@ -24,6 +24,8 @@ export const buildBlockClasses = (
   const isContainerExcluded = rule.container === false;
   const isPaddingExcluded = rule.padding === false;
   const depth = getBlockDepth(block.meta.uuid);
+  // depth === -1 means the block wasn't found in the page tree (e.g. global blocks like Header
+  // that live outside the page block hierarchy). Treat these the same as root-level blocks.
   const isRootNonFooter = (depth === 0 || depth === -1) && block.name !== 'Footer';
 
   const horizontalClass = getHorizontalClass(!fullWidth && !isContainerExcluded ? horizontalSpacing : undefined);

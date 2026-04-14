@@ -25,7 +25,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
 
   const handleConfirmLeave = async () => {
     if (isEditingEnabled.value) {
-console.log('confirm leave', cleanData.value)
+
       updateBlocks(JSON.parse(JSON.stringify(cleanData.value)));
       isEditingEnabled.value = false;
     }

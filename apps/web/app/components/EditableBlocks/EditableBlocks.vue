@@ -80,14 +80,11 @@ onBeforeRouteLeave(() => {
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
-const data = computed({
-  get: () => {
-    if (frozenBlocks.value) {
-      return frozenBlocks.value;
-    }
-   return  props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
-  },
-  set: (newValue: Block[]) => {},
+const data = computed(() => {
+  if (frozenBlocks.value) {
+    return frozenBlocks.value;
+  }
+  return props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
 });
 
 const getRawIndex = (block: Block) => rawData.value.indexOf(block);

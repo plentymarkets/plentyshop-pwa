@@ -49,7 +49,6 @@
           ]"
           :index="index"
           :block="block"
-          :actions="getBlockActions(block)"
           :read-only="readOnly"
           @change-position="changeBlockPosition"
         />
@@ -244,20 +243,6 @@ const showBottomAddBlockButton = computed(
     !isFooterBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
-
-const getBlockActions = (block: Block) => {
-  // if (isGlobalBlock(block)) {
-  //   return {
-  //     isEditable: !isEditDisabled(),
-  //     isMovable: false,
-  //     isDeletable: false,
-  //     classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
-  //     buttonClasses: [],
-  //     hoverBackground: ['hover:bg-gray-100'],
-  //   };
-  // }
-  return undefined;
-};
 
 const { hoveredUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
 

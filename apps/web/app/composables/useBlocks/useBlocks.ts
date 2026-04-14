@@ -28,7 +28,7 @@ export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   { columnGroup: 'services', key: 'showRegisterLink', shopTranslationKey: 'footer.register.label', editorTranslationKey: 'column-2-register-label', link: paths.register },
 ];
 
-const isHeaderEmpty = (block: Block | null | undefined): boolean => {
+const isBlockEmpty = (block: Block | null | undefined): boolean => {
   if (!block) return true;
   return !Array.isArray(block.content) || block.content.length === 0;
 };
@@ -67,7 +67,7 @@ const getDefaultPageBlocks = (type: string): Block[] => {
 };
 
 const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse => {
-  const HeaderContainer = isHeaderEmpty(raw?.HeaderContainer)
+  const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
     ? createDefaultHeaderContainerBlock()
     : raw?.HeaderContainer;
 
