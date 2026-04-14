@@ -1,6 +1,7 @@
 name: New release app
 permissions:
   contents: read
+  deployments: write
 
 on:
   release:
