@@ -17,7 +17,15 @@ const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NA
  * Call this once after fetching / assembling the full block tree.
  */
 export function migrateAllBlocks(blocks: Block[]): void {
-  //TODO: wtf is this logic?
+  /**
+   * TECH DEBT: Identify the first text content block (TextCard, Banner, ProductRecommendedProducts, or NewsletterSubscribe)
+   * that appears outside of the header/navigation area. This block receives special migration handling to ensure
+   * proper text formatting initialization. The logic skips header-related blocks and nested content within the header
+   * container to focus on main page content blocks.
+   *
+   * @refactor Consider extracting this into a dedicated utility function with clearer naming and documentation
+   * of why the first text block specifically needs differentiated treatment.
+   */
   const firstTextContentBlock = (() => {
     let headerContainerBlock: Block = {} as Block;
     for (const block of blocks) {
