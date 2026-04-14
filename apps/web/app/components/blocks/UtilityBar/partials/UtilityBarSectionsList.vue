@@ -43,7 +43,7 @@
                 </SfIconBase>
               </button>
 
-              <div :key="`menu-${index}`" class="relative">
+              <!-- <div :key="`menu-${index}`" class="relative">
                 <button
                   :data-testid="`actions-menu-section-${index}`"
                   class="text-gray-500 rounded-full no-drag"
@@ -70,7 +70,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </template>
