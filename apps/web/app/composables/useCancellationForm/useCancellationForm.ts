@@ -37,9 +37,9 @@ export const useCancellationForm = () => {
   const submitCancellation: SubmitCancellation = async (params) => {
     state.value.loading = true;
     try {
-        //const { data } = await useSdk().plentysystems.doSubmitCancellation(params);
-        const data = { email: '' }; // TODO: replace with actual API call once backend is implemented
-        return data?.email ?? null;
+      //const { data } = await useSdk().plentysystems.doSubmitCancellation(params);
+      const data = { email: params.email }; // TODO: replace with actual API call once backend is implemented
+      return data?.email ?? null;
     } catch (error) {
       useHandleError(error as ApiError);
       return null;
@@ -55,7 +55,3 @@ export const useCancellationForm = () => {
     ...toRefs(state.value),
   };
 };
-
-function sleep(arg0: number) {
-    throw new Error('Function not implemented.');
-}
