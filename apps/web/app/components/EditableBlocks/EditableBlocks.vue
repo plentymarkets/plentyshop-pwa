@@ -66,17 +66,19 @@ const { allBlocks, pageBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
-onBeforeRouteUpdate(() => {
-  if (!frozenBlocks.value && !props.readOnly) {
-    frozenBlocks.value = pageBlocks.value;
-  }
-});
+if (import.meta.client) {
+  onBeforeRouteUpdate(() => {
+    if (!frozenBlocks.value && !props.readOnly) {
+      frozenBlocks.value = pageBlocks.value;
+    }
+  });
 
-onBeforeRouteLeave(() => {
-  if (!frozenBlocks.value && !props.readOnly) {
-    frozenBlocks.value = pageBlocks.value;
-  }
-});
+  onBeforeRouteLeave(() => {
+    if (!frozenBlocks.value && !props.readOnly) {
+      frozenBlocks.value = pageBlocks.value;
+    }
+  });
+}
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
