@@ -500,13 +500,14 @@ export const useBlockTemplates: UseBlockTemplatesReturn = (
     );
 
     const headerContainerToUse = headerContainerCache.value || createDefaultHeaderContainerBlock();
-    const footerToUse = footerCache.value || createDefaultFooterBlockHelper();
+    footerCache.value =
+      fetchedBlocks.find((block) => isFooterBlock(block)) || footerCache.value || createDefaultFooterBlockHelper();
     const blocksToUse =
       mainBlocks.length > 0
         ? mainBlocks
         : state.value.defaultTemplateData.filter((block) => !isFooterBlock(block) && !isHeaderContainerBlock(block));
 
-    const finalBlocks = [headerContainerToUse, ...blocksToUse, footerToUse];
+    const finalBlocks = [headerContainerToUse, ...blocksToUse, footerCache.value];
 
     migrateAllBlocks(finalBlocks);
 
