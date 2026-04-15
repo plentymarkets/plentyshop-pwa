@@ -31,7 +31,7 @@
               </SfLink>
             </SfListItem>
           </ul>
-          <div v-if="resolvedContent.column1?.showCancellationForm" class="px-4 pt-2 flex">
+          <div v-if="enableContractWithdrawalButton  && resolvedContent.column1?.showCancellationForm" class="px-4 pt-2 flex">
             <UiButton
               :tag="NuxtLink"
               :to="localePath(paths.cancellationForm)"
@@ -111,6 +111,7 @@ const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBl
   useNuxtApp().$i18n.locale.value,
 );
 const { t } = useI18n();
+const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
   return true;
@@ -125,7 +126,11 @@ const resolvedContent = computed(() => {
 });
 
 const getColumnSwitches = (column: FooterColumn) => {
-  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
+  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => {
+    if (column[switchConfig.key] !== true) return false;
+
+    return !(enableContractWithdrawalButton && switchConfig.key === 'showCancellationForm');
+  }).map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: t(switchConfig.shopTranslationKey),
     link: switchConfig.link,

@@ -39,7 +39,7 @@
           />
         </div>
       </div>
-      <div class="py-2">
+      <div v-if="enableContractWithdrawalButton" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel class="mb-1">
             {{ getEditorTranslation('column-1-contract-withdrawal-button-label') }}
@@ -363,6 +363,7 @@ const thirdColumnOpen = ref(false);
 const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
+const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 
 const getSourceBlock = (): Block | null => {
   return findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
@@ -372,8 +373,17 @@ const sourceBlock = getSourceBlock();
 const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
 const footerContent = computed(() => footerBlock.value.content as FooterContent);
 
-const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
-  (switchConfig) => ({
+const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS
+  .filter((config) => {
+    if (config.columnGroup !== 'legal') return false;
+
+    if (enableContractWithdrawalButton && config.key === 'showCancellationForm') {
+      return false;
+    }
+
+    return true;
+  })
+  .map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
@@ -383,8 +393,7 @@ const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
         content.column1[switchConfig.key] = value;
       },
     }),
-  }),
-);
+  }));
 
 const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'services').map(
   (switchConfig) => ({
@@ -419,6 +428,7 @@ watch(
     "column-1-title-label": "Title",
     "column-1-terms-and-conditions-label": "Show Terms and Conditions link",
     "column-1-cancellation-rights-label": "Show Cancellation Rights link",
+    "column-1-cancellation-form-label": "Show Cancellation Form link",
     "column-1-contract-withdrawal-button-label": "Show Contract Withdrawal Button",
     "column-1-legal-disclosure-label": "Show Legal Disclosure link",
     "column-1-privacy-policy-label": "Show Privacy Policy link",
@@ -459,6 +469,7 @@ watch(
     "column-1-title-label": "Title",
     "column-1-terms-and-conditions-label": "Show the link to Terms and Conditions",
     "column-1-cancellation-rights-label": "Show the link to Cancellation Rights",
+    "column-1-cancellation-form-label": "Show Cancellation Form link",
     "column-1-contract-withdrawal-button-label": "Show Contract Withdrawal Button",
     "column-1-legal-disclosure-label": "Show the link to Legal Disclosure",
     "column-1-privacy-policy-label": "Show the link to Privacy Policy",

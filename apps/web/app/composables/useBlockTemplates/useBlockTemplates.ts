@@ -62,6 +62,13 @@ const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
     link: paths.cancellationRights,
   },
   {
+    columnGroup: 'legal',
+    key: 'showCancellationForm',
+    shopTranslationKey: 'legal.cancellationForm',
+    editorTranslationKey: 'column-1-cancellation-form-label',
+    link: paths.cancellationForm,
+  },
+  {
     columnGroup: 'services',
     key: 'showContactLink',
     shopTranslationKey: 'footer.contact.label',
