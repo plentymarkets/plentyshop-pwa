@@ -66,13 +66,7 @@
           <span class="mr-1">{{ t('cancellationForm.reason') }}</span>
           <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
         </UiFormLabel>
-        <SfTextarea
-          v-bind="reasonAttributes"
-          v-model="reason"
-          name="reason"
-          :disabled="loading"
-          class="w-full"
-        />
+        <SfTextarea v-bind="reasonAttributes" v-model="reason" name="reason" :disabled="loading" class="w-full" />
       </label>
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
