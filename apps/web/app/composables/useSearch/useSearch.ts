@@ -11,6 +11,7 @@ import type { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/u
  * ```
  */
 export const useSearch: UseSearchReturn = () => {
+  const { normalizeItemSearchResultProductNames } = useProductNameNormalizer();
   const state = useState<UseSearchState>('search', () => ({
     data: {} as ItemSearchResult,
     loading: false,
@@ -37,7 +38,7 @@ export const useSearch: UseSearchReturn = () => {
       const { data } = await useSdk().plentysystems.getSearch(params);
       state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
       if (data) data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = data ?? state.value.data;
+      state.value.data = normalizeItemSearchResultProductNames(data);
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
