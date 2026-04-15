@@ -10,7 +10,7 @@ export const useUpdatePageTemplate = () => {
 
     try {
       const { HeaderContainer, blocks: pageBlocks, Footer } = data.value ?? {};
-      const flat = [HeaderContainer, ...(pageBlocks ?? []), Footer].filter(Boolean);
+      const flat = [HeaderContainer, ...(pageBlocks ?? []), Footer];
       const cleanedData = JSON.stringify(flat);
 
       let identifier: string | number = route.meta.identifier as string | number;
