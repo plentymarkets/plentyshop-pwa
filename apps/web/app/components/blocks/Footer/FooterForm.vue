@@ -39,6 +39,18 @@
           />
         </div>
       </div>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel class="mb-1">
+            {{ getEditorTranslation('column-1-contract-withdrawal-button-label') }}
+          </UiFormLabel>
+          <SfSwitch
+            v-model="footerContent.column1.showCancellationForm"
+            data-testid="showCancellationForm-switch"
+            class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+          />
+        </div>
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -407,7 +419,7 @@ watch(
     "column-1-title-label": "Title",
     "column-1-terms-and-conditions-label": "Show Terms and Conditions link",
     "column-1-cancellation-rights-label": "Show Cancellation Rights link",
-    "column-1-cancellation-form-label": "Show Cancellation Form link",
+    "column-1-contract-withdrawal-button-label": "Show Contract Withdrawal Button",
     "column-1-legal-disclosure-label": "Show Legal Disclosure link",
     "column-1-privacy-policy-label": "Show Privacy Policy link",
     "column-1-declaration-of-accessibility-label": "Show Declaration of Accessibility link",
@@ -447,7 +459,7 @@ watch(
     "column-1-title-label": "Title",
     "column-1-terms-and-conditions-label": "Show the link to Terms and Conditions",
     "column-1-cancellation-rights-label": "Show the link to Cancellation Rights",
-    "column-1-cancellation-form-label": "Show the link to Cancellation Form",
+    "column-1-contract-withdrawal-button-label": "Show Contract Withdrawal Button",
     "column-1-legal-disclosure-label": "Show the link to Legal Disclosure",
     "column-1-privacy-policy-label": "Show the link to Privacy Policy",
     "column-1-declaration-of-accessibility-label": "Show the link to Declaration of Accessibility",

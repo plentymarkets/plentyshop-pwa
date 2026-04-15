@@ -35,20 +35,6 @@ const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
   },
   {
     columnGroup: 'legal',
-    key: 'showCancellationRights',
-    shopTranslationKey: 'legal.cancellationRights',
-    editorTranslationKey: 'column-1-cancellation-rights-label',
-    link: paths.cancellationRights,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showCancellationForm',
-    shopTranslationKey: 'legal.cancellationForm',
-    editorTranslationKey: 'column-1-cancellation-form-label',
-    link: paths.cancellationForm,
-  },
-  {
-    columnGroup: 'legal',
     key: 'showLegalDisclosure',
     shopTranslationKey: 'legal.legalDisclosure',
     editorTranslationKey: 'column-1-legal-disclosure-label',
@@ -67,6 +53,13 @@ const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
     shopTranslationKey: 'legal.declarationOfAccessibility',
     editorTranslationKey: 'column-1-declaration-of-accessibility-label',
     link: paths.declarationOfAccessibility,
+  },
+  {
+    columnGroup: 'legal',
+    key: 'showCancellationRights',
+    shopTranslationKey: 'legal.cancellationRights',
+    editorTranslationKey: 'column-1-cancellation-rights-label',
+    link: paths.cancellationRights,
   },
   {
     columnGroup: 'services',

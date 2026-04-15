@@ -31,6 +31,17 @@
               </SfLink>
             </SfListItem>
           </ul>
+          <div v-if="resolvedContent.column1?.showCancellationForm" class="px-4 pt-2 flex">
+            <UiButton
+              :tag="NuxtLink"
+              :to="localePath(paths.cancellationForm)"
+              size="sm"
+              class="text-xs leading-5"
+              data-testid="footer-cancellation-button"
+            >
+              {{ t('footer.withdrawButton.label') }}
+            </UiButton>
+          </div>
         </div>
 
         <div
@@ -99,7 +110,7 @@ const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBl
   'immutable',
   useNuxtApp().$i18n.locale.value,
 );
-
+const { t } = useI18n();
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
   return true;
@@ -122,3 +133,21 @@ const getColumnSwitches = (column: FooterColumn) => {
   }));
 };
 </script>
+<i18n lang="json">
+{
+  "en": {
+    "footer": {
+      "withdrawButton": {
+        "label": "Withdraw from contract here"
+      }
+    }
+  },
+  "de": {
+    "footer": {
+      "withdrawButton": {
+        "label": "Vertrag widerrufen"
+      }
+    }
+  }
+}
+</i18n>
