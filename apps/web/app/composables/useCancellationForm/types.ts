@@ -7,5 +7,6 @@ export type SubmitCancellation = (params: {
   name: string;
   orderId: number;
   lang: string;
+  reason?: string;
   'cf-turnstile-response': string;
 }) => Promise<string | null>;

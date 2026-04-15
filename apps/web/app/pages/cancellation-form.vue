@@ -61,6 +61,20 @@
         <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </label>
 
+      <label class="flex flex-col">
+        <UiFormLabel class="mb-1 flex">
+          <span class="mr-1">{{ t('cancellationForm.reason') }}</span>
+          <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+        </UiFormLabel>
+        <SfTextarea
+          v-bind="reasonAttributes"
+          v-model="reason"
+          name="reason"
+          :disabled="loading"
+          class="w-full"
+        />
+      </label>
+
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
 
       <div class="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
@@ -86,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 import type { Locale } from '#i18n';
 
@@ -123,6 +137,7 @@ const orderId = rawOrderId as Ref<string>;
 const [rawName, nameAttributes] = defineField('name');
 const name = rawName as Ref<string>;
 const [email, emailAttributes] = defineField('email');
+const [reason, reasonAttributes] = defineField('reason');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 
 const submitForm = async () => {
@@ -133,6 +148,7 @@ const submitForm = async () => {
     name: name.value || '',
     orderId: Number(orderId.value),
     lang: locale.value,
+    reason: reason.value || '',
     'cf-turnstile-response': turnstile.value || '',
   });
 

@@ -467,6 +467,7 @@
     "orderId": "Bestellnummer",
     "name": "Name",
     "email": "E-Mail",
+    "reason": "Grund für den Widerruf",
     "submit": "Widerruf absenden",
     "asterixHint": "markierte Felder sind Pflichtfelder",
     "orderIdInvalid": "Bitte geben Sie eine gültige Bestellnummer ein.",

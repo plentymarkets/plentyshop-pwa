@@ -467,6 +467,7 @@
     "orderId": "Order ID",
     "name": "Name",
     "email": "Email",
+    "reason": "Reason for cancellation",
     "submit": "Submit cancellation",
     "asterixHint": "marked fields are required",
     "orderIdInvalid": "Please enter a valid order ID.",
