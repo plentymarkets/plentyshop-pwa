@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   blocks: () => [],
 });
 
-const { allBlocks, pageBlocks } = useBlocks();
+const { allBlocks, pageBlocks, updateBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
@@ -82,11 +82,16 @@ if (import.meta.client) {
 
 const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
-const data = computed(() => {
-  if (frozenBlocks.value) {
-    return frozenBlocks.value;
-  }
-  return props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
+const data = computed({
+  get() {
+    if (frozenBlocks.value) {
+      return frozenBlocks.value;
+    }
+    return props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
+  },
+  set(value: Block[]) {
+    updateBlocks(value);
+  },
 });
 
 const getRawIndex = (block: Block) => rawData.value.indexOf(block);
