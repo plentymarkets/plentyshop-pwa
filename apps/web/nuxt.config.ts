@@ -130,6 +130,7 @@ export default defineNuxtConfig({
       turnstileSiteKey: process.env?.CLOUDFLARETURNSTILEAPISITEKEY ?? '',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
+      editorUnsavedChangesConfirm: process.env.EDITOR_UNSAVED_CHANGES_CONFIRM !== '0',
       ...settingsConfig,
       ...featureFlagsConfig,
     },

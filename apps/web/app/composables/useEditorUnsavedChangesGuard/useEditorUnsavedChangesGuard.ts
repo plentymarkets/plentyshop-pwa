@@ -20,6 +20,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     useNuxtApp().$i18n.locale.value,
   );
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
+  const { public: { editorUnsavedChangesConfirm } } = useRuntimeConfig();
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
 
@@ -51,14 +52,15 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
 
   onBeforeRouteLeave(async () => {
     if (hasUnsavedChanges()) {
-      const confirmation = window.confirm(confirmMessage);
-
-      if (confirmation) {
-        await handleConfirmLeave();
-        return true;
-      } else {
-        return false;
+      if (editorUnsavedChangesConfirm) {
+        const confirmation = window.confirm(confirmMessage);
+        if (!confirmation) {
+          return false;
+        }
       }
+
+      await handleConfirmLeave();
+      return true;
     }
   });
 };
