@@ -42,7 +42,10 @@ export const useCarousel: UseCarouselReturn = () => {
     const carouselBlock = findOrDeleteBlockByUuid(allBlocks.value, blockUuid);
 
     if (carouselBlock) {
-      carouselBlock.content = [...newBannerItems];
+      carouselBlock.content = newBannerItems.map((item, index) => ({
+        ...item,
+        parent_slot: index,
+      }));
     }
   };
 

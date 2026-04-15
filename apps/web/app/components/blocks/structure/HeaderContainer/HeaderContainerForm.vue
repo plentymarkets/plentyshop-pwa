@@ -101,7 +101,10 @@ const blocks = computed({
     }));
   },
   set: (value: SlideBlock[]) => {
-    headerContainerStructure.value.content = [...value];
+    headerContainerStructure.value.content = value.map((block, index) => ({
+      ...block,
+      parent_slot: index,
+    }));
   },
 });
 
