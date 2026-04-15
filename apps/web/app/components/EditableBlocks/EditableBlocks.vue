@@ -22,7 +22,7 @@
             v-if="shouldShowBlock(block, enabledActions)"
           >
             <PageBlock
-              :index="getRawIndex(block)"
+              :index="getIndex(block)"
               :block="block"
               :enable-actions="enabledActions"
               :is-clicked="isClicked"
@@ -34,7 +34,7 @@
               class="group"
               :class="getBlockClass(block).value"
               data-testid="block-wrapper"
-              @click="tabletEdit(getRawIndex(block))"
+              @click="tabletEdit(getIndex(block))"
             />
           </component>
           <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<EditableBlocksProps>(), {
   blocks: () => [],
 });
 
-const { allBlocks, pageBlocks, updateBlocks } = useBlocks();
+const { pageBlocks, updateBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
@@ -80,7 +80,6 @@ if (import.meta.client) {
   });
 }
 
-const rawData = computed(() => (props.blocks && props.blocks.length > 0 ? props.blocks : allBlocks.value));
 
 const data = computed({
   get() {
@@ -94,7 +93,7 @@ const data = computed({
   },
 });
 
-const getRawIndex = (block: Block) => rawData.value.indexOf(block);
+const getIndex = (block: Block) => pageBlocks.value.indexOf(block);
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
