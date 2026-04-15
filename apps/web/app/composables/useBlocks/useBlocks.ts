@@ -66,14 +66,14 @@ const getDefaultPageBlocks = (type: string): Block[] => {
   }
 };
 
-const assembleBlocks = (raw: GetBlocksResponse, type: string, existing?: GetBlocksResponse): GetBlocksResponse => {
+const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
-    ? (existing?.HeaderContainer ?? createDefaultHeaderContainerBlock())
+    ? (createDefaultHeaderContainerBlock())
     : raw?.HeaderContainer;
 
   const Footer = raw?.Footer
     ? normalizeFooter(raw.Footer)
-    : (existing?.Footer ?? normalizeFooter(createFooter()));
+    : (normalizeFooter(createFooter()));
 
   const pageBlocks =
     Array.isArray(raw?.blocks) && raw?.blocks.length > 0
@@ -85,11 +85,9 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string, existing?: GetBloc
   return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
 };
 
-export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
-  const { $i18n } = useNuxtApp();
-  const locale = localeOverride ?? $i18n.locale.value;
+export const useBlocks: UseBlocksReturn = () => {
 
-  const state = useState<UseBlocksState>(`useBlocks-${locale}`, () => ({
+  const state = useState<UseBlocksState>(`useBlocks`, () => ({
     data: {} as GetBlocksResponse,
     cleanData: {} as GetBlocksResponse,
     defaultTemplateData: [] as Block[],
@@ -108,7 +106,11 @@ export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
   const fetchBlocks = async (identifier: string | number, type: string) => {
     state.value.loading = true;
 
-    const key = `blocks-${locale}-${type}-${identifier}`;
+    const { $i18n } = useNuxtApp();
+
+    const loc = computed(() => $i18n.locale.value);
+
+    const key = `blocks-${loc.value}-${type}-${identifier}`;
 
     const { data, error } = await useAsyncData(key, () =>
       useSdk().plentysystems.getBlocksWithGlobalBlocks({ identifier, type, enableGlobalBlocks: true }),
@@ -118,7 +120,7 @@ export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const allBlocks = assembleBlocks(data.value?.data || {} as GetBlocksResponse, type, state.value.data);
+    const allBlocks = assembleBlocks(data.value?.data || {} as GetBlocksResponse, type);
 
     state.value.data = allBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));

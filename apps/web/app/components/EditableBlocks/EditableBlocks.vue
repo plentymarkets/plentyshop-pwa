@@ -66,34 +66,37 @@ const { pageBlocks, updateBlocks } = useBlocks();
 
 const frozenBlocks = shallowRef<Block[] | null>(null);
 
+const renderedBlocks = computed(() => {
+  return props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
+});
+
 if (import.meta.client) {
   onBeforeRouteUpdate(() => {
-    if (!frozenBlocks.value && !props.readOnly) {
-      frozenBlocks.value = pageBlocks.value;
+    if (!frozenBlocks.value) {
+      frozenBlocks.value = renderedBlocks.value;
     }
   });
 
   onBeforeRouteLeave(() => {
-    if (!frozenBlocks.value && !props.readOnly) {
-      frozenBlocks.value = pageBlocks.value;
+    if (!frozenBlocks.value) {
+      frozenBlocks.value = renderedBlocks.value
     }
   });
 }
-
 
 const data = computed({
   get() {
     if (frozenBlocks.value) {
       return frozenBlocks.value;
     }
-    return props.blocks && props.blocks.length > 0 ? props.blocks : pageBlocks.value;
+    return renderedBlocks.value;
   },
   set(value: Block[]) {
     updateBlocks(value);
   },
 });
 
-const getIndex = (block: Block) => pageBlocks.value.indexOf(block);
+const getIndex = (block: Block) => renderedBlocks.value.indexOf(block);
 
 const dataIsEmpty = computed(() => data.value.length === 0);
 
@@ -151,19 +154,6 @@ const enabledActions = computed(
 useEditorUnsavedChangesGuard({
   enabled: !props.readOnly,
   onConfirmLeave: () => closeSiteConfigurationDrawer(),
-});
-
-onMounted(async () => {
-  if (!props.readOnly) {
-    const { isEditingEnabled } = useEditor();
-    isEditingEnabled.value = false;
-  }
-
-  if (isInEditor.value && !props.readOnly) {
-    await import('./draggable.css');
-  }
-
-  isHydrationComplete.value = true;
 });
 
 onBeforeUnmount(() => {
