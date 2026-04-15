@@ -89,7 +89,7 @@ export const useBlocks: UseBlocksReturn = (localeOverride?: string) => {
   const { $i18n } = useNuxtApp();
   const locale = localeOverride ?? $i18n.locale.value;
 
-  const state = useState<UseBlocksState>(`useBlocks-${locale}`, () => ({
+  const state = useState<UseBlocksState>(`useBlocks`, () => ({
     data: {} as GetBlocksResponse,
     cleanData: {} as GetBlocksResponse,
     defaultTemplateData: [] as Block[],
