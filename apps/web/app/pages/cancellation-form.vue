@@ -2,28 +2,35 @@
   <div class="w-full p-5 overflow-x-auto no-preflight" v-html="getHTMLTexts()" />
 
   <div  class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8">
+    <h2 class="mb-6 text-2xl font-semibold text-neutral-900">
+      {{ t('legal.cancellationForm') }}
+    </h2>
+
     <form @submit.prevent="handlesubmit" class="space-y-6">
       <div>
-        <UiFormLabel>Order ID</UiFormLabel>
+        <UiFormLabel>Order ID {{ t('form.required') }}</UiFormLabel>
         <SfInput name="orderId" type="text" required />
       </div>
 
       <div>
-        <UiFormLabel>Name</UiFormLabel>
+        <UiFormLabel>Name {{ t('form.required') }}</UiFormLabel>
         <SfInput name="name" type="text" required />
       </div>
 
       <div>
-        <UiFormLabel>Email</UiFormLabel>
+        <UiFormLabel>Email {{ t('form.required') }}</UiFormLabel>
         <SfInput name="email" type="email" required />
       </div>
 
       <div>
-        <UiFormLabel>Reason for Cancellation</UiFormLabel>
+        <UiFormLabel>
+          Reason for Cancellation
+          <UiFormHelperText class="inline">({{ t('form.optional') }})</UiFormHelperText>
+        </UiFormLabel>
         <SfTextarea class="w-full" name="reason" type="text" />
       </div>
 
-      <button type="submit">Submit</button>
+      <UiButton type="submit" variant="primary">Submit</UiButton>
     </form>
   </div>
 </template>
