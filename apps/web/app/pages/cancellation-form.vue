@@ -63,24 +63,23 @@
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
 
-      <div class="flex flex-col-reverse md:flex-row justify-end gap-4">
+      <div class="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+        <div>
+          <NuxtTurnstile
+            v-if="turnstileSiteKey.length > 0 && turnstileLoad"
+            v-bind="turnstileAttributes"
+            ref="turnstileElement"
+            v-model="turnstile"
+            :site-key="turnstileSiteKey"
+            :options="{ theme: 'light' }"
+          />
+          <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        </div>
+
         <UiButton type="submit" class="min-w-[120px]" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else>{{ t('cancellationForm.submit') }}</span>
         </UiButton>
-      </div>
-
-      <div>
-        <NuxtTurnstile
-          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
-          v-bind="turnstileAttributes"
-          ref="turnstileElement"
-          v-model="turnstile"
-          :site-key="turnstileSiteKey"
-          :options="{ theme: 'light' }"
-          class="mt-4"
-        />
-        <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </div>
     </form>
   </div>
@@ -88,10 +87,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
-import { object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
-import { userGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -103,9 +99,7 @@ definePageMeta({
 });
 
 const { data, getLegalTexts } = useLegalInformation();
-const { loading, submitCancellation } = useCancellationForm();
-const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-const turnstileSiteKey = getSetting() ?? '';
+const { loading, submitCancellation, validationSchema, turnstileSiteKey } = useCancellationForm();
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const { send } = useNotification();
@@ -121,31 +115,6 @@ const getHTMLTexts = () => data.value.htmlText ?? '';
 
 await getRobots();
 setRobotForStaticPage('CancellationForm');
-
-const validationSchema = toTypedSchema(
-  object({
-    orderId: string()
-      .trim()
-      .required(t('error.requiredField'))
-      .matches(/^[1-9][0-9]*$/, t('cancellationForm.orderIdInvalid'))
-      .default(''),
-    name: string()
-      .trim()
-      .required(t('error.requiredField'))
-      .default(''),
-    email: string()
-      .trim()
-      .required(t('error.email.required'))
-      .test('is-valid-email', t('storefrontError.contactMail.emailInvalid'), (mail: string) =>
-        userGetters.isValidEmailAddress(mail),
-      )
-      .default(''),
-    turnstile:
-      turnstileSiteKey.length > 0
-        ? string().required(t('error.turnstileRequired')).default('')
-        : string().optional().default(''),
-  }),
-);
 
 const { errors, meta, defineField, handleSubmit, resetForm } = useForm({ validationSchema });
 

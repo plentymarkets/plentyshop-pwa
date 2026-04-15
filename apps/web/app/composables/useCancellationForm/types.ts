@@ -9,8 +9,3 @@ export type SubmitCancellation = (params: {
   lang: string;
   'cf-turnstile-response': string;
 }) => Promise<string | null>;
-
-export type UseCancellationFormReturn = () => {
-  loading: Ref<boolean>;
-  submitCancellation: SubmitCancellation;
-};
