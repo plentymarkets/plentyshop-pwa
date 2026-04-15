@@ -115,7 +115,6 @@ import {
 } from '@storefront-ui/vue';
 import type { ItemTextFormProps, ItemTextContent } from './types';
 
-
 const { blocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
@@ -131,7 +130,6 @@ const itemTextBlock = computed<ItemTextContent>(() => {
   }
   return content as ItemTextContent;
 });
-
 
 const { isFullWidth } = useFullWidthToggleForContent(itemTextBlock);
 

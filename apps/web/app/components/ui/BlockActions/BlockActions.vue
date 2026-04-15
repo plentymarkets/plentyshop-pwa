@@ -82,13 +82,13 @@
       <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
 
       <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
-      <button
-        class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
-        aria-label="Drag to reorder block"
-      >
-        <NuxtImg width="18" height="18" :src="dragIcon" />
-      </button>
-    </SfTooltip>
+        <button
+          class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
+          aria-label="Drag to reorder block"
+        >
+          <NuxtImg width="18" height="18" :src="dragIcon" />
+        </button>
+      </SfTooltip>
 
       <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
 

@@ -53,12 +53,9 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const { $i18n } = useNuxtApp();
     const { isInEditor } = useEditorState();
-    const {
-      pageBlocks,
-      setupFakeBlocks,
-    } = useBlocks();
+    const { pageBlocks, setupFakeBlocks } = useBlocks();
 
-      state.value.loading = true;
+    state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 

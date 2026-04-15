@@ -70,9 +70,7 @@ const blockForm = computed(() => {
   return loader ? defineAsyncComponent(loader) : null;
 });
 
-const headerContainerStructure = computed(
-  () => (headerContainer.value ?? {}) as HeaderContainerBlock,
-);
+const headerContainerStructure = computed(() => (headerContainer.value ?? {}) as HeaderContainerBlock);
 
 const isStickyToggle = computed({
   get: () => headerContainerStructure.value.configuration?.layout?.sticky ?? false,

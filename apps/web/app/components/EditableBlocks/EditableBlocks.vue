@@ -79,7 +79,7 @@ if (import.meta.client) {
 
   onBeforeRouteLeave(() => {
     if (!frozenBlocks.value) {
-      frozenBlocks.value = renderedBlocks.value
+      frozenBlocks.value = renderedBlocks.value;
     }
   });
 }

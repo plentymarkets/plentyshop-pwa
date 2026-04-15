@@ -56,7 +56,10 @@ export function migrateAllBlocks(blocks: Block[]): void {
       }
 
       if (TEXT_CONTENT_BLOCKS.includes(block.name) && block.content) {
-        block.content = migrateTextCardContent(block.content as Partial<TextCardContent>, block === firstTextContentBlock);
+        block.content = migrateTextCardContent(
+          block.content as Partial<TextCardContent>,
+          block === firstTextContentBlock,
+        );
       }
 
       if (block.name === 'Banner' && block.content) {

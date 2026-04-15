@@ -143,7 +143,6 @@ const buttonGroup = ref(true);
 const settingsGroup = ref(true);
 const layoutOpen = ref(true);
 
-
 const { blocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();

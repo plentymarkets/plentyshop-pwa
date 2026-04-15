@@ -56,10 +56,7 @@ export const useProduct: UseProductReturn = (slug) => {
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     const { $i18n } = useNuxtApp();
     const { isInEditor } = useEditorState();
-    const {
-      pageBlocks,
-      setupFakeBlocks,
-    } = useBlocks();
+    const { pageBlocks, setupFakeBlocks } = useBlocks();
 
     state.value.loading = true;
 

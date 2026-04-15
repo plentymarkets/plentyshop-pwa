@@ -18,14 +18,62 @@ export const isGlobalBlock = (block: Block | null | undefined): boolean =>
   isFooterBlock(block) || isHeaderContainerBlock(block);
 
 export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
-  { columnGroup: 'legal', key: 'showTermsAndConditions', shopTranslationKey: 'legal.termsAndConditions', editorTranslationKey: 'column-1-terms-and-conditions-label', link: paths.termsAndConditions },
-  { columnGroup: 'legal', key: 'showCancellationRights', shopTranslationKey: 'legal.cancellationRights', editorTranslationKey: 'column-1-cancellation-rights-label', link: paths.cancellationRights },
-  { columnGroup: 'legal', key: 'showCancellationForm', shopTranslationKey: 'legal.cancellationForm', editorTranslationKey: 'column-1-cancellation-form-label', link: paths.cancellationForm },
-  { columnGroup: 'legal', key: 'showLegalDisclosure', shopTranslationKey: 'legal.legalDisclosure', editorTranslationKey: 'column-1-legal-disclosure-label', link: paths.legalDisclosure },
-  { columnGroup: 'legal', key: 'showPrivacyPolicy', shopTranslationKey: 'legal.privacyPolicy', editorTranslationKey: 'column-1-privacy-policy-label', link: paths.privacyPolicy },
-  { columnGroup: 'legal', key: 'showDeclarationOfAccessibility', shopTranslationKey: 'legal.declarationOfAccessibility', editorTranslationKey: 'column-1-declaration-of-accessibility-label', link: paths.declarationOfAccessibility },
-  { columnGroup: 'services', key: 'showContactLink', shopTranslationKey: 'footer.contact.label', editorTranslationKey: 'column-2-contact-label', link: paths.contact },
-  { columnGroup: 'services', key: 'showRegisterLink', shopTranslationKey: 'footer.register.label', editorTranslationKey: 'column-2-register-label', link: paths.register },
+  {
+    columnGroup: 'legal',
+    key: 'showTermsAndConditions',
+    shopTranslationKey: 'legal.termsAndConditions',
+    editorTranslationKey: 'column-1-terms-and-conditions-label',
+    link: paths.termsAndConditions,
+  },
+  {
+    columnGroup: 'legal',
+    key: 'showCancellationRights',
+    shopTranslationKey: 'legal.cancellationRights',
+    editorTranslationKey: 'column-1-cancellation-rights-label',
+    link: paths.cancellationRights,
+  },
+  {
+    columnGroup: 'legal',
+    key: 'showCancellationForm',
+    shopTranslationKey: 'legal.cancellationForm',
+    editorTranslationKey: 'column-1-cancellation-form-label',
+    link: paths.cancellationForm,
+  },
+  {
+    columnGroup: 'legal',
+    key: 'showLegalDisclosure',
+    shopTranslationKey: 'legal.legalDisclosure',
+    editorTranslationKey: 'column-1-legal-disclosure-label',
+    link: paths.legalDisclosure,
+  },
+  {
+    columnGroup: 'legal',
+    key: 'showPrivacyPolicy',
+    shopTranslationKey: 'legal.privacyPolicy',
+    editorTranslationKey: 'column-1-privacy-policy-label',
+    link: paths.privacyPolicy,
+  },
+  {
+    columnGroup: 'legal',
+    key: 'showDeclarationOfAccessibility',
+    shopTranslationKey: 'legal.declarationOfAccessibility',
+    editorTranslationKey: 'column-1-declaration-of-accessibility-label',
+    link: paths.declarationOfAccessibility,
+  },
+  {
+    columnGroup: 'services',
+    key: 'showContactLink',
+    shopTranslationKey: 'footer.contact.label',
+    editorTranslationKey: 'column-2-contact-label',
+    link: paths.contact,
+  },
+  {
+    columnGroup: 'services',
+    key: 'showRegisterLink',
+    shopTranslationKey: 'footer.register.label',
+    editorTranslationKey: 'column-2-register-label',
+    link: paths.register,
+  },
 ];
 
 const isBlockEmpty = (block: Block | null | undefined): boolean => {
@@ -68,17 +116,12 @@ const getDefaultPageBlocks = (type: string): Block[] => {
 
 const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
-    ? (createDefaultHeaderContainerBlock())
+    ? createDefaultHeaderContainerBlock()
     : raw?.HeaderContainer;
 
-  const Footer = raw?.Footer
-    ? normalizeFooter(raw.Footer)
-    : (normalizeFooter(createFooter()));
+  const Footer = raw?.Footer ? normalizeFooter(raw.Footer) : normalizeFooter(createFooter());
 
-  const pageBlocks =
-    Array.isArray(raw?.blocks) && raw?.blocks.length > 0
-      ? raw?.blocks
-      : getDefaultPageBlocks(type);
+  const pageBlocks = Array.isArray(raw?.blocks) && raw?.blocks.length > 0 ? raw?.blocks : getDefaultPageBlocks(type);
 
   migrateAllBlocks(pageBlocks);
 
@@ -86,7 +129,6 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse
 };
 
 export const useBlocks: UseBlocksReturn = () => {
-
   const state = useState<UseBlocksState>(`useBlocks`, () => ({
     data: {} as GetBlocksResponse,
     cleanData: {} as GetBlocksResponse,
@@ -99,7 +141,7 @@ export const useBlocks: UseBlocksReturn = () => {
   const pageBlocks = computed(() => state.value.data.blocks ?? []);
   const allBlocks = computed(() => [
     ...(headerContainer.value ? [headerContainer.value] : []),
-    ...(pageBlocks.value),
+    ...pageBlocks.value,
     ...(footer.value ? [footer.value] : []),
   ]);
 
@@ -120,7 +162,7 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const allBlocks = assembleBlocks(data.value?.data || {} as GetBlocksResponse, type);
+    const allBlocks = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type);
 
     state.value.data = allBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
@@ -153,11 +195,14 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable') => {
-    const allBlocks = assembleBlocks({
-      HeaderContainer: headerContainer.value,
-      blocks: rawBlocks,
-      Footer: footer.value
-    } as GetBlocksResponse, type);
+    const allBlocks = assembleBlocks(
+      {
+        HeaderContainer: headerContainer.value,
+        blocks: rawBlocks,
+        Footer: footer.value,
+      } as GetBlocksResponse,
+      type,
+    );
 
     state.value.data = allBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));

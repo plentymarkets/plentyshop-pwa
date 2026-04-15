@@ -54,10 +54,9 @@ export const useBlockManager = () => {
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    const targetInHeader = headerContainer.value && findBlockParent(
-      Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [],
-      targetUuid
-    );
+    const targetInHeader =
+      headerContainer.value &&
+      findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
 
     if (targetInHeader) {
       if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
