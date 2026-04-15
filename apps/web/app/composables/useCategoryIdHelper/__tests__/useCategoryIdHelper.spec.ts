@@ -8,28 +8,32 @@ describe('getCorrectPreviewPathWithLocale', () => {
     getI18n().locale.value = 'en';
   });
 
-  it('handles absolute URL', () => {
+  it('should handle absolute URL', () => {
     expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('https://host.tld/en/b2b/')).toBe('/en/b2b/');
   });
 
-  it('handles protocol-relative URL', () => {
+  it('should handle protocol-relative URL', () => {
     expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('//host.tld/en/b2b/')).toBe('/en/b2b/');
   });
 
-  it('handles relative path', () => {
+  it('should handle relative path', () => {
     expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b/')).toBe('/en/b2b/');
   });
 
-  it('adds locale when missing', () => {
+  it('should add locale when missing', () => {
     expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/b2b/')).toBe('/en/b2b/');
   });
 
-  it('swaps stale locale with current one', () => {
+  it('should swap stale locale with current one', () => {
     expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/de/b2b/')).toBe('/en/b2b/');
   });
 
-  it('preserves query and hash', () => {
+  it('should preserve query and hash', () => {
     expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b/?foo=bar#x')).toBe('/en/b2b/?foo=bar#x');
+  });
+
+  it('should preserve path without trailing slash', () => {
+    expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b')).toBe('/en/b2b');
   });
 
   describe('when locale is switched to de', () => {
@@ -37,19 +41,19 @@ describe('getCorrectPreviewPathWithLocale', () => {
       getI18n().locale.value = 'de';
     });
 
-    it('replaces en prefix with de', () => {
+    it('should replace en prefix with de', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b/')).toBe('/de/b2b/');
     });
 
-    it('keeps de prefix as-is', () => {
+    it('should keep de prefix as-is', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/de/b2b/')).toBe('/de/b2b/');
     });
 
-    it('adds de prefix when no locale in path', () => {
+    it('should add de prefix when no locale in path', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/b2b/')).toBe('/de/b2b/');
     });
 
-    it('handles absolute URL with de locale', () => {
+    it('should handle absolute URL with de locale', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('https://host.tld/en/b2b/')).toBe('/de/b2b/');
     });
   });
@@ -65,19 +69,19 @@ describe('getCorrectPreviewPathWithLocale', () => {
       getI18n().strategy = 'prefix_and_default';
     });
 
-    it('omits prefix when at default locale', () => {
+    it('should omit prefix when at default locale', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b/')).toBe('/b2b/');
     });
 
-    it('omits prefix for path without locale at default locale', () => {
+    it('should omit prefix for path without locale at default locale', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/b2b/')).toBe('/b2b/');
     });
 
-    it('strips stale locale and omits prefix when at default locale', () => {
+    it('should strip stale locale and omit prefix when at default locale', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/de/b2b/')).toBe('/b2b/');
     });
 
-    it('adds prefix when at non-default locale', () => {
+    it('should add prefix when at non-default locale', () => {
       getI18n().locale.value = 'de';
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b/')).toBe('/de/b2b/');
     });
@@ -92,11 +96,11 @@ describe('getCorrectPreviewPathWithLocale', () => {
       getI18n().strategy = 'prefix_and_default';
     });
 
-    it('never adds locale prefix', () => {
+    it('should never add locale prefix', () => {
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/en/b2b/')).toBe('/b2b/');
     });
 
-    it('strips existing locale even for non-default', () => {
+    it('should strip existing locale even for non-default', () => {
       getI18n().locale.value = 'de';
       expect(useCategoryIdHelper().getCorrectPreviewPathWithLocale('/de/b2b/')).toBe('/b2b/');
     });
