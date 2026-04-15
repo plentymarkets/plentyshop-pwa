@@ -117,6 +117,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
   const buildSearchParams = (categoryType: CategoryType, page: number): CategorySearchCriteria => ({
     type: categoryType,
+    level: 1,
     page,
     itemsPerPage: ITEMS_PER_PAGE,
     sortBy: 'position_asc',
