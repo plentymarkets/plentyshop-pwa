@@ -1,9 +1,36 @@
 <template>
   <div class="w-full p-5 overflow-x-auto no-preflight" v-html="getHTMLTexts()" />
+
+  <div  class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8">
+    <form @submit.prevent="handlesubmit" class="space-y-6">
+      <div>
+        <UiFormLabel>Order ID</UiFormLabel>
+        <SfInput name="orderId" type="text" required />
+      </div>
+
+      <div>
+        <UiFormLabel>Name</UiFormLabel>
+        <SfInput name="name" type="text" required />
+      </div>
+
+      <div>
+        <UiFormLabel>Email</UiFormLabel>
+        <SfInput name="email" type="email" required />
+      </div>
+
+      <div>
+        <UiFormLabel>Reason for Cancellation</UiFormLabel>
+        <SfTextarea class="w-full" name="reason" type="text" />
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { Locale } from '#i18n';
+import { SfInput, SfTextarea } from '@storefront-ui/vue';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
@@ -30,4 +57,8 @@ setRobotForStaticPage('CancellationForm');
 
 const icon = 'page';
 setPageMeta(t('legal.cancellationForm'), icon);
+
+const handlesubmit = () => (
+ console.log('submit')
+)
 </script>
