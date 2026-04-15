@@ -41,7 +41,7 @@ export const useCoupon: UseCouponReturn = () => {
       send({ message: t('coupon.couponApplied'), type: 'positive' });
     } catch (err) {
       const error = err as ApiError;
-      if (error.warn?.code) {
+      if (error.warn?.code !== undefined) {
         const key = getErrorCode(error.warn.code.toString()) ?? 'couponAlreadyUsedOrInvalidCouponCode';
         send({ message: t('error.' + key), type: 'negative' });
       } else {
