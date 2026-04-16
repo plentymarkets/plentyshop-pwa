@@ -42,7 +42,7 @@
               class="text-xs leading-5"
               data-testid="footer-cancellation-button"
             >
-              {{ t('footer.withdrawButton.label') }}
+              {{ t('footer.withdrawButton') }}
             </UiButton>
           </div>
         </div>
@@ -145,16 +145,12 @@ const getColumnSwitches = (column: FooterColumn) => {
 {
   "en": {
     "footer": {
-      "withdrawButton": {
-        "label": "Withdraw from contract here"
-      }
+      "withdrawButton": "Withdraw from contract here"
     }
   },
   "de": {
     "footer": {
-      "withdrawButton": {
-        "label": "Vertrag widerrufen"
-      }
+      "withdrawButton": "Vertrag widerrufen"
     }
   }
 }
