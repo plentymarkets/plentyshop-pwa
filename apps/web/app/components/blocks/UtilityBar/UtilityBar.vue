@@ -2,7 +2,8 @@
   <div :style="headerPaletteStyle">
     <header class="relative w-full md:sticky md:shadow-md z-10">
       <div
-        class="flex md:hidden items-center w-full"
+        v-if="viewport.isLessThan('md')"
+        class="flex items-center w-full"
         :style="{ backgroundColor: headerBackgroundColor }"
         data-testid="navbar-top-mobile"
       >
@@ -54,7 +55,8 @@
       </div>
 
       <div
-        class="hidden md:flex items-center flex-nowrap w-full border-0 border-neutral-200"
+        v-else
+        class="flex items-center flex-nowrap w-full border-0 border-neutral-200"
         :style="{ backgroundColor: headerBackgroundColor, ...paddingStyles }"
         data-testid="navbar-top-desktop"
       >
