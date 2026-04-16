@@ -5,6 +5,7 @@ export default defineNuxtPlugin({
     const router = useRouter();
     const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
     const { fetchProducts, data: productsCatalog } = useProducts();
+    const routeDataReady = useState<Promise<void> | null>('routeDataReady', () => null);
 
     const fetchForRoute = async () => {
       const { meta } = router.currentRoute.value;
@@ -32,8 +33,8 @@ export default defineNuxtPlugin({
     await fetchForRoute();
 
     if (import.meta.client) {
-      router.afterEach(async () => {
-        await fetchForRoute();
+      router.afterEach(() => {
+        routeDataReady.value = fetchForRoute();
       });
     }
   },
