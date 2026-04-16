@@ -21,6 +21,6 @@ const enableHeaderActionsOnlyForIndex = computed(() => {
 
 const headerBlocksClasses = computed(() => [
   'header-blocks',
-  { 'sticky top-0 z-50': (headerBlock.value?.configuration as Record<string, any>)?.layout?.sticky },
+  { 'sticky top-0 z-50': headerBlock.value?.configuration?.layout?.sticky },
 ]);
 </script>

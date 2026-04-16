@@ -43,10 +43,8 @@ import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderC
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
-const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
-const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const emit = defineEmits<{
   'set-edit-title': [title: string];
