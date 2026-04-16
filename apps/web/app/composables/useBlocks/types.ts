@@ -25,6 +25,7 @@ export interface UseBlocks {
   updateBlocks: (blocks: Block[]) => void;
   discardChanges: () => void;
   setDefaultTemplate: (blocks: Block[]) => void;
+  isSettling: Ref<boolean>;
   FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
 }
 
