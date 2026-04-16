@@ -5,6 +5,8 @@ describe('Footer Block', () => {
   const cookieBar = new CookieBarObject();
   const isFlagOn = Cypress.env('ENABLE_CONTRACT_WITHDRAWAL_BUTTON') === '1';
 
+  const getFooter = () => cy.getByTestId('footer');
+
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
@@ -16,8 +18,6 @@ describe('Footer Block', () => {
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
   });
-
-  const getFooter = () => cy.getByTestId('footer');
 
   it('should render footer', () => {
     getFooter().should('be.visible');
@@ -40,16 +40,15 @@ describe('Footer Block', () => {
     });
   });
 
-  it('should render cancellation rights before the withdrawal button when feature flag is ON', function () {
-    if (!isFlagOn) {
-      cy.log('Skipping because ENABLE_CONTRACT_WITHDRAWAL_BUTTON is OFF');
-      return;
-    }
+  it('should render cancellation rights before the withdrawal button when feature flag is ON', () => {
+    if (!isFlagOn) return;
 
     getFooter().then(($footer) => {
       const text = $footer.text();
 
-      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(text.indexOf('Withdraw from contract here'));
+      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(
+        text.indexOf('Withdraw from contract here'),
+      );
     });
   });
 
@@ -59,12 +58,11 @@ describe('Footer Block', () => {
       .and('have.css', 'color', 'rgb(28, 28, 28)');
   });
 
-  it('should navigate to cancellation form when clicking the withdrawal button if feature flag is ON', function () {
-    if (!isFlagOn) {
-      cy.log('Skipping because ENABLE_CONTRACT_WITHDRAWAL_BUTTON is OFF');
-      return;
-    }
+  it('should navigate to cancellation form when clicking the withdrawal button if feature flag is ON', () => {
+    if (!isFlagOn) return;
 
-    cy.getByTestId('footer-cancellation-button').should('have.attr', 'href').and('include', paths.cancellationForm);
+    cy.getByTestId('footer-cancellation-button')
+      .should('have.attr', 'href')
+      .and('include', paths.cancellationForm);
   });
 });
