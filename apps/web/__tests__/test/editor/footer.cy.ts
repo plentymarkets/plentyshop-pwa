@@ -46,9 +46,7 @@ describe('Footer Block', () => {
     getFooter().then(($footer) => {
       const text = $footer.text();
 
-      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(
-        text.indexOf('Withdraw from contract here'),
-      );
+      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(text.indexOf('Withdraw from contract here'));
     });
   });
 
@@ -61,8 +59,6 @@ describe('Footer Block', () => {
   it('should navigate to cancellation form when clicking the withdrawal button if feature flag is ON', () => {
     if (!isFlagOn) return;
 
-    cy.getByTestId('footer-cancellation-button')
-      .should('have.attr', 'href')
-      .and('include', paths.cancellationForm);
+    cy.getByTestId('footer-cancellation-button').should('have.attr', 'href').and('include', paths.cancellationForm);
   });
 });
