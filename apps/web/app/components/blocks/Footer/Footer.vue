@@ -31,7 +31,10 @@
               </SfLink>
             </SfListItem>
           </ul>
-          <div v-if="enableContractWithdrawalButton  && resolvedContent.column1?.showCancellationForm" class="px-4 pt-2 flex">
+          <div
+            v-if="enableContractWithdrawalButton && resolvedContent.column1?.showCancellationForm"
+            class="px-4 pt-2 flex"
+          >
             <UiButton
               :tag="NuxtLink"
               :to="localePath(paths.cancellationForm)"

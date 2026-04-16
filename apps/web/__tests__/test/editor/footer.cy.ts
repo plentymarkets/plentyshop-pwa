@@ -55,9 +55,7 @@ describe('Footer Block', () => {
     getFooter().then(($footer) => {
       const text = $footer.text();
 
-      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(
-        text.indexOf('Withdraw from contract here'),
-      );
+      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(text.indexOf('Withdraw from contract here'));
     });
   });
 
@@ -77,8 +75,6 @@ describe('Footer Block', () => {
 
     visitPage();
 
-    cy.getByTestId('footer-cancellation-button')
-      .should('have.attr', 'href')
-      .and('include', paths.cancellationForm);
+    cy.getByTestId('footer-cancellation-button').should('have.attr', 'href').and('include', paths.cancellationForm);
   });
 });

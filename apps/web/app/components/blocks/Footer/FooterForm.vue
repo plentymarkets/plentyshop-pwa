@@ -373,27 +373,25 @@ const sourceBlock = getSourceBlock();
 const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
 const footerContent = computed(() => footerBlock.value.content as FooterContent);
 
-const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS
-  .filter((config) => {
-    if (config.columnGroup !== 'legal') return false;
+const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => {
+  if (config.columnGroup !== 'legal') return false;
 
-    if (enableContractWithdrawalButton && config.key === 'showCancellationForm') {
-      return false;
-    }
+  if (enableContractWithdrawalButton && config.key === 'showCancellationForm') {
+    return false;
+  }
 
-    return true;
-  })
-  .map((switchConfig) => ({
-    id: `${switchConfig.key}-switch`,
-    translationKey: switchConfig.editorTranslationKey,
-    model: computed({
-      get: () => footerContent.value.column1[switchConfig.key] as boolean,
-      set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterContent;
-        content.column1[switchConfig.key] = value;
-      },
-    }),
-  }));
+  return true;
+}).map((switchConfig) => ({
+  id: `${switchConfig.key}-switch`,
+  translationKey: switchConfig.editorTranslationKey,
+  model: computed({
+    get: () => footerContent.value.column1[switchConfig.key] as boolean,
+    set: (value: boolean) => {
+      const content = footerBlock.value.content as FooterContent;
+      content.column1[switchConfig.key] = value;
+    },
+  }),
+}));
 
 const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'services').map(
   (switchConfig) => ({
