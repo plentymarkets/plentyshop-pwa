@@ -20,7 +20,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     useNuxtApp().$i18n.locale.value,
   );
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
-  const { public: { editorUnsavedChangesConfirm } } = useRuntimeConfig();
+  const editorUnsavedChangesConfirm = useRuntimeConfig().public?.editorUnsavedChangesConfirm ?? true;
 
   const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
 
