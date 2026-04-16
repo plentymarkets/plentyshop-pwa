@@ -146,4 +146,3 @@ const getColumnSwitches = (column: FooterColumn) => {
   }));
 };
 </script>
-
