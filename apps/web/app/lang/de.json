@@ -814,7 +814,8 @@
     "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
     "cancellationForm": "Widerrufsformular",
     "declarationOfAccessibility": "Barrierefreiheitserklärung",
-    "legalDisclosure": "Impressum"
+    "legalDisclosure": "Impressum",
+    "withdrawButton": "Vertrag widerrufen"
   },
   "manufacturer": {
     "contactUrl": "Kontaktformular",
