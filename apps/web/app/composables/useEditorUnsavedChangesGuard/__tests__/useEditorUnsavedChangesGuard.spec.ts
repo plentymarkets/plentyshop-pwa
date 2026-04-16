@@ -24,17 +24,16 @@ const { getEditorUITranslation } = vi.hoisted(() => ({
   getEditorUITranslation: vi.fn((key: string) => `Translated: ${key}`),
 }));
 
-const { useBlockTemplates } = vi.hoisted(() => ({
-  useBlockTemplates: vi.fn(() => ({
-    resetFooterToSaved: vi.fn().mockResolvedValue(undefined),
-    resetHeaderToSaved: vi.fn().mockResolvedValue(undefined),
+const { useBlocks } = vi.hoisted(() => ({
+  useBlocks: vi.fn(() => ({
+    discardChanges: vi.fn(),
   })),
 }));
 
 mockNuxtImport('useEditor', () => useEditor);
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
 mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
-mockNuxtImport('useBlockTemplates', () => useBlockTemplates);
+mockNuxtImport('useBlocks', () => useBlocks);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
 
 let mockOnBeforeRouteLeave: ((callback: () => Promise<boolean | undefined>) => void) | null = null;
@@ -51,8 +50,7 @@ describe('useEditorUnsavedChangesGuard', () => {
   let isEditingEnabled: Ref<boolean>;
   let settingsIsDirty: Ref<boolean>;
   let closeDrawer: ReturnType<typeof vi.fn>;
-  let resetFooterToSaved: ReturnType<typeof vi.fn>;
-  let resetHeaderToSaved: ReturnType<typeof vi.fn>;
+  let discardChanges: ReturnType<typeof vi.fn>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
   let routeLeaveCallback: (() => Promise<boolean | undefined>) | null = null;
 
@@ -62,8 +60,7 @@ describe('useEditorUnsavedChangesGuard', () => {
     isEditingEnabled = ref<boolean>(false);
     settingsIsDirty = ref<boolean>(false);
     closeDrawer = vi.fn();
-    resetFooterToSaved = vi.fn().mockResolvedValue(undefined);
-    resetHeaderToSaved = vi.fn().mockResolvedValue(undefined);
+    discardChanges = vi.fn();
 
     useEditor.mockReturnValue({
       isEditingEnabled,
@@ -77,9 +74,8 @@ describe('useEditorUnsavedChangesGuard', () => {
       closeDrawer,
     });
 
-    useBlockTemplates.mockReturnValue({
-      resetFooterToSaved,
-      resetHeaderToSaved,
+    useBlocks.mockReturnValue({
+      discardChanges,
     });
 
     vi.spyOn(window, 'addEventListener').mockImplementation(
@@ -271,7 +267,7 @@ describe('useEditorUnsavedChangesGuard', () => {
       const result = await routeLeaveCallback?.();
 
       expect(confirmSpy).toHaveBeenCalledWith('Translated: unsaved-changes-confirm');
-      expect(resetFooterToSaved).toHaveBeenCalled();
+      expect(discardChanges).toHaveBeenCalled();
       expect(result).toBe(true);
       expect(closeDrawer).toHaveBeenCalled();
     });
@@ -359,7 +355,7 @@ describe('useEditorUnsavedChangesGuard', () => {
       await routeLeaveCallback?.();
 
       expect(confirmSpy).toHaveBeenCalled();
-      expect(resetFooterToSaved).toHaveBeenCalled();
+      expect(discardChanges).toHaveBeenCalled();
       expect(customOnConfirmLeave).toHaveBeenCalled();
       expect(closeDrawer).not.toHaveBeenCalled();
     });

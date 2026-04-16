@@ -216,10 +216,6 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
 
 const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
 
-const isEditDisabled = () => {
-  return route.fullPath !== getHomePath(locale.value);
-};
-
 const showTopAddBlockButton = computed(
   () =>
     props.enableActions &&
