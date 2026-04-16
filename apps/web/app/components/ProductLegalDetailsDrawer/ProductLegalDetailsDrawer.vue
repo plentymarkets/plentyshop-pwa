@@ -92,16 +92,11 @@ const productLegalDrawerRef = ref();
 const { open, openedBlockUuid } = useProductLegalDetailsDrawer();
 useTrapFocus(productLegalDrawerRef, { activeState: open });
 
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks } = useBlocks();
 
 const productLegalBlock = computed(() => {
   if (!openedBlockUuid.value) return null;
-  return data.value
+  return allBlocks.value
     .flatMap((block) => (Array.isArray(block.content) ? block.content : [block]))
     .find((block) => block.meta?.uuid === openedBlockUuid.value);
 });

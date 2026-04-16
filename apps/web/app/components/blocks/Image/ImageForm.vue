@@ -379,12 +379,8 @@ import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { blocks: data } = useBlocks();
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 

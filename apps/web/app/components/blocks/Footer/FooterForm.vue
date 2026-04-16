@@ -346,16 +346,10 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
-import type { Block } from '@plentymarkets/shop-api';
-const route = useRoute();
-const { data, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+
+const { footer, FOOTER_SWITCH_DEFINITIONS } = useBlocks();
+
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
-const props = defineProps<{ uuid?: string }>();
 
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
@@ -365,13 +359,8 @@ const footNoteOpen = ref(false);
 const footerColors = ref(false);
 const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 
-const getSourceBlock = (): Block | null => {
-  return findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
-};
-
-const sourceBlock = getSourceBlock();
-const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
-const footerContent = computed(() => footerBlock.value.content as FooterContent);
+const footerBlock = computed(() => footer.value as FooterBlock);
+const footerContent = computed(() => footerBlock.value?.content as FooterContent);
 
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => {
   if (config.columnGroup !== 'legal') return false;
@@ -385,10 +374,11 @@ const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => {
   id: `${switchConfig.key}-switch`,
   translationKey: switchConfig.editorTranslationKey,
   model: computed({
-    get: () => footerContent.value.column1[switchConfig.key] as boolean,
+    get: () => footerContent.value?.column1[switchConfig.key] as boolean,
     set: (value: boolean) => {
-      const content = footerBlock.value.content as FooterContent;
-      content.column1[switchConfig.key] = value;
+      if (footerBlock.value?.content) {
+        (footerBlock.value.content as FooterContent).column1[switchConfig.key] = value;
+      }
     },
   }),
 }));
@@ -398,24 +388,14 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
-      get: () => footerContent.value.column2[switchConfig.key] as boolean,
+      get: () => footerContent.value?.column2[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterContent;
-        content.column2[switchConfig.key] = value;
+        if (footerBlock.value?.content) {
+          (footerBlock.value.content as FooterContent).column2[switchConfig.key] = value;
+        }
       },
     }),
   }),
-);
-
-watch(
-  footerBlock,
-  (updatedFooterBlock) => {
-    const block = getSourceBlock();
-    if (block) {
-      block.content = updatedFooterBlock.content;
-    }
-  },
-  { deep: true },
 );
 </script>
 

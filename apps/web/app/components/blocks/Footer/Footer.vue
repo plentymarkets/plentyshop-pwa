@@ -105,11 +105,8 @@ const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useBlockTemplates(
-  'index',
-  'immutable',
-  useNuxtApp().$i18n.locale.value,
-);
+const { footer, FOOTER_SWITCH_DEFINITIONS } = useBlocks();
+
 const { t } = useI18n();
 const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 const shouldRender = computed(() => {
@@ -120,9 +117,8 @@ const shouldRender = computed(() => {
 const resolvedContent = computed(() => {
   if (!shouldRender.value) return null;
 
-  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
-
-  return mapFooterData(block).content as FooterContent;
+  const content = props.content ?? footer.value?.content;
+  return (content ?? null) as FooterContent | null;
 });
 const hasColumn1Button = computed(() => {
   return !!(enableContractWithdrawalButton && resolvedContent.value?.column1?.showCancellationForm);

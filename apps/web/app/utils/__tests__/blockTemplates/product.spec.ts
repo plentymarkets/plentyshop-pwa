@@ -17,7 +17,6 @@ describe('createProduct', () => {
     expect(blockNames).toContain('CustomerReview');
     expect(blockNames).toContain('ProductLegalInformation');
     expect(blockNames).toContain('ProductRecommendedProducts');
-    expect(blockNames).toContain('Footer');
   });
 
   it('should create blocks with valid structure', () => {
@@ -50,12 +49,9 @@ describe('createProduct', () => {
     expect(typeof content?.text?.title).toBe('string');
   });
 
-  it('should have valid Footer block structure', () => {
+  it('should not include Footer (Footer is a global block)', () => {
     const blocks = createProduct();
-    const footerBlock = blocks.find((block) => block.name === 'Footer');
-    expect(footerBlock).toBeDefined();
-    expect(footerBlock?.type).toBe('content');
-    expect(footerBlock?.meta).toBeDefined();
-    expect(footerBlock?.content).toBeDefined();
+    const blockNames = blocks.map((block) => block.name);
+    expect(blockNames).not.toContain('Footer');
   });
 });

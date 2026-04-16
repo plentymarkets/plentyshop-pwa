@@ -124,12 +124,7 @@ const reviewsOpen = ref(true);
 const layoutOpen = ref(true);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { blocks: data } = useBlocks();
 
 const customerReview = computed<CustomerReviewContent>(() => {
   const uuid = blockUuid.value;
