@@ -77,7 +77,7 @@ const { hasChanges: localizationHasChanges } = useEditorLocalizationKeys();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { isDrawerOpen } = useDrawerState();
 
-const { data, loading, cleanData } = useBlocks();
+const { data, cleanData, loading } = useBlocks();
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
@@ -101,7 +101,7 @@ const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'lg:z-20 md:z-10'
 
 watch(
   () => data.value,
-  async () => {
+  () => {
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
   },
   { deep: true },

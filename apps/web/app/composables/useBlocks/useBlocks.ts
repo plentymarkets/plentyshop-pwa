@@ -168,8 +168,16 @@ export const useBlocks: UseBlocksReturn = () => {
 
     const allBlocks = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
 
-    state.value.data = allBlocks;
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+    const serialized = JSON.stringify(allBlocks);
+
+    state.value.data = JSON.parse(serialized);
+
+    await nextTick();
+    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+
+    const { isEditingEnabled } = useEditor();
+    isEditingEnabled.value = false;
+
     state.value.loading = false;
   };
 
