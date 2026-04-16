@@ -132,6 +132,9 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string, identifier: string
   return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
 };
 
+const isSettling = ref(false);
+let settleTimer: ReturnType<typeof setTimeout> | null = null;
+
 export const useBlocks: UseBlocksReturn = () => {
   const state = useState<UseBlocksState>(`useBlocks`, () => ({
     data: {} as GetBlocksResponse,
@@ -139,6 +142,20 @@ export const useBlocks: UseBlocksReturn = () => {
     defaultTemplateData: [] as Block[],
     loading: false,
   }));
+
+  /*
+   @description Schedule setting up clean data & editor enable reset with a timeout.
+   */
+  const scheduleCleanDataSync = () => {
+    isSettling.value = true;
+    if (settleTimer) clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => {
+      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+      const { isEditingEnabled } = useEditor();
+      isEditingEnabled.value = false;
+      isSettling.value = false;
+    }, 150);
+  };
 
   const headerContainer = computed(() => state.value.data.HeaderContainer);
   const footer = computed(() => state.value.data.Footer);
@@ -171,14 +188,15 @@ export const useBlocks: UseBlocksReturn = () => {
     const serialized = JSON.stringify(allBlocks);
 
     state.value.data = JSON.parse(serialized);
-
-    await nextTick();
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+    state.value.cleanData = markRaw(JSON.parse(serialized));
+    state.value.loading = false;
 
     const { isEditingEnabled } = useEditor();
     isEditingEnabled.value = false;
 
-    state.value.loading = false;
+    if (import.meta.client) {
+      scheduleCleanDataSync();
+    }
   };
 
   const saveBlocks = async (identifier: string | number, type: string, content: string): Promise<boolean> => {
@@ -253,6 +271,7 @@ export const useBlocks: UseBlocksReturn = () => {
     updateBlocks,
     discardChanges,
     setDefaultTemplate,
+    isSettling,
     FOOTER_SWITCH_DEFINITIONS,
   };
 };
