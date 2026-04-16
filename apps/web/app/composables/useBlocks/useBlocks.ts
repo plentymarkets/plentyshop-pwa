@@ -101,11 +101,14 @@ const normalizeFooter = (block: Block): Block => {
   };
 };
 
-const getDefaultPageBlocks = (type: string): Block[] => {
+const getDefaultPageBlocks = (type: string, identifier: string | number): Block[] => {
   switch (type) {
     case 'immutable':
       return createHomepage();
     case 'category':
+      if (typeof identifier === 'number' && identifier > 0) {
+        return [];
+      }
       return createCategory();
     case 'product':
       return createProduct();
@@ -114,14 +117,15 @@ const getDefaultPageBlocks = (type: string): Block[] => {
   }
 };
 
-const assembleBlocks = (raw: GetBlocksResponse, type: string): GetBlocksResponse => {
+const assembleBlocks = (raw: GetBlocksResponse, type: string, identifier: string | number): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
     ? createDefaultHeaderContainerBlock()
     : raw?.HeaderContainer;
 
   const Footer = raw?.Footer ? normalizeFooter(raw.Footer) : normalizeFooter(createFooter());
 
-  const pageBlocks = Array.isArray(raw?.blocks) && raw?.blocks.length > 0 ? raw?.blocks : getDefaultPageBlocks(type);
+  const pageBlocks =
+    Array.isArray(raw?.blocks) && raw?.blocks.length > 0 ? raw?.blocks : getDefaultPageBlocks(type, identifier);
 
   migrateAllBlocks(pageBlocks);
 
@@ -162,7 +166,7 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const allBlocks = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type);
+    const allBlocks = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
 
     state.value.data = allBlocks;
     state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
@@ -180,7 +184,11 @@ export const useBlocks: UseBlocksReturn = () => {
         enableGlobalBlocks: true,
       });
 
-      const allBlocks = assembleBlocks((response?.data as unknown as GetBlocksResponse) ?? state.value.data, type);
+      const allBlocks = assembleBlocks(
+        (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
+        type,
+        identifier,
+      );
       state.value.data = allBlocks;
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
 
@@ -194,7 +202,7 @@ export const useBlocks: UseBlocksReturn = () => {
     }
   };
 
-  const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable') => {
+  const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable', identifier: string | number = 0) => {
     const allBlocks = assembleBlocks(
       {
         HeaderContainer: headerContainer.value,
@@ -202,6 +210,7 @@ export const useBlocks: UseBlocksReturn = () => {
         Footer: footer.value,
       } as GetBlocksResponse,
       type,
+      identifier,
     );
 
     state.value.data = allBlocks;

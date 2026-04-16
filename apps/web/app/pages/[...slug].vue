@@ -30,8 +30,8 @@ const route = useRoute();
 const router = useRouter();
 const { setCategoriesPageMeta } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
-const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, loading } = useProducts();
+const { getFacetsFromURL } = useCategoryFilter();
+const { data: productsCatalog, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 
@@ -64,8 +64,6 @@ const breadcrumbs = computed(() => {
 const canonicalDb = productsCatalog.value.category?.details?.[0]?.canonicalLink;
 
 const handleQueryUpdate = async () => {
-  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
-
   if (!productsCatalog.value.category) {
     throw createError({
       statusCode: 404,

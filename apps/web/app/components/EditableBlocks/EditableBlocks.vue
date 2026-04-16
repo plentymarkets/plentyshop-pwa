@@ -1,7 +1,5 @@
 <template>
   <div>
-    <EmptyBlock v-if="!readOnly && isContentEmptyInEditor" />
-    <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
     <draggable
       v-if="data.length"
       v-model="data"
@@ -41,6 +39,8 @@
         </div>
       </template>
     </draggable>
+    <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
+    <EmptyBlock v-else />
   </div>
 </template>
 
@@ -51,7 +51,7 @@ import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
-const { isInEditor, shouldShowEditorUI } = useEditorState();
+const { isLiveMode, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
   identifier: 'index',
   type: 'immutable',
@@ -98,11 +98,7 @@ const data = computed({
 
 const getIndex = (block: Block) => renderedBlocks.value.indexOf(block);
 
-const dataIsEmpty = computed(() => data.value.length === 0);
-
-const isContentEmptyInEditor = computed(() => dataIsEmpty.value && isInEditor.value);
-
-const isContentEmptyInLive = computed(() => dataIsEmpty.value);
+const isContentEmptyInLive = computed(() => data.value.length === 0 && isLiveMode.value);
 
 const {
   isClicked,
@@ -142,7 +138,7 @@ const {
   siteConfigurationDrawerView: siteConfigurationDrawerViewRef,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
+const { shouldShowBlock, clearRegistry } = useBlocksVisibility();
 
 const drawerOpen = computed<boolean>(() => siteConfigurationDrawerOpenRef.value);
 const drawerView = computed<string | null>(() => siteConfigurationDrawerViewRef.value);
