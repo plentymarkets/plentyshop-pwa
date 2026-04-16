@@ -110,9 +110,7 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
   readOnly: false,
 });
 
-const route = useRoute();
 const { isInEditorClient } = useEditorState();
-const { locale, defaultLocale } = useI18n();
 const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
