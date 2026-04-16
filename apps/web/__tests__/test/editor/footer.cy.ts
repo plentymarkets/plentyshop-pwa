@@ -5,7 +5,7 @@ describe('Footer Block', () => {
   const cookieBar = new CookieBarObject();
   const isFlagOn = Cypress.env('ENABLE_CONTRACT_WITHDRAWAL_BUTTON') === '1';
 
-  const visitPage = () => {
+  beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
 
@@ -15,19 +15,15 @@ describe('Footer Block', () => {
 
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
-  };
+  });
 
   const getFooter = () => cy.getByTestId('footer');
 
   it('should render footer', () => {
-    visitPage();
-
     getFooter().should('be.visible');
   });
 
   it('should render the correct cancellation action depending on feature flag', () => {
-    visitPage();
-
     getFooter().within(() => {
       if (isFlagOn) {
         cy.getByTestId('footer-cancellation-button')
@@ -50,8 +46,6 @@ describe('Footer Block', () => {
       return;
     }
 
-    visitPage();
-
     getFooter().then(($footer) => {
       const text = $footer.text();
 
@@ -60,8 +54,6 @@ describe('Footer Block', () => {
   });
 
   it('should apply footer colors', () => {
-    visitPage();
-
     getFooter()
       .should('have.css', 'background-color', 'rgb(207, 228, 236)')
       .and('have.css', 'color', 'rgb(28, 28, 28)');
@@ -72,8 +64,6 @@ describe('Footer Block', () => {
       cy.log('Skipping because ENABLE_CONTRACT_WITHDRAWAL_BUTTON is OFF');
       return;
     }
-
-    visitPage();
 
     cy.getByTestId('footer-cancellation-button').should('have.attr', 'href').and('include', paths.cancellationForm);
   });
