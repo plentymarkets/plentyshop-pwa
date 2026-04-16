@@ -42,11 +42,7 @@ import { SfIconDelete, SfIconClose, SfIconChevronLeft } from '@storefront-ui/vue
 
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks } = useBlocks();
 
 const { closeBlocksConfigurationDrawer, blocksConfigurationDrawerView, blockType, blockUuid } = useSiteConfiguration();
 
@@ -98,7 +94,7 @@ const getComponent = (name: string) => {
 
 const currentComponent = computed(() => getComponent(blockType.value));
 
-const block = computed(() => findOrDeleteBlockByUuid(data.value, blockUuid.value));
+const block = computed(() => findOrDeleteBlockByUuid(allBlocks.value, blockUuid.value));
 
 const blockDisplayName = computed(() => {
   if (blockType.value === 'Carousel') {

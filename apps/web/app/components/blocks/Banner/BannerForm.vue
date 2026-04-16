@@ -367,12 +367,7 @@ import type { BannerFormProps, BannerProps } from './types';
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { blocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 

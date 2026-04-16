@@ -131,12 +131,7 @@ const layoutOpen = ref(true);
 const props = defineProps<ProductLegalInformationProps>();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { blocks: data } = useBlocks();
 
 const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;

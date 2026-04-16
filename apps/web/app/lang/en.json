@@ -814,7 +814,8 @@
     "termsRequired": "You have to agree with the terms and conditions.",
     "cancellationForm": "Cancellation form",
     "declarationOfAccessibility": "Declaration of accessibility",
-    "legalDisclosure": "Legal disclosure"
+    "legalDisclosure": "Legal disclosure",
+    "withdrawButton": "Withdraw from contract here"
   },
   "manufacturer": {
     "contactUrl": "Contact form",

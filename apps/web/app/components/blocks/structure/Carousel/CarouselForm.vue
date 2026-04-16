@@ -73,12 +73,7 @@ import type { CarouselStructureProps, SlideBlock } from './types';
 const { blockUuid } = useSiteConfiguration();
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
 const { toggleBlockVisibility } = useBlocksVisibility();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { blocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const emit = defineEmits<{

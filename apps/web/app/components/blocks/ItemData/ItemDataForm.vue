@@ -151,13 +151,7 @@ import {
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
 
-const route = useRoute();
-
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { blocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
