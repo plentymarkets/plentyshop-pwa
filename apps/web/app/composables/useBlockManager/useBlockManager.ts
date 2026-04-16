@@ -27,7 +27,7 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
-  const { data, cleanData, pageBlocks, allBlocks, headerContainer, updateBlocks } = useBlocks();
+  const { data, cleanData, pageBlocks, allBlocks, headerContainer, footer, updateBlocks } = useBlocks();
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
@@ -93,20 +93,26 @@ export const useBlockManager = () => {
       }
 
       const copiedData: Block[] = JSON.parse(JSON.stringify(pageBlocks.value));
-      const parentInfo = findBlockParent(copiedData, targetUuid);
 
-      const parent = parentInfo?.parent ?? copiedData;
-      const index = parentInfo?.index ?? 0;
-
-      const targetBlock = parent[index];
-      if (!targetBlock) return;
-
-      newBlock.parent_slot = targetBlock.parent_slot;
-
-      if (position === 'inside') {
-        insertIntoColumn(targetBlock, newBlock, parent);
+      const isTargetFooter = footer.value?.meta?.uuid === targetUuid;
+      if (isTargetFooter) {
+        copiedData.push(newBlock);
       } else {
-        insertNextToBlock(parent, index, newBlock, position);
+        const parentInfo = findBlockParent(copiedData, targetUuid);
+
+        const parent = parentInfo?.parent ?? copiedData;
+        const index = parentInfo?.index ?? 0;
+
+        const targetBlock = parent[index];
+        if (!targetBlock) return;
+
+        newBlock.parent_slot = targetBlock.parent_slot;
+
+        if (position === 'inside') {
+          insertIntoColumn(targetBlock, newBlock, parent);
+        } else {
+          insertNextToBlock(parent, index, newBlock, position);
+        }
       }
 
       if (Array.isArray(newBlock.content) && newBlock.content.length) {
