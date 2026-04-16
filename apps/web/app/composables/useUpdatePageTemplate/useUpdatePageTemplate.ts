@@ -1,3 +1,5 @@
+import type { Block } from '@plentymarkets/shop-api';
+
 export const useUpdatePageTemplate = () => {
   const updatePageTemplate = async (): Promise<boolean> => {
     const { isEditingEnabled } = useEditor();
@@ -10,7 +12,9 @@ export const useUpdatePageTemplate = () => {
 
     try {
       const { HeaderContainer, blocks: pageBlocks, Footer } = data.value ?? {};
-      const flat = [HeaderContainer, ...(pageBlocks ?? []), Footer];
+      const flat = [HeaderContainer, ...(pageBlocks ?? []), Footer].filter(
+        (block): block is Block => block !== undefined && block !== null,
+      );
       const cleanedData = JSON.stringify(flat);
 
       let identifier: string | number = route.meta.identifier as string | number;

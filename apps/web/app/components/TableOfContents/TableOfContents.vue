@@ -71,7 +71,6 @@ const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 
 const filteredDataForDisplay = computed(() => {
-  // Filter out blocks that are not yet visible in the editor (feature flags).
   return data.value;
 });
 

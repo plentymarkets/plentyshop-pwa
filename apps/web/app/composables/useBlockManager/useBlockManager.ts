@@ -95,8 +95,6 @@ export const useBlockManager = () => {
       const copiedData: Block[] = JSON.parse(JSON.stringify(pageBlocks.value));
       const parentInfo = findBlockParent(copiedData, targetUuid);
 
-      console.warn('parentInfo: ', parentInfo);
-
       const parent = parentInfo?.parent ?? copiedData;
       const index = parentInfo?.index ?? 0;
 
@@ -114,8 +112,6 @@ export const useBlockManager = () => {
       if (Array.isArray(newBlock.content) && newBlock.content.length) {
         setUuid(newBlock.content as Block[]);
       }
-
-      console.warn('copiedData: ', copiedData);
 
       updateBlocks(copiedData);
 
