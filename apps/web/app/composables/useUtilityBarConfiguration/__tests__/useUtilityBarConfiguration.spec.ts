@@ -56,7 +56,6 @@ mockNuxtImport('useNuxtApp', () => () => ({
   },
 }));
 
-
 mockNuxtImport('useBlocks', () => () => ({
   allBlocks: templatesRef,
 }));

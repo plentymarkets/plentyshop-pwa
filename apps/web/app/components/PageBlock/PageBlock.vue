@@ -214,8 +214,6 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
   multigridColumnUuid.value = null;
 };
 
-const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
-
 const showTopAddBlockButton = computed(
   () =>
     props.enableActions &&
