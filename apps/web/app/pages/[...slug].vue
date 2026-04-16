@@ -64,7 +64,9 @@ const breadcrumbs = computed(() => {
 const canonicalDb = productsCatalog.value.category?.details?.[0]?.canonicalLink;
 
 const handleQueryUpdate = async () => {
-  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+  if (!productsCatalog.value.category) {
+    await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+  }
 
   if (!productsCatalog.value.category) {
     throw createError({
