@@ -464,13 +464,13 @@
     }
   },
   "cancellationForm": {
-    "orderId": "Order ID",
-    "name": "Name",
-    "email": "Email",
-    "reason": "Reason for cancellation",
-    "submit": "Submit cancellation",
+    "orderId": "Order Number",
+    "name": "Full Name",
+    "email": "Contact-Mail",
+    "reason": "Reason for Cancellation",
+    "submit": "Submit withdrawal",
     "asterixHint": "marked fields are required",
-    "orderIdInvalid": "Please enter a valid order ID.",
+    "orderIdInvalid": "Please enter a valid order number.",
     "misConfigured": "Our cancellation form is temporarily disabled due to a missing configuration. Please check back later or reach out to us via alternative contact methods.",
     "success": "Your notice of withdrawal has been successfully submitted. We have sent a confirmation email containing the details of your request to {email}."
   },

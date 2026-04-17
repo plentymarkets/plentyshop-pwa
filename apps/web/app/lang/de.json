@@ -464,13 +464,13 @@
     }
   },
   "cancellationForm": {
-    "orderId": "Bestellnummer",
-    "name": "Name",
-    "email": "E-Mail",
+    "orderId": "Auftragsnummer",
+    "name": "Vollständiger Name",
+    "email": "Kontaktmail",
     "reason": "Grund für den Widerruf",
-    "submit": "Widerruf absenden",
+    "submit": "Vertrag kündigen",
     "asterixHint": "markierte Felder sind Pflichtfelder",
-    "orderIdInvalid": "Bitte geben Sie eine gültige Bestellnummer ein.",
+    "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
     "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
     "success": "Ihr Widerruf wurde erfolgreich übermittelt. Wir haben soeben eine Bestätigungs-E-Mail mit allen Details an {email} gesendet."
   },
