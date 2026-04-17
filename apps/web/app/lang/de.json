@@ -1192,6 +1192,10 @@
     }
   },
   "storefrontError": {
+    "cancellation": {
+      "recipientNotConfigured": "Das Widerrufsformular ist nicht konfiguriert. Bitte kontaktieren Sie den Seitenbetreiber.",
+      "submitFailed": "Der Widerruf konnte nicht übermittelt werden. Bitte versuchen Sie es später erneut."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",

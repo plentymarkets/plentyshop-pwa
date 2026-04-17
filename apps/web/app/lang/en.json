@@ -1192,6 +1192,10 @@
     }
   },
   "storefrontError": {
+    "cancellation": {
+      "recipientNotConfigured": "The cancellation form is not configured. Please contact the site administrator.",
+      "submitFailed": "The cancellation request could not be submitted. Please try again later."
+    },
     "address": {
       "createFailed": "Saving the address has failed.",
       "deleteFailed": "The deletion of the address failed.",
