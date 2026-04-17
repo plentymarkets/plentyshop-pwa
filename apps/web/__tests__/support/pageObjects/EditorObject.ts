@@ -287,7 +287,7 @@ export class EditorObject extends PageObject {
   }
 
   switchLanguage() {
-    cy.intercept('/plentysystems/getBlocks').as('getBlocks');
+    cy.intercept('/plentysystems/getBlocksWithGlobalBlocks').as('getBlocks');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
     cy.intercept('/plentysystems/getSession').as('getSession');
 
