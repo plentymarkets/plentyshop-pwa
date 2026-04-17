@@ -22,7 +22,10 @@ export class TableOfContentsObject extends PageObject {
   }
 
   get contentTableOfContentsItemLabels() {
-    return cy.get('[data-testid^="toc-visibility-"]').closest('[data-testid^="toc-item-"]').find('[data-testid="toc-label"]');
+    return cy
+      .get('[data-testid^="toc-visibility-"]')
+      .closest('[data-testid^="toc-item-"]')
+      .find('[data-testid="toc-label"]');
   }
 
   get tableOfContentsItemLabel() {

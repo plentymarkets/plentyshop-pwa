@@ -244,7 +244,11 @@ export class EditorObject extends PageObject {
   }
 
   buttonsExistWithGroupClasses() {
-    this.contentBlockWrappers.first().should('exist').and('have.class', 'group').and('not.have.css', 'outline-style', 'solid');
+    this.contentBlockWrappers
+      .first()
+      .should('exist')
+      .and('have.class', 'group')
+      .and('not.have.css', 'outline-style', 'solid');
     this.contentBlockWrappers.first().within(() => {
       this.topBlockButton
         .should('exist')
