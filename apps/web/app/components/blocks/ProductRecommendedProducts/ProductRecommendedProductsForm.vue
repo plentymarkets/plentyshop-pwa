@@ -120,8 +120,11 @@ import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-const { blocks: data } = useBlocks();
+const props = defineProps<{ uuid?: string }>();
+
+const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { currentProduct } = useProducts();
 const { data: categoryTree } = useCategoryTree();
@@ -129,7 +132,7 @@ const layoutOpen = ref(true);
 
 const recommendedBlock = computed(
   () =>
-    (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
+    (findOrDeleteBlockByUuid(data.value, resolvedUuid.value)?.content || {
       text: {
         pretitle: '',
         title: '',

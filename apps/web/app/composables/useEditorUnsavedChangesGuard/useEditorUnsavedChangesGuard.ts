@@ -23,7 +23,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     event.preventDefault();
   };
 
-  const handleConfirmLeave = async () => {
+  const handleConfirmLeave = () => {
     if (isEditingEnabled.value) {
       discardChanges();
       isEditingEnabled.value = false;
@@ -36,24 +36,48 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     }
   };
 
+  const route = useRoute();
+
+  const handleLinkClick = (event: MouseEvent) => {
+    if (!hasUnsavedChanges()) return;
+
+    if (!(event.target instanceof Element)) return;
+    const anchor = event.target.closest('a[href]');
+    if (!anchor) return;
+
+    const href = anchor.getAttribute('href');
+    if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const confirmation = window.confirm(confirmMessage);
+    if (confirmation) {
+      handleConfirmLeave();
+      navigateTo(href);
+    }
+  };
+
+  addRouteMiddleware(
+    'unsaved-changes-guard',
+    (to) => {
+      if (to.path === route.path) return;
+      if (!hasUnsavedChanges()) return;
+
+      const confirmation = window.confirm(confirmMessage);
+      if (!confirmation) return false;
+      handleConfirmLeave();
+    },
+    { global: true },
+  );
+
   onMounted(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('click', handleLinkClick, true);
   });
 
   onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
-  });
-
-  onBeforeRouteLeave(async () => {
-    if (hasUnsavedChanges()) {
-      const confirmation = window.confirm(confirmMessage);
-
-      if (confirmation) {
-        await handleConfirmLeave();
-        return true;
-      } else {
-        return false;
-      }
-    }
+    document.removeEventListener('click', handleLinkClick, true);
   });
 };

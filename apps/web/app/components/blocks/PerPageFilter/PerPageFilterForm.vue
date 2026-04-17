@@ -78,7 +78,7 @@ import type { PerPageContent, PerPageProps } from '~/components/blocks/PerPageFi
 
 const props = defineProps<PerPageProps>();
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();

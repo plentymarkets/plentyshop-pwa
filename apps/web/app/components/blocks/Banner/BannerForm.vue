@@ -367,7 +367,7 @@ import type { BannerFormProps, BannerProps } from './types';
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
 
