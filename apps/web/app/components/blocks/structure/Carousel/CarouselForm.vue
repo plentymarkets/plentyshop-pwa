@@ -60,7 +60,7 @@
         <template #summary>
           <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
         </template>
-        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
       </UiAccordionItem>
     </template>
   </div>
@@ -70,10 +70,13 @@
 import { SfInput } from '@storefront-ui/vue';
 import type { CarouselStructureProps, SlideBlock } from './types';
 
+const props = defineProps<{ uuid?: string }>();
+
 const { blockUuid } = useSiteConfiguration();
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
 const { toggleBlockVisibility } = useBlocksVisibility();
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const emit = defineEmits<{
@@ -87,7 +90,7 @@ const layoutOpen = ref(true);
 const controlsOpen = ref(true);
 const slideLabels = ref<string[]>([]);
 
-setIndex(blockUuid.value, 0);
+setIndex(resolvedUuid.value, 0);
 
 const blockForm = computed(() => {
   if (editingSlideIndex.value === undefined) return null;
@@ -100,7 +103,7 @@ const blockForm = computed(() => {
 });
 
 const carouselStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as CarouselStructureProps,
+  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as CarouselStructureProps,
 );
 
 const { isFullWidth } = useFullWidthToggleForConfig(
@@ -108,9 +111,9 @@ const { isFullWidth } = useFullWidthToggleForConfig(
   { fullWidth: true },
 );
 
-const controls = computed(() => carouselStructure.value.configuration.controls);
+const controls = computed(() => carouselStructure.value.configuration?.controls ?? { color: '', displayArrows: true });
 
-const currentActiveSlideIndex = computed(() => activeSlideIndex.value[blockUuid.value]);
+const currentActiveSlideIndex = computed(() => activeSlideIndex.value[resolvedUuid.value]);
 
 const slides = computed({
   get: () => {
@@ -124,7 +127,7 @@ const slides = computed({
       },
     }));
   },
-  set: (value: SlideBlock[]) => updateCarouselItems(value, blockUuid.value),
+  set: (value: SlideBlock[]) => updateCarouselItems(value, resolvedUuid.value),
 });
 
 const resolveSlideLabels = async () => {
@@ -132,12 +135,12 @@ const resolveSlideLabels = async () => {
 };
 
 const selectSlide = (index: number) => {
-  setIndex(blockUuid.value, index);
+  setIndex(resolvedUuid.value, index);
 };
 
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
-  setIndex(blockUuid.value, index);
+  setIndex(resolvedUuid.value, index);
   emit('set-edit-title', slideLabels.value[index]!);
 };
 
@@ -165,13 +168,13 @@ const addSlide = async () => {
 
   await nextTick();
 
-  setIndex(blockUuid.value, slides.value.length - 1);
+  setIndex(resolvedUuid.value, slides.value.length - 1);
 };
 
 const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
   slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
-  setIndex(blockUuid.value, 0);
+  setIndex(resolvedUuid.value, 0);
   await nextTick();
   if (editingSlideIndex.value === index) {
     exitEditMode();

@@ -113,7 +113,7 @@ import {
 } from '@storefront-ui/vue';
 import type { TechnicalDataFormProps, TechnicalDataContent } from './types';
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();

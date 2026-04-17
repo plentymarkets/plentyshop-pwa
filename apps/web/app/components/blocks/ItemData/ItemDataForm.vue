@@ -151,7 +151,7 @@ import {
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();

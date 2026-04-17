@@ -47,7 +47,7 @@ import { SfInput } from '@storefront-ui/vue';
 const props = defineProps<AnnouncementBarFormProps>();
 
 const { blockUuid } = useSiteConfiguration();
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const expandedLayoutSettings = ref(true);
 const expandedTextSettings = ref(true);

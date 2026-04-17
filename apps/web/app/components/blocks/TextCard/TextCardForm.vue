@@ -193,7 +193,7 @@ import {
 import type { TextCardFormProps, TextCardContent } from './types';
 const props = defineProps<TextCardFormProps>();
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
