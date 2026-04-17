@@ -6,7 +6,7 @@
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>
-    <SfInput v-model="cancellationEmail" type="text" data-testid="contact-email" />
+    <SfInput v-model="cancellationEmail" type="text" data-testid="cancellation-email" />
   </div>
 </template>
 <script setup lang="ts">
