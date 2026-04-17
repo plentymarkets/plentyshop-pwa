@@ -377,7 +377,7 @@ export class EditorObject extends PageObject {
   }
 
   checkWrapperSpacings() {
-    this.blockWrappers.each((el) => {
+    this.contentBlockWrappers.each((el) => {
       if (this.blockIsBanner(el) || this.isMultiGrid(el) || this.isInnerBlock(el) || this.blockIsFooter(el.get(0))) {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
