@@ -23,7 +23,7 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     event.preventDefault();
   };
 
-  const handleConfirmLeave = async () => {
+  const handleConfirmLeave = () => {
     if (isEditingEnabled.value) {
       discardChanges();
       isEditingEnabled.value = false;
@@ -41,7 +41,8 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
   const handleLinkClick = (event: MouseEvent) => {
     if (!hasUnsavedChanges()) return;
 
-    const anchor = (event.target as HTMLElement).closest('a[href]');
+    if (!(event.target instanceof Element)) return;
+    const anchor = event.target.closest('a[href]');
     if (!anchor) return;
 
     const href = anchor.getAttribute('href');

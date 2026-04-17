@@ -30,7 +30,7 @@ const { useBlocks } = vi.hoisted(() => ({
   })),
 }));
 
-let middlewareCallback: ((to: { path: string }) => boolean | undefined | void) | null = null;
+let middlewareCallback: ((to: { path: string }) => boolean | undefined) | null = null;
 
 const { addRouteMiddleware } = vi.hoisted(() => ({
   addRouteMiddleware: vi.fn(),
