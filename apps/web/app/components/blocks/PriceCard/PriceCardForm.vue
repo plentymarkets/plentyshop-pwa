@@ -194,7 +194,7 @@ import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 

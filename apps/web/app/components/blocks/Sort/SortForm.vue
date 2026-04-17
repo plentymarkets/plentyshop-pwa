@@ -78,7 +78,7 @@ import type { SortContent, SortFormProps } from '~/components/blocks/Sort/types'
 
 const props = defineProps<SortFormProps>();
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();

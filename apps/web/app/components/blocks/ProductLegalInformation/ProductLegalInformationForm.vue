@@ -131,7 +131,7 @@ const layoutOpen = ref(true);
 const props = defineProps<ProductLegalInformationProps>();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const productLegalInformation = computed<ProductLegalInformationContent>(() => {
   const uuid = props.meta?.uuid || blockUuid.value;

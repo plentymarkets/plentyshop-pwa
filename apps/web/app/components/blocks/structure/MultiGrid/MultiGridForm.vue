@@ -85,7 +85,7 @@
           </button>
         </div>
       </div>
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -133,8 +133,11 @@ import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types'
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
+const props = defineProps<{ uuid?: string }>();
+
 const { blockUuid } = useSiteConfiguration();
-const { blocks: data } = useBlocks();
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
+const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
@@ -144,7 +147,7 @@ const isTwoColumnMultigrid = computed(() => {
 });
 
 const multiGridStructure = computed(() => {
-  const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
+  const block = (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
   if (!block.configuration.layout) {
     block.configuration.layout = {
       marginTop: 0,

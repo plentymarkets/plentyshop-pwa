@@ -140,16 +140,18 @@ import { initializeNewsletterContent } from './utils';
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);
+const props = defineProps<{ uuid?: string }>();
+
 const settingsGroup = ref(true);
 const layoutOpen = ref(true);
 
-const { blocks: data } = useBlocks();
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
-  const uuid = blockUuid.value;
+  const uuid = props.uuid || blockUuid.value;
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   return initializeNewsletterContent(rawContent as Partial<NewsletterSubscribeContent>);
 });

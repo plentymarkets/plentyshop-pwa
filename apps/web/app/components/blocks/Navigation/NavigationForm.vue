@@ -185,13 +185,13 @@ import type { NavigationFormProps, NavigationContent } from './types';
 const props = defineProps<NavigationFormProps>();
 const layoutSettings = ref(false);
 
-const { blocks: data } = useBlocks();
+const { allBlocks } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const navigationBlock = computed<NavigationContent>(() => {
-  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
+  const rawContent = findOrDeleteBlockByUuid(allBlocks.value, props.uuid || blockUuid.value)?.content ?? {};
   const content = rawContent as Partial<NavigationContent>;
 
   if (!content.layout) content.layout = {};
