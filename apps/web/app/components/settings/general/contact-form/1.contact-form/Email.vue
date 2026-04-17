@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('cancellationFormRecipient');
+const { updateSetting, getSetting } = useSiteSettings('contactShopEmail');
 
 const contactEmail = computed({
   get: () => getSetting(),
