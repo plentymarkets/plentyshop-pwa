@@ -57,14 +57,18 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
     }
   };
 
-  addRouteMiddleware('unsaved-changes-guard', (to) => {
-    if (to.path === route.path) return;
-    if (!hasUnsavedChanges()) return;
+  addRouteMiddleware(
+    'unsaved-changes-guard',
+    (to) => {
+      if (to.path === route.path) return;
+      if (!hasUnsavedChanges()) return;
 
-    const confirmation = window.confirm(confirmMessage);
-    if (!confirmation) return false;
-    handleConfirmLeave();
-  }, { global: true });
+      const confirmation = window.confirm(confirmMessage);
+      if (!confirmation) return false;
+      handleConfirmLeave();
+    },
+    { global: true },
+  );
 
   onMounted(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
