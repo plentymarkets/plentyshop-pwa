@@ -138,7 +138,7 @@ describe('utils/block-helpers', () => {
       const result = assembleBlocks(raw, 'immutable', 'index');
 
       expect(result.blocks.length).toBeGreaterThan(0);
-      expect(result.blocks[0].name).toBe('Carousel');
+      expect(result.blocks[0]?.name).toBe('Carousel');
     });
 
     it('should use category factory blocks when identifier is not a positive number', () => {
@@ -146,7 +146,7 @@ describe('utils/block-helpers', () => {
       const result = assembleBlocks(raw, 'category', 'slug');
 
       expect(result.blocks.length).toBeGreaterThan(0);
-      expect(result.blocks[0].name).toBe('CategoryData');
+      expect(result.blocks[0]?.name).toBe('CategoryData');
     });
 
     it('should return empty blocks for category with positive numeric identifier', () => {
@@ -161,7 +161,7 @@ describe('utils/block-helpers', () => {
       const result = assembleBlocks(raw, 'product', 'test');
 
       expect(result.blocks.length).toBeGreaterThan(0);
-      expect(result.blocks[0].name).toBe('MultiGrid');
+      expect(result.blocks[0]?.name).toBe('MultiGrid');
     });
 
     it('should return empty blocks for unknown type with no raw blocks', () => {
@@ -178,7 +178,7 @@ describe('utils/block-helpers', () => {
       expect(result.HeaderContainer).toBeDefined();
       expect(result.Footer).toBeDefined();
       expect(result.blocks.length).toBeGreaterThan(0);
-      expect(result.blocks[0].name).toBe('Carousel');
+      expect(result.blocks[0]?.name).toBe('Carousel');
     });
   });
 });
