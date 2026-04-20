@@ -1,6 +1,6 @@
 import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { UseBlocksState, UseBlocksReturn } from './types';
-import { assembleBlocks } from '~/utils/block-helpers';
+import { assembleBlocks } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
   interface NuxtApp {
@@ -24,7 +24,9 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   /*
-    @description Schedule setting up clean data & editor enable reset with a timeout.
+    After a fetch or navigation, the editor may briefly render stale state.
+    This debounced sync waits for the UI to settle before snapshotting cleanData
+    and resetting the editing flag, preventing flicker and dirty-state false positives.
   */
   const scheduleCleanDataSync = () => {
     state.value.isSettling = true;

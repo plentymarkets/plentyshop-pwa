@@ -1,11 +1,4 @@
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
-import { createDefaultHeaderContainerBlock } from '~/utils/blockTemplates/header';
-import { createFooter } from '~/utils/blockTemplates/footer';
-import { createHomepage } from '~/utils/blockTemplates/homepage';
-import { createCategory } from '~/utils/blockTemplates/category';
-import { createProduct } from '~/utils/blockTemplates/product';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
-import { migrateAllBlocks } from '~/utils/migrate-blocks';
 
 const FOOTER_BLOCK_NAME = 'Footer';
 const HEADER_BLOCK_NAME = 'Header';

@@ -33,6 +33,11 @@ describe('utils/block-helpers', () => {
     it('should return false for other block names', () => {
       expect(isHeaderBlock(makeBlock('Footer'))).toBe(false);
     });
+
+    it('should return false for null or undefined', () => {
+      expect(isHeaderBlock(null)).toBe(false);
+      expect(isHeaderBlock(undefined)).toBe(false);
+    });
   });
 
   describe('isGlobalBlock', () => {
@@ -48,6 +53,11 @@ describe('utils/block-helpers', () => {
 
     it('should return false for regular content blocks', () => {
       expect(isGlobalBlock(makeBlock('TextCard'))).toBe(false);
+    });
+
+    it('should return false for null or undefined', () => {
+      expect(isGlobalBlock(null)).toBe(false);
+      expect(isGlobalBlock(undefined)).toBe(false);
     });
   });
 
@@ -123,18 +133,20 @@ describe('utils/block-helpers', () => {
       expect(result.Footer?.name).toBe('Footer');
     });
 
-    it('should use default homepage blocks when raw blocks are empty for immutable type', () => {
+    it('should use homepage factory blocks when raw blocks are empty for immutable type', () => {
       const raw = { blocks: [] } as unknown as GetBlocksResponse;
       const result = assembleBlocks(raw, 'immutable', 'index');
 
       expect(result.blocks.length).toBeGreaterThan(0);
+      expect(result.blocks[0].name).toBe('Carousel');
     });
 
-    it('should use default category blocks when identifier is not a positive number', () => {
+    it('should use category factory blocks when identifier is not a positive number', () => {
       const raw = { blocks: [] } as unknown as GetBlocksResponse;
       const result = assembleBlocks(raw, 'category', 'slug');
 
       expect(result.blocks.length).toBeGreaterThan(0);
+      expect(result.blocks[0].name).toBe('CategoryData');
     });
 
     it('should return empty blocks for category with positive numeric identifier', () => {
@@ -144,11 +156,12 @@ describe('utils/block-helpers', () => {
       expect(result.blocks).toEqual([]);
     });
 
-    it('should use default product blocks when raw blocks are empty', () => {
+    it('should use product factory blocks when raw blocks are empty', () => {
       const raw = { blocks: [] } as unknown as GetBlocksResponse;
       const result = assembleBlocks(raw, 'product', 'test');
 
       expect(result.blocks.length).toBeGreaterThan(0);
+      expect(result.blocks[0].name).toBe('MultiGrid');
     });
 
     it('should return empty blocks for unknown type with no raw blocks', () => {
@@ -165,6 +178,7 @@ describe('utils/block-helpers', () => {
       expect(result.HeaderContainer).toBeDefined();
       expect(result.Footer).toBeDefined();
       expect(result.blocks.length).toBeGreaterThan(0);
+      expect(result.blocks[0].name).toBe('Carousel');
     });
   });
 });
