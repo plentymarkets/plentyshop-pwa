@@ -1,11 +1,11 @@
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
-import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
 
 export interface UseBlocksState {
   data: GetBlocksResponse;
   cleanData: GetBlocksResponse;
   defaultTemplateData: Block[];
   loading: boolean;
+  isSettling: boolean;
 }
 
 export interface UseBlocks {
@@ -26,7 +26,6 @@ export interface UseBlocks {
   discardChanges: () => void;
   setDefaultTemplate: (blocks: Block[]) => void;
   isSettling: Ref<boolean>;
-  FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[];
 }
 
 export type UseBlocksReturn = (localeOverride?: string) => UseBlocks;
