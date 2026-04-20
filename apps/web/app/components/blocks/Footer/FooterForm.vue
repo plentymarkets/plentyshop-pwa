@@ -346,8 +346,9 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
+import { FOOTER_SWITCH_DEFINITIONS } from './constants';
 
-const { footer, FOOTER_SWITCH_DEFINITIONS } = useBlocks();
+const { footer } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 
