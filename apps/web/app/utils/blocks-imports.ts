@@ -28,6 +28,19 @@ export const getBlockLoader = (name: string) => {
   return blockLoaders[name];
 };
 
+const asyncComponentCache: Record<string, ReturnType<typeof defineAsyncComponent>> = {};
+
+export const getCachedBlockComponent = (name: string) => {
+  if (asyncComponentCache[name]) return asyncComponentCache[name];
+
+  const loader = blockLoaders[name];
+  if (!loader) return null;
+
+  const component = defineAsyncComponent({ loader });
+  asyncComponentCache[name] = component;
+  return component;
+};
+
 export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
 };

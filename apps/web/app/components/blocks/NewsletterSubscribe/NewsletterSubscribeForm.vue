@@ -140,20 +140,18 @@ import { initializeNewsletterContent } from './utils';
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);
+const props = defineProps<{ uuid?: string }>();
+
 const settingsGroup = ref(true);
 const layoutOpen = ref(true);
 
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks: data } = useBlocks();
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const newsletterBlock = computed<NewsletterSubscribeContent>(() => {
-  const uuid = blockUuid.value;
+  const uuid = props.uuid || blockUuid.value;
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   return initializeNewsletterContent(rawContent as Partial<NewsletterSubscribeContent>);
 });

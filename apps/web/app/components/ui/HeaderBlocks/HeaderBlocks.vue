@@ -1,28 +1,28 @@
 <template>
   <div :class="headerBlocksClasses">
-    <EditableBlocks v-if="headerBlock" :blocks="[headerBlock]" />
+    <EditableBlocks
+      v-if="headerBlock"
+      :has-enabled-actions="enableHeaderActionsOnlyForIndex"
+      :blocks="[headerBlock]"
+      read-only
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-const nuxtApp = useNuxtApp();
-const { headerContainerCache, fetchHeaderContainerBlock } = useBlockTemplates(
-  'index',
-  'immutable',
-  nuxtApp.$i18n.locale.value,
-);
+import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 
-const headerBlock = computed(() => headerContainerCache.value);
+const { headerContainer } = useBlocks();
+const route = useRoute();
+
+const headerBlock = computed(() => headerContainer.value);
+
+const enableHeaderActionsOnlyForIndex = computed(() => {
+  return route.meta.identifier === 'index';
+});
 
 const headerBlocksClasses = computed(() => [
   'header-blocks',
-  { 'sticky top-0 z-50': headerBlock.value?.configuration?.layout?.sticky },
+  { 'sticky top-0 z-50': (headerBlock.value as HeaderContainerBlock | undefined)?.configuration?.layout?.sticky },
 ]);
-
-watch(
-  () => nuxtApp.$i18n.locale.value,
-  async () => {
-    await fetchHeaderContainerBlock(true);
-  },
-);
 </script>

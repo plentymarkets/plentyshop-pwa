@@ -29,6 +29,7 @@ export * from './useCategoryDetails';
 export * from './useCategoryFilter';
 export * from './useCategoryIdHelper';
 export * from './useBlockTemplates';
+export * from './useBlocks';
 export * from './useCategoryTree';
 export * from './useCheckout';
 export * from './useCheckoutPagePaymentAndShipping';

@@ -43,7 +43,7 @@
                 </SfIconBase>
               </button>
 
-              <div :key="`menu-${index}`" class="relative">
+              <!-- <div :key="`menu-${index}`" class="relative">
                 <button
                   :data-testid="`actions-menu-section-${index}`"
                   class="text-gray-500 rounded-full no-drag"
@@ -70,7 +70,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </template>
@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
+import { SfIconBase } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
 import type { UtilityBarSection, SectionType } from '../types';
 

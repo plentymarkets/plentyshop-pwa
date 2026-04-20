@@ -120,19 +120,16 @@ import {
   SfSwitch,
 } from '@storefront-ui/vue';
 
+const props = defineProps<{ uuid?: string }>();
+
 const reviewsOpen = ref(true);
 const layoutOpen = ref(true);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { blockUuid } = useSiteConfiguration();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks: data } = useBlocks();
 
 const customerReview = computed<CustomerReviewContent>(() => {
-  const uuid = blockUuid.value;
+  const uuid = props.uuid || blockUuid.value;
   const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
   const content = rawContent as Partial<CustomerReviewContent>;
 

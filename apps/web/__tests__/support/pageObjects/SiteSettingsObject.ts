@@ -81,7 +81,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   get block() {
-    return cy.getByTestId('block-wrapper');
+    return cy.get('[data-testid*="block-wrapper"]').not('.header-blocks [data-testid*="block-wrapper"]');
   }
 
   get saveButton() {

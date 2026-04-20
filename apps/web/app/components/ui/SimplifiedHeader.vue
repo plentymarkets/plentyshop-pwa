@@ -8,7 +8,7 @@
       <div class="pl-4 md:pl-0">
         <NuxtLink
           :to="localePath(paths.home)"
-          aria-label="Sf Homepage"
+          :aria-label="t('common.actions.goToHomepage')"
           class="flex shrink-0 w-full h-8 lg:w-48 lg:h-8 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
@@ -20,8 +20,16 @@
 
 <script setup lang="ts">
 import { paths } from '~/utils/paths';
-const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
-const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
+const { headerContainer } = useBlocks();
+const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
+
+const headerBackgroundColor = computed(() => {
+  const children = headerContainer.value?.content as
+    | Array<{ name: string; content: { color?: { backgroundColor?: string } } }>
+    | undefined;
+  const utilityBar = children?.find((block) => block.name === 'UtilityBar');
+  return utilityBar?.content?.color?.backgroundColor ?? getPrimaryColor();
+});
 
 const localePath = useLocalePath();
 </script>

@@ -1,19 +1,21 @@
+import type { Block } from '@plentymarkets/shop-api';
+
 export const useUpdatePageTemplate = () => {
   const updatePageTemplate = async (): Promise<boolean> => {
     const { isEditingEnabled } = useEditor();
     const { send } = useNotification();
     const route = useRoute();
 
-    const { saveBlocks, data } = useBlockTemplates(
-      route?.meta?.identifier as string,
-      route.meta.type as string,
-      useNuxtApp().$i18n.locale.value,
-    );
+    const { saveBlocks, data } = useBlocks();
 
     const { data: dataProducts } = useProducts();
 
     try {
-      const cleanedData = JSON.stringify(data.value);
+      const { HeaderContainer, blocks: pageBlocks, Footer } = data.value ?? {};
+      const flat = [HeaderContainer, ...(pageBlocks ?? []), Footer].filter(
+        (block): block is Block => block !== undefined && block !== null,
+      );
+      const cleanedData = JSON.stringify(flat);
 
       let identifier: string | number = route.meta.identifier as string | number;
 
