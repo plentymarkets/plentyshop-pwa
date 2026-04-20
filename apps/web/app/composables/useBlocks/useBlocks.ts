@@ -18,8 +18,9 @@ export const useBlocks: UseBlocksReturn = () => {
   }));
 
   const setBlocks = (blocks: GetBlocksResponse) => {
-    state.value.data = deepClone(blocks);
-    state.value.cleanData = markRaw(deepClone(blocks));
+    const serialized = JSON.stringify(blocks);
+    state.value.data = JSON.parse(serialized);
+    state.value.cleanData = markRaw(JSON.parse(serialized));
   };
 
   /*
