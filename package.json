@@ -9,7 +9,6 @@
     "docs"
   ],
   "scripts": {
-    "predev": "node ./scripts/prepare-vue-tsc.js",
     "postinstall": "node ./scripts/postinstall.js",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
@@ -20,6 +19,7 @@
     "start": "npm run turbo:disable-telemetry && turbo run start",
     "lint": "npm run turbo:disable-telemetry && turbo run lint",
     "lint:fix": "npm run turbo:disable-telemetry && turbo run lint:fix",
+    "typecheck": "npm run turbo:disable-telemetry && turbo run typecheck",
     "format": "prettier --check \"**/*.{ts,vue,css,scss,md}\"",
     "format:fix": "prettier --write \"**/*.{ts,vue,css,scss,md}\"",
     "clean": "npx rimraf ./**/node_modules && rm package-lock.json",
@@ -115,7 +115,7 @@
     "typedoc-plugin-markdown": "^4.10.0",
     "typedoc-vitepress-theme": "1.1.2",
     "typescript": "5.9.3",
-    "vite-plugin-checker": "^0.12.0",
+    "vite-plugin-checker": "^0.13.0",
     "vitest": "^3.2.4",
     "wait-on": "^8.0.5"
   },
@@ -124,12 +124,19 @@
       "prettier": "$prettier"
     },
     "@vitejs/plugin-vue-jsx": "5.0.1",
-    "tar": "7.5.3",
+    "tar": "7.5.13",
+    "serialize-javascript": "7.0.5",
+    "swiper": "^12.1.2",
+    "commitizen": {
+      "lodash": "4.18.1"
+    },
     "giget": "2.0.0",
     "c12": "3.3.3",
     "unimport": "5.6.0",
     "vue-router": "^5.0.4",
-    "vite-plugin-checker": "^0.12.0"
+    "vite-plugin-checker": "^0.13.0",
+    "eslint": "^9.39.4",
+    "@nuxt/devtools": "2.7.0"
   },
   "engines": {
     "node": ">=24.0.0"

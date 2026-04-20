@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/richtext.css'],
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
   },
   app: appConfiguration,
   experimental: {
@@ -31,9 +31,6 @@ export default defineNuxtConfig({
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
-      },
-      watch: {
-        usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
     plugins: [FailOnLargeChunksPlugin],
