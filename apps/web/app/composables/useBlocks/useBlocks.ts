@@ -9,6 +9,12 @@ import { createProduct } from '~/utils/blockTemplates/product';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateAllBlocks } from '~/utils/migrate-blocks';
 
+declare module '#app' {
+  interface NuxtApp {
+    _settleTimer?: ReturnType<typeof setTimeout> | null;
+  }
+}
+
 const FOOTER_BLOCK_NAME = 'Footer';
 const HEADER_BLOCK_NAME = 'Header';
 
@@ -132,28 +138,29 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string, identifier: string
   return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
 };
 
-const isSettling = ref(false);
-let settleTimer: ReturnType<typeof setTimeout> | null = null;
-
 export const useBlocks: UseBlocksReturn = () => {
   const state = useState<UseBlocksState>(`useBlocks`, () => ({
     data: {} as GetBlocksResponse,
     cleanData: {} as GetBlocksResponse,
     defaultTemplateData: [] as Block[],
     loading: false,
+    isSettling: false,
   }));
 
   /*
    @description Schedule setting up clean data & editor enable reset with a timeout.
    */
+
   const scheduleCleanDataSync = () => {
-    isSettling.value = true;
-    if (settleTimer) clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => {
+    state.value.isSettling = true;
+    const nuxtApp = useNuxtApp();
+    if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
+    nuxtApp._settleTimer = setTimeout(() => {
       state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
       const { isEditingEnabled } = useEditor();
       isEditingEnabled.value = false;
-      isSettling.value = false;
+      state.value.isSettling = false;
+      nuxtApp._settleTimer = null;
     }, 150);
   };
 
@@ -271,7 +278,7 @@ export const useBlocks: UseBlocksReturn = () => {
     updateBlocks,
     discardChanges,
     setDefaultTemplate,
-    isSettling,
+    isSettling: computed(() => state.value.isSettling),
     FOOTER_SWITCH_DEFINITIONS,
   };
 };
