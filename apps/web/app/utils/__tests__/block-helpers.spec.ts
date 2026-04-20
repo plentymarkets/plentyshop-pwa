@@ -59,7 +59,7 @@ describe('utils/block-helpers', () => {
       const result = normalizeFooter(input);
       const content = result.content as Record<string, Record<string, unknown>>;
 
-      expect(content.column1.title).toBe('Custom Legal');
+      expect(content.column1?.title).toBe('Custom Legal');
       expect(content.column2).toBeDefined();
       expect(content.column3).toBeDefined();
       expect(content.column4).toBeDefined();
