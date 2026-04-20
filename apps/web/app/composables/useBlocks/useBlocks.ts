@@ -33,7 +33,7 @@ export const useBlocks: UseBlocksReturn = () => {
     const nuxtApp = useNuxtApp();
     if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
     nuxtApp._settleTimer = setTimeout(() => {
-      state.value.cleanData = markRaw(deepClone(state.value.data));
+      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
       const { isEditingEnabled } = useEditor();
       isEditingEnabled.value = false;
       state.value.isSettling = false;
@@ -123,7 +123,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const discardChanges = () => {
-    state.value.data = deepClone(state.value.cleanData);
+    state.value.data = JSON.parse(JSON.stringify(state.value.cleanData));
   };
 
   const setDefaultTemplate = (blocks: Block[]) => {
