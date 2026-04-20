@@ -28,16 +28,26 @@ export const getBlockLoader = (name: string) => {
   return blockLoaders[name];
 };
 
-const asyncComponentCache: Record<string, ReturnType<typeof defineAsyncComponent>> = {};
+declare module '#app' {
+  interface NuxtApp {
+    _blockComponentCache?: Record<string, ReturnType<typeof defineAsyncComponent>>;
+  }
+}
 
 export const getCachedBlockComponent = (name: string) => {
-  if (asyncComponentCache[name]) return asyncComponentCache[name];
+  const nuxtApp = useNuxtApp();
+  if (!nuxtApp._blockComponentCache) {
+    nuxtApp._blockComponentCache = {};
+  }
+
+  const cache = nuxtApp._blockComponentCache;
+  if (cache[name]) return cache[name];
 
   const loader = blockLoaders[name];
   if (!loader) return null;
 
   const component = defineAsyncComponent({ loader });
-  asyncComponentCache[name] = component;
+  cache[name] = component;
   return component;
 };
 
