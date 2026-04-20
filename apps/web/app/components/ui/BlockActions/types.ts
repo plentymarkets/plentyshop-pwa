@@ -12,5 +12,6 @@ type BlockActionOptions = {
 export interface BlockActionsProps {
   index: number;
   block: Block;
+  readOnly?: boolean;
   actions?: BlockActionOptions;
 }

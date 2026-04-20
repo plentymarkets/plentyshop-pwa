@@ -1,6 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
-import { createFooter } from '../footer/factory';
 
 export const createProduct = (): Block[] => {
   const itemTextTitle = t('defaultTemplate.product.itemText.title');
@@ -197,6 +196,5 @@ export const createProduct = (): Block[] => {
         },
       },
     },
-    createFooter(),
   ] as Block[];
 };

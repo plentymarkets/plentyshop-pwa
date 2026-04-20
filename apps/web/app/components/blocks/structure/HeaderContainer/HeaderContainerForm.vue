@@ -43,10 +43,8 @@ import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderC
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
-const { blockUuid } = useSiteConfiguration();
 const { toggleBlockVisibility } = useBlocksVisibility();
-const { data } = useBlockTemplates('index', 'immutable', useNuxtApp().$i18n.locale.value);
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { headerContainer } = useBlocks();
 
 const emit = defineEmits<{
   'set-edit-title': [title: string];
@@ -70,9 +68,7 @@ const blockForm = computed(() => {
   return loader ? defineAsyncComponent(loader) : null;
 });
 
-const headerContainerStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, blockUuid.value) || {}) as HeaderContainerBlock,
-);
+const headerContainerStructure = computed(() => (headerContainer.value ?? {}) as HeaderContainerBlock);
 
 const isStickyToggle = computed({
   get: () => headerContainerStructure.value.configuration?.layout?.sticky ?? false,
@@ -101,7 +97,10 @@ const blocks = computed({
     }));
   },
   set: (value: SlideBlock[]) => {
-    headerContainerStructure.value.content = [...value];
+    headerContainerStructure.value.content = value.map((block, index) => ({
+      ...block,
+      parent_slot: index,
+    }));
   },
 });
 

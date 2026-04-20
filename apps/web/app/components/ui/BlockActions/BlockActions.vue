@@ -49,58 +49,60 @@
       </button>
     </SfTooltip>
 
-    <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
+    <template v-if="!props.readOnly">
+      <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
 
-    <div class="flex flex-col">
-      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="left" :show-arrow="true">
-        <button
-          class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-          data-testid="move-up-button"
-          aria-label="move up button"
-          :disabled="isFirstContentBlock(props.index)"
-          :class="{ 'opacity-40 cursor-not-allowed': isFirstContentBlock(props.index) }"
-          @click="changePosition(-1)"
-        >
-          <SfIconExpandLess />
-        </button>
-      </SfTooltip>
+      <div class="flex flex-col">
+        <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="left" :show-arrow="true">
+          <button
+            class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
+            data-testid="move-up-button"
+            aria-label="move up button"
+            :disabled="isFirstContentBlock(props.index)"
+            :class="{ 'opacity-40 cursor-not-allowed': isFirstContentBlock(props.index) }"
+            @click="changePosition(-1)"
+          >
+            <SfIconExpandLess />
+          </button>
+        </SfTooltip>
+        <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
+          <button
+            class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
+            data-testid="move-down-button"
+            aria-label="move down button"
+            :disabled="isLastNonFooterBlock(index)"
+            :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
+            @click="changePosition(1)"
+          >
+            <SfIconExpandMore />
+          </button>
+        </SfTooltip>
+      </div>
+
+      <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
+
       <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
         <button
-          class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-          data-testid="move-down-button"
-          aria-label="move down button"
-          :disabled="isLastNonFooterBlock(index)"
-          :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
-          @click="changePosition(1)"
+          class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
+          aria-label="Drag to reorder block"
         >
-          <SfIconExpandMore />
+          <NuxtImg width="18" height="18" :src="dragIcon" />
         </button>
       </SfTooltip>
-    </div>
 
-    <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
+      <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
 
-    <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
-      <button
-        class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
-        aria-label="Drag to reorder block"
-      >
-        <NuxtImg width="18" height="18" :src="dragIcon" />
-      </button>
-    </SfTooltip>
-
-    <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
-
-    <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="bottom" :show-arrow="true">
-      <button
-        class="text-black hover:bg-gray-100 p-1 rounded no-drag"
-        aria-label="delete block button"
-        data-testid="delete-block-button"
-        @click="triggerDelete"
-      >
-        <SfIconDelete />
-      </button>
-    </SfTooltip>
+      <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="bottom" :show-arrow="true">
+        <button
+          class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+          aria-label="delete block button"
+          data-testid="delete-block-button"
+          @click="triggerDelete"
+        >
+          <SfIconDelete />
+        </button>
+      </SfTooltip>
+    </template>
   </div>
 </template>
 
@@ -114,6 +116,7 @@ const positionLabel = 'Change block position.';
 const deleteLabel = 'Delete this block.';
 
 const props = withDefaults(defineProps<BlockActionsProps>(), {
+  readOnly: false,
   actions: () => ({
     isEditable: true,
     isMovable: true,

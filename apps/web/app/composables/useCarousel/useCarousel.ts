@@ -8,12 +8,7 @@ export const useCarousel: UseCarouselReturn = () => {
   }));
 
   const { findOrDeleteBlockByUuid } = useBlockManager();
-  const route = useRoute();
-  const { data } = useBlockTemplates(
-    route?.meta?.identifier as string,
-    route.meta.type as string,
-    useNuxtApp().$i18n.locale.value,
-  );
+  const { allBlocks } = useBlocks();
 
   const createSlide = async (type: string, index: number): Promise<SlideBlock> => {
     const module = await import(`~/components/blocks/${type}/defaults.ts`);
@@ -44,10 +39,13 @@ export const useCarousel: UseCarouselReturn = () => {
   };
 
   const updateCarouselItems: UpdateCarouselItems = (newBannerItems: SlideBlock[], blockUuid: string) => {
-    const carouselBlock = findOrDeleteBlockByUuid(data.value, blockUuid);
+    const carouselBlock = findOrDeleteBlockByUuid(allBlocks.value, blockUuid);
 
     if (carouselBlock) {
-      carouselBlock.content = [...newBannerItems];
+      carouselBlock.content = newBannerItems.map((item, index) => ({
+        ...item,
+        parent_slot: index,
+      }));
     }
   };
 

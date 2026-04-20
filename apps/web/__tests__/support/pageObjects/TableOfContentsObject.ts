@@ -21,6 +21,13 @@ export class TableOfContentsObject extends PageObject {
     return cy.get('[data-testid^="toc-item-"]');
   }
 
+  get contentTableOfContentsItemLabels() {
+    return cy
+      .get('[data-testid^="toc-visibility-"]')
+      .closest('[data-testid^="toc-item-"]')
+      .find('[data-testid="toc-label"]');
+  }
+
   get tableOfContentsItemLabel() {
     return cy.get('[data-testid="toc-label"]');
   }
@@ -123,7 +130,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockIsGrayedOut() {
-    this.tableOfContentsItemLabel.eq(0).should('have.class', 'opacity-50');
+    this.contentTableOfContentsItemLabels.eq(0).should('have.class', 'opacity-50');
     return this;
   }
 
@@ -133,7 +140,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockIsNotGrayedOut() {
-    this.tableOfContentsItems.eq(0).should('not.have.class', 'opacity-50');
+    this.contentTableOfContentsItemLabels.eq(0).should('not.have.class', 'opacity-50');
     return this;
   }
 
@@ -184,7 +191,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkPlaceholderAppears() {
-    this.blockPlaceholder.should('be.visible');
+    this.blockPlaceholder.scrollIntoView().should('be.visible');
     return this;
   }
 

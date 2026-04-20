@@ -1,6 +1,7 @@
 name: New release app
 permissions:
   contents: read
+  deployments: write
 
 on:
   release:
@@ -9,6 +10,7 @@ on:
 jobs:
   create-archive:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
