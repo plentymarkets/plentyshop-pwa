@@ -64,7 +64,7 @@
     "cypress": "14.5.4",
     "cypress-real-events": "^1.15.0",
     "cypress-wait-until": "^2.0.1",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "happy-dom": "^20.8.9",
