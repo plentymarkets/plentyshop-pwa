@@ -29,7 +29,7 @@ mockNuxtImport('useNuxtApp', () => useNuxtApp);
 mockNuxtImport('useEditor', () => useEditor);
 
 const emptyResponse = (): GetBlocksResponse =>
-  ({ blocks: [], HeaderContainer: undefined, Footer: undefined } as unknown as GetBlocksResponse);
+  ({ blocks: [], HeaderContainer: undefined, Footer: undefined }) as unknown as GetBlocksResponse;
 
 describe('useBlocks — isSettling', () => {
   let isEditingEnabled: { value: boolean };

@@ -138,20 +138,19 @@ const assembleBlocks = (raw: GetBlocksResponse, type: string, identifier: string
   return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
 };
 
-
 export const useBlocks: UseBlocksReturn = () => {
   const state = useState<UseBlocksState>(`useBlocks`, () => ({
     data: {} as GetBlocksResponse,
     cleanData: {} as GetBlocksResponse,
     defaultTemplateData: [] as Block[],
     loading: false,
-    isSettling: false
+    isSettling: false,
   }));
 
   /*
    @description Schedule setting up clean data & editor enable reset with a timeout.
    */
-  
+
   const scheduleCleanDataSync = () => {
     state.value.isSettling = true;
     const nuxtApp = useNuxtApp();
