@@ -1,3 +1,5 @@
+export const deepClone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
+
 export const deepEqual = (object1: unknown, object2: unknown): boolean => {
   if (object1 === object2) return true;
 

@@ -17,16 +17,20 @@ export const useBlocks: UseBlocksReturn = () => {
     isSettling: false,
   }));
 
-  /*
-   @description Schedule setting up clean data & editor enable reset with a timeout.
-   */
+  const setBlocks = (blocks: GetBlocksResponse) => {
+    state.value.data = deepClone(blocks);
+    state.value.cleanData = markRaw(deepClone(blocks));
+  };
 
+  /*
+    @description Schedule setting up clean data & editor enable reset with a timeout.
+  */
   const scheduleCleanDataSync = () => {
     state.value.isSettling = true;
     const nuxtApp = useNuxtApp();
     if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
     nuxtApp._settleTimer = setTimeout(() => {
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+      state.value.cleanData = markRaw(deepClone(state.value.data));
       const { isEditingEnabled } = useEditor();
       isEditingEnabled.value = false;
       state.value.isSettling = false;
@@ -47,9 +51,7 @@ export const useBlocks: UseBlocksReturn = () => {
     state.value.loading = true;
 
     const { $i18n } = useNuxtApp();
-
     const loc = computed(() => $i18n.locale.value);
-
     const key = `blocks-${loc.value}-${type}-${identifier}`;
 
     const { data, error } = await useAsyncData(key, () =>
@@ -60,12 +62,8 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const allBlocks = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
-
-    const serialized = JSON.stringify(allBlocks);
-
-    state.value.data = JSON.parse(serialized);
-    state.value.cleanData = markRaw(JSON.parse(serialized));
+    const assembled = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
+    setBlocks(assembled);
     state.value.loading = false;
 
     const { isEditingEnabled } = useEditor();
@@ -87,13 +85,12 @@ export const useBlocks: UseBlocksReturn = () => {
         enableGlobalBlocks: true,
       });
 
-      const allBlocks = assembleBlocks(
+      const assembled = assembleBlocks(
         (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
         type,
         identifier,
       );
-      state.value.data = allBlocks;
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+      setBlocks(assembled);
 
       return true;
     } catch (error) {
@@ -106,7 +103,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable', identifier: string | number = 0) => {
-    const allBlocks = assembleBlocks(
+    const assembled = assembleBlocks(
       {
         HeaderContainer: headerContainer.value,
         blocks: rawBlocks,
@@ -115,9 +112,7 @@ export const useBlocks: UseBlocksReturn = () => {
       type,
       identifier,
     );
-
-    state.value.data = allBlocks;
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+    setBlocks(assembled);
   };
 
   const updateBlocks = (blocks: Block[]) => {
@@ -125,7 +120,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const discardChanges = () => {
-    state.value.data = JSON.parse(JSON.stringify(state.value.cleanData));
+    state.value.data = deepClone(state.value.cleanData);
   };
 
   const setDefaultTemplate = (blocks: Block[]) => {
