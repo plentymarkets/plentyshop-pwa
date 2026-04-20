@@ -51,7 +51,7 @@ describe('utils/block-helpers', () => {
       expect(isGlobalBlock(block)).toBe(true);
     });
 
-    it('should return false for regular content blocks', () => {
+    it('should return false for blocks with other names', () => {
       expect(isGlobalBlock(makeBlock('TextCard'))).toBe(false);
     });
 
