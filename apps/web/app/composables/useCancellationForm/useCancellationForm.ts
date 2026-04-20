@@ -38,8 +38,7 @@ export const useCancellationForm = () => {
   const submitCancellation: SubmitCancellation = async (params) => {
     state.value.loading = true;
     try {
-      //const { data } = await useSdk().plentysystems.doSubmitCancellation(params);
-      const data = { email: params.email }; // TODO: replace with actual API call once backend is implemented
+      const { data } = await useSdk().plentysystems.doSubmitCancellation(params);
       return data?.email ?? null;
     } catch (error) {
       useHandleError(error as ApiError);
