@@ -11,7 +11,7 @@ import { migrateAllBlocks } from '~/utils/migrate-blocks';
 
 declare module '#app' {
   interface NuxtApp {
-    _settleTimer: ReturnType<typeof setTimeout> | null;
+    _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
 }
 
