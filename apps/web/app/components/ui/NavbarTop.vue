@@ -11,7 +11,7 @@
       :style="{ backgroundColor: headerBackgroundColor }"
       class="flex gap-[clamp(1rem,3vw,3rem)] items-center w-full md:h-[60px] max-w-screen-3xl py-6 px-4 md:px-6 lg:px-10 mx-auto sticky top-0 justify-between md:justify-normal"
     >
-      <NuxtLink :to="localePath(paths.home)" aria-label="Sf Homepage" class="h-6 md:h-7 -mt-1.5">
+      <NuxtLink :to="localePath(paths.home)" :aria-label="t('common.actions.goToHomepage')" class="h-6 md:h-7 -mt-1.5">
         <UiLogo />
       </NuxtLink>
       <slot />

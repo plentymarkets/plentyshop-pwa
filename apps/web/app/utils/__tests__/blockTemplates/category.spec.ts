@@ -13,7 +13,6 @@ describe('createCategory', () => {
     const blockNames = blocks.map((block) => block.name);
     expect(blockNames).toContain('CategoryData');
     expect(blockNames).toContain('MultiGrid');
-    expect(blockNames).toContain('Footer');
   });
 
   it('should create blocks with valid structure', () => {
@@ -47,12 +46,9 @@ describe('createCategory', () => {
     expect(itemGrid?.parent_slot).toBe(1);
   });
 
-  it('should have valid Footer block structure', () => {
+  it('should not include Footer (Footer is a global block)', () => {
     const blocks = createCategory();
-    const footerBlock = blocks.find((block) => block.name === 'Footer');
-    expect(footerBlock).toBeDefined();
-    expect(footerBlock?.type).toBe('content');
-    expect(footerBlock?.meta).toBeDefined();
-    expect(footerBlock?.content).toBeDefined();
+    const blockNames = blocks.map((block) => block.name);
+    expect(blockNames).not.toContain('Footer');
   });
 });

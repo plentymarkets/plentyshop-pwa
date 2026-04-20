@@ -16,7 +16,6 @@ describe('createHomepage', () => {
     expect(blockNames).toContain('MultiGrid');
     expect(blockNames).toContain('ProductRecommendedProducts');
     expect(blockNames).toContain('NewsletterSubscribe');
-    expect(blockNames).toContain('Footer');
   });
 
   it('should create blocks with valid structure', () => {
@@ -57,12 +56,9 @@ describe('createHomepage', () => {
     expect(typeof content?.text?.title).toBe('string');
   });
 
-  it('should have valid Footer block structure', () => {
+  it('should not include Footer (Footer is a global block)', () => {
     const blocks = createHomepage();
-    const footerBlock = blocks.find((block) => block.name === 'Footer');
-    expect(footerBlock).toBeDefined();
-    expect(footerBlock?.type).toBe('content');
-    expect(footerBlock?.meta).toBeDefined();
-    expect(footerBlock?.content).toBeDefined();
+    const blockNames = blocks.map((block) => block.name);
+    expect(blockNames).not.toContain('Footer');
   });
 });

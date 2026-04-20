@@ -9,15 +9,7 @@ import { collectUtilityBarBlocks } from './helpers/collect-utility-bar-blocks';
  */
 export const useUtilityBarConfiguration = (uuid?: string) => {
   const { blockUuid } = useSiteConfiguration();
-  const nuxtApp = useNuxtApp();
-  const route = useRoute();
-  const { data } = useBlockTemplates(
-    route?.meta?.identifier as string,
-    route.meta.type as string,
-    nuxtApp.$i18n.locale.value,
-  );
-
-  const { headerContainerCache } = useBlockTemplates('index', 'immutable', nuxtApp.$i18n.locale.value);
+  const { allBlocks } = useBlocks();
   const { findOrDeleteBlockByUuid } = useBlockManager();
 
   const targetUuid = computed(() => uuid || blockUuid.value);
@@ -35,19 +27,11 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
 
   const utilityBarBlock = computed<UtilityBarProps | null>(() => {
     if (targetUuid.value) {
-      const blockByUuid = findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null;
+      const blockByUuid = findOrDeleteBlockByUuid(allBlocks.value, targetUuid.value) as UtilityBarProps | null;
       if (blockByUuid) return blockByUuid;
-
-      if (headerContainerCache.value?.content) {
-        const blockInHeader = findOrDeleteBlockByUuid(
-          headerContainerCache.value.content,
-          targetUuid.value,
-        ) as UtilityBarProps | null;
-        if (blockInHeader) return blockInHeader;
-      }
     }
 
-    const utilityBarMatches = collectUtilityBarBlocks(data.value);
+    const utilityBarMatches = collectUtilityBarBlocks(allBlocks.value);
     if (utilityBarMatches.length === 1) {
       return utilityBarMatches[0] || null;
     }

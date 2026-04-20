@@ -10,7 +10,7 @@
   >
     <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
+        <div v-if="hasColumn1Content" class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
             {{ resolvedContent.column1?.title }}
           </div>
@@ -31,6 +31,17 @@
               </SfLink>
             </SfListItem>
           </ul>
+          <div v-if="hasColumn1Button" class="px-4 pt-2 flex">
+            <UiButton
+              :tag="NuxtLink"
+              :to="localePath(paths.cancellationForm)"
+              size="sm"
+              class="text-xs leading-5"
+              data-testid="footer-cancellation-button"
+            >
+              {{ t('legal.withdrawButton') }}
+            </UiButton>
+          </div>
         </div>
 
         <div
@@ -94,12 +105,10 @@ const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { getFooterBlock, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock } = useBlockTemplates(
-  'index',
-  'immutable',
-  useNuxtApp().$i18n.locale.value,
-);
+const { footer, FOOTER_SWITCH_DEFINITIONS } = useBlocks();
 
+const { t } = useI18n();
+const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
   return true;
@@ -108,13 +117,24 @@ const shouldRender = computed(() => {
 const resolvedContent = computed(() => {
   if (!shouldRender.value) return null;
 
-  const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
-
-  return mapFooterData(block).content as FooterContent;
+  const content = props.content ?? footer.value?.content;
+  return (content ?? null) as FooterContent | null;
+});
+const hasColumn1Button = computed(() => {
+  return !!(enableContractWithdrawalButton && resolvedContent.value?.column1?.showCancellationForm);
 });
 
+const hasColumn1Content = computed(() => {
+  if (!resolvedContent.value?.column1) return false;
+
+  return getColumnSwitches(resolvedContent.value.column1).length > 0 || hasColumn1Button.value;
+});
 const getColumnSwitches = (column: FooterColumn) => {
-  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
+  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => {
+    if (column[switchConfig.key] !== true) return false;
+
+    return !(enableContractWithdrawalButton && switchConfig.key === 'showCancellationForm');
+  }).map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: t(switchConfig.shopTranslationKey),
     link: switchConfig.link,

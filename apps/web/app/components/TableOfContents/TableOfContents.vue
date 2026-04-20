@@ -71,10 +71,7 @@ const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
 const { scrollIntoBlockView } = useBlockManager();
 
 const filteredDataForDisplay = computed(() => {
-  if (useRuntimeConfig().public.enableEditableHeader) {
-    return data.value;
-  }
-  return data.value.filter((block: Block) => !isHeaderContainerBlock(block));
+  return data.value;
 });
 
 const draggableData = computed({
