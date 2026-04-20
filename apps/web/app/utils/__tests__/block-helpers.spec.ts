@@ -1,12 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
-import {
-  isFooterBlock,
-  isHeaderBlock,
-  isGlobalBlock,
-  normalizeFooter,
-  assembleBlocks,
-} from '../block-helpers';
+import { isFooterBlock, isHeaderBlock, isGlobalBlock, normalizeFooter, assembleBlocks } from '../block-helpers';
 
 vi.mock('~/utils/migrate-blocks', () => ({
   migrateAllBlocks: vi.fn(),
