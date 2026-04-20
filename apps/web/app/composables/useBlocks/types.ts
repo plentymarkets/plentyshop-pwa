@@ -6,6 +6,7 @@ export interface UseBlocksState {
   cleanData: GetBlocksResponse;
   defaultTemplateData: Block[];
   loading: boolean;
+  isSettling: boolean;
 }
 
 export interface UseBlocks {
