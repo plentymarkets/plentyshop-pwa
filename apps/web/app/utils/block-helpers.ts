@@ -56,7 +56,11 @@ const getDefaultPageBlocks = (type: string, identifier: string | number): Block[
   }
 };
 
-export const assembleBlocks = (raw: GetBlocksResponse, type: string, identifier: string | number): GetBlocksResponse => {
+export const assembleBlocks = (
+  raw: GetBlocksResponse,
+  type: string,
+  identifier: string | number,
+): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
     ? createDefaultHeaderContainerBlock()
     : raw?.HeaderContainer;
