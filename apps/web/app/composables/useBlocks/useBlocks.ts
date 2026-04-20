@@ -1,10 +1,4 @@
 import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
-
-declare module '#app' {
-  interface NuxtApp {
-    _settleTimer: ReturnType<typeof setTimeout> | null;
-  }
-}
 import type { UseBlocksState, UseBlocksReturn } from './types';
 import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
 import { createDefaultHeaderContainerBlock } from '~/utils/blockTemplates/header';
@@ -14,6 +8,12 @@ import { createCategory } from '~/utils/blockTemplates/category';
 import { createProduct } from '~/utils/blockTemplates/product';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateAllBlocks } from '~/utils/migrate-blocks';
+
+declare module '#app' {
+  interface NuxtApp {
+    _settleTimer: ReturnType<typeof setTimeout> | null;
+  }
+}
 
 const FOOTER_BLOCK_NAME = 'Footer';
 const HEADER_BLOCK_NAME = 'Header';
