@@ -19,7 +19,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
     const cacheKey = `${categoryId}-${locale.value}`;
     if (cache.value[cacheKey]) {
       state.value.data = cache.value[cacheKey];
-      state.value.initialData = JSON.parse(JSON.stringify(cache.value[cacheKey]));
+      state.value.initialData = deepClone(cache.value[cacheKey]);
       return cache.value[cacheKey];
     }
 
@@ -28,7 +28,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       const { getCategory } = useCategoryDetails();
       const result = await getCategory(categoryId);
 
-      const cleanData = JSON.parse(JSON.stringify(result));
+      const cleanData = deepClone(result) as unknown as CategoryEntry;
 
       const { addCategorySettings } = useCategorySettingsCollection();
       await addCategorySettings(cleanData);
@@ -36,7 +36,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
 
       cache.value[cacheKey] = cleanData;
       state.value.data = cleanData;
-      state.value.initialData = JSON.parse(JSON.stringify(cleanData));
+      state.value.initialData = deepClone(cleanData);
       return cleanData ?? null;
     } catch (error) {
       console.error('Error fetching category settings:', error);
