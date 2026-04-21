@@ -250,7 +250,7 @@ const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
-const { data: fetchedCategoryTree, getCategoryTree } = useCategoryTree();
+const { data: fetchedCategoryTree } = useCategoryTree();
 
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
@@ -495,7 +495,6 @@ onBeforeUnmount(() => removeHook?.());
 
 onNuxtReady(async () => {
   if (props.categories.length > 0) return;
-  if (fetchedCategoryTree.value.length === 0) await getCategoryTree();
 });
 
 const resolvedCategories = computed(() => (props.categories.length > 0 ? props.categories : fetchedCategoryTree.value));

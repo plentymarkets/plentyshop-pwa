@@ -69,12 +69,6 @@ const { getAssetsOfType } = useCustomAssets();
 
 const isSafeMode = computed(() => customAssetsSafeMode());
 
-onMounted(async () => {
-  if (route.meta.cacheControl) {
-    useFetchSession().fetchSession();
-  }
-});
-
 const getCategoryMetaTitle = () => {
   if (isCategoryPage.value) {
     const categoryMetaTitle = categoryGetters.getMetaTitle(category.value);
