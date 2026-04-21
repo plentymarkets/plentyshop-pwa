@@ -9,13 +9,13 @@ export const getCategoryTemplate = async (locale: string): Promise<Block[]> => {
   const useCache = import.meta.env.PROD;
   const cached = cache.get(locale);
 
-  if (useCache && cached) return JSON.parse(JSON.stringify(cached));
+  if (useCache && cached) return deepClone(cached);
 
   const blocks = createCategory();
 
   if (useCache) {
     cache.set(locale, blocks);
-    return JSON.parse(JSON.stringify(blocks));
+    return deepClone(blocks);
   }
 
   return blocks;

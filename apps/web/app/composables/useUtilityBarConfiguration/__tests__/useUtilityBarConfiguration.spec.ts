@@ -93,7 +93,7 @@ describe('useUtilityBarConfiguration', () => {
     stateContent.value = createContent();
     setContent.mockImplementation((incoming) => {
       if (incoming) {
-        stateContent.value = JSON.parse(JSON.stringify(incoming));
+        stateContent.value = deepClone(incoming);
       }
     });
 

@@ -61,7 +61,7 @@ export const useBlockManager = () => {
     if (targetInHeader) {
       if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
 
-      const headerCopy = JSON.parse(JSON.stringify(headerContainer.value)) as Block;
+      const headerCopy = deepClone(headerContainer.value) as Block;
       const parentInfo = findBlockParent([headerCopy], targetUuid);
 
       if (parentInfo) {
@@ -92,7 +92,7 @@ export const useBlockManager = () => {
         return;
       }
 
-      const copiedData: Block[] = JSON.parse(JSON.stringify(pageBlocks.value));
+      const copiedData: Block[] = deepClone(pageBlocks.value);
 
       const isTargetFooter = footer.value?.meta?.uuid === targetUuid;
       if (isTargetFooter) {

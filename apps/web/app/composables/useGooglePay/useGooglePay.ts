@@ -57,9 +57,9 @@ export const useGooglePay = () => {
     return {
       apiVersion: 2,
       apiVersionMinor: 0,
-      allowedPaymentMethods: JSON.parse(JSON.stringify(state.value.googleConfig.allowedPaymentMethods)),
+      allowedPaymentMethods: deepClone(state.value.googleConfig.allowedPaymentMethods),
       transactionInfo: await getGoogleTransactionInfo(),
-      merchantInfo: JSON.parse(JSON.stringify(state.value.googleConfig.merchantInfo)),
+      merchantInfo: deepClone(state.value.googleConfig.merchantInfo),
     } as google.payments.api.PaymentDataRequest;
   };
 
@@ -137,7 +137,7 @@ export const useGooglePay = () => {
     return {
       apiVersion: 2,
       apiVersionMinor: 0,
-      allowedPaymentMethods: JSON.parse(JSON.stringify(state.value.googleConfig.allowedPaymentMethods)),
+      allowedPaymentMethods: deepClone(state.value.googleConfig.allowedPaymentMethods),
     } as google.payments.api.IsReadyToPayRequest;
   };
 
