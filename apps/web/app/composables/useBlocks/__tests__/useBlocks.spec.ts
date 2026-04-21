@@ -148,8 +148,7 @@ describe('useBlocks', () => {
     it('should call SDK with correct parameters and cache key', async () => {
       setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: mockPageBlocks, Footer: mockFooterBlock });
       await useBlocks().fetchBlocks('test-id', 'category');
-      // Nuxt may append an extra dedupe argument — match only the first two
-      expect(useAsyncData).toHaveBeenCalledWith('blocks-en-category-test-id', expect.any(Function), expect.anything());
+      expect(useAsyncData).toHaveBeenCalledWith('blocks-en-category-test-id', expect.any(Function));
     });
 
     it('should assemble and store blocks in state after fetch', async () => {
