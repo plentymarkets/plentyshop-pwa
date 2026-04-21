@@ -9,10 +9,13 @@
 <script setup lang="ts">
 import type { StyleValue } from 'vue';
 
-defineProps<{
-  containerClasses: string;
-  containerStyle: StyleValue;
-}>();
+withDefaults(defineProps<{
+  containerClasses?: string;
+  containerStyle?: StyleValue;
+}>(), {
+  containerClasses: 'flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid',
+  containerStyle: () => ({}),
+});
 
 const items = [
   { id: 1, width: 'w-20' },
