@@ -85,6 +85,7 @@ const createMockState = () => ({
     cleanData: {} as GetBlocksResponse,
     defaultTemplateData: [] as Block[],
     loading: false,
+    isSettling: false,
   },
 });
 
@@ -93,6 +94,8 @@ const setupApiResponse = (responseData: unknown) =>
     data: { value: responseData },
     error: { value: null },
   }));
+
+const noop = () => {};
 
 const setupApiError = (errorMessage = 'API Error') =>
   useAsyncData.mockImplementation(() => ({
@@ -137,13 +140,7 @@ describe('useBlocks', () => {
       expect(composable.footer).toBeDefined();
       expect(composable.loading).toBeDefined();
       expect(composable.defaultTemplateData).toBeDefined();
-      expect(composable.FOOTER_SWITCH_DEFINITIONS).toBeDefined();
-    });
-
-    it('FOOTER_SWITCH_DEFINITIONS - should be a non-empty array', () => {
-      const { FOOTER_SWITCH_DEFINITIONS } = useBlocks();
-      expect(Array.isArray(FOOTER_SWITCH_DEFINITIONS)).toBe(true);
-      expect(FOOTER_SWITCH_DEFINITIONS.length).toBeGreaterThan(0);
+      expect(composable.isSettling).toBeDefined();
     });
   });
 
@@ -170,7 +167,7 @@ describe('useBlocks', () => {
     });
 
     it('should warn and still assemble defaults when API returns an error', async () => {
-      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(noop);
       setupApiError('Network failure');
       await useBlocks().fetchBlocks('index', 'immutable');
       expect(consoleSpy).toHaveBeenCalledWith('Failed to fetch blocks:', 'Network failure');
@@ -213,7 +210,7 @@ describe('useBlocks', () => {
     it('should return false and call useHandleError on save failure', async () => {
       const error = new Error('Save failed');
       mockDoSaveBlocksWithGlobalBlocks.mockRejectedValue(error);
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(noop);
       const result = await useBlocks().saveBlocks('test-id', 'category', JSON.stringify(mockPageBlocks));
       expect(result).toBe(false);
       expect(useHandleError).toHaveBeenCalledWith(error);
@@ -223,7 +220,7 @@ describe('useBlocks', () => {
 
     it('should set loading to false after save regardless of outcome', async () => {
       mockDoSaveBlocksWithGlobalBlocks.mockRejectedValue(new Error('fail'));
-      vi.spyOn(console, 'error').mockImplementation(() => {});
+      vi.spyOn(console, 'error').mockImplementation(noop);
       await useBlocks().saveBlocks('id', 'type', '[]');
       expect(mockStateRef.value.loading).toBe(false);
     });
