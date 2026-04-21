@@ -1,7 +1,7 @@
 <template>
   <div class="w-full p-5 overflow-x-auto no-preflight" v-html="getHTMLTexts()" />
 
-  <div class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8">
+  <div class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8" v-if="config.enableContractWithdrawalButton">
     <h2 class="mb-6 text-2xl font-semibold text-neutral-900">
       {{ t('legal.cancellationForm') }}
     </h2>
@@ -106,6 +106,7 @@ definePageMeta({
   pageType: 'static',
 });
 
+const config = useRuntimeConfig().public;
 const { data, getLegalTexts } = useLegalInformation();
 const { loading, submitCancellation, validationSchema, turnstileSiteKey } = useCancellationForm();
 const { getSetting: getCancellationEmail } = useSiteSettings('cancellationFormRecipient');
@@ -143,7 +144,6 @@ const submitForm = async () => {
     email: email.value || '',
     name: name.value || '',
     orderId: Number(orderId.value),
-    lang: locale.value,
     reason: reason.value || '',
     'cf-turnstile-response': turnstile.value || '',
   });
