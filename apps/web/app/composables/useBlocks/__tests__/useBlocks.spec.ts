@@ -91,7 +91,7 @@ const createMockState = () => ({
 
 const setupApiResponse = (responseData: unknown) =>
   useAsyncData.mockImplementation((_key: string, _fetcher: () => unknown) => ({
-    data: { value: responseData },
+    data: { value: { data: responseData } },
     error: { value: null },
   }));
 
@@ -151,11 +151,13 @@ describe('useBlocks', () => {
       expect(useAsyncData).toHaveBeenCalledWith('blocks-en-category-test-id', expect.any(Function));
     });
 
-    it('should assemble and store blocks in state after fetch', async () => {
+    it('should assemble and store blocks from the API response', async () => {
       setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: mockPageBlocks, Footer: mockFooterBlock });
       await useBlocks().fetchBlocks('index', 'immutable');
-      expect(mockStateRef.value.data.HeaderContainer).toBeDefined();
-      expect(mockStateRef.value.data.Footer).toBeDefined();
+      expect(mockStateRef.value.data.HeaderContainer?.meta.uuid).toBe('header-uuid');
+      expect(mockStateRef.value.data.Footer?.meta.uuid).toBe('footer-uuid');
+      expect(mockStateRef.value.data.blocks).toHaveLength(2);
+      expect(mockStateRef.value.data.blocks[0]?.name).toBe('TextCard');
       expect(mockStateRef.value.loading).toBe(false);
     });
 
