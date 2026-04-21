@@ -100,10 +100,6 @@
 import { SfInput, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 
-defineI18nRoute({
-  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
-});
-
 definePageMeta({
   pageType: 'static',
 });
