@@ -1,7 +1,8 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
-      <ul
+      <MegaMenuSkeleton v-if="categoryTree.length === 0 && route.meta.cacheControl" />
+      <ul v-else
         :class="navigationContainerClasses"
         :style="navigationContainerStyle"
         @blur="
@@ -251,6 +252,7 @@ const { buildCategoryMenuLink } = useLocalization();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const { data: fetchedCategoryTree } = useCategoryTree();
+const route = useRoute();
 
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
