@@ -1,7 +1,7 @@
 <template>
   <div class="w-full p-5 overflow-x-auto no-preflight" v-html="getHTMLTexts()" />
 
-  <div class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8" v-if="config.enableContractWithdrawalButton">
+  <div v-if="config.enableContractWithdrawalButton" class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8">
     <h2 class="mb-6 text-2xl font-semibold text-neutral-900">
       {{ t('legal.cancellationForm') }}
     </h2>
