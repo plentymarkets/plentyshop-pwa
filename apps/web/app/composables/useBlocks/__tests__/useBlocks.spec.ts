@@ -221,9 +221,10 @@ describe('useBlocks', () => {
 
     it('should set loading to false after save regardless of outcome', async () => {
       mockDoSaveBlocksWithGlobalBlocks.mockRejectedValue(new Error('fail'));
-      vi.spyOn(console, 'error').mockImplementation(noop);
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(noop);
       await useBlocks().saveBlocks('id', 'type', '[]');
       expect(mockStateRef.value.loading).toBe(false);
+      consoleSpy.mockRestore();
     });
   });
 
