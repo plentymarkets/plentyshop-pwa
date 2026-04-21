@@ -5,9 +5,8 @@
         {{ t('contact.contact') }}
       </h1>
       <p class="mb-10">{{ t('contact.contactShopMessage') }}</p>
-
       <div
-        v-if="turnstileSiteKey.length === 0"
+        v-if="turnstileSiteKey.length === 0 || contactShopEmail.length === 0"
         class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
       >
         <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
@@ -172,15 +171,18 @@ definePageMeta({
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-const turnstileSiteKey = getSetting() ?? '';
-const turnstileElement = ref();
-const turnstileLoad = ref(false);
+const { getSetting: getContactShopEmail } = useSiteSettings('contactShopEmail');
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
 setPageMeta(t('contact.label'), icon);
+
+const contactShopEmail = getContactShopEmail() ?? '';
+const turnstileSiteKey = getSetting() ?? '';
+const turnstileElement = ref();
+const turnstileLoad = ref(false);
 
 const validationSchema = toTypedSchema(
   object({
