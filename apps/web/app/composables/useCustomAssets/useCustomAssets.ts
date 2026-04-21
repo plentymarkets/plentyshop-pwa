@@ -58,9 +58,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
   const getAssetsOfType: GetAssetsOfType = (type: string) => {
     const currentAssets = state.value.data || [];
-    const initialAssets = Array.isArray(state.value.initialData)
-      ? markRaw(deepClone(state.value.initialData))
-      : [];
+    const initialAssets = Array.isArray(state.value.initialData) ? markRaw(deepClone(state.value.initialData)) : [];
 
     const merged = [...initialAssets, ...currentAssets]
       .filter((asset) => asset.type === type)
