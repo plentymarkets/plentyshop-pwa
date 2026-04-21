@@ -10,17 +10,24 @@ on:
 jobs:
   create-archive:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Create GitHub Deployment
         id: deployment
+        # required_contexts is intentionally empty: releases are manually published,
+        # so CI status checks are not enforced here.
         run: |
           deployment_id=$(gh api repos/${{ github.repository }}/deployments \
             --method POST \
-            -f ref="${{ github.sha }}" \
-            -f environment="production" \
-            -f description="Release ${{ github.event.release.tag_name }}" \
-            -F auto_merge=false \
-            -F required_contexts='[]' \
+            --input - <<EOF
+          {
+            "ref": "${{ github.sha }}",
+            "environment": "production",
+            "description": "Release ${{ github.event.release.tag_name }}",
+            "auto_merge": false,
+            "required_contexts": []
+          }
+          EOF
             --jq '.id')
           echo "id=$deployment_id" >> $GITHUB_OUTPUT
           gh api repos/${{ github.repository }}/deployments/$deployment_id/statuses \
@@ -55,7 +62,11 @@ jobs:
       - name: Set Deployment Status
         if: always() && steps.deployment.outputs.id != ''
         run: |
-          state=$([[ "${{ job.status }}" == "success" ]] && echo "success" || echo "failure")
+          case "${{ job.status }}" in
+            success)   state="success" ;;
+            cancelled) state="inactive" ;;
+            *)         state="failure" ;;
+          esac
           gh api repos/${{ github.repository }}/deployments/${{ steps.deployment.outputs.id }}/statuses \
             --method POST \
             -f state="$state"
