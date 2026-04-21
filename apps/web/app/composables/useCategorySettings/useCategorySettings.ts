@@ -28,7 +28,7 @@ export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') 
       const { getCategory } = useCategoryDetails();
       const result = await getCategory(categoryId);
 
-      const cleanData = deepClone(result);
+      const cleanData = deepClone(result) as unknown as CategoryEntry;
 
       const { addCategorySettings } = useCategorySettingsCollection();
       await addCategorySettings(cleanData);
