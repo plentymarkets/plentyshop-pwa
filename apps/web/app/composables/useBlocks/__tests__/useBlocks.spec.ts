@@ -90,10 +90,13 @@ const createMockState = () => ({
 });
 
 const setupApiResponse = (responseData: unknown) =>
-  useAsyncData.mockImplementation((_key: string, _fetcher: () => unknown) => ({
-    data: { value: { data: responseData } },
-    error: { value: null },
-  }));
+  useAsyncData.mockImplementation((_key: string, fetcher: () => unknown) => {
+    fetcher();
+    return {
+      data: { value: { data: responseData } },
+      error: { value: null },
+    };
+  });
 
 const noop = () => {};
 
@@ -148,7 +151,12 @@ describe('useBlocks', () => {
     it('should call SDK with correct parameters and cache key', async () => {
       setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: mockPageBlocks, Footer: mockFooterBlock });
       await useBlocks().fetchBlocks('test-id', 'category');
-      expect(useAsyncData).toHaveBeenCalledWith('blocks-en-category-test-id', expect.any(Function));
+      expect(useAsyncData).toHaveBeenCalledWith('blocks-en-category-test-id', expect.any(Function), expect.anything());
+      expect(mockGetBlocksWithGlobalBlocks).toHaveBeenCalledWith({
+        identifier: 'test-id',
+        type: 'category',
+        enableGlobalBlocks: true,
+      });
     });
 
     it('should assemble and store blocks from the API response', async () => {
