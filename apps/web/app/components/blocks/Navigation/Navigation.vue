@@ -1,7 +1,11 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
-      <MegaMenuSkeleton v-if="categoryTree.length === 0 && route.meta.cacheControl" />
+      <MegaMenuSkeleton
+        v-if="categoryTree.length === 0 && route.meta.cacheControl"
+        :container-classes="navigationContainerClasses"
+        :container-style="navigationContainerStyle"
+      />
       <ul v-else
         :class="navigationContainerClasses"
         :style="navigationContainerStyle"
