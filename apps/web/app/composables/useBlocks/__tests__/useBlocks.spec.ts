@@ -229,7 +229,11 @@ describe('useBlocks', () => {
   describe('updateBlocks', () => {
     it('should update page blocks in state', () => {
       const newBlocks = [...mockPageBlocks];
-      mockStateRef.value.data = { blocks: [], HeaderContainer: undefined, Footer: undefined } as unknown as GetBlocksResponse;
+      mockStateRef.value.data = {
+        blocks: [],
+        HeaderContainer: undefined,
+        Footer: undefined,
+      } as unknown as GetBlocksResponse;
       useBlocks().updateBlocks(newBlocks);
       expect(mockStateRef.value.data.blocks).toBe(newBlocks);
     });
@@ -239,7 +243,11 @@ describe('useBlocks', () => {
     it('should restore data from cleanData snapshot', () => {
       const clean = { blocks: mockPageBlocks, HeaderContainer: mockHeaderContainerBlock, Footer: mockFooterBlock };
       mockStateRef.value.cleanData = clean as unknown as GetBlocksResponse;
-      mockStateRef.value.data = { blocks: [], HeaderContainer: undefined, Footer: undefined } as unknown as GetBlocksResponse;
+      mockStateRef.value.data = {
+        blocks: [],
+        HeaderContainer: undefined,
+        Footer: undefined,
+      } as unknown as GetBlocksResponse;
       useBlocks().discardChanges();
       expect(JSON.stringify(mockStateRef.value.data)).toEqual(JSON.stringify(clean));
     });
@@ -266,7 +274,3 @@ describe('useBlocks', () => {
     });
   });
 });
-
-
-
-
