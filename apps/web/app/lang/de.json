@@ -463,6 +463,17 @@
       "email": "E-Mail"
     }
   },
+  "cancellationForm": {
+    "orderId": "Auftragsnummer",
+    "name": "Vollständiger Name",
+    "email": "Kontaktmail",
+    "reason": "Grund für den Widerruf",
+    "submit": "Vertrag kündigen",
+    "asterixHint": "markierte Felder sind Pflichtfelder",
+    "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
+    "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
+    "success": "Ihr Widerruf wurde erfolgreich übermittelt. Wir haben soeben eine Bestätigungs-E-Mail mit allen Details an {email} gesendet."
+  },
   "CookieBar": {
     "about": {
       "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Beachten Sie unser {legal} und weitere Hinweise zur Verwendung personenbezogener Daten in unserer {policy}.",
@@ -1182,6 +1193,10 @@
     }
   },
   "storefrontError": {
+    "cancellation": {
+      "recipientNotConfigured": "Das Widerrufsformular ist nicht konfiguriert. Bitte kontaktieren Sie den Seitenbetreiber.",
+      "submitFailed": "Der Widerruf konnte nicht übermittelt werden. Bitte versuchen Sie es später erneut."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",

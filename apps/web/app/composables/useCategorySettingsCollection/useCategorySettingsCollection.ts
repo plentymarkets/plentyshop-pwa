@@ -18,13 +18,13 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     if (exists) return;
 
     state.value.data.push(category);
-    state.value.initialData.push(JSON.parse(JSON.stringify(category)));
+    state.value.initialData.push(deepClone(category));
   };
 
   const hasChanges = computed(() => {
     const dataNoChildren = stripChildren(state.value.data);
     const initialNoChildren = stripChildren(state.value.initialData);
-    return JSON.stringify(dataNoChildren) !== JSON.stringify(initialNoChildren);
+    return !deepEqual(dataNoChildren, initialNoChildren);
   });
 
   const isCategoryDirty = (id: number) => {
@@ -33,7 +33,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     if (!current || !initial) return false;
     const currentNoChildren = stripChildren(current);
     const initialNoChildren = stripChildren(initial);
-    return JSON.stringify(currentNoChildren) !== JSON.stringify(initialNoChildren);
+    return !deepEqual(currentNoChildren, initialNoChildren);
   };
 
   const saveCategorySettings = async (): Promise<boolean> => {
@@ -42,54 +42,52 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
       const dirtyCategories = state.value.data.filter((category) => {
         const initial = state.value.initialData.find((item) => item.id === category.id);
         if (!initial) return false;
-        return JSON.stringify(category) !== JSON.stringify(initial);
+        return !deepEqual(category, initial);
       });
       if (dirtyCategories.length === 0) {
         state.value.loading = false;
         return true;
       }
-      const settings = JSON.parse(
-        JSON.stringify(
-          dirtyCategories
-            .filter((category) => category.details && category.details.length > 0)
-            .map((category) => {
-              const detail = category.details[0];
-              if (!detail) throw new Error('Unexpected: detail should exist after filter');
-              return {
-                id: category.id,
-                parentCategoryId: category.parentCategoryId,
-                sitemap: category.sitemap,
-                linklist: category.linklist,
-                linkCategoryToWebstore: category.isLinkedToWebstore,
-                right: category.right,
-                categoryId: detail.categoryId,
-                lang: detail.lang,
-                name: detail.name,
-                nameUrl: detail.nameUrl,
-                type: category.type,
-                position: detail.position,
-                metaTitle: detail.metaTitle,
-                metaDescription: detail.metaDescription,
-                metaKeywords: detail.metaKeywords,
-                metaRobots: detail.metaRobots,
-                canonicalLink: detail.canonicalLink,
-                pageView: detail.pageView,
-                itemListView: detail.itemListView,
-                singleItemView: detail.singleItemView,
-                clients: category.clients.map((client) => ({
-                  categoryId: client.categoryId,
-                  plentyId: client.plentyId,
-                })),
-              };
-            }),
-        ),
+      const settings = deepClone(
+        dirtyCategories
+          .filter((category) => category.details && category.details.length > 0)
+          .map((category) => {
+            const detail = category.details[0];
+            if (!detail) throw new Error('Unexpected: detail should exist after filter');
+            return {
+              id: category.id,
+              parentCategoryId: category.parentCategoryId,
+              sitemap: category.sitemap,
+              linklist: category.linklist,
+              linkCategoryToWebstore: category.isLinkedToWebstore,
+              right: category.right,
+              categoryId: detail.categoryId,
+              lang: detail.lang,
+              name: detail.name,
+              nameUrl: detail.nameUrl,
+              type: category.type,
+              position: Number(detail.position),
+              metaTitle: detail.metaTitle,
+              metaDescription: detail.metaDescription,
+              metaKeywords: detail.metaKeywords,
+              metaRobots: detail.metaRobots,
+              canonicalLink: detail.canonicalLink,
+              pageView: detail.pageView,
+              itemListView: detail.itemListView,
+              singleItemView: detail.singleItemView,
+              clients: category.clients.map((client) => ({
+                categoryId: client.categoryId,
+                plentyId: client.plentyId,
+              })),
+            };
+          }),
       );
       await useSdk().plentysystems.setCategorySettings(settings);
       movePagesInTree(dirtyCategories);
       dirtyCategories.forEach((category) => {
         const idx = state.value.initialData.findIndex((item) => item.id === category.id);
         if (idx !== -1) {
-          state.value.initialData[idx] = JSON.parse(JSON.stringify(category));
+          state.value.initialData[idx] = deepClone(category);
         }
       });
       state.value.loading = false;
@@ -110,7 +108,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const errorMessage = getEditorUITranslation('error');
     const route = useRoute();
     const router = useRouter();
-    const initialCategories: CategoryEntry[] = JSON.parse(JSON.stringify(state.value.initialData));
+    const initialCategories: CategoryEntry[] = deepClone(state.value.initialData);
     const currentCategorySlug = extractCategorySlug(route.path);
 
     const categoryFromRoute = initialCategories.find(
