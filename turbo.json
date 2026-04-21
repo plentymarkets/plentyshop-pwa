@@ -1,8 +1,8 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
+  "$schema": "https://turborepo.dev/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "typecheck"],
       "outputs": ["dist/**", ".output/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env"],
       "cache": true
@@ -15,6 +15,10 @@
     },
     "start": {
       "outputs": []
+    },
+    "typecheck": {
+      "outputs": [],
+      "cache": false
     },
     "lint": {
       "outputs": [],
@@ -33,7 +37,7 @@
       "outputs": ["docs/.vitepress/dist/**"]
     },
     "docs:preview": {
-       "cache": false
+      "cache": false
     },
     "publish-typedoc": {
       "cache": false,
