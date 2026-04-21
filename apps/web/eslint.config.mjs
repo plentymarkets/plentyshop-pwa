@@ -32,7 +32,7 @@ export default withNuxt(
     /**
      * Rules from other plugins
      * Consider reintroducing in the future
-     * 
+     *
      * etc/no-implicit-any-catch
      * etc/throw-error
      * promise/no-nesting
@@ -52,7 +52,7 @@ export default withNuxt(
         "error",
         {
           name: 'structuredClone',
-          message: 'structuredClone strips Vue reactivity. Avoid cloning reactive state; use JSON.parse(JSON.stringify(...)) for plain data or toRaw() on reactive objects instead.'
+          message: 'structuredClone strips Vue reactivity. Avoid cloning reactive state; use deepClone(...) for plain data or toRaw() on reactive objects instead.'
         }
       ],
       'no-restricted-imports': ['error', {
