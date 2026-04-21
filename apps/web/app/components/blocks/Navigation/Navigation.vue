@@ -6,7 +6,8 @@
         :container-classes="navigationContainerClasses"
         :container-style="navigationContainerStyle"
       />
-      <ul v-else
+      <ul
+        v-else
         :class="navigationContainerClasses"
         :style="navigationContainerStyle"
         @blur="
