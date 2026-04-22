@@ -67,5 +67,4 @@ export class FooterBlockObject extends PageObject {
     this.columnOneTitle.should('have.value', title);
     return this;
   }
-
 }

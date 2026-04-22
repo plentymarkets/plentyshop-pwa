@@ -111,12 +111,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        spec:
-          - smoke
-          - globalBlocks
     steps:
       - uses: actions/checkout@v6
       - name: Setup Node
@@ -137,10 +131,42 @@ jobs:
       - name: Extract build
         run: tar -xzf build.tar.gz
 
-      - name: E2E Smoke (${{ matrix.spec }})
+      - name: E2E Smoke
         uses: cypress-io/github-action@v7
         with:
           install: false
-          command: npx cypress run --browser chrome --headless --spec '__tests__/test/smoke/${{ matrix.spec }}.cy.ts'
+          command: npm run test:cypress
+        env:
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
+  smoke-global-blocks:
+    if: github.repository == 'plentymarkets/plentyshop-pwa'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v8
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: E2E Global Blocks Smoke
+        uses: cypress-io/github-action@v7
+        with:
+          install: false
+          command: npm run test:cypress-global-blocks
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
