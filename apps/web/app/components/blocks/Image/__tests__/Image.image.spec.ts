@@ -94,6 +94,7 @@ describe('Image block', () => {
     expect(wrapperEl.exists()).toBe(true);
     expect(wrapperEl.element.tagName.toLowerCase()).toBe('div');
     expect(wrapperEl.attributes('to')).toBeUndefined();
+    expect(wrapperEl.classes()).not.toContain('absolute');
     const img = wrapper.find('[data-testid="image-block-image"]');
     expect(img.exists()).toBe(true);
   });
@@ -227,5 +228,29 @@ describe('Image block', () => {
     getBlockDepthMock.mockReturnValueOnce(1);
     const wrapper = mount(Image, { props: mockImageBlock });
     expect(wrapper.find('[data-testid="image-block"]').attributes('style')).toContain('height: 24rem');
+  });
+
+  it('should allow overlay content to receive clicks when a link target is set', () => {
+    const block = {
+      ...mockImageBlock,
+      content: {
+        ...mockImageBlock.content,
+        image: { ...mockImageBlock.content.image, linktarget: 'https://example.com' },
+      },
+    };
+    const wrapper = mount(Image, { props: block });
+    expect(wrapper.find('[data-testid="image-overlay-wrapper"]').classes()).toContain('pointer-events-none');
+  });
+
+  it('should not block overlay clicks when no link target is set', () => {
+    const block = {
+      ...mockImageBlock,
+      content: {
+        ...mockImageBlock.content,
+        image: { ...mockImageBlock.content.image, linktarget: '' },
+      },
+    };
+    const wrapper = mount(Image, { props: block });
+    expect(wrapper.find('[data-testid="image-overlay-wrapper"]').classes()).not.toContain('pointer-events-none');
   });
 });

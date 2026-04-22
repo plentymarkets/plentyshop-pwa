@@ -5,7 +5,7 @@
       v-if="hasImage"
       :to="linkTarget"
       :aria-label="ariaLabel"
-      class="absolute inset-0"
+      :class="{ 'absolute inset-0': linkTarget }"
       v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
       data-testid="image-link"
     >
@@ -28,11 +28,11 @@
       />
     </component>
     <div
-      class="absolute inset-0 px-4 flex flex-col pointer-events-none"
-      :class="overlayAlignClasses"
+      class="absolute inset-0 px-4 flex flex-col"
+      :class="[overlayAlignClasses, { 'pointer-events-none': linkTarget }]"
       data-testid="image-overlay-wrapper"
     >
-      <div class="pointer-events-auto">
+      <div :class="{ 'pointer-events-auto': linkTarget }">
         <TextContent v-bind="textContentProps" :test-id="'image-overlay'" />
       </div>
     </div>
@@ -89,14 +89,14 @@ const breakpointConfig = computed(() => {
       url: image?.tablet,
       dimensions: { width: 757, height: 483 },
     },
-    mobile: {
+    fallback: {
       aspectRatio: image?.aspectRatio || '1 / 1',
       url: image?.mobile,
       dimensions: { width: 320, height: 320 },
     },
   };
 
-  return (configs[viewport.breakpoint.value] ?? configs['mobile']) as BreakpointEntry;
+  return (configs[viewport.breakpoint.value] ?? configs['fallback']) as BreakpointEntry;
 });
 
 const depth = getBlockDepth(props.meta.uuid);
