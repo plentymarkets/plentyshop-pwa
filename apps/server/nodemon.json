@@ -1,5 +1,5 @@
 {
-  "watch": ["**/*"],
-  "ext": "ts",
+  "watch": ["**/*", "../web/.env"],
+  "ext": "ts,env",
   "exec": "ts-node-dev src/index.ts"
 }

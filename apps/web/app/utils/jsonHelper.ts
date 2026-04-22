@@ -1,3 +1,10 @@
+export const deepClone = <T>(value: T): T => {
+  if (value === undefined) {
+    return value;
+  }
+
+  return JSON.parse(JSON.stringify(value)) as T;
+};
 export const deepEqual = (object1: unknown, object2: unknown): boolean => {
   if (object1 === object2) return true;
 

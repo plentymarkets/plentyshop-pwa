@@ -62,7 +62,7 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
           return;
         }
 
-        block.content = JSON.parse(JSON.stringify(newContent));
+        block.content = deepClone(newContent);
       }
     },
     { deep: true },
