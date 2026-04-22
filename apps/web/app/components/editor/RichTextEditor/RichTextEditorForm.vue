@@ -8,7 +8,7 @@
       @update:model-value="editorMode = $event"
     />
 
-    <div v-if="editorMode === 'wysiwyg'" class="py-2">
+    <div v-if="editorMode === 'wysiwyg'" class="py-2" data-testid="rte-content">
       <EditorRichTextEditor
         ref="contentRichTextEditor"
         v-model:expanded="expandedToolbars"
@@ -16,7 +16,6 @@
         :min-height="232"
         :expandable="true"
         :text-align="textAlign"
-        data-testid="rte-content"
         @update:model-value="$emit('update:modelValue', $event)"
         @request-html-modal="handleRequestHtmlModal"
       />
