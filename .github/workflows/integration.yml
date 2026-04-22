@@ -106,7 +106,7 @@ jobs:
         with:
           name: build
           path: build.tar.gz
-  smoke:
+  smoke-shop:
     if: github.repository == 'plentymarkets/plentyshop-pwa'
     needs: build
     runs-on: ubuntu-latest
@@ -131,14 +131,14 @@ jobs:
       - name: Extract build
         run: tar -xzf build.tar.gz
 
-      - name: E2E Smoke
+      - name: E2E Smoke Shop
         uses: cypress-io/github-action@v7
         with:
           install: false
           command: npm run test:cypress
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
-  smoke-global-blocks:
+  smoke-editor:
     if: github.repository == 'plentymarkets/plentyshop-pwa'
     needs: build
     runs-on: ubuntu-latest
@@ -163,10 +163,10 @@ jobs:
       - name: Extract build
         run: tar -xzf build.tar.gz
 
-      - name: E2E Global Blocks Smoke
+      - name: E2E Smoke Editor
         uses: cypress-io/github-action@v7
         with:
           install: false
-          command: npm run test:cypress-global-blocks
+          command: npm run test:cypress-smoke-editor
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}

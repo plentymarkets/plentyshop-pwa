@@ -79,7 +79,7 @@
     "test:cypress": {
       "cache": false
     },
-    "test:cypress-global-blocks": {
+    "test:cypress-smoke-editor": {
       "cache": false
     },
     "test:cypress-dev": {

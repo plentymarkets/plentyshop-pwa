@@ -6,7 +6,7 @@ export class ToolbarObject extends PageObject {
   }
 
   assertSaveEnabled() {
-    this.saveButton.should('be.visible').and('not.be.disabled');
+    this.saveButton.should('be.visible').and('be.enabled');
     return this;
   }
 

@@ -11,30 +11,8 @@ const footerBlock = new FooterBlockObject();
 const tableOfContents = new TableOfContentsObject();
 const toolbar = new ToolbarObject();
 
-describe('Global Blocks Smoke', () => {
-  it('storefront header and footer', () => {
-    cy.visitAndHydrate(paths.home);
-    cookieBar.acceptAll();
-
-    // prettier-ignore
-    headerBlock
-      .assertVisible()
-      .assertNavigation()
-      .assertActionButtons()
-      .navigateToCategory();
-
-    // prettier-ignore
-    headerBlock
-      .assertVisible()
-      .assertNavigation();
-
-    // prettier-ignore
-    footerBlock
-      .assertVisible()
-      .assertLinks();
-  });
-
-  it('editor global blocks interactions', () => {
+describe('Editor Smoke Tests', () => {
+  it('global blocks editor interactions', () => {
     cy.clearCookies();
     cy.clearConfig();
     cy.setConfig({ isPreview: true });
