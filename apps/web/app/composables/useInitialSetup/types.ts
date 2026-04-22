@@ -5,6 +5,7 @@ export interface UseInitialSetup {
   setInitialDataSSR: SetInitialData;
   fetchSettings: () => Promise<void>;
   fetchCacheableInitData: SetInitialData;
+  fetchSessionAndCategoryTree: () => Promise<void>;
 }
 
 export type UseInitialSetupReturn = () => UseInitialSetup;
