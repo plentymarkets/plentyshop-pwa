@@ -26,7 +26,7 @@ const contactEmail = computed({
 {
   "en": {
     "label": "Contact Form Email",
-    "tooltip": "Enter the email address to which messages from the contact form should be sent."
+    "tooltip": "Enter the email address to which messages from the contact form should be sent. The form is found under /contact"
   },
   "de": {
     "label": "Contact Form Email",
