@@ -1,6 +1,6 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" class="hidden lg:block">
       <ul
         :class="navigationContainerClasses"
         :style="navigationContainerStyle"

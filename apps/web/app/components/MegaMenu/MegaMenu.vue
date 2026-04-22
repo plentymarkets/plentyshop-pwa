@@ -30,7 +30,7 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" class="hidden lg:block">
       <ul
         class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
