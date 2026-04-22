@@ -1,6 +1,16 @@
 import { createI18n } from 'vue-i18n';
 import { config } from '@vue/test-utils';
 import { vi } from 'vitest';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+
+mockNuxtImport('useSdk', () => () => ({
+  plentysystems: new Proxy(
+    {},
+    {
+      get: () => vi.fn().mockResolvedValue({ data: undefined }),
+    },
+  ),
+}));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FindTestIdPlugin = (wrapper: any) => {
