@@ -45,102 +45,102 @@
           <MegaMenuSkeleton v-if="categoryTree.length === 0" />
           <template v-else>
             <li v-for="(menuNode, index) in categoryTree" :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-          <NuxtLink
-            v-if="menuNode.childCount > 0"
-            ref="triggerReference"
-            :to="localePath(generateCategoryLink(menuNode))"
-            data-testid="category-button"
-            :class="categoryButtonClasses"
-            tabindex="0"
-            aria-haspopup="true"
-            :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
-            @touchstart="onTouchStart"
-            @mousedown="onMouseDown"
-            @click.capture="onCategoryClickCapture($event, menuNode)"
-            @keydown.enter="onEnterKey"
-            @keydown.space.prevent="openMenuAndFocusFirst(menuNode)"
-            @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
-            @keydown.left="focusPreviousCategory(index)"
-            @keydown.right="focusNextCategory(index)"
-          >
-            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-            <SfIconChevronRight
-              aria-hidden="true"
-              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
-            />
-          </NuxtLink>
+              <NuxtLink
+                v-if="menuNode.childCount > 0"
+                ref="triggerReference"
+                :to="localePath(generateCategoryLink(menuNode))"
+                data-testid="category-button"
+                :class="categoryButtonClasses"
+                tabindex="0"
+                aria-haspopup="true"
+                :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
+                @touchstart="onTouchStart"
+                @mousedown="onMouseDown"
+                @click.capture="onCategoryClickCapture($event, menuNode)"
+                @keydown.enter="onEnterKey"
+                @keydown.space.prevent="openMenuAndFocusFirst(menuNode)"
+                @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
+                @keydown.left="focusPreviousCategory(index)"
+                @keydown.right="focusNextCategory(index)"
+              >
+                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+                <SfIconChevronRight
+                  aria-hidden="true"
+                  class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+                />
+              </NuxtLink>
 
-          <NuxtLink
-            v-else
-            ref="triggerReference"
-            :to="localePath(generateCategoryLink(menuNode))"
-            data-testid="category-button"
-            :class="categoryButtonClasses"
-            tabindex="0"
-            @keydown.left="focusPreviousCategory(index)"
-            @keydown.right="focusNextCategory(index)"
-          >
-            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-          </NuxtLink>
+              <NuxtLink
+                v-else
+                ref="triggerReference"
+                :to="localePath(generateCategoryLink(menuNode))"
+                data-testid="category-button"
+                :class="categoryButtonClasses"
+                tabindex="0"
+                @keydown.left="focusPreviousCategory(index)"
+                @keydown.right="focusNextCategory(index)"
+              >
+                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+              </NuxtLink>
 
-          <div
-            v-if="
-              isOpen &&
-              activeMenu &&
-              activeNode.length === 1 &&
-              activeNode[0] === menuNode.id &&
-              menuNode.childCount > 0
-            "
-            :key="activeMenu.id"
-            ref="megaMenuReference"
-            :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
-            @mouseleave="onMouseLeave"
-            @keydown.esc="focusTrigger(index)"
-            @keydown.up="navigateDropdownItems($event, 'up')"
-            @keydown.down="navigateDropdownItems($event, 'down')"
-            @keydown.tab="handleTabInDropdown($event)"
-          >
-            <template v-for="node in activeMenu.children" :key="node.id">
-              <template v-if="node.childCount === 0">
-                <ul>
-                  <li>
+              <div
+                v-if="
+                  isOpen &&
+                  activeMenu &&
+                  activeNode.length === 1 &&
+                  activeNode[0] === menuNode.id &&
+                  menuNode.childCount > 0
+                "
+                :key="activeMenu.id"
+                ref="megaMenuReference"
+                :style="style"
+                class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
+                @mouseleave="onMouseLeave"
+                @keydown.esc="focusTrigger(index)"
+                @keydown.up="navigateDropdownItems($event, 'up')"
+                @keydown.down="navigateDropdownItems($event, 'down')"
+                @keydown.tab="handleTabInDropdown($event)"
+              >
+                <template v-for="node in activeMenu.children" :key="node.id">
+                  <template v-if="node.childCount === 0">
+                    <ul>
+                      <li>
+                        <SfListItem
+                          :tag="NuxtLink"
+                          size="sm"
+                          :href="localePath(generateCategoryLink(node))"
+                          class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                        >
+                          {{ categoryTreeGetters.getName(node) }}
+                        </SfListItem>
+                      </li>
+                    </ul>
+                  </template>
+                  <div v-else>
                     <SfListItem
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                      class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
-                  </li>
-                </ul>
-              </template>
-              <div v-else>
-                <SfListItem
-                  :tag="NuxtLink"
-                  size="sm"
-                  :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
-                >
-                  {{ categoryTreeGetters.getName(node) }}
-                </SfListItem>
-                <ul class="mt-2 mb-3">
-                  <li v-for="child in node.children" :key="child.id">
-                    <SfListItem
-                      v-if="categoryTreeGetters.getName(child)"
-                      :tag="NuxtLink"
-                      size="sm"
-                      :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
-                    >
-                      {{ categoryTreeGetters.getName(child) }}
-                    </SfListItem>
-                  </li>
-                </ul>
+                    <ul class="mt-2 mb-3">
+                      <li v-for="child in node.children" :key="child.id">
+                        <SfListItem
+                          v-if="categoryTreeGetters.getName(child)"
+                          :tag="NuxtLink"
+                          size="sm"
+                          :href="localePath(generateCategoryLink(child))"
+                          class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
+                        >
+                          {{ categoryTreeGetters.getName(child) }}
+                        </SfListItem>
+                      </li>
+                    </ul>
+                  </div>
+                </template>
               </div>
-            </template>
-          </div>
             </li>
           </template>
           <template #fallback>
