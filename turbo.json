@@ -79,6 +79,9 @@
     "test:cypress": {
       "cache": false
     },
+    "test:cypress-global-blocks": {
+      "cache": false
+    },
     "test:cypress-dev": {
       "cache": false
     },
