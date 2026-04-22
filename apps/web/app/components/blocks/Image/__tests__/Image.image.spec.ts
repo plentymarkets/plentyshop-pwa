@@ -2,6 +2,7 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { mount } from '@vue/test-utils';
 import Image from '../../../../components/blocks/Image/Image.vue';
 import { mockImageBlock } from './Image.mock';
+import type { ImageProps } from '../types';
 
 const getBlockDepthMock = vi.hoisted(() => vi.fn().mockReturnValue(-1));
 
@@ -162,13 +163,10 @@ describe('Image block', () => {
   });
 
   it('should not render the image when content.image is absent', () => {
+    const { image, ...contentWithoutImage } = mockImageBlock.content;
     const block = {
       ...mockImageBlock,
-      content: {
-        ...mockImageBlock.content,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        image: undefined as any,
-      },
+      content: contentWithoutImage as ImageProps['content'],
     };
     const wrapper = mount(Image, { props: block });
     expect(wrapper.find('[data-testid="image-link"]').exists()).toBe(false);
