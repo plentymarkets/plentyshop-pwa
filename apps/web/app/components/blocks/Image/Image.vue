@@ -6,7 +6,7 @@
       :to="linkTarget"
       :aria-label="ariaLabel"
       :class="{ 'absolute inset-0': linkTarget }"
-      v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
+      v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
       data-testid="image-link"
     >
       <NuxtImg
@@ -27,6 +27,7 @@
         data-testid="image-block-image"
       />
     </component>
+
     <div
       class="absolute inset-0 px-4 flex flex-col"
       :class="[overlayAlignClasses, { 'pointer-events-none': linkTarget }]"

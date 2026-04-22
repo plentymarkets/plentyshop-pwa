@@ -158,7 +158,7 @@ describe('Image block', () => {
     });
     const link = wrapper.find('[data-testid="image-link"]');
     expect(link.attributes('target')).toBe('_blank');
-    expect(link.attributes('rel')).toBe('noopener');
+    expect(link.attributes('rel')).toBe('noopener noreferrer');
   });
 
   it('should not render the image when content.image is absent', () => {
