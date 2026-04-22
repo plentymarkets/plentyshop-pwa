@@ -11,6 +11,9 @@ import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTre
  * ```
  */
 export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
+  const {
+    public: { mockGetInit },
+  } = useRuntimeConfig();
   const state = useState<UseCategoryTreeState>('useCategoryTree', () => ({
     data: [] as CategoryTreeItem[],
     loading: false,
@@ -24,6 +27,10 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
    * ```
    */
   const getCategoryTree: GetCategoryTree = async () => {
+    if (mockGetInit) {
+      console.warn('[perf-experiment] mockGetInit is active — skipping getCategoryTree(), keeping mock data');
+      return state.value.data;
+    }
     state.value.loading = true;
     try {
       const data = await useSdk().plentysystems.getCategoryTree();

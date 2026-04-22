@@ -1,4 +1,5 @@
 import type { Cart, ApiError } from '@plentymarkets/shop-api';
+import { mockCart, mockCategoryTree, mockRobots, mockSettings } from '~/mocks/initData';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
 
@@ -47,6 +48,18 @@ const setInitialDataSSR: SetInitialData = async () => {
 
   cartLoading.value = true;
 
+  if (useRuntimeConfig().public.mockGetInit) {
+    console.warn('[perf-experiment] mockGetInit is active — skipping getInit(), using static mock data');
+    setUser(null);
+    setCart(mockCart);
+    setCategoryTree(mockCategoryTree);
+    setInitialAssetsData([]);
+    setWishlistItemIds([]);
+    setRobots(mockRobots);
+    cartLoading.value = false;
+    return true;
+  }
+
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: { settings: true } }));
     if (data.value?.data) {
@@ -75,6 +88,12 @@ const setInitialDataSSR: SetInitialData = async () => {
  * ```
  */
 const fetchSettings = async () => {
+  if (useRuntimeConfig().public.mockGetSettings) {
+    console.warn('[perf-experiment] mockGetSettings is active — skipping getSettings(), using static mock data');
+    useSiteSettings().setInitialData(mockSettings);
+    return;
+  }
+
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getSettings());
     if (data.value?.data) {
