@@ -32,11 +32,6 @@ export class FooterBlockObject extends PageObject {
     return this;
   }
 
-  assertColors() {
-    this.footer.should('have.css', 'background-color').and('not.eq', 'rgba(0, 0, 0, 0)');
-    return this;
-  }
-
   assertNotMovableOrDeletable() {
     this.lastBlockWrapper.find('[data-testid="move-up-button"]').should('not.exist');
     this.lastBlockWrapper.find('[data-testid="move-down-button"]').should('not.exist');

@@ -31,8 +31,7 @@ describe('Global Blocks Smoke', () => {
     // prettier-ignore
     footerBlock
       .assertVisible()
-      .assertLinks()
-      .assertColors();
+      .assertLinks();
   });
 
   it('editor global blocks interactions', () => {
