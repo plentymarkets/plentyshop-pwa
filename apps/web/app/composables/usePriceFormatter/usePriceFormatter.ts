@@ -42,7 +42,7 @@ export const usePriceFormatter = () => {
     }
 
     if (state.value.thousandSeparator && integerPart) {
-      integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, state.value.thousandSeparator);
+      integerPart = integerPart.replaceAll(/\B(?=(\d{3})+(?!\d))/g, state.value.thousandSeparator);
     }
 
     let formattedNumber = integerPart;
@@ -60,6 +60,29 @@ export const usePriceFormatter = () => {
   };
 
   const format = (value: number) => {
+    const { getSetting } = useSiteSettings('shopCurrencyFormat');
+    const useIsoCode = getSetting() === 'code';
+    const { $i18n } = useNuxtApp();
+
+    if (state.value.pattern === '') {
+      if (useIsoCode) {
+        const locale = $i18n.locale.value as string;
+        const fmt = $i18n.getNumberFormat(locale) as Record<string, Intl.NumberFormatOptions> | undefined;
+        const isoCode = fmt?.['currency']?.currency;
+        if (isoCode) return $i18n.n(value, { style: 'currency', currency: isoCode, currencyDisplay: 'code' });
+      }
+
+      // eslint-disable-next-line custom-rules/no-i18n-globals
+      return $i18n.n(value, 'currency');
+    }
+
+    if (useIsoCode) {
+      const locale = $i18n.locale.value as string;
+      const fmt = $i18n.getNumberFormat(locale) as Record<string, Intl.NumberFormatOptions> | undefined;
+      const isoCode = fmt?.['currency']?.currency;
+      if (isoCode) return formatWithSymbol(value, isoCode);
+    }
+
     return formatWithSymbol(value, state.value.currency);
   };
 

@@ -60,8 +60,8 @@
   "variation.number_desc": "Variation number ⬇",
   "variation.updatedAt_asc": "Last update",
   "variation.updatedAt_desc": "First update",
-  "variation.position_asc": "Top seller ⬆",
-  "variation.position_desc": "Top seller ⬇",
+  "variation.position_asc": "Variation position ⬆",
+  "variation.position_desc": "Variation position ⬇",
   "item.manufacturer.externalName_asc": "Manufacturer A-Z",
   "item.manufacturer.externalName_desc": "Manufacturer Z-A",
   "item.feedbackDecimal_asc": "Item reviews ⬆",
@@ -79,5 +79,7 @@
   "external-scripts": "External Scripts & Styles",
   "custom-code": "Custom Code",
   "block-reset-success": "Blocks reset successfully. Please refresh the page.",
-  "block-reset-error": "An error occurred while resetting the blocks. {error}"
+  "block-reset-error": "An error occurred while resetting the blocks. {error}",
+  "unsaved-changes-confirm": "You have unsaved changes. Are you sure you want to leave?",
+  "block-edit-homepage-only": "You can only edit the {blockName} on the homepage"
 }

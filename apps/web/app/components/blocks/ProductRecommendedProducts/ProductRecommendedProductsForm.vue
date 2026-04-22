@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[52px] h-[80vh] overflow-y-auto">
+  <div class="sticky h-[80vh] overflow-y-auto">
     <UiAccordionItem
       v-model="textsOpen"
       summary-active-class="bg-neutral-100"
@@ -9,74 +9,12 @@
       <template #summary>
         <h2>{{ getEditorTranslation('texts-label') }}</h2>
       </template>
-
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
-        <SfInput
-          v-model="recommendedBlock.text.pretitle"
-          data-testid="recommended-form-pretitle"
-          name="preTitle"
-          type="text"
-          :placeholder="getEditorTranslation('pretitle-placeholder')"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-        <SfInput
-          v-model="recommendedBlock.text.title"
-          data-testid="recommended-form-title"
-          name="Title"
-          type="text"
-          :placeholder="getEditorTranslation('main-title-placeholder')"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
-        <SfInput
-          v-model="recommendedBlock.text.subtitle"
-          data-testid="recommended-form-subtitle"
-          name="Subtitle"
-          type="text"
-          :placeholder="getEditorTranslation('subtitle-placeholder')"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="recommendedBlock.text.htmlDescription"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('description-placeholder')"
-          data-testid="recommended-form-html"
-        />
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-        <EditorColorPicker v-model="recommendedBlock.text.color" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </template>
-        </EditorColorPicker>
-      </div>
-      <div v-if="recommendedBlock.text" class="p-2">
-        <EditorOptionsTabs
-          v-model="textAlignModel"
-          :legend="getEditorTranslation('text-align-label')"
-          test-id-prefix="recommended-form-text-align"
-          :options="textAlignOptions"
-        />
-      </div>
+      <EditorRichTextEditorForm
+        v-if="recommendedBlock.text"
+        :model-value="recommendedBlock.text.htmlDescription ?? ''"
+        :text-align="recommendedBlock.text.textAlignment ?? 'left'"
+        @update:model-value="recommendedBlock.text.htmlDescription = $event"
+      />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -133,7 +71,7 @@
         <EditorCategorySelect
           v-model="categoryIdModel"
           :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
-          data-test-id="recommended-form-categories"
+          data-testid="recommended-form-categories"
         />
       </div>
     </UiAccordionItem>
@@ -165,13 +103,11 @@ import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-const route = useRoute();
-const { data } = useCategoryTemplate(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const props = defineProps<{ uuid?: string }>();
+
+const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { currentProduct } = useProducts();
 const { data: categoryTree } = useCategoryTree();
@@ -179,7 +115,7 @@ const layoutOpen = ref(true);
 
 const recommendedBlock = computed(
   () =>
-    (findOrDeleteBlockByUuid(data.value, blockUuid.value)?.content || {
+    (findOrDeleteBlockByUuid(data.value, resolvedUuid.value)?.content || {
       text: {
         pretitle: '',
         title: '',
@@ -296,28 +232,6 @@ const sourceTypeModel = computed<SourceType>({
 <i18n lang="json">
 {
   "en": {
-    "pretitle-label": "Pre-title",
-    "pretitle-placeholder": "PreTitle",
-
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "Title",
-
-    "subtitle-label": "Subtitle",
-    "subtitle-placeholder": "Subtitle",
-
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
-
-    "category-id-label": "Category ID",
-    "category-id-placeholder": "Enter Category Id",
-
-    "text-color-label": "Text Colour",
-
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
-
     "texts-label": "Texts",
     "source-label": "Source",
     "source-type-label": "Choose source",
@@ -334,28 +248,7 @@ const sourceTypeModel = computed<SourceType>({
     "cross-selling-relation-bundle": "Item bundle"
   },
   "de": {
-    "pretitle-label": "Pre-title",
-    "pretitle-placeholder": "PreTitle",
-
-    "main-title-label": "Main Title",
-    "main-title-placeholder": "Title",
-
-    "subtitle-label": "Subtitle",
-    "subtitle-placeholder": "Subtitle",
-
-    "description-label": "Description",
-    "description-placeholder": "Text that supports HTML formatting",
-
-    "category-id-label": "Category ID",
-    "category-id-placeholder": "Enter Category Id",
-
-    "text-color-label": "Text Colour",
     "layout-label": "Layout",
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
-
     "texts-label": "Texts",
     "source-label": "Source",
     "source-type-label": "Choose source",

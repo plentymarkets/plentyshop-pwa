@@ -7,7 +7,7 @@ export class GeneralSettingsObject extends PageObject {
   }
 
   toggleCustomerManagement() {
-    cy.getByTestId('site-settings-sub-category-customer-management').click();
+    cy.getByTestId('site-settings-category-customer-management').click();
     return this;
   }
 

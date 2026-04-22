@@ -4,29 +4,6 @@ import TextCard from '../TextCard.vue';
 import { mockTextCard } from './TextCard.mock';
 
 describe('TextCard - Text Property', () => {
-  it('should render the pretitle correctly', () => {
-    const wrapper = mount(TextCard, { props: mockTextCard });
-    const pretitle = wrapper.find('[data-testid="text-pretitle"]');
-    expect(pretitle.exists()).toBe(true);
-    expect(pretitle.text()).toBe(mockTextCard.content.text.pretitle);
-  });
-
-  it('should render the title correctly as an H1 for the first block', () => {
-    const wrapper = mount(TextCard, { props: { ...mockTextCard, index: 0 } });
-    const title = wrapper.find('[data-testid="text-title"]');
-    expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(mockTextCard.content.text.title);
-    expect(title.element.tagName).toBe('H1');
-  });
-
-  it('should render the title correctly as an H2 for non-first blocks', () => {
-    const wrapper = mount(TextCard, { props: { ...mockTextCard, index: 1 } });
-    const title = wrapper.find('[data-testid="text-title"]');
-    expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(mockTextCard.content.text.title);
-    expect(title.element.tagName).toBe('H2');
-  });
-
   it('should apply the correct text color', () => {
     const mockWithColor = {
       ...mockTextCard,
@@ -42,13 +19,6 @@ describe('TextCard - Text Property', () => {
     const wrapper = mount(TextCard, { props: mockWithColor });
     const textContent = wrapper.find('[data-testid="text-content"]');
     expect(textContent.attributes('style')).toContain('color: #ff5733');
-  });
-
-  it('should render the subtitle correctly', () => {
-    const wrapper = mount(TextCard, { props: mockTextCard });
-    const subtitle = wrapper.find('[data-testid="text-subtitle"]');
-    expect(subtitle.exists()).toBe(true);
-    expect(subtitle.text()).toBe(mockTextCard.content.text.subtitle);
   });
 
   it('should render the HTML description correctly', () => {
@@ -101,15 +71,11 @@ describe('TextCard - Text Property', () => {
         ...mockTextCard.content,
         text: {
           ...mockTextCard.content.text,
-          pretitle: '',
-          subtitle: '',
           htmlDescription: '',
         },
       },
     };
     const wrapper = mount(TextCard, { props: mockWithoutOptionalFields });
-    expect(wrapper.find('[data-testid="text-pretitle"]').exists()).toBe(false);
-    expect(wrapper.find('[data-testid="text-subtitle"]').exists()).toBe(false);
     expect(wrapper.find('[data-testid="text-html"]').exists()).toBe(false);
   });
 });

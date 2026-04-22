@@ -65,7 +65,7 @@ export class SeoSettingsObject extends PageObject {
   }
 
   get itemUrlHandlingSection() {
-    return cy.getByTestId('item-URL-handling-section');
+    return cy.getByTestId('item-URL-scheme-section');
   }
 
   get siteSettingsItemUrlHandling() {

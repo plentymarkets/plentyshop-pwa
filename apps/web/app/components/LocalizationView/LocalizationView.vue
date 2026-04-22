@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky top-[52px] z-[2]" data-testid="localization-management-drawer">
+  <div class="pages-view sticky z-[2]" data-testid="localization-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
@@ -12,7 +12,7 @@
           data-testid="pages-view-close"
           class="!p-0"
           @click="
-            closeDrawer();
+            closeSiteConfigurationDrawer();
             drawerOpen = false;
           "
         >
@@ -58,7 +58,7 @@ const { keys, drawerOpen } = useEditorLocalizationKeys();
 const { initializeLocales } = useEditorLocalizationLocales();
 
 initializeLocales();
-const { closeDrawer } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const editTranslationsOpen = ref(false);
 const editLanguagesOpen = ref(false);
 </script>

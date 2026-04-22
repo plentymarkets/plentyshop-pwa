@@ -463,6 +463,17 @@
       "email": "E-Mail"
     }
   },
+  "cancellationForm": {
+    "orderId": "Auftragsnummer",
+    "name": "Vollständiger Name",
+    "email": "Kontaktmail",
+    "reason": "Grund für den Widerruf",
+    "submit": "Vertrag kündigen",
+    "asterixHint": "markierte Felder sind Pflichtfelder",
+    "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
+    "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
+    "success": "Ihr Widerruf wurde erfolgreich übermittelt. Wir haben soeben eine Bestätigungs-E-Mail mit allen Details an {email} gesendet."
+  },
   "CookieBar": {
     "about": {
       "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Beachten Sie unser {legal} und weitere Hinweise zur Verwendung personenbezogener Daten in unserer {policy}.",
@@ -575,25 +586,9 @@
     "consentReCaptchaCookieNotSet": "Das reCAPTCHA-Script wurde nicht akzeptiert. reCAPTCHA kann nicht ausgeführt werden. Dadurch können ggf. Formulare nicht versendet werden.",
     "couponAlreadyUsedOrInvalidCouponCode": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
     "couponCampaignExpired": "Der Gutschein ist leider abgelaufen.",
-    "couponCampaignNoWebstoreActivated": "Der Gutschein konnte nicht eingelöst werden. Kein Mandant aktiviert.",
-    "couponCampaignNoWebstoreIdGiven": "Der Gutschein konnte nicht eingelöst werden. Keine Mandant-ID übergeben.",
-    "couponCampaignWrongWebstoreId": "Der Gutschein konnte nicht eingelöst werden. Falscher Mandant.",
     "couponExpired": "Der Gutschein ist leider abgelaufen.",
     "couponMinOrderValueNotReached": "Der Gutschein wurde leider wieder entfernt, da der hierfür nötige Warenwert unterschritten wurde. Bitte geben Sie den Code erneut ein, wenn der geforderte Warenwert erreicht ist.",
-    "couponNoCustomerGroupActivated": "Der Gutschein konnte nicht eingelöst werden. Keine Kundenklasse aktiviert.",
-    "couponNoCustomerTypeActivated": "Der Gutschein konnte nicht eingelöst werden. Kein Kundentyp aktiviert.",
-    "couponNoCustomerTypeProvided": "Der Gutschein konnte nicht eingelöst werden. Kundentyp nicht übergeben.",
-    "couponNoMatchingItemInBasket": "Der Gutschein wurde leider wieder entfernt, da kein Artikel im Warenkorb für diesen Gutschein freigeschaltet wurde.",
-    "couponNoOpenAmount": "Der Gutschein wurde bereits vollständig eingelöst.",
-    "couponnotUsableForSpecialOffer": "Der Gutschein konnte nicht eingelöst werden. Gutscheine können nicht für Sonderangebotsartikel verwendet werden.",
-    "couponOnlyForExistingCustomers": "Der Gutschein kann nur von Bestandskunden eingelöst werden.",
-    "couponOnlyForNewCustomers": "Der Gutschein kann nur von Neukunden eingelöst werden.",
-    "couponOnlySingleUsage": "Diesen Gutschein kann nicht für Abo-Artikel eingelöst werden.",
-    "couponOnlySubscription": "Der Gutschein kann nur für Abo-Artikel eingelöst werden.",
-    "couponPromotionRequired": "Die Variante des Artikels kann nur gekauft werden, wenn ein Aktionsgutschein eingelöst wird.",
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden.",
-    "couponWrongCustomerGroup": "Der Gutschein kann nur von Kunden mit einer anderen Kundenklasse eingelöst werden.",
-    "couponWrongCustomerType": "Der Gutschein kann nur von Kunden mit einem anderen Kundentyp eingelöst werden.",
     "csrfTokenMismatch": "Sie wurden aus Sicherheitsgründen abgemeldet. Sie werden zur Login-Seite weitergeleitet.",
     "errorActionIsNotExecuted": "Die Aktion konnte nicht ausgeführt werden.",
     "errorBasketItemMaximumQuantityReachedForItem": "Die maximale Bestellmenge dieses Artikels wurde überschritten.",
@@ -830,7 +825,8 @@
     "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
     "cancellationForm": "Widerrufsformular",
     "declarationOfAccessibility": "Barrierefreiheitserklärung",
-    "legalDisclosure": "Impressum"
+    "legalDisclosure": "Impressum",
+    "withdrawButton": "Vertrag widerrufen"
   },
   "manufacturer": {
     "contactUrl": "Kontaktformular",
@@ -1129,6 +1125,13 @@
     "numberOfProducts": "{count} Artikel von {total} Artikeln",
     "searchResults": "Suchergebnisse für \"{phrase}\""
   },
+  "searchBar": {
+    "searchSuggestions": "Suchvorschläge",
+    "productSuggestions": "Produktvorschläge",
+    "matchingCategories": "Passende Kategorien",
+    "showAllResults": "Alle Ergebnisse für „{searchTerm}“ anzeigen ({hitsCount})",
+    "noResultsFound": "Es wurden keine Ergebnisse gefunden."
+  },
   "sessionLifetime": {
     "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
     "oneHour": "Eine Stunde, auch wenn der Browser geschlossen wird",
@@ -1190,6 +1193,10 @@
     }
   },
   "storefrontError": {
+    "cancellation": {
+      "recipientNotConfigured": "Das Widerrufsformular ist nicht konfiguriert. Bitte kontaktieren Sie den Seitenbetreiber.",
+      "submitFailed": "Der Widerruf konnte nicht übermittelt werden. Bitte versuchen Sie es später erneut."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
@@ -1199,7 +1206,7 @@
       "vatServerFallback": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Der Auftrag wird erneut geprüft."
     },
     "blocks": {
-      "base64NotAllowed": "Das Bild wurde nicht korrekt hochgeladen. Bitte versuchen Sie es erneut."
+      "base64NotAllowed": "The image was not uploaded correctly. Try uploading it again."
     },
     "cart": {
       "addToBasket": {
@@ -1275,5 +1282,90 @@
       "alreadySubscribed": "Sie haben sich bereits für diesen Artikel registriert"
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
+  },
+  "defaultTemplate": {
+    "category": {
+      "categoryData": {
+        "name": "Kategoriename"
+      }
+    },
+    "product": {
+      "itemText": {
+        "title": "Artikeldetails"
+      },
+      "technicalData": {
+        "title": "Technische Daten"
+      },
+      "customerReview": {
+        "title": "Kundenbewertungen"
+      },
+      "productLegalInformation": {
+        "title": "Rechtliche Artikeldetails",
+        "linkText": "EU-Verantwortliche Person - klicken Sie für Details"
+      }
+    },
+    "homepage": {
+      "carousel": {
+        "banner1": {
+          "pretitle": "Kristallklare Klänge Genießen",
+          "title": "Ihr Sound auf höchstem Niveau",
+          "description": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
+          "buttonLabel": "Capybara entdecken"
+        },
+        "banner2": {
+          "pretitle": "Die Zukunft der Luftbildfotografie",
+          "title": "Drone Omega",
+          "description": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
+          "buttonLabel": "Omega entdecken"
+        }
+      },
+      "textcard": {
+        "welcome": {
+          "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
+          "title": "Entdecke Technik & Style",
+          "subtitle": "Innovative Technik trifft auf moderne Mode",
+          "paragraph1": "Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.",
+          "paragraph2": "Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.",
+          "buttonLabel": "Jetzt zuschlagen"
+        }
+      },
+      "multigrid": {
+        "textcard": {
+          "title": "Entdecken Sie Technik und Stil",
+          "subtitle": "Innovative Technologie trifft moderne Fashion",
+          "paragraph": "Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.",
+          "feature1": "Premium-Sound in Studioqualität",
+          "feature2": "Bequeme Passform für längeres Hören",
+          "feature3": "Lange Akkulaufzeit",
+          "feature4": "Nahtlose kabellose Verbindung",
+          "buttonLabel": "Zu unseren Kopfhörern"
+        },
+        "image": {
+          "alt": "Kopfhörer"
+        }
+      },
+      "productRecommended": {
+        "fashion": {
+          "pretitle": "Mehr als nur Technik",
+          "title": "Entdecken Sie unsere Modekollektion",
+          "subtitle": "Sportive Mode und Accessories für alle.",
+          "linkText": "Zu unserer kompletten Kollektion.",
+          "linkUrl": "https://plentyshop.plentymarkets.com/kleidung"
+        }
+      },
+      "newsletter": {
+        "title": "Abonnieren Sie unseren Newsletter",
+        "description": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!",
+        "buttonLabel": "Newsletter abonnieren"
+      }
+    },
+    "footer": {
+      "column1": {
+        "title": "Rechtliches"
+      },
+      "column2": {
+        "title": "Services"
+      }
+    }
   }
 }

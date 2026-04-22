@@ -38,17 +38,24 @@
                 <span class="font-medium">{{ asset.name || 'Snippet' }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" class="p-1 rounded hover:bg-gray-100" @click="selectAsset(asset)">
+                <button
+                  type="button"
+                  class="p-1 rounded hover:bg-gray-100"
+                  :title="getEditorTranslation('edit-tooltip')"
+                  @click="selectAsset(asset)"
+                >
                   <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path :d="editPath" fill="black" />
                     </svg>
                   </SfIconBase>
                 </button>
+
                 <SfSwitch
                   data-testid="activate-snippet"
                   :model-value="asset.isActive"
                   class="checked:bg-editor-button checked:before:hover:bg-editor-button"
+                  :title="getEditorTranslation('activate-tooltip')"
                   @update:model-value="onToggle(asset, !asset.isActive)"
                 />
               </div>
@@ -155,14 +162,16 @@ const onToggle = (asset: Asset, value: boolean) => addOrUpdate({ ...asset, isAct
   "en": {
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
-    "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
+    "edit-tooltip": "Edit snippet",
+    "activate-tooltip": "Activate/deactivate snippet",
     "js-disable-warning": "⚠️ JavaScript snippets are executed immediately when added. Disabling them does not automatically revert already executed scripts, so a page reload is required to fully reset the state.",
     "drag-reorder-aria": "Drag to reorder"
   },
   "de": {
     "label": "CSS Code",
     "add-snippet-label": "Add snippet",
-    "tooltip": "Add your custom CSS code here. It will be injected into the head section of your shop.",
+    "edit-tooltip": "Edit snippet",
+    "activate-tooltip": "Activate/deactivate snippet",
     "js-disable-warning": "⚠️ JavaScript snippets are executed immediately when added. Disabling them does not automatically revert already executed scripts, so a page reload is required to fully reset the state.",
     "drag-reorder-aria": "Drag to reorder"
   }

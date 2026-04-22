@@ -104,45 +104,12 @@
       <h2>{{ getEditorTranslation('text-overlay-label') }}</h2>
     </template>
 
-    <div class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('text-overlay-label') }}</UiFormLabel>
-      <SfTextarea
-        id="text-overlay"
-        v-model="uiImageTextBlock.text.textOverlay"
-        data-testid="text-overlay"
-        name="text-overlay"
-        rows="3"
-        class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
-        :placeholder="getEditorTranslation('text-overlay-placeholder')"
-      />
-    </div>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('text-overlay-color-label') }}</UiFormLabel>
-      </div>
-      <EditorColorPicker v-model="uiImageTextBlock.text.textOverlayColor" class="w-full">
-        <template #trigger="{ color, toggle }">
-          <label>
-            <SfInput
-              v-model="uiImageTextBlock.text.textOverlayColor"
-              type="text"
-              data-testid="text-overlay-color-input"
-            >
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </label>
-        </template>
-      </EditorColorPicker>
-    </div>
+    <EditorRichTextEditorForm
+      :model-value="uiImageTextBlock.text.textOverlay ?? ''"
+      :text-align="uiImageTextBlock.text.textOverlayAlignX"
+      :block-uuid="blockUuid"
+      @update:model-value="uiImageTextBlock.text.textOverlay = $event"
+    />
 
     <div class="py-2">
       <EditorOptionsTabs
@@ -330,12 +297,8 @@ import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
-const route = useRoute();
-const { data } = useCategoryTemplate(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks: data } = useBlocks();
+
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -488,18 +451,6 @@ const buttonVariantModel = computed<ButtonVariant>({
   "en": {
     "images-group-label": "Images",
 
-    "image-xl-label": "Image XL (Desktop)",
-    "image-xl-hint": "Recommended dimensions: 1920 × 1080 px",
-
-    "image-l-label": "Image L (Desktop)",
-    "image-l-hint": "Recommended dimensions: 1024 × 576 px",
-
-    "image-m-label": "Image M (Laptop)",
-    "image-m-hint": "Recommended dimensions: 768 × 432 px",
-
-    "image-s-label": "Image S (Mobile)",
-    "image-s-hint": "Recommended dimensions: 320 × 320 px",
-
     "image-scalling-label": "Image Scaling",
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
@@ -509,17 +460,9 @@ const buttonVariantModel = computed<ButtonVariant>({
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
-    "image-align-option-left-label": "Left",
-    "image-align-option-right-label": "Right",
 
     "text-overlay-label": "Text",
-    "text-overlay-placeholder": "Text that supports HTML formatting",
-    "text-overlay-color-label": "Text Color",
 
-    "text-overlay-align-x-label": "Horizontal Alignment (x)",
-    "text-overlay-align-x-left": "Left",
-    "text-overlay-align-x-center": "Center",
-    "text-overlay-align-x-right": "Right",
     "background-color-label": "Background Color",
 
     "keep-transparent-label": "Keep background transparent",
@@ -540,19 +483,7 @@ const buttonVariantModel = computed<ButtonVariant>({
   "de": {
     "images-group-label": "Images",
 
-    "image-xl-label": "Image XL (Desktop)",
-    "image-xl-hint": "Recommended dimensions: 1920 × 1080 px",
-
-    "image-l-label": "Image L (Desktop)",
-    "image-l-hint": "Recommended dimensions: 1024 × 576 px",
-
-    "image-m-label": "Image M (Laptop)",
-    "image-m-hint": "Recommended dimensions: 768 × 432 px",
-
-    "image-s-label": "Image S (Mobile)",
-    "image-s-hint": "Recommended dimensions: 320 × 320 px",
-
-    "image-scaling-label": "Image Scaling",
+    "image-scalling-label": "Image Scaling",
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
     "background-color-label": "Background Color",
@@ -562,21 +493,14 @@ const buttonVariantModel = computed<ButtonVariant>({
     "alt-label": "Alt",
     "linktarget-label": "Link-Target",
     "padding-label": "Padding",
-    "image-align-option-left-label": "Left",
-    "image-align-option-right-label": "Right",
     "keep-transparent-label": "Keep background transparent",
 
     "text-overlay-label": "Text",
-    "text-overlay-placeholder": "Enter text (HTML allowed)",
-    "text-overlay-color-label": "Text Color",
-    "text-overlay-align-x-label": "Horizontal Alignment (x)",
-    "text-overlay-align-x-left": "Left",
-    "text-overlay-align-x-center": "Center",
-    "text-overlay-align-x-right": "Right",
 
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
+    "text-overlay-align-y-bottom": "Bottom",
     "button-group-label": "Button",
     "button-text-label": "Label",
     "button-text-placeholder": "Button",

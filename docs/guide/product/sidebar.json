@@ -1,0 +1,14 @@
+[
+  {
+    "text": "Introduction",
+    "link": "/guide/product/index.md"
+  },
+  {
+    "text": "Changelog",
+    "link": "https://github.com/plentymarkets/plentyshop-pwa/releases"
+  },
+  {
+    "text": "Experimental features",
+    "link": "/guide/product/experimental-features.md"
+  }
+]

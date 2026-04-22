@@ -11,6 +11,8 @@ describe('DefaultB2CandB2BCustomerClass', () => {
 
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     cy.visit('/');
     cookieBar.acceptAll();
   });

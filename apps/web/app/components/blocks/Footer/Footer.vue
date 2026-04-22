@@ -1,6 +1,6 @@
 <template>
   <footer
-    v-if="shouldRender && resolvedContent"
+    v-if="resolvedContent"
     class="pt-10"
     :style="{
       backgroundColor: resolvedContent.colors?.background,
@@ -10,7 +10,7 @@
   >
     <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
+        <div v-if="hasColumn1Content" class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
             {{ resolvedContent.column1?.title }}
           </div>
@@ -31,6 +31,17 @@
               </SfLink>
             </SfListItem>
           </ul>
+          <div v-if="hasColumn1Button" class="px-4 pt-2 flex">
+            <UiButton
+              :tag="NuxtLink"
+              :to="localePath(paths.cancellationForm)"
+              size="sm"
+              class="text-xs leading-5"
+              data-testid="footer-cancellation-button"
+            >
+              {{ t('legal.withdrawButton') }}
+            </UiButton>
+          </div>
         </div>
 
         <div
@@ -60,10 +71,9 @@
               </SfListItem>
             </ul>
           </div>
-          <div
+          <TextContent
             v-if="column?.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
-            v-html="column.description"
+            v-bind="mapToTextContentProps({ htmlDescription: column.description })"
           />
         </div>
       </div>
@@ -71,7 +81,7 @@
     <div>
       <div
         v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
-        class="text-sm py-10 md:py-6 px-10"
+        class="text-sm py-10 md:py-6 px-10 no-preflight"
         :class="{
           'text-left': resolvedContent.footnoteAlign === 'left',
           'text-center': resolvedContent.footnoteAlign === 'center',
@@ -90,29 +100,42 @@
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import type { FooterProps, FooterContent, FooterColumn } from './types';
+import { FOOTER_SWITCH_DEFINITIONS } from './constants';
 
 const props = defineProps<FooterProps>();
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { footerCache, mapFooterData, FOOTER_SWITCH_DEFINITIONS, createFooterBlock, createDefaultFooterBlock } =
-  useCategoryTemplate();
+const { footer } = useBlocks();
 
+const { t } = useI18n();
+const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
   return true;
 });
 
 const resolvedContent = computed(() => {
-  const block = props.content
-    ? createFooterBlock(props.content, props.meta)
-    : footerCache.value || createDefaultFooterBlock();
+  if (!shouldRender.value) return null;
 
-  return mapFooterData(block).content as FooterContent;
+  const content = props.content ?? footer.value?.content;
+  return (content ?? null) as FooterContent | null;
+});
+const hasColumn1Button = computed(() => {
+  return !!(enableContractWithdrawalButton && resolvedContent.value?.column1?.showCancellationForm);
 });
 
+const hasColumn1Content = computed(() => {
+  if (!resolvedContent.value?.column1) return false;
+
+  return getColumnSwitches(resolvedContent.value.column1).length > 0 || hasColumn1Button.value;
+});
 const getColumnSwitches = (column: FooterColumn) => {
-  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
+  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => {
+    if (column[switchConfig.key] !== true) return false;
+
+    return !(enableContractWithdrawalButton && switchConfig.key === 'showCancellationForm');
+  }).map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: t(switchConfig.shopTranslationKey),
     link: switchConfig.link,
@@ -120,14 +143,3 @@ const getColumnSwitches = (column: FooterColumn) => {
   }));
 };
 </script>
-
-<style scoped>
-::v-deep(.custom-html li) {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-::v-deep(.custom-html li:hover) {
-  text-decoration: underline;
-}
-</style>

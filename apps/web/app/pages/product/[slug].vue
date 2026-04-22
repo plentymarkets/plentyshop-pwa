@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <EditablePage :identifier="'0'" :type="'product'" prevent-blocks-request />
+    <EditableBlocks :identifier="'0'" :type="'product'" prevent-blocks-request />
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
   </NuxtLayout>
@@ -8,13 +8,14 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import type { Locale } from '#i18n';
 import type { WatchStopHandle } from 'vue';
-import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
@@ -25,12 +26,10 @@ const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcru
 const product = productForEditor;
 const { disableActions } = useEditor();
 const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
-const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
-const config = useRuntimeConfig().public;
 const { variationId } = useProductAttributes();
 let variationWatchHandler: WatchStopHandle | undefined;
 
@@ -108,19 +107,11 @@ watch(
 );
 
 watch(
-  () => categoryTree.value,
-  (categoriesTree) => {
+  () => product.value,
+  () => {
     setProductCanonicalMetaData(product.value);
-    const productCategoryId = productGetters.getParentCategoryId(product.value);
-    if (categoriesTree.length > 0 && productCategoryId) {
-      const categoryTree = categoriesTree.find(
-        (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
-      );
-      if (categoryTree) {
-        setProductMetaData(product.value, categoryTree);
-        setProductRobotsMetaData(product.value);
-      }
-    }
+    setProductMetaData(product.value);
+    setProductRobotsMetaData(product.value);
   },
   { immediate: true },
 );
@@ -164,7 +155,7 @@ onBeforeRouteLeave(() => {
 onNuxtReady(() => {
   observeRecommendedSection();
 
-  if (import.meta.client && config.enableCallistoUrlScheme) {
+  if (import.meta.client && useCallisto().isEnabled) {
     variationWatchHandler = watch(variationId, async () => {
       if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
         productParams.variationId = variationId.value;

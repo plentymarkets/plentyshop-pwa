@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/richtext.css'],
   typescript: {
-    typeCheck: true,
+    typeCheck: false, // type checking runs via `npm run typecheck`, on build, and in CI (fitness-code-quality)
   },
   app: appConfiguration,
   experimental: {
@@ -31,9 +31,6 @@ export default defineNuxtConfig({
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
-      },
-      watch: {
-        usePolling: process.env.NODE_ENV === 'development', // see apps/web/app/plugins/02.pwa-cookie.ts
       },
     },
     plugins: [FailOnLargeChunksPlugin],
@@ -82,6 +79,7 @@ export default defineNuxtConfig({
       ],
     },
     build: {
+      modulePreload: { polyfill: false },
       rollupOptions: {
         output: {
           manualChunks: {
@@ -102,7 +100,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
       crawlLinks: false,
@@ -112,14 +109,12 @@ export default defineNuxtConfig({
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=86400` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
+    '/favicon.ico': { redirect: { to: '/_nuxt-plenty/favicon.ico', statusCode: 301 } },
   },
   image: {
     provider: 'none',
-  },
-  site: {
-    url: '',
   },
   pages: true,
   runtimeConfig: {
@@ -145,7 +140,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
@@ -163,7 +157,29 @@ export default defineNuxtConfig({
       icons: {
         defaultSet: 'mdi-svg',
       },
+      theme: {
+        defaultTheme: 'light',
+      },
     },
+  },
+  plentySitemap: {
+    locales: (process.env.LANGUAGELIST || 'en,de').split(','),
+    defaultLocale: nuxtI18nOptions.defaultLocale,
+    exclude: [
+      '/search',
+      '/offline',
+      '/my-account**',
+      '/readonly-checkout',
+      '/set-new-password',
+      '/reset-password-success',
+      '/cart',
+      '/checkout',
+      '/confirmation',
+      '/wishlist',
+      '/login',
+      '/signup',
+      '/reset-password',
+    ],
   },
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
@@ -186,36 +202,6 @@ export default defineNuxtConfig({
     },
   },
   i18n: nuxtI18nOptions,
-  sitemap: {
-    autoLastmod: true,
-    xsl: '/sitemap_style.xsl',
-    xslColumns: [
-      // URL column must always be set, no value needed
-      { label: 'URL', width: '75%' },
-      { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
-    ],
-    sitemaps: {
-      'sitemap/content': {
-        exclude: [
-          `/${nuxtI18nOptions.defaultLocale}/**`,
-          '/search',
-          '/offline',
-          '/my-account/**',
-          '/readonly-checkout',
-          '/set-new-password',
-          '/reset-password-success',
-          '/cart',
-          '/checkout',
-          '/confirmation',
-          '/wishlist',
-          '/login',
-          '/signup',
-          '/reset-password',
-        ],
-        includeAppSources: true,
-      },
-    },
-  },
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
     exposeConfig: true,

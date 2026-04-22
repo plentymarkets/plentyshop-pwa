@@ -43,18 +43,16 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
   const { setRobots } = useRobots();
-  const { setInitialData } = useSiteSettings();
   const { setInitialData: setInitialAssetsData } = useCustomAssets();
 
   cartLoading.value = true;
 
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: { settings: true } }));
     if (data.value?.data) {
       setUser(data.value.data.session.user);
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
-      setInitialData(data.value.data.settings);
       setInitialAssetsData(data.value.data.customAssets || []);
       setWishlistItemIds(Object.values(data.value.data.session?.basket?.itemWishListIds || []));
       if (data.value.data.robots) {
@@ -70,6 +68,23 @@ const setInitialDataSSR: SetInitialData = async () => {
   return true;
 };
 
+/** Function for fetching all settings
+ * @example
+ * ``` ts
+ * fetchSettings();
+ * ```
+ */
+const fetchSettings = async () => {
+  try {
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getSettings());
+    if (data.value?.data) {
+      useSiteSettings().setInitialData(data.value.data);
+    }
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
+};
+
 /**
  * @description Composable to get initial customer and cart data
  * @returns UseInitialSetupReturn
@@ -82,5 +97,6 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
   return {
     setInitialData,
     setInitialDataSSR,
+    fetchSettings,
   };
 };

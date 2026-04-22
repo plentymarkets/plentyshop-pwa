@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
+  <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
     <UiAccordionItem
       v-model="textSettings"
       data-testid="open-layout-settings"
@@ -85,7 +85,7 @@
           </button>
         </div>
       </div>
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -133,13 +133,11 @@ import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types'
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
+const props = defineProps<{ uuid?: string }>();
+
 const { blockUuid } = useSiteConfiguration();
-const route = useRoute();
-const { data } = useCategoryTemplate(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
+const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
@@ -149,7 +147,7 @@ const isTwoColumnMultigrid = computed(() => {
 });
 
 const multiGridStructure = computed(() => {
-  const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
+  const block = (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
   if (!block.configuration.layout) {
     block.configuration.layout = {
       marginTop: 0,

@@ -9,166 +9,11 @@
       <h2>{{ getEditorTranslation('text-group-label') }}</h2>
     </template>
 
-    <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-card-form-v2">
-      <EditorOptionsTabs
-        :model-value="editorMode"
-        test-id-prefix="mode"
-        :legend="getEditorTranslation('content-label')"
-        :options="editorModeOptions"
-        @update:model-value="editorMode = $event"
-      />
-
-      <div v-if="editorMode === 'wysiwyg'" class="py-2">
-        <EditorRichTextEditor
-          ref="contentRichTextEditor"
-          v-model="contentModel"
-          v-model:expanded="expandedToolbars.content"
-          :min-height="232"
-          :expandable="true"
-          :text-align="textCardBlock.text.textAlignment"
-          data-testid="rte-content"
-          @request-html-modal="handleRequestHtmlModal"
-        />
-      </div>
-
-      <div v-else class="py-2">
-        <div class="flex items-center justify-between">
-          <UiFormLabel for="html-editor" class="m-0">
-            {{ getEditorTranslation('html-editor-label') }}
-          </UiFormLabel>
-
-          <EditorRichTextEditorMenuButton
-            aria-label="Open HTML editor in fullscreen"
-            icon-name="fullscreen"
-            class="ml-2"
-            @click="toggleModal"
-          />
-        </div>
-        <SfTextarea
-          id="html-editor"
-          v-model="htmlDraft"
-          data-testid="html-editor"
-          rows="10"
-          class="min-h-[232px] mt-1 block w-full border rounded-md shadow-sm sm:text-sm font-mono"
-          :class="htmlErrors.length ? 'border-red-400' : 'border-gray-300'"
-          :aria-invalid="htmlErrors.length ? 'true' : 'false'"
-          :aria-describedby="ariaDescribedBy"
-        />
-
-        <div
-          v-if="htmlErrors.length"
-          id="html-editor-errors"
-          data-testid="html-editor-errors"
-          class="mt-2 rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-800"
-          role="alert"
-        >
-          <div class="font-semibold">{{ getEditorTranslation('html-invalid-label') }}</div>
-          <ul class="list-disc ml-5 mt-1">
-            <li v-for="(e, idx) in htmlErrors.slice(0, 3)" :key="idx">{{ e }}</li>
-          </ul>
-        </div>
-      </div>
-
-      <EditorHtmlEditor
-        v-if="modalOpen"
-        v-model="htmlDraft"
-        :aria-describedby="ariaDescribedBy"
-        :html-errors="htmlErrors"
-        @switch-to-wysiwyg="handleSwitchToWysiwygFromModal"
-        @close="toggleModal"
-      />
-    </div>
-
-    <div v-else data-testid="text-card-form">
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('pretitle-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="textCardBlock.text.pretitle" type="text" data-testid="input-pretitle">
-            <template #suffix>
-              <label for="text-pretitle" class="rounded-lg cursor-pointer">
-                <input id="text-pretitle" v-model="textCardBlock.text.pretitle" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="textCardBlock.text.title" type="text" data-testid="input-main-title">
-            <template #suffix>
-              <label for="text-title" class="rounded-lg cursor-pointer">
-                <input id="text-title" v-model="textCardBlock.text.title" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('subtitle-label') }}</UiFormLabel>
-        </div>
-        <label>
-          <SfInput v-model="textCardBlock.text.subtitle" type="text" data-testid="input-subtitle">
-            <template #suffix>
-              <label for="text-subtitle" class="rounded-lg cursor-pointer">
-                <input id="text-subtitle" v-model="textCardBlock.text.subtitle" type="text" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </label>
-      </div>
-
-      <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('html-description-label') }}</UiFormLabel>
-        <SfTextarea
-          id="text-html-description"
-          v-model="textCardBlock.text.htmlDescription"
-          data-testid="textarea-description"
-          name="text-html-description"
-          rows="3"
-          class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
-        />
-      </div>
-
-      <div class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('text-color-label') }}</UiFormLabel>
-        </div>
-        <EditorColorPicker v-model="textCardBlock.text.color" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <label>
-              <SfInput v-model="textCardBlock.text.color" type="text" data-testid="input-text-color">
-                <template #suffix>
-                  <button
-                    type="button"
-                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                    :style="{ backgroundColor: color }"
-                    @mousedown.stop
-                    @click.stop="toggle"
-                  />
-                </template>
-              </SfInput>
-            </label>
-          </template>
-        </EditorColorPicker>
-      </div>
-
-      <div class="py-2">
-        <EditorOptionsTabs
-          v-model="textAlignModel"
-          :legend="getEditorTranslation('text-align-label')"
-          test-id-prefix="text-align"
-          :options="textAlignOptions"
-        />
-      </div>
-    </div>
+    <EditorRichTextEditorForm
+      v-model="contentModel"
+      :text-align="textCardBlock.text.textAlignment"
+      :placeholder="getEditorTranslation('placeholder')"
+    />
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -321,7 +166,6 @@
 <script setup lang="ts">
 import {
   SfInput,
-  SfTextarea,
   SfSwitch,
   SfIconArrowUpward,
   SfIconArrowDownward,
@@ -331,29 +175,10 @@ import {
 import type { TextCardFormProps, TextCardContent, TextAlign, ButtonVariant } from './types';
 const props = defineProps<TextCardFormProps>();
 
-const runtimeConfig = useRuntimeConfig().public;
-const modalOpen = ref(false);
-const toggleModal = () => {
-  modalOpen.value = !modalOpen.value;
-};
-
-const contentRichTextEditor = ref<{
-  openModal: () => void;
-} | null>(null);
-
-const route = useRoute();
-const { data } = useCategoryTemplate(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-
-const expandedToolbars = ref({
-  content: true,
-});
 
 const textCardBlock = computed<TextCardContent>(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content ?? {};
@@ -389,33 +214,6 @@ const contentModel = computed<string>({
     textCardBlock.value.text.htmlDescription = val ?? '';
   },
 });
-const editorModeOptions = computed(
-  (): Array<{ value: EditorMode; label: string; testId: string }> => [
-    { value: 'wysiwyg', label: getEditorTranslation('wysiwyg-label'), testId: 'mode-wysiwyg' },
-    { value: 'html', label: getEditorTranslation('html-label'), testId: 'mode-html' },
-  ],
-);
-
-const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy, switchToHtmlMode, switchToWysiwygMode } = useHtmlEditorMode(
-  contentModel,
-  {
-    defaultMode: 'wysiwyg',
-    commitOnValid: true,
-    maxErrors: 5,
-  },
-);
-
-const handleRequestHtmlModal = () => {
-  switchToHtmlMode();
-  if (!modalOpen.value) toggleModal();
-};
-
-const handleSwitchToWysiwygFromModal = async () => {
-  if (modalOpen.value) toggleModal();
-  switchToWysiwygMode();
-  await nextTick();
-  contentRichTextEditor.value?.openModal();
-};
 
 const textAlignOptions = computed(
   (): Array<{ value: TextAlign; label: string; testId: string }> => [
@@ -468,15 +266,7 @@ watch([isTransparent, backgroundColor], () => {
 {
   "en": {
     "text-group-label": "Text",
-    "pretitle-label": "Pre-title",
-    "main-title-label": "Main title",
-    "subtitle-label": "Subtitle",
-    "html-description-label": "HTML Description",
-    "text-color-label": "Text Color",
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
+    "placeholder": "Enter text here...",
 
     "button-group-label": "Button",
     "button-text-label": "Label",
@@ -489,24 +279,11 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "Keep background transparent",
-    "content-label": "Content",
-    "wysiwyg-label": "Rich Text",
-    "html-label": "HTML",
-    "html-editor-label": "HTML editor",
-    "html-invalid-label": "HTML syntax issues"
+    "keep-transparent-label": "Keep background transparent"
   },
   "de": {
     "text-group-label": "Text",
-    "pretitle-label": "Pre-title",
-    "main-title-label": "Main title",
-    "subtitle-label": "Subtitle",
-    "html-description-label": "HTML Description",
-    "text-color-label": "Text Color",
-    "text-align-label": "Text alignment",
-    "text-align-option-left-label": "Left",
-    "text-align-option-center-label": "Center",
-    "text-align-option-right-label": "Right",
+    "placeholder": "Hier Text eingeben...",
 
     "button-group-label": "Button",
     "button-text-label": "Label",
@@ -519,12 +296,7 @@ watch([isTransparent, backgroundColor], () => {
     "background-color-label": "Background Color",
     "padding-label": "Padding",
     "spacing-around": "Spacing around the text elements",
-    "keep-transparent-label": "or keep transparent",
-    "content-label": "Content",
-    "wysiwyg-label": "Rich Text",
-    "html-label": "HTML",
-    "html-editor-label": "HTML editor",
-    "html-invalid-label": "HTML syntax issues"
+    "keep-transparent-label": "or keep transparent"
   }
 }
 </i18n>

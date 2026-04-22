@@ -6,6 +6,8 @@ describe('Smoke: Cart Page', () => {
   beforeEach(() => {
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ enableSingleProductUrlScheme: false });
 
     cy.visitSmoke();
   });
@@ -46,8 +48,6 @@ describe('Smoke: Cart Page', () => {
     cy.addToCart();
     cart.openCart().increaseCartItemQuantity();
 
-    cy.wait(1000);
-
     cart.increaseCartItemQuantity().increaseCartItemQuantity().summaryItems('Items: 4');
   });
 
@@ -69,5 +69,27 @@ describe('Smoke: Cart Page', () => {
     ]);
 
     cart.openCart().compareItemAndFullPriceNyQuantity(quantity).checkSurcharge(Expected_Surcharge);
+  });
+
+  it('should have the right link in the cart product card', () => {
+    cy.addToCart();
+
+    cart.openCart().assertCartProductPath('/coupon_141_1072');
+  });
+
+  describe('Callisto Url', () => {
+    beforeEach(() => {
+      cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
+      cy.clearCookies();
+      cy.clearConfig();
+      cy.setConfig({ enableSingleProductUrlScheme: true });
+      cy.visitSmoke();
+    });
+
+    it('should have the right link in the cart product card with callisto url scheme enabled', () => {
+      cy.addToCart();
+
+      cart.openCart().assertCartProductPath('/coupon/a-141');
+    });
   });
 });

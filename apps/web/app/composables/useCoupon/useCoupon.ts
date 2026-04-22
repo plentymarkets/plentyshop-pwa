@@ -39,8 +39,14 @@ export const useCoupon: UseCouponReturn = () => {
       await useSdk().plentysystems.doAddCoupon(params);
       await fetchSession();
       send({ message: t('coupon.couponApplied'), type: 'positive' });
-    } catch (error) {
-      useHandleError(error as ApiError);
+    } catch (err) {
+      const error = err as ApiError;
+      if (error.warn?.code !== undefined) {
+        const key = getErrorCode(error.warn.code.toString()) ?? 'couponAlreadyUsedOrInvalidCouponCode';
+        send({ message: t('error.' + key), type: 'negative' });
+      } else {
+        useHandleError(error);
+      }
     } finally {
       state.value.loading = false;
     }

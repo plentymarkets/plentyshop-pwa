@@ -78,6 +78,10 @@ export default {
         editor: {
           'body-bg': '#F1F3F5',
           button: '#062633',
+          'toc-highlight': '#E6F0FF',
+          'toc-hover': '#F5FAFF',
+          'toc-selected': '#538AEA',
+          'icon-hover': 'rgba(6, 38, 51, 0.08)',
         },
 
         header: {
@@ -126,5 +130,5 @@ export default {
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
+  plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas'), require('@tailwindcss/container-queries')],
 } as Config;

@@ -3,4 +3,5 @@ export type AccordionItemProps = {
   summary?: string;
   summaryClass?: string;
   summaryActiveClass?: string;
+  contentPaddingClass?: string;
 };

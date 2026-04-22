@@ -9,12 +9,10 @@
     "dev": "tsx ./build/index.ts && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "docs:dev": "npm run publish-typedoc && vitepress dev docs",
-    "docs:build": "npm run publish-typedoc && vitepress build docs",
-    "docs:preview": "vitepress preview docs",
     "publish-typedoc": "npx typedoc --options typedoc.json && mkdir -p docs/reference && rsync -av --delete reference/composables/ docs/reference/composables/",
     "lint": "nuxi prepare && eslint . --max-warnings 0",
     "lint:fix": "nuxi prepare && eslint . --fix --max-warnings 0",
+    "typecheck": "nuxi prepare && vue-tsc --noEmit",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest run",
@@ -38,12 +36,12 @@
     "@types/js-beautify": "^1.14.3",
     "@nuxt/fonts": "^0.14.0",
     "@plentymarkets/tailwind-colors": "^1.0.1",
-    "@vueuse/core": "^10.11.0",
+    "@vueuse/core": "^14.2.1",
     "axios": "^1.13.5",
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@mdi/js": "^7.4.47",
@@ -51,9 +49,9 @@
     "@nuxt/image": "^1.11.0",
     "@nuxt/test-utils": "^3.21.0",
     "@nuxtjs/i18n": "^10.2.3",
-    "@nuxtjs/sitemap": "^5.2.2",
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@savvywombat/tailwindcss-grid-areas": "^3.1.0",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@storefront-ui/typography": "^2.6.1",
     "@storefront-ui/vue": "^2.6.3",
     "@types/node": "^24.9.1",
@@ -66,17 +64,17 @@
     "cypress": "14.5.4",
     "cypress-real-events": "^1.15.0",
     "cypress-wait-until": "^2.0.1",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "happy-dom": "^20.3.4",
+    "happy-dom": "^20.8.9",
     "msw": "^2.12.10",
-    "nuxt": "^4.1.3",
+    "nuxt": "^4.4.2",
     "sass": "^1.97.3",
     "tsx": "^4.21.0",
     "vitepress": "^1.6.4",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.1",
+    "vue-tsc": "^3.2.5",
     "vuepress": "^2.0.0-rc.24",
     "vuetify-nuxt-module": "^0.19.4"
   },
@@ -84,6 +82,7 @@
     "@vue-storefront/eslint-config": {
       "prettier": "3.6.2"
     },
-    "@vitejs/plugin-vue-jsx": "5.0.1"
+    "@vitejs/plugin-vue-jsx": "5.0.1",
+    "unimport": "5.6.0"
   }
 }

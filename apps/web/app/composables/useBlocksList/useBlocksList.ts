@@ -58,7 +58,7 @@ export const useBlocksList: UseBlocksListReturn = () => {
     if (!variationToAdd) throw new Error(`Variation ${variationIndex} not found in category ${category}`);
     const variationTemplate = variationToAdd.template;
 
-    return JSON.parse(JSON.stringify(lang === 'de' ? variationTemplate.de : variationTemplate.en));
+    return deepClone(lang === 'de' ? variationTemplate.de : variationTemplate.en);
   };
 
   /**

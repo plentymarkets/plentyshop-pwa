@@ -21,6 +21,30 @@ export class ProductListPageObject extends PageObject {
     return cy.getByTestId('category-layout').find('h1');
   }
 
+  get productLink() {
+    return cy.getByTestId('product-card-link').first();
+  }
+
+  get categoryData() {
+    return cy.getByTestId('category-data');
+  }
+
+  get sortFilter() {
+    return cy.getByTestId('category-sort-filter');
+  }
+
+  assertProductCardPath(expectedPathContent?: string) {
+    const link = this.productLink;
+
+    if (expectedPathContent) {
+      link.should('have.attr', 'href').and('contain', expectedPathContent);
+    } else {
+      link.should('have.attr', 'href').and('not.be.empty');
+    }
+
+    return this;
+  }
+
   assertProductListElements() {
     this.products.each((product) => {
       cy.wrap(product).as('product');
@@ -46,6 +70,14 @@ export class ProductListPageObject extends PageObject {
             });
         });
     });
+    return this;
+  }
+
+  assertBlockTemplate() {
+    this.categoryData.should('exist');
+    this.sortFilter.should('exist');
+    this.categoryGrid.should('exist');
+    this.footer.should('have.length', 1);
     return this;
   }
 

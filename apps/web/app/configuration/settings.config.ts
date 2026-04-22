@@ -17,7 +17,7 @@ export default {
   passwordMinLength: Number(process.env.PASSWORD_MIN_LENGTH ?? 8),
   passwordMaxLength: Number(process.env.PASSWORD_MAX_LENGTH ?? 64),
   robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
-  contactShopEmail: process.env.NUXT_PUBLIC_CONTACT_SHOP_EMAIL || 'your@email.com',
+  contactShopEmail: process.env.NUXT_PUBLIC_CONTACT_SHOP_EMAIL,
   robotsHomePage: process.env.NUXT_PUBLIC_ROBOTS_HOME_PAGE || 'all',
   robotsContactPage: process.env.NUXT_PUBLIC_ROBOTS_CONTACT_PAGE || 'all',
   robotsCancellationRights: process.env.NUXT_PUBLIC_ROBOTS_CANCELLATION_RIGHTS || 'all',
@@ -101,7 +101,7 @@ export default {
   showNotifyMe: process.env.NUXT_PUBLIC_SHOW_NOTIFY_ME === 'true',
   itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
   defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
-  defaultB2BCustomerClass: process.env.NUXT_PUBLIC_DEFAULT_B2B_CUSTOMER_CLASS || '0',
+  defaultCustomerB2BClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_B2B_CLASS_ID || '0',
   fetchDynamicTranslations: false,
   sessionLifetime: process.env.NUXT_PUBLIC_SESSION_LIFETIME || '3600',
   shippingTextCategoryId: process.env.NUXT_PUBLIC_SHIPPING_TEXT_CATEGORY_ID || '',
@@ -120,4 +120,5 @@ export default {
   manufacturerEmail: process.env.NUXT_PUBLIC_MANUFACTURER_EMAIL || '0',
   manufacturerContactUrl: process.env.NUXT_PUBLIC_MANUFACTURER_CONTACT_URL || '0',
   customAssetsSafeMode: process.env.NUXT_PUBLIC_CUSTOM_ASSETS_SAFE_MODE === 'true',
+  enableSingleProductUrlScheme: process.env.NUXT_PUBLIC_ENABLE_SINGLE_PRODUCT_URL_SCHEME === 'true',
 };

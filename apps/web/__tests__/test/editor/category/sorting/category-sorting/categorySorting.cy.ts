@@ -10,6 +10,8 @@ describe('CategorySorting', () => {
 
   beforeEach(() => {
     cy.clearCookies();
+    cy.clearConfig();
+    cy.setConfig({ isPreview: true });
     //1. Go to Living room category page
     cy.visit(categoryPage);
     cookieBar.acceptAll();
@@ -41,7 +43,7 @@ describe('CategorySorting', () => {
       )
       .checkTooltip(
         'default-sorting-tooltip',
-        'Which sorting option do you want to preselect by default for the category view?',
+        'Which sorting option do you want to preselect by default for the category page?',
       )
       .closeDrawer();
 

@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
+      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
         <NuxtImg
           v-if="cartItem.variation?.images?.all?.length"
           ref="img"
@@ -151,7 +151,6 @@ const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { format } = usePriceFormatter();
-const config = useRuntimeConfig();
 const localePath = useLocalePath();
 
 const imageLoaded = ref(false);
@@ -248,7 +247,7 @@ const basePriceSingleValue = computed(
 );
 
 const path = computed(() => {
-  return localePath('/' + cartGetters.getProductPath(cartItem, config.public.enableCallistoUrlScheme));
+  return localePath('/' + cartGetters.getProductPath(cartItem, useCallisto().isEnabled));
 });
 
 const imageAlt = computed(() => {

@@ -1,47 +1,73 @@
 import { PageObject } from './PageObject';
 
-export const firstBannerBlockUuid = 'a7b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d';
-export const secondBannerBlockUuid = 'd4e1f2a3-b7c8-4d9e-8f1a-2b3c4d5e6f7a';
-
 export class BannerSliderObject extends PageObject {
+  getFirstBannerBlockUuid(): Cypress.Chainable<string> {
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .first()
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
+  }
+
+  getSecondBannerBlockUuid(): Cypress.Chainable<string> {
+    return cy
+      .get('[data-testid^="banner-image-"]')
+      .eq(1)
+      .then(($el) => {
+        const testId = $el.attr('data-testid') || '';
+        return testId.replace('banner-image-', '');
+      });
+  }
+
+  checkDroneImageVisibility() {
+    cy.get(`[data-testid="tooltip"]`).contains('drone-A-1024.avif');
+  }
+
+  checkGuyImageVisibility() {
+    cy.get(`[data-testid="tooltip"]`).contains('guy-1024.avif');
+  }
+
   openSlideActions() {
-    cy.get('[data-testid="open-slide-actions"]').click();
+    cy.get(`[data-testid="actions-menu-item-0"]`).click();
   }
 
   openSlideOneSettings() {
-    cy.get('[data-testid="slide-settings-1"]').click();
+    cy.get('[data-testid="actions-edit-item-0"]').click();
   }
 
   openSlideTwoSettings() {
-    cy.get('[data-testid="slide-settings-2"]').click();
+    cy.get('[data-testid="actions-edit-item-1"]').click();
   }
 
-  addSlide() {
-    cy.get('[data-testid="actions-add-slide-button"]').click();
+  goBackToElementList() {
+    cy.get('[data-testid="view-title"] button').first().click();
   }
 
   deleteSlide() {
-    cy.get('[data-testid="actions-delete-slide-1"]').click();
+    cy.get('[data-testid="actions-delete-item-0"]').click();
   }
 
   checkIfSlideIsDeleted() {
-    cy.get(`[data-testid="banner-image-${secondBannerBlockUuid}"]`).should('not.exist');
-    cy.get('[data-testid="open-slide-actions"]').should('not.exist');
+    cy.get('[data-testid^="banner-image-"]').should('have.length', 1);
+    cy.get('[data-testid="actions-menu-slide-1"]').should('not.exist');
   }
 
   checkIfSlideActionsAreVisible() {
-    cy.get('[data-testid="open-slide-actions"]').should('not.exist');
+    cy.get('[data-testid="actions-menu-slide-1"]').should('not.exist');
   }
+
   quickAddSlide() {
-    cy.get('[data-testid="quick-add-slide-button"]').click();
+    cy.get('[data-testid="actions-add-block-button"]').click();
   }
 
   checkSlideSettings(index: number) {
-    cy.get(`[data-testid="slide-settings-${index}"]`).should('exist');
+    cy.get(`[data-testid="actions-edit-slide-${index}"]`).click();
   }
 
-  checkIsBannerImageVisible(uuid: string) {
-    cy.get(`[data-testid="banner-image-${uuid}"]`).should('be.visible');
+  checkIsBannerImageVisible(index = 0) {
+    cy.get('[data-testid^="banner-image-"]').eq(index).should('be.visible');
   }
 
   checkIsNewBannerImageVisible() {
@@ -56,34 +82,12 @@ export class BannerSliderObject extends PageObject {
     });
   }
 
-  checkIsMoveSlideUpDisabled(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`).should('not.exist');
-  }
-
-  checkIsMoveSlideDownDisabled(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`).should('not.exist');
-  }
-
-  moveSlideUp(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`)
-      .trigger('mousedown', { which: 1 })
-      .trigger('mousemove', { clientX: 0, clientY: -100 })
-      .trigger('mouseup', { force: true });
-  }
-
-  moveSlideDown(index: number) {
-    cy.get(`[data-testid="actions-drag-slide-handle-${index}"]`)
-      .trigger('mousedown', { which: 1 })
-      .trigger('mousemove', { clientX: 0, clientY: 100 })
-      .trigger('mouseup', { force: true });
-  }
-
   openImageGroup() {
-    cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('be.visible');
+    cy.get('[data-testid="slider-image-group"]').should('exist').click();
   }
 
   openImageSelector(imageType: string) {
-    cy.get(`[data-testid="image-picker-select-button-${imageType}"]`).should('be.visible').click();
+    cy.get(`[data-testid="image-picker-select-button-${imageType}"]`).scrollIntoView().should('be.visible').click();
     cy.get('[data-testid="image-selector-modal"]').should('be.visible');
     cy.get('[data-testid="image-selector-loader"]').should('not.exist');
   }
@@ -96,39 +100,41 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkNewBannerImage() {
-    cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('be.visible');
-    cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should(
-      'have.attr',
-      'src',
-      'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg',
-    );
+    cy.get('[data-testid^="banner-image-"]').first().should('be.visible');
+    cy.get('[data-testid^="banner-image-"]')
+      .first()
+      .should('have.attr', 'src', 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg');
   }
 
   checkBannerAltText() {
-    cy.get('[data-testid="slide-alt-text"]').should('be.visible').clear().type('New Alt Text', { delay: 0 });
-    cy.get(`[data-testid="banner-image-${firstBannerBlockUuid}"]`).should('have.attr', 'alt', 'New Alt Text');
+    cy.get('[data-testid="slide-alt-text"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Alt Text', { delay: 0 });
+    cy.get('[data-testid^="banner-image-"]').first().should('have.attr', 'alt', 'New Alt Text');
   }
 
   closeImageGroup() {
-    cy.get('[data-testid="slider-image-group-title"]').should('be.visible').click();
+    cy.get('[data-testid="slider-image-group"]').scrollIntoView().should('be.visible').click();
   }
 
   openTextGroup() {
-    cy.get('[data-testid="banner-text-group"]').should('be.visible').scrollIntoView().click();
+    cy.get('[data-testid="banner-text-group"]').scrollIntoView().should('be.visible').click();
   }
 
   changeTexts() {
-    cy.get('[data-testid="banner-input-pre-title"]').should('be.visible').clear().type('New Pre-Title', { delay: 0 });
-    cy.get('[data-testid="banner-input-title"]').should('be.visible').clear().type('New Title', { delay: 0 });
-    cy.get('[data-testid="banner-input-sub-title"]').should('be.visible').clear().type('New Subtitle', { delay: 0 });
-    cy.get('[data-testid="banner-text-content"]').should('be.visible').clear().type('New Text Content', { delay: 0 });
+    cy.get('[data-testid="rte-editor"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .find('[contenteditable="true"]')
+      .click()
+      .clear()
+      .type('New Pre-Title', { delay: 0 });
   }
 
   checkNewTexts() {
-    cy.get(`[data-testid="banner-pretitle-${firstBannerBlockUuid}"]`).should('have.text', 'New Pre-Title');
-    cy.get(`[data-testid="banner-title-${firstBannerBlockUuid}"]`).should('have.text', 'New Title');
-    cy.get(`[data-testid="banner-subtitle-${firstBannerBlockUuid}"]`).should('have.text', 'New Subtitle');
-    cy.get(`[data-testid="banner-description-${firstBannerBlockUuid}"]`).should('have.text', 'New Text Content');
+    cy.get('[data-testid^="text-html"]').first().should('have.text', 'New Pre-Title');
   }
 
   scrollFormDown() {
@@ -137,82 +143,96 @@ export class BannerSliderObject extends PageObject {
 
   alignBoxCenterX() {
     cy.get('[data-testid="slider-textbox-align-center"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'justify-content', 'center');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'center');
   }
 
   alignBoxBottomX() {
     cy.get('[data-testid="slider-textbox-align-bottom"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'justify-content', 'flex-end');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-end');
   }
 
   alignBoxTopX() {
     cy.get('[data-testid="slider-textbox-align-top"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should(
-      'have.css',
-      'justify-content',
-      'flex-start',
-    );
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-start');
   }
 
   alignBoxCenterY() {
     cy.get('[data-testid="slider-textbox-y-align-center"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'align-items', 'center');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'center');
   }
 
   alignBoxRightY() {
     cy.get('[data-testid="slider-textbox-y-align-right"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'align-items', 'flex-end');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-end');
   }
 
   alignBoxLeftY() {
     cy.get('[data-testid="slider-textbox-y-align-left"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'align-items', 'flex-start');
+    cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-start');
   }
 
   textAlignCenter() {
-    cy.get('[data-testid="slider-text-align-center"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'text-align', 'center');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
+    cy.get('[data-testid="rte-align-center"]').click();
+    cy.get('[data-testid="rte-editor"]')
+      .find('[contenteditable="true"] p')
+      .first()
+      .should('have.css', 'text-align', 'center');
   }
 
   textAlignRight() {
-    cy.get('[data-testid="slider-text-align-right"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'text-align', 'right');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
+    cy.get('[data-testid="rte-align-right"]').click();
+    cy.get('[data-testid="rte-editor"]')
+      .find('[contenteditable="true"] p')
+      .first()
+      .should('have.css', 'text-align', 'right');
   }
 
   textAlignLeft() {
-    cy.get('[data-testid="slider-text-align-left"]').should('exist').click();
-    cy.get(`[data-testid="banner-overlay-${firstBannerBlockUuid}"]`).should('have.css', 'text-align', 'left');
+    cy.get('[data-testid="rte-editor"]').find('[contenteditable="true"]').click().type('{selectall}');
+    cy.get('[data-testid="rte-align-left"]').click();
+    cy.get('[data-testid="rte-editor"]')
+      .find('[contenteditable="true"] p')
+      .first()
+      .should('have.css', 'text-align', 'left');
   }
 
   closeTextGroup() {
-    cy.get('[data-testid="slider-text-group-title"]').should('be.visible').click();
+    cy.get('[data-testid="banner-text-group"]').scrollIntoView().should('be.visible').click();
   }
 
   openButtonGroup() {
-    cy.get('[data-testid="slider-button-group-title"]').should('be.visible').click();
+    cy.get('[data-testid="slider-button-group-title"]').scrollIntoView().should('be.visible').click();
   }
 
   changeButtonLabelAndLink() {
-    cy.get('[data-testid="slider-button-label"]').should('be.visible').clear().type('New Button Label', { delay: 0 });
+    cy.get('[data-testid="slider-button-label"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .clear()
+      .type('New Button Label', { delay: 0 });
     cy.get('[data-testid="slider-button-link"]')
+      .scrollIntoView()
       .should('be.visible')
       .clear()
       .type('https://www.google.com', { delay: 0 });
   }
 
   checkButtonLabelAndLink() {
-    cy.get(`[data-testid="banner-button-${firstBannerBlockUuid}"]`)
+    cy.get('[data-testid^="banner-button-"]')
+      .first()
       .should('have.text', 'New Button Label')
       .should('have.attr', 'href', 'https://www.google.com');
   }
 
   checkButtonSecondary() {
     cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
-    cy.get(`[data-testid="banner-button-${firstBannerBlockUuid}"]`).should('have.class', 'active:text-primary-900');
+    cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:text-primary-900');
   }
 
   checkButtonPrimary() {
     cy.get('[data-testid="slider-button-primary"]').should('exist').click();
-    cy.get(`[data-testid="banner-button-${firstBannerBlockUuid}"]`).should('have.class', 'active:bg-primary-700');
+    cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:bg-primary-700');
   }
 }

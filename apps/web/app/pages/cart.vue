@@ -47,9 +47,11 @@
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
+
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
+
 const { setPageMeta } = usePageMeta();
 
 definePageMeta({ pageType: 'static' });
