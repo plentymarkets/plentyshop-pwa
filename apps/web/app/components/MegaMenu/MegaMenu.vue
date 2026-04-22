@@ -31,9 +31,7 @@
     </div>
 
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
-      <MegaMenuSkeleton v-if="categoryTree.length === 0 && route.meta.cacheControl" />
       <ul
-        v-else
         class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
           (event: FocusEvent) => {
@@ -43,9 +41,10 @@
           }
         "
       >
-        <li v-if="categoryTree.length === 0" class="h-10" />
-
-        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
+        <ClientOnly>
+          <MegaMenuSkeleton v-if="categoryTree.length === 0" />
+          <template v-else>
+            <li v-for="(menuNode, index) in categoryTree" :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
           <NuxtLink
             v-if="menuNode.childCount > 0"
             ref="triggerReference"
@@ -142,7 +141,12 @@
               </div>
             </template>
           </div>
-        </li>
+            </li>
+          </template>
+          <template #fallback>
+            <li class="h-10" aria-hidden="true" />
+          </template>
+        </ClientOnly>
       </ul>
     </nav>
 

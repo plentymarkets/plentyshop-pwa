@@ -1,13 +1,7 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
-      <MegaMenuSkeleton
-        v-if="categoryTree.length === 0 && route.meta.cacheControl"
-        :container-classes="navigationContainerClasses"
-        :container-style="navigationContainerStyle"
-      />
       <ul
-        v-else
         :class="navigationContainerClasses"
         :style="navigationContainerStyle"
         @blur="
@@ -18,9 +12,10 @@
           }
         "
       >
-        <li v-if="categoryTree.length === 0" class="h-10" />
-
-        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
+        <ClientOnly>
+          <MegaMenuSkeleton v-if="categoryTree.length === 0" />
+          <template v-else>
+            <li v-for="(menuNode, index) in categoryTree" :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
           <NuxtLink
             v-if="menuNode.childCount > 0"
             ref="triggerReference"
@@ -126,7 +121,12 @@
               </div>
             </template>
           </div>
-        </li>
+            </li>
+          </template>
+          <template #fallback>
+            <li class="h-10" aria-hidden="true" />
+          </template>
+        </ClientOnly>
       </ul>
     </nav>
 
