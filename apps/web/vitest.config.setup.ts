@@ -3,11 +3,19 @@ import { config } from '@vue/test-utils';
 import { vi } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
+const plentysystemsMethodMocks = new Map<PropertyKey, ReturnType<typeof vi.fn>>();
+
 mockNuxtImport('useSdk', () => () => ({
   plentysystems: new Proxy(
     {},
     {
-      get: () => vi.fn().mockResolvedValue({ data: undefined }),
+      get: (_target, property) => {
+        if (!plentysystemsMethodMocks.has(property)) {
+          plentysystemsMethodMocks.set(property, vi.fn().mockResolvedValue({ data: undefined }));
+        }
+
+        return plentysystemsMethodMocks.get(property);
+      },
     },
   ),
 }));
