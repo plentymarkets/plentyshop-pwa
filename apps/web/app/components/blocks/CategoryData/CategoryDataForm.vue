@@ -358,6 +358,8 @@ const {
   fillModeOptions,
   displayCategoryImageModel,
   displayCategoryImageOptions,
+  textAlignModel,
+  textAlignOptions,
 } = useEditorOptionsTabs(() => categoryDataBlock.value as EditorTarget, getEditorTranslation);
 </script>
 
