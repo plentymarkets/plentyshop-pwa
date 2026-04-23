@@ -215,12 +215,10 @@ const contentModel = computed<string>({
   },
 });
 
-const {
-  buttonVariantModel, buttonVariantOptions,
-} = useEditorOptionsTabs(
+const { buttonVariantModel, buttonVariantOptions } = useEditorOptionsTabs(
   () => textCardBlock.value,
   getEditorTranslation,
-)
+);
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 

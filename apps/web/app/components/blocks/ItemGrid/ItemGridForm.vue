@@ -171,11 +171,7 @@
 
 <script setup lang="ts">
 import { SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
-import type {
-  ItemGridFormProps,
-  ItemGridContent,
-  ItemGridFieldKey,
-} from './types';
+import type { ItemGridFormProps, ItemGridContent, ItemGridFieldKey } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
 

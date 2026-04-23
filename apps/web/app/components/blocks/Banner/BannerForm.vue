@@ -152,7 +152,6 @@
               :options="textboxAlignYOptions"
             />
           </div>
-
         </div>
       </UiAccordionItem>
 

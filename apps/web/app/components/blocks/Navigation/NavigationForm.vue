@@ -176,10 +176,7 @@ const navigationBlock = computed<NavigationContent>(() => {
 
   return content as NavigationContent;
 });
-const { textAlignModel, textAlignOptions } = useEditorOptionsTabs(
-  () => navigationBlock.value,
-  getEditorTranslation,
-);
+const { textAlignModel, textAlignOptions } = useEditorOptionsTabs(() => navigationBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">

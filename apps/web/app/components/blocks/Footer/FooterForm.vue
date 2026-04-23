@@ -369,12 +369,10 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
   }),
 );
 
-const {
-  footnoteAlignModel, footnoteAlignOptions,
-} = useEditorOptionsTabs(
+const { footnoteAlignModel, footnoteAlignOptions } = useEditorOptionsTabs(
   () => footerBlock.value,
   getEditorTranslation,
-)
+);
 watch(
   footerBlock,
   (updatedFooterBlock) => {

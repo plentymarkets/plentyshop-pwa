@@ -91,10 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  CrossSellingRelationType,
-  ProductRecommendedProductsContent,
-} from '../ProductRecommendedProducts/types';
+import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
 import { SfInput } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
@@ -180,12 +177,7 @@ const recommendedBlockRef = ref(recommendedBlock.value);
 
 const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
 
-const {
-  sourceTypeModel, sourceTypeOptions,
-} = useEditorOptionsTabs(
-  () => recommendedBlock.value,
-  getEditorTranslation,
-)
+const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recommendedBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">

@@ -206,12 +206,10 @@ const fieldLabels = {
 const cardOpen = ref(true);
 const layoutOpen = ref(false);
 
-const {
-  wishlistSizeModel, wishlistSizeOptions,
-} = useEditorOptionsTabs(
+const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
   () => priceCardBlock.value,
   getEditorTranslation,
-)
+);
 </script>
 
 <i18n lang="json">
