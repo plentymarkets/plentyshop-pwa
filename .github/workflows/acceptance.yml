@@ -60,7 +60,6 @@ jobs:
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
-
       - name: E2E External
         uses: cypress-io/github-action@v7
         with:
