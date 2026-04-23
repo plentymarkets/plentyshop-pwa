@@ -41,7 +41,6 @@ describe('composables index exports', () => {
     'useLazyProductImage',
     'useSliderImagePreload',
     'useNearViewport',
-    'useEditorOptionsTabs',
   ];
 
   const allFileModules = fs
