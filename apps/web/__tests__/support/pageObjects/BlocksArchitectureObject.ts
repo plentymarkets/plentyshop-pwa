@@ -2,6 +2,7 @@ import { PageObject } from './PageObject';
 import emptyBlocksResponse from '../../fixtures/blocks/emptyBlocksResponse.json';
 import partialBlocksResponse from '../../fixtures/blocks/partialBlocksResponse.json';
 import fullBlocksResponse from '../../fixtures/blocks/fullBlocksResponse.json';
+import savedBlocksResponse from '../../fixtures/blocks/savedBlocksResponse.json';
 
 interface BlocksFixture {
   data: Record<string, unknown>;
@@ -102,6 +103,10 @@ export class BlocksArchitectureObject extends PageObject {
       body: fullBlocksResponse,
     }).as('saveBlocks');
     return this;
+  }
+
+  interceptSaved() {
+    return this.interceptBlocksWithFixture(savedBlocksResponse);
   }
 
   waitForBlocks() {

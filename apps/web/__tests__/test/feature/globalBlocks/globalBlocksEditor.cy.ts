@@ -142,12 +142,15 @@ describe('Global Blocks Editor', () => {
       toolbar.clickSave();
       blocks.waitForSave();
 
+      blocks.interceptSaved();
       cy.visitAndHydrate(paths.home);
+      blocks.switchLocale('de');
 
       // prettier-ignore
       blocks
         .assertHeaderContainerVisible()
-        .assertFooterVisible();
+        .assertFooterVisible()
+        .assertFooterContainsText('Saved Footer Title');
     });
   });
 
