@@ -14,22 +14,19 @@ jobs:
     steps:
       - name: Create GitHub Deployment
         id: deployment
-        # required_contexts is intentionally empty: releases are manually published,
-        # so CI status checks are not enforced here.
         run: |
-          deployment_id=$(gh api repos/${{ github.repository }}/deployments \
-            --method POST \
-            --input - <<EOF
-          {
-            "ref": "${{ github.sha }}",
-            "environment": "production",
-            "description": "Release ${{ github.event.release.tag_name }}",
-            "auto_merge": false,
-            "required_contexts": []
-          }
-          EOF
-            --jq '.id')
-          echo "id=$deployment_id" >> $GITHUB_OUTPUT
+          deployment_id=$(
+            gh api repos/${{ github.repository }}/deployments \
+              --method POST \
+              --jq '.id' \
+              -f ref="${{ github.sha }}" \
+              -f environment="production" \
+              -f description="Release ${{ github.event.release.tag_name }}" \
+              -F auto_merge=false \
+              -f required_contexts[]=
+          )
+          echo "id=$deployment_id" >> "$GITHUB_OUTPUT"
+      
           gh api repos/${{ github.repository }}/deployments/$deployment_id/statuses \
             --method POST \
             -f state="in_progress"
