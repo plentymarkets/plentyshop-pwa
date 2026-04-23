@@ -53,6 +53,7 @@ describe('Blocks Architecture', () => {
       blocks.interceptPartial();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
+      blocks.switchLocale('de');
 
       // prettier-ignore
       blocks
@@ -83,7 +84,7 @@ describe('Blocks Architecture', () => {
       cookieBar.acceptAll();
       blocks.navigateToCategory();
       blocks.interceptPartial();
-      blocks.navigateToProduct();
+      blocks.navigateToProduct(false);
 
       // prettier-ignore
       blocks
@@ -99,6 +100,7 @@ describe('Blocks Architecture', () => {
       blocks.interceptPartial();
       cy.visitAndHydrate(paths.cart);
       cookieBar.acceptAll();
+      blocks.switchLocale('de');
 
       // prettier-ignore
       blocks
@@ -111,12 +113,14 @@ describe('Blocks Architecture', () => {
       blocks.footerElement.should('not.contain.text', '© API Store 2026');
     });
   });
-
   describe('initial load with full data on cart', () => {
     it('cart page loads footer from response', () => {
+      // SSR populates 'blocks-en-immutable-index' — intercepts cannot apply to it.
+      // Switching to 'de' uses a fresh key 'blocks-de-immutable-index' that fires a real browser request.
       blocks.interceptFull();
       cy.visitAndHydrate(paths.cart);
       cookieBar.acceptAll();
+      blocks.switchLocale('de');
 
       // prettier-ignore
       blocks
@@ -134,6 +138,7 @@ describe('Blocks Architecture', () => {
       blocks.interceptFull();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
+      blocks.switchLocale('de');
 
       // prettier-ignore
       blocks
@@ -164,7 +169,7 @@ describe('Blocks Architecture', () => {
       cookieBar.acceptAll();
       blocks.navigateToCategory();
       blocks.interceptFull();
-      blocks.navigateToProduct();
+      blocks.navigateToProduct(false);
 
       // prettier-ignore
       blocks
@@ -278,7 +283,7 @@ describe('Blocks Architecture', () => {
       cookieBar.acceptAll();
       blocks.navigateToCategory();
       blocks.interceptPartial();
-      blocks.navigateToProduct();
+      blocks.navigateToProduct(false);
       blocks.switchLocale('de');
 
       // prettier-ignore
@@ -350,7 +355,7 @@ describe('Blocks Architecture', () => {
       cookieBar.acceptAll();
       blocks.navigateToCategory();
       blocks.interceptFull();
-      blocks.navigateToProduct();
+      blocks.navigateToProduct(false);
       blocks.switchLocale('de');
 
       // prettier-ignore
