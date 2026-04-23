@@ -1,11 +1,11 @@
-import { paths } from '../../../../app/utils/paths';
-import { CookieBarObject } from '../../../support/pageObjects/CookieBarObject';
-import { HeaderBlockObject } from '../../../support/pageObjects/HeaderBlockObject';
-import { FooterBlockObject } from '../../../support/pageObjects/FooterBlockObject';
-import { TableOfContentsObject } from '../../../support/pageObjects/TableOfContentsObject';
-import { ToolbarObject } from '../../../support/pageObjects/ToolbarObject';
-import { BlocksArchitectureObject } from '../../../support/pageObjects/BlocksArchitectureObject';
-import { LanguageSelectObject } from '../../../support/pageObjects/LanguageSelectObject';
+import { paths } from '../../../app/utils/paths';
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
+import { HeaderBlockObject } from '../../support/pageObjects/HeaderBlockObject';
+import { FooterBlockObject } from '../../support/pageObjects/FooterBlockObject';
+import { TableOfContentsObject } from '../../support/pageObjects/TableOfContentsObject';
+import { ToolbarObject } from '../../support/pageObjects/ToolbarObject';
+import { BlocksArchitectureObject } from '../../support/pageObjects/BlocksArchitectureObject';
+import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
 
 const cookieBar = new CookieBarObject();
 const headerBlock = new HeaderBlockObject();

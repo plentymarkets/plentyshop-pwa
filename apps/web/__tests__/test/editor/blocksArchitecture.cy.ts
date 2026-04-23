@@ -1,9 +1,9 @@
-import { paths } from '../../../../app/utils/paths';
-import { CookieBarObject } from '../../../support/pageObjects/CookieBarObject';
-import { BlocksArchitectureObject } from '../../../support/pageObjects/BlocksArchitectureObject';
-import { LanguageSelectObject } from '../../../support/pageObjects/LanguageSelectObject';
-import { CategoryObject } from '../../../support/pageObjects/CategoryObject';
-import { ProductDetailPageObject } from '../../../support/pageObjects/ProductDetailPageObject';
+import { paths } from '../../../app/utils/paths';
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
+import { BlocksArchitectureObject } from '../../support/pageObjects/BlocksArchitectureObject';
+import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
+import { CategoryObject } from '../../support/pageObjects/CategoryObject';
+import { ProductDetailPageObject } from '../../support/pageObjects/ProductDetailPageObject';
 
 const cookieBar = new CookieBarObject();
 const blocks = new BlocksArchitectureObject();
