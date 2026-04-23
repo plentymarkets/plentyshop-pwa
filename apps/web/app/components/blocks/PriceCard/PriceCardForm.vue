@@ -167,7 +167,7 @@ import {
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
-import type { PriceCardFormProps, WishlistSize } from '~/components/blocks/PriceCard/types';
+import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
 
 const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
@@ -206,19 +206,12 @@ const fieldLabels = {
 const cardOpen = ref(true);
 const layoutOpen = ref(false);
 
-const wishlistSizeOptions = computed(
-  (): Array<{ value: WishlistSize; label: string; testId: string }> => [
-    { value: 'small', label: getEditorTranslation('wishlist-size-small'), testId: 'wishlist-size-small' },
-    { value: 'large', label: getEditorTranslation('wishlist-size-large'), testId: 'wishlist-size-large' },
-  ],
-);
-
-const wishlistSizeModel = computed<WishlistSize>({
-  get: () => (priceCardBlock.value.wishlistSize as WishlistSize | undefined) ?? 'small',
-  set: (v) => {
-    priceCardBlock.value.wishlistSize = v;
-  },
-});
+const {
+  wishlistSizeModel, wishlistSizeOptions,
+} = useEditorOptionsTabs(
+  () => priceCardBlock.value,
+  getEditorTranslation,
+)
 </script>
 
 <i18n lang="json">

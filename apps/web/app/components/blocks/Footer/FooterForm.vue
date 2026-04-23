@@ -316,7 +316,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
-import type { FooterContent, FooterBlock, FootnoteAlign } from './types';
+import type { FooterContent, FooterBlock } from './types';
 import { FOOTER_SWITCH_DEFINITIONS } from './constants';
 
 const { footer } = useBlocks();
@@ -369,33 +369,12 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
   }),
 );
 
-const footnoteAlignOptions = computed(
-  (): Array<{ value: FootnoteAlign; label: string; testId: string }> => [
-    {
-      value: 'left',
-      label: getEditorTranslation('footnotes-align-option-left-label'),
-      testId: 'footnoteAlign-textbox-y-align-left',
-    },
-    {
-      value: 'center',
-      label: getEditorTranslation('footnotes-align-option-center-label'),
-      testId: 'footnoteAlign-textbox-y-align-center',
-    },
-    {
-      value: 'right',
-      label: getEditorTranslation('footnotes-align-option-right-label'),
-      testId: 'footnoteAlign-textbox-y-align-right',
-    },
-  ],
-);
-
-const footnoteAlignModel = computed<FootnoteAlign>({
-  get: () => (footerBlock.value.content.footnoteAlign as FootnoteAlign | undefined) ?? 'left',
-  set: (v) => {
-    footerBlock.value.content.footnoteAlign = v;
-  },
-});
-
+const {
+  footnoteAlignModel, footnoteAlignOptions,
+} = useEditorOptionsTabs(
+  () => footerBlock.value,
+  getEditorTranslation,
+)
 watch(
   footerBlock,
   (updatedFooterBlock) => {

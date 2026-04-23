@@ -113,15 +113,6 @@
 
     <div class="py-2">
       <EditorOptionsTabs
-        v-model="textOverlayAlignXModel"
-        :legend="getEditorTranslation('text-overlay-align-x-label')"
-        test-id-prefix="text-overlay-align-x"
-        :options="textOverlayAlignXOptions"
-      />
-    </div>
-
-    <div class="py-2">
-      <EditorOptionsTabs
         v-model="textOverlayAlignYModel"
         :legend="getEditorTranslation('text-overlay-align-y-label')"
         test-id-prefix="text-overlay-align-y"
@@ -281,7 +272,6 @@
 <script setup lang="ts">
 import {
   SfInput,
-  SfTextarea,
   SfIconArrowBack,
   SfIconArrowUpward,
   SfIconArrowDownward,
@@ -291,7 +281,7 @@ import {
   SfIconInfo,
 } from '@storefront-ui/vue';
 
-import type { ImageFormProps, FillMode, AlignX, AlignY, ButtonVariant } from './types';
+import type { ImageFormProps } from './types';
 import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
@@ -310,6 +300,15 @@ const DEFAULT_LAYOUT = {
   paddingLeft: 0,
   paddingRight: 0,
 };
+
+const {
+  fillModeModel,
+  fillModeOptions,
+  textOverlayAlignYModel,
+  textOverlayAlignYOptions,
+  buttonVariantModel,
+  buttonVariantOptions,
+} = useEditorOptionsTabs(() => uiImageTextBlock.value, getEditorTranslation);
 
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
@@ -332,20 +331,6 @@ const { isFullWidth } = useFullWidthToggleForContent(uiImageTextBlock);
 const backgroundColorInit = uiImageTextBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
 const backgroundColor = ref(isTransparent.value ? '' : backgroundColorInit);
-
-const fillModeOptions = computed(
-  (): Array<{ value: FillMode; label: string; testId: string }> => [
-    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scaling-fill' },
-    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'image-scaling-fit' },
-  ],
-);
-
-const fillModeModel = computed<FillMode>({
-  get: () => (uiImageTextBlock.value.image.fillMode as FillMode | undefined) ?? 'fit',
-  set: (v) => {
-    uiImageTextBlock.value.image.fillMode = v;
-  },
-});
 
 watch([isTransparent, backgroundColor], () => {
   uiImageTextBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
@@ -384,66 +369,6 @@ const clampBrightness = (event: Event, type: string) => {
     uiImageTextBlock.value.image.brightness = clamp(nextValue, 0, 1);
   }
 };
-
-const textOverlayAlignXOptions = computed(
-  (): Array<{ value: AlignX; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('text-overlay-align-x-left'), testId: 'text-overlay-align-x-left' },
-    {
-      value: 'center',
-      label: getEditorTranslation('text-overlay-align-x-center'),
-      testId: 'text-overlay-align-x-center',
-    },
-    { value: 'right', label: getEditorTranslation('text-overlay-align-x-right'), testId: 'text-overlay-align-x-right' },
-  ],
-);
-
-const textOverlayAlignYOptions = computed(
-  (): Array<{ value: AlignY; label: string; testId: string }> => [
-    { value: 'top', label: getEditorTranslation('text-overlay-align-y-top'), testId: 'text-overlay-align-y-top' },
-    {
-      value: 'center',
-      label: getEditorTranslation('text-overlay-align-y-center'),
-      testId: 'text-overlay-align-y-center',
-    },
-    {
-      value: 'bottom',
-      label: getEditorTranslation('text-overlay-align-y-bottom'),
-      testId: 'text-overlay-align-y-bottom',
-    },
-  ],
-);
-
-const textOverlayAlignXModel = computed<AlignX>({
-  get: () => (uiImageTextBlock.value.text.textOverlayAlignX as AlignX | undefined) ?? 'left',
-  set: (v) => {
-    uiImageTextBlock.value.text.textOverlayAlignX = v;
-  },
-});
-
-const textOverlayAlignYModel = computed<AlignY>({
-  get: () => (uiImageTextBlock.value.text.textOverlayAlignY as AlignY | undefined) ?? 'top',
-  set: (v) => {
-    uiImageTextBlock.value.text.textOverlayAlignY = v;
-  },
-});
-
-const buttonVariantOptions = computed(
-  (): Array<{ value: ButtonVariant; label: string; testId: string }> => [
-    { value: 'primary', label: getEditorTranslation('button-variant-primary-label'), testId: 'slider-button-primary' },
-    {
-      value: 'secondary',
-      label: getEditorTranslation('button-variant-secondary-label'),
-      testId: 'slider-button-secondary',
-    },
-  ],
-);
-
-const buttonVariantModel = computed<ButtonVariant>({
-  get: () => (uiImageTextBlock.value.button.variant as ButtonVariant | undefined) ?? 'primary',
-  set: (v) => {
-    uiImageTextBlock.value.button.variant = v;
-  },
-});
 </script>
 
 <i18n lang="json">

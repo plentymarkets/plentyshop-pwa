@@ -172,7 +172,7 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
 } from '@storefront-ui/vue';
-import type { TextCardFormProps, TextCardContent, TextAlign, ButtonVariant } from './types';
+import type { TextCardFormProps, TextCardContent } from './types';
 const props = defineProps<TextCardFormProps>();
 
 const { allBlocks: data } = useBlocks();
@@ -215,38 +215,12 @@ const contentModel = computed<string>({
   },
 });
 
-const textAlignOptions = computed(
-  (): Array<{ value: TextAlign; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('text-align-option-left-label'), testId: 'text-align-left' },
-    { value: 'center', label: getEditorTranslation('text-align-option-center-label'), testId: 'text-align-center' },
-    { value: 'right', label: getEditorTranslation('text-align-option-right-label'), testId: 'text-align-right' },
-  ],
-);
-
-const textAlignModel = computed<TextAlign>({
-  get: () => (textCardBlock.value.text.textAlignment as TextAlign | undefined) ?? 'left',
-  set: (v) => {
-    textCardBlock.value.text.textAlignment = v;
-  },
-});
-
-const buttonVariantOptions = computed(
-  (): Array<{ value: ButtonVariant; label: string; testId: string }> => [
-    { value: 'primary', label: getEditorTranslation('button-variant-primary-label'), testId: 'button-outline-primary' },
-    {
-      value: 'secondary',
-      label: getEditorTranslation('button-variant-secondary-label'),
-      testId: 'button-outline-secondary',
-    },
-  ],
-);
-
-const buttonVariantModel = computed<ButtonVariant>({
-  get: () => (textCardBlock.value.button.variant as ButtonVariant | undefined) ?? 'primary',
-  set: (v) => {
-    textCardBlock.value.button.variant = v;
-  },
-});
+const {
+  buttonVariantModel, buttonVariantOptions,
+} = useEditorOptionsTabs(
+  () => textCardBlock.value,
+  getEditorTranslation,
+)
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 

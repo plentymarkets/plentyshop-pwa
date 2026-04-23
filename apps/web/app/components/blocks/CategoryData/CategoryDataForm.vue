@@ -317,7 +317,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CategoryDataFieldKey, DisplayCategoryImage, FillMode, TextAlignX, TextAlignY } from './types';
+import type { CategoryDataFieldKey } from './types';
 import {
   SfIconArrowBack,
   SfIconArrowDownward,
@@ -349,94 +349,16 @@ const {
 
 const { blockUuid } = useSiteConfiguration();
 const { isFullWidth } = useFullWidthToggleForContent(categoryDataBlock);
-const displayCategoryImageOptions = computed(
-  (): Array<{ value: DisplayCategoryImage; label: string; testId: string }> => [
-    { value: 'off', label: getEditorTranslation('off'), testId: 'display-category-image-off' },
-    { value: 'image-1', label: getEditorTranslation('image-1'), testId: 'display-category-image-1' },
-    { value: 'image-2', label: getEditorTranslation('image-2'), testId: 'display-category-image-2' },
-  ],
-);
-const fillModeOptions = computed(
-  (): Array<{ value: FillMode; label: string; testId: string }> => [
-    { value: 'fill', label: getEditorTranslation('image-scalling-fill-label'), testId: 'image-scaling-fill' },
-    { value: 'fit', label: getEditorTranslation('image-scalling-fit-label'), testId: 'image-scaling-fit' },
-  ],
-);
-const textboxAlignXOptions = computed(
-  (): Array<{ value: TextAlignX; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('textbox-align-x-left-label'), testId: 'slider-textbox-align-x-left' },
-    {
-      value: 'center',
-      label: getEditorTranslation('textbox-align-x-center-label'),
-      testId: 'slider-textbox-align-x-center',
-    },
-    {
-      value: 'right',
-      label: getEditorTranslation('textbox-align-x-right-label'),
-      testId: 'slider-textbox-align-x-right',
-    },
-  ],
-);
-
-const textboxAlignYOptions = computed(
-  (): Array<{ value: TextAlignY; label: string; testId: string }> => [
-    { value: 'top', label: getEditorTranslation('textbox-align-y-top-label'), testId: 'slider-textbox-align-y-top' },
-    {
-      value: 'center',
-      label: getEditorTranslation('textbox-align-y-center-label'),
-      testId: 'slider-textbox-align-y-center',
-    },
-    {
-      value: 'bottom',
-      label: getEditorTranslation('textbox-align-y-bottom-label'),
-      testId: 'slider-textbox-align-y-bottom',
-    },
-  ],
-);
-
-const textAlignOptions = computed(
-  (): Array<{ value: TextAlignX; label: string; testId: string }> => [
-    { value: 'left', label: getEditorTranslation('text-align-option-left-label'), testId: 'slider-text-align-left' },
-    {
-      value: 'center',
-      label: getEditorTranslation('text-align-option-center-label'),
-      testId: 'slider-text-align-center',
-    },
-    { value: 'right', label: getEditorTranslation('text-align-option-right-label'), testId: 'slider-text-align-right' },
-  ],
-);
-const displayCategoryImageModel = computed<DisplayCategoryImage>({
-  get: () => (categoryDataBlock.value.displayCategoryImage as DisplayCategoryImage | undefined) ?? 'off',
-  set: (v) => {
-    categoryDataBlock.value.displayCategoryImage = v;
-  },
-});
-const fillModeModel = computed<FillMode>({
-  get: () => (categoryDataBlock.value.image.fillMode as FillMode | undefined) ?? 'fit',
-  set: (v) => {
-    categoryDataBlock.value.image.fillMode = v;
-  },
-});
-const textboxAlignXModel = computed<TextAlignX>({
-  get: () => (categoryDataBlock.value.text.align as TextAlignX | undefined) ?? 'left',
-  set: (v) => {
-    categoryDataBlock.value.text.align = v;
-  },
-});
-
-const textboxAlignYModel = computed<TextAlignY>({
-  get: () => (categoryDataBlock.value.text.justify as TextAlignY | undefined) ?? 'top',
-  set: (v) => {
-    categoryDataBlock.value.text.justify = v;
-  },
-});
-
-const textAlignModel = computed<TextAlignX>({
-  get: () => (categoryDataBlock.value.text.textAlignment as TextAlignX | undefined) ?? 'left',
-  set: (v) => {
-    categoryDataBlock.value.text.textAlignment = v;
-  },
-});
+const {
+  textboxAlignXModel,
+  textboxAlignXOptions,
+  textboxAlignYModel,
+  textboxAlignYOptions,
+  fillModeModel,
+  fillModeOptions,
+  displayCategoryImageModel,
+  displayCategoryImageOptions,
+} = useEditorOptionsTabs(() => categoryDataBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">

@@ -94,10 +94,8 @@
 import type {
   CrossSellingRelationType,
   ProductRecommendedProductsContent,
-  SourceType,
-  TextAlign,
 } from '../ProductRecommendedProducts/types';
-import { SfInput, SfTextarea } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
@@ -182,51 +180,12 @@ const recommendedBlockRef = ref(recommendedBlock.value);
 
 const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
 
-const textAlignOptions = computed(() => [
-  {
-    value: 'left' as const,
-    label: getEditorTranslation('text-align-option-left-label'),
-    testId: 'recommended-form-text-align-left',
-  },
-  {
-    value: 'center' as const,
-    label: getEditorTranslation('text-align-option-center-label'),
-    testId: 'recommended-form-text-align-center',
-  },
-  {
-    value: 'right' as const,
-    label: getEditorTranslation('text-align-option-right-label'),
-    testId: 'recommended-form-text-align-right',
-  },
-]);
-
-const textAlignModel = computed<TextAlign>({
-  get: () => (recommendedBlock.value.text?.textAlignment as TextAlign | undefined) ?? 'left',
-  set: (v) => {
-    if (!recommendedBlock.value.text) return;
-    recommendedBlock.value.text.textAlignment = v;
-  },
-});
-
-const sourceTypeOptions = computed(() => [
-  {
-    value: 'cross_selling' as const,
-    label: getEditorTranslation('source-type-product'),
-    testId: 'recommended-form-source-product',
-  },
-  {
-    value: 'category' as const,
-    label: getEditorTranslation('source-type-category'),
-    testId: 'recommended-form-source-category',
-  },
-]);
-
-const sourceTypeModel = computed<SourceType>({
-  get: () => recommendedBlock.value.source?.type ?? 'category',
-  set: (v) => {
-    recommendedBlock.value.source.type = v;
-  },
-});
+const {
+  sourceTypeModel, sourceTypeOptions,
+} = useEditorOptionsTabs(
+  () => recommendedBlock.value,
+  getEditorTranslation,
+)
 </script>
 
 <i18n lang="json">

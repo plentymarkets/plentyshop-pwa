@@ -153,14 +153,6 @@
             />
           </div>
 
-          <div class="mb-6">
-            <EditorOptionsTabs
-              v-model="textAlignModel"
-              :legend="getEditorTranslation('text-align-label')"
-              test-id-prefix="slider-text-align"
-              :options="textAlignOptions"
-            />
-          </div>
         </div>
       </UiAccordionItem>
 
@@ -308,14 +300,9 @@ const {
   textboxAlignXOptions,
   textboxAlignYModel,
   textboxAlignYOptions,
-  textAlignModel,
-  textAlignOptions,
   buttonVariantModel,
   buttonVariantOptions,
-} = useTextOverlayTabs({
-  t: getEditorTranslation,
-  getTarget: () => banner.value.content,
-});
+} = useEditorOptionsTabs(() => banner.value.content, getEditorTranslation);
 </script>
 
 <style scoped>

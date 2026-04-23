@@ -175,9 +175,6 @@ import type {
   ItemGridFormProps,
   ItemGridContent,
   ItemGridFieldKey,
-  ItemCountPosition,
-  ContentAlignment,
-  AddToCartStyle,
 } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -213,42 +210,14 @@ const fieldLabels: Record<string, string> = {
   addToCart: getEditorTranslation('field-add-to-cart'),
 };
 
-const itemCountPositionOptions = computed(() => [
-  { value: 'left' as const, label: getEditorTranslation('position-left'), testId: 'item-count-left' },
-  { value: 'center' as const, label: getEditorTranslation('position-center'), testId: 'item-count-center' },
-  { value: 'right' as const, label: getEditorTranslation('position-right'), testId: 'item-count-right' },
-]);
-
-const itemCountPositionModel = computed<ItemCountPosition>({
-  get: () => (uiItemGridBlock.value.itemCountPosition as ItemCountPosition | undefined) ?? 'left',
-  set: (v) => {
-    uiItemGridBlock.value.itemCountPosition = v;
-  },
-});
-const contentAlignmentOptions = computed(() => [
-  { value: 'left' as const, label: getEditorTranslation('position-left'), testId: 'content-align-left' },
-  { value: 'center' as const, label: getEditorTranslation('position-center'), testId: 'content-align-center' },
-  { value: 'right' as const, label: getEditorTranslation('position-right'), testId: 'content-align-right' },
-]);
-
-const contentAlignmentModel = computed<ContentAlignment>({
-  get: () => (uiItemGridBlock.value.contentAlignment as ContentAlignment | undefined) ?? 'left',
-  set: (v) => {
-    uiItemGridBlock.value.contentAlignment = v;
-  },
-});
-
-const addToCartStyleOptions = computed(() => [
-  { value: 'primary' as const, label: getEditorTranslation('button-primary'), testId: 'add-to-cart-primary' },
-  { value: 'secondary' as const, label: getEditorTranslation('button-secondary'), testId: 'add-to-cart-secondary' },
-]);
-
-const addToCartStyleModel = computed<AddToCartStyle>({
-  get: () => (uiItemGridBlock.value.addToCartStyle as AddToCartStyle | undefined) ?? 'primary',
-  set: (v) => {
-    uiItemGridBlock.value.addToCartStyle = v;
-  },
-});
+const {
+  itemCountPositionModel,
+  itemCountPositionOptions,
+  contentAlignmentModel,
+  contentAlignmentOptions,
+  addToCartStyleModel,
+  addToCartStyleOptions,
+} = useEditorOptionsTabs(() => uiItemGridBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">
