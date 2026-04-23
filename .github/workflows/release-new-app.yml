@@ -34,6 +34,3 @@ jobs:
           url: "https://pwapublish.plentysystems.com/storeDefaultApplication"
           forms: '{ "token": "${{ secrets.SUPPLIER_TOKEN }}", "version": "${{ github.event.release.tag_name }}" }'
           fileForms: '{ "file": "pwa.tar.gz" }'
-            -f state="$state"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
