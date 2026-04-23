@@ -409,16 +409,4 @@ describe('Blocks Architecture', () => {
     });
   });
 
-  describe('simplified header on checkout', () => {
-    it('checkout shows simplified header and footer blocks', () => {
-      cy.visitAndHydrate(paths.home);
-      cookieBar.acceptAll();
-
-      // prettier-ignore
-      blocks
-        .visitCheckout()
-        .assertSimplifiedHeaderVisible()
-        .assertFooterVisible();
-    });
-  });
 });

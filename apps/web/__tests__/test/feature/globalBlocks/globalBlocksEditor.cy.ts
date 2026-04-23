@@ -155,19 +155,4 @@ describe('Global Blocks Editor', () => {
         .assertFooterContainsText('Saved Footer Title');
     });
   });
-
-  describe('simplified header on checkout', () => {
-    it('checkout shows simplified header with footer blocks', () => {
-      setupEditor();
-
-      blocks.assertHeaderContainerVisible();
-      blocks.assertFooterVisible();
-
-      // prettier-ignore
-      blocks
-        .visitCheckout()
-        .assertSimplifiedHeaderVisible()
-        .assertFooterVisible();
-    });
-  });
 });

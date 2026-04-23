@@ -1,7 +1,11 @@
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
+import { BlocksArchitectureObject } from '../../support/pageObjects/BlocksArchitectureObject';
+import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../app/utils/paths';
 
 const homePage = new HomePageObject();
+const blocks = new BlocksArchitectureObject();
+const cookieBar = new CookieBarObject();
 const text_de = 'Wohnzimmer';
 const text_en = 'Living Room';
 
@@ -29,5 +33,15 @@ describe('Smoke: Homepage', () => {
     homePage.topToolbarShouldNotExist();
     homePage.sideToolbarShouldNotExist();
     homePage.blockActionsShouldNotExist();
+  });
+
+  it('[smoke] checkout shows simplified header and footer', () => {
+    cookieBar.acceptAll();
+
+    // prettier-ignore
+    blocks
+      .visitCheckout()
+      .assertSimplifiedHeaderVisible()
+      .assertFooterVisible();
   });
 });
