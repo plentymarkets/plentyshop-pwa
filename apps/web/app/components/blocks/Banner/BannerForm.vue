@@ -257,10 +257,7 @@ const {
   buttonVariantOptions,
   buttonAlignModel,
   buttonAlignOptions,
-} = useEditorOptionsTabs(
-  () => banner.value.content as EditorTarget,
-  getEditorTranslation,
-)
+} = useEditorOptionsTabs(() => banner.value.content as EditorTarget, getEditorTranslation);
 </script>
 
 <style scoped>

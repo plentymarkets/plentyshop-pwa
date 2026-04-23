@@ -40,4 +40,3 @@ export type EditorTarget = {
   addToCartStyle?: AddToCartStyle;
   wishlistSize?: WishlistSize;
 };
-
