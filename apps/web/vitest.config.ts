@@ -8,6 +8,13 @@ const silenceLogsFromSuspenseComponent = (log: string): boolean => {
 
 export default defineVitestConfig({
   test: {
+    environmentOptions: {
+      nuxtRuntimeConfig: {
+        public: {
+          configId: '1',
+        },
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'json-summary', 'json', 'lcov'],
