@@ -1,7 +1,7 @@
 <template>
   <div>
-    <UiHeaderBlocks v-if="enableEditableHeader" />
-    <UiHeader v-else />
+    <UiHeaderBlocks />
+
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
@@ -21,7 +21,6 @@ import type { DefaultLayoutProps } from '~/layouts/types';
 
 defineProps<DefaultLayoutProps>();
 
-const { enableEditableHeader } = useRuntimeConfig().public;
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();

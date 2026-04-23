@@ -1,5 +1,5 @@
 <template>
-  <div v-if="runtimeConfig.enableRichTextEditorV2" data-testid="text-form-v2">
+  <div data-testid="text-form-v2">
     <EditorOptionsTabs
       :model-value="editorMode"
       test-id-prefix="mode"
@@ -8,7 +8,7 @@
       @update:model-value="editorMode = $event"
     />
 
-    <div v-if="editorMode === 'wysiwyg'" class="py-2">
+    <div v-if="editorMode === 'wysiwyg'" class="py-2" data-testid="rte-content">
       <EditorRichTextEditor
         ref="contentRichTextEditor"
         v-model:expanded="expandedToolbars"
@@ -16,7 +16,6 @@
         :min-height="232"
         :expandable="true"
         :text-align="textAlign"
-        data-testid="rte-content"
         @update:model-value="$emit('update:modelValue', $event)"
         @request-html-modal="handleRequestHtmlModal"
       />
@@ -69,10 +68,6 @@
       @close="toggleModal"
     />
   </div>
-
-  <div v-else data-testid="text-form">
-    <slot />
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -87,7 +82,6 @@ const emit = defineEmits<{
   'update:modelValue': [value: string];
 }>();
 
-const runtimeConfig = useRuntimeConfig().public;
 const modalOpen = ref(false);
 const expandedToolbars = ref(true);
 const contentRichTextEditor = ref<{ openModal: () => void } | null>(null);

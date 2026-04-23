@@ -9,13 +9,13 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
   const useCache = import.meta.env.PROD;
   const cached = cache.get(locale);
 
-  if (useCache && cached) return JSON.parse(JSON.stringify(cached));
+  if (useCache && cached) return deepClone(cached);
 
   const block = createFooter();
 
   if (useCache) {
     cache.set(locale, block);
-    return JSON.parse(JSON.stringify(block));
+    return deepClone(block);
   }
 
   return block;

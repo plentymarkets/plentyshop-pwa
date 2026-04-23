@@ -40,7 +40,7 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.getReturns(params);
-      state.value.data = data || state.value.data;
+      state.value.data = data ?? state.value.data;
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {
@@ -61,7 +61,7 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.getReturnReasons();
-      state.value.returnReasons = data;
+      state.value.returnReasons = data ?? state.value.returnReasons;
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

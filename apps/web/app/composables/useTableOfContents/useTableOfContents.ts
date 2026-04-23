@@ -1,17 +1,15 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { FlatBlock } from '~/components/TableOfContents/types';
-import { getBlockDisplayName } from '~/utils/get-block-display-name';
 
 export const useTableOfContents = () => {
   const { setIndex } = useCarousel();
   const route = useRoute();
-  const { $i18n } = useNuxtApp();
   const { isStructureBlock } = useBlockManager();
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
 
-  const { data } = useBlockTemplates(route?.meta?.identifier as string, route.meta.type as string, $i18n.locale.value);
+  const { allBlocks: data } = useBlocks();
 
   watch(
     () => route.fullPath,

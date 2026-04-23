@@ -5,11 +5,12 @@
       v-if="hasImage"
       :to="linkTarget"
       :aria-label="ariaLabel"
-      v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
+      :class="{ 'absolute inset-0': linkTarget }"
+      v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
       data-testid="image-link"
     >
       <NuxtImg
-        :src="getImageUrl()"
+        :src="breakpointConfig.url"
         :alt="props.content.image.alt"
         class="absolute inset-0 w-full h-full"
         :class="props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover'"
@@ -21,38 +22,26 @@
               : '',
           ...imageInlineStyle,
         }"
-        :width="getImageDimensions().width"
-        :height="getImageDimensions().height"
+        :width="breakpointConfig.dimensions.width"
+        :height="breakpointConfig.dimensions.height"
         data-testid="image-block-image"
       />
     </component>
 
     <div
-      v-if="props.content?.text?.textOverlay || props.content?.button.label"
-      class="absolute inset-0 px-4 pointer-events-none flex flex-col"
-      :class="overlayAlignClasses"
-      :style="{ color: props.content.text?.textOverlayColor || '#000' }"
-      data-testid="image-overlay-text"
+      class="absolute inset-0 px-4 flex flex-col"
+      :class="[overlayAlignClasses, { 'pointer-events-none': linkTarget }]"
+      data-testid="image-overlay-wrapper"
     >
-      <div class="no-preflight" v-html="props.content.text.textOverlay" />
-      <UiButton
-        v-if="props.content?.button.label"
-        class="cursor-pointer pointer-events-auto"
-        :tag="NuxtLink"
-        :to="localePath(props.content.button.link ?? '')"
-        :variant="props.content.button.variant ?? 'primary'"
-        size="lg"
-        :data-testid="'image-button-' + (meta?.uuid ?? '')"
-        v-bind="isExternalLink(props.content.button.link) ? { target: '_blank', rel: 'noopener' } : {}"
-      >
-        {{ props.content.button.label }}
-      </UiButton>
+      <div :class="{ 'pointer-events-auto': linkTarget }">
+        <TextContent v-bind="textContentProps" :test-id="'image-overlay'" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ImageProps, ImageDimensions } from './types';
+import type { ImageProps, BreakpointEntry } from './types';
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
@@ -62,30 +51,54 @@ const { getBlockDepth } = useBlockManager();
 const props = defineProps<ImageProps>();
 
 const hasImage = computed(() => !!props.content?.image);
-const linkTarget = computed(() =>
-  props.content?.image?.linktarget?.trim() ? localePath(props.content.image.linktarget) : undefined,
-);
+const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
+const linkTarget = computed(() => {
+  const target = props.content?.image?.linktarget?.trim();
+  if (!target) return undefined;
+  return isExternalLink(target) ? target : localePath(target);
+});
 const linkTag = computed(() => (linkTarget.value ? NuxtLink : 'div'));
 const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
 
-const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
+const textContentProps = computed(() =>
+  mapToTextContentProps({
+    htmlDescription: props.content?.text.textOverlay,
+    color: props.content?.text.textOverlayColor || '#000',
+    textAlignment: props.content?.text.textOverlayAlignX ?? 'center',
+    buttonLabel: props.content?.button.label,
+    buttonLink: props.content?.button.link,
+    buttonVariant: props.content?.button.variant,
+  }),
+);
 
-const getAspectRatio = () => {
-  switch (viewport.breakpoint.value) {
-    case '4xl': {
-      return props.content?.image?.aspectRatio || '16 / 9';
-    }
-    case 'lg': {
-      return props.content?.image?.aspectRatio || '16 / 9';
-    }
-    case 'md': {
-      return props.content?.image?.aspectRatio || '4 / 3';
-    }
-    default: {
-      return props.content?.image?.aspectRatio || '1 / 1';
-    }
-  }
-};
+const breakpointConfig = computed(() => {
+  const image = props.content?.image;
+
+  const configs: Record<string, BreakpointEntry> = {
+    '4xl': {
+      aspectRatio: image?.aspectRatio || '16 / 9',
+      url: image?.wideScreen,
+      dimensions: { width: 696, height: 392 },
+    },
+    lg: {
+      aspectRatio: image?.aspectRatio || '16 / 9',
+      url: image?.desktop,
+      dimensions: { width: 712, height: 474 },
+    },
+    md: {
+      aspectRatio: image?.aspectRatio || '4 / 3',
+      url: image?.tablet,
+      dimensions: { width: 757, height: 483 },
+    },
+    fallback: {
+      aspectRatio: image?.aspectRatio || '1 / 1',
+      url: image?.mobile,
+      dimensions: { width: 320, height: 320 },
+    },
+  };
+
+  return (configs[viewport.breakpoint.value] ?? configs['fallback']) as BreakpointEntry;
+});
 
 const depth = getBlockDepth(props.meta.uuid);
 const wrapperStyle = computed(() => {
@@ -95,61 +108,20 @@ const wrapperStyle = computed(() => {
       height: '24rem',
     };
   }
+
   return {
-    aspectRatio: getAspectRatio(),
+    aspectRatio: breakpointConfig.value.aspectRatio,
     position: 'relative' as const,
   };
 });
 
-const getImageUrl = () => {
-  switch (viewport.breakpoint.value) {
-    case '4xl': {
-      return props.content?.image?.wideScreen;
-    }
-    case 'lg': {
-      return props.content?.image?.desktop;
-    }
-    case 'md': {
-      return props.content?.image?.tablet;
-    }
-    default: {
-      return props.content?.image?.mobile;
-    }
-  }
-};
 const overlayAlignClasses = computed(() => {
-  const vertical =
-    props.content?.text.textOverlayAlignY === 'top'
-      ? 'items-start'
-      : props.content?.text.textOverlayAlignY === 'bottom'
-        ? 'items-end'
-        : 'items-center';
+  const alignY = props.content?.text.textOverlayAlignY;
 
-  const horizontal =
-    props.content?.text.textOverlayAlignX === 'left'
-      ? 'justify-start text-left'
-      : props.content?.text.textOverlayAlignX === 'right'
-        ? 'justify-end text-right'
-        : 'justify-center text-center';
-
-  return [vertical, horizontal];
+  if (alignY === 'top') return ['justify-start'];
+  if (alignY === 'bottom') return ['justify-end'];
+  return ['justify-center'];
 });
-const getImageDimensions = (): ImageDimensions => {
-  switch (viewport.breakpoint.value) {
-    case '4xl': {
-      return { width: 696, height: 392 };
-    }
-    case 'lg': {
-      return { width: 712, height: 474 };
-    }
-    case 'md': {
-      return { width: 757, height: 483 };
-    }
-    default: {
-      return { width: 320, height: 320 };
-    }
-  }
-};
 
 const imageInlineStyle = computed(() => {
   const layout = props.content.layout ?? {};

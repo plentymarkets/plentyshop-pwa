@@ -21,6 +21,13 @@ export class TableOfContentsObject extends PageObject {
     return cy.get('[data-testid^="toc-item-"]');
   }
 
+  get contentTableOfContentsItemLabels() {
+    return cy
+      .get('[data-testid^="toc-visibility-"]')
+      .closest('[data-testid^="toc-item-"]')
+      .find('[data-testid="toc-label"]');
+  }
+
   get tableOfContentsItemLabel() {
     return cy.get('[data-testid="toc-label"]');
   }
@@ -53,6 +60,14 @@ export class TableOfContentsObject extends PageObject {
     return cy.getByTestId('block-placeholder');
   }
 
+  getBlockIcon(uuid: string) {
+    return cy.getByTestId(`toc-block-icon-${uuid}`);
+  }
+
+  get allBlockIcons() {
+    return cy.get('[data-testid^="toc-block-icon-"]');
+  }
+
   openTableOfContents() {
     this.tableOfContentsButton.should('be.visible').click();
     return this;
@@ -65,6 +80,16 @@ export class TableOfContentsObject extends PageObject {
 
   checkBlocksExist() {
     this.tableOfContentsItems.should('have.length.greaterThan', 0);
+    return this;
+  }
+
+  checkFirstBlockLabel(text: string) {
+    this.tableOfContentsItemLabel.first().should('contain.text', text);
+    return this;
+  }
+
+  checkLastBlockLabel(text: string) {
+    this.tableOfContentsItemLabel.last().should('contain.text', text);
     return this;
   }
 
@@ -109,13 +134,13 @@ export class TableOfContentsObject extends PageObject {
   }
 
   toggleBlockVisibility() {
-    this.visibilityIcons.eq(1).click({ force: true });
+    this.visibilityIcons.eq(0).click({ force: true });
     cy.wait(800);
     return this;
   }
 
   checkBlockIsGrayedOut() {
-    this.tableOfContentsItemLabel.eq(1).should('have.class', 'opacity-50');
+    this.contentTableOfContentsItemLabels.eq(0).should('have.class', 'opacity-50');
     return this;
   }
 
@@ -125,7 +150,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkBlockIsNotGrayedOut() {
-    this.tableOfContentsItems.eq(1).should('not.have.class', 'opacity-50');
+    this.contentTableOfContentsItemLabels.eq(0).should('not.have.class', 'opacity-50');
     return this;
   }
 
@@ -135,7 +160,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   deleteBlockFromToc() {
-    this.deleteIcons.eq(1).click({ force: true });
+    this.deleteIcons.eq(0).click({ force: true });
     cy.wait(500);
     return this;
   }
@@ -176,7 +201,7 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkPlaceholderAppears() {
-    this.blockPlaceholder.should('be.visible');
+    this.blockPlaceholder.scrollIntoView().should('be.visible');
     return this;
   }
 
@@ -197,6 +222,14 @@ export class TableOfContentsObject extends PageObject {
   checkBothDrawersStillVisible() {
     this.tableOfContentsDrawer.should('be.visible');
     this.blocksConfigurationDrawer.should('be.visible');
+    return this;
+  }
+
+  checkBlockIconsExist() {
+    this.allBlockIcons.should('have.length.greaterThan', 0);
+    this.allBlockIcons.each(($icon) => {
+      cy.wrap($icon).should('exist');
+    });
     return this;
   }
 }

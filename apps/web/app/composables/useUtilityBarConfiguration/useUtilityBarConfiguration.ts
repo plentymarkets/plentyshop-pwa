@@ -9,12 +9,7 @@ import { collectUtilityBarBlocks } from './helpers/collect-utility-bar-blocks';
  */
 export const useUtilityBarConfiguration = (uuid?: string) => {
   const { blockUuid } = useSiteConfiguration();
-  const route = useRoute();
-  const { data } = useBlockTemplates(
-    route?.meta?.identifier as string,
-    route.meta.type as string,
-    useNuxtApp().$i18n.locale.value,
-  );
+  const { allBlocks } = useBlocks();
   const { findOrDeleteBlockByUuid } = useBlockManager();
 
   const targetUuid = computed(() => uuid || blockUuid.value);
@@ -31,15 +26,12 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
   } = useUtilityBarState(targetUuid.value);
 
   const utilityBarBlock = computed<UtilityBarProps | null>(() => {
-    const blockByUuid = targetUuid.value
-      ? (findOrDeleteBlockByUuid(data.value, targetUuid.value) as UtilityBarProps | null)
-      : null;
-
-    if (blockByUuid) {
-      return blockByUuid;
+    if (targetUuid.value) {
+      const blockByUuid = findOrDeleteBlockByUuid(allBlocks.value, targetUuid.value) as UtilityBarProps | null;
+      if (blockByUuid) return blockByUuid;
     }
 
-    const utilityBarMatches = collectUtilityBarBlocks(data.value);
+    const utilityBarMatches = collectUtilityBarBlocks(allBlocks.value);
     if (utilityBarMatches.length === 1) {
       return utilityBarMatches[0] || null;
     }
@@ -70,7 +62,7 @@ export const useUtilityBarConfiguration = (uuid?: string) => {
           return;
         }
 
-        block.content = JSON.parse(JSON.stringify(newContent));
+        block.content = deepClone(newContent);
       }
     },
     { deep: true },

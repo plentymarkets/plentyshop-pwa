@@ -463,6 +463,17 @@
       "email": "E-Mail"
     }
   },
+  "cancellationForm": {
+    "orderId": "Auftragsnummer",
+    "name": "Vollständiger Name",
+    "email": "Kontaktmail",
+    "reason": "Grund für den Widerruf",
+    "submit": "Vertrag kündigen",
+    "asterixHint": "markierte Felder sind Pflichtfelder",
+    "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
+    "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
+    "success": "Ihr Widerruf wurde erfolgreich übermittelt. Wir haben soeben eine Bestätigungs-E-Mail mit allen Details an {email} gesendet."
+  },
   "CookieBar": {
     "about": {
       "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Beachten Sie unser {legal} und weitere Hinweise zur Verwendung personenbezogener Daten in unserer {policy}.",
@@ -575,25 +586,9 @@
     "consentReCaptchaCookieNotSet": "Das reCAPTCHA-Script wurde nicht akzeptiert. reCAPTCHA kann nicht ausgeführt werden. Dadurch können ggf. Formulare nicht versendet werden.",
     "couponAlreadyUsedOrInvalidCouponCode": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
     "couponCampaignExpired": "Der Gutschein ist leider abgelaufen.",
-    "couponCampaignNoWebstoreActivated": "Der Gutschein konnte nicht eingelöst werden. Kein Mandant aktiviert.",
-    "couponCampaignNoWebstoreIdGiven": "Der Gutschein konnte nicht eingelöst werden. Keine Mandant-ID übergeben.",
-    "couponCampaignWrongWebstoreId": "Der Gutschein konnte nicht eingelöst werden. Falscher Mandant.",
     "couponExpired": "Der Gutschein ist leider abgelaufen.",
     "couponMinOrderValueNotReached": "Der Gutschein wurde leider wieder entfernt, da der hierfür nötige Warenwert unterschritten wurde. Bitte geben Sie den Code erneut ein, wenn der geforderte Warenwert erreicht ist.",
-    "couponNoCustomerGroupActivated": "Der Gutschein konnte nicht eingelöst werden. Keine Kundenklasse aktiviert.",
-    "couponNoCustomerTypeActivated": "Der Gutschein konnte nicht eingelöst werden. Kein Kundentyp aktiviert.",
-    "couponNoCustomerTypeProvided": "Der Gutschein konnte nicht eingelöst werden. Kundentyp nicht übergeben.",
-    "couponNoMatchingItemInBasket": "Der Gutschein wurde leider wieder entfernt, da kein Artikel im Warenkorb für diesen Gutschein freigeschaltet wurde.",
-    "couponNoOpenAmount": "Der Gutschein wurde bereits vollständig eingelöst.",
-    "couponnotUsableForSpecialOffer": "Der Gutschein konnte nicht eingelöst werden. Gutscheine können nicht für Sonderangebotsartikel verwendet werden.",
-    "couponOnlyForExistingCustomers": "Der Gutschein kann nur von Bestandskunden eingelöst werden.",
-    "couponOnlyForNewCustomers": "Der Gutschein kann nur von Neukunden eingelöst werden.",
-    "couponOnlySingleUsage": "Diesen Gutschein kann nicht für Abo-Artikel eingelöst werden.",
-    "couponOnlySubscription": "Der Gutschein kann nur für Abo-Artikel eingelöst werden.",
-    "couponPromotionRequired": "Die Variante des Artikels kann nur gekauft werden, wenn ein Aktionsgutschein eingelöst wird.",
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden.",
-    "couponWrongCustomerGroup": "Der Gutschein kann nur von Kunden mit einer anderen Kundenklasse eingelöst werden.",
-    "couponWrongCustomerType": "Der Gutschein kann nur von Kunden mit einem anderen Kundentyp eingelöst werden.",
     "csrfTokenMismatch": "Sie wurden aus Sicherheitsgründen abgemeldet. Sie werden zur Login-Seite weitergeleitet.",
     "errorActionIsNotExecuted": "Die Aktion konnte nicht ausgeführt werden.",
     "errorBasketItemMaximumQuantityReachedForItem": "Die maximale Bestellmenge dieses Artikels wurde überschritten.",
@@ -830,7 +825,8 @@
     "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
     "cancellationForm": "Widerrufsformular",
     "declarationOfAccessibility": "Barrierefreiheitserklärung",
-    "legalDisclosure": "Impressum"
+    "legalDisclosure": "Impressum",
+    "withdrawButton": "Vertrag widerrufen"
   },
   "manufacturer": {
     "contactUrl": "Kontaktformular",
@@ -1129,6 +1125,13 @@
     "numberOfProducts": "{count} Artikel von {total} Artikeln",
     "searchResults": "Suchergebnisse für \"{phrase}\""
   },
+  "searchBar": {
+    "searchSuggestions": "Suchvorschläge",
+    "productSuggestions": "Produktvorschläge",
+    "matchingCategories": "Passende Kategorien",
+    "showAllResults": "Alle Ergebnisse für „{searchTerm}“ anzeigen ({hitsCount})",
+    "noResultsFound": "Es wurden keine Ergebnisse gefunden."
+  },
   "sessionLifetime": {
     "oneDay": "Ein Tag, auch wenn der Browser geschlossen wird",
     "oneHour": "Eine Stunde, auch wenn der Browser geschlossen wird",
@@ -1190,6 +1193,10 @@
     }
   },
   "storefrontError": {
+    "cancellation": {
+      "recipientNotConfigured": "Das Widerrufsformular ist nicht konfiguriert. Bitte kontaktieren Sie den Seitenbetreiber.",
+      "submitFailed": "Der Widerruf konnte nicht übermittelt werden. Bitte versuchen Sie es später erneut."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",

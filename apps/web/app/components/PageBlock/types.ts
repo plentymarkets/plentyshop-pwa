@@ -6,6 +6,7 @@ export interface PageBlockProps {
   enableActions?: boolean;
   root: boolean;
   isClicked: boolean;
+  readOnly?: boolean;
   clickedBlockIndex: number | null;
   isTablet: boolean;
   columnLength?: number;

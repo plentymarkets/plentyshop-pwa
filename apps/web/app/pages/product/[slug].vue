@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
 import type { WatchStopHandle } from 'vue';
-import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -26,7 +26,6 @@ const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcru
 const product = productForEditor;
 const { disableActions } = useEditor();
 const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
-const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
@@ -108,19 +107,11 @@ watch(
 );
 
 watch(
-  () => categoryTree.value,
-  (categoriesTree) => {
+  () => product.value,
+  () => {
     setProductCanonicalMetaData(product.value);
-    const productCategoryId = productGetters.getParentCategoryId(product.value);
-    if (categoriesTree.length > 0 && productCategoryId) {
-      const categoryTree = categoriesTree.find(
-        (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
-      );
-      if (categoryTree) {
-        setProductMetaData(product.value, categoryTree);
-        setProductRobotsMetaData(product.value);
-      }
-    }
+    setProductMetaData(product.value);
+    setProductRobotsMetaData(product.value);
   },
   { immediate: true },
 );

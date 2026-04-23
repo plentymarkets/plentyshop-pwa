@@ -1,6 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
-import { createFooter } from '../footer/factory';
 
 export function createCategory(): Block[] {
   const categoryName = t('defaultTemplate.category.categoryData.name');
@@ -128,6 +127,5 @@ export function createCategory(): Block[] {
         },
       ],
     },
-    createFooter(),
   ] as Block[];
 }

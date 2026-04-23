@@ -24,39 +24,48 @@ const { getEditorUITranslation } = vi.hoisted(() => ({
   getEditorUITranslation: vi.fn((key: string) => `Translated: ${key}`),
 }));
 
-const { useBlockTemplates } = vi.hoisted(() => ({
-  useBlockTemplates: vi.fn(() => ({
-    resetFooterToSaved: vi.fn().mockResolvedValue(undefined),
-    resetHeaderToSaved: vi.fn().mockResolvedValue(undefined),
+const { useBlocks } = vi.hoisted(() => ({
+  useBlocks: vi.fn(() => ({
+    discardChanges: vi.fn(),
   })),
+}));
+
+let middlewareCallback: ((to: { path: string }) => boolean | undefined) | null = null;
+
+const { addRouteMiddleware } = vi.hoisted(() => ({
+  addRouteMiddleware: vi.fn(),
+}));
+
+const { navigateTo } = vi.hoisted(() => ({
+  navigateTo: vi.fn(),
+}));
+
+const { useRoute } = vi.hoisted(() => ({
+  useRoute: vi.fn(() => ({ path: '/' })),
 }));
 
 mockNuxtImport('useEditor', () => useEditor);
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
 mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
-mockNuxtImport('useBlockTemplates', () => useBlockTemplates);
+mockNuxtImport('useBlocks', () => useBlocks);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
-
-let mockOnBeforeRouteLeave:
-  | ((callback: (to: unknown, from: unknown, next: (value?: unknown) => void) => void) => void)
-  | null = null;
-
-vi.mock('vue-router', () => ({
-  onBeforeRouteLeave: (callback: (to: unknown, from: unknown, next: (value?: unknown) => void) => void) => {
-    if (mockOnBeforeRouteLeave) {
-      mockOnBeforeRouteLeave(callback);
-    }
-  },
-}));
+mockNuxtImport('addRouteMiddleware', () => (...args: unknown[]) => {
+  middlewareCallback = args[1] as typeof middlewareCallback;
+  addRouteMiddleware(...args);
+});
+mockNuxtImport('navigateTo', () => navigateTo);
+mockNuxtImport('useRoute', () => useRoute);
 
 describe('useEditorUnsavedChangesGuard', () => {
   let isEditingEnabled: Ref<boolean>;
   let settingsIsDirty: Ref<boolean>;
   let closeDrawer: ReturnType<typeof vi.fn>;
-  let resetFooterToSaved: ReturnType<typeof vi.fn>;
-  let resetHeaderToSaved: ReturnType<typeof vi.fn>;
+  let discardChanges: ReturnType<typeof vi.fn>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
-  let routeLeaveCallback: ((to: unknown, from: unknown, next: (value?: unknown) => void) => void) | null = null;
+
+  const callMiddleware = (toPath = '/other') => {
+    return middlewareCallback?.({ path: toPath });
+  };
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -64,8 +73,8 @@ describe('useEditorUnsavedChangesGuard', () => {
     isEditingEnabled = ref<boolean>(false);
     settingsIsDirty = ref<boolean>(false);
     closeDrawer = vi.fn();
-    resetFooterToSaved = vi.fn().mockResolvedValue(undefined);
-    resetHeaderToSaved = vi.fn().mockResolvedValue(undefined);
+    discardChanges = vi.fn();
+    middlewareCallback = null;
 
     useEditor.mockReturnValue({
       isEditingEnabled,
@@ -79,9 +88,8 @@ describe('useEditorUnsavedChangesGuard', () => {
       closeDrawer,
     });
 
-    useBlockTemplates.mockReturnValue({
-      resetFooterToSaved,
-      resetHeaderToSaved,
+    useBlocks.mockReturnValue({
+      discardChanges,
     });
 
     vi.spyOn(window, 'addEventListener').mockImplementation(
@@ -93,16 +101,11 @@ describe('useEditorUnsavedChangesGuard', () => {
     );
 
     vi.spyOn(window, 'removeEventListener').mockImplementation(() => {});
-
-    mockOnBeforeRouteLeave = (callback) => {
-      routeLeaveCallback = callback;
-    };
   });
 
   afterEach(() => {
     beforeUnloadHandler = null;
-    routeLeaveCallback = null;
-    mockOnBeforeRouteLeave = null;
+    middlewareCallback = null;
     vi.restoreAllMocks();
   });
 
@@ -145,6 +148,19 @@ describe('useEditorUnsavedChangesGuard', () => {
       wrapper.unmount();
 
       expect(window.removeEventListener).toHaveBeenCalledWith('beforeunload', expect.any(Function));
+    });
+
+    it('should register route middleware', () => {
+      const TestComponent = {
+        setup() {
+          useEditorUnsavedChangesGuard();
+          return () => null;
+        },
+      };
+
+      mount(TestComponent);
+
+      expect(addRouteMiddleware).toHaveBeenCalledWith('unsaved-changes-guard', expect.any(Function), { global: true });
     });
   });
 
@@ -248,18 +264,15 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = false;
       settingsIsDirty.value = false;
 
-      routeLeaveCallback?.({}, {}, next);
+      const result = callMiddleware();
 
-      expect(next).toHaveBeenCalledWith();
-      expect(next).not.toHaveBeenCalledWith(false);
+      expect(result).toBeUndefined();
     });
 
-    it('should show confirmation and allow navigation when user confirms', async () => {
+    it('should show confirmation and allow navigation when user confirms', () => {
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
       const TestComponent = {
@@ -271,15 +284,12 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = true;
 
-      await routeLeaveCallback?.({}, {}, next);
+      callMiddleware();
 
       expect(confirmSpy).toHaveBeenCalledWith('Translated: unsaved-changes-confirm');
-      expect(resetFooterToSaved).toHaveBeenCalled();
-      expect(next).toHaveBeenCalledWith();
+      expect(discardChanges).toHaveBeenCalled();
       expect(closeDrawer).toHaveBeenCalled();
     });
 
@@ -295,14 +305,12 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = true;
 
-      routeLeaveCallback?.({}, {}, next);
+      const result = callMiddleware();
 
       expect(confirmSpy).toHaveBeenCalledWith('Translated: unsaved-changes-confirm');
-      expect(next).toHaveBeenCalledWith(false);
+      expect(result).toBe(false);
       expect(closeDrawer).not.toHaveBeenCalled();
     });
 
@@ -318,12 +326,10 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = false;
       settingsIsDirty.value = true;
 
-      routeLeaveCallback?.({}, {}, next);
+      callMiddleware();
 
       expect(confirmSpy).toHaveBeenCalled();
     });
@@ -341,20 +347,38 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = false;
       settingsIsDirty.value = false;
 
-      routeLeaveCallback?.({}, {}, next);
+      callMiddleware();
 
       expect(customHasUnsavedChanges).toHaveBeenCalled();
       expect(confirmSpy).toHaveBeenCalled();
     });
+
+    it('should skip middleware when navigating to the same path', () => {
+      const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false);
+
+      const TestComponent = {
+        setup() {
+          useEditorUnsavedChangesGuard();
+          return () => null;
+        },
+      };
+
+      mount(TestComponent);
+
+      isEditingEnabled.value = true;
+
+      const result = callMiddleware('/');
+
+      expect(confirmSpy).not.toHaveBeenCalled();
+      expect(result).toBeUndefined();
+    });
   });
 
   describe('custom onConfirmLeave callback', () => {
-    it('should call custom onConfirmLeave instead of closeDrawer', async () => {
+    it('should call custom onConfirmLeave instead of closeDrawer', () => {
       const customOnConfirmLeave = vi.fn();
       const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
 
@@ -367,14 +391,12 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       mount(TestComponent);
 
-      const next = vi.fn();
-
       isEditingEnabled.value = true;
 
-      await routeLeaveCallback?.({}, {}, next);
+      callMiddleware();
 
       expect(confirmSpy).toHaveBeenCalled();
-      expect(resetFooterToSaved).toHaveBeenCalled();
+      expect(discardChanges).toHaveBeenCalled();
       expect(customOnConfirmLeave).toHaveBeenCalled();
       expect(closeDrawer).not.toHaveBeenCalled();
     });
@@ -395,7 +417,6 @@ describe('useEditorUnsavedChangesGuard', () => {
 
       const event = new Event('beforeunload') as BeforeUnloadEvent;
       const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
-      const next = vi.fn();
 
       isEditingEnabled.value = true;
       settingsIsDirty.value = true;
@@ -403,7 +424,7 @@ describe('useEditorUnsavedChangesGuard', () => {
       beforeUnloadHandler?.(event);
       expect(preventDefaultSpy).toHaveBeenCalled();
 
-      routeLeaveCallback?.({}, {}, next);
+      callMiddleware();
       expect(confirmSpy).toHaveBeenCalled();
     });
 

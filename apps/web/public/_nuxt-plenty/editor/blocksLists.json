@@ -1,7 +1,7 @@
 {
   "header": {
     "category": "header",
-    "accessControl": [],
+    "accessControl": ["content"],
     "title": "Header",
     "blockName": "Header",
     "variations": [
@@ -85,6 +85,138 @@
                 }
               }
             }
+          }
+        }
+      },
+      {
+        "title": "Navigation",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/navigation-thumbnail.svg",
+        "template": {
+          "en": {
+            "name": "Navigation",
+            "type": "content",
+            "meta": { "uuid": "87654321-4321-4789-8234-123456789abc" },
+            "content": {
+              "layout": {
+                "paddingTop": 20,
+                "paddingBottom": 20,
+                "paddingLeft": 20,
+                "paddingRight": 20
+              },
+              "text": {
+                "textAlignment": "left"
+              },
+              "color": {
+                "backgroundColor": "#ffffff",
+                "textColor": "#161A16",
+                "hoverBackgroundColor": "#f5f5f5"
+              }
+            }
+          },
+          "de": {
+            "name": "Navigation",
+            "type": "content",
+            "meta": { "uuid": "87654321-4321-4789-8234-123456789abc" },
+            "content": {
+              "layout": {
+                "paddingTop": 20,
+                "paddingBottom": 20,
+                "paddingLeft": 20,
+                "paddingRight": 20
+              },
+              "text": {
+                "textAlignment": "left"
+              },
+              "color": {
+                "backgroundColor": "#ffffff",
+                "textColor": "#161A16",
+                "hoverBackgroundColor": "#f5f5f5"
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Announcement Bar",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement-bar.svg",
+        "template": {
+          "en": {
+            "name": "Carousel",
+            "type": "structure",
+            "meta": { "uuid": "47e5b671-f9b5-47ee-9271-066575d8e4e7" },
+            "configuration": {
+              "controls": {
+                "color": "#000000",
+                "displayIndicators": false
+              },
+              "layout": { "fullWidth": true },
+              "visible": true
+            },
+            "content": [
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "cf7a2410-3173-1434-9bc8-4588e904fcbe" },
+                "configuration": {
+                  "visible": true
+                },
+                "content": {
+                  "backgroundColor": "#EDFF6C",
+                  "text": "This is an example announcement."
+                }
+              },
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "cf7a2410-3177-4444-9bc5-4588e904fcbe" },
+                "configuration": {
+                  "visible": true
+                },
+                "content": {
+                  "backgroundColor": "#EDFF6C",
+                  "text": "This is another example announcement."
+                }
+              }
+            ]
+          },
+          "de": {
+            "name": "Carousel",
+            "type": "structure",
+            "meta": { "uuid": "5ff701a4-4b18-4364-b494-4f2cf223e8c4" },
+            "configuration": {
+              "controls": {
+                "color": "#000000",
+                "displayIndicators": false
+              },
+              "layout": { "fullWidth": true },
+              "visible": true
+            },
+            "content": [
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "76a7fc16-ada0-4e73-a1e0-ead3774387e0" },
+                "configuration": {
+                  "visible": true
+                },
+                "content": {
+                  "backgroundColor": "#EDFF6C",
+                  "text": "Dies ist eine Beispielankündigung."
+                }
+              },
+              {
+                "name": "AnnouncementBar",
+                "type": "content",
+                "meta": { "uuid": "7e9dcf94-8bb4-41ed-a056-03a64b99b866" },
+                "configuration": {
+                  "visible": true
+                },
+                "content": {
+                  "backgroundColor": "#EDFF6C",
+                  "text": "Dies ist eine weitere Beispielankündigung."
+                }
+              }
+            ]
           }
         }
       }
@@ -282,8 +414,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -291,7 +422,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -314,8 +446,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -323,7 +454,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -358,8 +490,7 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -367,7 +498,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -390,8 +522,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left",
                     "background": true
@@ -399,7 +530,8 @@
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -439,15 +571,15 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -470,15 +602,15 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -513,15 +645,15 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "right"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -544,15 +676,15 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -592,15 +724,15 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
-                    "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -623,15 +755,15 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 title",
-                    "htmlDescription": "Text that supports HTML formatting",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -666,15 +798,15 @@
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
                     "subtitle": "Untertitel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               },
@@ -697,15 +829,15 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
-                    "htmlDescription": "Text mit HTML-Formatierung",
-                    "textAlignment": "left",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "center"
                   },
                   "button": {
                     "label": "Button",
                     "link": "/",
-                    "variant": "primary"
+                    "variant": "primary",
+                    "alignment": "left"
                   }
                 }
               }
@@ -838,7 +970,7 @@
                 "parent_slot": 1,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "title": "h2 heading",
                     "subtitle": "subtitle",
                     "textAlignment": "left",
@@ -906,7 +1038,7 @@
                 "parent_slot": 1,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "title": "h2 Titel",
                     "subtitle": "Untertitel",
                     "textAlignment": "left",
@@ -943,7 +1075,7 @@
                 "parent_slot": 0,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text that supports HTML formatting",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "title": "h2 heading",
                     "subtitle": "Subtitle",
                     "textAlignment": "right",
@@ -1003,7 +1135,7 @@
                 "parent_slot": 0,
                 "content": {
                   "text": {
-                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "title": "h2 Titel",
                     "subtitle": "Untertitel",
                     "textAlignment": "left",
@@ -1067,7 +1199,7 @@
             "meta": { "uuid": "01020304-0506-4070-8090-0a0b0c0d0e0f" },
             "content": {
               "text": {
-                "htmlDescription": "Text that supports HTML formatting",
+                "htmlDescription": "<p style=\"text-align: center;\">Text that supports HTML formatting</p>",
                 "pretitle": "Pretitle",
                 "title": "h2 heading",
                 "subtitle": "Subtitle",
@@ -1090,7 +1222,7 @@
             "meta": { "uuid": "1a2b3c4d-5e6f-4111-8abc-1234567890ab" },
             "content": {
               "text": {
-                "htmlDescription": "Text mit HTML-Formatierung",
+                "htmlDescription": "<p style=\"text-align: center;\">Text mit HTML-Formatierung</p>",
                 "pretitle": "Vortitel",
                 "title": "h2 Titel",
                 "subtitle": "Untertitel",
@@ -1130,7 +1262,7 @@
                 "pretitle": "Pretitle",
                 "title": "h2 heading",
                 "subtitle": "Subtitle.",
-                "htmlDescription": "Text that supports HTML formatting"
+                "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>"
               },
               "layout": {
                 "fullWidth": false
@@ -1151,7 +1283,7 @@
                 "pretitle": "Vortitel",
                 "title": "h2 Titel",
                 "subtitle": "Untertitel",
-                "htmlDescription": "Text mit HTML-Formatierung"
+                "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>"
               },
               "layout": {
                 "fullWidth": false
@@ -1543,7 +1675,7 @@
               "text": {
                 "bgColor": "#f5f5f5",
                 "title": "Newsletter",
-                "htmlDescription": "Text that supports HTML formatting"
+                "htmlDescription": "<p style=\"text-align: center;\">Text that supports HTML formatting</p>"
               },
               "input": {
                 "displayNameInput": true,
@@ -1568,7 +1700,7 @@
               "text": {
                 "bgColor": "#f5f5f5",
                 "title": "Abonnieren Sie unseren Newsletter",
-                "htmlDescription": "Text mit HTML-Formatierung"
+                "htmlDescription": "<p style=\"text-align: center;\">Text mit HTML-Formatierung</p>"
               },
               "input": {
                 "displayNameInput": true,

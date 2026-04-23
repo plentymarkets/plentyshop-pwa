@@ -49,7 +49,7 @@
           ]"
           :index="index"
           :block="block"
-          :actions="getBlockActions(block)"
+          :read-only="readOnly"
           @change-position="changeBlockPosition"
         />
       </ClientOnly>
@@ -107,11 +107,10 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
+  readOnly: false,
 });
 
 const { isInEditorClient } = useEditorState();
-const { locale, defaultLocale } = useI18n();
-const route = useRoute();
 const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
@@ -142,13 +141,7 @@ const buttonLabel = 'Insert a new block at this position.';
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
-
-  const loader = getBlockLoader(props.block.name);
-  if (!loader) return null;
-
-  return defineAsyncComponent({
-    loader,
-  });
+  return getCachedBlockComponent(props.block.name);
 });
 
 const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid);
@@ -219,15 +212,13 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
   multigridColumnUuid.value = null;
 };
 
-const getHomePath = (localeCode: string) => (localeCode === defaultLocale ? '/' : `/${localeCode}`);
-
-const isEditDisabled = computed(() => {
-  const homePath = getHomePath(locale.value);
-  return route.fullPath !== homePath;
-});
-
 const showTopAddBlockButton = computed(
-  () => props.enableActions && clientPreview.value && props.root && !isDragging.value && !isHeaderBlock(props.block),
+  () =>
+    props.enableActions &&
+    clientPreview.value &&
+    props.root &&
+    !isDragging.value &&
+    !isHeaderContainerBlock(props.block),
 );
 
 const showBottomAddBlockButton = computed(
@@ -236,23 +227,8 @@ const showBottomAddBlockButton = computed(
     clientPreview.value &&
     !isDragging.value &&
     !isFooterBlock(props.block) &&
-    !isHeaderBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
-
-const getBlockActions = (block: Block) => {
-  if (isFooterBlock(block) || isHeaderBlock(block)) {
-    return {
-      isEditable: !isEditDisabled.value,
-      isMovable: false,
-      isDeletable: false,
-      classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
-      buttonClasses: [],
-      hoverBackground: ['hover:bg-gray-100'],
-    };
-  }
-  return undefined;
-};
 
 const { hoveredUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
 

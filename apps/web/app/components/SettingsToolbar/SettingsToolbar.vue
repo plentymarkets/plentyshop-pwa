@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="h-[calc(100vh-150px)] bg-white z-[1] md:z-[10] lg:z-[150] mb-3 w-[54px] min-w-[54px] border-r"
+    class="h-[calc(100vh-50px)] bg-white z-[1] md:z-[10] lg:z-[150] mb-3 w-[54px] min-w-[54px] border-r"
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
@@ -29,13 +29,7 @@
           <SfIconLanguage width="24" height="24px" />
         </button>
       </SfTooltip>
-      <SfTooltip
-        v-if="enableTableOfContents"
-        :label="tableOfContentsLabel"
-        placement="right"
-        :show-arrow="true"
-        class="inline-grid font-editor"
-      >
+      <SfTooltip :label="tableOfContentsLabel" placement="right" :show-arrow="true" class="inline-grid font-editor">
         <button
           type="button"
           class="editor-button relative py-2 flex justify-center"
@@ -79,9 +73,6 @@ const {
   setActiveSetting,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const {
-  public: { enableTableOfContents },
-} = useRuntimeConfig();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';

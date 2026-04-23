@@ -26,7 +26,7 @@
       </span>
       <router-link
         v-if="!isTablet && !hasEmptyDetails"
-        :to="pagePath"
+        :to="localePagePath"
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
         <span v-if="props.icon">
@@ -140,6 +140,8 @@ const pagePath = computed(() => {
 const currentGeneralPageId = ref<number | null>(null);
 const open = ref(false);
 const childrenPagination = usePaginatedChildren(item);
+const { getCorrectPreviewPathWithLocale } = useCategoryIdHelper();
+const localePagePath = getCorrectPreviewPathWithLocale(pagePath.value);
 
 const toggleOpen = async (isTabletCheck = false) => {
   if (item.level === 5) {

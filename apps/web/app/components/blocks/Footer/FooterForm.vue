@@ -39,6 +39,18 @@
           />
         </div>
       </div>
+      <div v-if="enableContractWithdrawalButton" class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel class="mb-1">
+            {{ getEditorTranslation('column-1-contract-withdrawal-button-label') }}
+          </UiFormLabel>
+          <SfSwitch
+            v-model="footerContent.column1.showCancellationForm"
+            data-testid="showCancellationForm-switch"
+            class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+          />
+        </div>
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -82,14 +94,10 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('column-2-description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="footerContent.column2.description"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('column-2-description-placeholder')"
-          data-testid="input-text-column-2"
+        <EditorRichTextEditorForm
+          :model-value="footerContent.column2.description ?? ''"
+          :block-uuid="blockUuid"
+          @update:model-value="footerContent.column2.description = $event"
         />
       </div>
     </UiAccordionItem>
@@ -124,14 +132,10 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('column-3-description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="footerContent.column3.description"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('column-3-description-placeholder')"
-          data-testid="input-text-column-3"
+        <EditorRichTextEditorForm
+          :model-value="footerContent.column3.description ?? ''"
+          :block-uuid="blockUuid"
+          @update:model-value="footerContent.column3.description = $event"
         />
       </div>
     </UiAccordionItem>
@@ -166,14 +170,10 @@
       </div>
 
       <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('column-4-description-label') }}</UiFormLabel>
-        <SfTextarea
-          v-model="footerContent.column4.description"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          :placeholder="getEditorTranslation('column-4-description-placeholder')"
-          data-testid="input-text-column-4"
+        <EditorRichTextEditorForm
+          :model-value="footerContent.column4.description ?? ''"
+          :block-uuid="blockUuid"
+          @update:model-value="footerContent.column4.description = $event"
         />
       </div>
     </UiAccordionItem>
@@ -344,18 +344,13 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
-import type { Block } from '@plentymarkets/shop-api';
-const route = useRoute();
-const { data, mapFooterData, FOOTER_SWITCH_DEFINITIONS } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+import { FOOTER_SWITCH_DEFINITIONS } from './constants';
+
+const { footer } = useBlocks();
+
 const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
-const props = defineProps<{ uuid?: string }>();
 
 const firstColumnOpen = ref(false);
 const secondColumnOpen = ref(false);
@@ -363,52 +358,45 @@ const thirdColumnOpen = ref(false);
 const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
+const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 
-const getSourceBlock = (): Block | null => {
-  return findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
-};
+const footerBlock = computed(() => footer.value as FooterBlock);
+const footerContent = computed(() => footerBlock.value?.content as FooterContent);
 
-const sourceBlock = getSourceBlock();
-const footerBlock = ref<FooterBlock>(mapFooterData(sourceBlock || null));
-const footerContent = computed(() => footerBlock.value.content as FooterContent);
+const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => {
+  if (config.columnGroup !== 'legal') return false;
 
-const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'legal').map(
-  (switchConfig) => ({
-    id: `${switchConfig.key}-switch`,
-    translationKey: switchConfig.editorTranslationKey,
-    model: computed({
-      get: () => footerContent.value.column1[switchConfig.key] as boolean,
-      set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterContent;
-        content.column1[switchConfig.key] = value;
-      },
-    }),
+  if (enableContractWithdrawalButton && config.key === 'showCancellationForm') {
+    return false;
+  }
+
+  return true;
+}).map((switchConfig) => ({
+  id: `${switchConfig.key}-switch`,
+  translationKey: switchConfig.editorTranslationKey,
+  model: computed({
+    get: () => footerContent.value?.column1[switchConfig.key] as boolean,
+    set: (value: boolean) => {
+      if (footerBlock.value?.content) {
+        (footerBlock.value.content as FooterContent).column1[switchConfig.key] = value;
+      }
+    },
   }),
-);
+}));
 
 const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.columnGroup === 'services').map(
   (switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: switchConfig.editorTranslationKey,
     model: computed({
-      get: () => footerContent.value.column2[switchConfig.key] as boolean,
+      get: () => footerContent.value?.column2[switchConfig.key] as boolean,
       set: (value: boolean) => {
-        const content = footerBlock.value.content as FooterContent;
-        content.column2[switchConfig.key] = value;
+        if (footerBlock.value?.content) {
+          (footerBlock.value.content as FooterContent).column2[switchConfig.key] = value;
+        }
       },
     }),
   }),
-);
-
-watch(
-  footerBlock,
-  (updatedFooterBlock) => {
-    const block = getSourceBlock();
-    if (block) {
-      block.content = updatedFooterBlock.content;
-    }
-  },
-  { deep: true },
 );
 </script>
 
@@ -420,6 +408,7 @@ watch(
     "column-1-terms-and-conditions-label": "Show Terms and Conditions link",
     "column-1-cancellation-rights-label": "Show Cancellation Rights link",
     "column-1-cancellation-form-label": "Show Cancellation Form link",
+    "column-1-contract-withdrawal-button-label": "Show Contract Withdrawal Button",
     "column-1-legal-disclosure-label": "Show Legal Disclosure link",
     "column-1-privacy-policy-label": "Show Privacy Policy link",
     "column-1-declaration-of-accessibility-label": "Show Declaration of Accessibility link",
@@ -459,7 +448,8 @@ watch(
     "column-1-title-label": "Title",
     "column-1-terms-and-conditions-label": "Show the link to Terms and Conditions",
     "column-1-cancellation-rights-label": "Show the link to Cancellation Rights",
-    "column-1-cancellation-form-label": "Show the link to Cancellation Form",
+    "column-1-cancellation-form-label": "Show Cancellation Form link",
+    "column-1-contract-withdrawal-button-label": "Show Contract Withdrawal Button",
     "column-1-legal-disclosure-label": "Show the link to Legal Disclosure",
     "column-1-privacy-policy-label": "Show the link to Privacy Policy",
     "column-1-declaration-of-accessibility-label": "Show the link to Declaration of Accessibility",

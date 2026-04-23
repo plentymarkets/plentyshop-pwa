@@ -1,0 +1,14 @@
+[
+  {
+    "text": "Quickstart",
+    "link": "/guide/setup/quickstart.md"
+  },
+  {
+    "text": "FAQ",
+    "link": "/guide/setup/faq.md"
+  },
+  {
+    "text": "Troubleshooting",
+    "link": "/guide/setup/troubleshooting.md"
+  }
+]

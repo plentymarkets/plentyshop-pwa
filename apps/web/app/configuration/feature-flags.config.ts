@@ -1,10 +1,8 @@
 export default {
-  /** @description Enables the editable header block (HeaderContainer) */
-  enableEditableHeader: process.env?.ENABLE_EDITABLE_HEADER === '1',
-  /** @description Enables TipTap rich text editor in block forms */
-  enableRichTextEditorV2: process.env?.ENABLE_RICH_TEXT_EDITOR_V2 === '1',
-  /** @description Enables the Table of Contents drawer in the editor toolbar */
-  enableTableOfContents: process.env?.ENABLE_TABLE_OF_CONTENTS === '1',
+  /** @description Enables the new withdrawal button from the footer */
+  enableContractWithdrawalButton: process.env?.ENABLE_CONTRACT_WITHDRAWAL_BUTTON === '1',
+  /** @description Enables the new menu entry in settings for cancellation email  */
+  enableCancellationForm: process.env?.ENABLE_CANCELLATION_FORM === '1',
   /** @description Unleash feature flag configuration */
   unleash: {
     /** @description Unleash frontend API URL */
