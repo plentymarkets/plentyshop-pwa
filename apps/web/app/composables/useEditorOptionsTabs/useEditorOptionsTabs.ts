@@ -1,4 +1,6 @@
-export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: TranslateFn) {
+import type { EditorTarget, TranslateFn, FillMode } from '~/composables/useEditorOptionsTabs/types';
+
+export function useEditorOptionsTabs(getTarget: () => EditorTarget, t: TranslateFn) {
   const textboxAlignXOptions = computed(() => [
     { value: 'left' as AlignX, label: t('textbox-align-x-left-label'), testId: 'slider-textbox-align-x-left' },
     { value: 'center' as AlignX, label: t('textbox-align-x-center-label'), testId: 'slider-textbox-align-x-center' },
@@ -7,7 +9,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const textboxAlignXModel = computed<AlignX>({
     get: () => getTarget()?.text?.align ?? 'left',
     set: (v) => {
-      getTarget().text.align = v;
+      const target = getTarget();
+      if (target?.text) target.text.align = v;
     },
   });
 
@@ -19,7 +22,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const textboxAlignYModel = computed<AlignY>({
     get: () => getTarget()?.text?.justify ?? 'top',
     set: (v) => {
-      getTarget().text.justify = v;
+      const target = getTarget();
+      if (target?.text) target.text.justify = v;
     },
   });
 
@@ -31,7 +35,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const textOverlayAlignXModel = computed<AlignX>({
     get: () => getTarget()?.text?.textOverlayAlignX ?? 'left',
     set: (v) => {
-      getTarget().text.textOverlayAlignX = v;
+      const target = getTarget();
+      if (target?.text) target.text.textOverlayAlignX = v;
     },
   });
 
@@ -43,7 +48,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const textOverlayAlignYModel = computed<AlignY>({
     get: () => getTarget()?.text?.textOverlayAlignY ?? 'top',
     set: (v) => {
-      getTarget().text.textOverlayAlignY = v;
+      const target = getTarget();
+      if (target?.text) target.text.textOverlayAlignY = v;
     },
   });
 
@@ -58,18 +64,31 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const buttonVariantModel = computed<ButtonVariant>({
     get: () => getTarget()?.button?.variant ?? 'primary',
     set: (v) => {
-      getTarget().button.variant = v;
+      const target = getTarget();
+      if (target?.button) target.button.variant = v;
     },
   });
-
+  const buttonAlignOptions = computed(() => [
+    { value: 'left' as AlignX, label: t('button-align-option-left-label'), testId: 'slider-button-align-left' },
+    { value: 'center' as AlignX, label: t('button-align-option-center-label'), testId: 'slider-button-align-center' },
+    { value: 'right' as AlignX, label: t('button-align-option-right-label'), testId: 'slider-button-align-right' },
+  ]);
+  const buttonAlignModel = computed<AlignX>({
+    get: () => getTarget()?.button?.alignment ?? 'left',
+    set: (v) => {
+      const target = getTarget();
+      if (target?.button) target.button.alignment = v;
+    },
+  });
   const fillModeOptions = computed(() => [
     { value: 'fill' as FillMode, label: t('image-scalling-fill-label'), testId: 'image-scaling-fill' },
     { value: 'fit' as FillMode, label: t('image-scalling-fit-label'), testId: 'image-scaling-fit' },
   ]);
-  const fillModeModel = computed<FillMode>({
-    get: () => getTarget()?.image?.fillMode ?? 'fit',
-    set: (v) => {
-      getTarget().image.fillMode = v;
+  const fillModeModel = computed({
+    get: (): FillMode => (getTarget()?.image?.fillMode ?? 'fit') as FillMode,
+    set: (v: FillMode) => {
+      const target = getTarget();
+      if (target?.image) target.image.fillMode = v;
     },
   });
 
@@ -81,7 +100,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const displayCategoryImageModel = computed<DisplayCategoryImage>({
     get: () => getTarget()?.displayCategoryImage ?? 'off',
     set: (v) => {
-      getTarget().displayCategoryImage = v;
+      const target = getTarget();
+      if (target) target.displayCategoryImage = v;
     },
   });
 
@@ -93,7 +113,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const itemCountPositionModel = computed<ItemCountPosition>({
     get: () => getTarget()?.itemCountPosition ?? 'left',
     set: (v) => {
-      getTarget().itemCountPosition = v;
+      const target = getTarget();
+      if (target) target.itemCountPosition = v;
     },
   });
 
@@ -105,7 +126,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const contentAlignmentModel = computed<ContentAlignment>({
     get: () => getTarget()?.contentAlignment ?? 'left',
     set: (v) => {
-      getTarget().contentAlignment = v;
+      const target = getTarget();
+      if (target) target.contentAlignment = v;
     },
   });
 
@@ -116,7 +138,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const addToCartStyleModel = computed<AddToCartStyle>({
     get: () => getTarget()?.addToCartStyle ?? 'primary',
     set: (v) => {
-      getTarget().addToCartStyle = v;
+      const target = getTarget();
+      if (target) target.addToCartStyle = v;
     },
   });
 
@@ -127,7 +150,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const wishlistSizeModel = computed<WishlistSize>({
     get: () => getTarget()?.wishlistSize ?? 'small',
     set: (v) => {
-      getTarget().wishlistSize = v;
+      const target = getTarget();
+      if (target) target.wishlistSize = v;
     },
   });
 
@@ -142,7 +166,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const sourceTypeModel = computed<SourceType>({
     get: () => getTarget()?.source?.type ?? 'category',
     set: (v) => {
-      getTarget().source.type = v;
+      const target = getTarget();
+      if (target?.source) target.source.type = v;
     },
   });
 
@@ -166,7 +191,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
   const footnoteAlignModel = computed<FootnoteAlign>({
     get: () => getTarget()?.content?.footnoteAlign ?? 'left',
     set: (v) => {
-      getTarget().content.footnoteAlign = v;
+      const target = getTarget();
+      if (target?.content) target.content.footnoteAlign = v;
     },
   });
 
@@ -181,6 +207,8 @@ export function useEditorOptionsTabs(getTarget: () => Record<string, any>, t: Tr
     textOverlayAlignYOptions,
     buttonVariantModel,
     buttonVariantOptions,
+    buttonAlignModel,
+    buttonAlignOptions,
     fillModeModel,
     fillModeOptions,
     displayCategoryImageModel,

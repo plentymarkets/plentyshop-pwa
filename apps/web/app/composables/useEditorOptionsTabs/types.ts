@@ -12,3 +12,32 @@ export type SourceType = 'cross_selling' | 'category';
 export type EditorMode = 'wysiwyg' | 'html';
 
 export type TranslateFn = (key: string) => string;
+
+export type EditorTarget = {
+  text?: {
+    align?: AlignX;
+    justify?: AlignY;
+    textAlignment?: AlignX;
+    textOverlayAlignX?: AlignX;
+    textOverlayAlignY?: AlignY;
+  };
+  button?: {
+    variant?: ButtonVariant;
+    alignment?: AlignX;
+  };
+  image?: {
+    fillMode?: FillMode;
+  };
+  content?: {
+    footnoteAlign?: FootnoteAlign;
+  };
+  source?: {
+    type?: SourceType;
+  };
+  displayCategoryImage?: DisplayCategoryImage;
+  itemCountPosition?: ItemCountPosition;
+  contentAlignment?: ContentAlignment;
+  addToCartStyle?: AddToCartStyle;
+  wishlistSize?: WishlistSize;
+};
+
