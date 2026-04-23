@@ -182,34 +182,5 @@ export class BlocksArchitectureObject extends PageObject {
   }
 
 
-  navigateToCategory() {
-    cy.intercept('/plentysystems/getFacet').as('getFacet');
-    this.categoryButtons.first().click();
-    cy.wait('@getFacet');
-    this.categoryPageContent.should('be.visible');
-    return this;
-  }
 
-  navigateToProduct(waitForPayPal: boolean = true) {
-    cy.intercept('/plentysystems/getProduct').as('getProduct');
-    if (waitForPayPal) {
-      cy.intercept('/plentysystems/getPayPalSettings').as('getPayPalSettings');
-      cy.intercept('/plentysystems/doHandlePayPalFundingSources').as('doHandlePayPalFundingSources');
-    }
-
-    cy.getByTestId('product-card').first().click();
-    cy.wait('@getProduct');
-    cy.wait('@getBlocks');
-    if (waitForPayPal) {
-      cy.wait('@getPayPalSettings');
-      cy.wait('@doHandlePayPalFundingSources');
-    }
-    return this;
-  }
-
-  visitCheckout() {
-    cy.visit('/checkout');
-    cy.get('body.hydrated');
-    return this;
-  }
 }

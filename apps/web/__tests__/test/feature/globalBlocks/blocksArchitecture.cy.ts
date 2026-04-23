@@ -2,10 +2,14 @@ import { paths } from '../../../../app/utils/paths';
 import { CookieBarObject } from '../../../support/pageObjects/CookieBarObject';
 import { BlocksArchitectureObject } from '../../../support/pageObjects/BlocksArchitectureObject';
 import { LanguageSelectObject } from '../../../support/pageObjects/LanguageSelectObject';
+import { CategoryObject } from '../../../support/pageObjects/CategoryObject';
+import { ProductDetailPageObject } from '../../../support/pageObjects/ProductDetailPageObject';
 
 const cookieBar = new CookieBarObject();
 const blocks = new BlocksArchitectureObject();
 const languageSelect = new LanguageSelectObject();
+const category = new CategoryObject();
+const product = new ProductDetailPageObject();
 
 describe('Blocks Architecture', () => {
   describe('initial load without data', () => {
@@ -26,7 +30,7 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
 
       // prettier-ignore
       blocks
@@ -39,8 +43,8 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
-      blocks.navigateToProduct();
+      category.navigateFromHome();
+      product.navigateFromCategory();
 
       // prettier-ignore
       blocks
@@ -69,7 +73,7 @@ describe('Blocks Architecture', () => {
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
       blocks.interceptPartial();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.waitForBlocks();
 
       // prettier-ignore
@@ -84,9 +88,9 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.interceptPartial();
-      blocks.navigateToProduct(false);
+      product.navigateFromCategory(false);
 
       // prettier-ignore
       blocks
@@ -117,8 +121,6 @@ describe('Blocks Architecture', () => {
   });
   describe('initial load with full data on cart', () => {
     it('cart page loads footer from response', () => {
-      // SSR populates 'blocks-en-immutable-index' — intercepts cannot apply to it.
-      // Switching to 'de' uses a fresh key 'blocks-de-immutable-index' that fires a real browser request.
       blocks.interceptFull();
       cy.visitAndHydrate(paths.cart);
       cookieBar.acceptAll();
@@ -154,7 +156,7 @@ describe('Blocks Architecture', () => {
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
       blocks.interceptFull();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.waitForBlocks();
 
       // prettier-ignore
@@ -169,9 +171,9 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.interceptFull();
-      blocks.navigateToProduct(false);
+      product.navigateFromCategory(false);
 
       // prettier-ignore
       blocks
@@ -201,7 +203,7 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       languageSelect.switchLocale('de');
 
       // prettier-ignore
@@ -216,8 +218,8 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
-      blocks.navigateToProduct();
+      category.navigateFromHome();
+      product.navigateFromCategory();
       languageSelect.switchLocale('de');
 
       // prettier-ignore
@@ -267,7 +269,7 @@ describe('Blocks Architecture', () => {
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
       blocks.interceptPartial();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.waitForBlocks();
       languageSelect.switchLocale('de');
 
@@ -283,9 +285,9 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.interceptPartial();
-      blocks.navigateToProduct(false);
+      product.navigateFromCategory(false);
       languageSelect.switchLocale('de');
 
       // prettier-ignore
@@ -337,7 +339,7 @@ describe('Blocks Architecture', () => {
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
       blocks.interceptFull();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.waitForBlocks();
       languageSelect.switchLocale('de');
 
@@ -355,9 +357,9 @@ describe('Blocks Architecture', () => {
       blocks.interceptEmpty();
       cy.visitAndHydrate(paths.home);
       cookieBar.acceptAll();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.interceptFull();
-      blocks.navigateToProduct(false);
+      product.navigateFromCategory(false);
       languageSelect.switchLocale('de');
 
       // prettier-ignore
@@ -395,7 +397,7 @@ describe('Blocks Architecture', () => {
       cookieBar.acceptAll();
 
       blocks.assertFooterVisible();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.assertFooterVisible();
     });
 
@@ -404,7 +406,7 @@ describe('Blocks Architecture', () => {
       cookieBar.acceptAll();
 
       blocks.assertHeaderContainerVisible();
-      blocks.navigateToCategory();
+      category.navigateFromHome();
       blocks.assertHeaderContainerVisible();
     });
   });
