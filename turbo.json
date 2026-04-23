@@ -79,6 +79,9 @@
     "test:cypress": {
       "cache": false
     },
+    "test:cypress-smoke-editor": {
+      "cache": false
+    },
     "test:cypress-dev": {
       "cache": false
     },
