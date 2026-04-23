@@ -12,27 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Create GitHub Deployment
-        id: deployment
-        run: |
-          deployment_id=$(
-            gh api repos/${{ github.repository }}/deployments \
-              --method POST \
-              --jq '.id' \
-              -f ref="${{ github.sha }}" \
-              -f environment="production" \
-              -f description="Release ${{ github.event.release.tag_name }}" \
-              -F auto_merge=false \
-              -f required_contexts[]=
-          )
-          echo "id=$deployment_id" >> "$GITHUB_OUTPUT"
-      
-          gh api repos/${{ github.repository }}/deployments/$deployment_id/statuses \
-            --method POST \
-            -f state="in_progress"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Checkout Repository
         uses: actions/checkout@v6
         with:
@@ -55,17 +34,6 @@ jobs:
           url: "https://pwapublish.plentysystems.com/storeDefaultApplication"
           forms: '{ "token": "${{ secrets.SUPPLIER_TOKEN }}", "version": "${{ github.event.release.tag_name }}" }'
           fileForms: '{ "file": "pwa.tar.gz" }'
-
-      - name: Set Deployment Status
-        if: always() && steps.deployment.outputs.id != ''
-        run: |
-          case "${{ job.status }}" in
-            success)   state="success" ;;
-            cancelled) state="inactive" ;;
-            *)         state="failure" ;;
-          esac
-          gh api repos/${{ github.repository }}/deployments/${{ steps.deployment.outputs.id }}/statuses \
-            --method POST \
             -f state="$state"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
