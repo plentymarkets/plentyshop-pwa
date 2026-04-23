@@ -83,6 +83,16 @@ export class TableOfContentsObject extends PageObject {
     return this;
   }
 
+  checkFirstBlockLabel(text: string) {
+    this.tableOfContentsItemLabel.first().should('contain.text', text);
+    return this;
+  }
+
+  checkLastBlockLabel(text: string) {
+    this.tableOfContentsItemLabel.last().should('contain.text', text);
+    return this;
+  }
+
   checkCollapsibleArrowForStructureBlocks() {
     this.expandButtons.should('have.length.greaterThan', 0);
     return this;
