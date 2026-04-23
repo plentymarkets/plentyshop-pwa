@@ -26,7 +26,18 @@ export function useEditorOptionsTabs(getTarget: () => EditorTarget, t: Translate
       if (target?.text) target.text.justify = v;
     },
   });
-
+  const textAlignOptions = computed(() => [
+    { value: 'left' as AlignX, label: t('text-align-option-left-label'), testId: 'slider-text-align-left' },
+    { value: 'center' as AlignX, label: t('text-align-option-center-label'), testId: 'slider-text-align-center' },
+    { value: 'right' as AlignX, label: t('text-align-option-right-label'), testId: 'slider-text-align-right' },
+  ]);
+  const textAlignModel = computed<AlignX>({
+    get: () => getTarget()?.text?.textAlignment ?? 'left',
+    set: (v) => {
+      const target = getTarget();
+      if (target?.text) target.text.textAlignment = v;
+    },
+  });
   const textOverlayAlignXOptions = computed(() => [
     { value: 'left' as AlignX, label: t('text-overlay-align-x-left'), testId: 'text-overlay-align-x-left' },
     { value: 'center' as AlignX, label: t('text-overlay-align-x-center'), testId: 'text-overlay-align-x-center' },
@@ -201,6 +212,8 @@ export function useEditorOptionsTabs(getTarget: () => EditorTarget, t: Translate
     textboxAlignXOptions,
     textboxAlignYModel,
     textboxAlignYOptions,
+    textAlignModel,
+    textAlignOptions,
     textOverlayAlignXModel,
     textOverlayAlignXOptions,
     textOverlayAlignYModel,

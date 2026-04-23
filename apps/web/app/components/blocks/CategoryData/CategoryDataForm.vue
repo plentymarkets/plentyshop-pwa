@@ -358,7 +358,7 @@ const {
   fillModeOptions,
   displayCategoryImageModel,
   displayCategoryImageOptions,
-} = useEditorOptionsTabs(() => categoryDataBlock.value, getEditorTranslation);
+} = useEditorOptionsTabs(() => categoryDataBlock.value as EditorTarget, getEditorTranslation);
 </script>
 
 <i18n lang="json">
