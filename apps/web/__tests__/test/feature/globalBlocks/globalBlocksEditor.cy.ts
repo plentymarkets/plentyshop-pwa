@@ -5,9 +5,11 @@ import { FooterBlockObject } from '../../../support/pageObjects/FooterBlockObjec
 import { TableOfContentsObject } from '../../../support/pageObjects/TableOfContentsObject';
 import { ToolbarObject } from '../../../support/pageObjects/ToolbarObject';
 import { BlocksArchitectureObject } from '../../../support/pageObjects/BlocksArchitectureObject';
+import { LanguageSelectObject } from '../../../support/pageObjects/LanguageSelectObject';
 
 const cookieBar = new CookieBarObject();
 const headerBlock = new HeaderBlockObject();
+const languageSelect = new LanguageSelectObject();
 const footerBlock = new FooterBlockObject();
 const tableOfContents = new TableOfContentsObject();
 const toolbar = new ToolbarObject();
@@ -144,7 +146,7 @@ describe('Global Blocks Editor', () => {
 
       blocks.interceptSaved();
       cy.visitAndHydrate(paths.home);
-      blocks.switchLocale('de');
+      languageSelect.switchLocale('de');
 
       // prettier-ignore
       blocks

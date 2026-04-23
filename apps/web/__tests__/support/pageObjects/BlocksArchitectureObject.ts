@@ -181,12 +181,6 @@ export class BlocksArchitectureObject extends PageObject {
     return this;
   }
 
-  switchLocale(locale: string = 'de') {
-    cy.getByTestId('open-languageselect-button').first().click();
-    cy.getByTestId(`languageOption-${locale}`).click();
-    cy.wait('@getBlocks');
-    return this;
-  }
 
   navigateToCategory() {
     cy.intercept('/plentysystems/getFacet').as('getFacet');
