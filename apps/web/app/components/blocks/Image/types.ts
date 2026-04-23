@@ -49,6 +49,8 @@ export interface ImageDimensions {
   height: number;
 }
 
+export type BreakpointEntry = { aspectRatio: string; url: string | undefined; dimensions: ImageDimensions };
+
 export interface ImageFormProps {
   uuid?: string;
 }
