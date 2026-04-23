@@ -34,12 +34,6 @@ export function createHomepage(): Block[] {
     .map((feature) => `<li>${feature}</li>`)
     .join('');
   const multigridDescription = `<p>${multigridParagraph}</p><ul class='list-disc pl-4 mt-4 space-y-1'>${multigridFeaturesList}</ul>`;
-  const fashionPretitle = t('defaultTemplate.homepage.productRecommended.fashion.pretitle');
-  const fashionTitle = t('defaultTemplate.homepage.productRecommended.fashion.title');
-  const fashionSubtitle = t('defaultTemplate.homepage.productRecommended.fashion.subtitle');
-  const fashionLinkText = t('defaultTemplate.homepage.productRecommended.fashion.linkText');
-  const fashionLinkUrl = t('defaultTemplate.homepage.productRecommended.fashion.linkUrl');
-  const fashionDescription = `<a class='underline' href='${fashionLinkUrl}'>${fashionLinkText}</a>`;
   const newsletterTitle = t('defaultTemplate.homepage.newsletter.title');
   const newsletterDescription = t('defaultTemplate.homepage.newsletter.description');
   const newsletterButtonLabel = t('defaultTemplate.homepage.newsletter.buttonLabel');
@@ -155,23 +149,6 @@ export function createHomepage(): Block[] {
       },
     },
     {
-      name: 'ProductRecommendedProducts',
-      type: 'content',
-      meta: {
-        uuid: uuid(),
-        isGlobalTemplate: false,
-      },
-      content: {
-        categoryId: '73',
-        text: {
-          pretitle: '',
-          title: '',
-          subtitle: '',
-          htmlDescription: '',
-        },
-      },
-    },
-    {
       name: 'MultiGrid',
       type: 'structure',
       meta: {
@@ -241,27 +218,6 @@ export function createHomepage(): Block[] {
           },
         },
       ],
-    },
-    {
-      name: 'ProductRecommendedProducts',
-      type: 'content',
-      meta: {
-        uuid: uuid(),
-        isGlobalTemplate: false,
-      },
-      content: {
-        text: {
-          pretitle: fashionPretitle,
-          title: fashionTitle,
-          subtitle: fashionSubtitle,
-          htmlDescription: fashionDescription,
-        },
-        source: {
-          type: 'category',
-          itemId: '',
-          categoryId: '',
-        },
-      },
     },
     {
       name: 'NewsletterSubscribe',
