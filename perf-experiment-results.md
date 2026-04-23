@@ -3,7 +3,7 @@
 **PID:** 69056
 **URL:** https://1i0og1795b4v.c14-01.plentymarkets.com/
 **Tool:** PageSpeed Insights
-**Runs per scenario:** 3 (averaged)
+**Runs per scenario:** 6 (averaged)
 
 ---
 
@@ -17,27 +17,27 @@
 
 ---
 
-## Results — Mobile (avg of 3 runs)
+## Results — Mobile (avg of 6 runs)
 
 | Metric                   | default | mock-get-init | Δ      | mock-both | Δ      |
 | ------------------------ | ------- | ------------- | ------ | --------- | ------ |
-| First Contentful Paint   | 3.4s    | 3.9s          | +0.5s  | 3.93s     | +0.53s |
-| Largest Contentful Paint | 4.3s    | 4.97s         | +0.67s | 4.97s     | +0.67s |
-| Total Blocking Time      | 107ms   | 227ms         | +120ms | 93ms      | -14ms  |
-| Cumulative Layout Shift  | 0.077   | 0.026         | -0.051 | 0.026     | -0.051 |
-| Speed Index              | 4.07s   | 4.73s         | +0.66s | 4.83s     | +0.76s |
+| First Contentful Paint   | 3.45s   | 3.92s         | +0.47s | 3.95s     | +0.50s |
+| Largest Contentful Paint | 4.33s   | 4.99s         | +0.66s | 4.99s     | +0.66s |
+| Total Blocking Time      | 92ms    | 174ms         | +82ms  | 80ms      | -12ms  |
+| Cumulative Layout Shift  | 0.077   | 0.026         | -0.051 | 0.039     | -0.038 |
+| Speed Index              | 3.79s   | 4.72s         | +0.93s | 4.62s     | +0.83s |
 
 ---
 
-## Results — Desktop (avg of 3 runs)
+## Results — Desktop (avg of 6 runs)
 
 | Metric                   | default | mock-get-init | Δ      | mock-both | Δ      |
 | ------------------------ | ------- | ------------- | ------ | --------- | ------ |
-| First Contentful Paint   | 0.73s   | 0.77s         | +0.04s | 0.77s     | +0.04s |
-| Largest Contentful Paint | 0.9s    | 0.9s          | 0      | 0.9s      | 0      |
-| Total Blocking Time      | 60ms    | 293ms         | +233ms | 103ms     | +43ms  |
-| Cumulative Layout Shift  | 0.139   | 0.129         | -0.01  | 0.129     | -0.01  |
-| Speed Index              | 0.97s   | 1.23s         | +0.26s | 0.9s      | -0.07s |
+| First Contentful Paint   | 0.72s   | 0.77s         | +0.05s | 0.77s     | +0.05s |
+| Largest Contentful Paint | 0.9s    | 0.9s          | 0      | 0.92s     | +0.02s |
+| Total Blocking Time      | 88ms    | 200ms         | +112ms | 67ms      | -21ms  |
+| Cumulative Layout Shift  | 0.140   | 0.130         | -0.010 | 0.129     | -0.011 |
+| Speed Index              | 1.02s   | 1.10s         | +0.08s | 0.87s     | -0.15s |
 
 ---
 
