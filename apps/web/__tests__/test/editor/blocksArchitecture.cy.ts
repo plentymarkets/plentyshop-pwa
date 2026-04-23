@@ -410,5 +410,4 @@ describe('Blocks Architecture', () => {
       blocks.assertHeaderContainerVisible();
     });
   });
-
 });

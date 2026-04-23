@@ -180,7 +180,4 @@ export class BlocksArchitectureObject extends PageObject {
     this.simplifiedHeader.should('be.visible');
     return this;
   }
-
-
-
 }
