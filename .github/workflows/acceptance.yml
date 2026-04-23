@@ -60,6 +60,14 @@ jobs:
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
+      - name: E2E Global Blocks
+        uses: cypress-io/github-action@v7
+        with:
+          install: false
+          command: npm run test:cypress-global-blocks
+        env:
+          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
+
       - name: E2E External
         uses: cypress-io/github-action@v7
         with:

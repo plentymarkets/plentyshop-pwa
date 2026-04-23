@@ -66,6 +66,10 @@ export class HeaderBlockObject extends PageObject {
     return cy.getByTestId('input-background-color');
   }
 
+  get headerBlockActions() {
+    return cy.get('.header-blocks [data-testid="edit-block-actions"]');
+  }
+
   assertVisible() {
     this.headerContainer.should('be.visible');
     return this;
@@ -205,6 +209,11 @@ export class HeaderBlockObject extends PageObject {
 
   assertButtonLabelOnPage(label: string) {
     cy.get('.header-blocks').find('[data-testid="text-button"]').last().should('contain.text', label);
+    return this;
+  }
+
+  assertNotEditableOnPage() {
+    this.headerBlockActions.should('not.exist');
     return this;
   }
 }
