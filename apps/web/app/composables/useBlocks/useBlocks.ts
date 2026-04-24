@@ -1,142 +1,12 @@
 import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { UseBlocksState, UseBlocksReturn } from './types';
-import type { FooterSwitchDefinition } from '~/components/blocks/Footer/types';
-import { createDefaultHeaderContainerBlock } from '~/utils/blockTemplates/header';
-import { createFooter } from '~/utils/blockTemplates/footer';
-import { createHomepage } from '~/utils/blockTemplates/homepage';
-import { createCategory } from '~/utils/blockTemplates/category';
-import { createProduct } from '~/utils/blockTemplates/product';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
-import { migrateAllBlocks } from '~/utils/migrate-blocks';
+import { assembleBlocks } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
 }
-
-const FOOTER_BLOCK_NAME = 'Footer';
-const HEADER_BLOCK_NAME = 'Header';
-
-export const isFooterBlock = (block: Block | null | undefined): boolean => block?.name === FOOTER_BLOCK_NAME;
-export const isHeaderBlock = (block: Block | null | undefined): boolean => block?.name === HEADER_BLOCK_NAME;
-export const isGlobalBlock = (block: Block | null | undefined): boolean =>
-  isFooterBlock(block) || isHeaderContainerBlock(block);
-
-export const FOOTER_SWITCH_DEFINITIONS: FooterSwitchDefinition[] = [
-  {
-    columnGroup: 'legal',
-    key: 'showTermsAndConditions',
-    shopTranslationKey: 'legal.termsAndConditions',
-    editorTranslationKey: 'column-1-terms-and-conditions-label',
-    link: paths.termsAndConditions,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showLegalDisclosure',
-    shopTranslationKey: 'legal.legalDisclosure',
-    editorTranslationKey: 'column-1-legal-disclosure-label',
-    link: paths.legalDisclosure,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showPrivacyPolicy',
-    shopTranslationKey: 'legal.privacyPolicy',
-    editorTranslationKey: 'column-1-privacy-policy-label',
-    link: paths.privacyPolicy,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showDeclarationOfAccessibility',
-    shopTranslationKey: 'legal.declarationOfAccessibility',
-    editorTranslationKey: 'column-1-declaration-of-accessibility-label',
-    link: paths.declarationOfAccessibility,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showCancellationRights',
-    shopTranslationKey: 'legal.cancellationRights',
-    editorTranslationKey: 'column-1-cancellation-rights-label',
-    link: paths.cancellationRights,
-  },
-  {
-    columnGroup: 'legal',
-    key: 'showCancellationForm',
-    shopTranslationKey: 'legal.cancellationForm',
-    editorTranslationKey: 'column-1-cancellation-form-label',
-    link: paths.cancellationForm,
-  },
-  {
-    columnGroup: 'services',
-    key: 'showContactLink',
-    shopTranslationKey: 'footer.contact.label',
-    editorTranslationKey: 'column-2-contact-label',
-    link: paths.contact,
-  },
-  {
-    columnGroup: 'services',
-    key: 'showRegisterLink',
-    shopTranslationKey: 'footer.register.label',
-    editorTranslationKey: 'column-2-register-label',
-    link: paths.register,
-  },
-];
-
-const isBlockEmpty = (block: Block | null | undefined): boolean => {
-  if (!block) return true;
-  return !Array.isArray(block.content) || block.content.length === 0;
-};
-
-const normalizeFooter = (block: Block): Block => {
-  const defaultBlock = createFooter();
-  const defaults = defaultBlock.content as Record<string, Record<string, unknown>>;
-  const content = (block.content ?? {}) as Record<string, Record<string, unknown>>;
-
-  return {
-    ...block,
-    meta: { ...defaultBlock.meta, ...block.meta },
-    content: {
-      ...defaults,
-      ...content,
-      column1: { ...defaults.column1, ...content.column1 },
-      column2: { ...defaults.column2, ...content.column2 },
-      column3: { ...defaults.column3, ...content.column3 },
-      column4: { ...defaults.column4, ...content.column4 },
-      colors: { ...defaults.colors, ...content.colors },
-    },
-  };
-};
-
-const getDefaultPageBlocks = (type: string, identifier: string | number): Block[] => {
-  switch (type) {
-    case 'immutable':
-      return createHomepage();
-    case 'category':
-      if (typeof identifier === 'number' && identifier > 0) {
-        return [];
-      }
-      return createCategory();
-    case 'product':
-      return createProduct();
-    default:
-      return [];
-  }
-};
-
-const assembleBlocks = (raw: GetBlocksResponse, type: string, identifier: string | number): GetBlocksResponse => {
-  const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
-    ? createDefaultHeaderContainerBlock()
-    : raw?.HeaderContainer;
-
-  const Footer = raw?.Footer ? normalizeFooter(raw.Footer) : normalizeFooter(createFooter());
-
-  const pageBlocks =
-    Array.isArray(raw?.blocks) && raw?.blocks.length > 0 ? raw?.blocks : getDefaultPageBlocks(type, identifier);
-
-  migrateAllBlocks(pageBlocks);
-
-  return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
-};
 
 export const useBlocks: UseBlocksReturn = () => {
   const state = useState<UseBlocksState>(`useBlocks`, () => ({
@@ -147,16 +17,23 @@ export const useBlocks: UseBlocksReturn = () => {
     isSettling: false,
   }));
 
-  /*
-   @description Schedule setting up clean data & editor enable reset with a timeout.
-   */
+  const setBlocks = (blocks: GetBlocksResponse) => {
+    const serialized = JSON.stringify(blocks);
+    state.value.data = JSON.parse(serialized);
+    state.value.cleanData = markRaw(JSON.parse(serialized));
+  };
 
+  /*
+    After a fetch or navigation, the editor may briefly render stale state.
+    This debounced sync waits for the UI to settle before snapshotting cleanData
+    and resetting the editing flag, preventing flicker and dirty-state false positives.
+  */
   const scheduleCleanDataSync = () => {
     state.value.isSettling = true;
     const nuxtApp = useNuxtApp();
     if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
     nuxtApp._settleTimer = setTimeout(() => {
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(state.value.data)));
+      state.value.cleanData = markRaw(deepClone(state.value.data));
       const { isEditingEnabled } = useEditor();
       isEditingEnabled.value = false;
       state.value.isSettling = false;
@@ -177,9 +54,7 @@ export const useBlocks: UseBlocksReturn = () => {
     state.value.loading = true;
 
     const { $i18n } = useNuxtApp();
-
     const loc = computed(() => $i18n.locale.value);
-
     const key = `blocks-${loc.value}-${type}-${identifier}`;
 
     const { data, error } = await useAsyncData(key, () =>
@@ -190,12 +65,8 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const allBlocks = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
-
-    const serialized = JSON.stringify(allBlocks);
-
-    state.value.data = JSON.parse(serialized);
-    state.value.cleanData = markRaw(JSON.parse(serialized));
+    const assembled = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
+    setBlocks(assembled);
     state.value.loading = false;
 
     const { isEditingEnabled } = useEditor();
@@ -217,13 +88,12 @@ export const useBlocks: UseBlocksReturn = () => {
         enableGlobalBlocks: true,
       });
 
-      const allBlocks = assembleBlocks(
+      const assembled = assembleBlocks(
         (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
         type,
         identifier,
       );
-      state.value.data = allBlocks;
-      state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+      setBlocks(assembled);
 
       return true;
     } catch (error) {
@@ -236,7 +106,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable', identifier: string | number = 0) => {
-    const allBlocks = assembleBlocks(
+    const assembled = assembleBlocks(
       {
         HeaderContainer: headerContainer.value,
         blocks: rawBlocks,
@@ -245,9 +115,7 @@ export const useBlocks: UseBlocksReturn = () => {
       type,
       identifier,
     );
-
-    state.value.data = allBlocks;
-    state.value.cleanData = markRaw(JSON.parse(JSON.stringify(allBlocks)));
+    setBlocks(assembled);
   };
 
   const updateBlocks = (blocks: Block[]) => {
@@ -255,7 +123,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const discardChanges = () => {
-    state.value.data = JSON.parse(JSON.stringify(state.value.cleanData));
+    state.value.data = deepClone(state.value.cleanData);
   };
 
   const setDefaultTemplate = (blocks: Block[]) => {
@@ -279,6 +147,5 @@ export const useBlocks: UseBlocksReturn = () => {
     discardChanges,
     setDefaultTemplate,
     isSettling: computed(() => state.value.isSettling),
-    FOOTER_SWITCH_DEFINITIONS,
   };
 };

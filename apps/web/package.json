@@ -26,7 +26,8 @@
     "test:cypress-editor": "cypress run --browser chrome --headless --spec '__tests__/test/editor/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/quarantine/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress-post-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/post-quarantine/*.cy.{js,jsx,ts,tsx}'",
-    "test:cypress": "cypress run --browser chrome --headless --spec '__tests__/test/smoke/*.cy.{js,jsx,ts,tsx}'",
+    "test:cypress": "cypress run --browser chrome --headless --spec '__tests__/test/smoke/shop.cy.ts'",
+    "test:cypress-smoke-editor": "cypress run --browser chrome --headless --spec '__tests__/test/smoke/editor.cy.ts'",
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {

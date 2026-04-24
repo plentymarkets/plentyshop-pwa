@@ -41,6 +41,7 @@
     "test:cypress-quarantine": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"npm run start\"",
     "test:cypress-post-quarantine": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-post-quarantine\" \"npm run start\"",
     "test:cypress": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress\" \"npm run start\"",
+    "test:cypress-smoke-editor": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-smoke-editor\" \"npm run start\"",
     "test:cypress-dev": "concurrently -k -s=first --names \"cypress,server\" \"npx wait-on http-get://localhost:3000 && npm run turbo:disable-telemetry && turbo run test:cypress-dev\" \"npm run start\"",
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
@@ -51,8 +52,8 @@
     "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.165.2",
-    "@plentymarkets/shop-core": "^1.23.5",
+    "@plentymarkets/shop-api": "^0.166.0",
+    "@plentymarkets/shop-core": "^1.23.6",
     "@plentymarkets/shop-module-gtag": "^1.3.0",
     "@plentymarkets/shop-module-mollie": "^1.6.0",
     "@tanstack/vue-virtual": "^3.13.18",

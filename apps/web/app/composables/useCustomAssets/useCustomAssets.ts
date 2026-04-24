@@ -58,9 +58,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
 
   const getAssetsOfType: GetAssetsOfType = (type: string) => {
     const currentAssets = state.value.data || [];
-    const initialAssets = Array.isArray(state.value.initialData)
-      ? markRaw(JSON.parse(JSON.stringify(state.value.initialData)))
-      : [];
+    const initialAssets = Array.isArray(state.value.initialData) ? markRaw(deepClone(state.value.initialData)) : [];
 
     const merged = [...initialAssets, ...currentAssets]
       .filter((asset) => asset.type === type)
@@ -87,7 +85,7 @@ export const useCustomAssets: UseCustomAssetsReturn = () => {
     const actualChanges = state.value.data.filter((changedAsset) => {
       const initialAsset = state.value.initialData.find((a) => a.uuid === changedAsset.uuid);
       if (!initialAsset) return true;
-      return JSON.stringify(initialAsset) !== JSON.stringify(changedAsset);
+      return !deepEqual(initialAsset, changedAsset);
     });
 
     return actualChanges.length > 0;

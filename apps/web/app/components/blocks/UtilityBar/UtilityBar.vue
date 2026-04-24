@@ -20,6 +20,7 @@
           </UiButton>
           <NuxtLink
             id="blockified-logo-mobile"
+            data-testid="logo-link"
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
             class="focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
@@ -75,6 +76,7 @@
         <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
           <NuxtLink
             id="blockified-logo"
+            data-testid="logo-link"
             :to="localePath(paths.home)"
             :aria-label="t('common.actions.goToHomepage')"
             class="text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
