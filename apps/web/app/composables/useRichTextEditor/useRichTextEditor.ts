@@ -14,6 +14,7 @@ import { setupRichTextEditorColors } from './helpers/colors';
 import { setupRichTextEditorAlignment } from './helpers/alignment';
 import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
+import { IconNode } from './helpers/iconExtension';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { FontSize } from './helpers/fontSizeExtension';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -41,6 +42,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       Placeholder.configure({
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
+      IconNode,
     ],
     editorProps: {
       transformPastedHTML: (html) => {
@@ -105,6 +107,14 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const focus = () => editor.value?.commands.focus();
 
+  const insertIcon = (name: string) => {
+    editor.value?.chain().focus().insertIcon(name).run();
+  };
+
+  const insertEmoji = (emoji: string) => {
+    editor.value?.chain().focus().insertContent(emoji).run();
+  };
+
   return {
     editor,
     expandedLocal,
@@ -128,5 +138,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     toggleLink,
     clearFormatting,
     focus,
+    insertIcon,
+    insertEmoji,
   };
 }

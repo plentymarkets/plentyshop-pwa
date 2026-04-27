@@ -7,6 +7,7 @@
   >
     <div
       v-if="props.text?.htmlDescription"
+      ref="contentRef"
       class="rte-prose rte-prose--render"
       :data-testid="props.testId ? 'text-html-' + props.testId : 'text-html'"
       :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
@@ -28,8 +29,11 @@
 
 <script setup lang="ts">
 import type { TextContentProps } from '~/components/TextContent/types';
+import { hydrateIcons } from '~/composables/useIconRegistry/hydrateIcons';
 
 const props = defineProps<TextContentProps>();
+
+const contentRef = ref<HTMLElement | null>(null);
 
 const renderedHtmlDescription = computed(() => decodeHtmlEntities(props.text?.htmlDescription));
 
@@ -46,4 +50,13 @@ const textAlignmentClass = computed(() => {
 
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
+
+watch(
+  renderedHtmlDescription,
+  async () => {
+    await nextTick();
+    hydrateIcons(contentRef.value);
+  },
+  { immediate: true },
+);
 </script>

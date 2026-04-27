@@ -77,6 +77,7 @@
     "drift-zoom": "^1.5.1",
     "nuxt-color-picker": "^1.2.8",
     "nuxt-swiper": "^1.2.2",
+    "vue-frimousse": "^0.1.4",
     "vue-multiselect": "^3.4.0",
     "vue-router": "^5.0.4",
     "vue-tel-input": "^9.7.1",

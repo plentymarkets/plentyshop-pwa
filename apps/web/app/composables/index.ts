@@ -105,3 +105,4 @@ export * from './useItemDataTable';
 export * from './useBlockClasses';
 export * from './useCallisto';
 export * from './useCancellationForm';
+export * from './useIconRegistry';
