@@ -15,6 +15,10 @@ const config = {
         api: {
           url: process.env.API_ENDPOINT,
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
+          experimental: {
+            excludeBlocksFromFacets: true,
+            excludeBlocksFromProducts: true,
+          }
         },
       },
       errorHandler: (error: any, req: any, res: any) => {
