@@ -18,7 +18,7 @@ const config = {
           experimental: {
             excludeBlocksFromFacets: true,
             excludeBlocksFromProducts: true,
-          }
+          },
         },
       },
       errorHandler: (error: any, req: any, res: any) => {
