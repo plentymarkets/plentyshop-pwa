@@ -66,7 +66,6 @@ export const useProduct: UseProductReturn = (slug) => {
       const blocks = pageBlocks.value.length ? pageBlocks.value : await useProductTemplateData($i18n.locale.value);
 
       state.value.data = {
-        blocks: blocks,
         ...fakeProduct,
       };
 
