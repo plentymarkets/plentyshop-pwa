@@ -179,6 +179,7 @@ export default defineNuxtConfig({
       '/login',
       '/signup',
       '/reset-password',
+      '/favicon.ico',
     ],
   },
   shopCore: {
