@@ -182,6 +182,11 @@ export const ProductFixture: Product = {
       },
     ],
   },
+  breadcrumbs: [
+    { id: 1, level: 1, name: 'home', url: '/' },
+    { id: 2, level: 2, name: 'Gear', url: '/gear' },
+    { id: 3, level: 3, name: 'Headphones Capybara', url: '#' },
+  ],
 };
 
 export default ProductFixture;
