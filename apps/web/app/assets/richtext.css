@@ -99,12 +99,6 @@
   line-height: 1;
 }
 
-.rte-icon > svg {
-  width: 1em;
-  height: 1em;
-  display: block;
-}
-
 .ProseMirror-selectednode.rte-icon {
   outline: 2px solid rgb(100 116 139);
   outline-offset: 1px;
