@@ -3,7 +3,7 @@
     <SfDropdown v-model="isOpen" placement="bottom-start">
       <template #trigger>
         <EditorRichTextEditorMenuButton
-          data-testid="rte-emoji-button"
+          data-testid="rte-icon-picker-button"
           icon-name="emoji"
           :active="isOpen"
           @click="isOpen = !isOpen"
