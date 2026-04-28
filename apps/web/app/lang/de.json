@@ -440,7 +440,7 @@
       "socialLabel": "Gehe zu {label}"
     },
     "accessibility": {
-      "viewDetails": "Details anzeigen für "
+      "viewDetails": "Details anzeigen für {name}"
     }
   },
   "contact": {
