@@ -1,6 +1,9 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+export const useProductOptions = (
+  getTarget: () => EditorTarget,
+  t: TranslateFn
+) => {
   const itemCountPositionOptions = computed(() => [
     { value: 'left' as ItemCountPosition, label: t('position-left'), testId: 'item-count-left' },
     { value: 'center' as ItemCountPosition, label: t('position-center'), testId: 'item-count-center' },
@@ -9,9 +12,9 @@ export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const itemCountPositionModel = computed<ItemCountPosition>({
     get: () => getTarget()?.itemCountPosition ?? 'left',
-    set: (v) => {
+    set: (newItemCountPosition) => {
       const target = getTarget();
-      if (target) target.itemCountPosition = v;
+      if (target) target.itemCountPosition = newItemCountPosition;
     },
   });
 
@@ -23,9 +26,9 @@ export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const contentAlignmentModel = computed<ContentAlignment>({
     get: () => getTarget()?.contentAlignment ?? 'left',
-    set: (v) => {
+    set: (newContentAlignment) => {
       const target = getTarget();
-      if (target) target.contentAlignment = v;
+      if (target) target.contentAlignment = newContentAlignment;
     },
   });
 
@@ -36,9 +39,9 @@ export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const addToCartStyleModel = computed<AddToCartStyle>({
     get: () => getTarget()?.addToCartStyle ?? 'primary',
-    set: (v) => {
+    set: (newAddToCartStyle) => {
       const target = getTarget();
-      if (target) target.addToCartStyle = v;
+      if (target) target.addToCartStyle = newAddToCartStyle;
     },
   });
 
@@ -49,9 +52,9 @@ export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const wishlistSizeModel = computed<WishlistSize>({
     get: () => getTarget()?.wishlistSize ?? 'small',
-    set: (v) => {
+    set: (newWishlistSize) => {
       const target = getTarget();
-      if (target) target.wishlistSize = v;
+      if (target) target.wishlistSize = newWishlistSize;
     },
   });
 
@@ -66,9 +69,9 @@ export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const sourceTypeModel = computed<SourceType>({
     get: () => getTarget()?.source?.type ?? 'category',
-    set: (v) => {
+    set: (newSourceType) => {
       const target = getTarget();
-      if (target?.source) target.source.type = v;
+      if (target?.source) target.source.type = newSourceType;
     },
   });
 
@@ -84,4 +87,4 @@ export function useProductOptions(getTarget: () => EditorTarget, t: TranslateFn)
     sourceTypeModel,
     sourceTypeOptions,
   };
-}
+};

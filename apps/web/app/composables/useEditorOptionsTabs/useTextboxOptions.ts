@@ -1,6 +1,9 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export function useTextboxOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+export const useTextboxOptions = (
+  getTarget: () => EditorTarget,
+  t: TranslateFn
+) => {
   const textboxAlignXOptions = computed(() => [
     { value: 'left' as AlignX, label: t('textbox-align-x-left-label'), testId: 'slider-textbox-align-x-left' },
     { value: 'center' as AlignX, label: t('textbox-align-x-center-label'), testId: 'slider-textbox-align-x-center' },
@@ -9,9 +12,9 @@ export function useTextboxOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const textboxAlignXModel = computed<AlignX>({
     get: () => getTarget()?.text?.align ?? 'left',
-    set: (v) => {
+    set: (newAlignXValue) => {
       const target = getTarget();
-      if (target?.text) target.text.align = v;
+      if (target?.text) target.text.align = newAlignXValue;
     },
   });
 
@@ -23,9 +26,9 @@ export function useTextboxOptions(getTarget: () => EditorTarget, t: TranslateFn)
 
   const textboxAlignYModel = computed<AlignY>({
     get: () => getTarget()?.text?.justify ?? 'top',
-    set: (v) => {
+    set: (newAlignYValue) => {
       const target = getTarget();
-      if (target?.text) target.text.justify = v;
+      if (target?.text) target.text.justify = newAlignYValue;
     },
   });
 
@@ -35,4 +38,4 @@ export function useTextboxOptions(getTarget: () => EditorTarget, t: TranslateFn)
     textboxAlignYModel,
     textboxAlignYOptions,
   };
-}
+};

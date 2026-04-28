@@ -1,6 +1,9 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export function useFootnoteOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+export const useFootnoteOptions = (
+  getTarget: () => EditorTarget,
+  t: TranslateFn
+) => {
   const footnoteAlignOptions = computed(() => [
     {
       value: 'left' as FootnoteAlign,
@@ -21,9 +24,9 @@ export function useFootnoteOptions(getTarget: () => EditorTarget, t: TranslateFn
 
   const footnoteAlignModel = computed<FootnoteAlign>({
     get: () => getTarget()?.content?.footnoteAlign ?? 'left',
-    set: (v) => {
+    set: (newFootnoteAlign) => {
       const target = getTarget();
-      if (target?.content) target.content.footnoteAlign = v;
+      if (target?.content) target.content.footnoteAlign = newFootnoteAlign;
     },
   });
 
@@ -31,4 +34,4 @@ export function useFootnoteOptions(getTarget: () => EditorTarget, t: TranslateFn
     footnoteAlignModel,
     footnoteAlignOptions,
   };
-}
+};

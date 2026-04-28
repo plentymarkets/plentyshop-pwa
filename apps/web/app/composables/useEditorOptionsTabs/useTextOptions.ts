@@ -1,6 +1,9 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export function useTextOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+export const useTextOptions = (
+  getTarget: () => EditorTarget,
+  t: TranslateFn
+) => {
   const textAlignOptions = computed(() => [
     { value: 'left' as AlignX, label: t('text-align-option-left-label'), testId: 'slider-text-align-left' },
     { value: 'center' as AlignX, label: t('text-align-option-center-label'), testId: 'slider-text-align-center' },
@@ -9,9 +12,9 @@ export function useTextOptions(getTarget: () => EditorTarget, t: TranslateFn) {
 
   const textAlignModel = computed<AlignX>({
     get: () => getTarget()?.text?.textAlignment ?? 'left',
-    set: (v) => {
+    set: (newTextAlignValue) => {
       const target = getTarget();
-      if (target?.text) target.text.textAlignment = v;
+      if (target?.text) target.text.textAlignment = newTextAlignValue;
     },
   });
 
@@ -23,9 +26,9 @@ export function useTextOptions(getTarget: () => EditorTarget, t: TranslateFn) {
 
   const textOverlayAlignXModel = computed<AlignX>({
     get: () => getTarget()?.text?.textOverlayAlignX ?? 'left',
-    set: (v) => {
+    set: (newOverlayAlignXValue) => {
       const target = getTarget();
-      if (target?.text) target.text.textOverlayAlignX = v;
+      if (target?.text) target.text.textOverlayAlignX = newOverlayAlignXValue;
     },
   });
 
@@ -37,9 +40,9 @@ export function useTextOptions(getTarget: () => EditorTarget, t: TranslateFn) {
 
   const textOverlayAlignYModel = computed<AlignY>({
     get: () => getTarget()?.text?.textOverlayAlignY ?? 'top',
-    set: (v) => {
+    set: (newOverlayAlignYValue) => {
       const target = getTarget();
-      if (target?.text) target.text.textOverlayAlignY = v;
+      if (target?.text) target.text.textOverlayAlignY = newOverlayAlignYValue;
     },
   });
 
@@ -51,4 +54,4 @@ export function useTextOptions(getTarget: () => EditorTarget, t: TranslateFn) {
     textOverlayAlignYModel,
     textOverlayAlignYOptions,
   };
-}
+};

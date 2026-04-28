@@ -1,6 +1,9 @@
 import type { EditorTarget, TranslateFn, FillMode } from '~/composables/useEditorOptionsTabs/types';
 
-export function useImageOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+export const useImageOptions = (
+  getTarget: () => EditorTarget,
+  t: TranslateFn
+) => {
   const fillModeOptions = computed(() => [
     { value: 'fill' as FillMode, label: t('image-scalling-fill-label'), testId: 'image-scaling-fill' },
     { value: 'fit' as FillMode, label: t('image-scalling-fit-label'), testId: 'image-scaling-fit' },
@@ -8,9 +11,9 @@ export function useImageOptions(getTarget: () => EditorTarget, t: TranslateFn) {
 
   const fillModeModel = computed({
     get: (): FillMode => (getTarget()?.image?.fillMode ?? 'fit') as FillMode,
-    set: (v: FillMode) => {
+    set: (newFillMode: FillMode) => {
       const target = getTarget();
-      if (target?.image) target.image.fillMode = v;
+      if (target?.image) target.image.fillMode = newFillMode;
     },
   });
 
@@ -22,9 +25,9 @@ export function useImageOptions(getTarget: () => EditorTarget, t: TranslateFn) {
 
   const displayCategoryImageModel = computed<DisplayCategoryImage>({
     get: () => getTarget()?.displayCategoryImage ?? 'off',
-    set: (v) => {
+    set: (newDisplayCategoryImage) => {
       const target = getTarget();
-      if (target) target.displayCategoryImage = v;
+      if (target) target.displayCategoryImage = newDisplayCategoryImage;
     },
   });
 
@@ -34,4 +37,4 @@ export function useImageOptions(getTarget: () => EditorTarget, t: TranslateFn) {
     displayCategoryImageModel,
     displayCategoryImageOptions,
   };
-}
+};

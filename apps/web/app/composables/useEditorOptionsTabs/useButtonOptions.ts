@@ -1,6 +1,9 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export function useButtonOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+export const useButtonOptions = (
+  getTarget: () => EditorTarget,
+  t: TranslateFn
+) => {
   const buttonVariantOptions = computed(() => [
     { value: 'primary' as ButtonVariant, label: t('button-variant-primary-label'), testId: 'slider-button-primary' },
     {
@@ -12,9 +15,9 @@ export function useButtonOptions(getTarget: () => EditorTarget, t: TranslateFn) 
 
   const buttonVariantModel = computed<ButtonVariant>({
     get: () => getTarget()?.button?.variant ?? 'primary',
-    set: (v) => {
+    set: (newButtonVariant) => {
       const target = getTarget();
-      if (target?.button) target.button.variant = v;
+      if (target?.button) target.button.variant = newButtonVariant;
     },
   });
 
@@ -26,9 +29,9 @@ export function useButtonOptions(getTarget: () => EditorTarget, t: TranslateFn) 
 
   const buttonAlignModel = computed<AlignX>({
     get: () => getTarget()?.button?.alignment ?? 'left',
-    set: (v) => {
+    set: (newButtonAlignValue) => {
       const target = getTarget();
-      if (target?.button) target.button.alignment = v;
+      if (target?.button) target.button.alignment = newButtonAlignValue;
     },
   });
 
@@ -38,4 +41,4 @@ export function useButtonOptions(getTarget: () => EditorTarget, t: TranslateFn) 
     buttonAlignModel,
     buttonAlignOptions,
   };
-}
+};
