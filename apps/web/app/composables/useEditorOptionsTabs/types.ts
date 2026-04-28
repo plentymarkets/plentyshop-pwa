@@ -9,9 +9,6 @@ export type ContentAlignment = 'left' | 'center' | 'right';
 export type AddToCartStyle = 'primary' | 'secondary';
 export type WishlistSize = 'small' | 'large';
 export type SourceType = 'cross_selling' | 'category';
-export type EditorMode = 'wysiwyg' | 'html';
-
-export type TranslateFn = (key: string) => string;
 
 export type EditorTarget = {
   text?: {
