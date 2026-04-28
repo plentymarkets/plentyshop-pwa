@@ -9,4 +9,5 @@ Concept guides provide background information about the architecture of the soft
 
 The following pages are available:
 
+- [Blocks architecture](/guide/concept/blocks-architecture.md)
 - [Data flow](https://docs.vuestorefront.io/general/basics/data-flow)
