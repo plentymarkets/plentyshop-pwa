@@ -9,47 +9,14 @@
       <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
     </template>
 
-    <fieldset class="py-2">
-      <legend class="text-sm font-medium text-black">{{ getEditorTranslation('text-align-label') }}</legend>
-
-      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          for="text-align-left"
-          data-testid="text-align-left"
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': navigationBlock.text.textAlignment === 'left' }"
-          @click="navigationBlock.text.textAlignment = 'left'"
-        >
-          <SfIconCheck :class="{ invisible: navigationBlock.text.textAlignment !== 'left' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('text-align-option-left-label') }}
-        </div>
-
-        <div
-          for="text-align-center"
-          data-testid="text-align-center"
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': navigationBlock.text.textAlignment === 'center' }"
-          @click="navigationBlock.text.textAlignment = 'center'"
-        >
-          <SfIconCheck
-            :class="{ invisible: navigationBlock.text.textAlignment !== 'center' }"
-            class="mr-1 w-[1.1rem]"
-          />
-          {{ getEditorTranslation('text-align-option-center-label') }}
-        </div>
-
-        <div
-          for="text-align-right"
-          data-testid="text-align-right"
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': navigationBlock.text.textAlignment === 'right' }"
-          @click="navigationBlock.text.textAlignment = 'right'"
-        >
-          <SfIconCheck :class="{ invisible: navigationBlock.text.textAlignment !== 'right' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('text-align-option-right-label') }}
-        </div>
-      </div>
-    </fieldset>
+    <div class="py-2">
+      <EditorOptionsTabs
+        v-model="textAlignModel"
+        :legend="getEditorTranslation('text-align-label')"
+        test-id-prefix="text-align"
+        :options="textAlignOptions"
+      />
+    </div>
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
@@ -178,7 +145,6 @@ import {
   SfIconArrowBack,
   SfIconArrowForward,
   SfInput,
-  SfIconCheck,
 } from '@storefront-ui/vue';
 
 import type { NavigationFormProps, NavigationContent } from './types';
@@ -210,6 +176,7 @@ const navigationBlock = computed<NavigationContent>(() => {
 
   return content as NavigationContent;
 });
+const { textAlignModel, textAlignOptions } = useEditorOptionsTabs(() => navigationBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">
