@@ -177,7 +177,7 @@ export default defineNuxtConfig({
       '/confirmation',
       '/wishlist',
       '/login',
-      '/signup',
+      '/register',
       '/reset-password',
       '/favicon.ico',
     ],
