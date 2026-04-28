@@ -92,9 +92,7 @@
                 {{ emoji.emoji }}
               </button>
             </div>
-            <div v-if="filteredEmojis.length === 0" class="text-center text-sm text-gray-500 py-4">
-              No emoji found.
-            </div>
+            <div v-if="filteredEmojis.length === 0" class="text-center text-sm text-gray-500 py-4">No emoji found.</div>
           </div>
         </div>
       </div>
@@ -132,8 +130,7 @@ const categories = computed(() => {
   return [...set];
 });
 
-const iconsByCategory = (category: UserIconCategory) =>
-  allIcons.value.filter(({ icon }) => icon.category === category);
+const iconsByCategory = (category: UserIconCategory) => allIcons.value.filter(({ icon }) => icon.category === category);
 
 const filteredEmojis = computed(() => {
   const query = emojiSearch.value.trim().toLowerCase();
