@@ -96,9 +96,7 @@ export const useProduct: UseProductReturn = (slug) => {
    * @example setBreadcrumbs()
    */
   const setBreadcrumbs = () => {
-    const { data: categoryTree } = useCategoryTree();
-
-    state.value.breadcrumbs = generateBreadcrumbs(categoryTree.value, state.value.data, t('common.labels.home'));
+    state.value.breadcrumbs = generateBreadcrumbs(state.value.data, t('common.labels.home'));
   };
 
   /**
