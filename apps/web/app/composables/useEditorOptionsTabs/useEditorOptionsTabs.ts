@@ -1,4 +1,4 @@
-import type { EditorTarget, } from '~/composables/useEditorOptionsTabs/types';
+import type { EditorTarget } from '~/composables/useEditorOptionsTabs/types';
 import type { TranslateFn } from '~/composables/useItemDataTable/types';
 import { useTextboxOptions } from './useTextboxOptions';
 import { useTextOptions } from './useTextOptions';
