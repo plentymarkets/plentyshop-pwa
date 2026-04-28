@@ -35,8 +35,8 @@ The response contains three top-level properties:
 | Property           | Description                              |
 |--------------------|------------------------------------------|
 | `blocks`           | Array of page-specific blocks            |
-| `HeaderContainer`  | Global structure block for the header    |
-| `Footer`           | Global content block for the footer      |
+| `HeaderContainer`  | Global blocks for the header    |
+| `Footer`           | Global blocks for the footer      |
 
 ### Assembly phase
 
