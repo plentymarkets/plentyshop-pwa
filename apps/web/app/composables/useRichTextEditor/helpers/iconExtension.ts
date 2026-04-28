@@ -1,5 +1,6 @@
-import { Node, mergeAttributes, type DOMOutputSpec } from '@tiptap/core';
+import { Node, mergeAttributes } from '@tiptap/core';
 import { userIcons } from '~/components/editor/RichTextEditor/icons';
+import type { DOMOutputSpec } from '@tiptap/pm/model';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
