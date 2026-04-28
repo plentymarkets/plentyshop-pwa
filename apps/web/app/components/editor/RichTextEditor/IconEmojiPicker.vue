@@ -1,19 +1,19 @@
 <template>
-  <div class="relative inline-block z-[500]">
-    <SfDropdown v-model="isOpen" placement="bottom-start">
-      <template #trigger>
-        <EditorRichTextEditorMenuButton
-          data-testid="rte-icon-picker-button"
-          icon-name="emoji"
-          :active="isOpen"
-          @click="isOpen = !isOpen"
-        />
-      </template>
+  <div ref="root" class="relative inline-block">
+    <EditorRichTextEditorMenuButton
+      data-testid="rte-icon-picker-button"
+      icon-name="emoji"
+      :active="open"
+      @click="toggle"
+    />
 
+    <Teleport to="body">
       <div
-        class="-mt-1 z-[300] w-[320px] rounded border border-gray-200 bg-white shadow-lg"
+        v-if="open"
+        :style="dropdownStyle"
+        class="fixed z-[1000] w-[320px] rounded border border-gray-200 bg-white shadow-lg"
+        @mousedown.stop
         @click.stop
-        @mousedown.prevent
       >
         <div class="max-h-[280px] overflow-y-auto p-2">
           <div v-for="category in categories" :key="category" class="mb-2 last:mb-0">
@@ -46,19 +46,20 @@
           </div>
         </div>
       </div>
-    </SfDropdown>
+    </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfDropdown } from '@storefront-ui/vue';
 import { userIcons, type UserIconCategory } from './icons';
 
 const props = defineProps<{
   insertIcon: (name: string) => void;
 }>();
 
-const isOpen = ref(false);
+const root = ref<HTMLElement | null>(null);
+const open = ref(false);
+const dropdownStyle = ref<{ top: string; left: string }>({ top: '0px', left: '0px' });
 
 const allIcons = computed(() => Object.entries(userIcons).map(([name, icon]) => ({ name, icon })));
 
@@ -68,10 +69,48 @@ const categories = computed(() => {
   return [...set];
 });
 
-const iconsByCategory = (category: UserIconCategory) => allIcons.value.filter(({ icon }) => icon.category === category);
+const iconsByCategory = (category: UserIconCategory) =>
+  allIcons.value.filter(({ icon }) => icon.category === category);
+
+const updatePosition = () => {
+  if (!root.value) return;
+  const rect = root.value.getBoundingClientRect();
+  const dropdownWidth = 320;
+  dropdownStyle.value = {
+    top: `${rect.bottom + 4}px`,
+    left: `${rect.right - dropdownWidth}px`,
+  };
+};
+
+const toggle = () => {
+  if (!open.value) updatePosition();
+  open.value = !open.value;
+};
+
+const close = () => {
+  open.value = false;
+};
 
 const onSelectIcon = (name: string) => {
   props.insertIcon(name);
-  isOpen.value = false;
+  close();
 };
+
+const onDocClick = (e: MouseEvent) => {
+  if (!root.value?.contains(e.target as Node)) {
+    close();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('mousedown', onDocClick);
+  window.addEventListener('scroll', close, true);
+  window.addEventListener('resize', close);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', onDocClick);
+  window.removeEventListener('scroll', close, true);
+  window.removeEventListener('resize', close);
+});
 </script>
