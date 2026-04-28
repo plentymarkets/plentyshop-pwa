@@ -40,7 +40,7 @@ The response contains three top-level properties:
 
 ### Assembly phase
 
-The `assembleBlocks` helper normalises the API response.
+A helper normalises the API response.
 If any part of the response is missing, smart defaults are used:
 
 - A missing `HeaderContainer` is replaced with a default header containing the utility bar and navigation.
