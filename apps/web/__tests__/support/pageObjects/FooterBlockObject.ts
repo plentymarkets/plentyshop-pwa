@@ -67,4 +67,10 @@ export class FooterBlockObject extends PageObject {
     this.columnOneTitle.should('have.value', title);
     return this;
   }
+
+  assertNotEditableOnPage() {
+    this.footer.scrollIntoView();
+    this.lastBlockWrapper.find('[data-testid="edit-block-actions"]').should('not.exist');
+    return this;
+  }
 }
