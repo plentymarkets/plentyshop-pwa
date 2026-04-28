@@ -1,4 +1,4 @@
-import { Node, mergeAttributes } from '@tiptap/core';
+import { Node, mergeAttributes, type DOMOutputSpec } from '@tiptap/core';
 import { userIcons } from '~/components/editor/RichTextEditor/icons';
 
 declare module '@tiptap/core' {
@@ -8,6 +8,40 @@ declare module '@tiptap/core' {
     };
   }
 }
+
+const buildSvg = (name: string | null | undefined): string | null => {
+  if (!name) return null;
+  const icon = userIcons[name];
+  if (!icon) return null;
+
+  const paths = icon.paths.map((d) => `<path d="${d}"/>`).join('');
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${icon.viewBox}" ` +
+    `fill="currentColor" width="1em" height="1em" aria-hidden="true">${paths}</svg>`
+  );
+};
+
+const buildIconElement = (name: string | null, extraAttrs: Record<string, unknown> = {}): HTMLElement => {
+  const icon = name ? userIcons[name] : undefined;
+  const svg = buildSvg(name);
+
+  const attrs = mergeAttributes(extraAttrs, {
+    class: 'rte-icon',
+    ...(name ? { 'data-icon': name } : {}),
+    ...(icon ? { title: icon.label, 'aria-label': icon.label } : {}),
+  });
+
+  const span = document.createElement('span');
+  Object.entries(attrs).forEach(([k, v]) => span.setAttribute(k, String(v)));
+
+  if (svg) {
+    span.innerHTML = svg;
+  } else {
+    span.classList.add('rte-icon--missing');
+  }
+
+  return span;
+};
 
 export const IconNode = Node.create({
   name: 'icon',
@@ -31,6 +65,7 @@ export const IconNode = Node.create({
       },
     };
   },
+
   parseHTML() {
     return [
       {
@@ -45,40 +80,18 @@ export const IconNode = Node.create({
     ];
   },
 
-  renderHTML({ HTMLAttributes }) {
-    const name = HTMLAttributes['data-icon'] as string | undefined;
-    const icon = name ? userIcons[name] : undefined;
-
-    return [
-      'span',
-      mergeAttributes(HTMLAttributes, {
-        class: 'rte-icon',
-        ...(icon ? { title: icon.label, 'aria-label': icon.label } : {}),
-      }),
-    ];
+  renderHTML({ node, HTMLAttributes }) {
+    const span = buildIconElement(node.attrs.name as string | null, HTMLAttributes);
+    return span as unknown as DOMOutputSpec;
   },
+
   addNodeView() {
     return ({ node }) => {
-      const name = node.attrs.name as string | null;
-      const icon = name ? userIcons[name] : undefined;
-
-      const dom = document.createElement('span');
-      dom.classList.add('rte-icon');
-
-      if (name) dom.setAttribute('data-icon', name);
-
-      if (icon) {
-        dom.setAttribute('title', icon.label);
-        dom.setAttribute('aria-label', icon.label);
-        const paths = icon.paths.map((d) => `<path d="${d}"/>`).join('');
-        dom.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${icon.viewBox}" fill="currentColor" width="1em" height="1em" aria-hidden="true">${paths}</svg>`;
-      } else {
-        dom.classList.add('rte-icon--missing');
-      }
-
+      const dom = buildIconElement(node.attrs.name as string | null);
       return { dom };
     };
   },
+
   addCommands() {
     return {
       insertIcon:
