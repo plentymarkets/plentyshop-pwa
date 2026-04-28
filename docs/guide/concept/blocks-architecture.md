@@ -4,7 +4,7 @@ This article explains the basics of the blocks architecture and how it works in 
 It covers the data flow, rendering pipeline, the plugin system, the distinction between global and non-global blocks, content and item categories, blockified and non-blockified pages, frozen blocks, and the structure versus content form pattern.
 
 Blocks are the building units of the visual storefront.
-Each page in the shop is composed of a tree of blocks that the editor fetches from the backend, renders on the frontend, and persists back on save.
+Certain pages in the shop — such as the homepage, product pages, and category pages — are composed of a tree of blocks that the editor fetches from the backend, renders on the frontend, and persists back on save.
 A block is either a **structure block** (a container that holds child blocks) or a **content block** (a leaf that renders actual content such as text, images, or a product grid).
 
 Blocks address the common pain points of rigid page layouts by giving merchants a drag-and-drop editing experience while keeping developers in control of the component catalogue.
@@ -29,7 +29,8 @@ PlentyONE API ──► Nuxt Plugin ──► Fetch Blocks ──► Assemble Da
 ### Fetch phase
 
 On every route navigation, the blocks plugin (`plugins/06.blocks.ts`) triggers a data fetch through the `useBlocks` composable.
-The SDK method `getBlocksWithGlobalBlocks()` is called with three parameters: `identifier`, `type`, and `enableGlobalBlocks: true`.
+The plugin determines the page **type** (`immutable`, `category`, `product`) and **identifier** (page-specific ID or slug) and triggers the fetch.
+
 The response contains three top-level properties:
 
 | Property           | Description                              |
@@ -43,11 +44,7 @@ The response contains three top-level properties:
 A helper normalises the API response.
 If any part of the response is missing, smart defaults are used:
 
-- A missing `HeaderContainer` is replaced with a default header containing the utility bar and navigation.
-- A missing `Footer` is replaced with a default footer with colour defaults.
-- An empty `blocks` array is replaced with a default page template that varies by page type (homepage, category, product).
-
-After assembly, a migration step runs to convert legacy block content formats to the current structure.
+- A missing `HeaderContainer`, `Footer`, or empty `blocks` array is replaced with a default provided by the corresponding factory (`utils/blockTemplates/`).
 
 ### State management
 
@@ -64,18 +61,6 @@ When the two diverge, the editor shows an unsaved-changes indicator.
 When the merchant saves, `doSaveBlocksWithGlobalBlocks()` sends the serialised block tree back to the backend.
 The response is re-assembled and both `data` and `cleanData` are updated, resetting the dirty state.
 
-## Plugin
-
-The blocks plugin (`plugins/06.blocks.ts`) is the entry point of the blocks system.
-It runs on every route navigation (`router.afterEach`) and is marked as `parallel: true` so it does not block other plugins.
-
-Its responsibilities are:
-
-1. Determine the page **type** (`immutable`, `category`, `product`) and **identifier** (page-specific ID or slug).
-2. Decide whether to fetch blocks at all (item categories skip the request).
-3. Set the **blocks list context** (`content`, `productCategory`, `product`, or empty) so the editor knows which block templates are available.
-4. Call `useBlocks().fetchBlocks()` with the resolved identifier and type.
-
 ## Rendering
 
 The `EditableBlocks` component is the top-level container that receives the assembled block tree and iterates over it.
@@ -87,7 +72,8 @@ The loader uses `import.meta.glob()` to discover block components at build time 
 2. Nuxt module blocks
 3. Customer package blocks (`node_modules/*/runtime/components/blocks/`)
 
-This approach enables lazy loading: each block component is only loaded when it appears on a page.
+Block components are resolved asynchronously via `defineAsyncComponent`, which enables code-splitting per block.
+Individual blocks can additionally implement viewport-based lazy loading (for example, `ProductRecommendedProducts` defers rendering until the block is near the viewport).
 
 Structure blocks render their children recursively.
 For example, `HeaderContainer` renders its child blocks (utility bar, navigation) through the same `PageBlock` mechanism.
@@ -136,32 +122,6 @@ They are specific to the page they belong to and are fully editable: merchants c
 
 Non-global blocks have `isGlobalTemplate: false` or the flag is absent entirely.
 
-## Content categories vs. item categories
-
-The blocks system behaves differently depending on the type of category being viewed.
-
-### Content categories
-
-Content categories (`category.type === 'content'`) are fully blockified.
-They have a unique category ID that is used as the block identifier.
-Merchants can build custom layouts using the full blocks editor, making content categories ideal for landing pages, information pages, or promotional content.
-
-### Item categories
-
-Item categories (`category.type === 'item'`) use a fixed product grid layout.
-The blocks request is **skipped entirely** for item categories (via the `prevent-blocks-request` prop on `EditableBlocks`).
-The identifier is set to `0`, meaning all item categories share the same default template.
-
-The distinction is made in the category page component:
-
-```typescript
-const identifier = computed(() =>
-  productsCatalog.value?.category?.type === 'content'
-    ? productsCatalog.value.category.id
-    : 0
-);
-```
-
 ## Blockified vs. non-blockified pages
 
 Not every page in the shop uses the blocks system.
@@ -176,6 +136,8 @@ Currently, three page types are blockified:
 | Homepage | `immutable` | `'index'`          |
 | Product  | `product`   | `0`                |
 | Category | `category`  | Category ID or `0` |
+
+For categories, the identifier depends on the category type: **content categories** use their unique category ID, while **item categories** use `0`.
 
 These pages render the `EditableBlocks` component and participate in the full fetch-assemble-render-save cycle.
 
