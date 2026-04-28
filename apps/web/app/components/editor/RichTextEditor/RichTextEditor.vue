@@ -92,12 +92,19 @@
     @switch-to-html="handleSwitchToHtml"
     @close="closeModal"
   />
+
+  <EditorRichTextEditorLinkModal
+    v-if="linkModalOpen"
+    :editor="editor"
+    @close="linkModalOpen = false"
+  />
 </template>
 
 <script setup lang="ts">
 import { EditorContent } from '@tiptap/vue-3';
 
 const modalOpen = ref(false);
+const linkModalOpen = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -142,7 +149,6 @@ const {
   canRedo,
   undo,
   redo,
-  toggleLink,
   clearFormatting,
   focus,
   currentFontSize,
@@ -160,6 +166,18 @@ const editorStyle = computed(() => ({
   minHeight: `${props.minHeight}px`,
   ...textAlignStyle.value,
 }));
+
+// toggleLink opens the custom modal; if already on a link it removes it directly
+const toggleLink = () => {
+  if (!editor.value) return;
+
+  if (editor.value.isActive('link')) {
+    editor.value.chain().focus().unsetLink().run();
+    return;
+  }
+
+  linkModalOpen.value = true;
+};
 
 const openModal = () => {
   modalOpen.value = true;
