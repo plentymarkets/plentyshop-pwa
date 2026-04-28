@@ -18,6 +18,7 @@ import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { FontSize } from './helpers/fontSizeExtension';
 import { IconNode } from './helpers/iconExtension';
 import Placeholder from '@tiptap/extension-placeholder';
+import Emoji, { emojis } from '@tiptap/extension-emoji';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -43,6 +44,10 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
       IconNode,
+      Emoji.configure({
+        emojis,
+        enableEmoticons: true,
+      }),
     ],
     editorProps: {
       transformPastedHTML: (html) => {
@@ -111,6 +116,10 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     editor.value?.chain().focus().insertIcon(name).run();
   };
 
+  const insertEmoji = (name: string) => {
+    editor.value?.chain().focus().setEmoji(name).run();
+  };
+
   return {
     editor,
     expandedLocal,
@@ -135,5 +144,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     clearFormatting,
     focus,
     insertIcon,
+    insertEmoji,
   };
 }

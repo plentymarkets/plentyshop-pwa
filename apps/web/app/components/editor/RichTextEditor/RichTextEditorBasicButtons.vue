@@ -127,7 +127,7 @@
     @click="toggleLink"
   />
 
-  <EditorRichTextEditorIconEmojiPicker :insert-icon="insertIcon" />
+  <EditorRichTextEditorIconEmojiPicker :insert-icon="insertIcon" :insert-emoji="insertEmoji" />
 
   <EditorColorPicker
     data-testid="rte-font-color"
@@ -164,6 +164,7 @@ const props = defineProps<{
   setFontColor: (color: string) => void;
   toggleLink: () => void;
   insertIcon: (name: string) => void;
+  insertEmoji: (name: string) => void;
 }>();
 
 const isBlockTypeOpen = ref(false);
