@@ -29,6 +29,7 @@
               :toggle-link="toggleLink"
               :current-font-size="currentFontSize"
               :on-text-size-change="setFontSize"
+              :insert-icon="insertIcon"
             />
 
             <EditorRichTextEditorExtendedButtons
@@ -85,6 +86,7 @@ defineProps<{
   redo: () => void;
   toggleLink: () => void;
   clearFormatting: () => void;
+  insertIcon: (name: string) => void;
 }>();
 
 const emit = defineEmits<{

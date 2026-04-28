@@ -12,6 +12,7 @@
           :text-color="textColor"
           :set-font-color="setFontColor"
           :toggle-link="toggleLink"
+          :insert-icon="insertIcon"
         />
       </div>
 
@@ -89,6 +90,7 @@
     :redo="redo"
     :toggle-link="toggleLink"
     :clear-formatting="clearFormatting"
+    :insert-icon="insertIcon"
     @switch-to-html="handleSwitchToHtml"
     @close="closeModal"
   />
@@ -147,6 +149,7 @@ const {
   focus,
   currentFontSize,
   setFontSize,
+  insertIcon,
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
   onUpdateModelValue: (v) => emit('update:modelValue', v),

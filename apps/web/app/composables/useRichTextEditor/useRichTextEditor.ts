@@ -16,6 +16,7 @@ import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { FontSize } from './helpers/fontSizeExtension';
+import { IconNode } from './helpers/iconExtension';
 import Placeholder from '@tiptap/extension-placeholder';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
@@ -41,6 +42,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       Placeholder.configure({
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
+      IconNode,
     ],
     editorProps: {
       transformPastedHTML: (html) => {
@@ -105,6 +107,10 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const focus = () => editor.value?.commands.focus();
 
+  const insertIcon = (name: string) => {
+    editor.value?.chain().focus().insertIcon(name).run();
+  };
+
   return {
     editor,
     expandedLocal,
@@ -128,5 +134,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     toggleLink,
     clearFormatting,
     focus,
+    insertIcon,
   };
 }
