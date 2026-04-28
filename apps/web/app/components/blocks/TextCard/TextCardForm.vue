@@ -56,31 +56,14 @@
       </label>
     </div>
 
-    <fieldset class="py-2">
-      <UiFormLabel>{{ getEditorTranslation('outline-label') }}</UiFormLabel>
-
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          data-testid="button-outline-primary"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'primary' }"
-          @click="textCardBlock.button.variant = 'primary'"
-        >
-          <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'primary' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('button-variant-primary-label') }}
-        </div>
-
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          data-testid="button-outline-secondary"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'secondary' }"
-          @click="textCardBlock.button.variant = 'secondary'"
-        >
-          <SfIconCheck :class="{ invisible: textCardBlock.button.variant !== 'secondary' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('button-variant-secondary-label') }}
-        </div>
-      </div>
-    </fieldset>
+    <div class="py-2">
+      <EditorOptionsTabs
+        v-model="buttonVariantModel"
+        :legend="getEditorTranslation('outline-label')"
+        test-id-prefix="button-variant"
+        :options="buttonVariantOptions"
+      />
+    </div>
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -184,7 +167,6 @@
 import {
   SfInput,
   SfSwitch,
-  SfIconCheck,
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfIconArrowBack,
@@ -232,6 +214,11 @@ const contentModel = computed<string>({
     textCardBlock.value.text.htmlDescription = val ?? '';
   },
 });
+
+const { buttonVariantModel, buttonVariantOptions } = useEditorOptionsTabs(
+  () => textCardBlock.value,
+  getEditorTranslation,
+);
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
