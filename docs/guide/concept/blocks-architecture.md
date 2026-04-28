@@ -21,9 +21,9 @@ The blocks system decouples layout from code: PlentyONE stores the block tree as
 The block data flow follows a fetch-assemble-render-save cycle.
 
 ```
-Backend API ──► Plugin (06.blocks.ts) ──► useBlocks ──► assembleBlocks ──► EditableBlocks ──► PageBlock
+PlentyONE API ──► Nuxt Plugin ──► Fetch Blocks ──► Assemble Data ──► Block Container ──► Block Rendering
                                               │                                                    │
-                                              │◄──────────── saveBlocks ◄──── Editor UI ◄──────────┘
+                                              │◄──────────── Save Blocks ◄──── Editor UI ◄──────────┘
 ```
 
 ### Fetch phase
