@@ -373,16 +373,6 @@ const { footnoteAlignModel, footnoteAlignOptions } = useEditorOptionsTabs(
   () => footerBlock.value,
   getEditorTranslation,
 );
-watch(
-  footerBlock,
-  (updatedFooterBlock) => {
-    const block = getSourceBlock();
-    if (block) {
-      block.content = updatedFooterBlock.content;
-    }
-  },
-  { deep: true },
-);
 </script>
 
 <i18n lang="json">
