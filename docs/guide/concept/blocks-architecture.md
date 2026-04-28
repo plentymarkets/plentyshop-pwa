@@ -1,6 +1,6 @@
 # Blocks architecture
 
-This article explains the basics of the blocks architecture and how it works in plentyshop PWA.
+This article explains the basics of the blocks architecture and how it works in PlentyONE Shop.
 It covers the data flow, rendering pipeline, the plugin system, the distinction between global and non-global blocks, content and item categories, blockified and non-blockified pages, frozen blocks, and the structure versus content form pattern.
 
 Blocks are the building units of the visual storefront.
