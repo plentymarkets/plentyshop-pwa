@@ -1,4 +1,5 @@
-import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
+import type { EditorTarget } from '~/composables/useEditorOptionsTabs/types';
+import type { TranslateFn } from '~/composables/useItemDataTable/types';
 
 export const useButtonOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const buttonVariantOptions = computed(() => [
