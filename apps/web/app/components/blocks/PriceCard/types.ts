@@ -14,3 +14,4 @@ export type PriceCardProps = {
 export interface PriceCardFormProps {
   uuid?: string;
 }
+export type WishlistSize = 'small' | 'large';

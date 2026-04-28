@@ -69,43 +69,16 @@
       </div>
     </div>
 
-    <fieldset class="py-2">
-      <div class="flex items-center gap-2">
-        <legend class="text-sm font-medium text-black m-0">
-          {{ getEditorTranslation('image-scalling-label') }}
-        </legend>
-        <SfTooltip :label="fillTooltip" placement="top">
-          <SfIconInfo size="sm" />
-        </SfTooltip>
-      </div>
-      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
-        <div
-          data-testid="align-y-center"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.fillMode === 'fill' }"
-          @click="uiImageTextBlock.image.fillMode = 'fill'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.image.fillMode !== 'fill' }"
-            class="w-[1.1rem] shrink-0 mr-1"
-          />
-          {{ getEditorTranslation('image-scalling-fill-label') }}
-        </div>
-
-        <div
-          data-testid="align-y-top"
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.fillMode === 'fit' }"
-          @click="uiImageTextBlock.image.fillMode = 'fit'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.image.fillMode !== 'fit' }"
-            class="w-[1.1rem] shrink-0 mr-1"
-          />
-          {{ getEditorTranslation('image-scalling-fit-label') }}
-        </div>
-      </div>
-    </fieldset>
+    <div class="py-2">
+      <EditorOptionsTabs
+        v-model="fillModeModel"
+        :legend="getEditorTranslation('image-scalling-label')"
+        :tooltip="fillTooltip"
+        tooltip-placement="top"
+        test-id-prefix="image-scaling"
+        :options="fillModeOptions"
+      />
+    </div>
     <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
@@ -138,52 +111,14 @@
       @update:model-value="uiImageTextBlock.text.textOverlay = $event"
     />
 
-    <fieldset class="py-2">
-      <legend class="text-sm font-medium text-black">
-        {{ getEditorTranslation('text-overlay-align-y-label') }}
-      </legend>
-
-      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden mt-2">
-        <div
-          data-testid="align-y-top"
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignY === 'top' }"
-          @click="uiImageTextBlock.text.textOverlayAlignY = 'top'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'top' }"
-            class="w-[1.1rem] shrink-0 mr-1"
-          />
-          {{ getEditorTranslation('text-overlay-align-y-top') }}
-        </div>
-
-        <div
-          data-testid="align-y-center"
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignY === 'center' }"
-          @click="uiImageTextBlock.text.textOverlayAlignY = 'center'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'center' }"
-            class="w-[1.1rem] shrink-0 mr-1"
-          />
-          {{ getEditorTranslation('text-overlay-align-y-center') }}
-        </div>
-
-        <div
-          data-testid="align-y-bottom"
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textOverlayAlignY === 'bottom' }"
-          @click="uiImageTextBlock.text.textOverlayAlignY = 'bottom'"
-        >
-          <SfIconCheck
-            :class="{ invisible: uiImageTextBlock.text.textOverlayAlignY !== 'bottom' }"
-            class="w-[1.1rem] shrink-0 mr-1"
-          />
-          {{ getEditorTranslation('text-overlay-align-y-bottom') }}
-        </div>
-      </div>
-    </fieldset>
+    <div class="py-2">
+      <EditorOptionsTabs
+        v-model="textOverlayAlignYModel"
+        :legend="getEditorTranslation('text-overlay-align-y-label')"
+        test-id-prefix="text-overlay-align-y"
+        :options="textOverlayAlignYOptions"
+      />
+    </div>
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -219,38 +154,12 @@
         />
       </div>
       <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('button-variant-label') }}</UiFormLabel>
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'primary',
-            }"
-            data-testid="slider-button-primary"
-            @click="uiImageTextBlock.button.variant = 'primary'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: uiImageTextBlock.button.variant !== 'primary' }"
-            />
-            {{ getEditorTranslation('button-variant-primary-label') }}
-          </div>
-
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'secondary',
-            }"
-            data-testid="slider-button-secondary"
-            @click="uiImageTextBlock.button.variant = 'secondary'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: uiImageTextBlock.button.variant !== 'secondary' }"
-            />
-            {{ getEditorTranslation('button-variant-secondary-label') }}
-          </div>
-        </div>
+        <EditorOptionsTabs
+          v-model="buttonVariantModel"
+          :legend="getEditorTranslation('button-variant-label')"
+          test-id-prefix="slider-button-variant"
+          :options="buttonVariantOptions"
+        />
       </div>
     </div>
   </UiAccordionItem>
@@ -363,7 +272,6 @@
 <script setup lang="ts">
 import {
   SfInput,
-  SfIconCheck,
   SfIconArrowBack,
   SfIconArrowUpward,
   SfIconArrowDownward,
@@ -393,6 +301,15 @@ const DEFAULT_LAYOUT = {
   paddingRight: 0,
 };
 
+const {
+  fillModeModel,
+  fillModeOptions,
+  textOverlayAlignYModel,
+  textOverlayAlignYOptions,
+  buttonVariantModel,
+  buttonVariantOptions,
+} = useEditorOptionsTabs(() => uiImageTextBlock.value, getEditorTranslation);
+
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
   const migrated = migrateImageContent(rawContent as ImageContent | OldContent);
@@ -419,17 +336,14 @@ watch([isTransparent, backgroundColor], () => {
   uiImageTextBlock.value.layout.backgroundColor = isTransparent.value ? 'transparent' : backgroundColor.value;
 });
 
-watch(
-  () => uiImageTextBlock.value.image.fillMode,
-  (newMode) => {
-    if (newMode === 'fill') {
-      uiImageTextBlock.value.layout.paddingTop = 0;
-      uiImageTextBlock.value.layout.paddingBottom = 0;
-      uiImageTextBlock.value.layout.paddingLeft = 0;
-      uiImageTextBlock.value.layout.paddingRight = 0;
-    }
-  },
-);
+watch(fillModeModel, (newMode) => {
+  if (newMode === 'fill') {
+    uiImageTextBlock.value.layout.paddingTop = 0;
+    uiImageTextBlock.value.layout.paddingBottom = 0;
+    uiImageTextBlock.value.layout.paddingLeft = 0;
+    uiImageTextBlock.value.layout.paddingRight = 0;
+  }
+});
 
 const imageGroupOpen = ref(false);
 const textGroupOpen = ref(false);
