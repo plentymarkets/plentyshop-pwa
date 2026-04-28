@@ -14,7 +14,7 @@ By implementing blocks, merchants can rearrange, add, and remove page sections w
 
 The blocks architecture was introduced to replace static page templates with a flexible, CMS-style content system.
 Historically, page layouts were hard-coded in Vue components, meaning every layout change required a code deployment.
-The blocks system decouples layout from code: the backend stores the block tree as structured data, and the frontend dynamically renders whatever the backend delivers.
+The blocks system decouples layout from code: PlentyONE stores the block tree as structured data, and the shop dynamically renders whatever the system delivers.
 
 ## Data flow
 
