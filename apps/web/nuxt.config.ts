@@ -83,11 +83,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            tiptap: [
-              '@tiptap/core',
-              '@tiptap/starter-kit',
-              '@tiptap/vue-3',
-            ],
+            tiptap: ['@tiptap/core', '@tiptap/starter-kit', '@tiptap/vue-3'],
             tiptapExtensions: [
               '@tiptap/extension-color',
               '@tiptap/extension-emoji',
