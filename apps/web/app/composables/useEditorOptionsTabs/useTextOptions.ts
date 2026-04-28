@@ -1,9 +1,6 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export const useTextOptions = (
-  getTarget: () => EditorTarget,
-  t: TranslateFn
-) => {
+export const useTextOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const textAlignOptions = computed(() => [
     { value: 'left' as AlignX, label: t('text-align-option-left-label'), testId: 'slider-text-align-left' },
     { value: 'center' as AlignX, label: t('text-align-option-center-label'), testId: 'slider-text-align-center' },

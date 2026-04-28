@@ -1,9 +1,6 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export const useProductOptions = (
-  getTarget: () => EditorTarget,
-  t: TranslateFn
-) => {
+export const useProductOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const itemCountPositionOptions = computed(() => [
     { value: 'left' as ItemCountPosition, label: t('position-left'), testId: 'item-count-left' },
     { value: 'center' as ItemCountPosition, label: t('position-center'), testId: 'item-count-center' },

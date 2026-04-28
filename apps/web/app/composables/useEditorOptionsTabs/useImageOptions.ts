@@ -1,9 +1,6 @@
 import type { EditorTarget, TranslateFn, FillMode } from '~/composables/useEditorOptionsTabs/types';
 
-export const useImageOptions = (
-  getTarget: () => EditorTarget,
-  t: TranslateFn
-) => {
+export const useImageOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const fillModeOptions = computed(() => [
     { value: 'fill' as FillMode, label: t('image-scalling-fill-label'), testId: 'image-scaling-fill' },
     { value: 'fit' as FillMode, label: t('image-scalling-fit-label'), testId: 'image-scaling-fit' },

@@ -1,9 +1,6 @@
 import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
 
-export const useButtonOptions = (
-  getTarget: () => EditorTarget,
-  t: TranslateFn
-) => {
+export const useButtonOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const buttonVariantOptions = computed(() => [
     { value: 'primary' as ButtonVariant, label: t('button-variant-primary-label'), testId: 'slider-button-primary' },
     {
