@@ -1,0 +1,54 @@
+import type { EditorTarget, TranslateFn } from '~/composables/useEditorOptionsTabs/types';
+
+export function useTextOptions(getTarget: () => EditorTarget, t: TranslateFn) {
+  const textAlignOptions = computed(() => [
+    { value: 'left' as AlignX, label: t('text-align-option-left-label'), testId: 'slider-text-align-left' },
+    { value: 'center' as AlignX, label: t('text-align-option-center-label'), testId: 'slider-text-align-center' },
+    { value: 'right' as AlignX, label: t('text-align-option-right-label'), testId: 'slider-text-align-right' },
+  ]);
+
+  const textAlignModel = computed<AlignX>({
+    get: () => getTarget()?.text?.textAlignment ?? 'left',
+    set: (v) => {
+      const target = getTarget();
+      if (target?.text) target.text.textAlignment = v;
+    },
+  });
+
+  const textOverlayAlignXOptions = computed(() => [
+    { value: 'left' as AlignX, label: t('text-overlay-align-x-left'), testId: 'text-overlay-align-x-left' },
+    { value: 'center' as AlignX, label: t('text-overlay-align-x-center'), testId: 'text-overlay-align-x-center' },
+    { value: 'right' as AlignX, label: t('text-overlay-align-x-right'), testId: 'text-overlay-align-x-right' },
+  ]);
+
+  const textOverlayAlignXModel = computed<AlignX>({
+    get: () => getTarget()?.text?.textOverlayAlignX ?? 'left',
+    set: (v) => {
+      const target = getTarget();
+      if (target?.text) target.text.textOverlayAlignX = v;
+    },
+  });
+
+  const textOverlayAlignYOptions = computed(() => [
+    { value: 'top' as AlignY, label: t('text-overlay-align-y-top'), testId: 'text-overlay-align-y-top' },
+    { value: 'center' as AlignY, label: t('text-overlay-align-y-center'), testId: 'text-overlay-align-y-center' },
+    { value: 'bottom' as AlignY, label: t('text-overlay-align-y-bottom'), testId: 'text-overlay-align-y-bottom' },
+  ]);
+
+  const textOverlayAlignYModel = computed<AlignY>({
+    get: () => getTarget()?.text?.textOverlayAlignY ?? 'top',
+    set: (v) => {
+      const target = getTarget();
+      if (target?.text) target.text.textOverlayAlignY = v;
+    },
+  });
+
+  return {
+    textAlignModel,
+    textAlignOptions,
+    textOverlayAlignXModel,
+    textOverlayAlignXOptions,
+    textOverlayAlignYModel,
+    textOverlayAlignYOptions,
+  };
+}
