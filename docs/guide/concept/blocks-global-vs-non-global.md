@@ -9,10 +9,10 @@ The most important architectural distinction in the blocks system is between **g
 Global blocks appear on every page of the shop.
 Currently there are two global blocks:
 
-| Block              | Type        | Role                                           |
-|--------------------|-------------|-------------------------------------------------|
-| `HeaderContainer`  | `structure` | Contains utility bar and navigation              |
-| `Footer`           | `content`   | Contains footer links, legal text, and branding  |
+| Block             | Type        | Role                                            |
+| ----------------- | ----------- | ----------------------------------------------- |
+| `HeaderContainer` | `structure` | Contains utility bar and navigation             |
+| `Footer`          | `content`   | Contains footer links, legal text, and branding |
 
 Global blocks are identified by the `isGlobalTemplate: true` flag in their `meta` object.
 

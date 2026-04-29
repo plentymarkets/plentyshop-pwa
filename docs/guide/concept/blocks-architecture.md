@@ -33,11 +33,11 @@ The plugin determines the page **type** (`immutable`, `category`, `product`) and
 
 The response contains three top-level properties:
 
-| Property           | Description                              |
-|--------------------|------------------------------------------|
-| `blocks`           | Array of page-specific blocks            |
-| `HeaderContainer`  | Global blocks for the header    |
-| `Footer`           | Global blocks for the footer      |
+| Property          | Description                   |
+| ----------------- | ----------------------------- |
+| `blocks`          | Array of page-specific blocks |
+| `HeaderContainer` | Global blocks for the header  |
+| `Footer`          | Global blocks for the footer  |
 
 ### Assembly phase
 
@@ -77,7 +77,7 @@ Blockified pages opt in via `definePageMeta({ isBlockified: true })`.
 Currently, three page types are blockified:
 
 | Page     | Type        | Identifier         |
-|----------|-------------|--------------------|
+| -------- | ----------- | ------------------ |
 | Homepage | `immutable` | `'index'`          |
 | Product  | `product`   | `0`                |
 | Category | `category`  | Category ID or `0` |
