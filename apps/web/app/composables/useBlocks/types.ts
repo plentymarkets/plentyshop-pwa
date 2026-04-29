@@ -6,6 +6,7 @@ export interface UseBlocksState {
   defaultTemplateData: Block[];
   loading: boolean;
   isSettling: boolean;
+  hasSnapshot: boolean;
 }
 
 export interface UseBlocks {
@@ -18,6 +19,7 @@ export interface UseBlocks {
   headerContainer: Readonly<Ref<Block | undefined>>;
   footer: Readonly<Ref<Block | undefined>>;
   loading: Readonly<Ref<boolean>>;
+  hasSnapshot: Readonly<Ref<boolean>>;
   defaultTemplateData: Readonly<Ref<Block[]>>;
   fetchBlocks: (identifier: string | number, type: string) => Promise<void>;
   saveBlocks: (identifier: string | number, type: string, content: string) => Promise<boolean>;
