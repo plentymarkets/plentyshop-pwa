@@ -42,8 +42,7 @@ const { headerContainer } = useBlocks();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
-const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void } | null>(null);
-const isInnerFormSubEditing = ref(false);
+const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
 const elementsOpen = ref(true);
 const editingBlockIndex = ref<number | undefined>(undefined);
@@ -102,16 +101,14 @@ const resolveBlockLabels = async () => {
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
-  isInnerFormSubEditing.value = false;
   currentActiveBlockIndex.value = index;
   setEditTitle(blockLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
-  if (isInnerFormSubEditing.value && innerFormRef.value?.exitEditMode) {
+  if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
     innerFormRef.value.exitEditMode(false);
-    isInnerFormSubEditing.value = false;
-    const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
+    const blockLabel = editingBlockIndex.value === undefined ? undefined : blockLabels.value[editingBlockIndex.value];
     if (blockLabel) setEditTitle(blockLabel);
     return false;
   }

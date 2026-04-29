@@ -194,8 +194,11 @@ const updateBlocks = (newBlocks: SlideBlock[]) => {
   slides.value = newBlocks;
 };
 
+const isSubEditing = computed(() => editingSlideIndex.value !== undefined);
+
 defineExpose({
   exitEditMode,
+  isSubEditing,
 });
 </script>
 

@@ -55,6 +55,7 @@ watch(
 const { deleteBlock } = useBlockManager();
 
 const { editTitle: customTitle, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
+onBeforeUnmount(() => clearCustomTitle());
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
 const handleBackClick = () => {
   if (childComponentRef.value?.exitEditMode) {
