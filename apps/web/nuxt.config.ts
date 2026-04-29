@@ -56,6 +56,8 @@ export default defineNuxtConfig({
         '@tiptap/extension-underline',
         '@tiptap/starter-kit',
         '@tiptap/vue-3',
+        '@tiptap/extension-placeholder',
+        '@tiptap/core',
         '@vee-validate/yup',
         '@vue/devtools-core',
         '@vue/devtools-kit',
