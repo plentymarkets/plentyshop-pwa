@@ -21,6 +21,21 @@ Individual blocks can additionally implement viewport-based lazy loading (for ex
 Structure blocks render their children recursively.
 For example, `HeaderContainer` renders its child blocks (utility bar, navigation) through the same `PageBlock` mechanism.
 
+## Frozen blocks
+
+Frozen blocks are a **navigation optimisation** that prevents visual flicker during route transitions.
+
+When the user navigates from one blockified page to another, there is a brief moment where the new page's block data has not loaded yet but the old data is stale.
+Without frozen blocks, the page would briefly flash empty or show the wrong content.
+
+The mechanism works as follows:
+
+1. On `onBeforeRouteUpdate`, the current `renderedBlocks` are captured into a `frozenBlocks` ref.
+2. While frozen blocks exist, the template renders them instead of the (not yet loaded) fresh data.
+3. When the new page's block data arrives and can be rendered, the page transitions from showing the previously frozen content to showing the fresh block tree.
+
+This creates a seamless transition where the old content remains visible during navigation until the new content is ready to render.
+
 ## Related resources
 
 Linked concepts

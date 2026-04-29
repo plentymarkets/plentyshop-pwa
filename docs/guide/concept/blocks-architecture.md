@@ -1,7 +1,7 @@
 # Blocks architecture
 
 This article explains the basics of the blocks architecture and how it works in PlentyONE Shop.
-It covers the data flow, rendering pipeline, the plugin system, the distinction between global and non-global blocks, content and item categories, blockified and non-blockified pages, frozen blocks, and the structure versus content form pattern.
+It covers the data flow, rendering pipeline, the plugin system, the distinction between global and non-global blocks, content and item categories, blockified and non-blockified pages, and the structure versus content form pattern.
 
 Blocks are the building units of the visual storefront.
 Certain pages in the shop — such as the homepage, product pages, and category pages — are composed of a tree of blocks that the editor fetches from the backend, renders on the frontend, and persists back on save.
@@ -91,21 +91,6 @@ These pages render the `EditableBlocks` component and participate in the full fe
 Pages like checkout, my account, and legal pages do not use blocks.
 They are rendered with traditional Vue components and have no editor overlay.
 The blocks plugin detects that these pages are not blockified and skips the data fetch.
-
-## Frozen blocks
-
-Frozen blocks are a **navigation optimisation** that prevents visual flicker during route transitions.
-
-When the user navigates from one blockified page to another, there is a brief moment where the new page's block data has not loaded yet but the old data is stale.
-Without frozen blocks, the page would briefly flash empty or show the wrong content.
-
-The mechanism works as follows:
-
-1. On `onBeforeRouteUpdate`, the current `renderedBlocks` are captured into a `frozenBlocks` ref.
-2. While frozen blocks exist, the template renders them instead of the (not yet loaded) fresh data.
-3. When the new page's block data arrives and can be rendered, the page transitions from showing the previously frozen content to showing the fresh block tree.
-
-This creates a seamless transition where the old content remains visible during navigation until the new content is ready to render.
 
 For the distinction between structure and content blocks, see [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md).
 
