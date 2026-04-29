@@ -1,6 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core';
-import { userIcons } from '~/components/editor/RichTextEditor/icons';
-import type { DOMOutputSpec } from '@tiptap/pm/model';
+import { userIcons } from '~/components/editor/RichTextEditor/utils/icons';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -22,11 +21,11 @@ const buildSvg = (name: string | null | undefined): string | null => {
   );
 };
 
-const buildIconElement = (name: string | null, extraAttrs: Record<string, unknown> = {}): HTMLElement => {
+const buildIconElement = (name: string | null): HTMLElement => {
   const icon = name ? userIcons[name] : undefined;
   const svg = buildSvg(name);
 
-  const attrs = mergeAttributes(extraAttrs, {
+  const attrs = mergeAttributes({
     class: 'rte-icon',
     ...(name ? { 'data-icon': name } : {}),
     ...(icon ? { title: icon.label, 'aria-label': icon.label } : {}),
@@ -82,8 +81,16 @@ export const IconNode = Node.create({
   },
 
   renderHTML({ node, HTMLAttributes }) {
-    const span = buildIconElement(node.attrs.name as string | null, HTMLAttributes);
-    return span as unknown as DOMOutputSpec;
+    const name = node.attrs.name as string | null;
+    const icon = name ? userIcons[name] : undefined;
+    return [
+      'span',
+      mergeAttributes(HTMLAttributes, {
+        class: 'rte-icon',
+        ...(name ? { 'data-icon': name } : {}),
+        ...(icon ? { title: icon.label, 'aria-label': icon.label } : {}),
+      }),
+    ];
   },
 
   addNodeView() {

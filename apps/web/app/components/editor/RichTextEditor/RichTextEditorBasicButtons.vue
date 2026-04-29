@@ -127,7 +127,7 @@
     @click="toggleLink"
   />
 
-  <EditorRichTextEditorIconEmojiPicker :insert-icon="insertIcon" :insert-emoji="insertEmoji" />
+  <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
 
   <EditorColorPicker
     data-testid="rte-font-color"
