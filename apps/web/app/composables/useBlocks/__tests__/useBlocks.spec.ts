@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlocks } from '../useBlocks';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
@@ -272,7 +273,7 @@ describe('useBlocks', () => {
     });
   });
 
-  describe('default blocks fallback', () => {
+    describe('default blocks fallback', () => {
     it('should assemble default product blocks with HeaderContainer and Footer when API returns no blocks', async () => {
       setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock });
       await useBlocks().fetchBlocks(0, 'product');
