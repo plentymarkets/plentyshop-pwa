@@ -6,6 +6,15 @@
   "scripts": {
     "dev": "nodemon",
     "start": "echo \"Starting server...\" && nodemon --spawn",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:start:prod": "pm2 start ecosystem.config.js --env production",
+    "pm2:stop": "pm2 stop plentyshop-middleware",
+    "pm2:restart": "pm2 restart plentyshop-middleware",
+    "pm2:reload": "pm2 reload plentyshop-middleware",
+    "pm2:delete": "pm2 delete plentyshop-middleware",
+    "pm2:logs": "pm2 logs plentyshop-middleware",
+    "pm2:monit": "pm2 monit",
+    "pm2:status": "pm2 describe plentyshop-middleware",
     "lint": "echo \"No linting configured for server app\"",
     "lint:fix": "echo \"No linting configured for server app\"",
     "build": "tsup --minify"
