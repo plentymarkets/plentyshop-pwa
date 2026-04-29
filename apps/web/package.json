@@ -38,7 +38,7 @@
     "@nuxt/fonts": "^0.14.0",
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@vueuse/core": "^14.2.1",
-    "axios": "^1.13.5",
+    "axios": "^1.15.2",
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
