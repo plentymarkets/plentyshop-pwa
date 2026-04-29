@@ -273,7 +273,7 @@ describe('useBlocks', () => {
     });
   });
 
-    describe('default blocks fallback', () => {
+  describe('default blocks fallback', () => {
     it('should assemble default product blocks with HeaderContainer and Footer when API returns no blocks', async () => {
       setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock });
       await useBlocks().fetchBlocks(0, 'product');
