@@ -5,6 +5,7 @@
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
       class="group/col relative z-[1]"
+      :style="getColumnIndicatorStyle(colIndex)"
       data-testid="multi-grid-column"
     >
       <div
@@ -126,6 +127,14 @@ const getBlockActions = () => ({
   buttonClasses: ['border-2', 'border-purple-600'],
   hoverBackground: ['hover:bg-purple-500'],
 });
+
+const COLUMN_COLORS = ['#4285F4', '#34A853', '#9C59D1', '#F4791F', '#E8394A', '#00ACC1', '#7B6E27'];
+
+const getColumnIndicatorStyle = (colIndex: number) => {
+  if (!enableActions.value || !shouldEnableEditorFeatures.value) return {};
+  const color = COLUMN_COLORS[colIndex % COLUMN_COLORS.length];
+  return { borderTop: `3px solid ${color}` };
+};
 
 const enableActions = computed(() => attrs.enableActions === true);
 

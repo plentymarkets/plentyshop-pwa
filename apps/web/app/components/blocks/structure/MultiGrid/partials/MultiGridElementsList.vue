@@ -1,38 +1,31 @@
 <template>
   <div>
-    <div ref="listRef">
-      <!-- Element rows -->
-      <div
-        v-for="(block, i) in blocks"
-        :key="block.uuid"
-        :data-el-item="true"
-        :style="{ opacity: dragState?.fromIdx === i ? 0.25 : 1 }"
-        class="transition-opacity duration-100"
-      >
-        <!-- Drop indicator above -->
+    <draggable
+      v-if="blocks.length"
+      v-model="internalBlocks"
+      item-key="uuid"
+      handle=".mg-drag-handle"
+      :filter="'.no-drag'"
+      @end="onDragEnd"
+    >
+      <template #item="{ element: block, index: i }">
         <div
-          v-if="dragState && dragState.fromIdx !== i && dragState.overIdx === i && dragState.fromIdx > i"
-          class="h-[3px] bg-[#1D5EC7] mx-2.5 my-px rounded-sm"
-        />
-
-        <!-- Element row -->
-        <div
-          class="flex items-center py-[7px] px-2.5 pr-[10px] border-b border-[#f2f2f2] select-none cursor-default transition-colors duration-100"
+          :key="block.uuid"
+          class="flex items-center py-[7px] px-2 pr-2.5 border-b border-[#f2f2f2] transition-colors duration-100"
           :class="[
-            block.uuid === selectedId ? 'bg-[#eef3ff] outline outline-1 outline-[#d0deff] -outline-offset-1' : '',
+            block.uuid === selectedId
+              ? 'bg-[#eef3ff] outline outline-1 outline-[#d0deff] -outline-offset-1'
+              : 'hover:bg-[#fafafa]',
           ]"
           @click="$emit('select', block.uuid)"
-          @mouseenter="hoveredIdx = i"
-          @mouseleave="hoveredIdx = -1"
         >
           <!-- Drag handle -->
-          <div
-            class="text-xs mr-[7px] cursor-grab flex-shrink-0 px-[3px] leading-none tracking-[0.3px] transition-colors duration-100"
-            :class="hoveredIdx === i ? 'text-[#bbb]' : 'text-[#ddd]'"
-            @pointerdown.prevent="startDrag($event, i)"
+          <button
+            class="mg-drag-handle cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600 flex-shrink-0"
+            aria-label="Drag to reorder"
           >
-            &#8942;&#8942;
-          </div>
+            <NuxtImg width="18" height="18" :src="dragIcon" />
+          </button>
 
           <!-- Color swatch -->
           <div
@@ -43,7 +36,10 @@
           <!-- Label -->
           <span
             class="flex-1 text-[13px] text-[#1a1a1a] overflow-hidden text-ellipsis whitespace-nowrap"
-            :class="block.uuid === selectedId ? 'font-medium' : ''"
+            :class="[
+              block.uuid === selectedId ? 'font-medium' : '',
+              !block.visible ? 'text-gray-400' : '',
+            ]"
           >
             {{ block.label }}
           </span>
@@ -56,37 +52,66 @@
             {{ block.span }}/12
           </span>
 
-          <!-- Type (on hover/selected) -->
-          <span
-            v-if="hoveredIdx === i || block.uuid === selectedId"
-            class="text-[9px] text-[#bbb] font-semibold tracking-[0.05em] ml-[5px] uppercase flex-shrink-0"
-          >
-            {{ block.type }}
-          </span>
-
-          <!-- Delete -->
+          <!-- Edit button -->
           <button
-            v-if="hoveredIdx === i"
-            type="button"
-            class="border-none bg-transparent text-[#ccc] cursor-pointer text-[17px] p-0 pl-1.5 leading-none flex-shrink-0 transition-colors duration-100 hover:text-[#e53e3e]"
-            @click.stop="$emit('delete', block.uuid)"
+            class="text-gray-500 rounded-full no-drag ml-1 p-0.5"
+            aria-label="Edit block"
+            :data-testid="`mg-edit-item-${i}`"
+            @click.stop="$emit('edit', i)"
           >
-            &times;
+            <SfIconBase size="xs" viewBox="0 0 18 18">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path :d="editPath" fill="currentColor" />
+              </svg>
+            </SfIconBase>
           </button>
-        </div>
 
-        <!-- Drop indicator below -->
-        <div
-          v-if="dragState && dragState.fromIdx !== i && dragState.overIdx === i && dragState.fromIdx < i"
-          class="h-[3px] bg-[#1D5EC7] mx-2.5 my-px rounded-sm"
-        />
-      </div>
-    </div>
+          <!-- Action menu -->
+          <div class="relative no-drag">
+            <button
+              class="text-gray-500 rounded-full p-0.5"
+              :data-testid="`mg-menu-item-${i}`"
+              @click.stop="toggleMenu(i)"
+            >
+              <SfIconMoreVert size="sm" />
+            </button>
+
+            <div
+              v-if="openMenuIndex === i"
+              class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+              @click.stop
+            >
+              <div class="px-4 py-3 border-b">
+                <div class="flex items-center justify-between">
+                  <UiFormLabel class="mb-0">Visibility</UiFormLabel>
+                  <SfSwitch
+                    :model-value="block.visible"
+                    :data-testid="`mg-toggle-visibility-${i}`"
+                    class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+                    @update:model-value="$emit('toggleVisibility', i); openMenuIndex = undefined"
+                  />
+                </div>
+              </div>
+
+              <button
+                :data-testid="`mg-delete-item-${i}`"
+                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                @click.stop="$emit('delete', i); openMenuIndex = undefined"
+              >
+                <SfIconDelete size="sm" />
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </draggable>
 
     <!-- Add Element button + quick pills -->
     <div class="px-3.5 pt-2.5 pb-3">
       <button
         type="button"
+        data-testid="mg-add-element-btn"
         class="w-full py-2 rounded-[7px] border border-[#e2e2e2] bg-white text-[#555] text-[13px] cursor-pointer flex items-center justify-center gap-[5px] transition-all duration-100 hover:bg-[#f5f5f5] hover:border-[#ccc]"
         @click="$emit('addElement')"
       >
@@ -114,72 +139,68 @@
 </template>
 
 <script setup lang="ts">
+import { SfIconDelete, SfIconMoreVert, SfIconBase, SfSwitch } from '@storefront-ui/vue';
+import draggable from 'vuedraggable/src/vuedraggable';
+import dragIcon from '~/assets/icons/paths/drag.svg';
+import { editPath } from '~/assets/icons/paths/edit';
+
 export interface ElementBlock {
   uuid: string;
   label: string;
   span: number;
   color: string;
   type: string;
+  visible: boolean;
 }
 
-defineProps<{
+const props = defineProps<{
   blocks: ElementBlock[];
   selectedId: string | null;
 }>();
 
 const emit = defineEmits<{
   select: [uuid: string];
-  delete: [uuid: string];
-  reorder: [fromIdx: number, toIdx: number];
+  edit: [index: number];
+  delete: [index: number];
+  toggleVisibility: [index: number];
+  reorder: [blocks: ElementBlock[]];
   addElement: [];
   quickAdd: [type: string];
 }>();
 
-const hoveredIdx = ref(-1);
-const listRef = ref<HTMLElement | null>(null);
-const dragState = ref<{ fromIdx: number; overIdx: number } | null>(null);
-const dragRef = ref<{ fromIdx: number; overIdx: number } | null>(null);
+const openMenuIndex = ref<number | undefined>(undefined);
+
+const internalBlocks = computed<ElementBlock[]>({
+  get: () => props.blocks,
+  set: (value: ElementBlock[]) => emit('reorder', value),
+});
+
+const toggleMenu = (index: number) => {
+  openMenuIndex.value = openMenuIndex.value === index ? undefined : index;
+};
+
+const onDragEnd = (event: { newIndex: number }) => {
+  emit('select', props.blocks[event.newIndex]?.uuid ?? '');
+};
 
 const quickPills = [
-  { type: 'image', icon: '\u229E', label: 'Image' },
-  { type: 'text', icon: 'T', label: 'Text' },
-  { type: 'grid', icon: '\u22A0', label: 'Grid' },
+  { type: 'Image', icon: '\u229E', label: 'Image' },
+  { type: 'TextCard', icon: 'T', label: 'Text' },
+  { type: 'MultiGrid', icon: '\u22A0', label: 'Grid' },
 ];
 
-const startDrag = (e: PointerEvent, idx: number) => {
-  dragRef.value = { fromIdx: idx, overIdx: idx };
-  dragState.value = { fromIdx: idx, overIdx: idx };
-
-  const onMove = (ev: PointerEvent) => {
-    if (!listRef.value || !dragRef.value) return;
-    const items = [...listRef.value.querySelectorAll('[data-el-item]')];
-    let over = dragRef.value.fromIdx;
-    for (let i = 0; i < items.length; i++) {
-      const r = items[i]!.getBoundingClientRect();
-      if (ev.clientY < r.top + r.height / 2) {
-        over = i;
-        break;
-      }
-      over = i;
+// Close menu on outside click
+onMounted(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (openMenuIndex.value === undefined) return;
+    const target = event.target as HTMLElement;
+    const menuBtn = document.querySelector(`[data-testid="mg-menu-item-${openMenuIndex.value}"]`);
+    const menu = menuBtn?.parentElement?.querySelector('.absolute.right-0');
+    if (menuBtn && menu && !menuBtn.contains(target) && !menu.contains(target)) {
+      openMenuIndex.value = undefined;
     }
-    dragRef.value.overIdx = over;
-    dragState.value = { fromIdx: dragRef.value.fromIdx, overIdx: over };
   };
-
-  const onUp = () => {
-    if (dragRef.value) {
-      const { fromIdx, overIdx } = dragRef.value;
-      if (fromIdx !== overIdx) {
-        emit('reorder', fromIdx, overIdx);
-      }
-    }
-    window.removeEventListener('pointermove', onMove);
-    window.removeEventListener('pointerup', onUp);
-    dragRef.value = null;
-    dragState.value = null;
-  };
-
-  window.addEventListener('pointermove', onMove);
-  window.addEventListener('pointerup', onUp);
-};
+  document.addEventListener('click', handleClickOutside);
+  onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside));
+});
 </script>
