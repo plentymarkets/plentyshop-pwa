@@ -22,4 +22,4 @@ jobs:
         uses: fuxingloh/multi-labeler@v4
       - name: Assign author to PR
         if: github.event.action == 'opened'
-        uses: toshimaru/auto-author-assign@v3.0.1
+        uses: toshimaru/auto-author-assign@v3.0.2
