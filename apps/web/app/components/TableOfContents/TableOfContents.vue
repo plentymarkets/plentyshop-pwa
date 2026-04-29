@@ -41,41 +41,46 @@
           <span>{{ getEditorTranslation('content-section-label') }}</span>
           <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !contentCollapsed }" />
         </button>
-        <div v-if="!contentCollapsed" class="px-2">
-          <draggable
-            v-if="pageBlocks.length"
-            v-model="draggablePageBlocks"
-            item-key="meta.uuid"
-            handle=".toc-drag-handle"
-            ghost-class="toc-drag-ghost"
-            tag="ul"
-            class="mt-2 mb-4"
-            @change="handleDragChange"
-          >
-            <template #item="{ element: block, index }">
-              <div>
-                <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
-                <TableOfContentsItem :item="blockToFlatBlock(block)" />
-                <TableOfContentsInsertBlockLine
-                  v-if="index < pageBlocks.length - 1"
-                  :block="block"
-                  class="toc-insert-line"
-                />
-              </div>
-            </template>
-          </draggable>
-        </div>
-        <div v-if="!contentCollapsed" class="px-4 mb-4">
-          <button
-            type="button"
-            class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
-            data-testid="toc-add-block"
-            @click="addBlockAtBottom"
-          >
-            <SfIconAdd />
-            {{ getEditorTranslation('add-element-label') }}
-          </button>
-        </div>
+        <template v-if="!contentCollapsed">
+          <div class="px-2">
+            <draggable
+              v-if="pageBlocks.length"
+              v-model="draggablePageBlocks"
+              item-key="meta.uuid"
+              handle=".toc-drag-handle"
+              ghost-class="toc-drag-ghost"
+              tag="ul"
+              class="mt-2 mb-4"
+              @change="handleDragChange"
+            >
+              <template #item="{ element: block, index }">
+                <div>
+                  <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
+                  <TableOfContentsItem :item="blockToFlatBlock(block)" />
+                  <TableOfContentsInsertBlockLine
+                    v-if="index < pageBlocks.length - 1"
+                    :block="block"
+                    class="toc-insert-line"
+                  />
+                </div>
+              </template>
+            </draggable>
+            <div v-else class="mx-2 mt-8 mb-4 text-center text-sm text-neutral-400">
+              {{ getEditorTranslation('empty') }}
+            </div>
+          </div>
+          <div class="px-4 mb-4">
+            <button
+              type="button"
+              class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
+              data-testid="toc-add-block"
+              @click="addBlockAtBottom"
+            >
+              <SfIconAdd />
+              {{ getEditorTranslation('add-element-label') }}
+            </button>
+          </div>
+        </template>
       </div>
 
       <div v-if="footer">
@@ -141,8 +146,8 @@ const handleDragChange = (evt: DragEvent) => {
   "de": {
     "label": "Table of Contents",
     "description": "Click on a block to scroll to its position on the page.",
-    "empty": "No blocks found on this page.",
     "add-element-label": "Add element",
+    "empty": "No blocks found on this page.",
     "header-section-label": "Header",
     "content-section-label": "Content",
     "footer-section-label": "Footer"
