@@ -103,8 +103,7 @@ import type { IconEmojiPickerTab } from './types';
 import { getIconCategories, getIconsByCategory, filterEmojis } from './utils/iconEmojiPickerUtils';
 
 const emit = defineEmits<{
-  (e: 'select-icon', name: string): void;
-  (e: 'select-emoji', name: string): void;
+  (e: 'select-icon' | 'select-emoji', name: string): void;
 }>();
 
 const root = ref<HTMLElement | null>(null);

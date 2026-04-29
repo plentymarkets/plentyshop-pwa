@@ -12,7 +12,7 @@ export const getIconCategories = (): UserIconCategory[] => {
 
 export const getIconsByCategory = (category: UserIconCategory) =>
   Object.entries(userIcons)
-    .filter(([, icon]) => icon.category === category)
+    .filter(([_name, icon]) => icon.category === category)
     .map(([name, icon]) => ({ name, icon }));
 
 export const filterEmojis = (query: string) => {
