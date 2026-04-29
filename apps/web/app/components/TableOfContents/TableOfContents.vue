@@ -21,12 +21,14 @@
           type="button"
           class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
           data-testid="toc-section-header"
+          :aria-expanded="!headerCollapsed"
+          aria-controls="toc-header-region"
           @click="headerCollapsed = !headerCollapsed"
         >
           <span>{{ getEditorTranslation('header-section-label') }}</span>
           <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !headerCollapsed }" />
         </button>
-        <ul v-if="!headerCollapsed" class="px-2 mt-2 mb-4">
+        <ul v-if="!headerCollapsed" id="toc-header-region" class="px-2 mt-2 mb-4">
           <TableOfContentsItem :item="blockToFlatBlock(headerContainer!)" />
         </ul>
       </div>
@@ -36,49 +38,53 @@
           type="button"
           class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
           data-testid="toc-section-content"
+          :aria-expanded="!contentCollapsed"
+          aria-controls="toc-content-region"
           @click="contentCollapsed = !contentCollapsed"
         >
           <span>{{ getEditorTranslation('content-section-label') }}</span>
           <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !contentCollapsed }" />
         </button>
         <template v-if="!contentCollapsed">
-          <div class="px-2">
-            <draggable
-              v-if="pageBlocks.length"
-              v-model="draggablePageBlocks"
-              item-key="meta.uuid"
-              handle=".toc-drag-handle"
-              ghost-class="toc-drag-ghost"
-              tag="ul"
-              class="mt-2 mb-4"
-              @change="handleDragChange"
-            >
-              <template #item="{ element: block, index }">
-                <div>
-                  <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
-                  <TableOfContentsItem :item="blockToFlatBlock(block)" />
-                  <TableOfContentsInsertBlockLine
-                    v-if="index < pageBlocks.length - 1"
-                    :block="block"
-                    class="toc-insert-line"
-                  />
-                </div>
-              </template>
-            </draggable>
-            <div v-else class="mx-2 mt-8 mb-4 text-center text-sm text-neutral-400">
-              {{ getEditorTranslation('empty') }}
+          <div id="toc-content-region">
+            <div class="px-2">
+              <draggable
+                v-if="pageBlocks.length"
+                v-model="draggablePageBlocks"
+                item-key="meta.uuid"
+                handle=".toc-drag-handle"
+                ghost-class="toc-drag-ghost"
+                tag="div"
+                class="mt-2 mb-4"
+                @change="handleDragChange"
+              >
+                <template #item="{ element: block, index }">
+                  <div>
+                    <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
+                    <TableOfContentsItem :item="blockToFlatBlock(block)" />
+                    <TableOfContentsInsertBlockLine
+                      v-if="index < pageBlocks.length - 1"
+                      :block="block"
+                      class="toc-insert-line"
+                    />
+                  </div>
+                </template>
+              </draggable>
+              <div v-else class="mx-2 mt-8 mb-4 text-center text-sm text-neutral-400">
+                {{ getEditorTranslation('empty') }}
+              </div>
             </div>
-          </div>
-          <div class="px-4 mb-4">
-            <button
-              type="button"
-              class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
-              data-testid="toc-add-block"
-              @click="addBlockAtBottom"
-            >
-              <SfIconAdd />
-              {{ getEditorTranslation('add-element-label') }}
-            </button>
+            <div class="px-4 mb-4">
+              <button
+                type="button"
+                class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
+                data-testid="toc-add-block"
+                @click="addBlockAtBottom"
+              >
+                <SfIconAdd />
+                {{ getEditorTranslation('add-element-label') }}
+              </button>
+            </div>
           </div>
         </template>
       </div>
@@ -88,12 +94,14 @@
           type="button"
           class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
           data-testid="toc-section-footer"
+          :aria-expanded="!footerCollapsed"
+          aria-controls="toc-footer-region"
           @click="footerCollapsed = !footerCollapsed"
         >
           <span>{{ getEditorTranslation('footer-section-label') }}</span>
           <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !footerCollapsed }" />
         </button>
-        <ul v-if="!footerCollapsed" class="px-2 mt-2 mb-4">
+        <ul v-if="!footerCollapsed" id="toc-footer-region" class="px-2 mt-2 mb-4">
           <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
         </ul>
       </div>
@@ -109,13 +117,9 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
-const { addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
+const { addBlockAtBottom, blockToFlatBlock, headerCollapsed, contentCollapsed, footerCollapsed } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
 const { scrollIntoBlockView } = useBlockManager();
-
-const headerCollapsed = ref(false);
-const contentCollapsed = ref(false);
-const footerCollapsed = ref(false);
 
 const draggablePageBlocks = computed({
   get: () => pageBlocks.value,
