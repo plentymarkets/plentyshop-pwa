@@ -4,9 +4,6 @@ import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
-import { getProductTemplate } from '~/utils/blockTemplates/product';
-
-const useProductTemplateData = async (locale: string) => await getProductTemplate(locale);
 
 /**
  * @description Composable managing product data
@@ -56,21 +53,14 @@ export const useProduct: UseProductReturn = (slug) => {
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     const { $i18n } = useNuxtApp();
     const { isInEditor } = useEditorState();
-    const { pageBlocks, setupFakeBlocks } = useBlocks();
-
     state.value.loading = true;
 
     if (isGlobalProductDetailsTemplate.value && isInEditor.value) {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
-      const blocks = pageBlocks.value.length ? pageBlocks.value : await useProductTemplateData($i18n.locale.value);
-
       state.value.data = {
-        blocks: blocks,
         ...fakeProduct,
       };
-
-      setupFakeBlocks(blocks, 'product');
 
       handlePreviewProduct(state, $i18n.locale.value, false);
 
