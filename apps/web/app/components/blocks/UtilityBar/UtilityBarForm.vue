@@ -34,11 +34,6 @@ import type { UtilityBarFormProps } from './types';
 
 const props = defineProps<UtilityBarFormProps>();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
-
 const { sections } = useUtilityBarConfiguration(props.uuid);
 
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
@@ -50,7 +45,6 @@ const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSec
     editingSectionIndex,
     openSectionMenuIndex,
     getEditorTranslation,
-    emit,
   },
 );
 

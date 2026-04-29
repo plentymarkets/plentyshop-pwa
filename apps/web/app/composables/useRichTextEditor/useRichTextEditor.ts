@@ -26,7 +26,10 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const editor = useEditor({
     content: args.modelValue.value ?? '',
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        link: false,
+        underline: false,
+      }),
       Underline,
       Link.configure({
         openOnClick: false,
@@ -59,16 +62,17 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     },
   });
 
-  watch(args.modelValue, (next) => {
-    if (!editor.value) return;
-    const wanted = next ?? '';
-    const current = editor.value.getHTML();
+  watch(args.modelValue, (next = '') => {
+    if (!editor.value) {
+      return;
+    }
 
-    const normalizedWanted = decodeHtmlEntities(wanted);
+    const current = editor.value.getHTML();
+    const normalizedWanted = decodeHtmlEntities(next);
     const normalizedCurrent = decodeHtmlEntities(current);
 
     if (normalizedCurrent !== normalizedWanted) {
-      editor.value.commands.setContent(wanted, { emitUpdate: false });
+      editor.value.commands.setContent(next, { emitUpdate: false });
     }
   });
 
@@ -78,7 +82,9 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const cmd = (name: RteCommand) => {
     const chain = focusChain();
-    if (!chain) return;
+    if (!chain) {
+      return;
+    }
     chain[name]().run();
   };
 
