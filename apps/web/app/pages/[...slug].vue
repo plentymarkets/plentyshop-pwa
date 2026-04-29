@@ -48,7 +48,7 @@ definePageMeta({
 });
 
 const breadcrumbs = computed(() => {
-  const breadcrumb = breadcrumbGetters.mapFromCategoryBreadcrumbs(productsCatalog.value.breadcrumbs);
+  const breadcrumb = breadcrumbGetters.mapFromCategoryBreadcrumbs(productsCatalog.value.breadcrumbs ?? []);
   breadcrumb.unshift({ name: t('common.labels.home'), link: '/' });
 
   return breadcrumb;
