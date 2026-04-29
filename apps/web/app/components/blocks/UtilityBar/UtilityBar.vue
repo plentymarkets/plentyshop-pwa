@@ -409,10 +409,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) {
-    await getCategoryTree();
-  }
-
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 

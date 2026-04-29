@@ -89,7 +89,14 @@
               <template #prefix>
                 <SfIconPerson />
               </template>
-              {{ user?.firstName }}
+              <Transition
+                appear
+                enter-from-class="opacity-0 max-w-0"
+                enter-active-class="inline-block overflow-hidden transition-[max-width,opacity] duration-[250ms] ease-in"
+                enter-to-class="opacity-100 max-w-[10rem]"
+              >
+                <span class="whitespace-nowrap inline-block overflow-hidden">{{ user?.firstName }}</span>
+              </Transition>
             </UiButton>
           </template>
           <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -250,8 +257,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) await getCategoryTree();
-
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 
