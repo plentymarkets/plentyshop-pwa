@@ -103,9 +103,9 @@ The mechanism works as follows:
 
 1. On `onBeforeRouteUpdate`, the current `renderedBlocks` are captured into a `frozenBlocks` ref.
 2. While frozen blocks exist, the template renders them instead of the (not yet loaded) fresh data.
-3. Once the new data arrives and is assembled, the frozen blocks are cleared and the fresh data takes over.
+3. When the new page's block data arrives and can be rendered, the page transitions from showing the previously frozen content to showing the fresh block tree.
 
-This creates a seamless transition where the old content remains visible until the new content is ready.
+This creates a seamless transition where the old content remains visible during navigation until the new content is ready to render.
 
 For the distinction between structure and content blocks, see [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md).
 
