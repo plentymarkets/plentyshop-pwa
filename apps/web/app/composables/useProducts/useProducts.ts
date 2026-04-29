@@ -69,6 +69,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
           totals: 8,
           perPageOptions: defaults.PER_PAGE_STEPS,
         },
+        breadcrumbs: [],
       } as Facet;
 
       handlePreviewProducts(state, $i18n.locale.value);
