@@ -27,13 +27,7 @@
     </div>
 
     <div v-else-if="blocks[editingBlockIndex]" class="space-y-0">
-      <component
-        :is="blockForm"
-        ref="innerFormRef"
-        :uuid="blocks[editingBlockIndex]!.meta.uuid"
-        @set-edit-title="handleInnerSetEditTitle"
-        @clear-edit-title="handleInnerClearEditTitle"
-      />
+      <component :is="blockForm" ref="innerFormRef" :uuid="blocks[editingBlockIndex]!.meta.uuid" />
     </div>
   </div>
 </template>
@@ -46,10 +40,7 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
+const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
 const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void } | null>(null);
 const isInnerFormSubEditing = ref(false);
@@ -113,18 +104,7 @@ const editBlock = (index: number) => {
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
   isInnerFormSubEditing.value = false;
   currentActiveBlockIndex.value = index;
-  emit('set-edit-title', blockLabels.value[index]!);
-};
-
-const handleInnerSetEditTitle = (title: string) => {
-  isInnerFormSubEditing.value = true;
-  emit('set-edit-title', title);
-};
-
-const handleInnerClearEditTitle = () => {
-  isInnerFormSubEditing.value = false;
-  const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
-  if (blockLabel) emit('set-edit-title', blockLabel);
+  setEditTitle(blockLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
@@ -132,14 +112,14 @@ const exitEditMode = (shouldEmit = true): boolean => {
     innerFormRef.value.exitEditMode(false);
     isInnerFormSubEditing.value = false;
     const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
-    if (blockLabel) emit('set-edit-title', blockLabel);
+    if (blockLabel) setEditTitle(blockLabel);
     return false;
   }
 
   editingBlockIndex.value = undefined;
   editingBlockName.value = undefined;
   currentActiveBlockIndex.value = -1;
-  if (shouldEmit) emit('clear-edit-title');
+  if (shouldEmit) clearEditTitle();
   resolveBlockLabels();
   return true;
 };

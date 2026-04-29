@@ -79,10 +79,7 @@ const { toggleBlockVisibility } = useBlocksVisibility();
 const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
+const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
 const elementsOpen = ref(true);
 const editingSlideIndex = ref<number | undefined>(undefined);
@@ -141,13 +138,13 @@ const selectSlide = (index: number) => {
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   setIndex(resolvedUuid.value, index);
-  emit('set-edit-title', slideLabels.value[index]!);
+  setEditTitle(slideLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true) => {
   editingSlideIndex.value = undefined;
   if (shouldEmit) {
-    emit('clear-edit-title');
+    clearEditTitle();
   }
   resolveSlideLabels();
 };

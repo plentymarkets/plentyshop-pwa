@@ -24,7 +24,10 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const editor = useEditor({
     content: args.modelValue.value ?? '',
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        link: false,
+        underline: false,
+      }),
       Underline,
       Link.configure({
         openOnClick: false,

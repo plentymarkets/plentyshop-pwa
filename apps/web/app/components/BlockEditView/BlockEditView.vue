@@ -30,8 +30,6 @@
         ref="childComponentRef"
         :uuid="blockUuid"
         @vue:mounted="handleBackClick"
-        @set-edit-title="handleSetEditTitle"
-        @clear-edit-title="clearCustomTitle"
       />
     </div>
   </div>
@@ -56,16 +54,8 @@ watch(
 );
 const { deleteBlock } = useBlockManager();
 
-const customTitle = ref<string | null>(null);
+const { editTitle: customTitle, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
-
-const handleSetEditTitle = (title: string) => {
-  customTitle.value = title;
-};
-
-const clearCustomTitle = () => {
-  customTitle.value = null;
-};
 const handleBackClick = () => {
   if (childComponentRef.value?.exitEditMode) {
     const fullyExited = childComponentRef.value.exitEditMode(false);
