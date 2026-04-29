@@ -182,6 +182,7 @@ export const ProductFixture: Product = {
       },
     ],
   },
+  breadcrumbs: [{ id: 1, level: 1, name: 'Gear', url: '/gear' }],
 };
 
 export default ProductFixture;
