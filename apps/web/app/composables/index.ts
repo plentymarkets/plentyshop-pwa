@@ -19,6 +19,7 @@ export * from './useAddressV2';
 export * from './useAggregatedCountries';
 export * from './useAgreementCheckbox';
 export * from './useApplePay';
+export * from './useBlockEditTitle';
 export * from './useBlocksVisibility';
 export * from './useUrlPageMeta';
 export * from './useCarousel';
