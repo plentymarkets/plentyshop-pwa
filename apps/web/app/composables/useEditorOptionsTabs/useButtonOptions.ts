@@ -7,7 +7,7 @@ export const useButtonOptions = (getTarget: () => EditorTarget, t: TranslateFn) 
     {
       value: 'secondary' as ButtonVariant,
       label: t('button-variant-secondary-label'),
-      testId: 'slider-button-secondary',
+      testId: 'button-outline-secondary'
     },
   ]);
 

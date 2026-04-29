@@ -142,7 +142,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   alignBoxCenterX() {
-    cy.get('[data-testid="slider-textbox-align-center"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-center"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'center');
   }
 
@@ -157,7 +157,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   alignBoxCenterY() {
-    cy.get('[data-testid="slider-textbox-y-align-center"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-center"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'center');
   }
 
