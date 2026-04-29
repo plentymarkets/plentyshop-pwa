@@ -105,19 +105,6 @@ export const useBlocks: UseBlocksReturn = () => {
     }
   };
 
-  const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable', identifier: string | number = 0) => {
-    const assembled = assembleBlocks(
-      {
-        HeaderContainer: headerContainer.value,
-        blocks: rawBlocks,
-        Footer: footer.value,
-      } as GetBlocksResponse,
-      type,
-      identifier,
-    );
-    setBlocks(assembled);
-  };
-
   const updateBlocks = (blocks: Block[]) => {
     state.value.data.blocks = blocks;
   };
@@ -142,7 +129,6 @@ export const useBlocks: UseBlocksReturn = () => {
     defaultTemplateData: computed(() => state.value.defaultTemplateData),
     fetchBlocks,
     saveBlocks,
-    setupFakeBlocks,
     updateBlocks,
     discardChanges,
     setDefaultTemplate,

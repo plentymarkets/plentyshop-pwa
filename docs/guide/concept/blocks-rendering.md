@@ -9,7 +9,7 @@ Each block is rendered by `PageBlock`, which resolves the correct Vue component 
 
 The loader uses `import.meta.glob()` to discover block components at build time from three sources:
 
-1. Core app blocks (`@/components/blocks/`)
+1. Core app blocks (any `blocks` directory under `@/components/`, matched by `@/components/**/blocks/**/*.vue`)
 2. Nuxt module blocks
 3. Customer package blocks (`node_modules/*/runtime/components/blocks/`)
 

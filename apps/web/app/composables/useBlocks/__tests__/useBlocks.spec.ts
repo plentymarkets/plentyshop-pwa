@@ -1,7 +1,10 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlocks } from '../useBlocks';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { FooterContent } from '~/components/blocks/Footer/types';
+import { createProduct } from '~/utils/blockTemplates/product/factory';
+import { createCategory } from '~/utils/blockTemplates/category/factory';
 
 const mockFooterBlock: Block = {
   name: 'Footer',
@@ -270,17 +273,19 @@ describe('useBlocks', () => {
     });
   });
 
-  describe('setupFakeBlocks', () => {
-    it('should assemble blocks with HeaderContainer and Footer and store them', () => {
-      useBlocks().setupFakeBlocks(mockPageBlocks);
+  describe('default blocks fallback', () => {
+    it('should assemble default product blocks with HeaderContainer and Footer when API returns no blocks', async () => {
+      setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock });
+      await useBlocks().fetchBlocks(0, 'product');
       expect(mockStateRef.value.data.HeaderContainer).toBeDefined();
       expect(mockStateRef.value.data.Footer).toBeDefined();
-      expect(mockStateRef.value.data.blocks).toEqual(mockPageBlocks);
+      expect(mockStateRef.value.data.blocks?.map((b) => b.name)).toEqual(createProduct().map((b) => b.name));
     });
 
-    it('should set cleanData equal to data after setup', () => {
-      useBlocks().setupFakeBlocks(mockPageBlocks);
-      expect(JSON.stringify(mockStateRef.value.cleanData)).toEqual(JSON.stringify(mockStateRef.value.data));
+    it('should assemble default category blocks when API returns no blocks for global template', async () => {
+      setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock });
+      await useBlocks().fetchBlocks(0, 'category');
+      expect(mockStateRef.value.data.blocks?.map((b) => b.name)).toEqual(createCategory().map((b) => b.name));
     });
   });
 });
