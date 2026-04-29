@@ -90,10 +90,14 @@ const slideLabels = ref<string[]>([]);
 setIndex(resolvedUuid.value, 0);
 
 const blockForm = computed(() => {
-  if (editingSlideIndex.value === undefined) return null;
+  if (editingSlideIndex.value === undefined) {
+    return null;
+  }
 
   const slide = slides.value[editingSlideIndex.value];
-  if (!slide) return null;
+  if (!slide) {
+    return null;
+  }
 
   const loader = getBlockFormLoader(slide.name);
   return loader ? defineAsyncComponent(loader) : null;
@@ -169,7 +173,9 @@ const addSlide = async () => {
 };
 
 const deleteSlide = async (index: number) => {
-  if (slides.value.length <= 1) return;
+  if (slides.value.length <= 1) {
+    return;
+  }
   slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
   setIndex(resolvedUuid.value, 0);
   await nextTick();
@@ -180,11 +186,15 @@ const deleteSlide = async (index: number) => {
 
 const toggleSlideVisibility = (index: number) => {
   const slide = slides.value[index];
-  if (!slide) return;
+  if (!slide) {
+    return;
+  }
 
   const updatedSlides = [...slides.value];
   const slideToUpdate = updatedSlides[index];
-  if (!slideToUpdate) return;
+  if (!slideToUpdate) {
+    return;
+  }
 
   toggleBlockVisibility(slideToUpdate);
   slides.value = updatedSlides;

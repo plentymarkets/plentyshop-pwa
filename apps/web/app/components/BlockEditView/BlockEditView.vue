@@ -60,7 +60,9 @@ const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean
 const handleBackClick = () => {
   if (childComponentRef.value?.exitEditMode) {
     const fullyExited = childComponentRef.value.exitEditMode(false);
-    if (fullyExited !== false) clearCustomTitle();
+    if (fullyExited !== false) {
+      clearCustomTitle();
+    }
   } else {
     clearCustomTitle();
   }
@@ -69,14 +71,18 @@ const handleBackClick = () => {
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
 
 const getComponent = (name: string) => {
-  if (!name) return null;
+  if (!name) {
+    return null;
+  }
 
   if (componentCache.has(name)) {
     return componentCache.get(name);
   }
 
   const loader = getBlockFormLoader(name);
-  if (!loader) return null;
+  if (!loader) {
+    return null;
+  }
 
   const component = defineAsyncComponent(loader);
   componentCache.set(name, component);

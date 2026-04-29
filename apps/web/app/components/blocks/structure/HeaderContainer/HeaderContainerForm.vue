@@ -52,7 +52,9 @@ const currentActiveBlockIndex = ref<number>(-1);
 const layoutOpen = ref(true);
 
 const blockForm = computed(() => {
-  if (!editingBlockName.value) return null;
+  if (!editingBlockName.value) {
+    return null;
+  }
 
   const loader = getBlockFormLoader(editingBlockName.value);
   return loader ? defineAsyncComponent(loader) : null;
@@ -109,14 +111,18 @@ const exitEditMode = (shouldEmit = true): boolean => {
   if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
     innerFormRef.value.exitEditMode(false);
     const blockLabel = editingBlockIndex.value === undefined ? undefined : blockLabels.value[editingBlockIndex.value];
-    if (blockLabel) setEditTitle(blockLabel);
+    if (blockLabel) {
+      setEditTitle(blockLabel);
+    }
     return false;
   }
 
   editingBlockIndex.value = undefined;
   editingBlockName.value = undefined;
   currentActiveBlockIndex.value = -1;
-  if (shouldEmit) clearEditTitle();
+  if (shouldEmit) {
+    clearEditTitle();
+  }
   resolveBlockLabels();
   return true;
 };
@@ -127,14 +133,18 @@ const addBlock = () => {
 
   const lastChild = headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1];
 
-  if (!lastChild) return;
+  if (!lastChild) {
+    return;
+  }
 
   togglePlaceholder(lastChild.meta.uuid, 'bottom');
   openDrawerWithView('blocksList');
 };
 
 const deleteBlock = async (index: number) => {
-  if (blocks.value.length <= 1) return;
+  if (blocks.value.length <= 1) {
+    return;
+  }
   blocks.value = blocks.value.filter((_: Block, i: number) => i !== index);
   currentActiveBlockIndex.value = 0;
   await nextTick();
@@ -149,11 +159,15 @@ const updateBlocks = (newBlocks: SlideBlock[]) => {
 
 const toggleBlockVisibilityHandler = (index: number) => {
   const block = blocks.value[index];
-  if (!block) return;
+  if (!block) {
+    return;
+  }
 
   const updatedBlocks = [...blocks.value];
   const blockToUpdate = updatedBlocks[index];
-  if (!blockToUpdate) return;
+  if (!blockToUpdate) {
+    return;
+  }
 
   toggleBlockVisibility(blockToUpdate);
   blocks.value = updatedBlocks;
