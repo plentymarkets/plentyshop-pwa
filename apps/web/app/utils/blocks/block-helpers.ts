@@ -53,6 +53,7 @@ export const assembleBlocks = (
   raw: GetBlocksResponse,
   type: string,
   identifier: string | number,
+  hasSnapshot?: boolean,
 ): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
     ? createDefaultHeaderContainerBlock()
@@ -60,8 +61,8 @@ export const assembleBlocks = (
 
   const Footer = raw?.Footer ? normalizeFooter(raw.Footer) : normalizeFooter(createFooter());
 
-  const pageBlocks =
-    Array.isArray(raw?.blocks) && raw?.blocks.length > 0 ? raw?.blocks : getDefaultPageBlocks(type, identifier);
+  const hasApiBlocks = Array.isArray(raw?.blocks) && raw?.blocks.length > 0;
+  const pageBlocks = hasApiBlocks ? raw?.blocks : hasSnapshot ? [] : getDefaultPageBlocks(type, identifier);
 
   migrateAllBlocks(pageBlocks);
 

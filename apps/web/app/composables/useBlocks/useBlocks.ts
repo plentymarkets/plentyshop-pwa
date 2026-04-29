@@ -15,6 +15,7 @@ export const useBlocks: UseBlocksReturn = () => {
     defaultTemplateData: [] as Block[],
     loading: false,
     isSettling: false,
+    hasSnapshot: false,
   }));
 
   const setBlocks = (blocks: GetBlocksResponse) => {
@@ -65,7 +66,13 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const assembled = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
+    state.value.hasSnapshot = data.value?.hasSnapshot ?? false;
+    const assembled = assembleBlocks(
+      data.value?.data || ({} as GetBlocksResponse),
+      type,
+      identifier,
+      state.value.hasSnapshot,
+    );
     setBlocks(assembled);
     state.value.loading = false;
 
@@ -126,6 +133,7 @@ export const useBlocks: UseBlocksReturn = () => {
     headerContainer,
     footer,
     loading: computed(() => state.value.loading),
+    hasSnapshot: computed(() => state.value.hasSnapshot),
     defaultTemplateData: computed(() => state.value.defaultTemplateData),
     fetchBlocks,
     saveBlocks,
