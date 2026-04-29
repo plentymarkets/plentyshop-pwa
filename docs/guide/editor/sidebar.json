@@ -1,0 +1,42 @@
+[
+  {
+    "text": "Introduction",
+    "link": "/guide/editor/index.md"
+  },
+  {
+    "text": "Guides",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Extensible Site Settings",
+        "link": "/guide/editor/site-settings-architecture.md"
+      }
+    ]
+  },
+  {
+    "text": "Concepts",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Blocks: Global vs. Local",
+        "link": "/guide/concept/blocks-global-vs-non-global"
+      },
+      {
+        "text": "Blocks: Rendering",
+        "link": "/guide/concept/blocks-rendering"
+      },
+      {
+        "text": "Blocks: Saving",
+        "link": "/guide/concept/blocks-saving"
+      },
+      {
+        "text": "Blocks: Structure vs. Content Form",
+        "link": "/guide/concept/blocks-structure-vs-content"
+      },
+      {
+        "text": "Site settings",
+        "link": "/guide/editor/site-settings.md"
+      }
+    ]
+  }
+]

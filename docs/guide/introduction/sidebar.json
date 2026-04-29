@@ -1,0 +1,20 @@
+[
+  {
+    "text": "Quickstart",
+    "link": "/guide/introduction/quickstart.md"
+  },
+  {
+    "text": "Product",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Overview",
+        "link": "/guide/product/index.md"
+      },
+      {
+        "text": "Experimental Features",
+        "link": "/guide/product/experimental-features.md"
+      }
+    ]
+  }
+]
