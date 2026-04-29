@@ -21,7 +21,6 @@ export interface UseBlocks {
   defaultTemplateData: Readonly<Ref<Block[]>>;
   fetchBlocks: (identifier: string | number, type: string) => Promise<void>;
   saveBlocks: (identifier: string | number, type: string, content: string) => Promise<boolean>;
-  setupFakeBlocks: (rawBlocks: Block[], type?: string) => void;
   updateBlocks: (blocks: Block[]) => void;
   discardChanges: () => void;
   setDefaultTemplate: (blocks: Block[]) => void;

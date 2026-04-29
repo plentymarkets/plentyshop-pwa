@@ -438,6 +438,9 @@
       "openSearchModal": "Open item search",
       "previousAriaLabel": "Navigate to previous page",
       "socialLabel": "Go to {label} page"
+    },
+    "accessibility": {
+      "viewDetails": "View details for {name}"
     }
   },
   "contact": {

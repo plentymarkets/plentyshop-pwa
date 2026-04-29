@@ -30,8 +30,6 @@
         ref="childComponentRef"
         :uuid="blockUuid"
         @vue:mounted="handleBackClick"
-        @set-edit-title="handleSetEditTitle"
-        @clear-edit-title="clearCustomTitle"
       />
     </div>
   </div>
@@ -56,20 +54,15 @@ watch(
 );
 const { deleteBlock } = useBlockManager();
 
-const customTitle = ref<string | null>(null);
+const { editTitle: customTitle, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
+onBeforeUnmount(() => clearCustomTitle());
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
-
-const handleSetEditTitle = (title: string) => {
-  customTitle.value = title;
-};
-
-const clearCustomTitle = () => {
-  customTitle.value = null;
-};
 const handleBackClick = () => {
   if (childComponentRef.value?.exitEditMode) {
     const fullyExited = childComponentRef.value.exitEditMode(false);
-    if (fullyExited !== false) clearCustomTitle();
+    if (fullyExited !== false) {
+      clearCustomTitle();
+    }
   } else {
     clearCustomTitle();
   }
@@ -78,14 +71,18 @@ const handleBackClick = () => {
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
 
 const getComponent = (name: string) => {
-  if (!name) return null;
+  if (!name) {
+    return null;
+  }
 
   if (componentCache.has(name)) {
     return componentCache.get(name);
   }
 
   const loader = getBlockFormLoader(name);
-  if (!loader) return null;
+  if (!loader) {
+    return null;
+  }
 
   const component = defineAsyncComponent(loader);
   componentCache.set(name, component);
