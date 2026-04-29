@@ -2,7 +2,8 @@ import type { UseUtilityBarActionsOptions } from './types';
 import type { SectionType } from '~/components/blocks/UtilityBar/types';
 
 export const useUtilityBarActions = (options: UseUtilityBarActionsOptions) => {
-  const { sections, editingSectionIndex, openSectionMenuIndex, getEditorTranslation, emit } = options;
+  const { sections, editingSectionIndex, openSectionMenuIndex, getEditorTranslation } = options;
+  const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
   const sectionLabels = computed(() => ({
     logo: getEditorTranslation('logo-section-label'),
@@ -24,7 +25,7 @@ export const useUtilityBarActions = (options: UseUtilityBarActionsOptions) => {
 
     const sectionId = sections.value[index]?.id;
     if (sectionId) {
-      emit('set-edit-title', getSectionLabel(sectionId));
+      setEditTitle(getSectionLabel(sectionId));
     }
   };
 
@@ -33,7 +34,7 @@ export const useUtilityBarActions = (options: UseUtilityBarActionsOptions) => {
     openSectionMenuIndex.value = undefined;
 
     if (shouldEmit) {
-      emit('clear-edit-title');
+      clearEditTitle();
     }
   };
 
