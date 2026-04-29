@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "nodemon",
     "start": "echo \"Starting server...\" && nodemon --spawn",
-    "pm2:start": "pm2 start ecosystem.config.js",
-    "pm2:start:prod": "pm2 start ecosystem.config.js --env production",
+    "build": "tsup --minify",
+    "pm2:build": "npm run build",
+    "pm2:start": "npm run pm2:build && pm2 start ecosystem.config.js",
+    "pm2:start:prod": "npm run pm2:build && pm2 start ecosystem.config.js --env production",
+    "pm2:dev": "pm2 start ecosystem.config.js --watch src --interpreter ts-node-dev --interpreter-args '--respawn'",
     "pm2:stop": "pm2 stop plentyshop-middleware",
     "pm2:restart": "pm2 restart plentyshop-middleware",
     "pm2:reload": "pm2 reload plentyshop-middleware",
@@ -16,8 +19,7 @@
     "pm2:monit": "pm2 monit",
     "pm2:status": "pm2 describe plentyshop-middleware",
     "lint": "echo \"No linting configured for server app\"",
-    "lint:fix": "echo \"No linting configured for server app\"",
-    "build": "tsup --minify"
+    "lint:fix": "echo \"No linting configured for server app\""
   },
   "dependencies": {
     "@types/cors": "^2.8.17",

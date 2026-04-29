@@ -2,9 +2,9 @@ module.exports = {
   apps: [
     {
       name: 'plentyshop-middleware',
-      script: 'src/index.ts',
+      script: 'dist/index.js',
       interpreter: 'node',
-      interpreter_args: '--loader ts-node/esm --max-old-space-size=1800',
+      interpreter_args: '--max-old-space-size=1800',
       
       kill_timeout: 10000,       
       wait_ready: true,           
