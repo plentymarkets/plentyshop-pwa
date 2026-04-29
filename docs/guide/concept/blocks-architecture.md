@@ -61,66 +61,11 @@ When the two diverge, the editor shows an unsaved-changes indicator.
 When the merchant saves, `doSaveBlocksWithGlobalBlocks()` sends the serialised block tree back to the backend.
 The response is re-assembled and both `data` and `cleanData` are updated, resetting the dirty state.
 
-## Rendering
+For details on how blocks are rendered, see [Blocks rendering](/guide/concept/blocks-rendering.md).
 
-The `EditableBlocks` component is the top-level container that receives the assembled block tree and iterates over it.
-Each block is rendered by `PageBlock`, which resolves the correct Vue component using the dynamic block loader (`utils/blocks/blocks-imports.ts`).
+For details on how block data is persisted, see [Blocks saving](/guide/concept/blocks-saving.md).
 
-The loader uses `import.meta.glob()` to discover block components at build time from three sources:
-
-1. Core app blocks (`@/components/blocks/`)
-2. Nuxt module blocks
-3. Customer package blocks (`node_modules/*/runtime/components/blocks/`)
-
-Block components are resolved asynchronously via `defineAsyncComponent`, which enables code-splitting per block.
-Individual blocks can additionally implement viewport-based lazy loading (for example, `ProductRecommendedProducts` defers rendering until the block is near the viewport).
-
-Structure blocks render their children recursively.
-For example, `HeaderContainer` renders its child blocks (utility bar, navigation) through the same `PageBlock` mechanism.
-
-## Saving
-
-Saving persists the current editor state to the backend.
-The save payload is the full block tree serialised as a JSON string.
-The SDK method `doSaveBlocksWithGlobalBlocks()` handles both page-specific blocks and global blocks (header, footer) in a single request.
-
-After a successful save:
-
-1. The response is re-assembled through `assembleBlocks` to normalise any backend transformations.
-2. Both `data` and `cleanData` are updated from the response, resetting the dirty state.
-3. The editor disables the save button until the next change.
-
-Global blocks saved on the homepage propagate to all pages, since every page reads the same global block data.
-
-## Global blocks vs. non-global blocks
-
-The most important architectural distinction in the blocks system is between **global** and **non-global** blocks.
-
-### Global blocks
-
-Global blocks appear on every page of the shop.
-Currently there are two global blocks:
-
-| Block              | Type        | Role                                           |
-|--------------------|-------------|-------------------------------------------------|
-| `HeaderContainer`  | `structure` | Contains utility bar and navigation              |
-| `Footer`           | `content`   | Contains footer links, legal text, and branding  |
-
-Global blocks are identified by the `isGlobalTemplate: true` flag in their `meta` object.
-
-**Key rules for global blocks:**
-
-- They are **only editable on the homepage** (`identifier: 'index'`, `type: 'immutable'`).
-- On category and product pages they are rendered but **read-only** — the editor does not show editing controls.
-- They **cannot be deleted or reordered** by the merchant.
-- Changes saved on the homepage propagate to all pages.
-
-### Non-global blocks
-
-Non-global blocks are the regular page blocks stored in the `blocks` array.
-They are specific to the page they belong to and are fully editable: merchants can add, delete, reorder, and reconfigure them.
-
-Non-global blocks have `isGlobalTemplate: false` or the flag is absent entirely.
+For the distinction between global and non-global blocks, see [Global blocks vs. non-global blocks](/guide/concept/blocks-global-vs-non-global.md).
 
 ## Blockified vs. non-blockified pages
 
@@ -162,56 +107,7 @@ The mechanism works as follows:
 
 This creates a seamless transition where the old content remains visible until the new content is ready.
 
-## Structure vs. content form
-
-Every block in the system has one of two types that determine its role in the layout hierarchy.
-
-### Structure blocks
-
-Structure blocks are **containers**.
-Their `content` property is an array of child blocks.
-They define layout and composition but do not render user-facing content themselves.
-
-Examples:
-
-- `HeaderContainer` — wraps utility bar and navigation
-- `MultiGrid` — arranges child blocks in a column layout
-- `Carousel` — displays child blocks in a rotating slider
-
-Structure blocks may carry a `configuration` object that controls layout behaviour (for example, whether the header is sticky).
-
-### Content blocks
-
-Content blocks are **leaves**.
-Their `content` property is an object with block-specific fields (text, image URL, link target, and so on).
-They render the actual visual content that the merchant sees.
-
-Examples:
-
-- `TextCard` — renders rich text
-- `Image` — renders an image with optional caption
-- `Footer` — renders footer links and branding
-- `Navigation` — renders the main navigation menu
-
-### How they compose
-
-A page's block tree is a recursive structure where structure blocks nest other blocks (both structure and content), and content blocks form the leaves:
-
-```
-HeaderContainer (structure)
-├── UtilityBar (content)
-└── Navigation (content)
-
-blocks[] (page-specific)
-├── MultiGrid (structure)
-│   ├── TextCard (content)
-│   └── Image (content)
-└── ProductRecommendedProducts (content)
-
-Footer (content)
-```
-
-The `EditableBlocks` and `PageBlock` components traverse this tree recursively, rendering each node with its matched Vue component.
+For the distinction between structure and content blocks, see [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md).
 
 ## Use cases
 
@@ -241,5 +137,9 @@ How-to guides
 
 Linked concepts
 
-1. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow concept
-2. [Composable-centric data fetching](/guide/concept/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA
+1. [Blocks rendering](/guide/concept/blocks-rendering.md) — How blocks are rendered on the frontend
+2. [Blocks saving](/guide/concept/blocks-saving.md) — How block data is persisted
+3. [Global blocks vs. non-global blocks](/guide/concept/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
+4. [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md) — The two block types and how they compose
+5. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow concept
+6. [Composable-centric data fetching](/guide/concept/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA
