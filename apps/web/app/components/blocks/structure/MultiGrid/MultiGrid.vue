@@ -8,6 +8,21 @@
       :style="getColumnIndicatorStyle(colIndex)"
       data-testid="multi-grid-column"
     >
+      <template v-if="column.length === 0 && isEditorMode">
+        <slot name="empty-column" :col-index="colIndex">
+          <div
+            class="h-[120px] flex-1 border-2 border-dashed border-gray-300 bg-gray-50/50 flex flex-col items-center justify-center text-center cursor-pointer rounded-sm"
+            :style="{ borderColor: COLUMN_COLORS[colIndex % COLUMN_COLORS.length] + '66' }"
+            @click.stop="onEmptyColumnClick(colIndex)"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="mb-1 text-gray-400">
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span class="text-xs font-medium text-gray-500">Add block</span>
+          </div>
+        </slot>
+      </template>
+
       <div
         v-for="row in column"
         :key="row.meta.uuid"
@@ -74,14 +89,16 @@ const onRowLeave = () => {
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
-const { isDragging, shouldDisplayPlaceholder } = useBlockManager();
-const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
+const { isDragging, shouldDisplayPlaceholder, updateMultigridColumnUuid, visiblePlaceholder } = useBlockManager();
+const { siteConfigurationDrawerOpen, siteConfigurationDrawerView, openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 
 const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
 const drawerView = computed(() => siteConfigurationDrawerView.value);
+
+const isEditorMode = computed(() => enableActions.value && shouldEnableEditorFeatures.value);
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
@@ -145,6 +162,13 @@ const showOverlay = computed(
     enableActions.value && shouldEnableEditorFeatures.value && !isDragging.value && blockHasData(block),
 );
 
+const onEmptyColumnClick = (colIndex: number) => {
+  const columnUuid = `empty-col-${colIndex}`;
+  updateMultigridColumnUuid(columnUuid);
+  openDrawerWithView('blocksList');
+  visiblePlaceholder.value = { uuid: '', position: 'top' };
+};
+
 const isAlignable = (b: Block): b is AlignableBlock =>
   typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
 
@@ -173,19 +197,18 @@ const pairWithSlots = computed<Block[]>(() => {
 });
 
 const columns = computed<Block[][]>(() => {
-  const blocks = ref([] as Block[][]);
-  pairWithSlots.value.forEach((block) => {
-    if (block.parent_slot !== undefined) {
-      if (!blocks.value[block.parent_slot]) {
-        blocks.value[block.parent_slot] = [];
-      }
+  const result: Block[][] = [];
 
-      const slot = blocks.value[block.parent_slot];
-      if (slot) {
-        slot.push(block);
-      }
+  for (let i = 0; i < configuration.columnWidths.length; i++) {
+    result[i] = [];
+  }
+
+  pairWithSlots.value.forEach((block) => {
+    if (block.parent_slot !== undefined && result[block.parent_slot]) {
+      result[block.parent_slot]!.push(block);
     }
   });
-  return blocks.value;
+
+  return result;
 });
 </script>

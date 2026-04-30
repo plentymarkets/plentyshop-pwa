@@ -46,7 +46,7 @@
               outline: block.uuid === selectedId ? `2px solid ${block.color}` : 'none',
               outlineOffset: '-2px',
             }"
-            @click.stop="$emit('select', block.uuid)"
+            @click.stop="emit('select', block.uuid)"
           >
             <div class="flex-1 overflow-hidden min-w-0 px-2.5">
               <div
@@ -65,7 +65,7 @@
               v-if="block.uuid === selectedId"
               type="button"
               class="w-[18px] h-[18px] rounded-full bg-black/20 border-none text-white/90 text-[13px] leading-[18px] cursor-pointer flex-shrink-0 flex items-center justify-center mr-1.5 p-0"
-              @click.stop="$emit('delete', block.uuid)"
+              @click.stop="emit('delete', block.uuid)"
             >
               &times;
             </button>
@@ -87,12 +87,11 @@
             </div>
           </div>
 
-          <!-- Empty slot -->
           <div
             v-if="rowEmpty(row) > 0"
             class="flex items-stretch"
             :style="{ width: `${(rowEmpty(row) / COLS) * 100}%`, padding: '7px 5px' }"
-            @click="$emit('addBlock', row[row.length - 1]?.uuid)"
+            @click="emit('addInRow', rowEmpty(row))"
           >
             <div
               class="flex-1 border-[1.5px] border-dashed border-[#d4d4d4] rounded-[5px] flex items-center justify-center cursor-pointer text-[#bbb] text-sm font-normal transition-all duration-100 hover:border-[#999] hover:text-[#888]"
@@ -105,7 +104,7 @@
         <!-- Add row button -->
         <div
           class="h-8 flex items-center justify-center gap-[5px] cursor-pointer text-[#999] text-xs bg-[#f8f8f8] font-medium tracking-[0.01em] transition-all duration-100 hover:text-[#555] hover:bg-[#f2f2f2]"
-          @click="$emit('addRow')"
+          @click="emit('addRow')"
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
@@ -134,7 +133,7 @@ const emit = defineEmits<{
   select: [uuid: string];
   resize: [uuid: string, span: number];
   delete: [uuid: string];
-  addBlock: [afterUuid: string | undefined];
+  addInRow: [remainingSpan: number];
   addRow: [];
 }>();
 

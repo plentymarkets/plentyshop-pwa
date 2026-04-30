@@ -66,8 +66,8 @@
             @select="selectedColumnId = $event"
             @resize="resizeColumn"
             @delete="deleteColumn"
-            @add-block="addColumn"
-            @add-row="addColumn(undefined)"
+            @add-in-row="addColumnInRow"
+            @add-row="addFullRow"
           />
 
           <BlocksStructureMultiGridPartialsMultiGridGapSelector
@@ -175,10 +175,10 @@ const BLOCK_COLORS = ['#4285F4', '#34A853', '#9C59D1', '#F4791F', '#E8394A', '#0
 
 const props = defineProps<{ uuid?: string }>();
 
-const { blockUuid, openDrawerWithView } = useSiteConfiguration();
+const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks: data } = useBlocks();
-const { findOrDeleteBlockByUuid, togglePlaceholder, addNewBlock } = useBlockManager();
+const { findOrDeleteBlockByUuid, addNewBlock } = useBlockManager();
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
@@ -312,12 +312,7 @@ const handleReorder = (reordered: ElementBlock[]) => {
 };
 
 const addChildBlock = () => {
-  const content = multiGridStructure.value.content as Block[];
-  const lastChild = content[content.length - 1];
-  if (lastChild) {
-    togglePlaceholder(lastChild.meta.uuid, 'bottom');
-  }
-  openDrawerWithView('blocksList');
+  addFullRow();
 };
 
 const quickAddBlock = async (blockName: string) => {
@@ -380,11 +375,15 @@ const deleteColumn = (uuid: string) => {
   }
 };
 
-const addColumn = (_afterUuid?: string) => {
+const addFullRow = () => {
   const widths = [...multiGridStructure.value.configuration.columnWidths];
-  const remaining = 12 - widths.reduce((a, b) => a + b, 0);
-  const newSpan = remaining > 0 ? Math.min(remaining, 4) : 3;
-  widths.push(newSpan);
+  widths.push(12);
+  multiGridStructure.value.configuration.columnWidths = widths;
+};
+
+const addColumnInRow = (remainingSpan: number) => {
+  const widths = [...multiGridStructure.value.configuration.columnWidths];
+  widths.push(remainingSpan);
   multiGridStructure.value.configuration.columnWidths = widths;
 };
 
