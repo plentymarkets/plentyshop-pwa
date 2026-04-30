@@ -12,8 +12,9 @@
       <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
-    <div v-if="open" :class="['absolute top-full z-50 mt-2', dropdownPositionClass]" @mousedown.stop @click.stop>
-      <EditorColorPickerPanel
+    <Teleport to="body">
+      <div v-if="open" :style="floatingStyle" class="fixed z-[9999]" @mousedown.stop @click.stop>
+        <EditorColorPickerPanel
         :model-value="modelValue"
         :active-tab="activeTab"
         :primary-color="primaryColor"
@@ -22,7 +23,8 @@
         @update:model-value="emit('update:modelValue', $event)"
         @update:active-tab="activeTab = $event"
       />
-    </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -44,21 +46,13 @@ const emit = defineEmits<{
 }>();
 
 const open = ref(false);
-const root = ref<HTMLElement | null>(null);
 const activeTab = ref<'shop' | 'picker'>('picker');
+
+const { triggerRef: root, floatingStyle, updatePosition } = useFloatingDropdown({ handleClickOutside: false });
 
 const instanceId = `color-picker-${Math.random().toString(36).slice(2)}`;
 const activeId = useState<string | null>('editorColorPickerActiveId', () => null);
 
-const dropdownPositionClass = computed(() => {
-  if (props.dropdownAlign === 'rte') {
-    return 'right-0 translate-x-1/2';
-  }
-  if (props.dropdownAlign === 'top-editor') {
-    return 'right-0 translate-x-[30%]';
-  }
-  return '';
-});
 const style = computed(() => ({
   backgroundColor: props.modelValue || '#ffffff',
 }));
@@ -80,6 +74,7 @@ watch(
 );
 
 const openDropdown = () => {
+  updatePosition(props.dropdownAlign !== 'default' ? 'right' : 'left');
   activeId.value = instanceId;
 };
 

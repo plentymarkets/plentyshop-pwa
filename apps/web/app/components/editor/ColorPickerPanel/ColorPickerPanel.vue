@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-md border bg-white shadow-md p-3 min-w-[220px]">
+  <div class="rounded-md border bg-white shadow-md p-3 w-[240px]">
     <EditorColorPickerTabs
       v-if="props.showShopColors"
       :active-tab="props.activeTab"

@@ -1,5 +1,5 @@
 <template>
-  <div ref="root" class="relative inline-block">
+  <div ref="triggerRef" class="relative inline-block">
     <EditorRichTextEditorMenuButton
       data-testid="rte-icon-picker-button"
       icon-name="emoji"
@@ -7,12 +7,14 @@
       @click="toggle"
     />
 
-    <div
-      v-if="open"
-      class="absolute top-full right-0 mt-1 z-[1000] w-[260px] translate-x-[25%] rounded border border-gray-200 bg-white shadow-lg"
-      @mousedown.stop
-      @click.stop
-    >
+    <Teleport to="body">
+      <div
+        v-if="open"
+        :style="floatingStyle"
+        class="fixed z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
+        @mousedown.stop
+        @click.stop
+      >
       <div class="flex border-b border-gray-200" role="tablist">
         <button
           v-for="tab in tabs"
@@ -96,6 +98,7 @@
         </div>
       </div>
     </div>
+    </Teleport>
   </div>
 </template>
 
@@ -109,8 +112,8 @@ const emit = defineEmits<{
   (e: 'select-icon' | 'select-emoji', name: string): void;
 }>();
 
-const root = ref<HTMLElement | null>(null);
-const open = ref(false);
+const { triggerRef, open, floatingStyle, toggle, close } = useFloatingDropdown({ align: 'right' });
+
 const activeTab = ref<IconEmojiPickerTab>('icons');
 const emojiSearch = ref('');
 
@@ -122,35 +125,19 @@ const tabs: Array<{ value: IconEmojiPickerTab; label: string }> = [
 const categories = getIconCategories();
 const filteredEmojis = computed(() => filterEmojis(emojiSearch.value));
 
-const toggle = () => {
-  open.value = !open.value;
-};
-
-const close = () => {
-  open.value = false;
+const closeAndReset = () => {
+  close();
   activeTab.value = 'icons';
   emojiSearch.value = '';
 };
 
 const onSelectIcon = (name: string) => {
   emit('select-icon', name);
-  close();
+  closeAndReset();
 };
 
 const onSelectEmoji = (name: string) => {
   emit('select-emoji', name);
-  close();
+  closeAndReset();
 };
-
-const onDocClick = (e: MouseEvent) => {
-  if (!root.value?.contains(e.target as Node)) close();
-};
-
-onMounted(() => {
-  document.addEventListener('mousedown', onDocClick);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', onDocClick);
-});
 </script>

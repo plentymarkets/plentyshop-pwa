@@ -1,117 +1,115 @@
 <template>
-  <div class="relative inline-block z-[500]">
-    <SfDropdown v-model="isBlockTypeOpen" placement="bottom-start" @update:model-value="onBlockTypeDropdownToggle">
-      <template #trigger>
-        <button
-          ref="blockTypeTriggerRef"
-          type="button"
-          data-testid="rte-heading-select"
-          class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
-          @mousedown.prevent
-          @click="onBlockTypeTriggerClick"
-        >
-          <span>{{ selectedBlockTypeLabel }}</span>
+  <button
+    ref="blockTypeTriggerRef"
+    type="button"
+    data-testid="rte-heading-select"
+    class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+    @mousedown.prevent
+    @click="toggleBlockType"
+  >
+    <span>{{ selectedBlockTypeLabel }}</span>
 
-          <svg
-            class="h-4 w-4 shrink-0 transition-transform"
-            :class="{ 'rotate-180': isBlockTypeOpen }"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-            />
-          </svg>
-        </button>
-      </template>
+    <svg
+      class="h-4 w-4 shrink-0 transition-transform"
+      :class="{ 'rotate-180': isBlockTypeOpen }"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+      />
+    </svg>
+  </button>
 
-      <ul
-        class="-mt-1 z-[300] w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
-        role="listbox"
-        aria-label="Text style"
-        data-testid="rte-heading-options"
-        @click.stop
+  <Teleport to="body">
+    <ul
+      v-if="isBlockTypeOpen"
+      :style="blockTypeFloatingStyle"
+      class="fixed z-[9999] w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
+      role="listbox"
+      aria-label="Text style"
+      data-testid="rte-heading-options"
+      @mousedown.stop
+      @click.stop
+    >
+      <li
+        v-for="option in blockTypeOptions"
+        :key="option.value"
+        role="option"
+        :aria-selected="option.value === currentBlockType"
       >
-        <li
-          v-for="option in blockTypeOptions"
-          :key="option.value"
-          role="option"
-          :aria-selected="option.value === currentBlockType"
-        >
-          <button
-            :data-testid="`rte-heading-option-${option.value}`"
-            type="button"
-            class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
-            :class="{ 'bg-gray-100 font-semibold': option.value === currentBlockType }"
-            @mousedown.prevent
-            @click="selectBlockType(option.value)"
-          >
-            {{ option.label }}
-          </button>
-        </li>
-      </ul>
-    </SfDropdown>
-  </div>
-
-  <div class="relative inline-block z-[500]">
-    <SfDropdown v-model="isFontSizeOpen" placement="bottom-start" @update:model-value="onFontSizeDropdownToggle">
-      <template #trigger>
         <button
-          ref="fontSizeTriggerRef"
+          :data-testid="`rte-heading-option-${option.value}`"
           type="button"
-          data-testid="rte-font-size-select"
-          class="flex h-8 w-[84px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+          class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
+          :class="{ 'bg-gray-100 font-semibold': option.value === currentBlockType }"
           @mousedown.prevent
-          @click="onFontSizeTriggerClick"
+          @click="selectBlockType(option.value)"
         >
-          <span>{{ selectedFontSizeLabel }}</span>
-
-          <svg
-            class="h-4 w-4 shrink-0 transition-transform"
-            :class="{ 'rotate-180': isFontSizeOpen }"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-            />
-          </svg>
+          {{ option.label }}
         </button>
-      </template>
+      </li>
+    </ul>
+  </Teleport>
 
-      <ul
-        class="-mt-1 z-[300] max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
-        role="listbox"
-        aria-label="Font size"
-        data-testid="rte-font-size-options"
-        @click.stop
+  <button
+    ref="fontSizeTriggerRef"
+    type="button"
+    data-testid="rte-font-size-select"
+    class="flex h-8 w-[84px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+    @mousedown.prevent
+    @click="toggleFontSize"
+  >
+    <span>{{ selectedFontSizeLabel }}</span>
+
+    <svg
+      class="h-4 w-4 shrink-0 transition-transform"
+      :class="{ 'rotate-180': isFontSizeOpen }"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+      />
+    </svg>
+  </button>
+
+  <Teleport to="body">
+    <ul
+      v-if="isFontSizeOpen"
+      :style="fontSizeFloatingStyle"
+      class="fixed z-[9999] max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
+      role="listbox"
+      aria-label="Font size"
+      data-testid="rte-font-size-options"
+      @mousedown.stop
+      @click.stop
+    >
+      <li
+        v-for="option in fontSizeOptions"
+        :key="option.value"
+        role="option"
+        :aria-selected="option.value === effectiveFontSize"
       >
-        <li
-          v-for="option in fontSizeOptions"
-          :key="option.value"
-          role="option"
-          :aria-selected="option.value === effectiveFontSize"
+        <button
+          type="button"
+          :data-testid="`rte-font-size-option-${option.value}`"
+          class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
+          :class="{ 'bg-gray-100 font-semibold': option.value === effectiveFontSize }"
+          @mousedown.prevent
+          @click="selectFontSize(option.value)"
         >
-          <button
-            type="button"
-            :data-testid="`rte-font-size-option-${option.value}`"
-            class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
-            :class="{ 'bg-gray-100 font-semibold': option.value === effectiveFontSize }"
-            @mousedown.prevent
-            @click="selectFontSize(option.value)"
-          >
-            {{ option.label }}
-          </button>
-        </li>
-      </ul>
-    </SfDropdown>
-  </div>
+          {{ option.label }}
+        </button>
+      </li>
+    </ul>
+  </Teleport>
 
   <EditorRichTextEditorMenuButton :active="isActive('bold')" icon-name="bold" @click="cmd('toggleBold')" />
   <EditorRichTextEditorMenuButton :active="isActive('italic')" icon-name="italic" @click="cmd('toggleItalic')" />
@@ -150,7 +148,6 @@
   </EditorColorPicker>
 </template>
 <script setup lang="ts">
-import { SfDropdown } from '@storefront-ui/vue';
 import type { RteCommand } from '~/composables/useRichTextEditor/types';
 
 const props = defineProps<{
@@ -167,11 +164,21 @@ const props = defineProps<{
   insertEmoji: (name: string) => void;
 }>();
 
-const isBlockTypeOpen = ref(false);
-const isFontSizeOpen = ref(false);
+const {
+  triggerRef: blockTypeTriggerRef,
+  open: isBlockTypeOpen,
+  floatingStyle: blockTypeFloatingStyle,
+  toggle: toggleBlockType,
+  close: closeBlockType,
+} = useFloatingDropdown();
 
-const blockTypeTriggerRef = ref<HTMLButtonElement | null>(null);
-const fontSizeTriggerRef = ref<HTMLButtonElement | null>(null);
+const {
+  triggerRef: fontSizeTriggerRef,
+  open: isFontSizeOpen,
+  floatingStyle: fontSizeFloatingStyle,
+  toggle: toggleFontSize,
+  close: closeFontSize,
+} = useFloatingDropdown();
 
 const blockTypeOptions = [
   { value: 'paragraph', label: 'Normal' },
@@ -220,24 +227,9 @@ const effectiveFontSize = computed(() => {
 const selectedFontSizeLabel = computed(() => {
   return fontSizeOptions.find((option) => option.value === effectiveFontSize.value)?.label ?? '16px';
 });
-const onBlockTypeTriggerClick = () => {
-  isBlockTypeOpen.value = !isBlockTypeOpen.value;
-};
-
-const onFontSizeTriggerClick = () => {
-  isFontSizeOpen.value = !isFontSizeOpen.value;
-};
-
-const onBlockTypeDropdownToggle = (open: boolean) => {
-  isBlockTypeOpen.value = open;
-};
-
-const onFontSizeDropdownToggle = (open: boolean) => {
-  isFontSizeOpen.value = open;
-};
 const selectBlockType = (value: string) => {
   if (value === props.currentBlockType) {
-    isBlockTypeOpen.value = false;
+    closeBlockType();
     return;
   }
   props.onFontSizeChange(value);
@@ -247,11 +239,11 @@ const selectBlockType = (value: string) => {
     props.onTextSizeChange(defaultFontSize);
   }
 
-  isBlockTypeOpen.value = false;
+  closeBlockType();
 };
 
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
-  isFontSizeOpen.value = false;
+  closeFontSize();
 };
 </script>
