@@ -7,7 +7,12 @@
   "scripts": {
     "build": "tsx ./build/index.ts && nuxt build",
     "dev": "tsx ./build/index.ts && nuxt dev",
-    "start": "nuxt start",
+    "start": "pm2-runtime start ecosystem.config.cjs",
+    "stop": "pm2 stop plentyshop-nuxt",
+    "restart": "pm2 restart plentyshop-nuxt",
+    "delete": "pm2 delete plentyshop-nuxt",
+    "logs": "pm2 logs plentyshop-nuxt",
+    "monit": "pm2 monit",
     "generate": "nuxt generate",
     "publish-typedoc": "npx typedoc --options typedoc.json && mkdir -p docs/reference && rsync -av --delete reference/composables/ docs/reference/composables/",
     "lint": "nuxi prepare && eslint . --max-warnings 0",
@@ -42,6 +47,7 @@
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
+    "pm2": "^6.0.14",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

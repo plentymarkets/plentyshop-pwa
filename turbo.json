@@ -14,7 +14,23 @@
       "cache": true
     },
     "start": {
-      "outputs": []
+      "cache": false,
+      "persistent": true
+    },
+    "stop": {
+      "cache": false
+    },
+    "restart": {
+      "cache": false
+    },
+    "delete": {
+      "cache": false
+    },
+    "logs": {
+      "cache": false
+    },
+    "monit": {
+      "cache": false
     },
     "typecheck": {
       "outputs": [],
