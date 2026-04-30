@@ -142,32 +142,32 @@ export class BannerSliderObject extends PageObject {
   }
 
   alignBoxCenterX() {
-    cy.get('[data-testid="slider-textbox-align-center"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-center"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'center');
   }
 
   alignBoxBottomX() {
-    cy.get('[data-testid="slider-textbox-align-bottom"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-right"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-end');
   }
 
   alignBoxTopX() {
-    cy.get('[data-testid="slider-textbox-align-top"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-left"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-start');
   }
 
   alignBoxCenterY() {
-    cy.get('[data-testid="slider-textbox-y-align-center"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-center"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'center');
   }
 
   alignBoxRightY() {
-    cy.get('[data-testid="slider-textbox-y-align-right"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-bottom"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-end');
   }
 
   alignBoxLeftY() {
-    cy.get('[data-testid="slider-textbox-y-align-left"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-top"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-start');
   }
 
@@ -227,12 +227,12 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkButtonSecondary() {
-    cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
     cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:text-primary-900');
   }
 
   checkButtonPrimary() {
-    cy.get('[data-testid="slider-button-primary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-primary"]').should('exist').click();
     cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:bg-primary-700');
   }
 }

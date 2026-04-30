@@ -101,9 +101,9 @@ describe('Image Text Block Form', () => {
   };
 
   const changeButtonVariants = () => {
-    cy.get('[data-testid="button-outline-secondary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:text-primary-900');
-    cy.get('[data-testid="button-outline-primary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-primary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
   };
 
