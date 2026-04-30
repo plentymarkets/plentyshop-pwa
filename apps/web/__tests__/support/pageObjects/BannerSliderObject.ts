@@ -227,12 +227,12 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkButtonSecondary() {
-    cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
     cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:text-primary-900');
   }
 
   checkButtonPrimary() {
-    cy.get('[data-testid="slider-button-primary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-primary"]').should('exist').click();
     cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:bg-primary-700');
   }
 }
