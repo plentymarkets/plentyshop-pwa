@@ -18,8 +18,8 @@
       :style="{
         color: banner.text.color,
         textAlign: getTextAlignment(rteAlignment ?? ''),
-        alignItems: getContentPosition(banner.text.align ?? ''),
-        justifyContent: getContentPosition(banner.text.justify ?? ''),
+        alignItems: getContentPosition(banner.text.justify ?? ''),
+        justifyContent: getContentPosition(banner.text.align ?? ''),
       }"
       :data-testid="'banner-overlay-' + meta.uuid"
     >
