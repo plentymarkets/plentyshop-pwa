@@ -16,11 +16,11 @@
       v-if="banner.text"
       :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': banner.text.bgcolor }]"
       :style="{
-  color: banner.text.color,
-  textAlign: getTextAlignment(rteAlignment ?? ''),
-  alignItems: getContentPosition(banner.text.align ?? ''),
-  justifyContent: getContentPosition(banner.text.justify ?? ''),
-}"
+        color: banner.text.color,
+        textAlign: getTextAlignment(rteAlignment ?? ''),
+        alignItems: getContentPosition(banner.text.align ?? ''),
+        justifyContent: getContentPosition(banner.text.justify ?? ''),
+      }"
       :data-testid="'banner-overlay-' + meta.uuid"
     >
       <div
