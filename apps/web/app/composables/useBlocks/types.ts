@@ -24,6 +24,7 @@ export interface UseBlocks {
   updateBlocks: (blocks: Block[]) => void;
   discardChanges: () => void;
   setDefaultTemplate: (blocks: Block[]) => void;
+  scheduleCleanDataSync: () => void;
   isSettling: Ref<boolean>;
 }
 

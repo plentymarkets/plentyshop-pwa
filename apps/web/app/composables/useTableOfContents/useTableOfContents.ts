@@ -8,6 +8,9 @@ export const useTableOfContents = () => {
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
+  const headerCollapsed = useState<boolean>('toc-header-collapsed', () => false);
+  const contentCollapsed = useState<boolean>('toc-content-collapsed', () => false);
+  const footerCollapsed = useState<boolean>('toc-footer-collapsed', () => false);
 
   const { allBlocks: data } = useBlocks();
 
@@ -17,6 +20,9 @@ export const useTableOfContents = () => {
       expandedBlocks.value.clear();
       selectedUuid.value = '';
       hoveredUuid.value = '';
+      headerCollapsed.value = false;
+      contentCollapsed.value = false;
+      footerCollapsed.value = false;
     },
   );
 
@@ -133,6 +139,9 @@ export const useTableOfContents = () => {
     selectedUuid,
     hoveredUuid,
     expandedBlocks,
+    headerCollapsed,
+    contentCollapsed,
+    footerCollapsed,
     data,
     flatBlocks,
     isStructureBlock,

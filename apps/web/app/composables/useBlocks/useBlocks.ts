@@ -132,6 +132,7 @@ export const useBlocks: UseBlocksReturn = () => {
     updateBlocks,
     discardChanges,
     setDefaultTemplate,
+    scheduleCleanDataSync,
     isSettling: computed(() => state.value.isSettling),
   };
 };

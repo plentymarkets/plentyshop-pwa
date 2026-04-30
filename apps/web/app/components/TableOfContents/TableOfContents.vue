@@ -16,101 +16,119 @@
         {{ getEditorTranslation('description') }}
       </p>
 
-      <div class="px-2">
-        <draggable
-          v-if="filteredDataForDisplay.length"
-          v-model="draggableData"
-          item-key="meta.uuid"
-          handle=".toc-drag-handle"
-          ghost-class="toc-drag-ghost"
-          tag="ul"
-          class="mt-2 mb-4"
-          @change="handleDragChange"
+      <div v-if="headerContainer" class="mt-2">
+        <button
+          type="button"
+          class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
+          data-testid="toc-section-header"
+          :aria-expanded="!headerCollapsed"
+          aria-controls="toc-header-region"
+          @click="headerCollapsed = !headerCollapsed"
         >
-          <template #item="{ element: block, index }">
-            <div>
-              <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
-              <TableOfContentsItem :item="blockToFlatBlock(block)" />
-              <TableOfContentsInsertBlockLine
-                v-if="index < filteredDataForDisplay.length - 1"
-                :block="block"
-                class="toc-insert-line"
-              />
+          <span>{{ getEditorTranslation('header-section-label') }}</span>
+          <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !headerCollapsed }" />
+        </button>
+        <ul v-if="!headerCollapsed" id="toc-header-region" class="px-2 mt-2 mb-4">
+          <TableOfContentsItem :item="blockToFlatBlock(headerContainer!)" />
+        </ul>
+      </div>
+
+      <div>
+        <button
+          type="button"
+          class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
+          data-testid="toc-section-content"
+          :aria-expanded="!contentCollapsed"
+          aria-controls="toc-content-region"
+          @click="contentCollapsed = !contentCollapsed"
+        >
+          <span>{{ getEditorTranslation('content-section-label') }}</span>
+          <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !contentCollapsed }" />
+        </button>
+        <template v-if="!contentCollapsed">
+          <div id="toc-content-region">
+            <div class="px-2">
+              <draggable
+                v-if="pageBlocks.length"
+                v-model="draggablePageBlocks"
+                item-key="meta.uuid"
+                handle=".toc-drag-handle"
+                ghost-class="toc-drag-ghost"
+                tag="div"
+                class="mt-2 mb-4"
+                @change="handleDragChange"
+              >
+                <template #item="{ element: block, index }">
+                  <div>
+                    <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
+                    <TableOfContentsItem :item="blockToFlatBlock(block)" />
+                    <TableOfContentsInsertBlockLine
+                      v-if="index < pageBlocks.length - 1"
+                      :block="block"
+                      class="toc-insert-line"
+                    />
+                  </div>
+                </template>
+              </draggable>
+              <div v-else class="mx-2 mt-8 mb-4 text-center text-sm text-neutral-400">
+                {{ getEditorTranslation('empty') }}
+              </div>
             </div>
-          </template>
-        </draggable>
+            <div class="px-4 mb-4">
+              <button
+                type="button"
+                class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
+                data-testid="toc-add-block"
+                @click="addBlockAtBottom"
+              >
+                <SfIconAdd />
+                {{ getEditorTranslation('add-element-label') }}
+              </button>
+            </div>
+          </div>
+        </template>
+      </div>
 
-        <div v-else class="mx-2 mt-8 text-center text-sm text-neutral-400">
-          {{ getEditorTranslation('empty') }}
-        </div>
-
-        <div v-if="filteredDataForDisplay.length" class="px-2 mb-4">
-          <button
-            class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
-            data-testid="toc-add-block"
-            @click="addBlockAtBottom"
-          >
-            <SfIconAdd />
-            {{ getEditorTranslation('add-element-label') }}
-          </button>
-        </div>
+      <div v-if="footer">
+        <button
+          type="button"
+          class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
+          data-testid="toc-section-footer"
+          :aria-expanded="!footerCollapsed"
+          aria-controls="toc-footer-region"
+          @click="footerCollapsed = !footerCollapsed"
+        >
+          <span>{{ getEditorTranslation('footer-section-label') }}</span>
+          <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !footerCollapsed }" />
+        </button>
+        <ul v-if="!footerCollapsed" id="toc-footer-region" class="px-2 mt-2 mb-4">
+          <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
+import { SfIconClose, SfIconAdd, SfIconChevronRight } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
-const { data, addBlockAtBottom, blockToFlatBlock } = useTableOfContents();
+const { addBlockAtBottom, blockToFlatBlock, headerCollapsed, contentCollapsed, footerCollapsed } = useTableOfContents();
+const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
 const { scrollIntoBlockView } = useBlockManager();
 
-const filteredDataForDisplay = computed(() => {
-  return data.value;
+const draggablePageBlocks = computed({
+  get: () => pageBlocks.value,
+  set: (newValue: Block[]) => updateBlocks(newValue),
 });
-
-const draggableData = computed({
-  get: () => filteredDataForDisplay.value,
-  set: (newValue: Block[]) => {
-    data.value.splice(0, data.value.length, ...newValue);
-  },
-});
-
-const enforceHeaderAtTop = () => {
-  const headerIndex = data.value.findIndex((block) => isHeaderContainerBlock(block));
-  if (headerIndex !== -1 && headerIndex !== 0) {
-    const headerBlock = data.value.splice(headerIndex, 1)[0];
-    if (headerBlock) {
-      data.value.unshift(headerBlock);
-    }
-  }
-};
-
-const enforceFooterAtBottom = () => {
-  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
-  const lastIndex = data.value.length - 1;
-  if (footerIndex !== -1 && footerIndex !== lastIndex) {
-    const footerBlock = data.value.splice(footerIndex, 1)[0];
-    if (footerBlock) {
-      data.value.push(footerBlock);
-    }
-  }
-};
 
 const handleDragChange = (evt: DragEvent) => {
-  enforceHeaderAtTop();
-  enforceFooterAtBottom();
-  scrollToDraggedBlock(evt);
-};
-
-const scrollToDraggedBlock = (evt: DragEvent) => {
   if (evt.moved && evt.moved.oldIndex !== evt.moved.newIndex) {
-    const draggedBlock = data.value[evt.moved.newIndex];
+    const draggedBlock = pageBlocks.value[evt.moved.newIndex];
     if (draggedBlock) {
       scrollIntoBlockView(draggedBlock);
     }
@@ -124,13 +142,19 @@ const scrollToDraggedBlock = (evt: DragEvent) => {
     "label": "Table of Contents",
     "description": "Click on a block to scroll to its position on the page.",
     "empty": "No blocks found on this page.",
-    "add-element-label": "Add element"
+    "add-element-label": "Add element",
+    "header-section-label": "Header",
+    "content-section-label": "Content",
+    "footer-section-label": "Footer"
   },
   "de": {
     "label": "Table of Contents",
     "description": "Click on a block to scroll to its position on the page.",
+    "add-element-label": "Add element",
     "empty": "No blocks found on this page.",
-    "add-element-label": "Add element"
+    "header-section-label": "Header",
+    "content-section-label": "Content",
+    "footer-section-label": "Footer"
   }
 }
 </i18n>
