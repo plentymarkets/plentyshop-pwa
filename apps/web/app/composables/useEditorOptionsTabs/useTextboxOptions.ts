@@ -12,7 +12,10 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
     get: () => getTarget()?.text?.align ?? 'left',
     set: (newAlignXValue) => {
       const target = getTarget();
-      if (target?.text) target.text.align = newAlignXValue;
+      if (target) {
+        if (!target.text) target.text = {};
+        target.text.align = newAlignXValue;
+      }
     },
   });
 
@@ -26,7 +29,10 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
     get: () => getTarget()?.text?.justify ?? 'top',
     set: (newAlignYValue) => {
       const target = getTarget();
-      if (target?.text) target.text.justify = newAlignYValue;
+      if (target) {
+        if (!target.text) target.text = {};
+        target.text.justify = newAlignYValue;
+      }
     },
   });
 
