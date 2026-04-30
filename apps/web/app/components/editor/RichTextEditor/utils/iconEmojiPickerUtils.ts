@@ -15,10 +15,12 @@ export const getIconsByCategory = (category: UserIconCategory) =>
     .filter(([_name, icon]) => icon.category === category)
     .map(([name, icon]) => ({ name, icon }));
 
+const ALL_EMOJIS = emojis.filter((e) => e.emoji);
+
 export const filterEmojis = (query: string) => {
   const normalized = query.trim().toLowerCase();
-  if (!normalized) return emojis.filter((e) => e.emoji);
-  return emojis.filter((e) => {
+  if (!normalized) return ALL_EMOJIS;
+  return ALL_EMOJIS.filter((e) => {
     if (!e.emoji) return false;
     if (e.name.toLowerCase().includes(normalized)) return true;
     if (e.shortcodes?.some((s) => s.toLowerCase().includes(normalized))) return true;
