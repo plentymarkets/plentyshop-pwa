@@ -66,14 +66,14 @@ describe('MultiGrid block', () => {
     expect(cols.length).toBe(3);
   });
 
-  it('should render no columns when content is empty', () => {
+  it('should render column containers even when content is empty (for editor placeholders)', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,
         content: [],
       },
     });
-    expect(wrapper.findAll('[data-testid="multi-grid-column"]').length).toBe(0);
+    expect(wrapper.findAll('[data-testid="multi-grid-column"]').length).toBe(2);
   });
 
   it('should apply the correct gap class', () => {
