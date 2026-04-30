@@ -70,6 +70,7 @@
         <div class="p-2 border-b border-gray-200">
           <input
             v-model="emojiSearch"
+            v-focus
             type="text"
             placeholder="Search emoji..."
             class="w-full px-2 py-1.5 text-sm border border-gray-200 rounded outline-none focus:border-slate-500"
@@ -102,6 +103,8 @@
 import type { IconEmojiPickerTab } from './types';
 import { getIconCategories, getIconsByCategory, filterEmojis } from './utils/iconEmojiPickerUtils';
 
+const vFocus = { mounted: (el: HTMLElement) => el.focus() };
+
 const emit = defineEmits<{
   (e: 'select-icon' | 'select-emoji', name: string): void;
 }>();
@@ -125,6 +128,8 @@ const toggle = () => {
 
 const close = () => {
   open.value = false;
+  activeTab.value = 'icons';
+  emojiSearch.value = '';
 };
 
 const onSelectIcon = (name: string) => {
