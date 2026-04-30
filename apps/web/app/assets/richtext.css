@@ -89,3 +89,18 @@
   font-weight: 400;
   line-height: 1.5;
 }
+
+.rte-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.15em;
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+.ProseMirror-selectednode.rte-icon {
+  outline: 2px solid rgb(100 116 139);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
