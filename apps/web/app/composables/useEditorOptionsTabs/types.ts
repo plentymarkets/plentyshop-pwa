@@ -12,8 +12,8 @@ export type SourceType = 'cross_selling' | 'category';
 
 export type EditorTarget = {
   text?: {
-    align?: AlignX;
-    justify?: AlignY;
+    align?: AlignY;
+    justify?: AlignX;
     textAlignment?: AlignX;
     textOverlayAlignX?: AlignX;
     textOverlayAlignY?: AlignY;
