@@ -110,6 +110,7 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
   readOnly: false,
 });
 
+const viewport = useViewport();
 const { isInEditorClient } = useEditorState();
 const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
@@ -136,7 +137,7 @@ const shouldShowBottomAddInGrid = computed(() =>
     getBlockDepth,
   }),
 );
-const clientPreview = ref(false);
+const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
 const buttonLabel = 'Insert a new block at this position.';
 
 const getBlockComponent = computed(() => {
@@ -192,7 +193,6 @@ const observeLazyLoadSection = (blockName: string) => {
 };
 
 onNuxtReady(() => {
-  clientPreview.value = isInEditorClient.value;
   if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 
