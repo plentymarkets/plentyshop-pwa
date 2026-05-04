@@ -17,14 +17,18 @@
       </p>
 
       <div v-if="headerContainer" class="mt-2">
-        <UiAccordionItem
-          v-model="headerOpen"
-          data-testid="toc-section-header"
-          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-          summary-active-class="bg-neutral-100 border-t-0"
-          content-padding-class=""
-        >
-          <template #summary>{{ getEditorTranslation('header-section-label') }}</template>
+        <UiAccordionItem v-model="headerOpen" v-bind="accordionProps" data-testid="toc-section-header">
+          <template #summary>
+            <span>{{ getEditorTranslation('header-section-label') }}</span>
+            <button
+              type="button"
+              data-testid="toc-header-settings"
+              class="p-1 rounded hover:bg-editor-icon-hover"
+              @click.stop="editHeaderContainer"
+            >
+              <SfIconTune class="!w-4 !h-4" />
+            </button>
+          </template>
           <div class="px-2 mt-2 mb-4">
             <draggable
               v-if="headerBlocks.length"
@@ -57,13 +61,7 @@
       </div>
 
       <div>
-        <UiAccordionItem
-          v-model="contentOpen"
-          data-testid="toc-section-content"
-          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-          summary-active-class="bg-neutral-100 border-t-0"
-          content-padding-class=""
-        >
+        <UiAccordionItem v-model="contentOpen" v-bind="accordionProps" data-testid="toc-section-content">
           <template #summary>{{ getEditorTranslation('content-section-label') }}</template>
           <div class="px-2">
             <draggable
@@ -107,13 +105,7 @@
       </div>
 
       <div v-if="footer">
-        <UiAccordionItem
-          v-model="footerOpen"
-          data-testid="toc-section-footer"
-          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-          summary-active-class="bg-neutral-100 border-t-0"
-          content-padding-class=""
-        >
+        <UiAccordionItem v-model="footerOpen" v-bind="accordionProps" data-testid="toc-section-footer">
           <template #summary>{{ getEditorTranslation('footer-section-label') }}</template>
           <ul class="px-2 mt-2 mb-4">
             <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
@@ -125,17 +117,23 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
+import { SfIconClose, SfIconAdd, SfIconTune } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
 import type { Block } from '@plentymarkets/shop-api';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
-const { closeSiteConfigurationDrawer } = useSiteConfiguration();
-const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen } = useTableOfContents();
+const { closeSiteConfigurationDrawer, openDrawerWithView } = useSiteConfiguration();
+const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen, editBlock } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
-const { scrollIntoBlockView } = useBlockManager();
+const { scrollIntoBlockView, togglePlaceholder } = useBlockManager();
+
+const accordionProps = {
+  summaryClass: 'w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b',
+  summaryActiveClass: 'bg-neutral-100 border-t-0',
+  contentPaddingClass: '',
+};
 
 const headerBlocks = computed(() => ((headerContainer.value as HeaderContainerBlock)?.content ?? []) as Block[]);
 
@@ -158,9 +156,13 @@ const handleHeaderDragChange = (evt: DragEvent) => {
   }
 };
 
+const editHeaderContainer = () => {
+  if (headerContainer.value) {
+    editBlock(headerContainer.value as Block);
+  }
+};
+
 const addHeaderBlock = () => {
-  const { openDrawerWithView } = useSiteConfiguration();
-  const { togglePlaceholder } = useBlockManager();
   const lastChild = headerBlocks.value[headerBlocks.value.length - 1];
   if (!lastChild) return;
   togglePlaceholder(lastChild.meta.uuid, 'bottom');

@@ -65,7 +65,13 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const assembled = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
+    const raw = data.value?.data || ({} as GetBlocksResponse);
+    const assembled = assembleBlocks(raw, type, identifier);
+
+    if (!raw.HeaderContainer && state.value.data?.HeaderContainer) {
+      (assembled as GetBlocksResponse).HeaderContainer = state.value.data.HeaderContainer;
+    }
+
     setBlocks(assembled);
     state.value.loading = false;
 

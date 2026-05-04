@@ -79,12 +79,7 @@ export const useTableOfContents = () => {
     selectedUuid.value = uuid;
     const el = document.querySelector(`[data-uuid="${uuid}"]`);
     if (el) {
-      const { top, bottom } = el.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-      if (top < 0 || bottom > viewportHeight) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     highlightedUuid.value = uuid;

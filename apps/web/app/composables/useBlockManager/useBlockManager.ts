@@ -48,6 +48,26 @@ export const useBlockManager = () => {
     multigridColumnUuid.value = uuid;
   };
 
+  const insertBlock = ({
+    targetBlock,
+    newBlock,
+    parent,
+    index,
+    position,
+  }: {
+    targetBlock: Block;
+    newBlock: Block;
+    parent: Block[];
+    index: number;
+    position: BlockPosition;
+  }) => {
+    if (position === 'inside') {
+      insertIntoColumn(targetBlock, newBlock, parent);
+    } else {
+      insertNextToBlock(parent, index, newBlock, position);
+    }
+  };
+
   const addBlockToHeader = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
     if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
 
@@ -191,26 +211,6 @@ export const useBlockManager = () => {
     }
     const insertIndex = position === 'top' ? index : index + 1;
     parent.splice(insertIndex, 0, newBlock);
-  };
-
-  const insertBlock = ({
-    targetBlock,
-    newBlock,
-    parent,
-    index,
-    position,
-  }: {
-    targetBlock: Block;
-    newBlock: Block;
-    parent: Block[];
-    index: number;
-    position: BlockPosition;
-  }) => {
-    if (position === 'inside') {
-      insertIntoColumn(targetBlock, newBlock, parent);
-    } else {
-      insertNextToBlock(parent, index, newBlock, position);
-    }
   };
 
   const changeBlockPosition = (index: number, position: number) => {
