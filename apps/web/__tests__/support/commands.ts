@@ -191,11 +191,15 @@ Cypress.Commands.add('capturePopup', () => {
             node.addEventListener('load', () => {
               try {
                 if (node.contentWindow) patchWindowOpen(node.contentWindow);
-              } catch { /* cross-origin */ }
+              } catch {
+                /* cross-origin */
+              }
             });
             try {
               if (node.contentWindow) patchWindowOpen(node.contentWindow);
-            } catch { /* cross-origin */ }
+            } catch {
+              /* cross-origin */
+            }
           }
           // Also check descendants
           if (node instanceof HTMLElement) {
@@ -204,11 +208,15 @@ Cypress.Commands.add('capturePopup', () => {
               iframe.addEventListener('load', () => {
                 try {
                   if (iframe.contentWindow) patchWindowOpen(iframe.contentWindow);
-                } catch { /* cross-origin */ }
+                } catch {
+                  /* cross-origin */
+                }
               });
               try {
                 if (iframe.contentWindow) patchWindowOpen(iframe.contentWindow);
-              } catch { /* cross-origin */ }
+              } catch {
+                /* cross-origin */
+              }
             });
           }
         }
@@ -234,22 +242,28 @@ Cypress.Commands.add('firstIFrame', { prevSubject: 'element' }, ($iframe) => {
  * Returns a wrapped body of a captured popup
  */
 Cypress.Commands.add('popup', (): Cypress.Chainable => {
-  return cy.waitUntil(
-    () => {
-      if (state.popup && !state.popup.closed) {
-        try {
-          return cy.wrap(true);
-        } catch {
-          return cy.wrap(false);
+  return cy
+    .waitUntil(
+      () => {
+        if (state.popup && !state.popup.closed) {
+          try {
+            return cy.wrap(true);
+          } catch {
+            return cy.wrap(false);
+          }
         }
-      }
-      return cy.wrap(false);
-    },
-    { timeout: 15_000, interval: 500, errorMsg: 'No popup window captured. Make sure to call `cy.capturePopup()` before using `cy.popup()`.' },
-  ).then(() => {
-    const popup = Cypress.$(state.popup!.document);
-    return cy.wrap(popup.contents().find('body'));
-  });
+        return cy.wrap(false);
+      },
+      {
+        timeout: 15_000,
+        interval: 500,
+        errorMsg: 'No popup window captured. Make sure to call `cy.capturePopup()` before using `cy.popup()`.',
+      },
+    )
+    .then(() => {
+      const popup = Cypress.$(state.popup!.document);
+      return cy.wrap(popup.contents().find('body'));
+    });
 });
 
 Cypress.Commands.add('resetPopupStub', () => {

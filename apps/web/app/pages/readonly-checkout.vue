@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts" setup>
-import {AddressType, cartGetters} from '@plentymarkets/shop-api';
+import { AddressType, cartGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import type { Locale } from '#i18n';
