@@ -74,6 +74,14 @@
       {
         "text": "Mollie",
         "link": "/guide/modules/plentyone/mollie"
+      },
+      {
+        "text": "PayPal",
+        "link": "https://github.com/plentymarkets/plentyshop-pwa/tree/main/apps/web/modules/paypal"
+      },
+      {
+        "text": "Sitemap",
+        "link": "https://github.com/plentymarkets/plentyshop-pwa/tree/main/apps/web/modules/sitemap"
       }
     ]
   }
