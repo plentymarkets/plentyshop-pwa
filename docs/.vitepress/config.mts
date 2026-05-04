@@ -54,9 +54,10 @@ export default withMermaid({
       {
         text: "Guide",
         items: [
-          { text: "Get started", link: "/guide/setup/quickstart" },
-          { text: "How-To", link: "/guide/how-to/" },
-          { text: "Concept", link: "/guide/concept/" },
+          { text: "Quickstart", link: "/guide/introduction/quickstart" },
+          { text: "Themes", link: "/guide/themes/" },
+          { text: "Editor CMS", link: "/guide/editor/" },
+          { text: "Modules", link: "/guide/modules/" },
         ],
       },
       {
@@ -102,11 +103,11 @@ export default withMermaid({
             },
             {
               text: "FAQ",
-              link: "",
+              link: "/guide/product/faq.md",
             },
             {
               text: "Troubleshooting",
-              link: "",
+              link: "/guide/introduction/troubleshooting.md",
             }
           ],
         }
