@@ -9,6 +9,7 @@ export const useTableOfContents = () => {
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
   const highlightedUuid = useState<string>('toc-highlighted-uuid', () => '');
+  const highlightTimeoutToken = useState<number>('toc-highlight-token', () => 0);
   const headerOpen = useState<boolean>('toc-header-open', () => true);
   const contentOpen = useState<boolean>('toc-content-open', () => true);
   const footerOpen = useState<boolean>('toc-footer-open', () => true);
@@ -21,6 +22,8 @@ export const useTableOfContents = () => {
       expandedBlocks.value.clear();
       selectedUuid.value = '';
       hoveredUuid.value = '';
+      highlightedUuid.value = '';
+      highlightTimeoutToken.value++;
       headerOpen.value = true;
       contentOpen.value = true;
       footerOpen.value = true;
@@ -83,8 +86,11 @@ export const useTableOfContents = () => {
     }
 
     highlightedUuid.value = uuid;
+    const token = ++highlightTimeoutToken.value;
     setTimeout(() => {
-      highlightedUuid.value = '';
+      if (highlightTimeoutToken.value === token) {
+        highlightedUuid.value = '';
+      }
     }, 1500);
   };
 

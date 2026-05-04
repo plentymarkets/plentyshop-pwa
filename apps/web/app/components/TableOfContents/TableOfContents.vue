@@ -107,9 +107,9 @@
       <div v-if="footer">
         <UiAccordionItem v-model="footerOpen" v-bind="accordionProps" data-testid="toc-section-footer">
           <template #summary>{{ getEditorTranslation('footer-section-label') }}</template>
-          <ul class="px-2 mt-2 mb-4">
+          <div class="px-2 mt-2 mb-4">
             <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
-          </ul>
+          </div>
         </UiAccordionItem>
       </div>
     </div>
@@ -127,7 +127,7 @@ import type { DragEvent } from '~/components/EditableBlocks/types';
 const { closeSiteConfigurationDrawer, openDrawerWithView } = useSiteConfiguration();
 const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen, editBlock } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
-const { scrollIntoBlockView, togglePlaceholder } = useBlockManager();
+const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
 
 const accordionProps = {
   summaryClass: 'w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b',
@@ -165,6 +165,7 @@ const editHeaderContainer = () => {
 const addHeaderBlock = () => {
   const lastChild = headerBlocks.value[headerBlocks.value.length - 1];
   if (!lastChild) return;
+  multigridColumnUuid.value = null;
   togglePlaceholder(lastChild.meta.uuid, 'bottom');
   openDrawerWithView('blocksList');
 };
