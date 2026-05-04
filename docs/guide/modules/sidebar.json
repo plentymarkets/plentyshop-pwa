@@ -46,12 +46,8 @@
     "collapsed": true,
     "items": [
       {
-        "text": "Get Started",
+        "text": "Introduction",
         "link": "/guide/modules/shop-core/index.md"
-      },
-      {
-        "text": "Usage Guide",
-        "link": "/guide/modules/shop-core/usage-guide.md"
       },
       {
         "text": "Cookie Consent System",
