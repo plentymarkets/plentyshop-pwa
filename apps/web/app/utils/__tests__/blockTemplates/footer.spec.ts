@@ -1,82 +1,81 @@
-import { createFooter } from '~/utils/blockTemplates/footer/factory';
+import { createFooterContainer } from '~/utils/blockTemplates/footer/factory';
+import type { Block } from '@plentymarkets/shop-api';
 
-describe('createFooter', () => {
-  it('should create a single Footer block', () => {
-    const footer = createFooter();
+describe('createFooterContainer', () => {
+  it('should create a FooterContainer block', () => {
+    const footer = createFooterContainer();
     expect(footer).toBeDefined();
-    expect(footer.name).toBe('Footer');
+    expect(footer.name).toBe('FooterContainer');
   });
 
   it('should have correct block structure', () => {
-    const footer = createFooter();
+    const footer = createFooterContainer();
     expect(footer).toHaveProperty('name');
     expect(footer).toHaveProperty('type');
     expect(footer).toHaveProperty('meta');
     expect(footer.meta).toHaveProperty('uuid');
     expect(footer).toHaveProperty('content');
+    expect(footer).toHaveProperty('configuration');
   });
 
-  it('should be a content type block', () => {
-    const footer = createFooter();
-    expect(footer.type).toBe('content');
+  it('should be a structure type block', () => {
+    const footer = createFooterContainer();
+    expect(footer.type).toBe('structure');
   });
 
   it('should be marked as global template', () => {
-    const footer = createFooter();
+    const footer = createFooterContainer();
     expect(footer.meta.isGlobalTemplate).toBe(true);
   });
 
-  it('should have all four column configurations', () => {
-    const footer = createFooter();
-    const content = footer.content as {
-      column1?: unknown;
-      column2?: unknown;
-      column3?: unknown;
-      column4?: unknown;
-    };
-    expect(content.column1).toBeDefined();
-    expect(content.column2).toBeDefined();
-    expect(content.column3).toBeDefined();
-    expect(content.column4).toBeDefined();
+  it('should have two top-level children: MultiGrid and TextCard', () => {
+    const footer = createFooterContainer();
+    const content = footer.content as Block[];
+    expect(Array.isArray(content)).toBe(true);
+    expect(content).toHaveLength(2);
+    expect(content[0]?.name).toBe('MultiGrid');
+    expect(content[1]?.name).toBe('TextCard');
   });
 
-  it('should use translations for column titles', () => {
-    const footer = createFooter();
-    const content = footer.content as {
-      column1?: { title?: string };
-      column2?: { title?: string };
-    };
-    expect(content.column1?.title).toBeDefined();
-    expect(typeof content.column1?.title).toBe('string');
-    expect(content.column2?.title).toBeDefined();
-    expect(typeof content.column2?.title).toBe('string');
+  it('should have a MultiGrid with four TextCard columns', () => {
+    const footer = createFooterContainer();
+    const multiGrid = (footer.content as Block[])[0];
+    const columns = multiGrid?.content as Block[];
+    expect(Array.isArray(columns)).toBe(true);
+    expect(columns).toHaveLength(4);
+    columns.forEach((col) => expect(col.name).toBe('TextCard'));
   });
 
-  it('should have footnote configuration', () => {
-    const footer = createFooter();
-    const content = footer.content as {
-      footnote?: string;
-      footnoteAlign?: string;
-    };
-    expect(content).toHaveProperty('footnote');
-    expect(content).toHaveProperty('footnoteAlign');
-    expect(content.footnoteAlign).toBe('right');
+  it('should assign parent_slot 0–3 to the four column TextCards', () => {
+    const footer = createFooterContainer();
+    const multiGrid = (footer.content as Block[])[0];
+    const columns = multiGrid?.content as Block[];
+    columns.forEach((col, i) => {
+      expect((col as Block & { parent_slot: number }).parent_slot).toBe(i);
+    });
   });
 
-  it('should have color configuration', () => {
-    const footer = createFooter();
-    const content = footer.content as {
-      colors?: {
-        background?: string;
-        text?: string;
-        footnoteBackground?: string;
-        footnoteText?: string;
-      };
-    };
-    expect(content.colors).toBeDefined();
-    expect(content.colors?.background).toBeDefined();
-    expect(content.colors?.text).toBeDefined();
-    expect(content.colors?.footnoteBackground).toBeDefined();
-    expect(content.colors?.footnoteText).toBeDefined();
+  it('should have MultiGrid with four equal column widths', () => {
+    const footer = createFooterContainer();
+    const multiGrid = (footer.content as Block[])[0];
+    const config = multiGrid?.configuration as { columnWidths: number[] };
+    expect(config?.columnWidths).toEqual([3, 3, 3, 3]);
+  });
+
+  it('should have color configuration in footer container', () => {
+    const footer = createFooterContainer();
+    expect(footer.configuration?.colors?.background).toBeDefined();
+    expect(footer.configuration?.colors?.text).toBeDefined();
+  });
+
+  it('should mark all child blocks as global templates', () => {
+    const footer = createFooterContainer();
+    const multiGrid = (footer.content as Block[])[0];
+    const footNote = (footer.content as Block[])[1];
+    const columns = multiGrid?.content as Block[];
+
+    expect(multiGrid?.meta.isGlobalTemplate).toBe(true);
+    expect(footNote?.meta.isGlobalTemplate).toBe(true);
+    columns.forEach((col) => expect(col.meta.isGlobalTemplate).toBe(true));
   });
 });

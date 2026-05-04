@@ -2,29 +2,19 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlocks } from '../useBlocks';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
-import type { FooterContent } from '~/components/blocks/Footer/types';
 import { createProduct } from '~/utils/blockTemplates/product/factory';
 import { createCategory } from '~/utils/blockTemplates/category/factory';
 
 const mockFooterBlock: Block = {
-  name: 'Footer',
-  type: 'content',
+  name: 'FooterContainer',
+  type: 'structure',
   meta: { uuid: 'footer-uuid', isGlobalTemplate: true },
-  content: {
-    column1: { title: 'Legal' },
-    column2: { title: 'Services', description: 'Get in touch', showContactLink: true, showRegisterLink: false },
-    column3: { title: 'About', description: 'Learn more' },
-    column4: { title: 'Help', description: 'Support' },
-    footnote: '© Test Company 2024',
-    footnoteAlign: 'center',
-    colors: {
-      background: '#ffffff',
-      text: '#000000',
-      footnoteBackground: '#f5f5f5',
-      footnoteText: '#666666',
-    },
-  } as FooterContent,
-};
+  content: [
+    { name: 'MultiGrid', type: 'structure', meta: { uuid: 'multigrid-uuid' }, content: [], configuration: { columnWidths: [3, 3, 3, 3] } },
+    { name: 'TextCard', type: 'content', meta: { uuid: 'footnote-uuid' }, content: {} },
+  ],
+  configuration: { visible: true, colors: { background: '#cfe4ec', text: '#1c1c1c' } },
+} as unknown as Block;
 
 const mockHeaderContainerBlock: Block = {
   name: 'HeaderContainer',

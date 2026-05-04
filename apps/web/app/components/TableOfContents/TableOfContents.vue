@@ -92,7 +92,7 @@ const enforceHeaderAtTop = () => {
 };
 
 const enforceFooterAtBottom = () => {
-  const footerIndex = data.value.findIndex((block) => isFooterBlock(block));
+  const footerIndex = data.value.findIndex((block) => isFooterContainerBlock(block));
   const lastIndex = data.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = data.value.splice(footerIndex, 1)[0];

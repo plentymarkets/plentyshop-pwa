@@ -1,47 +1,119 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { FooterContent } from '~/components/blocks/Footer/types';
+import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import { v4 as uuid } from 'uuid';
 
-export function createDefaultFooterContent(): FooterContent {
-  const runtimeConfig = useRuntimeConfig();
+export const FOOTER_CONTAINER_BLOCK_NAME = 'FooterContainer' as const;
 
-  return {
-    column1: {
-      title: t('footer.legal.label'),
-      showTermsAndConditions: true,
-      showCancellationRights: true,
-      showCancellationForm: true,
-      showLegalDisclosure: true,
-      showPrivacyPolicy: true,
-      showDeclarationOfAccessibility: true,
-    },
-    column2: {
-      title: t('footer.services.label'),
-      description: '',
-      showContactLink: true,
-      showRegisterLink: true,
-    },
-    column3: { title: '', description: '' },
-    column4: { title: '', description: '' },
-    footnote: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
-    footnoteAlign: 'right',
-    colors: {
-      background: '#cfe4ec',
-      text: '#1c1c1c',
-      footnoteBackground: '#161a16',
-      footnoteText: '#959795',
-    },
-  };
-}
+export const isFooterContainerBlock = (block: Block | null | undefined): block is FooterContainerBlock =>
+  block?.name === FOOTER_CONTAINER_BLOCK_NAME;
 
-export function createFooter(): Block {
+function createFooterColumnTextCard(parentSlot: number, title: string, htmlDescription = ''): Block {
   return {
-    name: 'Footer',
+    name: 'TextCard',
     type: 'content',
     meta: {
       uuid: uuid(),
       isGlobalTemplate: true,
     },
-    content: createDefaultFooterContent(),
+    parent_slot: parentSlot,
+    content: {
+      text: {
+        title,
+        htmlDescription,
+        textAlignment: 'left',
+        color: '',
+      },
+      button: {
+        label: '',
+        link: '',
+        variant: 'primary',
+      },
+      layout: {
+        backgroundColor: '',
+        paddingTop: '16px',
+        paddingBottom: '16px',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+      },
+    },
+  };
+}
+
+function createFooterNoteTextCard(): Block {
+  const runtimeConfig = useRuntimeConfig();
+
+  return {
+    name: 'TextCard',
+    type: 'content',
+    meta: {
+      uuid: uuid(),
+      isGlobalTemplate: true,
+    },
+    content: {
+      text: {
+        htmlDescription: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
+        textAlignment: 'right',
+        color: '#959795',
+      },
+      button: {
+        label: '',
+        link: '',
+        variant: 'primary',
+      },
+      layout: {
+        backgroundColor: '#161a16',
+        paddingTop: '24px',
+        paddingBottom: '24px',
+        paddingLeft: '40px',
+        paddingRight: '40px',
+        fullWidth: true,
+      },
+    },
+  };
+}
+
+function createFooterMultiGrid(): Block {
+  return {
+    name: 'MultiGrid',
+    type: 'structure',
+    meta: {
+      uuid: uuid(),
+      isGlobalTemplate: true,
+    },
+    configuration: {
+      visible: true,
+      columnWidths: [3, 3, 3, 3],
+      layout: {
+        gap: 'M',
+        marginTop: 0,
+        marginBottom: 0,
+        backgroundColor: 'transparent',
+      },
+    },
+    content: [
+      createFooterColumnTextCard(0, t('footer.legal.label')),
+      createFooterColumnTextCard(1, t('footer.services.label')),
+      createFooterColumnTextCard(2, ''),
+      createFooterColumnTextCard(3, ''),
+    ],
+  };
+}
+
+export function createFooterContainer(): FooterContainerBlock {
+  return {
+    name: FOOTER_CONTAINER_BLOCK_NAME,
+    type: 'structure',
+    meta: {
+      uuid: uuid(),
+      isGlobalTemplate: true,
+    },
+    content: [createFooterMultiGrid(), createFooterNoteTextCard()],
+    configuration: {
+      visible: true,
+      colors: {
+        background: '#cfe4ec',
+        text: '#1c1c1c',
+      },
+    },
   };
 }
