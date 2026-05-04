@@ -36,20 +36,12 @@
         "link": "/guide/themes/i18n.md"
       },
       {
-        "text": "Middleware",
-        "link": "/guide/themes/middleware.md"
-      },
-      {
         "text": "Product Cross-Selling",
         "link": "/guide/themes/cross-selling.md"
       },
       {
-        "text": "PWA",
-        "link": "/guide/themes/pwa.md"
-      },
-      {
-        "text": "Theme",
-        "link": "/guide/themes/theme.md"
+        "text": "Styling",
+        "link": "/guide/themes/styling.md"
       },
       {
         "text": "Variation properties",

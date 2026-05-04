@@ -3,7 +3,7 @@ prev: false
 next: false
 ---
 
-# Editor
+# Editor CMS
 
 The editor gives merchants a drag-and-drop interface for building and maintaining storefront pages without code changes. For developers, it is a structured extension system: you define the components and settings that merchants can work with, and the editor takes care of rendering, state management, and persistence.
 
