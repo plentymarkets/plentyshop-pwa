@@ -8,6 +8,7 @@ export const useTableOfContents = () => {
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
+  const highlightedUuid = useState<string>('toc-highlighted-uuid', () => '');
   const headerOpen = useState<boolean>('toc-header-open', () => true);
   const contentOpen = useState<boolean>('toc-content-open', () => true);
   const footerOpen = useState<boolean>('toc-footer-open', () => true);
@@ -78,13 +79,18 @@ export const useTableOfContents = () => {
     selectedUuid.value = uuid;
     const el = document.querySelector(`[data-uuid="${uuid}"]`);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const { top, bottom } = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
-      el.classList.add('outline', 'outline-4', 'outline-editor-toc-selected');
-      setTimeout(() => {
-        el.classList.remove('outline', 'outline-4', 'outline-editor-toc-selected');
-      }, 1500);
+      if (top < 0 || bottom > viewportHeight) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
+
+    highlightedUuid.value = uuid;
+    setTimeout(() => {
+      highlightedUuid.value = '';
+    }, 1500);
   };
 
   const editBlock = (block: Block) => {
@@ -138,6 +144,7 @@ export const useTableOfContents = () => {
   return {
     selectedUuid,
     hoveredUuid,
+    highlightedUuid,
     expandedBlocks,
     headerOpen,
     contentOpen,
