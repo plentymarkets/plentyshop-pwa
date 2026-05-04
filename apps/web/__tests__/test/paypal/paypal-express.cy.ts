@@ -17,10 +17,11 @@ beforeEach(() => {
 });
 
 describe('PayPal Express Flows', () => {
-  it.skip('[feature] Guest Flow', () => {
+  it('[feature] Guest Flow', () => {
+    cy.intercept('/plentysystems/getPayPalSettings').as('getPayPalSettings');
     cy.intercept('/plentysystems/getSession').as('getSession');
     cy.visitAndHydrate(`/de${paths.cart}`);
-    cy.wait(['@getSession']);
+    cy.wait(['@getSession', '@getPayPalSettings']);
     cy.paypalFlow(payPalEmail, payPalPassword, true);
     readonlyCheckout.waitUntilDataIsLoaded().acceptTerms().placeOrderButton().displaySuccessPage().displayFullyPaidDe();
   });
