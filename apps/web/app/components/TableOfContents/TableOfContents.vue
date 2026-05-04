@@ -17,109 +17,155 @@
       </p>
 
       <div v-if="headerContainer" class="mt-2">
-        <button
-          type="button"
-          class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
+        <UiAccordionItem
+          v-model="headerOpen"
           data-testid="toc-section-header"
-          :aria-expanded="!headerCollapsed"
-          aria-controls="toc-header-region"
-          @click="headerCollapsed = !headerCollapsed"
+          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+          summary-active-class="bg-neutral-100 border-t-0"
+          content-padding-class=""
         >
-          <span>{{ getEditorTranslation('header-section-label') }}</span>
-          <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !headerCollapsed }" />
-        </button>
-        <ul v-if="!headerCollapsed" id="toc-header-region" class="px-2 mt-2 mb-4">
-          <TableOfContentsItem :item="blockToFlatBlock(headerContainer!)" />
-        </ul>
+          <template #summary>{{ getEditorTranslation('header-section-label') }}</template>
+          <div class="px-2 mt-2 mb-4">
+            <draggable
+              v-if="headerBlocks.length"
+              v-model="draggableHeaderBlocks"
+              item-key="meta.uuid"
+              handle=".toc-drag-handle"
+              ghost-class="toc-drag-ghost"
+              tag="div"
+              @change="handleHeaderDragChange"
+            >
+              <template #item="{ element: block }">
+                <div>
+                  <TableOfContentsItem :item="blockToFlatBlock(block)" />
+                </div>
+              </template>
+            </draggable>
+          </div>
+          <div class="px-4 mb-4">
+            <button
+              type="button"
+              class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
+              data-testid="toc-add-header-block"
+              @click="addHeaderBlock"
+            >
+              <SfIconAdd />
+              {{ getEditorTranslation('add-element-label') }}
+            </button>
+          </div>
+        </UiAccordionItem>
       </div>
 
       <div>
-        <button
-          type="button"
-          class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
+        <UiAccordionItem
+          v-model="contentOpen"
           data-testid="toc-section-content"
-          :aria-expanded="!contentCollapsed"
-          aria-controls="toc-content-region"
-          @click="contentCollapsed = !contentCollapsed"
+          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+          summary-active-class="bg-neutral-100 border-t-0"
+          content-padding-class=""
         >
-          <span>{{ getEditorTranslation('content-section-label') }}</span>
-          <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !contentCollapsed }" />
-        </button>
-        <template v-if="!contentCollapsed">
-          <div id="toc-content-region">
-            <div class="px-2">
-              <draggable
-                v-if="pageBlocks.length"
-                v-model="draggablePageBlocks"
-                item-key="meta.uuid"
-                handle=".toc-drag-handle"
-                ghost-class="toc-drag-ghost"
-                tag="div"
-                class="mt-2 mb-4"
-                @change="handleDragChange"
-              >
-                <template #item="{ element: block, index }">
-                  <div>
-                    <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
-                    <TableOfContentsItem :item="blockToFlatBlock(block)" />
-                    <TableOfContentsInsertBlockLine
-                      v-if="index < pageBlocks.length - 1"
-                      :block="block"
-                      class="toc-insert-line"
-                    />
-                  </div>
-                </template>
-              </draggable>
-              <div v-else class="mx-2 mt-8 mb-4 text-center text-sm text-neutral-400">
-                {{ getEditorTranslation('empty') }}
-              </div>
-            </div>
-            <div class="px-4 mb-4">
-              <button
-                type="button"
-                class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
-                data-testid="toc-add-block"
-                @click="addBlockAtBottom"
-              >
-                <SfIconAdd />
-                {{ getEditorTranslation('add-element-label') }}
-              </button>
+          <template #summary>{{ getEditorTranslation('content-section-label') }}</template>
+          <div class="px-2">
+            <draggable
+              v-if="pageBlocks.length"
+              v-model="draggablePageBlocks"
+              item-key="meta.uuid"
+              handle=".toc-drag-handle"
+              ghost-class="toc-drag-ghost"
+              tag="div"
+              class="mt-2 mb-4"
+              @change="handleDragChange"
+            >
+              <template #item="{ element: block, index }">
+                <div>
+                  <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
+                  <TableOfContentsItem :item="blockToFlatBlock(block)" />
+                  <TableOfContentsInsertBlockLine
+                    v-if="index < pageBlocks.length - 1"
+                    :block="block"
+                    class="toc-insert-line"
+                  />
+                </div>
+              </template>
+            </draggable>
+            <div v-else class="mx-2 mt-8 mb-4 text-center text-sm text-neutral-400">
+              {{ getEditorTranslation('empty') }}
             </div>
           </div>
-        </template>
+          <div class="px-4 mb-4">
+            <button
+              type="button"
+              class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
+              data-testid="toc-add-block"
+              @click="addBlockAtBottom"
+            >
+              <SfIconAdd />
+              {{ getEditorTranslation('add-element-label') }}
+            </button>
+          </div>
+        </UiAccordionItem>
       </div>
 
       <div v-if="footer">
-        <button
-          type="button"
-          class="flex items-center justify-between w-full px-4 py-2 bg-neutral-100 text-sm font-semibold text-neutral-700"
+        <UiAccordionItem
+          v-model="footerOpen"
           data-testid="toc-section-footer"
-          :aria-expanded="!footerCollapsed"
-          aria-controls="toc-footer-region"
-          @click="footerCollapsed = !footerCollapsed"
+          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+          summary-active-class="bg-neutral-100 border-t-0"
+          content-padding-class=""
         >
-          <span>{{ getEditorTranslation('footer-section-label') }}</span>
-          <SfIconChevronRight class="!w-4 !h-4 transition-transform" :class="{ 'rotate-90': !footerCollapsed }" />
-        </button>
-        <ul v-if="!footerCollapsed" id="toc-footer-region" class="px-2 mt-2 mb-4">
-          <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
-        </ul>
+          <template #summary>{{ getEditorTranslation('footer-section-label') }}</template>
+          <ul class="px-2 mt-2 mb-4">
+            <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
+          </ul>
+        </UiAccordionItem>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconAdd, SfIconChevronRight } from '@storefront-ui/vue';
+import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
 import type { Block } from '@plentymarkets/shop-api';
+import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
-const { addBlockAtBottom, blockToFlatBlock, headerCollapsed, contentCollapsed, footerCollapsed } = useTableOfContents();
+const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
 const { scrollIntoBlockView } = useBlockManager();
+
+const headerBlocks = computed(() => ((headerContainer.value as HeaderContainerBlock)?.content ?? []) as Block[]);
+
+const draggableHeaderBlocks = computed({
+  get: () => headerBlocks.value,
+  set: (newValue: Block[]) => {
+    (headerContainer.value as HeaderContainerBlock).content = newValue.map((block, index) => ({
+      ...block,
+      parent_slot: index,
+    }));
+  },
+});
+
+const handleHeaderDragChange = (evt: DragEvent) => {
+  if (evt.moved && evt.moved.oldIndex !== evt.moved.newIndex) {
+    const draggedBlock = headerBlocks.value[evt.moved.newIndex];
+    if (draggedBlock) {
+      scrollIntoBlockView(draggedBlock);
+    }
+  }
+};
+
+const addHeaderBlock = () => {
+  const { openDrawerWithView } = useSiteConfiguration();
+  const { togglePlaceholder } = useBlockManager();
+  const lastChild = headerBlocks.value[headerBlocks.value.length - 1];
+  if (!lastChild) return;
+  togglePlaceholder(lastChild.meta.uuid, 'bottom');
+  openDrawerWithView('blocksList');
+};
 
 const draggablePageBlocks = computed({
   get: () => pageBlocks.value,
