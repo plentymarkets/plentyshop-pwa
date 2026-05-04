@@ -23,7 +23,7 @@ declare global {
       ): Cypress.Chainable;
       capturePopup(): Cypress.Chainable;
       popup(): Cypress.Chainable;
-      paypalFlow(email: string, password: string): Cypress.Chainable;
+      paypalFlow(email: string, password: string, isExpressFlow: boolean): Cypress.Chainable;
       firstIFrame(): Cypress.Chainable;
       resetPopupStub(): Cypress.Chainable;
       setConfig(config: Record<string, unknown>): Chainable<void>;
@@ -173,10 +173,21 @@ Cypress.Commands.add('resetPopupStub', () => {
   });
 });
 
-Cypress.Commands.add('paypalFlow', (email, password) => {
+Cypress.Commands.add('paypalFlow', (email, password, isExpress) => {
   cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
   cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
 
+  const LOGIN_BTN = isExpress ? 'button[data-atomic-wait-task="login_with_password"]' : 'button#btnLogin';
+  const PAY_BTN = isExpress ? 'button[data-atomic-wait-task="select_pay"]' : 'button[data-id="payment-submit-btn"]';
+
+  cy.waitUntil(
+    () =>
+      cy
+        .get('iframe')
+        .firstIFrame()
+        .then(($body) => !!$body.find('div[data-funding-source="paypal"]').length),
+    { timeout: 15_000, interval: 300, errorMsg: 'PayPal button did not appear in iframe' },
+  );
   // Enable popup capture
   cy.capturePopup();
   // Click on the PayPal button inside PayPal's iframe
@@ -186,10 +197,10 @@ Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.wait(4000);
   cy.popup().find('input#email').clear().type(email);
   cy.popup().find('button:visible').first().click().wait(1000);
-  cy.popup().find('input#password').clear().type(password);
-  cy.popup().find('button#btnLogin').click();
+  cy.popup().find('input#password').clear().type(password).wait(1000);
+  cy.popup().find(LOGIN_BTN).click();
   cy.wait(7000);
-  cy.popup().find('button[data-id="payment-submit-btn"]').should('exist').click({ force: true });
+  cy.popup().find(PAY_BTN).should('exist').click({ force: true });
 });
 
 Cypress.Commands.add('setConfig', (config: Record<string, unknown>) => {
