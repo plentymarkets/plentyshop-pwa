@@ -18,20 +18,26 @@
     "collapsed": true,
     "items": [
       {
-        "text": "Blocks: Global vs. Local",
-        "link": "/guide/concept/blocks-global-vs-non-global"
-      },
-      {
-        "text": "Blocks: Rendering",
-        "link": "/guide/concept/blocks-rendering"
-      },
-      {
-        "text": "Blocks: Saving",
-        "link": "/guide/concept/blocks-saving"
-      },
-      {
-        "text": "Blocks: Structure vs. Content Form",
-        "link": "/guide/concept/blocks-structure-vs-content"
+        "text": "Blocks",
+        "collapsed": true,
+        "items": [
+        {
+          "text": "Global vs. Local",
+          "link": "/guide/editor/blocks-global-vs-non-global"
+        },
+        {
+          "text": "Rendering",
+          "link": "/guide/editor/blocks-rendering"
+        },
+        {
+          "text": "Saving",
+          "link": "/guide/editor/blocks-saving"
+        },
+        {
+          "text": "Structure vs. Content Form",
+          "link": "/guide/editor/blocks-structure-vs-content"
+        }
+        ]
       },
       {
         "text": "Site settings",
