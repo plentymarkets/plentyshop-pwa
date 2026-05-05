@@ -23,7 +23,7 @@ declare global {
       ): Cypress.Chainable;
       capturePopup(): Cypress.Chainable;
       popup(): Cypress.Chainable;
-      paypalFlow(email: string, password: string, isExpressFlow: boolean): Cypress.Chainable;
+      paypalFlow(email: string, password: string, isReadonlyFlow: boolean): Cypress.Chainable;
       firstIFrame(): Cypress.Chainable;
       resetPopupStub(): Cypress.Chainable;
       setConfig(config: Record<string, unknown>): Chainable<void>;
@@ -280,12 +280,14 @@ Cypress.Commands.add('resetPopupStub', () => {
   });
 });
 
-Cypress.Commands.add('paypalFlow', (email, password, isExpress) => {
+Cypress.Commands.add('paypalFlow', (email, password, isReadonlyFlow) => {
   cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
   cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
 
-  const LOGIN_BTN = isExpress ? 'button[data-atomic-wait-task="login_with_password"]' : 'button#btnLogin';
-  const PAY_BTN = isExpress ? 'button[data-atomic-wait-task="select_pay"]' : 'button[data-id="payment-submit-btn"]';
+  const LOGIN_BTN = isReadonlyFlow ? 'button[data-atomic-wait-task="login_with_password"]' : 'button#btnLogin';
+  const PAY_BTN = isReadonlyFlow
+    ? 'button[data-atomic-wait-task="select_pay"]'
+    : 'button[data-id="payment-submit-btn"]';
 
   cy.capturePopup();
   cy.waitUntil(
