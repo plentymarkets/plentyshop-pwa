@@ -16,18 +16,10 @@ The Shop Core module provides a flexible and robust cookie consent system for Nu
 - Automatically remove cookies and scripts when consent is revoked
 - Seamless integration with your Nuxt app UI
 
-## API
+## Register cookie in cookiebar
 
-### useCookieBar
-
-- `visible`: Controls the visibility of the cookie bar
-- `setConsent()`: Save the current consent state
-- `setAllCookiesState(accepted: boolean)`: Accept or reject all cookies
-- `initializeCookies()`: Initialize consent state from configuration
-
-### useRegisterCookie
-
-Register a cookie in the cookiebar.
+The `useRegisterCookie` composable lets you add new entries to the cookie bar and provide information about the cookie itself.
+For examples, this includes the link to the provider's privacy policy and the lifespan.
 
 ```ts
 const { add } = useRegisterCookie();
@@ -43,11 +35,22 @@ add({
 });
 ```
 
-### useCookieConsent
+| Property        | Type       | Values                                                                                                                                                              | Description                                                                                                                                      |
+| --------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`          | `string`   | Any string. Typically a translation key.                                                                                                                            | Unique display/name identifier for the cookie. Used to prevent duplicate registration within the target cookie group and to store consent state. |
+| `Provider`      | `string`   | Any string. Typically a provider name or translation key.                                                                                                           | Provider of the cookie/service, for example Google Analytics.                                                                                    |
+| `Status`        | `string`   | Any string. Typically a status label or translation key.                                                                                                            | Status text shown for the cookie, for example whether it is active/inactive or required.                                                         |
+| `PrivacyPolicy` | `string`   | Any string URL or path.                                                                                                                                             | Link to the privacy policy for the cookie provider/service.                                                                                      |
+| `Lifespan`      | `string`   | Any string. Common examples are `Session`, `10 days`, `365 days`. For accepted cookies, numeric day-based values are used to calculate the consent-cookie lifetime. | Human-readable lifetime of the cookie.                                                                                                           |
+| `accepted`      | `boolean`  | `true` or `false`. Defaults to `false` when consent is written if unset. Essential cookies may be forced to `true` by the cookie bar.                               | Initial consent state for this cookie.                                                                                                           |
+| `script`        | `string[]` | Array of script URLs/paths. Only entries starting with `http` are injected as external scripts.                                                                     | Scripts to load when the cookie is accepted.                                                                                                     |
+| `cookieNames`   | `string[]` | Array of cookie-name patterns. Values are passed to `new RegExp(cookieName)`, so plain names like `_ga` and regex-style patterns like `/^_ga/` may be used.         | Browser cookie names/patterns to remove when consent is revoked.                                                                                 |
+
+## React to user consent
 
 To read and react to the state of the a specific cookie you can use the `useCookieConsent` composable.
 
-This composable uses the cookie name that you defined in the `cookie.config.ts` or via `useRegisterCookie` to get the reactive state of the cookie.
+This composable uses the cookie name that you defined via `useRegisterCookie` to get the reactive state of the cookie.
 
 ```vue
 // MyComponent.vue
@@ -68,9 +71,3 @@ watch(scriptDemoCookie, () => {
 });
 </script>
 ```
-
-## Configuration
-
-Configure cookie groups and their associated cookies in your Nuxt config. This allows you to define which cookies are essential, which require consent, and what scripts should be loaded based on user preferences.
-
-For more advanced configuration and usage, see [Usage Guide](/guide/modules/shop-core/usage-guide.md).
