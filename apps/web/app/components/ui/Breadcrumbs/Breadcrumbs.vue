@@ -115,3 +115,11 @@ useHead({
   ],
 });
 </script>
+
+<style>
+@media (max-width: 639px) {
+  [data-testid="dropdown-content"] {
+    z-index: 2 !important;
+  }
+}
+</style>
