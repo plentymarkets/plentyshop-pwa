@@ -24,8 +24,7 @@ describe('Editor Smoke Tests', () => {
       .openTableOfContents()
       .checkTableOfContentsVisible()
       .checkBlocksExist()
-      .checkFirstBlockLabel('Header')
-      .checkLastBlockLabel('Footer');
+      .checkSectionsExist();
 
     headerBlock.assertNotMovableOrDeletable();
 
