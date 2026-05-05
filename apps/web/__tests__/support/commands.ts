@@ -177,7 +177,6 @@ Cypress.Commands.add('capturePopup', () => {
       });
     }
 
-    // Patch all existing iframes
     patchAllIframes(win.document);
 
     // Watch for new iframes being added to the DOM and patch them too
@@ -201,7 +200,7 @@ Cypress.Commands.add('capturePopup', () => {
               /* cross-origin */
             }
           }
-          // Also check descendants
+
           if (node instanceof HTMLElement) {
             node.querySelectorAll?.('iframe').forEach((iframe) => {
               // eslint-disable-next-line max-nested-callbacks
