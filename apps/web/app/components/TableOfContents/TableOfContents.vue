@@ -18,17 +18,7 @@
 
       <div v-if="headerContainer" class="mt-2">
         <UiAccordionItem v-model="headerOpen" v-bind="accordionProps" data-testid="toc-section-header">
-          <template #summary>
-            <span>{{ getEditorTranslation('header-section-label') }}</span>
-            <button
-              type="button"
-              data-testid="toc-header-settings"
-              class="p-1 rounded hover:bg-editor-icon-hover"
-              @click.stop="editHeaderContainer"
-            >
-              <SfIconTune class="!w-4 !h-4" />
-            </button>
-          </template>
+          <template #summary>{{ getEditorTranslation('header-section-label') }}</template>
           <div class="px-2 mt-2 mb-4">
             <draggable
               v-if="headerBlocks.length"
@@ -117,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconAdd, SfIconTune } from '@storefront-ui/vue';
+import { SfIconClose, SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
 import type { Block } from '@plentymarkets/shop-api';
@@ -125,7 +115,7 @@ import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderC
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeSiteConfigurationDrawer, openDrawerWithView } = useSiteConfiguration();
-const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen, editBlock } = useTableOfContents();
+const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
 const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
 
@@ -153,12 +143,6 @@ const handleHeaderDragChange = (evt: DragEvent) => {
     if (draggedBlock) {
       scrollIntoBlockView(draggedBlock);
     }
-  }
-};
-
-const editHeaderContainer = () => {
-  if (headerContainer.value) {
-    editBlock(headerContainer.value as Block);
   }
 };
 

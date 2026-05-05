@@ -117,7 +117,7 @@ export class HeaderBlockObject extends PageObject {
   }
 
   openHeaderContainerForm() {
-    cy.getByTestId('toc-header-settings').click({ force: true });
+    cy.getByTestId('HeaderContainer-open-editor-button').click({ force: true });
     cy.getByTestId('block-edit-view').should('be.visible');
     this.headerContainerForm.should('be.visible');
     return this;

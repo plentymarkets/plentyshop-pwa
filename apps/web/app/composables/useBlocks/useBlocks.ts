@@ -33,9 +33,10 @@ export const useBlocks: UseBlocksReturn = () => {
     const nuxtApp = useNuxtApp();
     if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
     nuxtApp._settleTimer = setTimeout(() => {
+      if (!state.value) return;
       state.value.cleanData = markRaw(deepClone(state.value.data));
-      const { isEditingEnabled } = useEditor();
-      isEditingEnabled.value = false;
+      const editor = useEditor();
+      if (editor?.isEditingEnabled) editor.isEditingEnabled.value = false;
       state.value.isSettling = false;
       nuxtApp._settleTimer = null;
     }, 150);
