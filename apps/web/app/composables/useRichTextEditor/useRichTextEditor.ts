@@ -23,6 +23,8 @@ import Emoji, { emojis } from '@tiptap/extension-emoji';
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
 
+  let isReady = false;
+
   const editor = useEditor({
     content: args.modelValue.value ?? '',
     extensions: [
@@ -57,8 +59,15 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         return stripInlineFontSizesFromHtml(html);
       },
     },
+    onCreate: () => {
+      isReady = true;
+    },
     onUpdate: ({ editor }: { editor: Editor }) => {
-      args.onUpdateModelValue(editor.getHTML());
+      if (!isReady) return;
+      const next = editor.getHTML();
+      if (decodeHtmlEntities(next) !== decodeHtmlEntities(args.modelValue.value ?? '')) {
+        args.onUpdateModelValue(next);
+      }
     },
   });
 

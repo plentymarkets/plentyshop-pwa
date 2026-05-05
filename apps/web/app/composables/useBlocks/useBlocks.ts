@@ -33,9 +33,10 @@ export const useBlocks: UseBlocksReturn = () => {
     const nuxtApp = useNuxtApp();
     if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
     nuxtApp._settleTimer = setTimeout(() => {
+      if (!state.value) return;
       state.value.cleanData = markRaw(deepClone(state.value.data));
-      const { isEditingEnabled } = useEditor();
-      isEditingEnabled.value = false;
+      const editor = useEditor();
+      if (editor?.isEditingEnabled) editor.isEditingEnabled.value = false;
       state.value.isSettling = false;
       nuxtApp._settleTimer = null;
     }, 150);
@@ -65,7 +66,13 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const assembled = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
+    const fetchedData = data.value?.data || ({} as GetBlocksResponse);
+    const assembled = assembleBlocks(fetchedData, type, identifier);
+
+    if (!fetchedData.HeaderContainer && state.value.data?.HeaderContainer) {
+      (assembled as GetBlocksResponse).HeaderContainer = state.value.data.HeaderContainer;
+    }
+
     setBlocks(assembled);
     state.value.loading = false;
 
@@ -109,6 +116,14 @@ export const useBlocks: UseBlocksReturn = () => {
     state.value.data.blocks = blocks;
   };
 
+  const reorderHeaderBlocks = (blocks: Block[]) => {
+    if (!state.value.data.HeaderContainer) return;
+    (state.value.data.HeaderContainer as { content: Block[] }).content = blocks.map((block, index) => ({
+      ...block,
+      parent_slot: index,
+    }));
+  };
+
   const discardChanges = () => {
     state.value.data = deepClone(state.value.cleanData);
   };
@@ -130,8 +145,10 @@ export const useBlocks: UseBlocksReturn = () => {
     fetchBlocks,
     saveBlocks,
     updateBlocks,
+    reorderHeaderBlocks,
     discardChanges,
     setDefaultTemplate,
+    scheduleCleanDataSync,
     isSettling: computed(() => state.value.isSettling),
   };
 };

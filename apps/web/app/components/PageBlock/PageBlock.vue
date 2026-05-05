@@ -13,14 +13,15 @@
       :class="[
         'relative block-wrapper h-full',
         {
-          'outline outline-4 outline-editor-toc-selected': showOutline && !isDragging,
-        },
-        {
           'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
             clientPreview && enableActions && !isTablet && root && !isDragging,
         },
       ]"
     >
+      <div
+        v-if="showOutline && !isDragging"
+        class="pointer-events-none absolute inset-0 ring-4 ring-inset ring-editor-toc-selected z-[200]"
+      />
       <ClientOnly>
         <button
           v-if="showTopAddBlockButton"
@@ -129,6 +130,8 @@ const {
 } = useBlockManager();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
+const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
+
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
     blockMetaUuid: props.block.meta.uuid,
@@ -175,7 +178,7 @@ const observeLazyLoadSection = (blockName: string) => {
   const uniqueKey = getLazyLoadKey(blockName, props.block.meta.uuid);
 
   if (import.meta.client && lazyLoadRefs.value[uniqueKey] && config) {
-    const observer = new window.IntersectionObserver(
+    const observer = new globalThis.IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (entry?.isIntersecting) {
@@ -198,11 +201,12 @@ onNuxtReady(() => {
 
 const showOutline = computed(() => {
   return (
-    clientPreview.value &&
-    props.enableActions &&
-    props.isClicked &&
-    props.isTablet &&
-    props.clickedBlockIndex === props.index
+    (clientPreview.value &&
+      props.enableActions &&
+      props.isClicked &&
+      props.isTablet &&
+      props.clickedBlockIndex === props.index) ||
+    highlightedUuid.value === props.block.meta.uuid
   );
 });
 
@@ -229,8 +233,6 @@ const showBottomAddBlockButton = computed(
     !isFooterBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
-
-const { hoveredUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
 
 const onBlockHover = () => {
   if (props.root) {
