@@ -66,10 +66,10 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const raw = data.value?.data || ({} as GetBlocksResponse);
-    const assembled = assembleBlocks(raw, type, identifier);
+    const fetchedData = data.value?.data || ({} as GetBlocksResponse);
+    const assembled = assembleBlocks(fetchedData, type, identifier);
 
-    if (!raw.HeaderContainer && state.value.data?.HeaderContainer) {
+    if (!fetchedData.HeaderContainer && state.value.data?.HeaderContainer) {
       (assembled as GetBlocksResponse).HeaderContainer = state.value.data.HeaderContainer;
     }
 
@@ -116,6 +116,14 @@ export const useBlocks: UseBlocksReturn = () => {
     state.value.data.blocks = blocks;
   };
 
+  const reorderHeaderBlocks = (blocks: Block[]) => {
+    if (!state.value.data.HeaderContainer) return;
+    (state.value.data.HeaderContainer as { content: Block[] }).content = blocks.map((block, index) => ({
+      ...block,
+      parent_slot: index,
+    }));
+  };
+
   const discardChanges = () => {
     state.value.data = deepClone(state.value.cleanData);
   };
@@ -137,6 +145,7 @@ export const useBlocks: UseBlocksReturn = () => {
     fetchBlocks,
     saveBlocks,
     updateBlocks,
+    reorderHeaderBlocks,
     discardChanges,
     setDefaultTemplate,
     scheduleCleanDataSync,

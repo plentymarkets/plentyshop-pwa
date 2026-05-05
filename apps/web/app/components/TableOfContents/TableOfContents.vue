@@ -116,7 +116,7 @@ import type { DragEvent } from '~/components/EditableBlocks/types';
 
 const { closeSiteConfigurationDrawer, openDrawerWithView } = useSiteConfiguration();
 const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen } = useTableOfContents();
-const { headerContainer, pageBlocks, footer, updateBlocks } = useBlocks();
+const { headerContainer, pageBlocks, footer, updateBlocks, reorderHeaderBlocks } = useBlocks();
 const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
 
 const accordionProps = {
@@ -129,12 +129,7 @@ const headerBlocks = computed(() => ((headerContainer.value as HeaderContainerBl
 
 const draggableHeaderBlocks = computed({
   get: () => headerBlocks.value,
-  set: (newValue: Block[]) => {
-    (headerContainer.value as HeaderContainerBlock).content = newValue.map((block, index) => ({
-      ...block,
-      parent_slot: index,
-    }));
-  },
+  set: (newValue: Block[]) => reorderHeaderBlocks(newValue),
 });
 
 const handleHeaderDragChange = (evt: DragEvent) => {

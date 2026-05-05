@@ -125,6 +125,11 @@ describe('useTableOfContents', () => {
   });
 
   describe('scrollToBlock', () => {
+    afterEach(() => {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    });
+
     it('should set selectedUuid to the given uuid', () => {
       const { scrollToBlock, selectedUuid } = useTableOfContents();
 
@@ -150,8 +155,6 @@ describe('useTableOfContents', () => {
 
       vi.advanceTimersByTime(1500);
       expect(highlightedUuid.value).toBe('');
-
-      vi.useRealTimers();
     });
   });
 });
