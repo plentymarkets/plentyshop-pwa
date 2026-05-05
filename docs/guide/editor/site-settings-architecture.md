@@ -83,15 +83,15 @@ flowchart LR
 
 The full API exposed by `useSiteSettings`:
 
-| Member | Type | Description |
-|---|---|---|
-| `getSetting()` | `() => string` | Returns the staged value if present, otherwise the saved value. |
-| `updateSetting(value)` | `(string) => void` | Stages a new value locally without saving. |
-| `getJsonSetting()` | `() => string[]` | Like `getSetting`, but parses the value as JSON. |
-| `settingsIsDirty` | `ComputedRef<boolean>` | `true` when any staged value differs from the saved snapshot. |
-| `dirtyKeys` | `ComputedRef<string[]>` | The keys of all currently staged (unsaved) settings. |
-| `setInitialData(settings)` | `(Setting[]) => void` | Merges API-loaded settings into the saved snapshot. |
-| `saveSiteSettings()` | `() => Promise<boolean>` | Persists all staged changes to the PlentyONE system via the SDK, then promotes staged data to the saved snapshot. |
+| Member                     | Type                     | Description                                                                                                       |
+| -------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `getSetting()`             | `() => string`           | Returns the staged value if present, otherwise the saved value.                                                   |
+| `updateSetting(value)`     | `(string) => void`       | Stages a new value locally without saving.                                                                        |
+| `getJsonSetting()`         | `() => string[]`         | Like `getSetting`, but parses the value as JSON.                                                                  |
+| `settingsIsDirty`          | `ComputedRef<boolean>`   | `true` when any staged value differs from the saved snapshot.                                                     |
+| `dirtyKeys`                | `ComputedRef<string[]>`  | The keys of all currently staged (unsaved) settings.                                                              |
+| `setInitialData(settings)` | `(Setting[]) => void`    | Merges API-loaded settings into the saved snapshot.                                                               |
+| `saveSiteSettings()`       | `() => Promise<boolean>` | Persists all staged changes to the PlentyONE system via the SDK, then promotes staged data to the saved snapshot. |
 
 **`useSiteConfiguration`** manages UI state for the drawer itself — which view is open, transitions, and the save trigger. It is not used inside individual setting components; it is used by the drawer shell and the toolbar. The data flow from runtime configuration through to persistence looks like this:
 

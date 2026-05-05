@@ -5,7 +5,7 @@ next: false
 
 # Themes
 
-A Theme is a full Nuxt application built on top of the PlentyONE Shop foundation. It contains your pages, components, composables, layouts, middleware, and all other application code. [Modules](/guide/modules/index.md) are extensions *to* a theme — they add or override functionality without requiring you to modify the theme's core files directly.
+A Theme is a full Nuxt application built on top of the PlentyONE Shop foundation. It contains your pages, components, composables, layouts, middleware, and all other application code. [Modules](/guide/modules/index.md) are extensions _to_ a theme — they add or override functionality without requiring you to modify the theme's core files directly.
 
 Because a theme tracks an upstream repository, one of the first decisions you need to make is how to manage updates from the PlentyONE core as it evolves. [Project update strategies](/guide/themes/project-update-strategies.md) covers two approaches — forking and Git mirroring with vendor branching — and explains why keeping customisations isolated in local modules reduces merge conflicts regardless of which strategy you choose.
 

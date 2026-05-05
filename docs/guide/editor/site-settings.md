@@ -118,37 +118,37 @@ Add a `lang.json` at any folder level where the folder name itself would be show
 
 2. In the component, call `useSiteSettings('<key>')` to get `getSetting` and `updateSetting`, then bind them via a writable computed property.
 
-    ```vue
-    <!-- components/settings/branding-and-design/design/2.colours/PrimaryColour.vue -->
-    <template>
-      <div class="py-2">
-        <UiFormLabel>Primary colour</UiFormLabel>
-        <SfInput v-model="primaryColor" type="text" />
-      </div>
-    </template>
+   ```vue
+   <!-- components/settings/branding-and-design/design/2.colours/PrimaryColour.vue -->
+   <template>
+     <div class="py-2">
+       <UiFormLabel>Primary colour</UiFormLabel>
+       <SfInput v-model="primaryColor" type="text" />
+     </div>
+   </template>
 
-    <script setup lang="ts">
-    import { SfInput } from '@storefront-ui/vue';
-    import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
+   <script setup lang="ts">
+   import { SfInput } from '@storefront-ui/vue';
+   import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
 
-    const { updateSetting, getSetting } = useSiteSettings('primaryColor');
+   const { updateSetting, getSetting } = useSiteSettings('primaryColor');
 
-    const updatePrimaryColor = (hexColor: string) => {
-      const tailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({ ...color }));
-      setColorProperties('primary', tailwindColors);
-    };
+   const updatePrimaryColor = (hexColor: string) => {
+     const tailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({ ...color }));
+     setColorProperties('primary', tailwindColors);
+   };
 
-    const primaryColor = computed({
-      get: () => getSetting(),
-      set: (value) => {
-        updateSetting(value);
-        updatePrimaryColor(value); // optional: apply a live preview side-effect
-      },
-    });
-    </script>
-    ```
+   const primaryColor = computed({
+     get: () => getSetting(),
+     set: (value) => {
+       updateSetting(value);
+       updatePrimaryColor(value); // optional: apply a live preview side-effect
+     },
+   });
+   </script>
+   ```
 
-    The live-preview side-effect in the setter (calling `updatePrimaryColor`) is optional. Include it only if the setting has a visible effect you want to preview in real time while the merchant is editing.
+   The live-preview side-effect in the setter (calling `updatePrimaryColor`) is optional. Include it only if the setting has a visible effect you want to preview in real time while the merchant is editing.
 
 ## Result
 

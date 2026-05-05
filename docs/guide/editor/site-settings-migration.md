@@ -25,23 +25,23 @@ The only structural change is the addition of a sub-category folder between the 
 
 3. Create a `View.vue` inside the new sub-category folder.
 
-    ```vue
-    <!-- components/settings/branding-and-design/branding-and-design/View.vue -->
-    <template>
-      <SiteConfigurationView>
-        <template #setting-title>{{ getEditorTranslation('label') }}</template>
-      </SiteConfigurationView>
-    </template>
+   ```vue
+   <!-- components/settings/branding-and-design/branding-and-design/View.vue -->
+   <template>
+     <SiteConfigurationView>
+       <template #setting-title>{{ getEditorTranslation('label') }}</template>
+     </SiteConfigurationView>
+   </template>
 
-    <script setup lang="ts"></script>
+   <script setup lang="ts"></script>
 
-    <i18n lang="json">
-    {
-      "en": { "label": "Branding & Design" },
-      "de": { "label": "Branding & Design" }
-    }
-    </i18n>
-    ```
+   <i18n lang="json">
+   {
+     "en": { "label": "Branding & Design" },
+     "de": { "label": "Branding & Design" }
+   }
+   </i18n>
+   ```
 
 4. Ensure the main category folder still contains its own `View.vue` and `ToolbarTrigger.vue` at the top level. These do not move.
 

@@ -35,16 +35,16 @@ add({
 });
 ```
 
-| Property | Type | Values | Description |
-|---|---|---|---|
-| `name` | `string` | Any string. Typically a translation key. | Unique display/name identifier for the cookie. Used to prevent duplicate registration within the target cookie group and to store consent state. |
-| `Provider` | `string` | Any string. Typically a provider name or translation key. | Provider of the cookie/service, for example Google Analytics. |
-| `Status` | `string` | Any string. Typically a status label or translation key. | Status text shown for the cookie, for example whether it is active/inactive or required. |
-| `PrivacyPolicy` | `string` | Any string URL or path. | Link to the privacy policy for the cookie provider/service. |
-| `Lifespan` | `string` | Any string. Common examples are `Session`, `10 days`, `365 days`. For accepted cookies, numeric day-based values are used to calculate the consent-cookie lifetime. | Human-readable lifetime of the cookie. |
-| `accepted` | `boolean` | `true` or `false`. Defaults to `false` when consent is written if unset. Essential cookies may be forced to `true` by the cookie bar. | Initial consent state for this cookie. |
-| `script` | `string[]` | Array of script URLs/paths. Only entries starting with `http` are injected as external scripts. | Scripts to load when the cookie is accepted. |
-| `cookieNames` | `string[]` | Array of cookie-name patterns. Values are passed to `new RegExp(cookieName)`, so plain names like `_ga` and regex-style patterns like `/^_ga/` may be used. | Browser cookie names/patterns to remove when consent is revoked. |
+| Property        | Type       | Values                                                                                                                                                              | Description                                                                                                                                      |
+| --------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`          | `string`   | Any string. Typically a translation key.                                                                                                                            | Unique display/name identifier for the cookie. Used to prevent duplicate registration within the target cookie group and to store consent state. |
+| `Provider`      | `string`   | Any string. Typically a provider name or translation key.                                                                                                           | Provider of the cookie/service, for example Google Analytics.                                                                                    |
+| `Status`        | `string`   | Any string. Typically a status label or translation key.                                                                                                            | Status text shown for the cookie, for example whether it is active/inactive or required.                                                         |
+| `PrivacyPolicy` | `string`   | Any string URL or path.                                                                                                                                             | Link to the privacy policy for the cookie provider/service.                                                                                      |
+| `Lifespan`      | `string`   | Any string. Common examples are `Session`, `10 days`, `365 days`. For accepted cookies, numeric day-based values are used to calculate the consent-cookie lifetime. | Human-readable lifetime of the cookie.                                                                                                           |
+| `accepted`      | `boolean`  | `true` or `false`. Defaults to `false` when consent is written if unset. Essential cookies may be forced to `true` by the cookie bar.                               | Initial consent state for this cookie.                                                                                                           |
+| `script`        | `string[]` | Array of script URLs/paths. Only entries starting with `http` are injected as external scripts.                                                                     | Scripts to load when the cookie is accepted.                                                                                                     |
+| `cookieNames`   | `string[]` | Array of cookie-name patterns. Values are passed to `new RegExp(cookieName)`, so plain names like `_ga` and regex-style patterns like `/^_ga/` may be used.         | Browser cookie names/patterns to remove when consent is revoked.                                                                                 |
 
 ## React to user consent
 
