@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-5 overflow-x-auto no-preflight" v-html="getHTMLTexts()" />
+  <div class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="getHTMLTexts()" />
 
   <div
     v-if="config.enableContractWithdrawalButton"
@@ -24,9 +24,10 @@
       novalidate
       @submit.prevent="onSubmit"
     >
-      <label>
+      <label for="cancellation-order-id">
         <UiFormLabel class="mb-1">{{ t('cancellationForm.orderId') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
+          id="cancellation-order-id"
           v-bind="orderIdAttributes"
           v-model="orderId"
           name="orderId"
@@ -37,9 +38,10 @@
         <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </label>
 
-      <label>
+      <label for="cancellation-name">
         <UiFormLabel class="mb-1">{{ t('cancellationForm.name') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
+          id="cancellation-name"
           v-bind="nameAttributes"
           v-model="name"
           name="name"
@@ -50,9 +52,10 @@
         <ErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </label>
 
-      <label>
+      <label for="cancellation-email">
         <UiFormLabel class="mb-1">{{ t('cancellationForm.email') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
+          id="cancellation-email"
           v-bind="emailAttributes"
           v-model="email"
           name="email"
@@ -64,12 +67,19 @@
         <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </label>
 
-      <label class="flex flex-col">
+      <label for="cancellation-reason" class="flex flex-col">
         <UiFormLabel class="mb-1 flex">
           <span class="mr-1">{{ t('cancellationForm.reason') }}</span>
           <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
         </UiFormLabel>
-        <SfTextarea v-bind="reasonAttributes" v-model="reason" name="reason" :disabled="loading" class="w-full" />
+        <SfTextarea
+          id="cancellation-reason"
+          v-bind="reasonAttributes"
+          v-model="reason"
+          name="reason"
+          :disabled="loading"
+          class="w-full"
+        />
       </label>
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
