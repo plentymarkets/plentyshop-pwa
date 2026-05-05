@@ -3,7 +3,13 @@
     <ol class="flex w-auto leading-none group md:flex-wrap">
       <li class="flex items-center sm:hidden text-neutral-500 z-9">
         <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
-          <SfDropdown v-model="dropdownOpened" strategy="absolute" placement="bottom-start" @update:model-value="close">
+          <SfDropdown
+            v-model="dropdownOpened"
+            strategy="absolute"
+            placement="bottom-start"
+            @update:model-value="close"
+            class="z-[2]"
+          >
             <template #trigger>
               <UiButton
                 class="relative w-5 h-5 !p-0 rounded-sm outline-secondary-600 hover:bg-transparent active:bg-transparent"
@@ -115,11 +121,3 @@ useHead({
   ],
 });
 </script>
-
-<style>
-@media (max-width: 639px) {
-  [data-testid="dropdown-content"] {
-    z-index: 2 !important;
-  }
-}
-</style>
