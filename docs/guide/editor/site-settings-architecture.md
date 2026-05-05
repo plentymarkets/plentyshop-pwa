@@ -1,72 +1,56 @@
-# Extensible Site‑Settings Architecture
+# Site settings architecture
 
-This document explains how the settings drawer works, why the folder structure looks the way it does, and how one can plug in new settings or completely override existing ones without touching core code.
+This article explains how the editor's settings drawer discovers, renders, and persists site settings in PlentyONE Shop. It covers the folder-layout convention that drives automatic component discovery, the role of each required wrapper file, the two composables that manage state and persistence, and how Nuxt modules and customer packages can extend or override settings without touching core code.
 
----
-
-### Folder Layout Conventions
-
-The folder-layout convention defines a single, predictable path for every settings component, enabling automatic discovery, clean overrides, and zero manual registration. By adhering to `settings/<mainCategory>/<subCategory>/<group>/<Setting>.vue` with `View.vue` and `ToolbarTrigger.vue`, core code, Nuxt modules, and client customisations integrate seamlessly.
+The settings drawer is a sidebar panel in the editor where merchants configure storefront-wide values such as colours, fonts, and layout parameters. Settings are organised into a three-level hierarchy: **main categories** (each with its own toolbar button), **sub-categories** (intermediate sections within a category), and **groups** (labelled clusters of related individual settings). Each level maps directly to a folder in the filesystem. Discovery is automatic — no manual registration is required beyond placing files at the correct path.
 
 |                                                              |                                            |
 | ------------------------------------------------------------ | ------------------------------------------ |
 | ![Settings subcategories](images/settings-subcategories.png) | ![Site settings](images/site-settings.png) |
 
+## Background
+
+The folder convention was designed to allow core code, Nuxt modules, and customer packages to all contribute settings through a single, predictable mechanism without any of them needing to know about each other. Previously, every new settings panel had to be manually registered in `SiteConfigurationDrawer.vue` and `SettingsToolbar.vue`. The convention replaces that with a file-system contract: put files in the right place and they appear automatically.
+
+## Folder layout
+
+The full path for a setting component follows this pattern:
+
+```
+components/settings/<mainCategory>/<subCategory>/<group>/<Setting>.vue
+```
+
+A complete example for the branding and design category looks like this:
+
 ```
 components/
 └─ settings/
-   └─ branding-and-design/           # mainCategory ( one Toolbar button )
-      ├─ View.vue                    # wrapper for the mainCategory section
-      ├─ ToolbarTrigger.vue          # how the button looks in the side bar
-      ├─ lang.json                   # translation file for the section
-      └─ branding-and-design/        # subCategory ( intermediate section )
-         ├─ 1.fonts/                 # group (order via prefix)
-         │  └─ PrimaryFont.vue       # individual setting
-         ├─ 2.colors/
-         │  ├─ PrimaryColor.vue
-         │  └─ SecondaryColor.vue
-         ├─ lang.json                # translation file for the section
-         └─ View.vue                 # wrapper for the subCategory section
+   └─ branding-and-design/           # main category (one toolbar button)
+      ├─ ToolbarTrigger.vue          # toolbar button component
+      ├─ View.vue                    # main category wrapper
+      ├─ lang.json                   # display name translations
+      └─ design/                     # sub-category
+         ├─ View.vue                 # sub-category wrapper
+         ├─ lang.json
+         └─ 2.colours/              # group (numeric prefix controls order)
+            ├─ PrimaryColour.vue    # individual setting
+            └─ SecondaryColour.vue
 ```
 
 > [!NOTE]
-> The structure will be visually displayed if there is a valid individual setting component in the folder.
+> A folder only appears in the drawer if it contains at least one valid individual setting component.
 
-> [!NOTE]
-> If there is only one subCategory, it will be automatically selected when the settings drawer is opened and groups will be displayed.
+### `ToolbarTrigger.vue`
 
----
+`ToolbarTrigger.vue` is placed at the root of the main category folder. It defines the button that appears in the editor's left sidebar. The framework passes an `active` prop indicating whether this category is currently open, which the component uses to toggle its visual state.
 
-### View.vue
+### `View.vue`
 
-`View.vue` is a mandatory wrapper component for the mainCategory and subCategory sections. It is responsible for displaying the settings components in the correct order and structure. It also handles the section **title** and **description**.
+A `View.vue` is required at both the main category level and each sub-category level. It is a wrapper component responsible for rendering the section title and any description text. The `SiteConfigurationView` component handles the consistent layout around it.
 
-```vue
-<template>
-  <SiteConfigurationView>
-    <template #setting-title> SEO Settings </template>
-    <template #setting-description>
-      <div class="flex flex-col px-4 py-5 border-t text-sm">
-        <p class="pb-2">
-          <SfIconInfo size="sm" />
-          <span class="px-2 align-middle font-bold">Global defaults</span>
-        </p>
-        <p>The settings below apply to any page without its own, page-specific settings.</p>
-      </div>
-    </template>
-  </SiteConfigurationView>
-</template>
+### `lang.json`
 
-<script setup lang="ts">
-import { SfIconInfo } from '@storefront-ui/vue';
-</script>
-```
-
----
-
-### Lang.json
-
-This file is optional but recommended. It is used to provide translations for the folder names. These translations will be used in the settings drawer for the intermediate section name and the group names.
+`lang.json` is optional but recommended. It provides human-readable display names for the folder names that appear as labels in the drawer navigation. Place one at any folder level where the raw folder name would otherwise be shown.
 
 ```json
 {
@@ -74,115 +58,86 @@ This file is optional but recommended. It is used to provide translations for th
 }
 ```
 
----
+## State management
 
-### Working with Settings in modules
+Two composables divide responsibility for settings state.
 
-Any Nuxt module or customer package can replicate the same path inside `runtime/components/…/settings/**` to extend or override core files. If multiple modules try to use the same path, the first match is displayed.
+**`useSiteSettings(key)`** manages the key/value store for individual setting values. Individual setting components call it with their key to get `getSetting` and `updateSetting`. Staged changes (edits the merchant has made but not yet saved) are held in `data`. The last saved snapshot is held in `initialData`, which is seeded from `useRuntimeConfig().public` on initialisation and updated from the PlentyONE API when the page loads.
 
-Each time a new setting is plugged in, it needs to be registered manually in the runtime configuration. To register a setting inside a module, `updateRuntimeConfig` in the module's `index.ts`.
+```mermaid
+flowchart LR
+    A(initialData\nsaved snapshot)
+    B(getSetting)
+    C(Component UI)
+    D(updateSetting)
+    E(data\nstaged changes)
+    F(settingsIsDirty)
 
-```ts
-// modules/my-module/runtime/index.ts
-import { defineNuxtModule, updateRuntimeConfig } from '@nuxt/kit';
-
-export default defineNuxtModule({
-  setup() {
-    updateRuntimeConfig({
-      public: {
-        primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
-      },
-    });
-  },
-});
+    A -->|fallback| B
+    E -->|takes precedence| B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
 ```
 
-To work with the settings in the individual components use a [Writable computed](https://vuejs.org/guide/essentials/computed#writable-computed) which overrides a setter and getter for the setting value. This allows for a clean separation of concerns and makes it easy to manage the state of each setting.
+The full API exposed by `useSiteSettings`:
 
-```ts
-// components/settings/design/2.colors/PrimaryColor.vue
-import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
+| Member | Type | Description |
+|---|---|---|
+| `getSetting()` | `() => string` | Returns the staged value if present, otherwise the saved value. |
+| `updateSetting(value)` | `(string) => void` | Stages a new value locally without saving. |
+| `getJsonSetting()` | `() => string[]` | Like `getSetting`, but parses the value as JSON. |
+| `settingsIsDirty` | `ComputedRef<boolean>` | `true` when any staged value differs from the saved snapshot. |
+| `dirtyKeys` | `ComputedRef<string[]>` | The keys of all currently staged (unsaved) settings. |
+| `setInitialData(settings)` | `(Setting[]) => void` | Merges API-loaded settings into the saved snapshot. |
+| `saveSiteSettings()` | `() => Promise<boolean>` | Persists all staged changes to the PlentyONE system via the SDK, then promotes staged data to the saved snapshot. |
 
-const { updateSetting, getSetting } = useSiteSettings('primaryColor');
+**`useSiteConfiguration`** manages UI state for the drawer itself — which view is open, transitions, and the save trigger. It is not used inside individual setting components; it is used by the drawer shell and the toolbar. The data flow from runtime configuration through to persistence looks like this:
 
-const updatePrimaryColor = (hexColor: string) => {
-  const tailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({
-    ...color,
-  }));
+```mermaid
+flowchart LR
+    A(Runtime config / API)
+    B(useSiteSettings initialData)
+    C(Setting component)
+    D(PlentyONE system)
 
-  setColorProperties('primary', tailwindColors);
-};
-
-const primaryColor = computed({
-  get: () => getSetting(),
-  set: (value) => {
-    updateSetting(value);
-    updatePrimaryColor(value);
-  },
-});
+    A-->|seed on load| B
+    B-->|getSetting| C
+    C-->|updateSetting| B
+    B-->|saveSiteSettings| D
+    D-->|read .env during build| A
 ```
 
----
+## Extending settings from a module
 
-### `useSiteSettings.ts` composable
+Any Nuxt module or customer package can add or override settings by replicating the same folder path inside `runtime/components/…/settings/**`. The auto-discovery mechanism treats all sources equally — it finds components from the core app, registered Nuxt modules, and customer packages in a single pass.
 
-`useSiteSettings.ts` centralises all state management for site-level settings. It exposes a minimal API - staging, reading, dirty-checking, and committing changes - so UI components can update settings without duplicating logic.
+When multiple sources register a component at the same path, the first match is displayed. This means a module or customer package can override any core setting component without modifying the core files. See [How to add a site setting](/guide/editor/site-settings.md) for a worked example.
 
-```ts
-const { updateSetting, getSetting, isDirty, saveSiteSettings } = useSiteSettings('primaryColor');
+## Use cases
 
-updateSetting('#ff0000');
-console.log(getSetting()); // → '#ff0000'
-if (isDirty.value) await saveSiteSettings();
-```
+**A developer adding a colour to an existing category**
+The developer adds the key to `settings.config.ts`, creates a single `.vue` component inside the correct existing group folder, and uses `useSiteSettings('myColor')` to bind the input. No other files need to change.
 
-- **`data`** – live (unsaved) key → value map.
-- **`initialData`** – snapshot of the last saved state (sourced from `useRuntimeConfig().public`).
-- **`updateSetting(key, value)`** – stage a change locally.
-- **`getSetting(key)`** – read the staged _or_ saved value (staged takes precedence).
-- **`isDirty`** – `true` when staged data differs from saved data; useful for change notifications.
-- **`saveSiteSettings()`** – commit staged data to `initialData`; long-term persistence is handled in `useSiteConfiguration.ts`.
+**A module shipping its own settings category**
+The module places a full `<mainCategory>/` folder under `runtime/components/settings/`, including `ToolbarTrigger.vue`, `View.vue`, and at least one sub-category. When the module is installed, the new toolbar button appears automatically alongside the core categories.
 
----
+**A customer overriding a core setting component**
+The customer creates a file at the exact same path as the core component they want to replace inside their theme's `components/settings/` directory. The override takes precedence and no core file is modified.
 
-### Migration guide
+## Related resources
 
-If you are migrating from an older version of the site settings architecture, the only breaking change is the addition of the subCategory folder. This intermediate folder will have it's own `View.vue` and `lang.json` files, which will be used to display the subCategory section in the settings drawer. If you have custom settings that do not follow this structure, you will need to update them accordingly.
+How-to guides
 
-For example
+1. [How to add a site setting](/guide/editor/site-settings.md)
+2. [How to migrate site settings to the sub-category structure](/guide/editor/site-settings-migration.md)
 
-```
-components/
-└─ settings/
-   └─ branding-and-design/
-      ├─ 1.fonts/
-      │  └─ PrimaryFont.vue
-      ├─ 2.colors/
-      │  ├─ PrimaryColor.vue
-      │  └─ SecondaryColor.vue
-      ├─ ToolbarTrigger.vue
-      └─ View.vue
-```
+Linked concepts
 
-will be migrated to
+1. [Blocks architecture](/guide/editor/blocks-architecture.md)
 
-```
-components/
-└─ settings/
-   └─ branding-and-design/
-      ├─ View.vue                    # wrapper for the mainCategory section
-      ├─ ToolbarTrigger.vue
-      └─ branding-and-design/        # subCategory ( intermediate section )
-         ├─ 1.fonts/
-         │  └─ PrimaryFont.vue
-         ├─ 2.colors/
-         │  ├─ PrimaryColor.vue
-         │  └─ SecondaryColor.vue
-         └─ View.vue                 # wrapper for the subCategory section
-```
+External resources
 
----
-
-### Further Reading
-
-- [Writable computed](https://vuejs.org/guide/essentials/computed#writable-computed)
+1. [Nuxt runtime configuration](https://nuxt.com/docs/guide/going-further/runtime-config)
+2. [Writable computed](https://vuejs.org/guide/essentials/computed#writable-computed)

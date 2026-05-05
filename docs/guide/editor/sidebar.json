@@ -8,8 +8,12 @@
     "collapsed": true,
     "items": [
       {
-        "text": "Extensible Site Settings",
-        "link": "/guide/editor/site-settings-architecture.md"
+        "text": "Add a site setting",
+        "link": "/guide/editor/site-settings.md"
+      },
+      {
+        "text": "Migrate site settings",
+        "link": "/guide/editor/site-settings-migration.md"
       }
     ]
   },
@@ -40,8 +44,8 @@
         ]
       },
       {
-        "text": "Site settings",
-        "link": "/guide/editor/site-settings.md"
+        "text": "Site settings architecture",
+        "link": "/guide/editor/site-settings-architecture.md"
       }
     ]
   }
