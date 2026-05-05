@@ -23,5 +23,5 @@ Site settings give developers a way to expose configurable values — colours, f
 
 ## Component Discovery
 
-Both blocks and settings rely are discovered automatically from a [predictable folder convention](/guide/editor/site-settings-architecture.md).
+Both blocks and settings are discovered automatically from a [predictable folder convention](/guide/editor/site-settings-architecture.md).
 This means both [Themes](/guide/themes/index.md) and [Modules](/guide/modules/index.md) can add new blocks and settings in the same way.

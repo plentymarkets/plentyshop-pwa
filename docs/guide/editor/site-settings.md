@@ -172,4 +172,4 @@ The new setting is now discoverable automatically. No manual component registrat
 ## See also
 
 - [Site settings architecture](/guide/editor/site-settings-architecture.md) — explains the folder convention, auto-discovery, and how modules can add or override settings
-- [Theme configuration](/guide/themes/theme.md) — relevant if your setting drives a Tailwind design token
+- [Theme configuration](/guide/themes/styling.md) — relevant if your setting drives a Tailwind design token
