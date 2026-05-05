@@ -69,14 +69,9 @@ export const useBlocks: UseBlocksReturn = () => {
 
     state.value.hasSnapshot = data.value?.meta?.hasSnapshot ?? false;
 
-    const fetchedData =
-      data.value?.data || ({} as GetBlocksResponse);
+    const fetchedData = data.value?.data || ({} as GetBlocksResponse);
 
-    const assembled = assembleBlocks(fetchedData,
-      type,
-      identifier,
-      state.value.hasSnapshot,
-    );
+    const assembled = assembleBlocks(fetchedData, type, identifier, state.value.hasSnapshot);
 
     if (!fetchedData.HeaderContainer && state.value.data?.HeaderContainer) {
       (assembled as GetBlocksResponse).HeaderContainer = state.value.data.HeaderContainer;
