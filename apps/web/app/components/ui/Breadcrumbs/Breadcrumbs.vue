@@ -7,8 +7,8 @@
             v-model="dropdownOpened"
             strategy="absolute"
             placement="bottom-start"
-            @update:model-value="close"
             class="z-[2]"
+            @update:model-value="close"
           >
             <template #trigger>
               <UiButton
