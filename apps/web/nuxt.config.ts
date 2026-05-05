@@ -48,9 +48,11 @@ export default defineNuxtConfig({
         '@storefront-ui/shared',
         '@storefront-ui/vue',
         '@tanstack/vue-virtual',
+        '@tiptap/core',
         '@tiptap/extension-color',
         '@tiptap/extension-highlight',
         '@tiptap/extension-link',
+        '@tiptap/extension-placeholder',
         '@tiptap/extension-text-align',
         '@tiptap/extension-text-style',
         '@tiptap/extension-underline',
@@ -84,15 +86,16 @@ export default defineNuxtConfig({
         output: {
           manualChunks: {
             tiptap: [
-              '@tiptap/vue-3',
               '@tiptap/core',
-              '@tiptap/starter-kit',
-              '@tiptap/extension-link',
-              '@tiptap/extension-underline',
-              '@tiptap/extension-text-style',
               '@tiptap/extension-color',
               '@tiptap/extension-highlight',
+              '@tiptap/extension-link',
+              '@tiptap/extension-placeholder',
               '@tiptap/extension-text-align',
+              '@tiptap/extension-text-style',
+              '@tiptap/extension-underline',
+              '@tiptap/starter-kit',
+              '@tiptap/vue-3',
             ],
             vuetify: ['vuetify', '@mdi/js'],
           },
@@ -177,8 +180,9 @@ export default defineNuxtConfig({
       '/confirmation',
       '/wishlist',
       '/login',
-      '/signup',
+      '/register',
       '/reset-password',
+      '/favicon.ico',
     ],
   },
   shopCore: {
@@ -243,7 +247,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: null,
       globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
-      globIgnores: ['manifest**.webmanifest'],
+      globIgnores: ['manifest**.webmanifest', '_nuxt-plenty/editor/blocksLists.json'],
       additionalManifestEntries: [
         {
           url: '/offline',

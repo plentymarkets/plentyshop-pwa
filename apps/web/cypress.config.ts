@@ -23,6 +23,7 @@ export default defineConfig({
   screenshotsFolder: '__tests__/report/screenshots',
   video: false,
   chromeWebSecurity: false,
+  experimentalModifyObstructiveThirdPartyCode: true,
   env: {
     DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 10,
     POST_CODE_VALIDATION_COUNTRY: 'United Kingdom',

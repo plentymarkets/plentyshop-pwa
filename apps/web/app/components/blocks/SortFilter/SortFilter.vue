@@ -94,8 +94,9 @@ const showSortAndFilter = ref(false);
 const { isOpen, open, close } = useDisclosure();
 const { t } = useI18n({ useScope: 'global' });
 
+const viewport = useViewport();
 const { isInEditorClient } = useEditorState();
-const clientPreview = computed(() => isInEditorClient.value);
+const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
 
 const showAllFiltersImmediately = computed(() => props.content?.showAllFiltersImmediately ?? true);
 const numberOfFiltersToShowInitially = computed(() => props.content?.numberOfFiltersToShowInitially ?? 0);

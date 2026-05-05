@@ -10,5 +10,27 @@
   {
     "text": "Composable‑Centric Data Fetching",
     "link": "/guide/concept/composable-centric-data-fetching"
+  },
+  {
+    "text": "Blocks architecture",
+    "link": "/guide/concept/blocks-architecture",
+    "items": [
+      {
+        "text": "Rendering",
+        "link": "/guide/concept/blocks-rendering"
+      },
+      {
+        "text": "Saving",
+        "link": "/guide/concept/blocks-saving"
+      },
+      {
+        "text": "Global vs. non-global blocks",
+        "link": "/guide/concept/blocks-global-vs-non-global"
+      },
+      {
+        "text": "Structure vs. content form",
+        "link": "/guide/concept/blocks-structure-vs-content"
+      }
+    ]
   }
 ]

@@ -27,13 +27,7 @@
     </div>
 
     <div v-else-if="blocks[editingBlockIndex]" class="space-y-0">
-      <component
-        :is="blockForm"
-        ref="innerFormRef"
-        :uuid="blocks[editingBlockIndex]!.meta.uuid"
-        @set-edit-title="handleInnerSetEditTitle"
-        @clear-edit-title="handleInnerClearEditTitle"
-      />
+      <component :is="blockForm" ref="innerFormRef" :uuid="blocks[editingBlockIndex]!.meta.uuid" />
     </div>
   </div>
 </template>
@@ -46,13 +40,9 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
+const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
-const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void } | null>(null);
-const isInnerFormSubEditing = ref(false);
+const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
 const elementsOpen = ref(true);
 const editingBlockIndex = ref<number | undefined>(undefined);
@@ -62,7 +52,9 @@ const currentActiveBlockIndex = ref<number>(-1);
 const layoutOpen = ref(true);
 
 const blockForm = computed(() => {
-  if (!editingBlockName.value) return null;
+  if (!editingBlockName.value) {
+    return null;
+  }
 
   const loader = getBlockFormLoader(editingBlockName.value);
   return loader ? defineAsyncComponent(loader) : null;
@@ -111,35 +103,26 @@ const resolveBlockLabels = async () => {
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
-  isInnerFormSubEditing.value = false;
   currentActiveBlockIndex.value = index;
-  emit('set-edit-title', blockLabels.value[index]!);
-};
-
-const handleInnerSetEditTitle = (title: string) => {
-  isInnerFormSubEditing.value = true;
-  emit('set-edit-title', title);
-};
-
-const handleInnerClearEditTitle = () => {
-  isInnerFormSubEditing.value = false;
-  const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
-  if (blockLabel) emit('set-edit-title', blockLabel);
+  setEditTitle(blockLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
-  if (isInnerFormSubEditing.value && innerFormRef.value?.exitEditMode) {
+  if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
     innerFormRef.value.exitEditMode(false);
-    isInnerFormSubEditing.value = false;
-    const blockLabel = editingBlockIndex.value !== undefined ? blockLabels.value[editingBlockIndex.value] : undefined;
-    if (blockLabel) emit('set-edit-title', blockLabel);
+    const blockLabel = editingBlockIndex.value === undefined ? undefined : blockLabels.value[editingBlockIndex.value];
+    if (blockLabel) {
+      setEditTitle(blockLabel);
+    }
     return false;
   }
 
   editingBlockIndex.value = undefined;
   editingBlockName.value = undefined;
   currentActiveBlockIndex.value = -1;
-  if (shouldEmit) emit('clear-edit-title');
+  if (shouldEmit) {
+    clearEditTitle();
+  }
   resolveBlockLabels();
   return true;
 };
@@ -150,14 +133,18 @@ const addBlock = () => {
 
   const lastChild = headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1];
 
-  if (!lastChild) return;
+  if (!lastChild) {
+    return;
+  }
 
   togglePlaceholder(lastChild.meta.uuid, 'bottom');
   openDrawerWithView('blocksList');
 };
 
 const deleteBlock = async (index: number) => {
-  if (blocks.value.length <= 1) return;
+  if (blocks.value.length <= 1) {
+    return;
+  }
   blocks.value = blocks.value.filter((_: Block, i: number) => i !== index);
   currentActiveBlockIndex.value = 0;
   await nextTick();
@@ -172,11 +159,15 @@ const updateBlocks = (newBlocks: SlideBlock[]) => {
 
 const toggleBlockVisibilityHandler = (index: number) => {
   const block = blocks.value[index];
-  if (!block) return;
+  if (!block) {
+    return;
+  }
 
   const updatedBlocks = [...blocks.value];
   const blockToUpdate = updatedBlocks[index];
-  if (!blockToUpdate) return;
+  if (!blockToUpdate) {
+    return;
+  }
 
   toggleBlockVisibility(blockToUpdate);
   blocks.value = updatedBlocks;

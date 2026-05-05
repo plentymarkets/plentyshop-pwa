@@ -201,41 +201,12 @@
           </SfInput>
         </label>
       </div>
-      <div class="py-2">
-        <UiFormLabel>{{ getEditorTranslation('footnotes-align-label') }}</UiFormLabel>
-
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerContent.footnoteAlign === 'left' }"
-            data-testid="footnoteAlign-textbox-y-align-left"
-            @click="footerContent.footnoteAlign = 'left'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerContent.footnoteAlign !== 'left' }" />
-            {{ getEditorTranslation('footnotes-align-option-left-label') }}
-          </div>
-
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerContent.footnoteAlign === 'center' }"
-            data-testid="footnoteAlign-textbox-y-align-center"
-            @click="footerContent.footnoteAlign = 'center'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerContent.footnoteAlign !== 'center' }" />
-            {{ getEditorTranslation('footnotes-align-option-center-label') }}
-          </div>
-
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': footerContent.footnoteAlign === 'right' }"
-            data-testid="footnoteAlign-textbox-y-align-right"
-            @click="footerContent.footnoteAlign = 'right'"
-          >
-            <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: footerContent.footnoteAlign !== 'right' }" />
-            {{ getEditorTranslation('footnotes-align-option-right-label') }}
-          </div>
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="footnoteAlignModel"
+        :legend="getEditorTranslation('footnotes-align-label')"
+        test-id-prefix="footnote-align"
+        :options="footnoteAlignOptions"
+      />
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -344,12 +315,11 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfSwitch, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { FooterContent, FooterBlock } from './types';
 import { FOOTER_SWITCH_DEFINITIONS } from './constants';
 
 const { footer } = useBlocks();
-
 const { blockUuid } = useSiteConfiguration();
 
 const firstColumnOpen = ref(false);
@@ -397,6 +367,11 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
       },
     }),
   }),
+);
+
+const { footnoteAlignModel, footnoteAlignOptions } = useEditorOptionsTabs(
+  () => footerBlock.value,
+  getEditorTranslation,
 );
 </script>
 

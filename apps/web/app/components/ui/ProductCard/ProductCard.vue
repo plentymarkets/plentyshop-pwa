@@ -16,6 +16,7 @@
         <SfLink
           :tag="NuxtLink"
           :to="productPath"
+          :aria-label="ariaLabelContent"
           class="relative group/image flex items-center justify-center"
           data-testid="product-card-link"
         >
@@ -319,6 +320,11 @@ const canLoadHoverImage = computed(() => {
 
   return shouldLoadHoverImage.value;
 });
+
+const ariaLabelContent = computed(() => {
+  return t('common.accessibility.viewDetails', { name: name.value ?? '' });
+});
+
 const getWidth = () => {
   if (imageWidth.value && imageWidth.value > 0 && imageUrl.value.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth.value;

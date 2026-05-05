@@ -136,97 +136,21 @@
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-x-label') }}</UiFormLabel>
-
-            <div
-              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-            >
-              <div
-                for="textbox-align-left"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.align === 'left',
-                }"
-                data-testid="slider-textbox-y-align-left"
-                @click="banner.content.text.align = 'left'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'left' }" />
-                {{ getEditorTranslation('textbox-align-x-left-label') }}
-              </div>
-
-              <div
-                for="textbox-align-center"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.align === 'center',
-                }"
-                data-testid="slider-textbox-y-align-center"
-                @click="banner.content.text.align = 'center'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'center' }" />
-                {{ getEditorTranslation('textbox-align-x-center-label') }}
-              </div>
-
-              <div
-                for="textbox-align-right"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.align === 'right',
-                }"
-                data-testid="slider-textbox-y-align-right"
-                @click="banner.content.text.align = 'right'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.align !== 'right' }" />
-                {{ getEditorTranslation('textbox-align-x-right-label') }}
-              </div>
-            </div>
+            <EditorOptionsTabs
+              v-model="textboxAlignXModel"
+              :legend="getEditorTranslation('textbox-align-x-label')"
+              test-id-prefix="slider-textbox-align-x"
+              :options="textboxAlignXOptions"
+            />
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('textbox-align-y-label') }}</UiFormLabel>
-
-            <div
-              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-            >
-              <div
-                for="align-top"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'top',
-                }"
-                data-testid="slider-textbox-align-top"
-                @click="banner.content.text.justify = 'top'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'top' }" />
-                {{ getEditorTranslation('textbox-align-y-top-label') }}
-              </div>
-
-              <div
-                for="align-center"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'center',
-                }"
-                data-testid="slider-textbox-align-center"
-                @click="banner.content.text.justify = 'center'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'center' }" />
-                {{ getEditorTranslation('textbox-align-y-center-label') }}
-              </div>
-
-              <div
-                for="align-bottom"
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.text.justify === 'bottom',
-                }"
-                data-testid="slider-textbox-align-bottom"
-                @click="banner.content.text.justify = 'bottom'"
-              >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: banner.content.text.justify !== 'bottom' }" />
-                {{ getEditorTranslation('textbox-align-y-bottom-label') }}
-              </div>
-            </div>
+            <EditorOptionsTabs
+              v-model="textboxAlignYModel"
+              :legend="getEditorTranslation('textbox-align-y-label')"
+              test-id-prefix="slider-textbox-align-y"
+              :options="textboxAlignYOptions"
+            />
           </div>
         </div>
       </UiAccordionItem>
@@ -264,95 +188,21 @@
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('button-variant-label') }}</UiFormLabel>
-            <div
-              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-            >
-              <div
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.variant === 'primary',
-                }"
-                data-testid="slider-button-primary"
-                @click="banner.content.button.variant = 'primary'"
-              >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.button.variant !== 'primary' }"
-                />
-                {{ getEditorTranslation('button-variant-primary-label') }}
-              </div>
-
-              <div
-                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.variant === 'secondary',
-                }"
-                data-testid="slider-button-secondary"
-                @click="banner.content.button.variant = 'secondary'"
-              >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.button.variant !== 'secondary' }"
-                />
-                {{ getEditorTranslation('button-variant-secondary-label') }}
-              </div>
-            </div>
+            <EditorOptionsTabs
+              v-model="buttonVariantModel"
+              :legend="getEditorTranslation('button-variant-label')"
+              test-id-prefix="slider-button-variant"
+              :options="buttonVariantOptions"
+            />
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('button-align-label') }}</UiFormLabel>
-            <div
-              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-            >
-              <div
-                for="button-align-left"
-                class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'left',
-                }"
-                data-testid="slider-button-align-left"
-                @click="banner.content.button.alignment = 'left'"
-              >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.button.alignment !== 'left' }"
-                />
-                {{ getEditorTranslation('button-align-option-left-label') }}
-              </div>
-
-              <div
-                for="button-align-center"
-                class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'center',
-                }"
-                data-testid="slider-button-align-center"
-                @click="banner.content.button.alignment = 'center'"
-              >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.button.alignment !== 'center' }"
-                />
-                {{ getEditorTranslation('button-align-option-center-label') }}
-              </div>
-
-              <div
-                for="button-align-right"
-                class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-                :class="{
-                  'bg-gray-100 text-gray-900 font-semibold': banner.content.button.alignment === 'right',
-                }"
-                data-testid="slider-button-align-right"
-                @click="banner.content.button.alignment = 'right'"
-              >
-                <SfIconCheck
-                  class="mr-1 w-[1.1rem]"
-                  :class="{ invisible: banner.content.button.alignment !== 'right' }"
-                />
-                {{ getEditorTranslation('button-align-option-right-label') }}
-              </div>
-            </div>
+            <EditorOptionsTabs
+              v-model="buttonAlignModel"
+              :legend="getEditorTranslation('button-align-label')"
+              test-id-prefix="slider-button-align"
+              :options="buttonAlignOptions"
+            />
           </div>
         </div>
       </UiAccordionItem>
@@ -362,7 +212,7 @@
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfInput, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
 
 const { blockUuid } = useSiteConfiguration();
@@ -398,6 +248,16 @@ const handleImageAddBanner = ({ image, type }: { image: string; type: string }) 
   const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
   handleImageAdd({ image, type });
 };
+const {
+  textboxAlignXModel,
+  textboxAlignXOptions,
+  textboxAlignYModel,
+  textboxAlignYOptions,
+  buttonVariantModel,
+  buttonVariantOptions,
+  buttonAlignModel,
+  buttonAlignOptions,
+} = useEditorOptionsTabs(() => banner.value.content as EditorTarget, getEditorTranslation);
 </script>
 
 <style scoped>
