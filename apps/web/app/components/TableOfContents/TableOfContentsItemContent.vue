@@ -101,7 +101,8 @@ const { headerContainer } = useBlocks();
 
 const isLastHeaderChild = computed(() => {
   const content = headerContainer.value?.content as Block[] | undefined;
-  return Array.isArray(content) && content.length <= 1;
+  if (!Array.isArray(content) || content.length > 1) return false;
+  return content.some((b: Block) => b.meta.uuid === props.uuid);
 });
 
 const isVisible = computed(() => isBlockVisible(props.block));

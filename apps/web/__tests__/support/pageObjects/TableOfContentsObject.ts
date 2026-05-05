@@ -23,7 +23,8 @@ export class TableOfContentsObject extends PageObject {
 
   get contentTableOfContentsItemLabels() {
     return cy
-      .get('[data-testid^="toc-visibility-"]')
+      .getByTestId('toc-section-content')
+      .find('[data-testid^="toc-visibility-"]')
       .closest('[data-testid^="toc-item-"]')
       .find('[data-testid="toc-label"]');
   }
@@ -33,11 +34,11 @@ export class TableOfContentsObject extends PageObject {
   }
 
   get deleteIcons() {
-    return cy.get('[data-testid^="toc-delete-"]');
+    return cy.getByTestId('toc-section-content').find('[data-testid^="toc-delete-"]');
   }
 
   get visibilityIcons() {
-    return cy.get('[data-testid^="toc-visibility-"]');
+    return cy.getByTestId('toc-section-content').find('[data-testid^="toc-visibility-"]');
   }
 
   get addElementButton() {
