@@ -227,12 +227,6 @@ export class TableOfContentsObject extends PageObject {
     return this;
   }
 
-  checkBothDrawersStillVisible() {
-    this.tableOfContentsDrawer.should('be.visible');
-    this.blocksConfigurationDrawer.should('be.visible');
-    return this;
-  }
-
   checkBlockIconsExist() {
     this.allBlockIcons.should('have.length.greaterThan', 0);
     this.allBlockIcons.each(($icon) => {
