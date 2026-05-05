@@ -12,6 +12,10 @@
         "link": "/guide/modules/components.md"
       },
       {
+        "text": "Inject components into shop areas",
+        "link": "/guide/modules/inject-components.md"
+      },
+      {
         "text": "Layouts",
         "link": "/guide/modules/layouts.md"
       },
@@ -34,10 +38,6 @@
       {
         "text": "Custom JS & CSS",
         "link": "/guide/modules/custom-js-css.md"
-      },
-      {
-        "text": "Inject components into shop areas",
-        "link": "/guide/modules/inject-components.md"
       }
     ]
   },
