@@ -43,12 +43,13 @@ import { categoryGetters } from '@plentymarkets/shop-api';
 
 const bodyClass = ref('');
 const route = useRoute();
+const viewport = useViewport();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
 
-const clientPreview = computed(() => isInEditorClient.value);
+const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
