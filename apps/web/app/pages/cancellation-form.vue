@@ -34,8 +34,14 @@
           type="text"
           :invalid="Boolean(errors['orderId'])"
           :disabled="loading"
+          aria-describedby="cancellation-order-id-error"
         />
-        <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        <ErrorMessage
+          id="cancellation-order-id-error"
+          as="div"
+          name="orderId"
+          class="text-negative-700 text-left text-sm pt-[0.2rem]"
+        />
       </label>
 
       <label for="cancellation-name">
@@ -48,8 +54,14 @@
           type="text"
           :invalid="Boolean(errors['name'])"
           :disabled="loading"
+          aria-describedby="cancellation-name-error"
         />
-        <ErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        <ErrorMessage
+          id="cancellation-name-error"
+          as="div"
+          name="name"
+          class="text-negative-700 text-left text-sm pt-[0.2rem]"
+        />
       </label>
 
       <label for="cancellation-email">
@@ -63,8 +75,14 @@
           :invalid="Boolean(errors['email'])"
           :disabled="loading"
           autocomplete="email"
+          aria-describedby="cancellation-email-error"
         />
-        <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        <ErrorMessage
+          id="cancellation-email-error"
+          as="div"
+          name="email"
+          class="text-negative-700 text-left text-sm pt-[0.2rem]"
+        />
       </label>
 
       <label for="cancellation-reason" class="flex flex-col">
