@@ -4,7 +4,7 @@ export default defineNuxtPlugin({
   setup() {
     const route = useRoute();
     if (route.meta.cacheControl) {
-      useInitialSetup().fetchSessionAndCategoryTree(); 
+      useInitialSetup().fetchSessionAndCategoryTree();
     }
   },
 });

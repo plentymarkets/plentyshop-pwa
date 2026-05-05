@@ -71,14 +71,20 @@ const setInitialDataSSR: SetInitialData = async () => {
 const fetchCacheableInitData: SetInitialData = async () => {
   const { setRobots } = useRobots();
   const { setInitialData: setInitialAssetsData } = useCustomAssets();
+  const { setPattern } = usePriceFormatter();
 
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getAssetsAndRobots());
+    const { data } = await useAsyncData(() =>
+      useSdk().plentysystems.getInit({
+        exclude: { settings: true, session: true, categories: true },
+      }),
+    );
     if (data.value?.data) {
       setInitialAssetsData(data.value.data.customAssets || []);
       if (data.value.data.robots) {
         setRobots(data.value.data.robots);
       }
+      setPattern(data.value.data.currencyPattern);
     }
   } catch (error) {
     useHandleError(error as ApiError);
@@ -89,7 +95,9 @@ const fetchCacheableInitData: SetInitialData = async () => {
 
 const fetchSessionAndCategoryTree = async () => {
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: { settings: true, robots: true, customAssets: true } }));
+    const { data } = await useAsyncData(() =>
+      useSdk().plentysystems.getInit({ exclude: { settings: true, robots: true, customAssets: true } }),
+    );
     if (data.value?.data) {
       const { session, categories } = data.value.data;
       useCustomer().setUser(session.user);
@@ -100,7 +108,7 @@ const fetchSessionAndCategoryTree = async () => {
   } catch (error) {
     useHandleError(error as ApiError);
   }
-}
+};
 
 /** Function for fetching all settings
  * @example
@@ -133,6 +141,6 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
     setInitialDataSSR,
     fetchSettings,
     fetchCacheableInitData,
-    fetchSessionAndCategoryTree
+    fetchSessionAndCategoryTree,
   };
 };
