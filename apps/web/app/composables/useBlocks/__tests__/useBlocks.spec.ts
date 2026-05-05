@@ -89,6 +89,7 @@ const createMockState = () => ({
     defaultTemplateData: [] as Block[],
     loading: false,
     isSettling: false,
+    hasSnapshot: false,
   },
 });
 
@@ -97,6 +98,15 @@ const setupApiResponse = (responseData: unknown) =>
     fetcher();
     return {
       data: { value: { data: responseData } },
+      error: { value: null },
+    };
+  });
+
+const setupApiResponseWithMeta = (responseData: unknown, meta: Record<string, unknown>) =>
+  useAsyncData.mockImplementation((_key: string, fetcher: () => unknown) => {
+    fetcher();
+    return {
+      data: { value: { data: responseData, meta } },
       error: { value: null },
     };
   });
@@ -192,6 +202,16 @@ describe('useBlocks', () => {
       await useBlocks().fetchBlocks('index', 'immutable');
       expect(mockStateRef.value.loading).toBe(false);
     });
+
+    it('should not apply default blocks when meta.hasSnapshot is true and blocks array is empty', async () => {
+      setupApiResponseWithMeta(
+        { HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock },
+        { hasSnapshot: true },
+      );
+      await useBlocks().fetchBlocks('index', 'immutable');
+      expect(mockStateRef.value.hasSnapshot).toBe(true);
+      expect(mockStateRef.value.data.blocks).toHaveLength(0);
+    });
   });
 
   describe('saveBlocks', () => {
@@ -236,6 +256,15 @@ describe('useBlocks', () => {
       await useBlocks().saveBlocks('id', 'type', '[]');
       expect(mockStateRef.value.loading).toBe(false);
       consoleSpy.mockRestore();
+    });
+
+    it('should not apply default blocks when saving results in an empty blocks array', async () => {
+      mockDoSaveBlocksWithGlobalBlocks.mockResolvedValue({
+        data: { HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock },
+      });
+      await useBlocks().saveBlocks('index', 'immutable', '[]');
+      expect(mockStateRef.value.hasSnapshot).toBe(true);
+      expect(mockStateRef.value.data.blocks).toHaveLength(0);
     });
   });
 

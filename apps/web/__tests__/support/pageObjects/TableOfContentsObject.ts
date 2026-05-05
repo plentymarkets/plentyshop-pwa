@@ -93,6 +93,13 @@ export class TableOfContentsObject extends PageObject {
     return this;
   }
 
+  checkSectionsExist() {
+    cy.getByTestId('toc-section-header').should('exist');
+    cy.getByTestId('toc-section-content').should('exist');
+    cy.getByTestId('toc-section-footer').should('exist');
+    return this;
+  }
+
   checkCollapsibleArrowForStructureBlocks() {
     this.expandButtons.should('have.length.greaterThan', 0);
     return this;

@@ -3,14 +3,13 @@ import type { TranslateFn } from '~/composables/useItemDataTable/types';
 
 export const useButtonOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const buttonVariantOptions = computed(() => [
-    { value: 'primary' as ButtonVariant, label: t('button-variant-primary-label'), testId: 'slider-button-primary' },
+    { value: 'primary' as ButtonVariant, label: t('button-variant-primary-label'), testId: 'button-variant-primary' },
     {
       value: 'secondary' as ButtonVariant,
       label: t('button-variant-secondary-label'),
-      testId: 'slider-button-secondary',
+      testId: 'button-variant-secondary',
     },
   ]);
-
   const buttonVariantModel = computed<ButtonVariant>({
     get: () => getTarget()?.button?.variant ?? 'primary',
     set: (newButtonVariant) => {
