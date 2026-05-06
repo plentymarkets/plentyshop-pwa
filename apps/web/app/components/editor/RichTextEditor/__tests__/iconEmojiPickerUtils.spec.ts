@@ -118,4 +118,12 @@ describe('getIconsByCategory', () => {
       expect(icon).toEqual(userIcons[name]);
     });
   });
+
+  it('should return only icons matching the social category', () => {
+    const expected = Object.entries(userIcons).filter(([, icon]) => icon.category === 'social');
+    const results = getIconsByCategory('social');
+
+    expect(results).toHaveLength(expected.length);
+    results.forEach(({ icon }) => expect(icon.category).toBe('social'));
+  });
 });
