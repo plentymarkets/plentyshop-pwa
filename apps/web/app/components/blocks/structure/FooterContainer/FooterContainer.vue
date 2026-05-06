@@ -50,7 +50,7 @@ const fullWidthContent = computed(() => props.content?.filter(isFullWidthBlock) 
 }
 
 :deep([data-testid='multi-grid-column'] .rte-prose p:not(:has(a))) {
-  @apply m-0 ml-4 text-lg font-medium leading-7;
+  @apply m-0 ml-4 leading-7;
 }
 
 :deep([data-testid='multi-grid-column'] .rte-prose p:has(a)) {

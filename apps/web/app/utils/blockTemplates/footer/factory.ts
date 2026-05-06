@@ -8,11 +8,15 @@ export const FOOTER_CONTAINER_BLOCK_NAME = 'FooterContainer' as const;
 export const isFooterContainerBlock = (block: Block | null | undefined): block is FooterContainerBlock =>
   block?.name === FOOTER_CONTAINER_BLOCK_NAME;
 
+function buildColumnTitleHtml(title: string): string {
+  return `<p><span style="font-size: 1.125rem; font-weight: 500;">${title}</span></p>`;
+}
+
 function buildColumnHtml(columnGroup: string, groupLabel: string): string {
   const links = FOOTER_SWITCH_DEFINITIONS.filter((def) => def.columnGroup === columnGroup)
     .map((def) => `<p><a href="${def.link}">${t(def.shopTranslationKey)}</a></p>`)
     .join('');
-  return `<p>${groupLabel}</p>${links}`;
+  return `${buildColumnTitleHtml(groupLabel)}${links}`;
 }
 
 function createFooterColumnTextCard(parentSlot: number, htmlDescription = ''): Block {
@@ -59,9 +63,9 @@ function createFooterNoteTextCard(): Block {
     },
     content: {
       text: {
-        htmlDescription: `© ${runtimeConfig.public.storename} ${new Date().getFullYear()}`,
+        htmlDescription: `<span class="text-sm py-10 md:py-6 px-10 no-preflight text-right">© ${runtimeConfig.public.storename} ${new Date().getFullYear()}</span>`,
         textAlignment: 'right',
-        color: '#959795',
+        color: '#8b8d8b',
       },
       button: {
         label: '',
