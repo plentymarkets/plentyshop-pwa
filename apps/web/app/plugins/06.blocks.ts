@@ -1,40 +1,49 @@
+import type { RouteLocationNormalized } from 'vue-router';
+
 export default defineNuxtPlugin({
   name: 'blocks',
   parallel: true,
   async setup() {
     const router = useRouter();
-    const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-    const { fetchProducts, data: productsCatalog } = useProducts();
-    const routeDataReady = useState<Promise<void> | null>('routeDataReady', () => null);
+    const { $i18n } = useNuxtApp();
+    const { isInEditor } = useEditorState();
+    const { fetchProducts, loadFakeGlobalCategoryData, data: productsCatalog } = useProducts();
 
-    const fetchForRoute = async () => {
-      const { meta } = router.currentRoute.value;
+    const isGlobalCategoryTemplate = (to: RouteLocationNormalized) => {
+      if (!isInEditor.value) return false;
+      const slugParam = to.params.slug;
+      const slug = Array.isArray(slugParam) ? slugParam.join('/') : String(slugParam ?? '');
+      return `/${slug}` === paths.globalItemCategory;
+    };
+
+    const fetchForRoute = async (to: RouteLocationNormalized) => {
+      const { meta } = to;
       const hasBlockIdentifier = meta.isBlockified && meta.identifier !== undefined;
       const type = (hasBlockIdentifier && meta.type ? meta.type : 'immutable') as string;
 
       if (type === 'category') {
-        await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+        if (isGlobalCategoryTemplate(to)) {
+          loadFakeGlobalCategoryData($i18n.locale.value);
+        } else {
+          const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter(to);
+          await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+        }
       }
 
-      const identifier = computed(() => {
-        if (type === 'category' && productsCatalog.value) {
-          return (
-            productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0
-          ) as number;
-        }
-
-        return (hasBlockIdentifier ? meta.identifier : 'index') as string | number;
-      });
+      const categoryIdentifier =
+        productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
+      const staticIdentifier = hasBlockIdentifier ? meta.identifier : 'index';
+      const blockIdentifier = type === 'category' ? categoryIdentifier : staticIdentifier;
 
       const { fetchBlocks } = useBlocks();
-      await fetchBlocks(identifier.value, type);
+      await fetchBlocks(blockIdentifier as string | number, type);
     };
 
-    await fetchForRoute();
+    await fetchForRoute(router.currentRoute.value);
 
     if (import.meta.client) {
-      router.afterEach(() => {
-        routeDataReady.value = fetchForRoute();
+      router.beforeResolve(async (to) => {
+        await fetchForRoute(to);
       });
     }
   },
