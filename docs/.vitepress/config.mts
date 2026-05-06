@@ -1,10 +1,9 @@
 import { withMermaid } from "vitepress-plugin-mermaid";
 import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
-import sidebarProduct from "../guide/product/sidebar.json";
-import sidebarSetup from "../guide/setup/sidebar.json";
-import sidebarHowTo from "../guide/how-to/sidebar.json";
+import sidebarIntroduction from "../guide/introduction/sidebar.json";
+import sidebarThemes from "../guide/themes/sidebar.json";
+import sidebarEditorCMS from "../guide/editor/sidebar.json";
 import sidebarModules from "../guide/modules/sidebar.json";
-import sidebarConcept from "../guide/concept/sidebar.json";
 import typedocSidebarComposables from "../reference/composables/typedoc-sidebar.json";
 import typedocSidebarApi from "../reference/api/typedoc-sidebar.json";
 
@@ -55,9 +54,10 @@ export default withMermaid({
       {
         text: "Guide",
         items: [
-          { text: "Get started", link: "/guide/setup/quickstart" },
-          { text: "How-To", link: "/guide/how-to/" },
-          { text: "Concept", link: "/guide/concept/" },
+          { text: "Quickstart", link: "/guide/introduction/quickstart" },
+          { text: "Themes", link: "/guide/themes/" },
+          { text: "Editor CMS", link: "/guide/editor/" },
+          { text: "Modules", link: "/guide/modules/" },
         ],
       },
       {
@@ -72,25 +72,45 @@ export default withMermaid({
     sidebar: {
       "/guide/": [
         {
-          text: "Product",
-          items: sidebarProduct,
+          text: "Introduction",
+          items: sidebarIntroduction,
         },
         {
-          text: "Get started",
-          items: sidebarSetup,
+          text: "Themes",
+          items: sidebarThemes
         },
         {
-          text: "How-To",
-          items: sidebarHowTo,
+          text: "Editor CMS",
+          items: sidebarEditorCMS
         },
         {
           text: "Modules",
           items: sidebarModules,
         },
         {
-          text: "Concept",
-          items: sidebarConcept,
+          text: "References",
+          items: [
+            { text: "Composables", link: "/reference/composables/" },
+            { text: "API Client", link: "/reference/api/" },
+          ],
         },
+        {
+          text: "Support",
+          items: [
+            {
+              text: "Changelog",
+              link: "https://github.com/plentymarkets/plentyshop-pwa/releases",
+            },
+            {
+              text: "FAQ",
+              link: "/guide/product/faq.md",
+            },
+            {
+              text: "Troubleshooting",
+              link: "/guide/introduction/troubleshooting.md",
+            }
+          ],
+        }
       ],
 
       "/reference/": [

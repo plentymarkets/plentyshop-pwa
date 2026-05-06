@@ -1,0 +1,74 @@
+[
+  {
+    "text": "Introduction",
+    "link": "/guide/themes/index.md"
+  },
+  {
+    "text": "Guides",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Bot protection",
+        "link": "/guide/themes/bot-protection.md"
+      },
+      {
+        "text": "Cookie consent",
+        "link": "/guide/themes/cookie.md"
+      },
+      {
+        "text": "Custom API Endpoints",
+        "link": "/guide/themes/custom-api-endpoints.md"
+      },
+      {
+        "text": "Currency Formatter",
+        "link": "/guide/themes/currency-formatter.md"
+      },
+      {
+        "text": "Custom Icon",
+        "link": "/guide/themes/custom-icon.md"
+      },
+      {
+        "text": "Form validation",
+        "link": "/guide/themes/form-validation.md"
+      },
+      {
+        "text": "i18n",
+        "link": "/guide/themes/i18n.md"
+      },
+      {
+        "text": "Product Cross-Selling",
+        "link": "/guide/themes/cross-selling.md"
+      },
+      {
+        "text": "Styling",
+        "link": "/guide/themes/styling.md"
+      },
+      {
+        "text": "Variation properties",
+        "link": "/guide/themes/variation-property.md"
+      }
+    ]
+  },
+  {
+    "text": "Concepts",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Project Update Strategies",
+        "link": "/guide/themes/project-update-strategies.md"
+      },
+      {
+        "text": "Nuxt Directory Structure",
+        "link": "https://nuxt.com/docs/4.x/directory-structure"
+      },
+      {
+        "text": "Data Flow",
+        "link": "https://docs.alokai.com/general/basics/data-flow"
+      },
+      {
+        "text": "Composable-Centric Data Fetching",
+        "link": "/guide/themes/composable-centric-data-fetching.md"
+      }
+    ]
+  }
+]

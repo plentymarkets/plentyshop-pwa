@@ -51,7 +51,7 @@
 
     <div v-if="!isGlobalBlock(block)" class="flex items-center gap-1 shrink-0">
       <button
-        v-if="!isLastHeaderChild"
+        v-if="!isLastRemainingHeaderBlock"
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover group-hover:text-black"
         :class="{ 'text-white': isSelected }"
         :data-testid="`toc-delete-${uuid}`"
@@ -99,9 +99,10 @@ const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
 const { hoveredUuid } = useTableOfContents();
 const { headerContainer } = useBlocks();
 
-const isLastHeaderChild = computed(() => {
+const isLastRemainingHeaderBlock = computed(() => {
   const content = headerContainer.value?.content as Block[] | undefined;
-  return Array.isArray(content) && content.length <= 1;
+  if (!Array.isArray(content) || content.length > 1) return false;
+  return content.some((b: Block) => b.meta.uuid === props.uuid);
 });
 
 const isVisible = computed(() => isBlockVisible(props.block));

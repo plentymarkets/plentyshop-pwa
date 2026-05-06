@@ -1,4 +1,4 @@
-# Theme configuration
+# Styling
 
 Most of the shop uses [Tailwind](https://tailwindcss.com/) for styling.
 To edit your theme, open `tailwind.config.ts`.
