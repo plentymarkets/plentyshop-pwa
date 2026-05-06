@@ -19,6 +19,6 @@ const props = defineProps<VariationPropertyHtmlProps>();
 
 const isLongText = computed(() => {
   const value = productPropertyGetters.getPropertyValue(props.variationProperty);
-  return value.length > 100;
+  return value?.length && value.length > 100;
 });
 </script>
