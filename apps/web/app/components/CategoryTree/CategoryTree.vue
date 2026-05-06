@@ -6,7 +6,7 @@
     >
       {{ t('common.labels.category') }}
     </div>
-    <div v-if="parentCategory">
+    <template v-if="parentCategory">
       <CategoryTreeItem
         :name="breadcrumbGetters.getName(parentCategory)"
         :href="breadcrumbGetters.getUrl(parentCategory)"
@@ -14,11 +14,11 @@
       >
         <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
       </CategoryTreeItem>
-    </div>
+    </template>
     <ul class="mb-4 md:mt-2" data-testid="categories">
       <CategoryTreeItem
-        v-for="(categoryItem, index) in categoryItems"
-        :key="index"
+        v-for="categoryItem in categoryItems"
+        :key="categoryGetters.getSubcategoryId(categoryItem)"
         :name="categoryGetters.getSubcategoryName(categoryItem)"
         :href="buildSubcategoryHref(categoryItem)"
         :count="categoryGetters.getSubcategoryItemCount(categoryItem)"
@@ -39,9 +39,10 @@ const { t } = useI18n();
 
 const categoryItems = computed(() => categoryGetters.getSubcategories(props.category));
 
-const currentCategoryPath = computed(() =>
-  breadcrumbGetters.getUrl(breadcrumbGetters.getCurrent(props.breadcrumbs ?? []) ?? {}),
-);
+const currentCategoryPath = computed(() => {
+  const current = breadcrumbGetters.getCurrent(props.breadcrumbs ?? []);
+  return current ? breadcrumbGetters.getUrl(current) : '';
+});
 
 const parentCategory = computed(() => breadcrumbGetters.getParent(props.breadcrumbs ?? []));
 
