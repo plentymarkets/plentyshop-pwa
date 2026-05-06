@@ -6,7 +6,7 @@
           <CategoryTree
             v-if="productsCatalog.category"
             :category="productsCatalog.category"
-            :base-path="currentCategoryPath"
+            :breadcrumbs="productsCatalog.breadcrumbs"
           />
         </template>
 
@@ -104,10 +104,6 @@ const clientPreview = computed(() => isInEditorClient.value && viewport.isGreate
 
 const showAllFiltersImmediately = computed(() => props.content?.showAllFiltersImmediately ?? true);
 const numberOfFiltersToShowInitially = computed(() => props.content?.numberOfFiltersToShowInitially ?? 0);
-const currentCategoryPath = computed(() => {
-  const crumbs = productsCatalog.value?.breadcrumbs ?? [];
-  return crumbs.at(-1)?.url ?? '';
-});
 
 watch(
   () => props.content?.fields,

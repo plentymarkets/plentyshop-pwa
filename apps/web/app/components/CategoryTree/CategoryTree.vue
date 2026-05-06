@@ -1,10 +1,17 @@
 <template>
-  <div v-if="categoryItems?.length" class="category-tree">
+  <div v-if="parentCategory || categoryItems?.length" class="category-tree">
     <div
       class="py-2 px-4 mb-4 bg-primary-50/50 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
       data-testid="category-tree"
     >
       {{ t('common.labels.category') }}
+    </div>
+    <div v-if="parentCategory">
+      <CategoryTreeItem
+        :name="parentCategory.name"
+        :href="parentCategory.url"
+        :count="parentCategory.itemCount"
+      />
     </div>
     <ul class="mb-4 md:mt-2" data-testid="categories">
       <CategoryTreeItem
@@ -30,8 +37,20 @@ const categoryItems = computed(() =>
   categoryGetters.getSubcategories(props.category),
 );
 
+const currentCategoryPath = computed(() => {
+  const crumbs = props.breadcrumbs ?? [];
+  return crumbs.at(-1)?.url ?? '';
+});
+
+const parentCategory = computed(() => {
+  const crumbs = props.breadcrumbs ?? [];
+  return crumbs.length > 1 ? crumbs.at(-2) ?? '' : '';
+});
+console.log('categoryItems', categoryItems.value);
+console.log('parentCategory', parentCategory.value);
+
 const buildSubcategoryHref = (subcategory: Subcategory): string => {
-  const base = (props.basePath ?? '').replace(/\/$/, '');
+  const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
   const slug = categoryGetters.getSubcategoryNameUrl(subcategory);
   return localePath(`${base}/${slug}`);
 };
