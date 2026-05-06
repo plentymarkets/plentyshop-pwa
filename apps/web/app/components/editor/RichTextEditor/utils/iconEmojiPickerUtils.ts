@@ -15,9 +15,14 @@ export const getIconsByCategory = (category: UserIconCategory) =>
     .filter(([_name, icon]) => icon.category === category)
     .map(([name, icon]) => ({ name, icon }));
 
-const ALL_EMOJIS = emojis.filter((e) => e.emoji);
+let cachedEmojis: typeof emojis | null = null;
+const getAllEmojis = () => {
+  if (!cachedEmojis) cachedEmojis = emojis.filter((e) => e.emoji);
+  return cachedEmojis;
+};
 
 export const filterEmojis = (query: string) => {
+  const ALL_EMOJIS = getAllEmojis();
   const normalized = query.trim().toLowerCase();
   if (!normalized) return ALL_EMOJIS;
   return ALL_EMOJIS.filter((e) => {
