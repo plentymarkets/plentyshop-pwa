@@ -2,6 +2,7 @@ import type { Category } from '@plentymarkets/shop-api';
 
 export type CategoryTreeProps = {
   category: Category;
+  basePath?: string;
 };
 
 export type CategoryTreeItemType = {

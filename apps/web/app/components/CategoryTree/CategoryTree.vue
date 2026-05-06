@@ -1,50 +1,38 @@
 <template>
-  <div
-    v-if="parent || (categoryTreeItem && categoryTreeGetters.getItems(categoryTreeItem)?.length)"
-    class="category-tree"
-  >
+  <div v-if="categoryItems?.length" class="category-tree">
     <div
       class="py-2 px-4 mb-4 bg-primary-50/50 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest rounded-none select-none"
       data-testid="category-tree"
     >
       {{ t('common.labels.category') }}
     </div>
-    <template v-if="parent">
+    <ul class="mb-4 md:mt-2" data-testid="categories">
       <CategoryTreeItem
-        :name="categoryTreeGetters.getName(parent)"
-        :href="localePath(buildCategoryMenuLink(parent, categoryTree))"
-        :count="categoryTreeGetters.getCount(parent)"
-      >
-        <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
-      </CategoryTreeItem>
-    </template>
-    <ul v-if="categoryTreeItem" class="mb-4 md:mt-2" data-testid="categories">
-      <CategoryTreeItem
-        v-for="(categoryItem, index) in categoryTreeGetters.getItems(categoryTreeItem)"
+        v-for="(categoryItem, index) in categoryItems"
         :key="index"
-        :name="categoryTreeGetters.getName(categoryItem)"
-        :href="localePath(buildCategoryMenuLink(categoryItem, categoryTree))"
-        :count="categoryTreeGetters.getCount(categoryItem)"
+        :name="categoryGetters.getSubcategoryName(categoryItem)"
+        :href="buildSubcategoryHref(categoryItem)"
+        :count="categoryGetters.getSubcategoryItemCount(categoryItem)"
       />
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import { SfIconArrowBack } from '@storefront-ui/vue';
+import { categoryGetters, Subcategory } from '@plentymarkets/shop-api';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
 
 const props = defineProps<CategoryTreeProps>();
-
-const { data: categoryTree } = useCategoryTree();
-const { buildCategoryMenuLink } = useLocalization();
-
 const localePath = useLocalePath();
-const categoryTreeItem = computed(() =>
-  categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getId(props.category)),
+const { t } = useI18n();
+
+const categoryItems = computed(() =>
+  categoryGetters.getSubcategories(props.category),
 );
-const parent = computed(() =>
-  categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getParentId(props.category)),
-);
+
+const buildSubcategoryHref = (subcategory: Subcategory): string => {
+  const base = (props.basePath ?? '').replace(/\/$/, '');
+  const slug = categoryGetters.getSubcategoryNameUrl(subcategory);
+  return localePath(`${base}/${slug}`);
+};
 </script>
