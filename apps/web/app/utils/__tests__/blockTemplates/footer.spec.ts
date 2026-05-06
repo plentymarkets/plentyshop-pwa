@@ -46,7 +46,7 @@ describe('createFooterContainer', () => {
     columns.forEach((col) => expect(col.name).toBe('TextCard'));
   });
 
-  it('should assign parent_slot 0–3 to the four column TextCards', () => {
+  it('should assign parent_slot 0–3 to the four column blocks', () => {
     const footer = createFooterContainer();
     const multiGrid = (footer.content as Block[])[0];
     const columns = multiGrid?.content as Block[];
