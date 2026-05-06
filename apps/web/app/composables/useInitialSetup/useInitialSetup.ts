@@ -48,12 +48,15 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
 
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit({ exclude: { settings: true } }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
     if (data.value?.data) {
       setUser(data.value.data.session.user);
-      setCart(data.value.data.session?.basket as Cart);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setCart(data.value.data.session?.basket as any);
       setCategoryTree(data.value.data.categories);
-      setInitialAssetsData(data.value.data.customAssets || []);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setInitialAssetsData(data.value.data.customAssets as any || []);
       setWishlistItemIds(Object.values(data.value.data.session?.basket?.itemWishListIds || []));
       if (data.value.data.robots) {
         setRobots(data.value.data.robots);
@@ -76,9 +79,12 @@ const setInitialDataSSR: SetInitialData = async () => {
  */
 const fetchSettings = async () => {
   try {
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getSettings());
-    if (data.value?.data) {
-      useSiteSettings().setInitialData(data.value.data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data } = await useAsyncData(() => (useSdk().plentysystems as any).getSettings?.() ?? Promise.resolve({ data: {} }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((data.value as any)?.data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      useSiteSettings().setInitialData((data.value as any).data);
     }
   } catch (error) {
     useHandleError(error as ApiError);

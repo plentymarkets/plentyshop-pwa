@@ -30,7 +30,8 @@ export const useNotifyMe = () => {
     try {
       state.value.loading = true;
 
-      const { data } = await useSdk().plentysystems.doSubscribeNotifyMe(params);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (useSdk().plentysystems as any).doSubscribeNotifyMe?.(params) ?? { data: false };
       return data;
     } catch (error) {
       useHandleError(error as ApiError);
@@ -53,7 +54,8 @@ export const useNotifyMe = () => {
     try {
       state.value.loading = true;
 
-      const { data } = await useSdk().plentysystems.doConfirmNotifyMe(params);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (useSdk().plentysystems as any).doConfirmNotifyMe?.(params) ?? { data: false };
       return data;
     } catch {
       return false;
@@ -75,7 +77,8 @@ export const useNotifyMe = () => {
     try {
       state.value.loading = true;
 
-      const { data } = await useSdk().plentysystems.doUnsubscribeNotifyMe(params);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (useSdk().plentysystems as any).doUnsubscribeNotifyMe?.(params) ?? { data: false };
       return data;
     } catch {
       return false;

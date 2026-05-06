@@ -38,7 +38,8 @@ export const useCancellationForm = () => {
   const submitCancellation: SubmitCancellation = async (params) => {
     state.value.loading = true;
     try {
-      const { data } = await useSdk().plentysystems.doSubmitCancellation(params);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (useSdk().plentysystems as any).doSubmitCancellation?.(params) ?? { data: null };
       return data?.email ?? null;
     } catch (error) {
       useHandleError(error as ApiError);

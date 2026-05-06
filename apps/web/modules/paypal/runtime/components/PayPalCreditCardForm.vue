@@ -105,9 +105,12 @@ onMounted(() => {
           processingOrder.value = true;
           clearCartItems();
 
-          emitPlentyEvent('frontend:orderCreated', order);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          emitPlentyEvent('frontend:orderCreated', order as any);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           navigateTo(
-            localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            localePath(`${paths.confirmation}/${orderGetters.getId(order as any)}/${orderGetters.getAccessKey(order as any)}`),
           );
         }
         loading.value = false;

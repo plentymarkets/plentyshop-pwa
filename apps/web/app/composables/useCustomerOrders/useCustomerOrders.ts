@@ -34,7 +34,8 @@ export const useCustomerOrders: UseCustomerOrdersReturn = () => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.getOrders(params);
-      state.value.data = data ?? null;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.value.data = data as any ?? null;
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

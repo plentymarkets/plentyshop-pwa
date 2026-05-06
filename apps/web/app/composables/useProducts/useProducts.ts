@@ -88,7 +88,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = data.value.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.value.data = data.value.data as any;
       handlePreviewProducts(state, $i18n.locale.value);
     }
 

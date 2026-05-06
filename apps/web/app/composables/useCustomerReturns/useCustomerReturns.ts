@@ -40,7 +40,8 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     try {
       state.value.loading = true;
       const { data } = await useSdk().plentysystems.getReturns(params);
-      state.value.data = data ?? state.value.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.value.data = data as any ?? state.value.data;
     } catch (error) {
       useHandleError(error as ApiError);
     } finally {

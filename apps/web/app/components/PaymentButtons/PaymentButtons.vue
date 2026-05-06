@@ -242,7 +242,8 @@ const handleRegularOrder = async () => {
   });
 
   if (data?.order?.id) {
-    emit('frontend:orderCreated', data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    emit('frontend:orderCreated', data as any);
     clearCartItems();
     return navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   } else {

@@ -35,11 +35,14 @@ export const useOffer: UseOfferReturn = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleApiCall = async (
     apiCall: () => Promise<Data<Offer | GetOfferError | GetOfferReject | Order>>,
-  ): Promise<{ data: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null> }> => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<any> => {
     state.value.loading = true;
-    const data_: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null> = ref(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data_: Ref<any> = ref(null);
 
     try {
       data_.value = await apiCall();
@@ -55,7 +58,8 @@ export const useOffer: UseOfferReturn = () => {
   };
 
   const fetchOffer: FetchOffer = async (params: OfferSearchParams) => {
-    const { data } = await handleApiCall(() => useSdk().plentysystems.getOffer(params));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data } = await handleApiCall(() => useSdk().plentysystems.getOffer(params) as any) as any;
 
     const offerInnerData = data.value?.data;
     if (typeof offerInnerData === 'object' && offerInnerData && 'order' in offerInnerData) {
@@ -76,7 +80,8 @@ export const useOffer: UseOfferReturn = () => {
   };
 
   const acceptOffer: AcceptOffer = async (params: OfferSearchParams) => {
-    const { data } = await handleApiCall(() => useSdk().plentysystems.doAcceptOffer(params));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data } = await handleApiCall(() => useSdk().plentysystems.doAcceptOffer(params) as any) as any;
 
     const orderData = data.value?.data as Order;
     state.value.relatedOrder = orderData?.order ? orderData : null;

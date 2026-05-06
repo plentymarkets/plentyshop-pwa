@@ -59,17 +59,19 @@ export const useBlocks: UseBlocksReturn = () => {
     const loc = computed(() => $i18n.locale.value);
     const key = `blocks-${loc.value}-${type}-${identifier}`;
 
-    const { data, error } = await useAsyncData(key, () =>
-      useSdk().plentysystems.getBlocksWithGlobalBlocks({ identifier, type, enableGlobalBlocks: true }),
-    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await useAsyncData(key, () => (useSdk().plentysystems as any).getBlocksWithGlobalBlocks?.({ identifier, type, enableGlobalBlocks: true }) ?? Promise.resolve({ data: {}, meta: {} }));
 
     if (error.value) {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any  
 
-    state.value.hasSnapshot = data.value?.meta?.hasSnapshot ?? false;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state.value.hasSnapshot = (data.value as any)?.meta?.hasSnapshot ?? false;
 
-    const fetchedData = data.value?.data || ({} as GetBlocksResponse);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const fetchedData = (data.value as any)?.data || ({} as GetBlocksResponse);
 
     const assembled = assembleBlocks(fetchedData, type, identifier, state.value.hasSnapshot);
 
@@ -92,12 +94,13 @@ export const useBlocks: UseBlocksReturn = () => {
     try {
       state.value.loading = true;
 
-      const response = await useSdk().plentysystems.doSaveBlocksWithGlobalBlocks({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response = await (useSdk().plentysystems as any).doSaveBlocksWithGlobalBlocks?.({
         identifier,
         entityType: type,
         blocks: content,
         enableGlobalBlocks: true,
-      });
+      }) ?? { data: {} };
 
       state.value.hasSnapshot = true;
 

@@ -50,7 +50,8 @@ onMounted(async () => {
     });
 
     if (data.data) {
-      products.value = data.data.products;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      products.value = data.data.products as any;
     }
   } catch (error) {
     useHandleError(error as ApiError);

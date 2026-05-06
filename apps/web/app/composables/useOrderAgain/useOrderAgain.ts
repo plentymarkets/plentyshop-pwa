@@ -43,8 +43,10 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
       });
 
       if (data?.data) {
-        state.value.order = data.data;
-        state.value.order.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.data);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        state.value.order = data.data as any;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        state.value.order!.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.data as any);
         state.value.hasItemsChanged = state.value.order
           ? orderGetters.hasOrderAgainChangedItems(state.value.order)
           : false;

@@ -119,15 +119,19 @@ export const useCart = () => {
     try {
       const { data } = await useSdk().plentysystems.doAddCartItem(params);
 
-      state.value.data = data ? migrateVariationData(state.value.data, data) : state.value.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.value.data = data ? migrateVariationData(state.value.data, data as any) : state.value.data;
 
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
 
       if (item) {
         state.value.lastUpdatedCartItem = item;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         emit('frontend:addToCart', {
-          item,
-          cart: state.value.data,
+           // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          item: item as any,
+           // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          cart: state.value.data as any,
           addItemParams: params,
         });
       }
@@ -169,15 +173,19 @@ export const useCart = () => {
     try {
       const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
-      state.value.data = migrateVariationData(state.value.data, data ?? undefined) ?? state.value.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.value.data = migrateVariationData(state.value.data, (data ?? undefined) as any) ?? state.value.data;
 
       params.forEach((param) => {
         const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
 
         if (item) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           emit('frontend:addToCart', {
-            item,
-            cart: state.value.data,
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            item: item as any,
+                                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            cart: state.value.data as any,
             addItemParams: param,
           });
         }
@@ -268,11 +276,15 @@ export const useCart = () => {
         cartItemId: cartItem.id,
       });
 
-      state.value.data = migrateVariationData(state.value.data, data ?? undefined) ?? state.value.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.value.data = migrateVariationData(state.value.data, (data ?? undefined) as any) ?? state.value.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       emit('frontend:removeFromCart', {
         deleteItemParams: { cartItemId: cartItem.id },
-        cart: state.value.data,
-        item: cartItem,
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        cart: state.value.data as any,
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        item: cartItem as any,
       });
       return state.value.data;
     } catch (error) {

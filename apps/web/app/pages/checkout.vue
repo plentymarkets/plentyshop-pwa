@@ -94,7 +94,8 @@ const { getScript } = usePayPal();
 const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 
-emit('frontend:beginCheckout', cart.value);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+emit('frontend:beginCheckout', cart.value as any);
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {

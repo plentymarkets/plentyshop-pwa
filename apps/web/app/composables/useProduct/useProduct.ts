@@ -75,7 +75,8 @@ export const useProduct: UseProductReturn = (slug) => {
     useHandleError(error.value ?? null);
 
     properties.setProperties(data.value?.data?.properties ?? []);
-    state.value.data = data.value?.data ?? ({} as Product);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state.value.data = data.value?.data as any ?? ({} as Product);
     handlePreviewProduct(state, $i18n.locale.value, true);
     state.value.loading = false;
     return state.value.data;

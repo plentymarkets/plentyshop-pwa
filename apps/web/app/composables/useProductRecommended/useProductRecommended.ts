@@ -52,7 +52,8 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
     );
 
     useHandleError(error.value ?? null);
-    state.value.data = data?.value?.data?.products ?? state.value.data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state.value.data = data?.value?.data?.products as any ?? state.value.data;
     state.value.loading = false;
     return state.value.data;
   };

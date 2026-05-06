@@ -51,8 +51,10 @@ const icon = 'sell';
 setPageMeta(productName.value, icon);
 
 await fetchProduct(productParams).then(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   usePlentyEvent().emit('frontend:productLoaded', {
-    product: product.value,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    product: product.value as any,
   });
 });
 

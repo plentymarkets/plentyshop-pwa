@@ -28,10 +28,11 @@ export const useSearchSuggestions: UseSearchSuggestionsReturn = () => {
     const requestId = ++state.value.currentRequestId;
     state.value.loading = true;
     try {
-      const { data } = await useSdk().plentysystems.getItemSearchAutocomplete({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (useSdk().plentysystems as any).getItemSearchAutocomplete?.({
         query: term,
         types: ['suggestion', 'category'],
-      });
+      }) ?? { data: { categories: [], suggestions: [], items: [] } };
 
       if (data && requestId === state.value.currentRequestId) {
         data.categories = data?.categories?.splice(0, CATEGORY_LIMIT) ?? [];

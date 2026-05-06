@@ -25,7 +25,8 @@ export const useFetchSession = () => {
       const { setCart } = useCart();
       const { setUser } = useCustomer();
       if (data) {
-        setCart(data.basket);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setCart(data.basket as any);
         setUser(data.user);
       }
     } catch (error) {
