@@ -8,9 +8,9 @@
     </div>
     <div v-if="parentCategory">
       <CategoryTreeItem
-        :name="parentCategory.name"
-        :href="parentCategory.url"
-        :count="parentCategory.itemCount"
+        :name="breadcrumbGetters.getName(parentCategory)"
+        :href="breadcrumbGetters.getUrl(parentCategory)"
+        :count="breadcrumbGetters.getItemCount(parentCategory)"
       >
         <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
       </CategoryTreeItem>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, Subcategory } from '@plentymarkets/shop-api';
+import { categoryGetters, breadcrumbGetters, Subcategory } from '@plentymarkets/shop-api';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 
@@ -40,15 +40,13 @@ const categoryItems = computed(() =>
   categoryGetters.getSubcategories(props.category),
 );
 
-const currentCategoryPath = computed(() => {
-  const crumbs = props.breadcrumbs ?? [];
-  return crumbs.at(-1)?.url ?? '';
-});
+const currentCategoryPath = computed(() =>
+  breadcrumbGetters.getUrl(breadcrumbGetters.getCurrent(props.breadcrumbs ?? []) ?? {})
+);
 
-const parentCategory = computed(() => {
-  const crumbs = props.breadcrumbs ?? [];
-  return crumbs.length > 1 ? crumbs.at(-2) ?? '' : '';
-});
+const parentCategory = computed(() =>
+  breadcrumbGetters.getParent(props.breadcrumbs ?? [])
+);
 
 const buildSubcategoryHref = (subcategory: Subcategory): string => {
   const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
