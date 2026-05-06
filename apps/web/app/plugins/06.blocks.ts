@@ -9,20 +9,13 @@ export default defineNuxtPlugin({
     const { isInEditor } = useEditorState();
     const { fetchProducts, loadFakeGlobalCategoryData, data: productsCatalog } = useProducts();
 
-    const isGlobalCategoryTemplate = (to: RouteLocationNormalized) => {
-      if (!isInEditor.value) return false;
-      const slugParam = to.params.slug;
-      const slug = Array.isArray(slugParam) ? slugParam.join('/') : String(slugParam ?? '');
-      return `/${slug}` === paths.globalItemCategory;
-    };
-
     const fetchForRoute = async (to: RouteLocationNormalized) => {
       const { meta } = to;
       const hasBlockIdentifier = meta.isBlockified && meta.identifier !== undefined;
       const type = (hasBlockIdentifier && meta.type ? meta.type : 'immutable') as string;
 
       if (type === 'category') {
-        if (isGlobalCategoryTemplate(to)) {
+        if (isToGlobalCategoryTemplate(to) && isInEditor.value) {
           loadFakeGlobalCategoryData($i18n.locale.value);
         } else {
           const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter(to);
