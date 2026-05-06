@@ -15,10 +15,10 @@ export const getIconsByCategory = (category: UserIconCategory) =>
     .filter(([_name, icon]) => icon.category === category)
     .map(([name, icon]) => ({ name, icon }));
 
-let _cachedEmojis: typeof emojis | null = null;
+let cachedEmojis: typeof emojis | null = null;
 const getAllEmojis = () => {
-  if (!_cachedEmojis) _cachedEmojis = emojis.filter((e) => e.emoji);
-  return _cachedEmojis;
+  if (!cachedEmojis) cachedEmojis = emojis.filter((e) => e.emoji);
+  return cachedEmojis;
 };
 
 export const filterEmojis = (query: string) => {
