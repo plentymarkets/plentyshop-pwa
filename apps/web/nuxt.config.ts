@@ -50,6 +50,7 @@ export default defineNuxtConfig({
         '@tanstack/vue-virtual',
         '@tiptap/core',
         '@tiptap/extension-color',
+        '@tiptap/extension-emoji',
         '@tiptap/extension-highlight',
         '@tiptap/extension-link',
         '@tiptap/extension-placeholder',
