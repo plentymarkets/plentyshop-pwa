@@ -25,18 +25,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
     currentProduct: {} as Product,
   }));
 
-  const isGlobalProductCategoryTemplate = computed(() => {
-    const route = useRoute();
-    const slugParam = route.params.slug;
-
-    if (slugParam === undefined) {
-      return false;
-    }
-
-    const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
-    return `/${slug}` === paths.globalItemCategory;
-  });
-
   /**
    * @description Function for fetching products.
    * @param params { FacetSearchCriteria }
@@ -119,7 +107,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
     fetchProducts,
     setCurrentProduct,
     loadFakeGlobalCategoryData,
-    isGlobalProductCategoryTemplate,
     ...toRefs(state.value),
   };
 };

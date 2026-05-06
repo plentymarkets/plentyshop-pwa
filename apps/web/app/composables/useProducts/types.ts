@@ -19,7 +19,6 @@ export interface UseProducts {
   fetchProducts: FetchProducts;
   setCurrentProduct: SetCurrentProduct;
   loadFakeGlobalCategoryData: LoadFakeGlobalCategoryData;
-  isGlobalProductCategoryTemplate: Readonly<Ref<boolean>>;
 }
 
 export type UseProductsReturn = (category?: string) => UseProducts;
