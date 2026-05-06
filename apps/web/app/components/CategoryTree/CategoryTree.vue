@@ -11,7 +11,9 @@
         :name="parentCategory.name"
         :href="parentCategory.url"
         :count="parentCategory.itemCount"
-      />
+      >
+        <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
+      </CategoryTreeItem>
     </div>
     <ul class="mb-4 md:mt-2" data-testid="categories">
       <CategoryTreeItem
@@ -28,6 +30,7 @@
 <script setup lang="ts">
 import { categoryGetters, Subcategory } from '@plentymarkets/shop-api';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
+import { SfIconArrowBack } from '@storefront-ui/vue';
 
 const props = defineProps<CategoryTreeProps>();
 const localePath = useLocalePath();
@@ -46,8 +49,6 @@ const parentCategory = computed(() => {
   const crumbs = props.breadcrumbs ?? [];
   return crumbs.length > 1 ? crumbs.at(-2) ?? '' : '';
 });
-console.log('categoryItems', categoryItems.value);
-console.log('parentCategory', parentCategory.value);
 
 const buildSubcategoryHref = (subcategory: Subcategory): string => {
   const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
