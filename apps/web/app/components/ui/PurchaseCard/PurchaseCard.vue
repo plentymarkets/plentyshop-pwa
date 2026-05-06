@@ -11,9 +11,34 @@
         <section class="p-4 xl:p-6">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
-              <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
+              <component
+                :is="key === firstVisibleNameKey ? 'h1' : 'h2'"
+                class="font-bold break-word"
+                :class="key === firstVisibleNameKey ? 'typography-headline-4' : 'typography-headline-5'"
+                data-testid="product-name"
+              >
                 {{ productGetters.getName(product) }}
-              </h1>
+              </component>
+            </template>
+            <template v-if="key === 'itemName2' && configuration?.fields.itemName2">
+              <component
+                :is="key === firstVisibleNameKey ? 'h1' : 'h2'"
+                class="font-bold break-word"
+                :class="key === firstVisibleNameKey ? 'typography-headline-4' : 'typography-headline-5'"
+                data-testid="product-name-2"
+              >
+                {{ productGetters.getName2(product) }}
+              </component>
+            </template>
+            <template v-if="key === 'itemName3' && configuration?.fields.itemName3">
+              <component
+                :is="key === firstVisibleNameKey ? 'h1' : 'h2'"
+                class="font-bold break-word"
+                :class="key === firstVisibleNameKey ? 'typography-headline-4' : 'typography-headline-5'"
+                data-testid="product-name-3"
+              >
+                {{ productGetters.getName3(product) }}
+              </component>
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
@@ -227,6 +252,8 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
     fields: {
       itemName: true,
+      itemName2: false,
+      itemName3: false,
       price: true,
       tags: true,
       availability: true,
@@ -244,6 +271,8 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
     },
     fieldsOrder: [
       'itemName',
+      'itemName2',
+      'itemName3',
       'price',
       'tags',
       'availability',
@@ -273,6 +302,13 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
       fullWidth: false,
     },
   }),
+});
+
+const firstVisibleNameKey = computed(() => {
+  const nameKeys = ['itemName', 'itemName2', 'itemName3'];
+  return props.configuration?.fieldsOrder.find(
+    (key) => nameKeys.includes(key) && props.configuration?.fields[key as keyof typeof props.configuration.fields],
+  );
 });
 
 const { currentProduct } = useProducts();

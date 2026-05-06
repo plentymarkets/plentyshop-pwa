@@ -2,6 +2,8 @@ import type { Product } from '@plentymarkets/shop-api';
 
 export type PriceCardFieldKey =
   | 'itemName'
+  | 'itemName2'
+  | 'itemName3'
   | 'price'
   | 'tags'
   | 'availability'

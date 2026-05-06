@@ -187,6 +187,8 @@ priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';
 
 const fieldLabels = {
   itemName: getEditorTranslation('field-itemName'),
+  itemName2: getEditorTranslation('field-itemName2'),
+  itemName3: getEditorTranslation('field-itemName3'),
   price: getEditorTranslation('field-price'),
   tags: getEditorTranslation('field-tags'),
   availability: getEditorTranslation('field-availability'),
@@ -228,6 +230,8 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "padding-label": "Padding (px)",
 
     "field-itemName": "Item name",
+    "field-itemName2": "Item name 2",
+    "field-itemName3": "Item name 3",
     "field-price": "Price",
     "field-tags": "Tags",
     "field-availability": "Availability",
@@ -280,6 +284,8 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "padding-label": "Padding (px)",
 
     "field-itemName": "Item name",
+    "field-itemName2": "Item name 2",
+    "field-itemName3": "Item name 3",
     "field-price": "Price",
     "field-tags": "Tags",
     "field-availability": "Availability",

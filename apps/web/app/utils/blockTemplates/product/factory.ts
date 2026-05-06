@@ -56,6 +56,8 @@ export const createProduct = (): Block[] => {
           content: {
             fields: {
               itemName: true,
+              itemName2: false,
+              itemName3: false,
               price: true,
               tags: true,
               availability: true,
@@ -73,6 +75,8 @@ export const createProduct = (): Block[] => {
             },
             fieldsOrder: [
               'itemName',
+              'itemName2',
+              'itemName3',
               'price',
               'tags',
               'availability',
