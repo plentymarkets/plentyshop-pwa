@@ -58,6 +58,9 @@ export const useBlockManager = () => {
       headerContainer.value &&
       findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
 
+    const targetInFooterContent =
+      footer.value && Array.isArray(footer.value.content) ? findBlockParent(footer.value.content, targetUuid) : null;
+
     if (targetInHeader) {
       if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
 
@@ -82,6 +85,31 @@ export const useBlockManager = () => {
         }
 
         headerContainer.value.content = headerCopy.content;
+      }
+    } else if (targetInFooterContent) {
+      if (!footer.value || !Array.isArray(footer.value.content)) return;
+
+      const footerCopy = deepClone(footer.value) as Block;
+      const parentInfo = findBlockParent(footerCopy.content as Block[], targetUuid);
+
+      if (parentInfo) {
+        const { parent, index } = parentInfo;
+        const targetBlock = parent[index];
+        if (!targetBlock) return;
+
+        newBlock.parent_slot = targetBlock.parent_slot;
+
+        if (position === 'inside') {
+          insertIntoColumn(targetBlock, newBlock, parent);
+        } else {
+          insertNextToBlock(parent, index, newBlock, position);
+        }
+
+        if (Array.isArray(newBlock.content) && newBlock.content.length) {
+          setUuid(newBlock.content as Block[]);
+        }
+
+        footer.value.content = footerCopy.content;
       }
     } else {
       if (!pageBlocks.value) return;

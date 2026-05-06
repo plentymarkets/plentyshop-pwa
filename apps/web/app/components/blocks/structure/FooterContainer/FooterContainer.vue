@@ -8,15 +8,7 @@
     }"
   >
     <div class="footer-main px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
-      <div v-for="contentBlock in mainContent" :key="contentBlock.meta.uuid">
-        <slot name="content" :content-block="contentBlock" />
-
-        <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
-      </div>
-    </div>
-
-    <div class="footer-footnote">
-      <div v-for="contentBlock in fullWidthContent" :key="contentBlock.meta.uuid">
+      <div v-for="contentBlock in props.content" :key="contentBlock.meta.uuid">
         <slot name="content" :content-block="contentBlock" />
 
         <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
@@ -39,9 +31,6 @@ const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
 const drawerView = computed(() => siteConfigurationDrawerView.value);
 
 const isFullWidthBlock = (block: Block): boolean => (block.content as any)?.layout?.fullWidth === true;
-
-const mainContent = computed(() => props.content?.filter((b) => !isFullWidthBlock(b)) ?? []);
-const fullWidthContent = computed(() => props.content?.filter(isFullWidthBlock) ?? []);
 </script>
 
 <style scoped>
