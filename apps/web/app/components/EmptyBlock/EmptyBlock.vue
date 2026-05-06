@@ -18,5 +18,6 @@ const addNewBlock = (position: BlockPosition) => {
   togglePlaceholder('0', position);
   openDrawerWithView('blocksList');
   multigridColumnUuid.value = null;
+  trackContentCreateBlock();
 };
 </script>

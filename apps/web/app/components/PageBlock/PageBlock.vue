@@ -214,6 +214,7 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
   multigridColumnUuid.value = null;
+  trackContentCreateBlock();
 };
 
 const showTopAddBlockButton = computed(
