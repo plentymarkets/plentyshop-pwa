@@ -28,7 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, breadcrumbGetters, Subcategory } from '@plentymarkets/shop-api';
+import type { Subcategory } from '@plentymarkets/shop-api';
+import { categoryGetters, breadcrumbGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 
@@ -36,17 +37,13 @@ const props = defineProps<CategoryTreeProps>();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const categoryItems = computed(() =>
-  categoryGetters.getSubcategories(props.category),
-);
+const categoryItems = computed(() => categoryGetters.getSubcategories(props.category));
 
 const currentCategoryPath = computed(() =>
-  breadcrumbGetters.getUrl(breadcrumbGetters.getCurrent(props.breadcrumbs ?? []) ?? {})
+  breadcrumbGetters.getUrl(breadcrumbGetters.getCurrent(props.breadcrumbs ?? []) ?? {}),
 );
 
-const parentCategory = computed(() =>
-  breadcrumbGetters.getParent(props.breadcrumbs ?? [])
-);
+const parentCategory = computed(() => breadcrumbGetters.getParent(props.breadcrumbs ?? []));
 
 const buildSubcategoryHref = (subcategory: Subcategory): string => {
   const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
