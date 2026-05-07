@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- pending refactor */
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';

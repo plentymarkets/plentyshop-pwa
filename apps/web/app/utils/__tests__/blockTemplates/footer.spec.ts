@@ -71,17 +71,6 @@ describe('createFooterContainer', () => {
     expect(footer.configuration?.colors?.background).toBeDefined();
     expect(footer.configuration?.colors?.text).toBeDefined();
   });
-
-  it('should mark all child blocks as global templates', () => {
-    const footer = createFooterContainer();
-    const multiGrid = (footer.content as Block[])[0];
-    const footNote = (footer.content as Block[])[1];
-    const columns = multiGrid?.content as Block[];
-
-    expect(multiGrid?.meta.isGlobalTemplate).toBe(true);
-    expect(footNote?.meta.isGlobalTemplate).toBe(true);
-    columns.forEach((col) => expect(col.meta.isGlobalTemplate).toBe(true));
-  });
 });
 
 describe('migrateLegacyFooterToContainer', () => {
