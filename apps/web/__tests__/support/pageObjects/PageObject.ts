@@ -4,7 +4,9 @@ export class PageObject {
   }
 
   get multiGridStructure() {
-    return cy.get('[data-testid="multi-grid-structure"]').not('[data-testid="footer"] [data-testid="multi-grid-structure"]');
+    return cy
+      .get('[data-testid="multi-grid-structure"]')
+      .not('[data-testid="footer"] [data-testid="multi-grid-structure"]');
   }
 
   get multiGridColumn() {
