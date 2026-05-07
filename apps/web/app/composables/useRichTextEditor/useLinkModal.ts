@@ -1,16 +1,16 @@
 import type { Editor } from '@tiptap/core';
 import { validateUrl } from '~/components/editor/RichTextEditor/utils/url.helper';
 
-export type TabValue = 'url' | 'static' | 'category';
+export type LinkTabValue = 'url' | 'static' | 'category';
 
-export const tabs: { value: TabValue; label: string }[] = [
+export const tabs: { value: LinkTabValue; label: string }[] = [
   { value: 'url', label: 'URL' },
   { value: 'static', label: 'Static page' },
   { value: 'category', label: 'Category' },
 ];
 
 export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRef<Editor | null | undefined>) => {
-  const activeTab = ref<TabValue>('url');
+  const activeTab = ref<LinkTabValue>('url');
   const urlValue = ref('');
   const staticPageValue = ref('');
   const openInNewWindow = ref(false);
