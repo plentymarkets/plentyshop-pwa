@@ -161,7 +161,7 @@ describe('migrateLegacyFooterToContainer', () => {
     const migrated = migrateLegacyFooterToContainer(legacyFooter);
     const multiGrid = (migrated.content as Block[])[0];
     const column1 = (multiGrid?.content as Block[])[0];
-    const html = ((column1?.content as { text: { htmlDescription: string } }).text.htmlDescription) as string;
+    const html = (column1?.content as { text: { htmlDescription: string } }).text.htmlDescription as string;
 
     expect(html).toContain('Legal');
     expect(html).toContain(paths.cancellationForm);
@@ -176,7 +176,7 @@ describe('migrateLegacyFooterToContainer', () => {
     const migrated = migrateLegacyFooterToContainer(legacyFooter);
     const multiGrid = (migrated.content as Block[])[0];
     const column2 = (multiGrid?.content as Block[])[1];
-    const html = ((column2?.content as { text: { htmlDescription: string } }).text.htmlDescription) as string;
+    const html = (column2?.content as { text: { htmlDescription: string } }).text.htmlDescription as string;
 
     expect(html).toContain('Services');
     expect(html).toContain(paths.contact);
@@ -187,8 +187,8 @@ describe('migrateLegacyFooterToContainer', () => {
     const migrated = migrateLegacyFooterToContainer(legacyFooter);
     const multiGrid = (migrated.content as Block[])[0];
     const columns = multiGrid?.content as Block[];
-    const html3 = ((columns[2]?.content as { text: { htmlDescription: string } }).text.htmlDescription) as string;
-    const html4 = ((columns[3]?.content as { text: { htmlDescription: string } }).text.htmlDescription) as string;
+    const html3 = (columns[2]?.content as { text: { htmlDescription: string } }).text.htmlDescription as string;
+    const html4 = (columns[3]?.content as { text: { htmlDescription: string } }).text.htmlDescription as string;
 
     expect(html3).toBe('');
     expect(html4).toBe('');
