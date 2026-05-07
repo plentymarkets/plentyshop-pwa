@@ -3,13 +3,13 @@ import { validateUrl } from '~/components/editor/RichTextEditor/utils/url.helper
 
 export type LinkTabValue = 'url' | 'static' | 'category';
 
-export const tabs: { value: LinkTabValue; label: string }[] = [
-  { value: 'url', label: 'URL' },
-  { value: 'static', label: 'Static page' },
-  { value: 'category', label: 'Category' },
-];
-
 export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRef<Editor | null | undefined>) => {
+  const tabs: { value: LinkTabValue; label: string }[] = [
+    { value: 'url', label: 'URL' },
+    { value: 'static', label: 'Static page' },
+    { value: 'category', label: 'Category' },
+  ];
+
   const activeTab = ref<LinkTabValue>('url');
   const urlValue = ref('');
   const staticPageValue = ref('');
