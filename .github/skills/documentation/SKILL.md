@@ -29,6 +29,7 @@ When unsure which type a document is, ask yourself: is the reader trying to _lea
 docs/
 ├── index.md                    # Root landing page (published)
 ├── _changelog/                 # INTERNAL — changelog entries (not published)
+├── _how-to/            # INTERNAL — unpublished how-to drafts
 ├── _styleguide/                # INTERNAL — writing and design style guides (not published)
 ├── guide/                      # Tutorials, how-to guides, and explanations
 │   ├── editor/                 # Editor / CMS block architecture docs
@@ -36,7 +37,6 @@ docs/
 │   ├── introduction/           # Quickstart and troubleshooting
 │   ├── modules/                # Module system (extending the PWA)
 │   │   ├── index.md
-│   │   ├── _how-to/            # INTERNAL — unpublished how-to drafts
 │   │   ├── plentyone/          # PlentyONE-specific modules
 │   │   └── shop-core/          # shop-core package modules
 │   ├── product/                # Product-level features and FAQ
@@ -88,7 +88,6 @@ Use the fetched template as the structural starting point and the guide to under
 | ------------------------------------- | ---------------------------------------- |
 | New concept/explanation doc           | `docs/guide/<section>/`                  |
 | New how-to guide (published)          | `docs/guide/<section>/`                  |
-| New how-to guide (internal/draft)     | `docs/guide/<section>/_<name>.md`        |
 | New tutorial                          | `docs/guide/<section>/`                  |
 | New section                           | Create folder + `index.md` landing page  |
 | Internal process or contributor guide | Prefix file or folder with `_`           |
