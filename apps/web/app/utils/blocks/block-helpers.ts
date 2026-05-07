@@ -1,4 +1,5 @@
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
+import { migrateLegacyFooterToContainer } from '~/utils/blockTemplates/footer';
 
 const HEADER_BLOCK_NAME = 'Header';
 
@@ -37,7 +38,14 @@ export const assembleBlocks = (
     ? createDefaultHeaderContainerBlock()
     : raw?.HeaderContainer;
 
-  const Footer = isBlockEmpty(raw?.Footer) ? createFooterContainer() : raw?.Footer;
+  const rawFooterContainer = raw?.FooterContainer as Block | undefined;
+  const Footer = !isBlockEmpty(rawFooterContainer)
+    ? rawFooterContainer
+    : isLegacyFooterBlock(raw?.Footer)
+      ? migrateLegacyFooterToContainer(raw.Footer as Block)
+      : isBlockEmpty(raw?.Footer)
+        ? createFooterContainer()
+        : raw?.Footer;
 
   const hasApiBlocks = Array.isArray(raw?.blocks) && raw?.blocks.length > 0;
   const pageBlocks = hasApiBlocks ? raw?.blocks : hasSnapshot ? [] : getDefaultPageBlocks(type, identifier);
