@@ -48,82 +48,101 @@ export const useBlockManager = () => {
     multigridColumnUuid.value = uuid;
   };
 
+  const insertBlock = ({
+    targetBlock,
+    newBlock,
+    parent,
+    index,
+    position,
+  }: {
+    targetBlock: Block;
+    newBlock: Block;
+    parent: Block[];
+    index: number;
+    position: BlockPosition;
+  }) => {
+    if (position === 'inside') {
+      insertIntoColumn(targetBlock, newBlock, parent);
+    } else {
+      insertNextToBlock(parent, index, newBlock, position);
+    }
+  };
+
+  const addBlockToHeader = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
+    if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
+
+    const headerCopy = deepClone(headerContainer.value) as Block;
+    const parentInfo = findBlockParent([headerCopy], targetUuid);
+    if (!parentInfo) return;
+
+    const { parent, index } = parentInfo;
+    const targetBlock = parent[index];
+    if (!targetBlock) return;
+
+    newBlock.parent_slot = targetBlock.parent_slot;
+
+    insertBlock({ targetBlock, newBlock, parent, index, position });
+
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
+
+    headerContainer.value.content = headerCopy.content;
+  };
+
+  const addBlockToPage = (newBlock: Block, targetUuid: string, position: BlockPosition): boolean => {
+    if (!pageBlocks.value) return false;
+
+    if (pageBlocks.value.length === 0) {
+      updateBlocks([newBlock]);
+      openDrawerWithView('blocksSettings', newBlock);
+      return false;
+    }
+
+    const copiedData: Block[] = deepClone(pageBlocks.value);
+    const isTargetFooter = footer.value?.meta?.uuid === targetUuid;
+
+    if (isTargetFooter) {
+      copiedData.push(newBlock);
+    } else {
+      const parentInfo = findBlockParent(copiedData, targetUuid);
+      const parent = parentInfo?.parent ?? copiedData;
+      const index = parentInfo?.index ?? 0;
+      const targetBlock = parent[index];
+      if (!targetBlock) return false;
+
+      newBlock.parent_slot = targetBlock.parent_slot;
+
+      insertBlock({ targetBlock, newBlock, parent, index, position });
+    }
+
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
+
+    updateBlocks(copiedData);
+
+    if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
+      openDrawerWithView('blocksSettings', newBlock);
+    }
+
+    return true;
+  };
+
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!pageBlocks.value) return;
 
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
 
-    const targetInHeader =
-      headerContainer.value &&
-      findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
+    const isTargetInHeader =
+      !!headerContainer.value &&
+      !!findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
 
-    if (targetInHeader) {
-      if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
-
-      const headerCopy = deepClone(headerContainer.value) as Block;
-      const parentInfo = findBlockParent([headerCopy], targetUuid);
-
-      if (parentInfo) {
-        const { parent, index } = parentInfo;
-        const targetBlock = parent[index];
-        if (!targetBlock) return;
-
-        newBlock.parent_slot = targetBlock.parent_slot;
-
-        if (position === 'inside') {
-          insertIntoColumn(targetBlock, newBlock, parent);
-        } else {
-          insertNextToBlock(parent, index, newBlock, position);
-        }
-
-        if (Array.isArray(newBlock.content) && newBlock.content.length) {
-          setUuid(newBlock.content as Block[]);
-        }
-
-        headerContainer.value.content = headerCopy.content;
-      }
-    } else {
-      if (!pageBlocks.value) return;
-
-      if (pageBlocks.value.length === 0) {
-        updateBlocks([newBlock]);
-        openDrawerWithView('blocksSettings', newBlock);
-        return;
-      }
-
-      const copiedData: Block[] = deepClone(pageBlocks.value);
-
-      const isTargetFooter = footer.value?.meta?.uuid === targetUuid;
-      if (isTargetFooter) {
-        copiedData.push(newBlock);
-      } else {
-        const parentInfo = findBlockParent(copiedData, targetUuid);
-
-        const parent = parentInfo?.parent ?? copiedData;
-        const index = parentInfo?.index ?? 0;
-
-        const targetBlock = parent[index];
-        if (!targetBlock) return;
-
-        newBlock.parent_slot = targetBlock.parent_slot;
-
-        if (position === 'inside') {
-          insertIntoColumn(targetBlock, newBlock, parent);
-        } else {
-          insertNextToBlock(parent, index, newBlock, position);
-        }
-      }
-
-      if (Array.isArray(newBlock.content) && newBlock.content.length) {
-        setUuid(newBlock.content as Block[]);
-      }
-
-      updateBlocks(copiedData);
-
-      if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
-        openDrawerWithView('blocksSettings', newBlock);
-      }
+    if (isTargetInHeader) {
+      addBlockToHeader(newBlock, targetUuid, position);
+    } else if (!addBlockToPage(newBlock, targetUuid, position)) {
+      return;
     }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
@@ -209,7 +228,7 @@ export const useBlockManager = () => {
     const movedBlock = updatedBlocks[newIndex];
     if (!movedBlock) return;
 
-    window.dispatchEvent(
+    globalThis.dispatchEvent(
       new CustomEvent('block-moved', {
         detail: { uuid: movedBlock.meta.uuid, name: movedBlock.name },
       }),
@@ -269,7 +288,7 @@ export const useBlockManager = () => {
     deleteBlock = false,
   ) => {
     for (const [index, block] of blocks.entries()) {
-      if (block.meta && block.meta.uuid === targetUuid) {
+      if (block.meta?.uuid === targetUuid) {
         if (deleteBlock) {
           blocks.splice(index, 1);
         }
@@ -283,16 +302,26 @@ export const useBlockManager = () => {
     return null;
   };
 
-  const deleteBlock = async (uuid: string) => {
-    if (pageBlocks.value && uuid !== null) {
-      if (getBlockDepth(uuid) > 0) {
-        await deleteBlockFromColumn(uuid);
-      } else {
-        findOrDeleteBlockByUuid(pageBlocks.value, uuid, true);
-      }
-      isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
-      closeBlocksConfigurationDrawer();
+  const deleteFromHeaderContainer = (uuid: string) => {
+    if (!isHeaderContainerBlock(headerContainer.value) || !Array.isArray(headerContainer.value.content)) return;
+
+    const content = headerContainer.value.content as Block[];
+    if (content.length > 1) {
+      headerContainer.value.content = content.filter((block) => block.meta.uuid !== uuid);
     }
+  };
+
+  const deleteBlock = async (uuid: string) => {
+    if (!pageBlocks.value) return;
+
+    if (getBlockDepth(uuid) > 0) {
+      await deleteBlockFromColumn(uuid);
+    } else if (!findOrDeleteBlockByUuid(pageBlocks.value, uuid, true)) {
+      deleteFromHeaderContainer(uuid);
+    }
+
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+    closeBlocksConfigurationDrawer();
   };
 
   const tabletEdit = (index: number) => {

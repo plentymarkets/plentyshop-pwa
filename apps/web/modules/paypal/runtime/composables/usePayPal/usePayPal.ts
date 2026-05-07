@@ -346,6 +346,10 @@ export const usePayPal = () => {
     }
   };
 
+  const resetAPMs = () => {
+    state.value.activatedAPMs = '';
+  };
+
   return {
     state,
     isAvailable,
@@ -360,6 +364,7 @@ export const usePayPal = () => {
     getFraudId,
     createPlentyPaymentFromPayPalOrder,
     setAddressesFromPayPal,
+    resetAPMs,
     payPalVisibility,
     payLaterVisibility,
     ...toRefs(state.value),

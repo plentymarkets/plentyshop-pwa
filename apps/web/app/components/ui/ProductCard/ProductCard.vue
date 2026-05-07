@@ -16,6 +16,7 @@
         <SfLink
           :tag="NuxtLink"
           :to="productPath"
+          :aria-label="ariaLabelContent"
           class="relative group/image flex items-center justify-center"
           data-testid="product-card-link"
         >
@@ -269,7 +270,19 @@ const unitName = computed(() => productGetters.getUnitName(product.value));
 const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
 
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const { isGlobalProductCategoryTemplate } = useProducts();
+
+const isGlobalProductCategoryTemplate = computed(() => {
+  const route = useRoute();
+  const slugParam = route.params.slug;
+
+  if (slugParam === undefined) {
+    return false;
+  }
+
+  const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
+  return `/${slug}` === paths.globalItemCategory;
+});
+
 const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
     return paths.globalItemDetails;
@@ -319,6 +332,11 @@ const canLoadHoverImage = computed(() => {
 
   return shouldLoadHoverImage.value;
 });
+
+const ariaLabelContent = computed(() => {
+  return t('common.accessibility.viewDetails', { name: name.value ?? '' });
+});
+
 const getWidth = () => {
   if (imageWidth.value && imageWidth.value > 0 && imageUrl.value.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth.value;

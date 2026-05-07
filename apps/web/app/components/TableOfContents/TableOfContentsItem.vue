@@ -1,8 +1,7 @@
 <template>
-  <li
-    role="button"
-    tabindex="0"
-    class="flex items-center justify-between cursor-pointer transition-colors gap-1 group"
+  <button
+    type="button"
+    class="flex items-center justify-between cursor-pointer transition-colors gap-1 group w-full text-left"
     :data-testid="`toc-item-${item.uuid}`"
     @click="editBlock(item.block)"
     @keydown.enter="editBlock(item.block)"
@@ -33,7 +32,7 @@
         </button>
       </template>
     </TableOfContentsItemContent>
-  </li>
+  </button>
 
   <template v-if="(expandedBlocks.has(item.uuid) || !isStructureBlock(item.block)) && getChildren(item).length">
     <TableOfContentsItem v-for="child in getChildren(item)" :key="child.uuid" :item="child" />

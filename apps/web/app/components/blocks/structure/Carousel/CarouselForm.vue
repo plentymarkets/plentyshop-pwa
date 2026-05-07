@@ -79,10 +79,7 @@ const { toggleBlockVisibility } = useBlocksVisibility();
 const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
+const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
 const elementsOpen = ref(true);
 const editingSlideIndex = ref<number | undefined>(undefined);
@@ -93,10 +90,14 @@ const slideLabels = ref<string[]>([]);
 setIndex(resolvedUuid.value, 0);
 
 const blockForm = computed(() => {
-  if (editingSlideIndex.value === undefined) return null;
+  if (editingSlideIndex.value === undefined) {
+    return null;
+  }
 
   const slide = slides.value[editingSlideIndex.value];
-  if (!slide) return null;
+  if (!slide) {
+    return null;
+  }
 
   const loader = getBlockFormLoader(slide.name);
   return loader ? defineAsyncComponent(loader) : null;
@@ -141,13 +142,13 @@ const selectSlide = (index: number) => {
 const editSlide = (index: number) => {
   editingSlideIndex.value = index;
   setIndex(resolvedUuid.value, index);
-  emit('set-edit-title', slideLabels.value[index]!);
+  setEditTitle(slideLabels.value[index]!);
 };
 
 const exitEditMode = (shouldEmit = true) => {
   editingSlideIndex.value = undefined;
   if (shouldEmit) {
-    emit('clear-edit-title');
+    clearEditTitle();
   }
   resolveSlideLabels();
 };
@@ -172,7 +173,9 @@ const addSlide = async () => {
 };
 
 const deleteSlide = async (index: number) => {
-  if (slides.value.length <= 1) return;
+  if (slides.value.length <= 1) {
+    return;
+  }
   slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
   setIndex(resolvedUuid.value, 0);
   await nextTick();
@@ -183,11 +186,15 @@ const deleteSlide = async (index: number) => {
 
 const toggleSlideVisibility = (index: number) => {
   const slide = slides.value[index];
-  if (!slide) return;
+  if (!slide) {
+    return;
+  }
 
   const updatedSlides = [...slides.value];
   const slideToUpdate = updatedSlides[index];
-  if (!slideToUpdate) return;
+  if (!slideToUpdate) {
+    return;
+  }
 
   toggleBlockVisibility(slideToUpdate);
   slides.value = updatedSlides;
@@ -197,8 +204,11 @@ const updateBlocks = (newBlocks: SlideBlock[]) => {
   slides.value = newBlocks;
 };
 
+const isSubEditing = computed(() => editingSlideIndex.value !== undefined);
+
 defineExpose({
   exitEditMode,
+  isSubEditing,
 });
 </script>
 

@@ -53,43 +53,13 @@
       </div>
 
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
-      <div v-if="uiItemGridBlock.showItemCount">
-        <UiFormLabel>{{ getEditorTranslation('item-count-position') }}</UiFormLabel>
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.itemCountPosition === 'left' }"
-            data-testid="item-count-left"
-            @click="uiItemGridBlock.itemCountPosition = 'left'"
-          >
-            <SfIconCheck :class="{ invisible: uiItemGridBlock.itemCountPosition !== 'left' }" class="w-[1.1rem] mr-1" />
-            {{ getEditorTranslation('position-left') }}
-          </div>
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.itemCountPosition === 'center' }"
-            data-testid="item-count-center"
-            @click="uiItemGridBlock.itemCountPosition = 'center'"
-          >
-            <SfIconCheck
-              :class="{ invisible: uiItemGridBlock.itemCountPosition !== 'center' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('position-center') }}
-          </div>
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.itemCountPosition === 'right' }"
-            data-testid="item-count-right"
-            @click="uiItemGridBlock.itemCountPosition = 'right'"
-          >
-            <SfIconCheck
-              :class="{ invisible: uiItemGridBlock.itemCountPosition !== 'right' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('position-right') }}
-          </div>
-        </div>
+      <div v-if="uiItemGridBlock.showItemCount" class="py-2">
+        <EditorOptionsTabs
+          v-model="itemCountPositionModel"
+          :legend="getEditorTranslation('item-count-position')"
+          test-id-prefix="item-count"
+          :options="itemCountPositionOptions"
+        />
       </div>
     </div>
   </UiAccordionItem>
@@ -139,36 +109,12 @@
     <hr class="mb-6" />
 
     <div class="mb-6">
-      <UiFormLabel>{{ getEditorTranslation('content-alignment') }}</UiFormLabel>
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.contentAlignment === 'left' }"
-          data-testid="content-align-left"
-          @click="uiItemGridBlock.contentAlignment = 'left'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.contentAlignment !== 'left' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('position-left') }}
-        </div>
-        <div
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.contentAlignment === 'center' }"
-          data-testid="content-align-center"
-          @click="uiItemGridBlock.contentAlignment = 'center'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.contentAlignment !== 'center' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('position-center') }}
-        </div>
-        <div
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.contentAlignment === 'right' }"
-          data-testid="content-align-right"
-          @click="uiItemGridBlock.contentAlignment = 'right'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.contentAlignment !== 'right' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('position-right') }}
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="contentAlignmentModel"
+        :legend="getEditorTranslation('content-alignment')"
+        test-id-prefix="content-align"
+        :options="contentAlignmentOptions"
+      />
     </div>
 
     <div class="flex items-center justify-between mb-4">
@@ -187,27 +133,12 @@
     </div>
 
     <div>
-      <UiFormLabel>{{ getEditorTranslation('add-to-cart-button-style') }}</UiFormLabel>
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.addToCartStyle === 'primary' }"
-          data-testid="add-to-cart-primary"
-          @click="uiItemGridBlock.addToCartStyle = 'primary'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.addToCartStyle !== 'primary' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('button-primary') }}
-        </div>
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.addToCartStyle === 'secondary' }"
-          data-testid="add-to-cart-secondary"
-          @click="uiItemGridBlock.addToCartStyle = 'secondary'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.addToCartStyle !== 'secondary' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('button-secondary') }}
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="addToCartStyleModel"
+        :legend="getEditorTranslation('add-to-cart-button-style')"
+        test-id-prefix="add-to-cart"
+        :options="addToCartStyleOptions"
+      />
     </div>
   </UiAccordionItem>
 
@@ -239,7 +170,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch, SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { ItemGridFormProps, ItemGridContent, ItemGridFieldKey } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -274,6 +205,15 @@ const fieldLabels: Record<string, string> = {
   price: getEditorTranslation('field-price'),
   addToCart: getEditorTranslation('field-add-to-cart'),
 };
+
+const {
+  itemCountPositionModel,
+  itemCountPositionOptions,
+  contentAlignmentModel,
+  contentAlignmentOptions,
+  addToCartStyleModel,
+  addToCartStyleOptions,
+} = useEditorOptionsTabs(() => uiItemGridBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">

@@ -27,36 +27,14 @@
         <h2>{{ getEditorTranslation('source-label') }}</h2>
       </template>
 
-      <fieldset class="py-2">
-        <legend class="text-sm font-medium text-black">
-          {{ getEditorTranslation('source-type-label') }}
-        </legend>
-
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.source.type === 'cross_selling' }"
-            data-testid="recommended-form-source-product"
-            @click="recommendedBlock.source.type = 'cross_selling'"
-          >
-            <SfIconCheck
-              :class="{ invisible: recommendedBlock.source.type !== 'cross_selling' }"
-              class="mr-1 w-[1.1rem]"
-            />
-            {{ getEditorTranslation('source-type-product') }}
-          </div>
-
-          <div
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.source.type === 'category' }"
-            data-testid="recommended-form-source-category"
-            @click="selectCategoryTab()"
-          >
-            <SfIconCheck :class="{ invisible: recommendedBlock.source.type !== 'category' }" class="mr-1 w-[1.1rem]" />
-            {{ getEditorTranslation('source-type-category') }}
-          </div>
-        </div>
-      </fieldset>
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="sourceTypeModel"
+          :legend="getEditorTranslation('source-type-label')"
+          test-id-prefix="recommended-form-source"
+          :options="sourceTypeOptions"
+        />
+      </div>
 
       <div v-if="recommendedBlock.source.type === 'cross_selling'" class="py-4">
         <UiFormLabel>{{ getEditorTranslation('product-id-label') }}</UiFormLabel>
@@ -114,7 +92,7 @@
 
 <script setup lang="ts">
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
-import { SfInput, SfIconCheck } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
@@ -199,9 +177,7 @@ const recommendedBlockRef = ref(recommendedBlock.value);
 
 const { isFullWidth } = useFullWidthToggleForContent(recommendedBlockRef);
 
-const selectCategoryTab = async () => {
-  recommendedBlock.value.source.type = 'category';
-};
+const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recommendedBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">

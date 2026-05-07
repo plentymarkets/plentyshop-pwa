@@ -1,7 +1,10 @@
+/* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlocks } from '../useBlocks';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { FooterContent } from '~/components/blocks/Footer/types';
+import { createProduct } from '~/utils/blockTemplates/product/factory';
+import { createCategory } from '~/utils/blockTemplates/category/factory';
 
 const mockFooterBlock: Block = {
   name: 'Footer',
@@ -86,6 +89,7 @@ const createMockState = () => ({
     defaultTemplateData: [] as Block[],
     loading: false,
     isSettling: false,
+    hasSnapshot: false,
   },
 });
 
@@ -94,6 +98,15 @@ const setupApiResponse = (responseData: unknown) =>
     fetcher();
     return {
       data: { value: { data: responseData } },
+      error: { value: null },
+    };
+  });
+
+const setupApiResponseWithMeta = (responseData: unknown, meta: Record<string, unknown>) =>
+  useAsyncData.mockImplementation((_key: string, fetcher: () => unknown) => {
+    fetcher();
+    return {
+      data: { value: { data: responseData, meta } },
       error: { value: null },
     };
   });
@@ -189,6 +202,16 @@ describe('useBlocks', () => {
       await useBlocks().fetchBlocks('index', 'immutable');
       expect(mockStateRef.value.loading).toBe(false);
     });
+
+    it('should not apply default blocks when meta.hasSnapshot is true and blocks array is empty', async () => {
+      setupApiResponseWithMeta(
+        { HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock },
+        { hasSnapshot: true },
+      );
+      await useBlocks().fetchBlocks('index', 'immutable');
+      expect(mockStateRef.value.hasSnapshot).toBe(true);
+      expect(mockStateRef.value.data.blocks).toHaveLength(0);
+    });
   });
 
   describe('saveBlocks', () => {
@@ -234,6 +257,15 @@ describe('useBlocks', () => {
       expect(mockStateRef.value.loading).toBe(false);
       consoleSpy.mockRestore();
     });
+
+    it('should not apply default blocks when saving results in an empty blocks array', async () => {
+      mockDoSaveBlocksWithGlobalBlocks.mockResolvedValue({
+        data: { HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock },
+      });
+      await useBlocks().saveBlocks('index', 'immutable', '[]');
+      expect(mockStateRef.value.hasSnapshot).toBe(true);
+      expect(mockStateRef.value.data.blocks).toHaveLength(0);
+    });
   });
 
   describe('updateBlocks', () => {
@@ -270,17 +302,19 @@ describe('useBlocks', () => {
     });
   });
 
-  describe('setupFakeBlocks', () => {
-    it('should assemble blocks with HeaderContainer and Footer and store them', () => {
-      useBlocks().setupFakeBlocks(mockPageBlocks);
+  describe('default blocks fallback', () => {
+    it('should assemble default product blocks with HeaderContainer and Footer when API returns no blocks', async () => {
+      setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock });
+      await useBlocks().fetchBlocks(0, 'product');
       expect(mockStateRef.value.data.HeaderContainer).toBeDefined();
       expect(mockStateRef.value.data.Footer).toBeDefined();
-      expect(mockStateRef.value.data.blocks).toEqual(mockPageBlocks);
+      expect(mockStateRef.value.data.blocks?.map((b) => b.name)).toEqual(createProduct().map((b) => b.name));
     });
 
-    it('should set cleanData equal to data after setup', () => {
-      useBlocks().setupFakeBlocks(mockPageBlocks);
-      expect(JSON.stringify(mockStateRef.value.cleanData)).toEqual(JSON.stringify(mockStateRef.value.data));
+    it('should assemble default category blocks when API returns no blocks for global template', async () => {
+      setupApiResponse({ HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock });
+      await useBlocks().fetchBlocks(0, 'category');
+      expect(mockStateRef.value.data.blocks?.map((b) => b.name)).toEqual(createCategory().map((b) => b.name));
     });
   });
 });

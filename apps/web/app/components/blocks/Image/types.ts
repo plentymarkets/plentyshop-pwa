@@ -54,3 +54,7 @@ export type BreakpointEntry = { aspectRatio: string; url: string | undefined; di
 export interface ImageFormProps {
   uuid?: string;
 }
+export type FillMode = 'fill' | 'fit';
+export type AlignX = 'left' | 'center' | 'right';
+export type AlignY = 'top' | 'center' | 'bottom';
+export type ButtonVariant = 'primary' | 'secondary';
