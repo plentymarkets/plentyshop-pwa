@@ -13,7 +13,6 @@ mockNuxtImport('useSiteSettings', () => useSiteSettings);
 const createWrapper = (
   props?: Partial<{
     modelValue: string | undefined;
-    dropdownAlign?: 'default' | 'rte' | 'top-editor';
     showShopColors?: boolean;
   }>,
 ) => {
@@ -25,6 +24,7 @@ const createWrapper = (
     global: {
       stubs: {
         EditorColorPickerPanel: true,
+        Teleport: true,
       },
     },
   });
@@ -45,7 +45,6 @@ describe('ColorPicker', () => {
     expect(style).toContain('background-color: #ff0000');
 
     const props = wrapper.props();
-    expect(props.dropdownAlign).toBe('default');
     expect(props.showShopColors).toBe(true);
   });
 
@@ -72,6 +71,7 @@ describe('ColorPicker', () => {
       },
       global: {
         stubs: {
+          Teleport: true,
           'color-picker-block': true,
           EditorColorPickerPanel: {
             template:
@@ -90,40 +90,6 @@ describe('ColorPicker', () => {
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['#123456']);
   });
 
-  it('should apply correct positioning classes for rte alignment', async () => {
-    const wrapper = createWrapper({ dropdownAlign: 'rte' });
-
-    const trigger = wrapper.get('div[style]');
-    await trigger.trigger('click');
-
-    const dropdown = wrapper.get('.absolute.top-full');
-    expect(dropdown.classes()).toContain('right-0');
-    expect(dropdown.classes()).toContain('translate-x-1/2');
-  });
-
-  it('should apply correct positioning classes for top-editor alignment', async () => {
-    const wrapper = createWrapper({ dropdownAlign: 'top-editor' });
-
-    const trigger = wrapper.get('div[style]');
-    await trigger.trigger('click');
-
-    const dropdown = wrapper.get('.absolute.top-full');
-    expect(dropdown.classes()).toContain('right-0');
-    expect(dropdown.classes()).toContain('translate-x-[30%]');
-  });
-
-  it('should apply no extra positioning classes for default alignment', async () => {
-    const wrapper = createWrapper({ dropdownAlign: 'default' });
-
-    const trigger = wrapper.get('div[style]');
-    await trigger.trigger('click');
-
-    const dropdown = wrapper.get('.absolute.top-full');
-    expect(dropdown.classes()).not.toContain('right-0');
-    expect(dropdown.classes()).not.toContain('translate-x-1/2');
-    expect(dropdown.classes()).not.toContain('translate-x-[30%]');
-  });
-
   it('should change activeTab when panel emits update:activeTab', async () => {
     const wrapper = mount(ColorPicker, {
       props: {
@@ -131,6 +97,7 @@ describe('ColorPicker', () => {
       },
       global: {
         stubs: {
+          Teleport: true,
           'color-picker-block': true,
           EditorColorPickerPanel: {
             props: ['modelValue', 'activeTab', 'primaryColor', 'secondaryColor', 'showShopColors'],
