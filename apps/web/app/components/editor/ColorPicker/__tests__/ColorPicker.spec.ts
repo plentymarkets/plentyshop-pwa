@@ -7,7 +7,8 @@ const useFloatingMock = vi.fn((_reference: unknown, _floating: unknown, _options
 }));
 
 vi.mock('@floating-ui/vue', () => ({
-  useFloating: (reference: unknown, floating: unknown, options: unknown) => useFloatingMock(reference, floating, options),
+  useFloating: (reference: unknown, floating: unknown, options: unknown) =>
+    useFloatingMock(reference, floating, options),
   autoUpdate: vi.fn(),
   flip: vi.fn(),
   shift: vi.fn(),
