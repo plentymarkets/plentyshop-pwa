@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="footer-container-form" class="block-footer-edit sticky h-[80vh] overflow-y-auto">
+  <div data-testid="footer-settings-drawer" class="block-footer-edit sticky h-[80vh] overflow-y-auto">
     <div v-if="editingBlockIndex === undefined" class="space-y-0">
       <EditorBlockItemsAccordion
         v-model="elementsOpen"

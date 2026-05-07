@@ -1,6 +1,6 @@
 <template>
   <footer
-    data-testid="footer-container"
+    data-testid="footer"
     class="pt-10"
     :style="{
       backgroundColor: props.configuration?.colors?.background,
