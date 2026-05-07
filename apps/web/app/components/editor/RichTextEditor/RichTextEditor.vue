@@ -96,7 +96,7 @@
   <EditorRichTextEditorLinkModal
     v-if="linkModalOpen"
     :editor="editor"
-    @close="linkModalOpen = false"
+    :close="() => linkModalOpen = false"
   />
 </template>
 
@@ -167,7 +167,6 @@ const editorStyle = computed(() => ({
   ...textAlignStyle.value,
 }));
 
-// toggleLink opens the custom modal; if already on a link it removes it directly
 const toggleLink = () => {
   if (!editor.value) return;
 
