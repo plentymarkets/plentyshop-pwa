@@ -7,12 +7,15 @@
       @click="toggle"
     />
 
-    <div
-      v-if="open"
-      class="absolute top-full right-0 mt-1 z-[1000] w-[260px] translate-x-[25%] rounded border border-gray-200 bg-white shadow-lg"
-      @mousedown.stop
-      @click.stop
-    >
+    <Teleport to="body">
+      <div
+        v-if="open"
+        ref="panelRef"
+        :style="panelStyle"
+        class="fixed z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
+        @mousedown.stop
+        @click.stop
+      >
       <div class="flex border-b border-gray-200" role="tablist">
         <button
           v-for="tab in tabs"
@@ -95,7 +98,8 @@
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -110,7 +114,22 @@ const emit = defineEmits<{
 }>();
 
 const root = ref<HTMLElement | null>(null);
+const panelRef = ref<HTMLElement | null>(null);
+const panelStyle = ref({ top: '0px', left: '0px' });
 const open = ref(false);
+
+const updatePosition = () => {
+  if (!root.value) return;
+  const rect = root.value.getBoundingClientRect();
+  const panelWidth = 260;
+  let left = rect.right - panelWidth;
+  if (left + panelWidth > window.innerWidth - 4) left = window.innerWidth - panelWidth - 4;
+  if (left < 4) left = 4;
+  panelStyle.value = {
+    top: `${rect.bottom + 4}px`,
+    left: `${left}px`,
+  };
+};
 const activeTab = ref<IconEmojiPickerTab>('icons');
 const emojiSearch = ref('');
 
@@ -122,8 +141,12 @@ const tabs: Array<{ value: IconEmojiPickerTab; label: string }> = [
 const categories = getIconCategories();
 const filteredEmojis = computed(() => filterEmojis(emojiSearch.value));
 
-const toggle = () => {
+const toggle = async () => {
   open.value = !open.value;
+  if (open.value) {
+    await nextTick();
+    updatePosition();
+  }
 };
 
 const close = () => {
@@ -148,9 +171,13 @@ const onDocClick = (e: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('mousedown', onDocClick);
+  window.addEventListener('resize', updatePosition);
+  window.addEventListener('scroll', updatePosition, true);
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onDocClick);
+  window.removeEventListener('resize', updatePosition);
+  window.removeEventListener('scroll', updatePosition, true);
 });
 </script>
