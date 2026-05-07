@@ -13,6 +13,7 @@ mockNuxtImport('useSiteSettings', () => useSiteSettings);
 const createWrapper = (
   props?: Partial<{
     modelValue: string | undefined;
+    align?: 'left' | 'center' | 'right';
     showShopColors?: boolean;
   }>,
 ) => {

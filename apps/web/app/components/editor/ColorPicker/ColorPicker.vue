@@ -34,6 +34,7 @@ import { useFloating, autoUpdate, flip, shift, offset } from '@floating-ui/vue';
 const props = withDefaults(
   defineProps<{
     modelValue: string | undefined;
+    align?: 'left' | 'center' | 'right';
     showShopColors?: boolean;
   }>(),
   {
@@ -50,8 +51,14 @@ const root = ref<HTMLElement | null>(null);
 const floatingEl = ref<HTMLElement | null>(null);
 const activeTab = ref<'shop' | 'picker'>('picker');
 
+const placementMap = {
+  left: 'bottom-end',
+  center: 'bottom',
+  right: 'bottom-start',
+} as const;
+
 const { floatingStyles } = useFloating(root, floatingEl, {
-  placement: 'bottom-end',
+  placement: computed(() => placementMap[props.align ?? 'left']),
   strategy: 'fixed',
   middleware: [offset(8), flip(), shift({ padding: 4 })],
   whileElementsMounted: autoUpdate,
