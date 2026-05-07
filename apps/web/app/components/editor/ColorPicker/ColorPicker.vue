@@ -13,7 +13,7 @@
     </slot>
 
     <Teleport to="body">
-      <div v-if="open" ref="panelRef" :style="panelStyle" class="fixed z-[9999]" @mousedown.stop @click.stop>
+      <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]" @mousedown.stop @click.stop>
         <EditorColorPickerPanel
           :model-value="modelValue"
           :active-tab="activeTab"
@@ -29,14 +29,14 @@
 </template>
 
 <script setup lang="ts">
+import { useFloating, autoUpdate, flip, shift, offset } from '@floating-ui/vue';
+
 const props = withDefaults(
   defineProps<{
     modelValue: string | undefined;
-    dropdownAlign?: 'default' | 'rte' | 'top-editor';
     showShopColors?: boolean;
   }>(),
   {
-    dropdownAlign: 'default',
     showShopColors: true,
   },
 );
@@ -47,22 +47,15 @@ const emit = defineEmits<{
 
 const open = ref(false);
 const root = ref<HTMLElement | null>(null);
-const panelRef = ref<HTMLElement | null>(null);
-const panelStyle = ref({ top: '0px', left: '0px' });
+const floatingEl = ref<HTMLElement | null>(null);
 const activeTab = ref<'shop' | 'picker'>('picker');
 
-const updatePosition = () => {
-  if (!root.value) return;
-  const rect = root.value.getBoundingClientRect();
-  const panelWidth = panelRef.value?.offsetWidth ?? 240;
-  let left = rect.right - panelWidth;
-  if (left + panelWidth > window.innerWidth - 4) left = window.innerWidth - panelWidth - 4;
-  if (left < 4) left = 4;
-  panelStyle.value = {
-    top: `${rect.bottom + 8}px`,
-    left: `${left}px`,
-  };
-};
+const { floatingStyles } = useFloating(root, floatingEl, {
+  placement: 'bottom-end',
+  strategy: 'fixed',
+  middleware: [offset(8), flip(), shift({ padding: 4 })],
+  whileElementsMounted: autoUpdate,
+});
 
 const instanceId = `color-picker-${Math.random().toString(36).slice(2)}`;
 const activeId = useState<string | null>('editorColorPickerActiveId', () => null);
@@ -82,12 +75,8 @@ const secondaryColor = computed(() => getSecondaryColorSetting());
 
 watch(
   activeId,
-  async (newId) => {
+  (newId) => {
     open.value = newId === instanceId;
-    if (open.value) {
-      await nextTick();
-      updatePosition();
-    }
   },
   { immediate: true },
 );
@@ -111,20 +100,16 @@ const toggle = () => {
 };
 
 const onDocClick = (e: MouseEvent) => {
-  if (!root.value?.contains(e.target as Node)) {
+  if (!root.value?.contains(e.target as Node) && !floatingEl.value?.contains(e.target as Node)) {
     close();
   }
 };
 
 onMounted(() => {
   document.addEventListener('mousedown', onDocClick);
-  window.addEventListener('resize', updatePosition);
-  window.addEventListener('scroll', updatePosition, true);
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onDocClick);
-  window.removeEventListener('resize', updatePosition);
-  window.removeEventListener('scroll', updatePosition, true);
 });
 </script>

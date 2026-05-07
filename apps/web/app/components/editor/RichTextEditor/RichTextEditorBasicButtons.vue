@@ -132,7 +132,6 @@
   <EditorColorPicker
     data-testid="rte-font-color"
     :model-value="textColor"
-    dropdown-align="top-editor"
     @update:model-value="setFontColor($event)"
   >
     <template #trigger="{ color, toggle }">

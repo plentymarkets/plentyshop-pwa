@@ -10,9 +10,9 @@
     <Teleport to="body">
       <div
         v-if="open"
-        ref="panelRef"
-        :style="panelStyle"
-        class="fixed z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
+        ref="floatingEl"
+        :style="floatingStyles"
+        class="z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
         @mousedown.stop
         @click.stop
       >
@@ -104,6 +104,7 @@
 </template>
 
 <script setup lang="ts">
+import { useFloating, autoUpdate, flip, shift, offset } from '@floating-ui/vue';
 import type { IconEmojiPickerTab } from './types';
 import { getIconCategories, getIconsByCategory, filterEmojis } from './utils/iconEmojiPickerUtils';
 
@@ -114,22 +115,16 @@ const emit = defineEmits<{
 }>();
 
 const root = ref<HTMLElement | null>(null);
-const panelRef = ref<HTMLElement | null>(null);
-const panelStyle = ref({ top: '0px', left: '0px' });
+const floatingEl = ref<HTMLElement | null>(null);
 const open = ref(false);
 
-const updatePosition = () => {
-  if (!root.value) return;
-  const rect = root.value.getBoundingClientRect();
-  const panelWidth = 260;
-  let left = rect.right - panelWidth;
-  if (left + panelWidth > window.innerWidth - 4) left = window.innerWidth - panelWidth - 4;
-  if (left < 4) left = 4;
-  panelStyle.value = {
-    top: `${rect.bottom + 4}px`,
-    left: `${left}px`,
-  };
-};
+const { floatingStyles } = useFloating(root, floatingEl, {
+  placement: 'bottom-end',
+  strategy: 'fixed',
+  middleware: [offset(4), flip(), shift({ padding: 4 })],
+  whileElementsMounted: autoUpdate,
+});
+
 const activeTab = ref<IconEmojiPickerTab>('icons');
 const emojiSearch = ref('');
 
@@ -141,12 +136,8 @@ const tabs: Array<{ value: IconEmojiPickerTab; label: string }> = [
 const categories = getIconCategories();
 const filteredEmojis = computed(() => filterEmojis(emojiSearch.value));
 
-const toggle = async () => {
+const toggle = () => {
   open.value = !open.value;
-  if (open.value) {
-    await nextTick();
-    updatePosition();
-  }
 };
 
 const close = () => {
@@ -166,18 +157,14 @@ const onSelectEmoji = (name: string) => {
 };
 
 const onDocClick = (e: MouseEvent) => {
-  if (!root.value?.contains(e.target as Node)) close();
+  if (!root.value?.contains(e.target as Node) && !floatingEl.value?.contains(e.target as Node)) close();
 };
 
 onMounted(() => {
   document.addEventListener('mousedown', onDocClick);
-  window.addEventListener('resize', updatePosition);
-  window.addEventListener('scroll', updatePosition, true);
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onDocClick);
-  window.removeEventListener('resize', updatePosition);
-  window.removeEventListener('scroll', updatePosition, true);
 });
 </script>
