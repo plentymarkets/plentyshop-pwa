@@ -2,6 +2,14 @@ import { mount } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import ColorPicker from '../ColorPicker.vue';
 
+vi.mock('@floating-ui/vue', () => ({
+  useFloating: () => ({ floatingStyles: ref({ position: 'fixed', top: '0px', left: '0px' }) }),
+  autoUpdate: vi.fn(),
+  flip: vi.fn(),
+  shift: vi.fn(),
+  offset: vi.fn(),
+}));
+
 const { useSiteSettings } = vi.hoisted(() => {
   return {
     useSiteSettings: vi.fn().mockImplementation(() => ({ getSetting: vi.fn().mockReturnValue('#000000') })),
