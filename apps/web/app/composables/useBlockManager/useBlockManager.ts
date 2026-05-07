@@ -162,9 +162,7 @@ export const useBlockManager = () => {
       !!findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
 
     const isTargetInFooter =
-      !!footer.value &&
-      Array.isArray(footer.value.content) &&
-      !!findBlockParent(footer.value.content, targetUuid);
+      !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
 
     if (isTargetInHeader) {
       addBlockToHeader(newBlock, targetUuid, position);
