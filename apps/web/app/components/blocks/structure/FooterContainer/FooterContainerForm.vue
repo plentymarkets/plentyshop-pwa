@@ -81,7 +81,6 @@
 import { SfInput } from '@storefront-ui/vue';
 import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { footer } = useBlocks();
@@ -136,7 +135,7 @@ const textColor = computed({
 
 const blocks = computed({
   get: () => {
-    const content = (footerContainer.value?.content || []) as SlideBlock[];
+    const content = (footerContainer.value?.content || []) as Block[];
     return content.map((block: Block) => ({
       ...block,
       configuration: {
@@ -145,7 +144,7 @@ const blocks = computed({
       },
     }));
   },
-  set: (value: SlideBlock[]) => {
+  set: (value: Block[]) => {
     footerContainer.value.content = value;
   },
 });
@@ -185,7 +184,8 @@ const addBlock = () => {
   const { openDrawerWithView } = useSiteConfiguration();
   const { togglePlaceholder } = useBlockManager();
 
-  const lastChild = footerContainer.value.content?.[footerContainer.value.content.length - 1];
+  const content = footerContainer.value.content ?? [];
+  const lastChild = content[content.length - 1];
 
   if (!lastChild) {
     return;
@@ -207,7 +207,7 @@ const deleteBlock = async (index: number) => {
   }
 };
 
-const updateBlocks = (newBlocks: SlideBlock[]) => {
+const updateBlocks = (newBlocks: Block[]) => {
   blocks.value = newBlocks;
 };
 
