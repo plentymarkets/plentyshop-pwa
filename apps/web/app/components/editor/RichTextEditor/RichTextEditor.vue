@@ -149,6 +149,7 @@ const {
   canRedo,
   undo,
   redo,
+  toggleLink,
   clearFormatting,
   focus,
   currentFontSize,
@@ -162,6 +163,9 @@ const {
   onUpdateExpanded: (v) => emit('update:expanded', v),
   textAlign: toRef(props, 'textAlign'),
   placeholder: toRef(props, 'placeholder'),
+  onOpenLinkModal: () => {
+    linkModalOpen.value = true;
+  },
 });
 
 const editorStyle = computed(() => ({
@@ -169,16 +173,6 @@ const editorStyle = computed(() => ({
   ...textAlignStyle.value,
 }));
 
-const toggleLink = () => {
-  if (!editor.value) return;
-
-  if (editor.value.isActive('link')) {
-    editor.value.chain().focus().unsetLink().run();
-    return;
-  }
-
-  linkModalOpen.value = true;
-};
 
 const openModal = () => {
   modalOpen.value = true;
