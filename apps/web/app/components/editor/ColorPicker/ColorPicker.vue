@@ -60,7 +60,6 @@ const { floatingStyles } = useFloating(root, floatingEl, {
 const instanceId = `color-picker-${Math.random().toString(36).slice(2)}`;
 const activeId = useState<string | null>('editorColorPickerActiveId', () => null);
 
-
 const style = computed(() => ({
   backgroundColor: props.modelValue || '#ffffff',
 }));
