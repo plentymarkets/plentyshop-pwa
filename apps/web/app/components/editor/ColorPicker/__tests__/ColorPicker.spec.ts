@@ -2,8 +2,12 @@ import { mount } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import ColorPicker from '../ColorPicker.vue';
 
+const useFloatingMock = vi.fn((_reference: unknown, _floating: unknown, _options: unknown) => ({
+  floatingStyles: ref({ position: 'fixed', top: '0px', left: '0px' }),
+}));
+
 vi.mock('@floating-ui/vue', () => ({
-  useFloating: () => ({ floatingStyles: ref({ position: 'fixed', top: '0px', left: '0px' }) }),
+  useFloating: (reference: unknown, floating: unknown, options: unknown) => useFloatingMock(reference, floating, options),
   autoUpdate: vi.fn(),
   flip: vi.fn(),
   shift: vi.fn(),
@@ -42,6 +46,9 @@ const createWrapper = (
 describe('ColorPicker', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useFloatingMock.mockImplementation((_reference, _floating, _options) => ({
+      floatingStyles: ref({ position: 'fixed', top: '0px', left: '0px' }),
+    }));
     useSiteSettings.mockImplementation(() => ({ getSetting: vi.fn().mockReturnValue('#000000') }));
   });
 
@@ -127,5 +134,21 @@ describe('ColorPicker', () => {
     await nextTick();
 
     expect(wrapper.get('[data-testid="active-tab"]').text()).toBe('shop');
+  });
+
+  it.each([
+    ['left', 'bottom-end'],
+    ['center', 'bottom'],
+    ['right', 'bottom-start'],
+  ] as const)('should use placement "%s" when align="%s"', (align, expectedPlacement) => {
+    createWrapper({ align });
+    const options = (useFloatingMock.mock.calls[0] as unknown[])[2] as { placement: () => string };
+    expect(options.placement()).toBe(expectedPlacement);
+  });
+
+  it('should default to bottom-end placement when align is not set', () => {
+    createWrapper();
+    const options = (useFloatingMock.mock.calls[0] as unknown[])[2] as { placement: () => string };
+    expect(options.placement()).toBe('bottom-end');
   });
 });

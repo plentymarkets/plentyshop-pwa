@@ -59,7 +59,7 @@ const placementMap = {
 } as const;
 
 const { floatingStyles } = useFloating(root, floatingEl, {
-  placement: computed(() => placementMap[props.align]),
+  placement: () => placementMap[props.align],
   strategy: 'fixed',
   middleware: [offset(8), flip(), shift({ padding: 4 })],
   whileElementsMounted: autoUpdate,
