@@ -7,18 +7,19 @@
       color: props.configuration?.colors?.text,
     }"
   >
-    <div class="footer-main px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
-      <div v-for="contentBlock in props.content" :key="contentBlock.meta.uuid">
-        <slot name="content" :content-block="contentBlock" />
+    <div
+      v-for="contentBlock in props.content"
+      :key="contentBlock.meta.uuid"
+      :class="{ 'px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto': contentBlock.name === 'MultiGrid' }"
+    >
+      <slot name="content" :content-block="contentBlock" />
 
-        <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
-      </div>
+      <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import type { Block } from '@plentymarkets/shop-api';
 import type { FooterContainerProps } from '~/components/blocks/structure/FooterContainer/types';
 
 const props = defineProps<FooterContainerProps>();
@@ -29,8 +30,6 @@ const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConf
 
 const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
 const drawerView = computed(() => siteConfigurationDrawerView.value);
-
-const isFullWidthBlock = (block: Block): boolean => (block.content as any)?.layout?.fullWidth === true;
 </script>
 
 <style scoped>
