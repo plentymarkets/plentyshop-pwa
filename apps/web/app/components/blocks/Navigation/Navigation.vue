@@ -1,6 +1,6 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" @mouseleave="onMouseLeave">
       <ul
         :class="navigationContainerClasses"
         :style="navigationContainerStyle"
@@ -405,16 +405,11 @@ const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') =
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
-  const nextIndex =
-    direction === 'down'
-      ? currentIndex < focusableItems.length - 1
-        ? currentIndex + 1
-        : 0
-      : currentIndex > 0
-        ? currentIndex - 1
-        : focusableItems.length - 1;
+  const downIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const upIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextIndex = direction === 'down' ? downIndex : upIndex;
 
   focusableItems[nextIndex]?.focus();
 };
@@ -424,17 +419,13 @@ const handleTabInDropdown = (event: KeyboardEvent) => {
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
   event.preventDefault();
 
-  const nextIndex = event.shiftKey
-    ? currentIndex > 0
-      ? currentIndex - 1
-      : focusableItems.length - 1
-    : currentIndex < focusableItems.length - 1
-      ? currentIndex + 1
-      : 0;
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextFwdIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const nextIndex = event.shiftKey ? prevIndex : nextFwdIndex;
 
   focusableItems[nextIndex]?.focus();
 };
