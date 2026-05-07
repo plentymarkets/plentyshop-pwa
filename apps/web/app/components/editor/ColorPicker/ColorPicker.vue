@@ -38,6 +38,7 @@ const props = withDefaults(
     showShopColors?: boolean;
   }>(),
   {
+    align: 'left',
     showShopColors: true,
   },
 );
@@ -58,7 +59,7 @@ const placementMap = {
 } as const;
 
 const { floatingStyles } = useFloating(root, floatingEl, {
-  placement: computed(() => placementMap[props.align ?? 'left']),
+  placement: computed(() => placementMap[props.align]),
   strategy: 'fixed',
   middleware: [offset(8), flip(), shift({ padding: 4 })],
   whileElementsMounted: autoUpdate,

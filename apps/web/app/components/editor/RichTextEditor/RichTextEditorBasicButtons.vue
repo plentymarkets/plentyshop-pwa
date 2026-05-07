@@ -131,7 +131,12 @@
 
   <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
 
-  <EditorColorPicker data-testid="rte-font-color" :model-value="textColor" align="right" @update:model-value="setFontColor($event)">
+  <EditorColorPicker
+    data-testid="rte-font-color"
+    :model-value="textColor"
+    align="right"
+    @update:model-value="setFontColor($event)"
+  >
     <template #trigger="{ color, toggle }">
       <button
         type="button"
