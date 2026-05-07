@@ -105,6 +105,7 @@ const editBlock = (index: number) => {
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
   currentActiveBlockIndex.value = index;
   setEditTitle(blockLabels.value[index]!);
+  trackHeaderContainerEditBlock();
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {

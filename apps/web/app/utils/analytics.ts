@@ -2,6 +2,7 @@ export const AnalyticsEventName = {
     tocOpened: 'tocOpened',
     tocCreateBlock: 'tocCreateBlock',
     contentCreateBlock: 'contentCreateBlock',
+    headerContainerEditBlock: 'headerContainerEditBlock',
 }
 
 export const trackToCOpened = () => {
@@ -26,6 +27,15 @@ export const trackContentCreateBlock = () => {
     usePlentyAnalytics({
         name: AnalyticsEventName.contentCreateBlock,
         loggableType: 'content',
+        loggableId: '',
+        payload: {}
+    })
+}
+
+export const trackHeaderContainerEditBlock = () => {
+    usePlentyAnalytics({
+        name: AnalyticsEventName.headerContainerEditBlock,
+        loggableType: 'headerContainer',
         loggableId: '',
         payload: {}
     })
