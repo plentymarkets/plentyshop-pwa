@@ -34,7 +34,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       }),
       Underline,
       Link.configure({
-        openOnClick: false,
+        openOnClick: true,
         autolink: true,
         linkOnPaste: true,
       }),

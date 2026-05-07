@@ -1,5 +1,8 @@
 <template>
-  <div class="fixed inset-0 z-[600] flex items-center justify-center bg-black/40" @mousedown.self="props.close()">
+  <div
+    class="fixed inset-0 z-[600] flex items-center justify-center bg-black/40"
+    @mousedown.self="cancelAndRevert(props.close)"
+  >
     <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-visible">
       <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
         <h2 class="text-sm font-semibold text-gray-800">{{ getEditorTranslation('insert-link') }}</h2>
@@ -9,7 +12,7 @@
           square
           size="sm"
           class="text-gray-400 hover:text-gray-600"
-          @click="props.close()"
+          @click="cancelAndRevert(props.close)"
         >
           <SfIconClose />
         </SfButton>
@@ -108,7 +111,7 @@
       </div>
 
       <div class="flex items-center justify-end gap-2 px-5 py-4">
-        <SfButton type="button" variant="secondary" @click="props.close()">
+        <SfButton type="button" variant="secondary" @click="cancelAndRevert(props.close)">
           {{ getEditorTranslation('cancel-button') }}
         </SfButton>
 
@@ -149,6 +152,7 @@ const {
   tabs,
   initFromEditor,
   handleSubmit,
+  cancelAndRevert,
   selectedCategoryPath,
 } = useLinkModal(editorRef);
 

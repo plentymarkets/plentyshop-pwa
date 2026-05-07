@@ -93,6 +93,7 @@
   color: #5082d9;
   text-decoration: underline;
   text-decoration-color: currentColor;
+  cursor: pointer;
 }
 
 .rte-icon {
