@@ -58,7 +58,7 @@ describe('createFooterContainer', () => {
   it('should have MultiGrid with four equal column widths', () => {
     const footer = createFooterContainer();
     const multiGrid = (footer.content as Block[])[0];
-    const config = multiGrid?.configuration as { columnWidths: number[] };
+    const config = multiGrid?.configuration as unknown as { columnWidths: number[] };
     expect(config?.columnWidths).toEqual([3, 3, 3, 3]);
   });
 
