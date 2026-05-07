@@ -34,19 +34,11 @@ const drawerView = computed(() => siteConfigurationDrawerView.value);
 
 <style scoped>
 :deep([data-testid='multi-grid-column']) {
-  @apply max-w-[280px] break-words;
-}
-
-:deep([data-testid='multi-grid-column'] .rte-prose p:not(:has(a))) {
-  @apply m-0 ml-4 leading-7;
-}
-
-:deep([data-testid='multi-grid-column'] .rte-prose p:has(a)) {
-  @apply m-0 py-2 px-4;
+  @apply break-words;
 }
 
 :deep([data-testid='multi-grid-column'] .rte-prose a) {
-  @apply no-underline text-sm text-inherit;
+  @apply no-underline;
 }
 
 :deep([data-testid='multi-grid-column'] .rte-prose a:hover) {

@@ -9,12 +9,12 @@ export const isFooterContainerBlock = (block: Block | null | undefined): block i
   block?.name === FOOTER_CONTAINER_BLOCK_NAME;
 
 function buildColumnTitleHtml(title: string): string {
-  return `<p><span style="font-size: 1.125rem; font-weight: 500;">${title}</span></p>`;
+  return `<h5><span style="font-size: 1rem;">${title}</span></h5>`;
 }
 
 function buildColumnHtml(columnGroup: string, groupLabel: string): string {
   const links = FOOTER_SWITCH_DEFINITIONS.filter((def) => def.columnGroup === columnGroup)
-    .map((def) => `<p><a href="${def.link}">${t(def.shopTranslationKey)}</a></p>`)
+    .map((def) => `<p><a rel="noopener noreferrer nofollow" href="${def.link}"><span style="font-size: 0.875rem">${t(def.shopTranslationKey)}</span></a></p>`)
     .join('');
   return `${buildColumnTitleHtml(groupLabel)}${links}`;
 }
@@ -63,7 +63,7 @@ function createFooterNoteTextCard(): Block {
     },
     content: {
       text: {
-        htmlDescription: `<span class="text-sm py-10 md:py-6 px-10 no-preflight text-right">© ${runtimeConfig.public.storename} ${new Date().getFullYear()}</span>`,
+        htmlDescription: `<p><span style="font-size: 0.875rem;">© ${runtimeConfig.public.storename} ${new Date().getFullYear()}</span></p>`,
         textAlignment: 'right',
         color: '#8b8d8b',
       },
@@ -74,8 +74,8 @@ function createFooterNoteTextCard(): Block {
       },
       layout: {
         backgroundColor: '#161a16',
-        paddingTop: 24,
-        paddingBottom: 24,
+        paddingTop: 16,
+        paddingBottom: 16,
         paddingLeft: 40,
         paddingRight: 40,
         fullWidth: true,
