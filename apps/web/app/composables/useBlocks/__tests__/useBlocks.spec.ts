@@ -10,7 +10,13 @@ const mockFooterBlock: Block = {
   type: 'structure',
   meta: { uuid: 'footer-uuid', isGlobalTemplate: true },
   content: [
-    { name: 'MultiGrid', type: 'structure', meta: { uuid: 'multigrid-uuid' }, content: [], configuration: { columnWidths: [3, 3, 3, 3] } },
+    {
+      name: 'MultiGrid',
+      type: 'structure',
+      meta: { uuid: 'multigrid-uuid' },
+      content: [],
+      configuration: { columnWidths: [3, 3, 3, 3] },
+    },
     { name: 'TextCard', type: 'content', meta: { uuid: 'footnote-uuid' }, content: {} },
   ],
   configuration: { visible: true, colors: { background: '#cfe4ec', text: '#1c1c1c' } },

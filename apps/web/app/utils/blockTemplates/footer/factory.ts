@@ -14,7 +14,10 @@ function buildColumnTitleHtml(title: string): string {
 
 function buildColumnHtml(columnGroup: string, groupLabel: string): string {
   const links = FOOTER_SWITCH_DEFINITIONS.filter((def) => def.columnGroup === columnGroup)
-    .map((def) => `<p><a rel="noopener noreferrer nofollow" href="${def.link}"><span style="font-size: 0.875rem">${t(def.shopTranslationKey)}</span></a></p>`)
+    .map(
+      (def) =>
+        `<p><a rel="noopener noreferrer nofollow" href="${def.link}"><span style="font-size: 0.875rem">${t(def.shopTranslationKey)}</span></a></p>`,
+    )
     .join('');
   return `${buildColumnTitleHtml(groupLabel)}${links}`;
 }
@@ -49,7 +52,6 @@ function createFooterColumnTextCard(parentSlot: number, htmlDescription = ''): B
     },
   };
 }
-
 
 function createFooterNoteTextCard(): Block {
   const runtimeConfig = useRuntimeConfig();

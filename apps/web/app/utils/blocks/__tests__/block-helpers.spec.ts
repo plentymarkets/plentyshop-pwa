@@ -78,7 +78,13 @@ describe('utils/block-helpers', () => {
     });
 
     it('should create default FooterContainer when raw Footer is old-style content block', () => {
-      const oldFooter = makeBlock('Footer', { column1: { title: 'Legal' }, column2: {}, column3: {}, column4: {}, colors: {} });
+      const oldFooter = makeBlock('Footer', {
+        column1: { title: 'Legal' },
+        column2: {},
+        column3: {},
+        column4: {},
+        colors: {},
+      });
       const raw = { Footer: oldFooter, blocks: [makeBlock('TextCard')] } as unknown as GetBlocksResponse;
       const result = assembleBlocks(raw, 'immutable', 'index');
 
