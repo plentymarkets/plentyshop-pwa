@@ -1,9 +1,6 @@
 import type { Editor } from '@tiptap/core';
 
-export const setupRichTextEditorLinksFormatting = (
-  editor: Ref<Editor | null> | null,
-  onOpenLinkModal?: () => void,
-) => {
+export const setupRichTextEditorLinksFormatting = (editor: Ref<Editor | null> | null, onOpenLinkModal?: () => void) => {
   const toggleLink = () => {
     const editorVal = editor?.value;
     if (!editorVal) return;

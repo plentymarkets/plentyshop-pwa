@@ -173,7 +173,6 @@ const editorStyle = computed(() => ({
   ...textAlignStyle.value,
 }));
 
-
 const openModal = () => {
   modalOpen.value = true;
 };
