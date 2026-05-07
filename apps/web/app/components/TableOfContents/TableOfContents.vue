@@ -85,7 +85,7 @@
               type="button"
               class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
               data-testid="toc-add-block"
-              @click="addBlockAtBottom(), trackToCCreateBlock()"
+              @click="(addBlockAtBottom(), trackToCCreateBlock())"
             >
               <SfIconAdd />
               {{ getEditorTranslation('add-element-label') }}

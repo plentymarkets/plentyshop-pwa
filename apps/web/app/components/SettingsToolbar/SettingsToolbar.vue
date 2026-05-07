@@ -36,7 +36,7 @@
           :class="{ 'bg-editor-button text-white rounded-md': siteConfigurationDrawerView === 'TableOfContents' }"
           aria-label="Open table of contents drawer"
           data-testid="open-table-of-contents-drawer"
-          @click="toggleDrawerView('TableOfContents'), trackToCOpened()"
+          @click="(toggleDrawerView('TableOfContents'), trackToCOpened())"
         >
           <NuxtImg
             v-if="siteConfigurationDrawerView === 'TableOfContents'"

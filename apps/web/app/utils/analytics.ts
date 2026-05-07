@@ -1,42 +1,42 @@
 export const AnalyticsEventName = {
-    tocOpened: 'tocOpened',
-    tocCreateBlock: 'tocCreateBlock',
-    contentCreateBlock: 'contentCreateBlock',
-    headerContainerEditBlock: 'headerContainerEditBlock',
-}
+  tocOpened: 'tocOpened',
+  tocCreateBlock: 'tocCreateBlock',
+  contentCreateBlock: 'contentCreateBlock',
+  headerContainerEditBlock: 'headerContainerEditBlock',
+};
 
 export const trackToCOpened = () => {
-    usePlentyAnalytics({
-        name: AnalyticsEventName.tocOpened,
-        loggableType: 'toc',
-        loggableId: '',
-        payload: {}
-    })
-}
+  usePlentyAnalytics({
+    name: AnalyticsEventName.tocOpened,
+    loggableType: 'toc',
+    loggableId: '',
+    payload: {},
+  });
+};
 
 export const trackToCCreateBlock = () => {
-    usePlentyAnalytics({
-        name: AnalyticsEventName.tocCreateBlock,
-        loggableType: 'toc',
-        loggableId: '',
-        payload: {}
-    })
-}
+  usePlentyAnalytics({
+    name: AnalyticsEventName.tocCreateBlock,
+    loggableType: 'toc',
+    loggableId: '',
+    payload: {},
+  });
+};
 
 export const trackContentCreateBlock = () => {
-    usePlentyAnalytics({
-        name: AnalyticsEventName.contentCreateBlock,
-        loggableType: 'content',
-        loggableId: '',
-        payload: {}
-    })
-}
+  usePlentyAnalytics({
+    name: AnalyticsEventName.contentCreateBlock,
+    loggableType: 'content',
+    loggableId: '',
+    payload: {},
+  });
+};
 
 export const trackHeaderContainerEditBlock = () => {
-    usePlentyAnalytics({
-        name: AnalyticsEventName.headerContainerEditBlock,
-        loggableType: 'headerContainer',
-        loggableId: '',
-        payload: {}
-    })
-}
+  usePlentyAnalytics({
+    name: AnalyticsEventName.headerContainerEditBlock,
+    loggableType: 'headerContainer',
+    loggableId: '',
+    payload: {},
+  });
+};
