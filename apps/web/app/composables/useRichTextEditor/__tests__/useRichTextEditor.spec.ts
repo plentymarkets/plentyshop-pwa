@@ -13,8 +13,6 @@ const {
   undoSpy,
   redoSpy,
   unsetLinkSpy,
-  setLinkSpy,
-  extendMarkRangeSpy,
   runSpy,
   focusSpy,
   isActiveSpy,
@@ -28,8 +26,8 @@ const {
   const undoSpy = vi.fn();
   const redoSpy = vi.fn();
   const unsetLinkSpy = vi.fn();
-  const setLinkSpy = vi.fn();
-  const extendMarkRangeSpy = vi.fn();
+  const _setLinkSpy = vi.fn();
+  const _extendMarkRangeSpy = vi.fn();
   const runSpy = vi.fn();
   const focusSpy = vi.fn();
   const isActiveSpy = vi.fn().mockReturnValue(false);
@@ -82,7 +80,7 @@ const {
   };
 
   chainReturn.extendMarkRange = (...args: unknown[]) => {
-    extendMarkRangeSpy(...args);
+    _extendMarkRangeSpy(...args);
     return chainReturn;
   };
 
@@ -92,7 +90,7 @@ const {
   };
 
   chainReturn.setLink = (...args: unknown[]) => {
-    setLinkSpy(...args);
+    _setLinkSpy(...args);
     return chainReturn;
   };
 
@@ -141,8 +139,6 @@ const {
     undoSpy,
     redoSpy,
     unsetLinkSpy,
-    setLinkSpy,
-    extendMarkRangeSpy,
     runSpy,
     focusSpy,
     isActiveSpy,
