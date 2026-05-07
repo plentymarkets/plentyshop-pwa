@@ -1,5 +1,5 @@
 <template>
-  <div v-if="text" class="w-full p-5 overflow-x-auto no-preflight" v-html="text" />
+  <div v-if="text" class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="text" />
   <h5 v-else class="text-center m-5 p-5">{{ t('shipping.noShippingMessage') }}</h5>
 </template>
 

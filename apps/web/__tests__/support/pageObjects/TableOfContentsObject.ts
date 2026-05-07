@@ -23,7 +23,8 @@ export class TableOfContentsObject extends PageObject {
 
   get contentTableOfContentsItemLabels() {
     return cy
-      .get('[data-testid^="toc-visibility-"]')
+      .getByTestId('toc-section-content')
+      .find('[data-testid^="toc-visibility-"]')
       .closest('[data-testid^="toc-item-"]')
       .find('[data-testid="toc-label"]');
   }
@@ -33,11 +34,11 @@ export class TableOfContentsObject extends PageObject {
   }
 
   get deleteIcons() {
-    return cy.get('[data-testid^="toc-delete-"]');
+    return cy.getByTestId('toc-section-content').find('[data-testid^="toc-delete-"]');
   }
 
   get visibilityIcons() {
-    return cy.get('[data-testid^="toc-visibility-"]');
+    return cy.getByTestId('toc-section-content').find('[data-testid^="toc-visibility-"]');
   }
 
   get addElementButton() {
@@ -90,6 +91,13 @@ export class TableOfContentsObject extends PageObject {
 
   checkLastBlockLabel(text: string) {
     this.tableOfContentsItemLabel.last().should('contain.text', text);
+    return this;
+  }
+
+  checkSectionsExist() {
+    cy.getByTestId('toc-section-header').should('exist');
+    cy.getByTestId('toc-section-content').should('exist');
+    cy.getByTestId('toc-section-footer').should('exist');
     return this;
   }
 
@@ -216,12 +224,6 @@ export class TableOfContentsObject extends PageObject {
 
   checkBlockAdded(initialCount: number) {
     this.tableOfContentsItems.should('have.length', initialCount + 1);
-    return this;
-  }
-
-  checkBothDrawersStillVisible() {
-    this.tableOfContentsDrawer.should('be.visible');
-    this.blocksConfigurationDrawer.should('be.visible');
     return this;
   }
 

@@ -270,7 +270,19 @@ const unitName = computed(() => productGetters.getUnitName(product.value));
 const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
 
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const { isGlobalProductCategoryTemplate } = useProducts();
+
+const isGlobalProductCategoryTemplate = computed(() => {
+  const route = useRoute();
+  const slugParam = route.params.slug;
+
+  if (slugParam === undefined) {
+    return false;
+  }
+
+  const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
+  return `/${slug}` === paths.globalItemCategory;
+});
+
 const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
     return paths.globalItemDetails;

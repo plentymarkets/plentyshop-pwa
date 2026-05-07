@@ -21,6 +21,7 @@ const {
   captureOrder,
   createPlentyOrder,
   createPlentyPaymentFromPayPalOrder,
+  resetAPMs,
   config,
   payPalVisibility,
   payLaterVisibility,
@@ -86,6 +87,7 @@ const onValidationCallback = async () => {
 
 const onApprove = async (data: OnApproveData) => {
   emits('on-approved');
+  resetAPMs();
 
   if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
     await fetchSession();
@@ -155,6 +157,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
           message: t('error.paymentCancelled'),
           type: 'negative',
         });
+        resetAPMs();
         await fetchSession();
         await useCartStockReservation().unreserve();
       },

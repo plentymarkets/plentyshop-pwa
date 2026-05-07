@@ -16,10 +16,14 @@ import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { FontSize } from './helpers/fontSizeExtension';
+import { IconNode } from './helpers/iconExtension';
 import Placeholder from '@tiptap/extension-placeholder';
+import Emoji, { emojis } from '@tiptap/extension-emoji';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
+
+  let isReady = false;
 
   const editor = useEditor({
     content: args.modelValue.value ?? '',
@@ -44,14 +48,26 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       Placeholder.configure({
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
+      IconNode,
+      Emoji.configure({
+        emojis,
+        enableEmoticons: true,
+      }),
     ],
     editorProps: {
       transformPastedHTML: (html) => {
         return stripInlineFontSizesFromHtml(html);
       },
     },
+    onCreate: () => {
+      isReady = true;
+    },
     onUpdate: ({ editor }: { editor: Editor }) => {
-      args.onUpdateModelValue(editor.getHTML());
+      if (!isReady) return;
+      const next = editor.getHTML();
+      if (decodeHtmlEntities(next) !== decodeHtmlEntities(args.modelValue.value ?? '')) {
+        args.onUpdateModelValue(next);
+      }
     },
   });
 
@@ -111,6 +127,14 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const focus = () => editor.value?.commands.focus();
 
+  const insertIcon = (name: string) => {
+    editor.value?.chain().focus().insertIcon(name).run();
+  };
+
+  const insertEmoji = (name: string) => {
+    editor.value?.chain().focus().setEmoji(name).run();
+  };
+
   return {
     editor,
     expandedLocal,
@@ -134,5 +158,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     toggleLink,
     clearFormatting,
     focus,
+    insertIcon,
+    insertEmoji,
   };
 }

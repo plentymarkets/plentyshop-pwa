@@ -9,10 +9,10 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
   ]);
 
   const textboxAlignXModel = computed<AlignX>({
-    get: () => getTarget()?.text?.align ?? 'left',
+    get: () => getTarget()?.text?.justify ?? 'left',
     set: (newAlignXValue) => {
       const target = getTarget();
-      if (target?.text) target.text.align = newAlignXValue;
+      if (target?.text) target.text.justify = newAlignXValue;
     },
   });
 
@@ -23,10 +23,10 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
   ]);
 
   const textboxAlignYModel = computed<AlignY>({
-    get: () => getTarget()?.text?.justify ?? 'top',
+    get: () => getTarget()?.text?.align ?? 'top',
     set: (newAlignYValue) => {
       const target = getTarget();
-      if (target?.text) target.text.justify = newAlignYValue;
+      if (target?.text) target.text.align = newAlignYValue;
     },
   });
 
