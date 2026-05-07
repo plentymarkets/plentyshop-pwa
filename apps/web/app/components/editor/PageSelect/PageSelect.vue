@@ -49,4 +49,3 @@ const onSelected = (option: PathOption | null) => {
   emit('update:modelValue', option?.value ?? null);
 };
 </script>
-

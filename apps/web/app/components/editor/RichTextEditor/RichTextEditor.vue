@@ -97,11 +97,7 @@
     @close="closeModal"
   />
 
-  <EditorRichTextEditorLinkModal
-    v-if="linkModalOpen"
-    :editor="editor"
-    :close="() => linkModalOpen = false"
-  />
+  <EditorRichTextEditorLinkModal v-if="linkModalOpen" :editor="editor" :close="() => (linkModalOpen = false)" />
 </template>
 
 <script setup lang="ts">
