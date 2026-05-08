@@ -13,7 +13,7 @@
     </slot>
 
     <Teleport to="body">
-      <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]" @mousedown.stop @click.stop>
+      <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]" @pointerdown.stop @click.stop>
         <EditorColorPickerPanel
           :model-value="modelValue"
           :active-tab="activeTab"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { useFloating, autoUpdate, flip, shift, offset } from '@floating-ui/vue';
+import { useDropdown } from '@storefront-ui/vue';
 
 const props = withDefaults(
   defineProps<{
@@ -58,15 +58,23 @@ const placementMap = {
   right: 'bottom-start',
 } as const;
 
-const { floatingStyles } = useFloating(root, floatingEl, {
-  placement: () => placementMap[props.align],
-  strategy: 'fixed',
-  middleware: [offset(8), flip(), shift({ padding: 4 })],
-  whileElementsMounted: autoUpdate,
-});
-
 const instanceId = `color-picker-${Math.random().toString(36).slice(2)}`;
 const activeId = useState<string | null>('editorColorPickerActiveId', () => null);
+
+const close = () => {
+  if (activeId.value === instanceId) {
+    activeId.value = null;
+  }
+};
+
+const { style: floatingStyles } = useDropdown({
+  referenceRef: root,
+  floatingRef: floatingEl,
+  isOpen: open,
+  placement: computed(() => placementMap[props.align]),
+  strategy: 'fixed',
+  onClose: close,
+});
 
 const style = computed(() => ({
   backgroundColor: props.modelValue || '#ffffff',
@@ -92,12 +100,6 @@ const openDropdown = () => {
   activeId.value = instanceId;
 };
 
-const close = () => {
-  if (activeId.value === instanceId) {
-    activeId.value = null;
-  }
-};
-
 const toggle = () => {
   if (open.value) {
     close();
@@ -105,18 +107,4 @@ const toggle = () => {
     openDropdown();
   }
 };
-
-const onDocClick = (e: MouseEvent) => {
-  if (!root.value?.contains(e.target as Node) && !floatingEl.value?.contains(e.target as Node)) {
-    close();
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('mousedown', onDocClick);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', onDocClick);
-});
 </script>

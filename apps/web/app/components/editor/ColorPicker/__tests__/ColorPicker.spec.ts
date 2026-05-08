@@ -2,18 +2,19 @@ import { mount } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import ColorPicker from '../ColorPicker.vue';
 
-const useFloatingMock = vi.fn((_reference: unknown, _floating: unknown, _options: unknown) => ({
-  floatingStyles: ref({ position: 'fixed', top: '0px', left: '0px' }),
+const useDropdownMock = vi.fn((_options: unknown) => ({
+  style: ref({ position: 'fixed', top: '0px', left: '0px' }),
+  referenceRef: ref(null),
+  floatingRef: ref(null),
 }));
 
-vi.mock('@floating-ui/vue', () => ({
-  useFloating: (reference: unknown, floating: unknown, options: unknown) =>
-    useFloatingMock(reference, floating, options),
-  autoUpdate: vi.fn(),
-  flip: vi.fn(),
-  shift: vi.fn(),
-  offset: vi.fn(),
-}));
+vi.mock('@storefront-ui/vue', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@storefront-ui/vue')>();
+  return {
+    ...actual,
+    useDropdown: (options: unknown) => useDropdownMock(options),
+  };
+});
 
 const { useSiteSettings } = vi.hoisted(() => {
   return {
@@ -49,8 +50,10 @@ const createWrapper = (
 describe('ColorPicker', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    useFloatingMock.mockImplementation((_reference, _floating, _options) => ({
-      floatingStyles: ref({ position: 'fixed', top: '0px', left: '0px' }),
+    useDropdownMock.mockImplementation((_options) => ({
+      style: ref({ position: 'fixed', top: '0px', left: '0px' }),
+      referenceRef: ref(null),
+      floatingRef: ref(null),
     }));
     useSiteSettings.mockImplementation(() => ({ getSetting: vi.fn().mockReturnValue('#000000') }));
   });
@@ -135,14 +138,14 @@ describe('ColorPicker', () => {
     'should set correct placement when align="%s", then placement should be "%s"',
     (align, expectedPlacement) => {
       createWrapper({ align });
-      const options = (useFloatingMock.mock.calls[0] as unknown[])[2] as { placement: () => string };
-      expect(options.placement()).toBe(expectedPlacement);
+      const options = (useDropdownMock.mock.calls[0] as unknown[])[0] as { placement: { value: string } };
+      expect(options.placement.value).toBe(expectedPlacement);
     },
   );
 
   it('should default to bottom-end placement when align is not set', () => {
     createWrapper();
-    const options = (useFloatingMock.mock.calls[0] as unknown[])[2] as { placement: () => string };
-    expect(options.placement()).toBe('bottom-end');
+    const options = (useDropdownMock.mock.calls[0] as unknown[])[0] as { placement: { value: string } };
+    expect(options.placement.value).toBe('bottom-end');
   });
 });
