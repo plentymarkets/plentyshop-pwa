@@ -131,11 +131,14 @@ describe('ColorPicker', () => {
     ['left', 'bottom-end'],
     ['center', 'bottom'],
     ['right', 'bottom-start'],
-  ] as const)('should set correct placement when align="%s", then placement should be "%s"', (align, expectedPlacement) => {
-    createWrapper({ align });
-    const options = (useFloatingMock.mock.calls[0] as unknown[])[2] as { placement: () => string };
-    expect(options.placement()).toBe(expectedPlacement);
-  });
+  ] as const)(
+    'should set correct placement when align="%s", then placement should be "%s"',
+    (align, expectedPlacement) => {
+      createWrapper({ align });
+      const options = (useFloatingMock.mock.calls[0] as unknown[])[2] as { placement: () => string };
+      expect(options.placement()).toBe(expectedPlacement);
+    },
+  );
 
   it('should default to bottom-end placement when align is not set', () => {
     createWrapper();
