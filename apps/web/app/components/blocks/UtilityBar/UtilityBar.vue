@@ -30,7 +30,6 @@
         </div>
         <div class="flex items-center gap-2">
           <UiButton
-            v-if="localeCodes.length > 1"
             variant="tertiary"
             class="relative hover:!bg-header-400 active:!bg-header-400 rounded-md"
             square

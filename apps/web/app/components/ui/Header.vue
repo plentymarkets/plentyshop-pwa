@@ -3,7 +3,7 @@
     <template v-if="viewport.isGreaterOrEquals('md')">
       <UiSearch class="hidden md:block flex-1" />
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-        <template v-if="localeCodes.length > 1">
+        <template>
           <UiButton
             v-if="!isLanguageSelectOpen"
             class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
