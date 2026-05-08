@@ -13,8 +13,6 @@
         ref="floatingEl"
         :style="floatingStyles"
         class="z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
-        @pointerdown.stop
-        @click.stop
       >
         <div class="flex border-b border-gray-200" role="tablist">
           <button
@@ -77,7 +75,6 @@
               type="text"
               placeholder="Search emoji..."
               class="w-full px-2 py-1.5 text-sm border border-gray-200 rounded outline-none focus:border-slate-500"
-              @mousedown.stop
             />
           </div>
           <div class="max-h-[240px] overflow-y-auto p-2">
@@ -130,7 +127,7 @@ const { style: floatingStyles } = useDropdown({
   isOpen: open,
   placement: 'bottom-end',
   strategy: 'fixed',
-  onClose: close,
+  onClose: () => {},
 });
 
 const activeTab = ref<IconEmojiPickerTab>('icons');
@@ -157,4 +154,11 @@ const onSelectEmoji = (name: string) => {
   emit('select-emoji', name);
   close();
 };
+
+const onDocPointerdown = (e: PointerEvent) => {
+  if (!root.value?.contains(e.target as Node) && !floatingEl.value?.contains(e.target as Node)) close();
+};
+
+onMounted(() => document.addEventListener('pointerdown', onDocPointerdown));
+onBeforeUnmount(() => document.removeEventListener('pointerdown', onDocPointerdown));
 </script>
