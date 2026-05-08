@@ -29,6 +29,7 @@ const createWrapper = (
     align?: 'left' | 'center' | 'right';
     showShopColors?: boolean;
   }>,
+  stubs?: Record<string, unknown>,
 ) => {
   return mount(ColorPicker, {
     props: {
@@ -39,6 +40,7 @@ const createWrapper = (
       stubs: {
         EditorColorPickerPanel: true,
         Teleport: true,
+        ...stubs,
       },
     },
   });
@@ -82,21 +84,15 @@ describe('ColorPicker', () => {
   });
 
   it('should emit update:modelValue when panel emits update', async () => {
-    const wrapper = mount(ColorPicker, {
-      props: {
-        modelValue: '#000000',
-      },
-      global: {
-        stubs: {
-          Teleport: true,
-          'color-picker-block': true,
-          EditorColorPickerPanel: {
-            template:
-              '<button type="button" data-testid="panel-button" @click="$emit(\'update:modelValue\', \'#123456\')" />',
-          },
+    const wrapper = createWrapper(
+      { modelValue: '#000000' },
+      {
+        EditorColorPickerPanel: {
+          template:
+            '<button type="button" data-testid="panel-button" @click="$emit(\'update:modelValue\', \'#123456\')" />',
         },
       },
-    });
+    );
 
     const trigger = wrapper.get('div[style]');
     await trigger.trigger('click');
@@ -108,22 +104,16 @@ describe('ColorPicker', () => {
   });
 
   it('should change activeTab when panel emits update:activeTab', async () => {
-    const wrapper = mount(ColorPicker, {
-      props: {
-        modelValue: '#000000',
-      },
-      global: {
-        stubs: {
-          Teleport: true,
-          'color-picker-block': true,
-          EditorColorPickerPanel: {
-            props: ['modelValue', 'activeTab', 'primaryColor', 'secondaryColor', 'showShopColors'],
-            template:
-              '<div><span data-testid="active-tab">{{ activeTab }}</span><button type="button" data-testid="tab-button" @click="$emit(\'update:activeTab\', \'shop\')" /></div>',
-          },
+    const wrapper = createWrapper(
+      { modelValue: '#000000' },
+      {
+        EditorColorPickerPanel: {
+          props: ['modelValue', 'activeTab', 'primaryColor', 'secondaryColor', 'showShopColors'],
+          template:
+            '<div><span data-testid="active-tab">{{ activeTab }}</span><button type="button" data-testid="tab-button" @click="$emit(\'update:activeTab\', \'shop\')" /></div>',
         },
       },
-    });
+    );
 
     const trigger = wrapper.get('div[style]');
     await trigger.trigger('click');
