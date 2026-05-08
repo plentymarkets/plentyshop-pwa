@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Fetches The Good Docs Project templates and guides for a given document type.
+# Prints The Good Docs Project templates and guides for a given document type
+# from local copies in ../templates/.
 #
 # Usage:
 #   ./fetch-templates.sh <type>
@@ -12,19 +13,20 @@
 
 set -euo pipefail
 
-BASE="https://gitlab.com/tgdp/templates/-/raw/main"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEMPLATES_DIR="${SCRIPT_DIR}/../templates"
 
 fetch_type() {
   local type="$1"
   echo "================================================================"
   echo "  TEMPLATE: ${type}"
   echo "================================================================"
-  curl -fsSL "${BASE}/${type}/template_${type}.md"
+  cat "${TEMPLATES_DIR}/template_${type}.md"
   echo ""
   echo "----------------------------------------------------------------"
   echo "  GUIDE: ${type}"
   echo "----------------------------------------------------------------"
-  curl -fsSL "${BASE}/${type}/guide_${type}.md"
+  cat "${TEMPLATES_DIR}/guide_${type}.md"
   echo ""
 }
 
