@@ -36,6 +36,6 @@ export const buildBlockClasses = (
     [horizontalClass]: !fullWidth && !isContainerExcluded,
     [verticalClass]: shouldApplyVerticalSpacing,
     'mx-auto': !isContainerExcluded,
-    'p-4 md:px-6 lg:px-10': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
+    'p-4 md:px-4': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
   };
 };
