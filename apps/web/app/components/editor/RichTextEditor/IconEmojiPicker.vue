@@ -9,9 +9,9 @@
 
     <div
       v-if="open"
-      class="absolute top-full right-0 mt-1 z-[1000] w-[260px] translate-x-[25%] rounded border border-gray-200 bg-white shadow-lg"
-      @mousedown.stop
-      @click.stop
+      ref="floatingEl"
+      :style="floatingStyles"
+      class="z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
     >
       <div class="flex border-b border-gray-200" role="tablist">
         <button
@@ -74,7 +74,6 @@
             type="text"
             placeholder="Search emoji..."
             class="w-full px-2 py-1.5 text-sm border border-gray-200 rounded outline-none focus:border-slate-500"
-            @mousedown.stop
           />
         </div>
         <div class="max-h-[240px] overflow-y-auto p-2">
@@ -100,6 +99,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDropdown } from '@storefront-ui/vue';
 import type { IconEmojiPickerTab } from './types';
 import { getIconCategories, getIconsByCategory, filterEmojis } from './utils/iconEmojiPickerUtils';
 
@@ -110,7 +110,24 @@ const emit = defineEmits<{
 }>();
 
 const root = ref<HTMLElement | null>(null);
+const floatingEl = ref<HTMLElement | null>(null);
 const open = ref(false);
+
+const close = () => {
+  open.value = false;
+  activeTab.value = 'icons';
+  emojiSearch.value = '';
+};
+
+const { style: floatingStyles } = useDropdown({
+  referenceRef: root,
+  floatingRef: floatingEl,
+  isOpen: open,
+  placement: 'bottom-end',
+  strategy: 'fixed',
+  onClose: close,
+});
+
 const activeTab = ref<IconEmojiPickerTab>('icons');
 const emojiSearch = ref('');
 
@@ -126,12 +143,6 @@ const toggle = () => {
   open.value = !open.value;
 };
 
-const close = () => {
-  open.value = false;
-  activeTab.value = 'icons';
-  emojiSearch.value = '';
-};
-
 const onSelectIcon = (name: string) => {
   emit('select-icon', name);
   close();
@@ -141,16 +152,4 @@ const onSelectEmoji = (name: string) => {
   emit('select-emoji', name);
   close();
 };
-
-const onDocClick = (e: MouseEvent) => {
-  if (!root.value?.contains(e.target as Node)) close();
-};
-
-onMounted(() => {
-  document.addEventListener('mousedown', onDocClick);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', onDocClick);
-});
 </script>
