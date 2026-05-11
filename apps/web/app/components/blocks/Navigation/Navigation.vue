@@ -1,7 +1,7 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" @mouseleave="onMouseLeave">
-      <ul :class="navigationContainerClasses" :style="navigationContainerStyle" @blur="onNavBlur">
+      <ul :class="navigationContainerClasses" :style="navigationContainerStyle" @focusout="onNavBlur">
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
@@ -422,6 +422,7 @@ const handleTabInDropdown = (event: KeyboardEvent) => {
 const onNavBlur = (event: FocusEvent) => {
   if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
     close();
+    tappedCategoryId.value = null;
   }
 };
 
@@ -473,7 +474,10 @@ const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) =
 };
 
 onMounted(() => {
-  removeHook = router.afterEach(() => close());
+  removeHook = router.afterEach(() => {
+    close();
+    tappedCategoryId.value = null;
+  });
 });
 
 onBeforeUnmount(() => removeHook?.());
