@@ -60,7 +60,7 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         with:
           scandir: './scripts'
-          additional_files: '.github/skills/code-generation/generate.sh'
+          additional_files: '.github/skills/code-generation/generate.sh .github/skills/documentation/scripts/fetch-templates.sh'
           severity: warning
           ignore_paths: 'node_modules'
         env:

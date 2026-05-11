@@ -123,7 +123,7 @@ export const useTableOfContents = () => {
     const blocks = data.value;
     if (!blocks.length) return;
 
-    const footerIndex = blocks.findIndex((block: Block) => isFooterBlock(block));
+    const footerIndex = blocks.findIndex((block: Block) => isFooterContainerBlock(block));
     const footerBlock = footerIndex >= 0 ? blocks[footerIndex] : null;
 
     if (footerBlock) {
