@@ -40,7 +40,6 @@ const createWrapper = (
     global: {
       stubs: {
         EditorColorPickerPanel: true,
-        Teleport: true,
         ...stubs,
       },
     },

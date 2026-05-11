@@ -12,7 +12,6 @@
       <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
-    <Teleport to="body">
       <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]">
         <EditorColorPickerPanel
           :model-value="modelValue"
@@ -24,7 +23,6 @@
           @update:active-tab="activeTab = $event"
         />
       </div>
-    </Teleport>
   </div>
 </template>
 
@@ -73,7 +71,7 @@ const { style: floatingStyles } = useDropdown({
   isOpen: open,
   placement: computed(() => placementMap[props.align]),
   strategy: 'fixed',
-  onClose: () => {},
+  onClose: close,
 });
 
 const style = computed(() => ({
@@ -108,12 +106,4 @@ const toggle = () => {
   }
 };
 
-const onDocPointerdown = (e: PointerEvent) => {
-  if (!root.value?.contains(e.target as Node) && !floatingEl.value?.contains(e.target as Node)) {
-    close();
-  }
-};
-
-onMounted(() => document.addEventListener('pointerdown', onDocPointerdown));
-onBeforeUnmount(() => document.removeEventListener('pointerdown', onDocPointerdown));
 </script>
