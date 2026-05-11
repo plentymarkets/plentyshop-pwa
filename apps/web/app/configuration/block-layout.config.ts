@@ -18,6 +18,7 @@ export type BlockLayoutRule = {
  */
 export const BLOCK_LAYOUT_RULES: Record<string, BlockLayoutRule> = {
   Footer: { container: false, padding: false },
+  FooterContainer: { container: false, padding: false },
 
   MultiGrid: { defaultFullWidth: false, padding: false },
   NewsletterSubscribe: { defaultFullWidth: false, padding: true },

@@ -4,13 +4,14 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      class="group/col relative z-[1]"
+      class="group/col relative md:z-[1]"
       data-testid="multi-grid-column"
     >
       <div
         v-for="row in column"
         :key="row.meta.uuid"
         class="group/row relative"
+        :class="{ 'min-h-[60px]': showOverlay(row) }"
         :data-uuid="row.meta.uuid"
         @mouseenter="onRowEnter(row)"
         @mouseleave="onRowLeave"
