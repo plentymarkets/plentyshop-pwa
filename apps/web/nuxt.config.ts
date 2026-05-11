@@ -161,9 +161,6 @@ export default defineNuxtConfig({
       disableVuetifyStyles: true,
     },
     vuetifyOptions: {
-      theme: {
-        defaultTheme: 'light',
-      },
       icons: {
         defaultSet: 'mdi-svg',
       },
