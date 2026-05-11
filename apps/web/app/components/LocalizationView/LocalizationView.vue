@@ -8,14 +8,7 @@
         <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" :show-arrow="true" class="flex">
           <SfIconHelp class="cursor-pointer" />
         </SfTooltip>
-        <button
-          data-testid="pages-view-close"
-          class="!p-0"
-          @click="
-            closeSiteConfigurationDrawer();
-            drawerOpen = false;
-          "
-        >
+        <button data-testid="pages-view-close" class="!p-0" @click="handleClose">
           <SfIconClose />
         </button>
       </div>
@@ -61,6 +54,11 @@ initializeLocales();
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const editTranslationsOpen = ref(false);
 const editLanguagesOpen = ref(false);
+
+const handleClose = () => {
+  closeSiteConfigurationDrawer();
+  drawerOpen.value = false;
+};
 </script>
 
 <i18n lang="json">
