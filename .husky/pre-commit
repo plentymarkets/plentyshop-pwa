@@ -1,4 +1,12 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+# .husky/pre-commit
+# Runs lint-staged (formatting + ESLint) and the DRY-principle check.
 
-node_modules/.bin/lint-staged --cwd apps/web
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 1. Formatting + ESLint on staged files
+npx lint-staged
+
+# 2. DRY-principle analysis
+#    Set SKIP_DRY_CHECK=1 to bypass when duplication is intentional.
+node scripts/dry-check.mjs

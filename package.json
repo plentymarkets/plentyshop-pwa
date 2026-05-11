@@ -10,8 +10,12 @@
   ],
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js",
+    "prepare": "husky",
+    "dry-check": "node scripts/dry-check.mjs",
+    "dry-check:warn": "node scripts/dry-check.mjs --warn-only",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
+    "use:local-packages": "./scripts/use-local-packages.sh",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "npm run turbo:disable-telemetry && turbo run build",
     "build:analyze": "npm run turbo:disable-telemetry && turbo run build:analyze",
