@@ -1,17 +1,7 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" @mouseleave="onMouseLeave">
-      <ul
-        :class="navigationContainerClasses"
-        :style="navigationContainerStyle"
-        @blur="
-          (event: FocusEvent) => {
-            if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
-              close();
-            }
-          }
-        "
-      >
+      <ul :class="navigationContainerClasses" :style="navigationContainerStyle" @blur="onNavBlur">
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
@@ -71,7 +61,6 @@
               'hidden md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
               submenuGridAlignmentClass,
             ]"
-            @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
             @keydown.down="navigateDropdownItems($event, 'down')"
@@ -265,7 +254,7 @@ const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
-const tappedCategories = ref<Map<number, boolean>>(new Map());
+const tappedCategoryId = ref<number | null>(null);
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
   'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 nav-hover-bg active:!bg-neutral-300';
@@ -396,7 +385,7 @@ const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
 
 const onEnterKey = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') => {
@@ -430,9 +419,15 @@ const handleTabInDropdown = (event: KeyboardEvent) => {
   focusableItems[nextIndex]?.focus();
 };
 
+const onNavBlur = (event: FocusEvent) => {
+  if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
+    close();
+  }
+};
+
 const onMouseLeave = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
@@ -461,13 +456,12 @@ const onMouseDown = () => {
 };
 
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
-  tappedCategories.value.clear();
-  tappedCategories.value.set(menuNode.id, true);
+  tappedCategoryId.value = menuNode.id;
   onCategoryMouseEnter(menuNode);
 };
 
 const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) => {
-  if (isUsingTouch.value && menuNode.childCount > 0 && !tappedCategories.value.get(menuNode.id)) {
+  if (isUsingTouch.value && menuNode.childCount > 0 && tappedCategoryId.value !== menuNode.id) {
     event.stopPropagation();
     event.preventDefault();
     handleFirstTouch(menuNode);
@@ -475,7 +469,7 @@ const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) =
   }
 
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 onMounted(() => {
