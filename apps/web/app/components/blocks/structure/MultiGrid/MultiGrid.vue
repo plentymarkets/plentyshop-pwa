@@ -4,7 +4,7 @@
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      class="group/col relative md:z-[1]"
+      class="px-4 group/col relative md:z-[1]"
       data-testid="multi-grid-column"
     >
       <div
