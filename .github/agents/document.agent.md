@@ -19,7 +19,7 @@ Before writing, conduct a focused interview. Cover these areas:
 1. **What** — What is the feature, concept, or workflow being documented?
 2. **Why** — What problem does it solve? What is the background/motivation?
 3. **How** — Step-by-step: how does it work technically or from a user perspective?
-4. **Who** — Is this for developers, merchants, or both?
+4. **Who** — Is this for theme developers, module developers, or both?
 5. **Where** — Search `docs/` to find the best existing file or section. Propose a specific path and only ask the user to confirm if you are genuinely uncertain between two candidates.
 6. **Examples** — Are there code snippets, diagrams, or screenshots to include?
 
