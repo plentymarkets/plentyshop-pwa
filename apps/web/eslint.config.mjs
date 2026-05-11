@@ -2,6 +2,7 @@ import withNuxt from './.nuxt/eslint.config.mjs';
 import { architecture, ecma } from "@vue-storefront/eslint-config";
 import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
 import { noI18nGlobals } from './eslint-rules/no-i18n-globals.js';
+import { noMultipleTemplateCallbacks } from './eslint-rules/no-multiple-template-callbacks.js';
 
 export default withNuxt(
   {
@@ -25,7 +26,8 @@ export default withNuxt(
     plugins: {
       'custom-rules': {
         rules: {
-          'no-i18n-globals': noI18nGlobals
+          'no-i18n-globals': noI18nGlobals,
+          'no-multiple-template-callbacks': noMultipleTemplateCallbacks,
         }
       }
     },
@@ -78,6 +80,7 @@ export default withNuxt(
       'vuejs-accessibility/no-redundant-roles': 'off',
       'vuejs-accessibility/no-static-element-interactions': 'off',
       'custom-rules/no-i18n-globals': 'error',
+      'custom-rules/no-multiple-template-callbacks': 'error',
     }
   },
 );

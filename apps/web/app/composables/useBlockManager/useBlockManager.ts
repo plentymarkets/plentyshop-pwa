@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- pending refactor */
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
@@ -90,6 +91,28 @@ export const useBlockManager = () => {
     headerContainer.value.content = headerCopy.content;
   };
 
+  const addBlockToFooter = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
+    if (!footer.value || !Array.isArray(footer.value.content)) return;
+
+    const footerCopy = deepClone(footer.value) as Block;
+    const parentInfo = findBlockParent(footerCopy.content as Block[], targetUuid);
+    if (!parentInfo) return;
+
+    const { parent, index } = parentInfo;
+    const targetBlock = parent[index];
+    if (!targetBlock) return;
+
+    newBlock.parent_slot = targetBlock.parent_slot;
+
+    insertBlock({ targetBlock, newBlock, parent, index, position });
+
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
+
+    footer.value.content = footerCopy.content;
+  };
+
   const addBlockToPage = (newBlock: Block, targetUuid: string, position: BlockPosition): boolean => {
     if (!pageBlocks.value) return false;
 
@@ -139,8 +162,13 @@ export const useBlockManager = () => {
       !!headerContainer.value &&
       !!findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
 
+    const isTargetInFooter =
+      !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
+
     if (isTargetInHeader) {
       addBlockToHeader(newBlock, targetUuid, position);
+    } else if (isTargetInFooter) {
+      addBlockToFooter(newBlock, targetUuid, position);
     } else if (!addBlockToPage(newBlock, targetUuid, position)) {
       return;
     }
