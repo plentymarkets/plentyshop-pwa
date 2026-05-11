@@ -152,6 +152,4 @@ const onSelectEmoji = (name: string) => {
   emit('select-emoji', name);
   close();
 };
-
-
 </script>

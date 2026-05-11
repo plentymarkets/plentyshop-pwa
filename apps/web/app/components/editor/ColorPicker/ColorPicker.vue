@@ -12,17 +12,17 @@
       <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
-      <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]">
-        <EditorColorPickerPanel
-          :model-value="modelValue"
-          :active-tab="activeTab"
-          :primary-color="primaryColor"
-          :secondary-color="secondaryColor"
-          :show-shop-colors="props.showShopColors"
-          @update:model-value="emit('update:modelValue', $event)"
-          @update:active-tab="activeTab = $event"
-        />
-      </div>
+    <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]">
+      <EditorColorPickerPanel
+        :model-value="modelValue"
+        :active-tab="activeTab"
+        :primary-color="primaryColor"
+        :secondary-color="secondaryColor"
+        :show-shop-colors="props.showShopColors"
+        @update:model-value="emit('update:modelValue', $event)"
+        @update:active-tab="activeTab = $event"
+      />
+    </div>
   </div>
 </template>
 
@@ -105,5 +105,4 @@ const toggle = () => {
     openDropdown();
   }
 };
-
 </script>
