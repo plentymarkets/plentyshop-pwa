@@ -36,7 +36,7 @@
           :class="{ 'bg-editor-button text-white rounded-md': siteConfigurationDrawerView === 'TableOfContents' }"
           aria-label="Open table of contents drawer"
           data-testid="open-table-of-contents-drawer"
-          @click="(toggleDrawerView('TableOfContents'), logToCOpened())"
+          @click="toggleTableOfContentsDrawer()"
         >
           <NuxtImg
             v-if="siteConfigurationDrawerView === 'TableOfContents'"
@@ -73,11 +73,19 @@ const {
   setActiveSetting,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const { logToCOpened } = useLogEvent();
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
 const tableOfContentsLabel = 'Table of contents: view and navigate to all blocks on the current page.';
+
+const toggleTableOfContentsDrawer = () => {
+  if (siteConfigurationDrawerView.value === 'TableOfContents') {
+    closeSiteConfigurationDrawer();
+  } else {
+    openDrawerWithView('TableOfContents');
+    useLogEvent().logToCOpened();
+  }
+};
 
 function toggleDrawerView(view: DrawerView) {
   if (siteConfigurationDrawerView.value === 'LocalizationView') {
