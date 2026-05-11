@@ -76,3 +76,5 @@ apps/web/reference/
 .github/instructions/experimental-*.instructions.md
 .github/skills/experimental-*/SKILL.md
 .github/skills/experimental-*/*.sh
+# local package linker cache
+scripts/.local-packages-config
