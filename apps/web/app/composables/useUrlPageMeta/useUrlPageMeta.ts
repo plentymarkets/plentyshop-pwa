@@ -33,7 +33,10 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
         ],
       });
     }
-    if (facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage) {
+    if (
+      productsCatalog.pagination?.totals &&
+      facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage
+    ) {
       useHead({
         link: [
           {

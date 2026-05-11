@@ -72,6 +72,6 @@ describe('Table of Contents & Double Drawer', () => {
       toc.selectBlockToAdd();
       toc.checkBlockAdded(initialBlockCount);
     });
-    toc.checkBothDrawersStillVisible();
+    toc.checkBothDrawersVisible();
   });
 });

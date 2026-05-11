@@ -9,6 +9,7 @@ export interface UseProductsState {
 
 export type FetchProducts = (params: FacetSearchCriteria) => Promise<Facet>;
 export type SetCurrentProduct = (product: Product) => void;
+export type LoadFakeGlobalCategoryData = (locale: string) => void;
 
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
@@ -17,7 +18,7 @@ export interface UseProducts {
   currentProduct: Readonly<Ref<UseProductsState['currentProduct']>>;
   fetchProducts: FetchProducts;
   setCurrentProduct: SetCurrentProduct;
-  isGlobalProductCategoryTemplate: Readonly<Ref<boolean>>;
+  loadFakeGlobalCategoryData: LoadFakeGlobalCategoryData;
 }
 
 export type UseProductsReturn = (category?: string) => UseProducts;

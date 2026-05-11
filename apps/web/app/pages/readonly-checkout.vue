@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/shop-api';
+import { AddressType, cartGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import type { Locale } from '#i18n';
@@ -116,6 +116,7 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { data: cart, cartIsEmpty, loading: cartLoading } = useCart();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { emit } = usePlentyEvent();
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const loading = ref(true);
 const {
   loading: executeOrderLoading,
@@ -123,6 +124,7 @@ const {
   captureOrder,
   createPlentyPaymentFromPayPalOrder,
   setAddressesFromPayPal,
+  getScript,
 } = usePayPal();
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal, initialTotal } = useCartTotalChange();
@@ -174,6 +176,12 @@ const handle = async () => {
     await unreserve();
     return navigateTo(localePath(paths.cart));
   }
+  const payPalScript = await getScript(currency.value);
+  if (!payPalScript) {
+    send({ type: 'negative', message: t('paypalPayment.expressNotAvailable') });
+    await unreserve();
+    return navigateTo(localePath(paths.cart));
+  }
 
   await setAddressesFromPayPal(paypalOrderId);
   await fetchSession();
@@ -203,6 +211,7 @@ const handle = async () => {
     return navigateTo(localePath(paths.checkout));
   }
 
+  await usePayPal().updateAvailableAPMs(payPalScript, currency.value);
   await Promise.all([
     useCartShippingMethods().getShippingMethods(),
     fetchPaymentMethods(),
