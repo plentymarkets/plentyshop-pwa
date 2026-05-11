@@ -11,10 +11,7 @@
         <button
           data-testid="pages-view-close"
           class="!p-0"
-          @click="
-            closeSiteConfigurationDrawer();
-            drawerOpen = false;
-          "
+          @click="handleClose"
         >
           <SfIconClose />
         </button>
@@ -61,6 +58,11 @@ initializeLocales();
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const editTranslationsOpen = ref(false);
 const editLanguagesOpen = ref(false);
+
+const handleClose = () => {
+  closeSiteConfigurationDrawer();
+  drawerOpen.value = false;
+};
 </script>
 
 <i18n lang="json">
