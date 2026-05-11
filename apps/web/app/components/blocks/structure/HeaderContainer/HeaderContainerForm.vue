@@ -41,6 +41,7 @@ const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
+const { logHeaderContainerEditBlock } = useLogEvent();
 
 const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
@@ -105,7 +106,7 @@ const editBlock = (index: number) => {
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
   currentActiveBlockIndex.value = index;
   setEditTitle(blockLabels.value[index]!);
-  trackHeaderContainerEditBlock();
+  logHeaderContainerEditBlock();
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {

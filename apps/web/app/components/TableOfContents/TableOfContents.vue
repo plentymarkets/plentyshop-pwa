@@ -85,7 +85,7 @@
               type="button"
               class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
               data-testid="toc-add-block"
-              @click="(addBlockAtBottom(), trackToCCreateBlock())"
+              @click="(addBlockAtBottom(), logToCCreateBlock())"
             >
               <SfIconAdd />
               {{ getEditorTranslation('add-element-label') }}
@@ -118,6 +118,7 @@ const { closeSiteConfigurationDrawer, openDrawerWithView } = useSiteConfiguratio
 const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks, reorderHeaderBlocks } = useBlocks();
 const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
+const { logToCCreateBlock } = useLogEvent();
 
 const accordionProps = {
   summaryClass: 'w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b',
@@ -146,7 +147,7 @@ const addHeaderBlock = () => {
   if (!lastChild) return;
   multigridColumnUuid.value = null;
   togglePlaceholder(lastChild.meta.uuid, 'bottom');
-  trackToCCreateBlock();
+  logToCCreateBlock();
   openDrawerWithView('blocksList');
 };
 
