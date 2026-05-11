@@ -1,6 +1,6 @@
 <template>
   <div ref="blockRef" v-bind="$attrs">
-    <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
+    <TextContent v-if="recommendedProducts.length > 0" data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
     <ProductSlider v-if="shouldShowSlider" :items="recommendedProducts" />
   </div>
 </template>
