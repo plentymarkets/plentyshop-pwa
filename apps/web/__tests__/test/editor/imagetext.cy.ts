@@ -6,8 +6,8 @@ describe('Image Text Block Form', () => {
   const imageText = new ImageTextObject();
 
   const openImageInGrid = () => {
-    cy.get('[data-testid="multi-grid-structure"]').children().should('have.length', 2);
-    cy.get('[data-testid="multi-grid-structure"]').within(() => {
+    cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
+    cy.get('[data-testid="multi-grid-structure"]').first().within(() => {
       cy.get('[data-testid="Image-open-editor-button"]').first().should('exist').click({ force: true });
     });
     cy.get('[data-testid="image-group"]').should('exist').click();
@@ -19,8 +19,8 @@ describe('Image Text Block Form', () => {
   };
 
   const openTextInGrid = () => {
-    cy.get('[data-testid="multi-grid-structure"]').children().should('have.length', 2);
-    cy.get('[data-testid="multi-grid-structure"]').within(() => {
+    cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
+    cy.get('[data-testid="multi-grid-structure"]').first().within(() => {
       cy.get('[data-testid="TextCard-open-editor-button"]').last().should('exist').click({ force: true });
     });
     cy.get('[data-testid="open-text-settings"]').should('exist').click();
