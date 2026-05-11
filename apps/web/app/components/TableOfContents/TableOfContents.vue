@@ -85,7 +85,7 @@
               type="button"
               class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
               data-testid="toc-add-block"
-              @click="(addBlockAtBottom(), logToCCreateBlock())"
+              @click="handleAddBlockAtBottom()"
             >
               <SfIconAdd />
               {{ getEditorTranslation('add-element-label') }}
@@ -140,6 +140,11 @@ const handleHeaderDragChange = (evt: DragEvent) => {
       scrollIntoBlockView(draggedBlock);
     }
   }
+};
+
+const handleAddBlockAtBottom = () => {
+  addBlockAtBottom();
+  logToCCreateBlock();
 };
 
 const addHeaderBlock = () => {
