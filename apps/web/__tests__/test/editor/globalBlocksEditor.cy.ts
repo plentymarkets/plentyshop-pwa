@@ -95,10 +95,10 @@ describe('Global Blocks Editor', () => {
       // prettier-ignore
       footerBlock
         .openSettingsDrawer()
-        .changeColumnTitle('E2E Footer Title');
+        .changeBackgroundColor('#abcdef');
 
       toolbar.assertSaveEnabled();
-      footerBlock.assertColumnTitleValue('E2E Footer Title');
+      footerBlock.assertBackgroundColorValue('#abcdef');
     });
 
     it('header container child form edits enable save button', () => {
@@ -138,7 +138,7 @@ describe('Global Blocks Editor', () => {
       // prettier-ignore
       footerBlock
         .openSettingsDrawer()
-        .changeColumnTitle('Saved Footer Title');
+        .changeBackgroundColor('#abcdef');
 
       toolbar.assertSaveEnabled();
       toolbar.clickSave();
@@ -151,8 +151,14 @@ describe('Global Blocks Editor', () => {
       // prettier-ignore
       blocks
         .assertHeaderContainerVisible()
-        .assertFooterVisible()
-        .assertFooterContainsText('Saved Footer Title');
+        .assertFooterVisible();
+
+      // prettier-ignore
+      tableOfContents
+        .openTableOfContents()
+        .checkTableOfContentsVisible();
+
+      footerBlock.openSettingsDrawer().assertBackgroundColorValue('#abcdef');
     });
   });
 });
