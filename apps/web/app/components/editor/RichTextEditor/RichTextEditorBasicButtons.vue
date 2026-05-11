@@ -4,7 +4,6 @@
       <SfDropdown v-model="isBlockTypeOpen" placement="bottom-start" @update:model-value="onBlockTypeDropdownToggle">
         <template #trigger>
           <button
-            ref="blockTypeTriggerRef"
             type="button"
             data-testid="rte-heading-select"
             class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
@@ -61,7 +60,6 @@
       <SfDropdown v-model="isFontSizeOpen" placement="bottom-start" @update:model-value="onFontSizeDropdownToggle">
         <template #trigger>
           <button
-            ref="fontSizeTriggerRef"
             type="button"
             data-testid="rte-font-size-select"
             class="flex h-8 w-[84px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
@@ -171,9 +169,6 @@ const props = defineProps<{
 
 const isBlockTypeOpen = ref(false);
 const isFontSizeOpen = ref(false);
-
-const blockTypeTriggerRef = ref<HTMLButtonElement | null>(null);
-const fontSizeTriggerRef = ref<HTMLButtonElement | null>(null);
 
 const blockTypeOptions = [
   { value: 'paragraph', label: 'Normal' },
