@@ -18,17 +18,17 @@
     <ul v-if="categoryItems?.length" class="mb-4 md:mt-2" data-testid="categories">
       <CategoryTreeItem
         v-for="categoryItem in categoryItems"
-        :key="categoryGetters.getSubcategoryId(categoryItem)"
-        :name="categoryGetters.getSubcategoryName(categoryItem)"
+        :key="categoryGetters.getSubCategoryId(categoryItem)"
+        :name="categoryGetters.getSubCategoryName(categoryItem)"
         :href="buildSubcategoryHref(categoryItem)"
-        :count="categoryGetters.getSubcategoryItemCount(categoryItem)"
+        :count="categoryGetters.getSubCategoryItemCount(categoryItem)"
       />
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Subcategory } from '@plentymarkets/shop-api';
+import type { SubCategory } from '@plentymarkets/shop-api';
 import { categoryGetters, breadcrumbGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
 import { SfIconArrowBack } from '@storefront-ui/vue';
@@ -37,7 +37,7 @@ const props = defineProps<CategoryTreeProps>();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const categoryItems = computed(() => categoryGetters.getSubcategories(props.category));
+const categoryItems = computed(() => categoryGetters.getSubCategories(props.category));
 
 const currentCategoryPath = computed(() => {
   const current = breadcrumbGetters.getCurrent(props.breadcrumbs ?? []);
@@ -46,9 +46,9 @@ const currentCategoryPath = computed(() => {
 
 const parentCategory = computed(() => breadcrumbGetters.getParent(props.breadcrumbs ?? []));
 
-const buildSubcategoryHref = (subcategory: Subcategory): string => {
+const buildSubcategoryHref = (subcategory: SubCategory): string => {
   const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
-  const slug = categoryGetters.getSubcategoryNameUrl(subcategory);
+  const slug = categoryGetters.getSubCategoryNameUrl(subcategory);
   return localePath(`${base}/${slug}`);
 };
 </script>
