@@ -133,7 +133,7 @@
           :style="getSectionColumnStyle('actions')"
           class="flex flex-row flex-nowrap"
         >
-          <template v-if="localeCodes.length > 1 && isActionVisible('language')">
+          <template v-if="isActionVisible('language')">
             <UiButton
               v-if="!isLanguageSelectOpen"
               class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
@@ -393,7 +393,6 @@ const headerBackgroundColor = computed(() => content.value?.color?.backgroundCol
 const headerPaletteStyle = useGenerateTailwindPalette('header', headerBackgroundColor);
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
