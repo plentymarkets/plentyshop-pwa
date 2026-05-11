@@ -1,6 +1,6 @@
 // eslint-rules/no-multiple-template-callbacks.js
 /**
- * @fileoverview Rule to forbid multiple method calls in a single Vue template event handler.
+ * @fileoverview Rule to forbid multiple statements/expressions in a single Vue template event handler.
  * Use a combined method instead: @click="method(), method2()" → @click="handleClick"
  */
 
@@ -10,11 +10,11 @@ export const noMultipleTemplateCallbacks = {
     type: 'suggestion',
     docs: {
       description:
-        'Forbid multiple method calls in a single Vue template event handler. Extract them into a single combined method.',
+        'Forbid multiple statements/expressions in a single Vue template event handler. Extract them into a single combined method.',
     },
     messages: {
       noMultipleCallbacks:
-        'Avoid calling multiple methods in a single template event handler. Extract them into a single combined method (e.g., @click="handleClick" where handleClick calls both methods).',
+        'Avoid multiple statements/expressions in a single template event handler. Extract them into a single combined method (e.g., @click="handleClick" where handleClick handles statements/expressions).',
     },
     schema: [],
   },
