@@ -1,10 +1,10 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
+  <div data-testid="multi-grid-structure" :class="[getGridClasses(), 'px-4']" :style="gridInlineStyle">
     <div
       v-for="(column, colIndex) in columns"
       :key="colIndex"
       :class="getColumnClasses(colIndex)"
-      class="px-4 group/col relative md:z-[1]"
+      class="group/col relative md:z-[1]"
       data-testid="multi-grid-column"
     >
       <div
