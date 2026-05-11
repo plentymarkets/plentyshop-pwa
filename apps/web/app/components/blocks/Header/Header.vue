@@ -4,36 +4,34 @@
       <template v-if="viewport.isGreaterOrEquals('md')">
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-          <template>
-            <UiButton
-              v-if="!isLanguageSelectOpen"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-              :aria-label="t('common.navigation.languageSelector')"
-              variant="tertiary"
-              :style="{ color: resolvedIconColor }"
-              square
-              data-testid="open-languageselect-button"
-              :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-              @click="toggleLanguageSelect()"
-            >
-              <template #prefix>
-                <SfIconLanguage class="relative" />
-              </template>
-            </UiButton>
-            <UiButton
-              v-else
-              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-              :aria-label="t('common.navigation.languageSelector')"
-              :style="{ color: isActive ? resolvedIconColor : '' }"
-              variant="tertiary"
-              square
-              data-testid="open-languageselect-button"
-            >
-              <template #prefix>
-                <SfIconLanguage class="relative" />
-              </template>
-            </UiButton>
-          </template>
+          <UiButton
+            v-if="!isLanguageSelectOpen"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            variant="tertiary"
+            :style="{ color: resolvedIconColor }"
+            square
+            data-testid="open-languageselect-button"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </UiButton>
+          <UiButton
+            v-else
+            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            :style="{ color: isActive ? resolvedIconColor : '' }"
+            variant="tertiary"
+            square
+            data-testid="open-languageselect-button"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </UiButton>
           <UiButton
             class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
@@ -255,7 +253,6 @@ const resolvedIconColor = computed(() => props.content.iconColor || getIconColor
 const resolvedBackgroundColor = computed(() => props.content.backgroundColor || getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
