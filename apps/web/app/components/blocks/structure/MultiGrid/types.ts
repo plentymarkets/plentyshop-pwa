@@ -5,6 +5,7 @@ interface MultiGridLayout {
   marginBottom?: number;
   backgroundColor?: string;
   gap?: string;
+  fullWidth?: boolean;
 }
 
 export type MultiGridProps = {
@@ -44,12 +45,12 @@ export type ColumnBlock = Block & {
   configuration: {
     columnWidths: number[];
     sticky?: number[];
+
     layout?: {
       gap: string;
       marginTop?: number;
       marginBottom?: number;
       backgroundColor?: string;
-      fullWidth?: boolean;
     };
   };
 };
