@@ -6,14 +6,14 @@
         v-for="preset in filteredPresets"
         :key="preset.label"
         class="px-1 pt-2 pb-[7px] rounded-[7px] border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-[5px] hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-[120ms]"
-        @click="pickPreset(preset.spans)"
+        @click="pickPreset(preset.columnWidths)"
       >
         <div class="flex gap-[2px] w-full h-[10px]">
           <div
-            v-for="(span, i) in preset.spans"
+            v-for="(columnWidth, i) in preset.columnWidths"
             :key="i"
-            class="h-full rounded-[2px]"
-            :style="{ flex: span, background: 'rgba(29,94,199,0.18)', border: '1px dashed rgba(29,94,199,0.5)' }"
+            class="h-full rounded-[2px] bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
+            :style="{ flex: columnWidth }"
           />
         </div>
         <span class="text-[10px] text-editor-text-subtle">{{ preset.label }}</span>
@@ -32,15 +32,15 @@ const showLayout = computed(() => activeFilters.value.length === 0 || activeFilt
 
 const filteredPresets = computed(() =>
   LAYOUT_PRESETS.filter(
-    (p) => !searchQuery.value || p.label.toLowerCase().includes(searchQuery.value.toLowerCase()),
+    (preset) => !searchQuery.value || preset.label.toLowerCase().includes(searchQuery.value.toLowerCase()),
   ),
 );
 
-const pickPreset = (spans: readonly number[]) => {
+const pickPreset = (columnWidths: readonly number[]) => {
   if (!popoverState.value) return;
   const { targetUuid: uuid, position } = popoverState.value;
   closeAddBlockPopover();
-  insertCustomBlock(createMultiGridBlock(spans) as never, uuid, position);
+  insertCustomBlock(createMultiGridBlock(columnWidths) as never, uuid, position);
 };
 </script>
 
@@ -53,6 +53,6 @@ const pickPreset = (spans: readonly number[]) => {
 <i18n lang="json">
 {
   "en": { "layout-preset": "Layout Presets" },
-  "de": { "layout-preset": "Layout-Vorlagen" }
+  "de": { "layout-preset": "Layout Presets" },
 }
 </i18n>

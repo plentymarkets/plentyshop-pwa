@@ -94,6 +94,7 @@ export default {
           'surface-muted': '#f0f0f0',
           border: '#e8e8e8',
           'accent-border-hover': '#c0d4ff',
+          accent: 'rgb(29 94 199 / <alpha-value>)',
         },
 
         header: {
