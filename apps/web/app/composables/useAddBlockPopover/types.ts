@@ -8,7 +8,6 @@ export interface AddBlockPopoverState {
   anchorBottom: number;
   targetUuid: string;
   position: BlockPosition;
-  showLayoutPresets: boolean;
 }
 
 export interface UseAddBlockPopoverState {
@@ -21,7 +20,6 @@ export interface OpenAddBlockPopoverParams {
   anchorEl: HTMLElement;
   targetUuid: string;
   position: BlockPosition;
-  showLayoutPresets?: boolean;
   onCancel?: () => void;
   onPresetPick?: (spans: readonly number[]) => void;
 }

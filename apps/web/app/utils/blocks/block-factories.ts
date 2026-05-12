@@ -1,31 +1,24 @@
+import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuidv4 } from 'uuid';
 
-export interface LayoutPreset {
-  readonly label: string;
-  readonly spans: readonly number[];
-}
-
-export const LAYOUT_PRESETS: readonly LayoutPreset[] = [
-  { label: '1 Col', spans: [12] },
-  { label: '2 Equal', spans: [6, 6] },
-  { label: 'Sidebar L', spans: [3, 9] },
-  { label: 'Sidebar R', spans: [9, 3] },
-  { label: '3 Equal', spans: [4, 4, 4] },
-  { label: '4 Equal', spans: [3, 3, 3, 3] },
-];
-
-export const createMultiGridBlock = (columnWidths: readonly number[]) => ({
-  name: 'MultiGrid' as const,
-  type: 'structure' as const,
+export const createMultiGridBlock = (columnWidths: readonly number[]): Block => ({
+  name: 'MultiGrid',
+  type: 'structure',
   meta: { uuid: '' },
-  configuration: { columnWidths: [...columnWidths], fullWidth: false, visible: true },
-  content: columnWidths.map((_, i) => ({
-    name: 'EmptyGridBlock' as const,
-    type: 'content' as const,
-    meta: { uuid: '' },
-    parent_slot: i,
-    content: [] as never[],
-  })),
+  configuration: {
+    visible: true,
+    columnWidths: [...columnWidths],
+    layout: { fullWidth: false },
+  },
+  content: columnWidths.map(
+    (_, i): Block => ({
+      name: 'EmptyGridBlock',
+      type: 'content',
+      meta: { uuid: '' },
+      parent_slot: i,
+      content: [],
+    }),
+  ),
 });
 
 export const createEmptyGridBlock = (parentSlot: number) => ({

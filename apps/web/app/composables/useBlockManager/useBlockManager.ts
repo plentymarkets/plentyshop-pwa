@@ -112,6 +112,9 @@ export const useBlockManager = () => {
     if (!pageBlocks.value) return false;
 
     if (pageBlocks.value.length === 0) {
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
       updateBlocks([newBlock]);
       openDrawerWithView('blocksSettings', newBlock);
       return false;

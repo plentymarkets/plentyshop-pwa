@@ -44,7 +44,7 @@ const pickPreset = (columnWidths: readonly number[]) => {
   const handled = consumePresetPick(columnWidths);
   closeAddBlockPopover();
   if (!handled) {
-    insertCustomBlock(createMultiGridBlock(columnWidths) as never, uuid, position);
+    insertCustomBlock(createMultiGridBlock(columnWidths), uuid, position);
   }
 };
 </script>

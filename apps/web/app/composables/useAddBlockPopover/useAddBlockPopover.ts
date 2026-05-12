@@ -22,7 +22,6 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
     anchorEl,
     targetUuid,
     position,
-    showLayoutPresets = false,
     onCancel,
     onPresetPick,
   }: OpenAddBlockPopoverParams) => {
@@ -45,7 +44,6 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
       anchorBottom: rect.bottom,
       targetUuid,
       position,
-      showLayoutPresets,
     };
   };
 
