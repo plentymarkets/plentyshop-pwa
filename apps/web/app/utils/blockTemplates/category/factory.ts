@@ -115,7 +115,7 @@ export function createCategory(): Block[] {
               previewText: true,
               shippingBadge: true,
               price: true,
-              addToCart: true
+              addToCart: true,
             },
             fieldsOrder: ['manufacturer', 'title', 'rating', 'previewText', 'shippingBadge', 'price', 'addToCart'],
             fieldsDisabled: ['title'],
