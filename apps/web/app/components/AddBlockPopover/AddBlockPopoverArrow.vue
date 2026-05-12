@@ -2,7 +2,11 @@
   <div
     v-if="position.opacity > 0"
     class="fixed z-[202] w-3 h-3 bg-white pointer-events-none"
-    :class="position.arrowDirection === 'down' ? 'border-b border-r border-editor-border' : 'border-t border-l border-editor-border'"
+    :class="
+      position.arrowDirection === 'down'
+        ? 'border-b border-r border-editor-border'
+        : 'border-t border-l border-editor-border'
+    "
     :style="{
       left: `${position.arrowLeft}px`,
       top: `${position.arrowTop}px`,

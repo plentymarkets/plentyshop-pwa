@@ -53,6 +53,6 @@ const pickPreset = (columnWidths: readonly number[]) => {
 <i18n lang="json">
 {
   "en": { "layout-preset": "Layout Presets" },
-  "de": { "layout-preset": "Layout Presets" },
+  "de": { "layout-preset": "Layout Presets" }
 }
 </i18n>

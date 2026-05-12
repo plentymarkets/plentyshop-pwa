@@ -30,8 +30,7 @@ const matchesSearch = (title: string) =>
 
 const hasLayoutContent = computed(
   () =>
-    (noFilter.value || activeFilters.value.includes('layout')) &&
-    LAYOUT_PRESETS.some((p) => matchesSearch(p.label)),
+    (noFilter.value || activeFilters.value.includes('layout')) && LAYOUT_PRESETS.some((p) => matchesSearch(p.label)),
 );
 
 const isLayoutBlock = (c: BlockListCategory) => c.blockName === 'MultiGrid';

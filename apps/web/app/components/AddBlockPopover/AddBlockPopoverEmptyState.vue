@@ -8,13 +8,17 @@
         v-if="hasActiveFilters"
         class="underline text-editor-toc-selected hover:opacity-80 transition-opacity"
         @click="activeFilters = []"
-      >{{ getEditorTranslation('your-filters') }}</button>
+      >
+        {{ getEditorTranslation('your-filters') }}
+      </button>
       <template v-if="hasActiveFilters && hasActiveSearch"> {{ getEditorTranslation('or') }} </template>
       <button
         v-if="hasActiveSearch"
         class="underline text-editor-toc-selected hover:opacity-80 transition-opacity"
         @click="searchQuery = ''"
-      >{{ getEditorTranslation('your-search') }}</button>.
+      >
+        {{ getEditorTranslation('your-search') }}</button
+      >.
     </template>
   </div>
 </template>
