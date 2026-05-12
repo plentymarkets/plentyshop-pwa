@@ -40,6 +40,7 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
+const { scrollToBlock } = useTableOfContents();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
@@ -103,11 +104,20 @@ const resolveBlockLabels = async () => {
 
 const selectBlock = (index: number) => {
   currentActiveBlockIndex.value = index;
+  const block = blocks.value[index];
+  if (block) {
+    scrollToBlock(block.meta.uuid);
+  }
 };
 
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
+  currentActiveBlockIndex.value = index;
+  const block = blocks.value[index];
+  if (block) {
+    scrollToBlock(block.meta.uuid);
+  }
   setEditTitle(blockLabels.value[index]!);
 };
 
@@ -158,6 +168,14 @@ const deleteBlock = async (index: number) => {
 
 const updateBlocks = (newBlocks: SlideBlock[]) => {
   blocks.value = newBlocks;
+  
+  // Keep the block at the current active index highlighted after reordering
+  if (currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length) {
+    const activeBlock = blocks.value[currentActiveBlockIndex.value];
+    if (activeBlock) {
+      scrollToBlock(activeBlock.meta.uuid);
+    }
+  }
 };
 
 const toggleBlockVisibilityHandler = (index: number) => {
