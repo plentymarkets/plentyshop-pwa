@@ -45,7 +45,6 @@ export type ColumnBlock = Block & {
   configuration: {
     columnWidths: number[];
     sticky?: number[];
-
     layout?: {
       gap: string;
       marginTop?: number;
