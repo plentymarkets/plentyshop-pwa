@@ -40,7 +40,6 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
-const { scrollToBlock, highlightTimeoutToken, highlightedUuid } = useTableOfContents();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
@@ -50,7 +49,6 @@ const elementsOpen = ref(true);
 const editingBlockIndex = ref<number | undefined>(undefined);
 const editingBlockName = ref<string | undefined>(undefined);
 const blockLabels = ref<string[]>([]);
-const currentActiveBlockIndex = ref<number>(-1);
 const layoutOpen = ref(true);
 
 const blockForm = computed(() => {
@@ -98,32 +96,16 @@ const blocks = computed({
   },
 });
 
+const { currentActiveBlockIndex, selectBlock, highlightActiveBlock } = useBlocksHighlight(blocks);
+
 const resolveBlockLabels = async () => {
   blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
-};
-
-const hasValidActiveBlock = computed(() => 
-  currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length
-);
-
-const selectBlock = (index: number) => {
-  currentActiveBlockIndex.value = index;
-  const block = blocks.value[index];
-  if (block) {
-    scrollToBlock(block.meta.uuid);
-    highlightTimeoutToken.value++;
-  }
 };
 
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
-  currentActiveBlockIndex.value = index;
-  const block = blocks.value[index];
-  if (block) {
-    scrollToBlock(block.meta.uuid);
-    highlightTimeoutToken.value++;
-  }
+  selectBlock(index);
   setEditTitle(blockLabels.value[index]!);
 };
 
@@ -174,14 +156,7 @@ const deleteBlock = async (index: number) => {
 
 const updateBlocks = (newBlocks: SlideBlock[]) => {
   blocks.value = newBlocks;
-  
-  if (hasValidActiveBlock.value) {
-    const activeBlock = blocks.value[currentActiveBlockIndex.value];
-    if (activeBlock) {
-      scrollToBlock(activeBlock.meta.uuid);
-      highlightTimeoutToken.value++;
-    }
-  }
+  highlightActiveBlock();
 };
 
 const toggleBlockVisibilityHandler = (index: number) => {
@@ -200,27 +175,13 @@ const toggleBlockVisibilityHandler = (index: number) => {
   blocks.value = updatedBlocks;
 };
 
-const previousBlocksLength = ref(blocks.value.length);
-
 watch(
   () => blocks.value.map((block) => block.meta.uuid),
-  (newUuids) => {
+  () => {
     resolveBlockLabels();
-    
-    if (newUuids.length > previousBlocksLength.value) {
-      const newBlockIndex = blocks.value.length - 1;
-      selectBlock(newBlockIndex);
-    }
-    
-    previousBlocksLength.value = newUuids.length;
   },
   { immediate: true },
 );
-
-onBeforeUnmount(() => {
-  highlightedUuid.value = '';
-  currentActiveBlockIndex.value = -1;
-});
 
 defineExpose({
   exitEditMode,
