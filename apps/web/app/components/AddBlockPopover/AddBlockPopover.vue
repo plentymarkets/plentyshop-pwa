@@ -3,7 +3,7 @@
     <template v-if="popoverState">
       <div class="fixed inset-0 z-[200]" @click="closeAddBlockPopover" />
 
-      <AddBlockPopoverArrow :pos="computedPos" />
+      <AddBlockPopoverArrow :position="popoverPosition" />
 
       <div
         ref="panelRef"
@@ -26,7 +26,7 @@ const { blocksLists, getBlocksLists } = useBlocksList();
 
 const panelRef = ref<HTMLElement | null>(null);
 const isLoading = ref(false);
-const computedPos = ref<PopoverPosition>({
+const popoverPosition = ref<PopoverPosition>({
   left: 0,
   top: 0,
   opacity: 0,
@@ -36,16 +36,16 @@ const computedPos = ref<PopoverPosition>({
 });
 
 const panelStyle = computed(() => ({
-  left: `${computedPos.value.left}px`,
-  top: `${computedPos.value.top}px`,
-  opacity: computedPos.value.opacity,
+  left: `${popoverPosition.value.left}px`,
+  top: `${popoverPosition.value.top}px`,
+  opacity: popoverPosition.value.opacity,
   boxShadow: '0 10px 38px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08)',
   transition: 'opacity 0.08s',
 }));
 
 const recalcPosition = async (state: typeof popoverState.value) => {
   if (!state) {
-    computedPos.value = { left: 0, top: 0, opacity: 0, arrowLeft: 0, arrowTop: 0, arrowDirection: 'down' };
+    popoverPosition.value = { left: 0, top: 0, opacity: 0, arrowLeft: 0, arrowTop: 0, arrowDirection: 'down' };
     return;
   }
   await nextTick();
@@ -69,7 +69,7 @@ const recalcPosition = async (state: typeof popoverState.value) => {
 
   const arrowLeft = Math.max(left + 12, Math.min(anchorCenterX, left + width - 12));
   const arrowTop = arrowDirection === 'down' ? top + height - 7 : top - 7;
-  computedPos.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDirection };
+  popoverPosition.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDirection };
 };
 
 watch(() => popoverState.value, recalcPosition);
