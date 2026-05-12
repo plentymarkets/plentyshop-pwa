@@ -2,7 +2,6 @@
   <div class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="getHTMLTexts()" />
 
   <div
-    v-if="config.enableContractWithdrawalButton"
     class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8"
   >
     <h2 class="mb-6 text-2xl font-semibold text-neutral-900">
@@ -137,7 +136,6 @@ definePageMeta({
   pageType: 'static',
 });
 
-const config = useRuntimeConfig().public;
 const { data, getLegalTexts } = useLegalInformation();
 const { loading, submitCancellation, validationSchema, turnstileSiteKey } = useCancellationForm();
 const { getSetting: getCancellationEmail } = useSiteSettings('cancellationFormRecipient');

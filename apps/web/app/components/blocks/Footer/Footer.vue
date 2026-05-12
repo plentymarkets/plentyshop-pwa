@@ -109,7 +109,6 @@ const NuxtLink = resolveComponent('NuxtLink');
 const { footer } = useBlocks();
 
 const { t } = useI18n();
-const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 const shouldRender = computed(() => {
   if (route.meta.isBlockified) return !!props.content;
   return true;
@@ -122,7 +121,7 @@ const resolvedContent = computed(() => {
   return (content ?? null) as FooterContent | null;
 });
 const hasColumn1Button = computed(() => {
-  return !!(enableContractWithdrawalButton && resolvedContent.value?.column1?.showCancellationForm);
+  return !!(resolvedContent.value?.column1?.showCancellationForm);
 });
 
 const hasColumn1Content = computed(() => {
@@ -134,7 +133,7 @@ const getColumnSwitches = (column: FooterColumn) => {
   return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => {
     if (column[switchConfig.key] !== true) return false;
 
-    return !(enableContractWithdrawalButton && switchConfig.key === 'showCancellationForm');
+    return switchConfig.key !== 'showCancellationForm';
   }).map((switchConfig) => ({
     id: `${switchConfig.key}-switch`,
     translationKey: t(switchConfig.shopTranslationKey),
