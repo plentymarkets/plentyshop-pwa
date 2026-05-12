@@ -36,7 +36,11 @@ const isActiveColumnOpen = computed(() => {
   if (useRuntimeConfig().public.enableAddBlockPopover) {
     return !!(popoverState.value && isActiveColumn.value);
   }
-  return !!(siteConfigurationDrawerOpen.value && siteConfigurationDrawerView.value === 'blocksList' && isActiveColumn.value);
+  return !!(
+    siteConfigurationDrawerOpen.value &&
+    siteConfigurationDrawerView.value === 'blocksList' &&
+    isActiveColumn.value
+  );
 });
 
 const addBlockToColumn = (event: MouseEvent) => {
