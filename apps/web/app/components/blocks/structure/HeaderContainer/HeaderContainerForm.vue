@@ -200,10 +200,21 @@ const toggleBlockVisibilityHandler = (index: number) => {
   blocks.value = updatedBlocks;
 };
 
+const previousBlocksLength = ref(blocks.value.length);
+
 watch(
   () => blocks.value.map((block) => block.meta.uuid),
-  () => {
+  (newUuids) => {
     resolveBlockLabels();
+    
+    // Detect if a new block was added
+    if (newUuids.length > previousBlocksLength.value) {
+      // Select the last block (the newly added one)
+      const newBlockIndex = blocks.value.length - 1;
+      selectBlock(newBlockIndex);
+    }
+    
+    previousBlocksLength.value = newUuids.length;
   },
   { immediate: true },
 );
