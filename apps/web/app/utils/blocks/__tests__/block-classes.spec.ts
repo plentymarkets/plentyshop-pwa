@@ -25,7 +25,7 @@ describe('utils/buildBlockClasses', () => {
     });
     expect(classes['p-4']).toBe(false);
     expect(Object.keys(classes).some((k) => k.startsWith('max-w-'))).toBe(true);
-  }); 
+  });
 
   it('should use default spacing when key is unknown', () => {
     const classes = buildBlockClasses(fakeBlock(), {
