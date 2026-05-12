@@ -1,4 +1,4 @@
-import type { Address, AddressType } from '@plentymarkets/shop-api';
+import type { Address, AddressType, ApiError, Cart } from '@plentymarkets/shop-api';
 
 export interface UseAddressMethodsState {
   data: Address[];
@@ -33,3 +33,16 @@ export interface UseAddressMethods {
 }
 
 export type UseAddressReturn = (type: AddressType, cacheKey?: string) => UseAddressMethods;
+
+export interface UseAddressDeps {
+  sdk: {
+    plentysystems: {
+      getAddresses: (params: { typeId: AddressType }) => Promise<{ data: Address[] | null }>;
+      doSaveAddress: (params: { typeId: AddressType; addressData: Address }) => Promise<{ data: Address[] | null }>;
+      deleteAddress: (params: { typeId: AddressType; addressId: number }) => Promise<{ data: Address[] | null }>;
+      setCheckoutAddress: (params: { typeId: AddressType; addressId: number }) => Promise<unknown>;
+    };
+  };
+  cart: Ref<Cart>;
+  handleError: (error: ApiError) => void;
+}
