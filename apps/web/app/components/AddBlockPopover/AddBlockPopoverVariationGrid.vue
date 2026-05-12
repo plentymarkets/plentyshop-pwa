@@ -3,14 +3,14 @@
     <button
       v-for="item in variations"
       :key="`${item.category.category}-${item.idx}`"
-      :disabled="isVariationDisabled(item.category, item.variation)"
+      :disabled="isDisabled(item)"
       class="flex flex-col items-center gap-[3px] py-2 px-1 rounded-[7px] border border-[#eee] bg-white transition-all duration-[120ms]"
       :class="
-        isVariationDisabled(item.category, item.variation)
+        isDisabled(item)
           ? 'opacity-40 cursor-not-allowed'
           : 'cursor-pointer hover:bg-[#f5f8ff] hover:border-[#c8d8ff]'
       "
-      @click="$emit('select', item.category, item.idx)"
+      @click="select(item)"
     >
       <span
         v-if="getBlockIconSvg(item.category.blockName)"
@@ -26,16 +26,31 @@
 </template>
 
 <script setup lang="ts">
-import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
 import type { FlatVariation } from './types';
+import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './types';
 import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 
-defineProps<{
-  variations: FlatVariation[];
-  isVariationDisabled: (category: BlockListCategory, variation: BlockTemplateVariation) => boolean;
-}>();
+defineProps<{ variations: FlatVariation[] }>();
 
-defineEmits<{
-  select: [category: BlockListCategory, idx: number];
-}>();
+const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
+const { addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
+
+const targetUuid = computed(() => popoverState.value?.targetUuid ?? '');
+
+const isDisabled = (item: FlatVariation): boolean => {
+  const depth = getBlockDepth(targetUuid.value);
+  const blockName = item.variation.template.en.name;
+  const isNestedForbidden =
+    (DEPTH_FORBIDDEN_CATEGORY_BLOCKS as readonly string[]).includes(item.category.blockName) && depth > 0;
+  const isSingletonDuplicate =
+    (SINGLETON_BLOCKS as readonly string[]).includes(blockName) && blockExistsOnPage(blockName);
+  return isNestedForbidden || isSingletonDuplicate;
+};
+
+const select = async (item: FlatVariation) => {
+  if (!popoverState.value) return;
+  const { targetUuid: uuid, position } = popoverState.value;
+  closeAddBlockPopover();
+  await addNewBlock(item.category.category, item.idx, uuid, position);
+};
 </script>
