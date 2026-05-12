@@ -5,6 +5,7 @@ interface MultiGridLayout {
   marginBottom?: number;
   backgroundColor?: string;
   gap?: string;
+  fullWidth?: boolean;
 }
 
 export type MultiGridProps = {
