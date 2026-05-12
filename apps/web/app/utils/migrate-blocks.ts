@@ -2,6 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
+import type { ItemGridContent, ItemGridFieldKey } from '~/components/blocks/ItemGrid/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
@@ -68,6 +69,23 @@ export function migrateAllBlocks(blocks: Block[]): void {
         if (textAlignment && !content?.button?.alignment) {
           content.button = content.button ?? {};
           content.button.alignment = textAlignment;
+        }
+      }
+
+      if (block.name === 'ItemGrid' && block.content) {
+        const content = block.content as ItemGridContent;
+        const newFields: ItemGridFieldKey[] = ['manufacturer', 'shippingBadge'];
+
+        content.fields ??= {};
+        content.fieldsOrder ??= [];
+
+        for (const field of newFields) {
+          if (content.fields[field] === undefined) {
+            content.fields[field] = true;
+          }
+          if (!content.fieldsOrder.includes(field)) {
+            content.fieldsOrder.push(field);
+          }
         }
       }
 
