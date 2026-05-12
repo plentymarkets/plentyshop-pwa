@@ -1,7 +1,5 @@
 import type { Editor } from '@tiptap/core';
-import { validateUrl } from '~/components/editor/RichTextEditor/utils/url.helper';
-
-export type LinkTabValue = 'url' | 'static' | 'category';
+import { validateUrl } from '~/composables/useRichTextEditor/helpers/url.helper';
 
 export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRef<Editor | null | undefined>) => {
   const tabs: { value: LinkTabValue; label: string }[] = [
@@ -76,8 +74,13 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const computedHref = computed(() => {
     if (activeTab.value === 'url') return urlValue.value.trim();
-    if (activeTab.value === 'static') return staticPageValue.value;
+
+    if (activeTab.value === 'static') {
+      return staticPageValue.value ? getCorrectPreviewPathWithLocale(staticPageValue.value) : '';
+    }
+
     if (activeTab.value === 'category') return categoryHref.value;
+
     return '';
   });
 
@@ -89,7 +92,6 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const handleSubmit = (onClose: () => void) => {
     if (!canSubmit.value || !editor.value) return;
-    // live preview already applied all changes, just confirm and close
     onClose();
   };
 

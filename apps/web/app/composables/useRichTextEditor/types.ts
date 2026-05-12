@@ -19,3 +19,5 @@ export type RteCommand =
   | 'toggleBulletList'
   | 'toggleOrderedList'
   | 'setHorizontalRule';
+
+export type LinkTabValue = 'url' | 'static' | 'category';

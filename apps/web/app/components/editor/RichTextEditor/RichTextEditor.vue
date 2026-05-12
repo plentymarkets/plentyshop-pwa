@@ -97,7 +97,7 @@
     @close="closeModal"
   />
 
-  <EditorRichTextEditorLinkModal v-if="linkModalOpen" :editor="editor" :close="() => (linkModalOpen = false)" />
+  <EditorRichTextEditorLinkModal v-if="linkModalOpen" :editor="editor" :close="closeLinkModal" />
 </template>
 
 <script setup lang="ts">
@@ -179,6 +179,10 @@ const openModal = () => {
 
 const closeModal = () => {
   modalOpen.value = false;
+};
+
+const closeLinkModal = () => {
+  linkModalOpen.value = false;
 };
 
 const handleSwitchToHtml = () => {
