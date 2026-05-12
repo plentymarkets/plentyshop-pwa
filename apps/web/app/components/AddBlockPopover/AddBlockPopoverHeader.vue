@@ -1,11 +1,11 @@
 <template>
   <div class="flex-shrink-0 bg-white px-3 pt-3">
     <div class="flex items-center justify-between mb-4">
-      <span class="text-[11px] font-semibold text-[#1a1a1a]">
+      <span class="text-[11px] font-semibold text-editor-text-strong">
         {{ getEditorTranslation('title') }}
       </span>
-      <div class="flex items-center gap-1.5 bg-[#f5f5f5] rounded-[6px] px-2 py-[3px] max-w-[120px]">
-        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" class="flex-shrink-0 text-[#aaa]">
+      <div class="flex items-center gap-1.5 bg-editor-surface rounded-[6px] px-2 py-[3px] max-w-[120px]">
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" class="flex-shrink-0 text-editor-text-placeholder">
           <circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.4" />
           <path d="M7.8 7.8L10 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
         </svg>
@@ -13,7 +13,7 @@
           v-model="searchQuery"
           type="text"
           :placeholder="getEditorTranslation('search-placeholder')"
-          class="text-[10px] text-[#444] placeholder:text-[#bbb] bg-transparent border-none outline-none w-full min-w-0"
+          class="text-[10px] text-editor-text-default placeholder:text-editor-text-ghost bg-transparent border-none outline-none w-full min-w-0"
         />
       </div>
     </div>
@@ -26,7 +26,7 @@
         :class="
           activeFilters.includes(filter.id)
             ? 'bg-editor-toc-selected text-white'
-            : 'bg-[#f0f2f5] text-[#666] hover:bg-[#e4e8f0]'
+            : 'bg-editor-body-bg text-editor-text-subtle hover:bg-editor-surface-cool-hover'
         "
         @click="toggleFilter(filter.id)"
       >
@@ -34,7 +34,7 @@
       </button>
     </div>
 
-    <div class="h-px bg-[#f0f0f0] -mx-3" />
+    <div class="h-px bg-editor-surface-muted -mx-3" />
   </div>
 </template>
 

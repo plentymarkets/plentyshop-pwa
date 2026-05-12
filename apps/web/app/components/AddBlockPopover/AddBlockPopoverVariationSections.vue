@@ -1,6 +1,6 @@
 <template>
   <template v-for="(section, i) in visibleSections" :key="section.id">
-    <div v-if="i > 0" class="h-px bg-[#f0f0f0] -mx-3 my-3" />
+    <div v-if="i > 0" class="h-px bg-editor-surface-muted -mx-3 my-3" />
     <div class="section-label">{{ getEditorTranslation(section.labelKey) }}</div>
     <AddBlockPopoverVariationGrid :variations="section.items" />
   </template>
@@ -80,7 +80,7 @@ const visibleSections = computed((): VariationSection[] => {
 
 <style scoped>
 .section-label {
-  @apply text-[9px] text-[#bbb] font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase;
+  @apply text-[9px] text-editor-text-ghost font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase;
 }
 </style>
 

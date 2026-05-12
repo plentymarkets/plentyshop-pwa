@@ -4,11 +4,11 @@
       v-for="item in variations"
       :key="`${item.category.category}-${item.idx}`"
       :disabled="isDisabled(item)"
-      class="flex flex-col items-center gap-[3px] py-2 px-1 rounded-[7px] border border-[#eee] bg-white transition-all duration-[120ms]"
+      class="flex flex-col items-center gap-[3px] py-2 px-1 rounded-[7px] border border-editor-border bg-white transition-all duration-[120ms]"
       :class="
         isDisabled(item)
           ? 'opacity-40 cursor-not-allowed'
-          : 'cursor-pointer hover:bg-[#f5f8ff] hover:border-[#c8d8ff]'
+          : 'cursor-pointer hover:bg-editor-toc-hover hover:border-editor-accent-border-hover'
       "
       @click="select(item)"
     >
@@ -17,8 +17,8 @@
         class="w-5 h-5 flex-shrink-0 [&_svg]:w-full [&_svg]:h-full opacity-50"
         v-html="getBlockIconSvg(item.category.blockName)"
       />
-      <span v-else class="w-5 h-5 rounded bg-[#f0f0f0] block flex-shrink-0" />
-      <span class="text-[9px] text-[#777] leading-tight text-center break-words w-full line-clamp-2">
+      <span v-else class="w-5 h-5 rounded bg-editor-surface-muted block flex-shrink-0" />
+      <span class="text-[9px] text-editor-text-muted leading-tight text-center break-words w-full line-clamp-2">
         {{ item.variation.title }}
       </span>
     </button>

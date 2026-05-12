@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
+  <div data-testid="multi-grid-structure"     :class="[getGridClasses(), { 'px-4': shouldApplyPadding }]" :style="gridInlineStyle">
     <template v-for="(gridRow, rIdx) in gridRows" :key="rIdx">
       <div
         v-for="cell in gridRow.cells"
@@ -71,7 +71,8 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { content, configuration } = defineProps<MultiGridProps>();
+const props = defineProps<MultiGridProps>();
+const { content, configuration } = props;
 const route = useRoute();
 
 const hoveredRowUuid = ref<string | null>(null);
@@ -97,6 +98,9 @@ const blockSize = computed(() => getBlockSize());
 
 const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
 const drawerView = computed(() => siteConfigurationDrawerView.value);
+
+const { isFullWidth } = useFullWidthToggleForConfig(computed(() => props.configuration));
+const shouldApplyPadding = computed(() => !isFullWidth.value);
 
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
