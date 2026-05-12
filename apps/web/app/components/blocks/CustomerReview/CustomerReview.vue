@@ -19,7 +19,7 @@
       data-testid="reviews-accordion"
     >
       <UiAccordionItem
-      id="here"
+        id="here"
         v-model="reviewsOpen"
         summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 flex justify-between items-center select-none"
         content-padding-class=""
