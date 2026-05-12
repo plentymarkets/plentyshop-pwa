@@ -112,9 +112,7 @@ const isLayoutBlock = (category: BlockListCategory) => category.blockName === 'M
 const isProductOnlyBlock = (category: BlockListCategory) =>
   !!category.accessControl && category.accessControl.length === 1 && category.accessControl[0] === 'product';
 const isCategoryOnlyBlock = (category: BlockListCategory) =>
-  !!category.accessControl &&
-  category.accessControl.length === 1 &&
-  category.accessControl[0] === 'productCategory';
+  !!category.accessControl && category.accessControl.length === 1 && category.accessControl[0] === 'productCategory';
 
 const accessibleCategories = computed(() => {
   const result: Record<string, BlockListCategory> = {};
@@ -141,7 +139,9 @@ const hasActiveSearch = computed(() => searchQuery.value.length > 0);
 
 const showLayout = computed(() => noFilter.value || activeFilters.value.includes('layout'));
 const showContent = computed(() => noFilter.value || activeFilters.value.includes('content'));
-const showProduct = computed(() => hasProductBlocks.value && (noFilter.value || activeFilters.value.includes('product')));
+const showProduct = computed(
+  () => hasProductBlocks.value && (noFilter.value || activeFilters.value.includes('product')),
+);
 const showCategory = computed(
   () => hasCategoryBlocks.value && (noFilter.value || activeFilters.value.includes('category')),
 );

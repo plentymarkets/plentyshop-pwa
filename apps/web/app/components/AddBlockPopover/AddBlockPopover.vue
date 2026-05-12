@@ -26,7 +26,14 @@ const { blocksLists, getBlocksLists } = useBlocksList();
 
 const panelRef = ref<HTMLElement | null>(null);
 const isLoading = ref(false);
-const computedPos = ref<PopoverPosition>({ left: 0, top: 0, opacity: 0, arrowLeft: 0, arrowTop: 0, arrowDirection: 'down' });
+const computedPos = ref<PopoverPosition>({
+  left: 0,
+  top: 0,
+  opacity: 0,
+  arrowLeft: 0,
+  arrowTop: 0,
+  arrowDirection: 'down',
+});
 
 const panelStyle = computed(() => ({
   left: `${computedPos.value.left}px`,
