@@ -109,13 +109,15 @@ export function createCategory(): Block[] {
             showItemCount: true,
             itemCountPosition: 'left',
             fields: {
+              manufacturer: true,
               title: true,
               rating: true,
               previewText: true,
+              shippingBadge: true,
               price: true,
-              addToCart: true,
+              addToCart: true
             },
-            fieldsOrder: ['title', 'rating', 'previewText', 'price', 'addToCart'],
+            fieldsOrder: ['manufacturer', 'title', 'rating', 'previewText', 'shippingBadge', 'price', 'addToCart'],
             fieldsDisabled: ['title'],
             contentAlignment: 'left',
             cardBorders: true,
