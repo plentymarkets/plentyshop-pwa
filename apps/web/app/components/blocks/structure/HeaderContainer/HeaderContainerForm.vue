@@ -7,6 +7,7 @@
         :item-labels="blockLabels"
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
+        @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
@@ -100,10 +101,13 @@ const resolveBlockLabels = async () => {
   blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
 };
 
+const selectBlock = (index: number) => {
+  currentActiveBlockIndex.value = index;
+};
+
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
-  currentActiveBlockIndex.value = index;
   setEditTitle(blockLabels.value[index]!);
 };
 
@@ -119,7 +123,6 @@ const exitEditMode = (shouldEmit = true): boolean => {
 
   editingBlockIndex.value = undefined;
   editingBlockName.value = undefined;
-  currentActiveBlockIndex.value = -1;
   if (shouldEmit) {
     clearEditTitle();
   }
@@ -146,7 +149,7 @@ const deleteBlock = async (index: number) => {
     return;
   }
   blocks.value = blocks.value.filter((_: Block, i: number) => i !== index);
-  currentActiveBlockIndex.value = 0;
+  currentActiveBlockIndex.value = -1;
   await nextTick();
   if (editingBlockIndex.value === index) {
     exitEditMode();
