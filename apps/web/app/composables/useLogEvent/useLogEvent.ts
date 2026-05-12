@@ -7,7 +7,7 @@ enum AnalyticsEventName {
 
 export const useLogEvent = () => {
   const logToCOpened = () => {
-    usePlentyAnalytics({
+    usePlentyLogs({
       name: AnalyticsEventName.tocOpened,
       loggableType: 'toc',
       loggableId: '',
@@ -16,7 +16,7 @@ export const useLogEvent = () => {
   };
 
   const logToCCreateBlock = () => {
-    usePlentyAnalytics({
+    usePlentyLogs({
       name: AnalyticsEventName.tocCreateBlock,
       loggableType: 'toc',
       loggableId: '',
@@ -25,7 +25,7 @@ export const useLogEvent = () => {
   };
 
   const logContentCreateBlock = () => {
-    usePlentyAnalytics({
+    usePlentyLogs({
       name: AnalyticsEventName.contentCreateBlock,
       loggableType: 'content',
       loggableId: '',
@@ -34,7 +34,7 @@ export const useLogEvent = () => {
   };
 
   const logHeaderContainerEditBlock = () => {
-    usePlentyAnalytics({
+    usePlentyLogs({
       name: AnalyticsEventName.headerContainerEditBlock,
       loggableType: 'headerContainer',
       loggableId: '',
