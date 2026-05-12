@@ -42,6 +42,7 @@
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
+    <component :is="AddBlockPopoverComponent" v-if="clientPreview" />
   </ClientOnly>
 </template>
 
@@ -247,6 +248,9 @@ const UnlinkCategoryModal = defineAsyncComponent(
 );
 const ResetProductPageModal = defineAsyncComponent(
   () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
+);
+const AddBlockPopoverComponent = defineAsyncComponent(
+  () => import('~/components/AddBlockPopover/AddBlockPopover.vue'),
 );
 </script>
 
