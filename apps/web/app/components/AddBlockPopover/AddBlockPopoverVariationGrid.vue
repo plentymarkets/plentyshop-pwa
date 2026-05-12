@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import type { FlatVariation } from './types';
 import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './types';
-import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 
 defineProps<{ variations: FlatVariation[] }>();
 

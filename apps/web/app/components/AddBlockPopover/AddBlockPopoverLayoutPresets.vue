@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { LAYOUT_PRESETS, createMultiGridBlock } from './types';
+import { LAYOUT_PRESETS } from './types';
 
 const { activeFilters, searchQuery, popoverState, closeAddBlockPopover } = useAddBlockPopover();
 const { insertCustomBlock } = useBlockManager();

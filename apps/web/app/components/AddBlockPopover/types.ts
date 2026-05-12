@@ -38,17 +38,3 @@ export interface VariationSection {
 export const DEPTH_FORBIDDEN_CATEGORY_BLOCKS = ['MultiGrid', 'BannerCarousel', 'ImageText'] as const;
 
 export const SINGLETON_BLOCKS = ['SortFilter', 'ItemGrid', 'Navigation'] as const;
-
-export const createMultiGridBlock = (columnWidths: readonly number[]) => ({
-  name: 'MultiGrid' as const,
-  type: 'structure' as const,
-  meta: { uuid: '' },
-  configuration: { columnWidths: [...columnWidths], fullWidth: false, visible: true },
-  content: columnWidths.map((_, i) => ({
-    name: 'EmptyGridBlock' as const,
-    type: 'content' as const,
-    meta: { uuid: '' },
-    parent_slot: i,
-    content: [] as never[],
-  })),
-});
