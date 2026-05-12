@@ -25,7 +25,8 @@
 <script setup lang="ts">
 import { LAYOUT_PRESETS } from './types';
 
-const { activeFilters, searchQuery, popoverState, closeAddBlockPopover } = useAddBlockPopover();
+const { activeFilters, searchQuery, popoverState, closeAddBlockPopover, clearPendingCancel, consumePresetPick } =
+  useAddBlockPopover();
 const { insertCustomBlock } = useBlockManager();
 
 const showLayout = computed(() => activeFilters.value.length === 0 || activeFilters.value.includes('layout'));
@@ -39,8 +40,12 @@ const filteredPresets = computed(() =>
 const pickPreset = (spans: readonly number[]) => {
   if (!popoverState.value) return;
   const { targetUuid: uuid, position } = popoverState.value;
+  clearPendingCancel();
+  const handled = consumePresetPick(spans);
   closeAddBlockPopover();
-  insertCustomBlock(createMultiGridBlock(spans) as never, uuid, position);
+  if (!handled) {
+    insertCustomBlock(createMultiGridBlock(spans) as never, uuid, position);
+  }
 };
 </script>
 

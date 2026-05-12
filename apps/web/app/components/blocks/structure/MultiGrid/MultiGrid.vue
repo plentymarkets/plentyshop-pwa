@@ -1,55 +1,69 @@
 <template>
   <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
-    <div
-      v-for="(column, colIndex) in columns"
-      :key="colIndex"
-      :class="getColumnClasses(colIndex)"
-      class="group/col relative md:z-[1]"
-      data-testid="multi-grid-column"
-    >
+    <template v-for="(gridRow, rIdx) in gridRows" :key="rIdx">
       <div
-        v-for="row in column"
-        :key="row.meta.uuid"
-        class="group/row relative"
-        :class="{ 'min-h-[60px]': showOverlay(row) }"
-        :data-uuid="row.meta.uuid"
-        @mouseenter="onRowEnter(row)"
-        @mouseleave="onRowLeave"
+        v-for="cell in gridRow.cells"
+        :key="cell.colIndex"
+        :class="getColumnClasses(cell.colIndex)"
+        class="group/col relative md:z-[1]"
+        data-testid="multi-grid-column"
       >
-        <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
-        <ClientOnly>
-          <template v-if="showOverlay(row)">
-            <div
-              class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
-              style="box-shadow: inset 0 0 0 2px #7c3aed"
-            />
-
-            <div
-              class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
-            />
-
-            <div
-              class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
-            >
-              <UiBlockActions
-                data-testid="multigrid-block-actions"
-                :block="row"
-                :index="colIndex"
-                :actions="getBlockActions()"
+        <div
+          v-for="row in columns[cell.colIndex]"
+          :key="row.meta.uuid"
+          class="group/row relative"
+          :class="{ 'min-h-[60px]': showOverlay(row) }"
+          :data-uuid="row.meta.uuid"
+          @mouseenter="onRowEnter(row)"
+          @mouseleave="onRowLeave"
+        >
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
+          <ClientOnly>
+            <template v-if="showOverlay(row)">
+              <div
+                class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+                style="box-shadow: inset 0 0 0 2px #7c3aed"
               />
-            </div>
-          </template>
-        </ClientOnly>
 
-        <slot
-          name="content"
-          :content-block="row"
-          :column-length="column.length"
-          :is-row-hovered="showOverlay(row) && isRowHovered(row)"
-        />
-        <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+              <div
+                class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+              />
+
+              <div
+                class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
+              >
+                <UiBlockActions
+                  data-testid="multigrid-block-actions"
+                  :block="row"
+                  :index="cell.colIndex"
+                  :actions="getBlockActions()"
+                />
+              </div>
+            </template>
+          </ClientOnly>
+
+          <slot
+            name="content"
+            :content-block="row"
+            :column-length="(columns[cell.colIndex] ?? []).length"
+            :is-row-hovered="showOverlay(row) && isRowHovered(row)"
+          />
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+        </div>
       </div>
-    </div>
+
+      <ClientOnly>
+        <div
+          v-if="gridRow.free > 0 && shouldEnableEditorFeatures"
+          :class="`col-span-${gridRow.free}`"
+          class="self-stretch rounded-[6px] border border-dashed border-[#e2e2e2] flex items-center justify-center"
+          style="background: repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)"
+          aria-hidden="true"
+        >
+          <span class="text-[10px] text-[#c4c4c4] tracking-[0.04em]">{{ gridRow.free }}/12 free</span>
+        </div>
+      </ClientOnly>
+    </template>
   </div>
 </template>
 
@@ -136,6 +150,29 @@ const showOverlay = computed(
   () => (block: Block) =>
     enableActions.value && shouldEnableEditorFeatures.value && !isDragging.value && blockHasData(block),
 );
+
+interface GridRow {
+  cells: { colIndex: number; span: number }[];
+  free: number;
+}
+
+const gridRows = computed((): GridRow[] => {
+  const result: GridRow[] = [];
+  let cells: { colIndex: number; span: number }[] = [];
+  let used = 0;
+
+  configuration.columnWidths.forEach((span, colIndex) => {
+    if (used + span > 12) {
+      result.push({ cells, free: 12 - used });
+      cells = [];
+      used = 0;
+    }
+    cells.push({ colIndex, span });
+    used += span;
+  });
+  if (cells.length > 0) result.push({ cells, free: 12 - used });
+  return result;
+});
 
 const isAlignable = (b: Block): b is AlignableBlock =>
   typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);

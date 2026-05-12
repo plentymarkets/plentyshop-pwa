@@ -22,6 +22,8 @@ export interface OpenAddBlockPopoverParams {
   targetUuid: string;
   position: BlockPosition;
   showLayoutPresets?: boolean;
+  onCancel?: () => void;
+  onPresetPick?: (spans: readonly number[]) => void;
 }
 
 export interface UseAddBlockPopover {
@@ -31,6 +33,8 @@ export interface UseAddBlockPopover {
   toggleFilter: (id: FilterId) => void;
   openAddBlockPopover: (params: OpenAddBlockPopoverParams) => void;
   closeAddBlockPopover: () => void;
+  clearPendingCancel: () => void;
+  consumePresetPick: (spans: readonly number[]) => boolean;
 }
 
 export type UseAddBlockPopoverReturn = () => UseAddBlockPopover;

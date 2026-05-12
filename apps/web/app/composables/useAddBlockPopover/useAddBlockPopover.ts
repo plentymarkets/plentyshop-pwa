@@ -1,5 +1,8 @@
 import type { FilterId, OpenAddBlockPopoverParams, UseAddBlockPopoverReturn, UseAddBlockPopoverState } from './types';
 
+const pendingCancelCallback = ref<(() => void) | null>(null);
+const pendingPresetCallback = ref<((spans: readonly number[]) => void) | null>(null);
+
 export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
   const state = useState<UseAddBlockPopoverState>('useAddBlockPopover', () => ({
     popoverState: null,
@@ -20,8 +23,13 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
     targetUuid,
     position,
     showLayoutPresets = false,
+    onCancel,
+    onPresetPick,
   }: OpenAddBlockPopoverParams) => {
     const rect = anchorEl.getBoundingClientRect();
+
+    pendingCancelCallback.value = onCancel ?? null;
+    pendingPresetCallback.value = onPresetPick ?? null;
 
     if (position === 'inside') {
       setInsertColumnUuid(targetUuid);
@@ -42,8 +50,24 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
   };
 
   const closeAddBlockPopover = () => {
+    if (pendingCancelCallback.value) {
+      pendingCancelCallback.value();
+      pendingCancelCallback.value = null;
+    }
+    pendingPresetCallback.value = null;
     state.value.popoverState = null;
     clearInsertColumnUuid();
+  };
+
+  const clearPendingCancel = () => {
+    pendingCancelCallback.value = null;
+  };
+
+  const consumePresetPick = (spans: readonly number[]): boolean => {
+    if (!pendingPresetCallback.value) return false;
+    pendingPresetCallback.value(spans);
+    pendingPresetCallback.value = null;
+    return true;
   };
 
   return {
@@ -51,5 +75,7 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
     toggleFilter,
     openAddBlockPopover,
     closeAddBlockPopover,
+    clearPendingCancel,
+    consumePresetPick,
   };
 };

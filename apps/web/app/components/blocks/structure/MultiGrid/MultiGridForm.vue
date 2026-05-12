@@ -1,74 +1,126 @@
 <template>
   <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-    <UiAccordionItem
-      v-model="textSettings"
-      data-testid="open-layout-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+
+    <div
+      class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-[#f7f7f7] border-t border-b border-[#ebebeb] select-none"
+      @click="gridLayoutOpen = !gridLayoutOpen"
     >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-settings') }}</h2>
-      </template>
+      <span class="flex-1 text-[11px] font-bold text-[#666] tracking-[0.05em] uppercase">
+        {{ getEditorTranslation('grid-layout') }}
+      </span>
+      <svg
+        width="10" height="6" viewBox="0 0 10 6" fill="none"
+        :style="{ transform: gridLayoutOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.18s' }"
+      >
+        <path d="M1 1l4 4 4-4" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
 
-      <div data-testid="image-text-form">
-        <div v-if="isTwoColumnMultigrid" class="py-4">
-          <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
-          <ColumnWidthInput
-            :multi-grid-structure="multiGridStructure"
-            @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
-          />
+    <div v-if="gridLayoutOpen" class="px-3.5 py-3">
+
+      <div v-if="allEmpty" class="mb-3.5">
+        <div class="text-[10px] text-[#b8b8b8] font-bold tracking-[0.07em] mb-2 uppercase">
+          {{ getEditorTranslation('layout-preset') }}
         </div>
-
-        <div v-if="multiGridStructure.configuration.layout" class="py-2">
-          <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
-          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowUpward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginTop"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-top"
+        <div class="grid grid-cols-3 gap-[5px]">
+          <button
+            v-for="preset in LAYOUT_PRESETS"
+            :key="preset.label"
+            class="px-1 pt-2 pb-[7px] rounded-[7px] border border-[#e8e8e8] bg-white cursor-pointer flex flex-col items-center gap-[5px] hover:bg-[#f4f8ff] hover:border-[#b8ccf8] transition-all duration-[120ms]"
+            @click="applyPreset(preset.spans)"
+          >
+            <div class="flex gap-[2px] w-full h-[9px]">
+              <div
+                v-for="(span, i) in preset.spans"
+                :key="i"
+                class="h-full rounded-[2px]"
+                :style="{ flex: span, background: 'rgba(29,94,199,0.18)', border: '1px dashed rgba(29,94,199,0.5)' }"
               />
             </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowDownward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginBottom"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-bottom"
-              />
-            </div>
-          </div>
+            <span class="text-[10px] text-[#666]">{{ preset.label }}</span>
+          </button>
         </div>
+      </div>
 
-        <div v-if="multiGridStructure.configuration.layout" class="py-2">
-          <UiFormLabel>{{ getEditorTranslation('gap-label') }}</UiFormLabel>
-          <div class="border-b py-1 flex gap-2">
+      <MultiGridEditor
+        :column-widths="multiGridStructure.configuration.columnWidths"
+        :blocks="(multiGridStructure.content as Block[]) ?? []"
+        @update:column-widths="handleColumnWidthsUpdate"
+        @click-add-row="handleClickAddRow"
+        @add-free-column="handleAddFreeColumn"
+      />
+
+      <div v-if="multiGridStructure.configuration.layout" class="mt-3.5 pt-3 border-t border-[#f0f0f0]">
+        <div class="flex items-center gap-2">
+          <span class="flex-1 text-[12px] text-[#555]">{{ getEditorTranslation('gap-label') }}</span>
+          <div class="flex gap-[3px]">
             <button
               v-for="gapOption in gapOptions"
               :key="gapOption"
               type="button"
               data-testid="gap-btn"
-              :class="[
-                gapBtnClasses,
-                { 'bg-editor-button text-white': gapOption === multiGridStructure.configuration.layout.gap },
-              ]"
+              class="w-7 h-6 rounded-[5px] text-[10px] cursor-pointer transition-colors"
+              :class="
+                gapOption === multiGridStructure.configuration.layout.gap
+                  ? 'border border-[#1D5EC7] bg-[rgba(29,94,199,0.08)] text-[#1D5EC7] font-bold'
+                  : 'border border-[#e2e2e2] bg-white text-[#888]'
+              "
               @click="multiGridStructure.configuration.layout.gap = gapOption"
             >
-              {{ getEditorTranslation('gap-size-' + gapOption.toLowerCase()) }}
+              {{ gapOption }}
             </button>
           </div>
-          <div class="mt-2 text-xs text-neutral-700">
-            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
+        </div>
+        <div class="mt-1.5 text-[11px] text-[#aaa]">
+          {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-[#f7f7f7] border-t border-b border-[#ebebeb] select-none"
+      @click="layoutOpen = !layoutOpen"
+    >
+      <span class="flex-1 text-[11px] font-bold text-[#666] tracking-[0.05em] uppercase">
+        {{ getEditorTranslation('layout') }}
+      </span>
+      <svg
+        width="10" height="6" viewBox="0 0 10 6" fill="none"
+        :style="{ transform: layoutOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.18s' }"
+      >
+        <path d="M1 1l4 4 4-4" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+
+    <div v-if="layoutOpen" class="px-3.5 py-3 flex flex-col gap-3">
+
+      <div v-if="multiGridStructure.configuration.layout">
+        <div class="text-[11px] text-[#888] mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
+        <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowUpward /></span>
+            <input
+              v-model.number="multiGridStructure.configuration.layout.marginTop"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="margin-top"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+            <span><SfIconArrowDownward /></span>
+            <input
+              v-model.number="multiGridStructure.configuration.layout.marginBottom"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="margin-bottom"
+            />
           </div>
         </div>
       </div>
-      <div v-if="multiGridStructure.configuration.columnWidths?.length" class="py-4">
-        <UiFormLabel>{{ getEditorTranslation('sticky-columns') }}</UiFormLabel>
 
-        <div class="grid grid-cols-3 gap-2 mt-2">
+      <div v-if="multiGridStructure.configuration.columnWidths?.length">
+        <div class="text-[11px] text-[#888] mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
+        <div class="grid grid-cols-3 gap-2">
           <button
             v-for="i in numColumns"
             :key="`sticky-col-${i}`"
@@ -85,23 +137,28 @@
           </button>
         </div>
       </div>
+
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-    </UiAccordionItem>
+    </div>
 
-    <UiAccordionItem
-      v-model="layoutBackground"
-      data-testid="open-layout-background-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    <div
+      class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-[#f7f7f7] border-t border-b border-[#ebebeb] select-none"
+      @click="backgroundOpen = !backgroundOpen"
     >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-background') }}</h2>
-      </template>
+      <span class="flex-1 text-[11px] font-bold text-[#666] tracking-[0.05em] uppercase">
+        {{ getEditorTranslation('layout-background') }}
+      </span>
+      <svg
+        width="10" height="6" viewBox="0 0 10 6" fill="none"
+        :style="{ transform: backgroundOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.18s' }"
+      >
+        <path d="M1 1l4 4 4-4" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
 
-      <div v-if="multiGridStructure.configuration.layout" class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
-        </div>
+    <div v-if="backgroundOpen" class="px-3.5 py-3">
+      <div v-if="multiGridStructure.configuration.layout">
+        <div class="text-[11px] text-[#888] mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
         <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
           <template #trigger="{ color, toggle }">
             <label>
@@ -124,17 +181,20 @@
           </template>
         </EditorColorPicker>
       </div>
-    </UiAccordionItem>
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
-import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
+import MultiGridEditor from './MultiGridEditor.vue';
 
 const props = defineProps<{ uuid?: string }>();
 
+const { openAddBlockPopover } = useAddBlockPopover();
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks: data } = useBlocks();
@@ -142,9 +202,6 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
-const isTwoColumnMultigrid = computed(() => {
-  return multiGridStructure.value.configuration?.columnWidths?.length === 2;
-});
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
@@ -168,16 +225,8 @@ const multiGridStructure = computed(() => {
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
-const gapBtnClasses =
-  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
 type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
-const gapPxMap: Record<GapSize, number> = {
-  None: 0,
-  S: 4,
-  M: 8,
-  L: 12,
-  XL: 20,
-};
+const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
 
 const getGapPx = (gap: string | undefined): number => {
   const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
@@ -189,65 +238,128 @@ if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.co
 const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
 
 const isSticky = (columnIndex: number) => {
-  const sticky = multiGridStructure.value.configuration?.sticky || [];
-  return sticky.includes(columnIndex);
+  return (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
 };
 
 const toggleSticky = (columnIndex: number) => {
   const configuration = multiGridStructure.value.configuration;
-
-  if (!Array.isArray(configuration?.sticky)) {
-    configuration.sticky = [];
-  }
-
-  const position = configuration?.sticky.indexOf(columnIndex);
-
+  if (!Array.isArray(configuration?.sticky)) configuration.sticky = [];
+  const position = configuration.sticky.indexOf(columnIndex);
   if (position === -1) {
-    configuration?.sticky.push(columnIndex);
+    configuration.sticky.push(columnIndex);
   } else {
-    configuration?.sticky.splice(position, 1);
+    configuration.sticky.splice(position, 1);
   }
 };
 
-const textSettings = ref(false);
-const layoutBackground = ref(false);
+const allEmpty = computed(() => {
+  const blocks = multiGridStructure.value.content as Block[] | undefined;
+  if (!blocks || blocks.length === 0) return true;
+  return blocks.every((b) => b.name === 'EmptyGridBlock');
+});
+
+const applyPreset = (spans: readonly number[]) => {
+  const block = multiGridStructure.value as ColumnBlock;
+  block.configuration.columnWidths = [...spans];
+  block.content = spans.map((_, i) => createEmptyGridBlock(i)) as unknown as Block[];
+};
+
+const handleColumnWidthsUpdate = (widths: number[]) => {
+  multiGridStructure.value.configuration.columnWidths = widths;
+};
+
+const addRowSpans = (spans: readonly number[]) => {
+  const block = multiGridStructure.value as ColumnBlock;
+  const currentLength = block.configuration.columnWidths.length;
+  block.configuration.columnWidths.push(...spans);
+  if (!block.content) block.content = [];
+  block.content.push(...(spans.map((_, i) => createEmptyGridBlock(currentLength + i)) as unknown as Block[]));
+};
+
+const handleClickAddRow = (anchorEl: HTMLElement) => {
+  const block = multiGridStructure.value as ColumnBlock;
+  const newSlot = block.configuration.columnWidths.length;
+  const newBlock = createEmptyGridBlock(newSlot);
+
+  const cleanupTempBlock = () => {
+    const b = multiGridStructure.value as ColumnBlock;
+    const blocks = b.content as Block[];
+    const idx = blocks.findIndex((x) => x.meta.uuid === newBlock.meta.uuid && x.name === 'EmptyGridBlock');
+    if (idx !== -1) {
+      blocks.splice(idx, 1);
+      b.configuration.columnWidths.splice(newSlot, 1);
+    }
+  };
+
+  openAddBlockPopover({
+    anchorEl,
+    targetUuid: newBlock.meta.uuid,
+    position: 'inside',
+    onCancel: cleanupTempBlock,
+    onPresetPick: (spans) => {
+      cleanupTempBlock();
+      addRowSpans(spans);
+    },
+  });
+
+  block.configuration.columnWidths.push(12);
+  if (!block.content) block.content = [];
+  (block.content as Block[]).push(newBlock as unknown as Block);
+};
+
+const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
+  const block = multiGridStructure.value as ColumnBlock;
+  const newSlot = block.configuration.columnWidths.length;
+  const newBlock = createEmptyGridBlock(newSlot);
+  openAddBlockPopover({
+    anchorEl,
+    targetUuid: newBlock.meta.uuid,
+    position: 'inside',
+    onCancel: () => {
+      const b = multiGridStructure.value as ColumnBlock;
+      const blocks = b.content as Block[];
+      const idx = blocks.findIndex((x) => x.meta.uuid === newBlock.meta.uuid && x.name === 'EmptyGridBlock');
+      if (idx !== -1) {
+        blocks.splice(idx, 1);
+        b.configuration.columnWidths.splice(newSlot, 1);
+      }
+    },
+  });
+  block.configuration.columnWidths.push(span);
+  if (!block.content) block.content = [];
+  (block.content as Block[]).push(newBlock as unknown as Block);
+};
+
+const gridLayoutOpen = ref(true);
+const layoutOpen = ref(true);
+const backgroundOpen = ref(false);
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "layout-settings": "Layout Settings",
+    "grid-layout": "Grid Layout",
+    "layout-preset": "Layout Preset",
+    "gap-label": "Column Gap",
+    "spacing-between": "Spacing between blocks:",
+    "layout": "Layout",
     "margin-label": "Margin (px)",
-    "background-color-label": "Background Color",
-    "gap-label": "Gap",
-    "gap-size-none": "None",
-    "gap-size-s": "S",
-    "gap-size-m": "M",
-    "gap-size-l": "L",
-    "gap-size-xl": "XL",
-    "spacing-around": "Spacing around",
-    "spacing-between": "Spacing between Blocks:",
-    "layout-background": "Layout Background",
     "sticky-columns": "Sticky columns",
-    "column-size": "Column Size",
-    "column": "Column"
+    "column": "Column",
+    "layout-background": "Background",
+    "background-color-label": "Background Color"
   },
   "de": {
-    "layout-settings": "Layout Settings",
+    "grid-layout": "Grid Layout",
+    "layout-preset": "Layout Preset",
+    "gap-label": "Column Gap",
+    "spacing-between": "Spacing between blocks:",
+    "layout": "Layout",
     "margin-label": "Margin (px)",
-    "background-color-label": "Background Color",
-    "gap-label": "Gap",
-    "gap-size-none": "None",
-    "gap-size-s": "S",
-    "gap-size-m": "M",
-    "gap-size-l": "L",
-    "gap-size-xl": "XL",
-    "spacing-around": "Spacing around",
-    "spacing-between": "Spacing between Blocks:",
-    "layout-background": "Layout Background",
     "sticky-columns": "Sticky columns",
-    "column-size": "Column Size",
-    "column": "Column"
+    "column": "Column",
+    "layout-background": "Background",
+    "background-color-label": "Background Color"
   }
 }
 </i18n>

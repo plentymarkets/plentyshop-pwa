@@ -31,7 +31,7 @@ import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './types';
 
 defineProps<{ variations: FlatVariation[] }>();
 
-const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
+const { popoverState, closeAddBlockPopover, clearPendingCancel } = useAddBlockPopover();
 const { addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
 
 const targetUuid = computed(() => popoverState.value?.targetUuid ?? '');
@@ -49,6 +49,7 @@ const isDisabled = (item: FlatVariation): boolean => {
 const select = async (item: FlatVariation) => {
   if (!popoverState.value) return;
   const { targetUuid: uuid, position } = popoverState.value;
+  clearPendingCancel();
   closeAddBlockPopover();
   await addNewBlock(item.category.category, item.idx, uuid, position);
 };
