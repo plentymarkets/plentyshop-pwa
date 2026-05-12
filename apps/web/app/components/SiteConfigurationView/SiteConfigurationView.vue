@@ -97,7 +97,6 @@ const groups = computed(() => {
   const allGroups = getSettingsGroups(activeSetting.value ?? '', activeSubCategory.value ?? '');
   const excludedGroups = runtimeConfig.public.disabledEditorSettings as string[];
 
-  return allGroups
-    .filter((group) => !excludedGroups.includes(group.slug));
+  return allGroups.filter((group) => !excludedGroups.includes(group.slug));
 });
 </script>

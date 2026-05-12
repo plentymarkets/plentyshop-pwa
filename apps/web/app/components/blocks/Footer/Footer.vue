@@ -121,7 +121,7 @@ const resolvedContent = computed(() => {
   return (content ?? null) as FooterContent | null;
 });
 const hasColumn1Button = computed(() => {
-  return !!(resolvedContent.value?.column1?.showCancellationForm);
+  return !!resolvedContent.value?.column1?.showCancellationForm;
 });
 
 const hasColumn1Content = computed(() => {
