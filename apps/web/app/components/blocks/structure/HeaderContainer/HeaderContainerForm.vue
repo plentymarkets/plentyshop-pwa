@@ -102,12 +102,15 @@ const resolveBlockLabels = async () => {
   blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
 };
 
+const hasValidActiveBlock = computed(() => 
+  currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length
+);
+
 const selectBlock = (index: number) => {
   currentActiveBlockIndex.value = index;
   const block = blocks.value[index];
   if (block) {
     scrollToBlock(block.meta.uuid);
-    // Prevent auto-clear by invalidating the timeout
     highlightTimeoutToken.value++;
   }
 };
@@ -119,7 +122,6 @@ const editBlock = (index: number) => {
   const block = blocks.value[index];
   if (block) {
     scrollToBlock(block.meta.uuid);
-    // Prevent auto-clear by invalidating the timeout
     highlightTimeoutToken.value++;
   }
   setEditTitle(blockLabels.value[index]!);
@@ -173,12 +175,10 @@ const deleteBlock = async (index: number) => {
 const updateBlocks = (newBlocks: SlideBlock[]) => {
   blocks.value = newBlocks;
   
-  // Keep the block at the current active index highlighted after reordering
-  if (currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length) {
+  if (hasValidActiveBlock.value) {
     const activeBlock = blocks.value[currentActiveBlockIndex.value];
     if (activeBlock) {
       scrollToBlock(activeBlock.meta.uuid);
-      // Prevent auto-clear by invalidating the timeout
       highlightTimeoutToken.value++;
     }
   }
@@ -207,9 +207,7 @@ watch(
   (newUuids) => {
     resolveBlockLabels();
     
-    // Detect if a new block was added
     if (newUuids.length > previousBlocksLength.value) {
-      // Select the last block (the newly added one)
       const newBlockIndex = blocks.value.length - 1;
       selectBlock(newBlockIndex);
     }
