@@ -12,7 +12,7 @@
         @click.stop
       >
         <AddBlockPopoverHeader />
-        <AddBlockPopoverBody />
+        <AddBlockPopoverBody :is-loading="isLoading" />
       </div>
     </template>
   </Teleport>
@@ -22,17 +22,11 @@
 import type { PopoverPosition } from './types';
 
 const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
-const { initBlocks, resetState } = useAddBlockPopoverPanel();
+const { blocksLists, getBlocksLists } = useBlocksList();
 
 const panelRef = ref<HTMLElement | null>(null);
-const computedPos = ref<PopoverPosition>({
-  left: 0,
-  top: 0,
-  opacity: 0,
-  arrowLeft: 0,
-  arrowTop: 0,
-  arrowDir: 'down',
-});
+const isLoading = ref(false);
+const computedPos = ref<PopoverPosition>({ left: 0, top: 0, opacity: 0, arrowLeft: 0, arrowTop: 0, arrowDirection: 'down' });
 
 const panelStyle = computed(() => ({
   left: `${computedPos.value.left}px`,
@@ -44,42 +38,34 @@ const panelStyle = computed(() => ({
 
 const recalcPosition = async (state: typeof popoverState.value) => {
   if (!state) {
-    computedPos.value = { left: 0, top: 0, opacity: 0, arrowLeft: 0, arrowTop: 0, arrowDir: 'down' };
+    computedPos.value = { left: 0, top: 0, opacity: 0, arrowLeft: 0, arrowTop: 0, arrowDirection: 'down' };
     return;
   }
   await nextTick();
   if (!panelRef.value) return;
 
-  const { width: W, height: H } = panelRef.value.getBoundingClientRect();
+  const { width, height } = panelRef.value.getBoundingClientRect();
   const margin = 8;
   const { anchorCenterX, anchorTop, anchorBottom } = state;
-
-  const left = Math.max(margin, Math.min(anchorCenterX - W / 2, window.innerWidth - W - margin));
+  const left = Math.max(margin, Math.min(anchorCenterX - width / 2, window.innerWidth - width - margin));
 
   let top = anchorBottom + 12;
-  let arrowDir: 'up' | 'down' = 'up';
-  if (top + H + margin > window.innerHeight) {
-    top = anchorTop - H - 12;
-    arrowDir = 'down';
+  let arrowDirection: 'up' | 'down' = 'up';
+  if (top + height + margin > window.innerHeight) {
+    top = anchorTop - height - 12;
+    arrowDirection = 'down';
     if (top < margin) {
-      top = Math.max(margin, window.innerHeight - H - margin);
-      arrowDir = 'up';
+      top = Math.max(margin, window.innerHeight - height - margin);
+      arrowDirection = 'up';
     }
   }
 
-  const arrowLeft = Math.max(left + 12, Math.min(anchorCenterX, left + W - 12));
-  const arrowTop = arrowDir === 'down' ? top + H - 7 : top - 7;
-
-  computedPos.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDir };
+  const arrowLeft = Math.max(left + 12, Math.min(anchorCenterX, left + width - 12));
+  const arrowTop = arrowDirection === 'down' ? top + height - 7 : top - 7;
+  computedPos.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDirection };
 };
 
-watch(
-  () => popoverState.value,
-  (state) => {
-    if (state) resetState();
-    recalcPosition(state);
-  },
-);
+watch(() => popoverState.value, recalcPosition);
 
 const handleKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') closeAddBlockPopover();
@@ -87,7 +73,14 @@ const handleKeydown = (e: KeyboardEvent) => {
 
 onMounted(async () => {
   document.addEventListener('keydown', handleKeydown);
-  await initBlocks();
+  if (Object.keys(blocksLists.value).length === 0) {
+    isLoading.value = true;
+    try {
+      await getBlocksLists();
+    } finally {
+      isLoading.value = false;
+    }
+  }
 });
 
 onUnmounted(() => {

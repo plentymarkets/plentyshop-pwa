@@ -1,11 +1,19 @@
-import type { OpenAddBlockPopoverParams, UseAddBlockPopoverReturn, UseAddBlockPopoverState } from './types';
+import type { FilterId, OpenAddBlockPopoverParams, UseAddBlockPopoverReturn, UseAddBlockPopoverState } from './types';
 
 export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
   const state = useState<UseAddBlockPopoverState>('useAddBlockPopover', () => ({
     popoverState: null,
+    searchQuery: '',
+    activeFilters: [],
   }));
 
   const { setInsertColumnUuid, clearInsertColumnUuid } = useBlocksMutations();
+
+  const toggleFilter = (id: FilterId) => {
+    const index = state.value.activeFilters.indexOf(id);
+    state.value.activeFilters =
+      index >= 0 ? state.value.activeFilters.filter((f) => f !== id) : [...state.value.activeFilters, id];
+  };
 
   const openAddBlockPopover = ({
     anchorEl,
@@ -21,6 +29,8 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
       clearInsertColumnUuid();
     }
 
+    state.value.searchQuery = '';
+    state.value.activeFilters = [];
     state.value.popoverState = {
       anchorCenterX: rect.left + rect.width / 2,
       anchorTop: rect.top,
@@ -38,6 +48,7 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
 
   return {
     ...toRefs(state.value),
+    toggleFilter,
     openAddBlockPopover,
     closeAddBlockPopover,
   };

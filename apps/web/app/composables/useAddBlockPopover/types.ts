@@ -1,5 +1,7 @@
 import type { BlockPosition } from '~/composables/useBlockManager/types';
 
+export type FilterId = 'layout' | 'content' | 'product' | 'category';
+
 export interface AddBlockPopoverState {
   anchorCenterX: number;
   anchorTop: number;
@@ -11,6 +13,8 @@ export interface AddBlockPopoverState {
 
 export interface UseAddBlockPopoverState {
   popoverState: AddBlockPopoverState | null;
+  searchQuery: string;
+  activeFilters: FilterId[];
 }
 
 export interface OpenAddBlockPopoverParams {
@@ -22,6 +26,9 @@ export interface OpenAddBlockPopoverParams {
 
 export interface UseAddBlockPopover {
   popoverState: Readonly<Ref<AddBlockPopoverState | null>>;
+  searchQuery: Ref<string>;
+  activeFilters: Ref<FilterId[]>;
+  toggleFilter: (id: FilterId) => void;
   openAddBlockPopover: (params: OpenAddBlockPopoverParams) => void;
   closeAddBlockPopover: () => void;
 }

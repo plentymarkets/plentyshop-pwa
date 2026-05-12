@@ -12,7 +12,12 @@
       "
       @click="$emit('select', item.category, item.idx)"
     >
-      <span class="w-5 h-5 rounded bg-[#f0f0f0] block flex-shrink-0" />
+      <span
+        v-if="getBlockIconSvg(item.category.blockName)"
+        class="w-5 h-5 flex-shrink-0 [&_svg]:w-full [&_svg]:h-full opacity-50"
+        v-html="getBlockIconSvg(item.category.blockName)"
+      />
+      <span v-else class="w-5 h-5 rounded bg-[#f0f0f0] block flex-shrink-0" />
       <span class="text-[9px] text-[#777] leading-tight text-center break-words w-full line-clamp-2">
         {{ item.variation.title }}
       </span>
@@ -22,7 +27,8 @@
 
 <script setup lang="ts">
 import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
-import type { FlatVariation } from '~/composables/useAddBlockPopoverPanel/types';
+import type { FlatVariation } from './types';
+import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 
 defineProps<{
   variations: FlatVariation[];

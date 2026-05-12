@@ -60,7 +60,7 @@
 
       <template v-if="showProduct && filteredProductVariations.length > 0">
         <div class="text-[9px] text-[#bbb] font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase">
-          {{ getEditorTranslation('filter-product') }}
+          {{ getEditorTranslation('section-product') }}
         </div>
         <AddBlockPopoverVariationGrid
           :variations="filteredProductVariations"
@@ -73,7 +73,7 @@
 
       <template v-if="showCategory && filteredCategoryVariations.length > 0">
         <div class="text-[9px] text-[#bbb] font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase">
-          {{ getEditorTranslation('filter-category') }}
+          {{ getEditorTranslation('section-category') }}
         </div>
         <AddBlockPopoverVariationGrid
           :variations="filteredCategoryVariations"
@@ -99,28 +99,155 @@
 </template>
 
 <script setup lang="ts">
-const {
-  isLoading,
-  searchQuery,
-  activeFilters,
-  hasActiveFilters,
-  hasActiveSearch,
-  showLayout,
-  showContent,
-  showProduct,
-  showCategory,
-  filteredPresets,
-  filteredContentVariations,
-  filteredProductVariations,
-  filteredCategoryVariations,
-  showLayoutSeparator,
-  showProductSeparator,
-  showCategorySeparator,
-  hasNoResults,
-  isVariationDisabled,
-  selectVariation,
-  onPickPreset,
-} = useAddBlockPopoverPanel();
+import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
+import type { FlatVariation } from './types';
+
+defineProps<{ isLoading: boolean }>();
+
+const { searchQuery, activeFilters, popoverState, closeAddBlockPopover } = useAddBlockPopover();
+const { blocksLists, pageHasAccessToCategory } = useBlocksList();
+const { addNewBlock, insertCustomBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
+
+const isLayoutBlock = (category: BlockListCategory) => category.blockName === 'MultiGrid';
+const isProductOnlyBlock = (category: BlockListCategory) =>
+  !!category.accessControl && category.accessControl.length === 1 && category.accessControl[0] === 'product';
+const isCategoryOnlyBlock = (category: BlockListCategory) =>
+  !!category.accessControl &&
+  category.accessControl.length === 1 &&
+  category.accessControl[0] === 'productCategory';
+
+const accessibleCategories = computed(() => {
+  const result: Record<string, BlockListCategory> = {};
+  for (const [key, category] of Object.entries(blocksLists.value)) {
+    if (pageHasAccessToCategory(category)) result[key] = category;
+  }
+  return result;
+});
+
+const contentCategoryList = computed(() =>
+  Object.values(accessibleCategories.value).filter(
+    (category) => !isLayoutBlock(category) && !isProductOnlyBlock(category) && !isCategoryOnlyBlock(category),
+  ),
+);
+const productCategoryList = computed(() => Object.values(accessibleCategories.value).filter(isProductOnlyBlock));
+const pageCategoryList = computed(() => Object.values(accessibleCategories.value).filter(isCategoryOnlyBlock));
+
+const hasProductBlocks = computed(() => productCategoryList.value.length > 0);
+const hasCategoryBlocks = computed(() => pageCategoryList.value.length > 0);
+
+const noFilter = computed(() => activeFilters.value.length === 0);
+const hasActiveFilters = computed(() => activeFilters.value.length > 0);
+const hasActiveSearch = computed(() => searchQuery.value.length > 0);
+
+const showLayout = computed(() => noFilter.value || activeFilters.value.includes('layout'));
+const showContent = computed(() => noFilter.value || activeFilters.value.includes('content'));
+const showProduct = computed(() => hasProductBlocks.value && (noFilter.value || activeFilters.value.includes('product')));
+const showCategory = computed(
+  () => hasCategoryBlocks.value && (noFilter.value || activeFilters.value.includes('category')),
+);
+
+const LAYOUT_PRESETS = [
+  { label: '1 Col', spans: [12] },
+  { label: '2 Equal', spans: [6, 6] },
+  { label: 'Sidebar L', spans: [3, 9] },
+  { label: 'Sidebar R', spans: [9, 3] },
+  { label: '3 Equal', spans: [4, 4, 4] },
+  { label: '4 Equal', spans: [3, 3, 3, 3] },
+] as const;
+
+const matchesSearch = (title: string) =>
+  !searchQuery.value || title.toLowerCase().includes(searchQuery.value.toLowerCase());
+
+const filteredPresets = computed(() => LAYOUT_PRESETS.filter((p) => matchesSearch(p.label)));
+
+const toFlatVariations = (categories: BlockListCategory[]): FlatVariation[] =>
+  categories.flatMap((category) => category.variations.map((variation, idx) => ({ category, variation, idx })));
+
+const filteredContentVariations = computed(() =>
+  toFlatVariations(contentCategoryList.value).filter((item) => matchesSearch(item.variation.title)),
+);
+const filteredProductVariations = computed(() =>
+  toFlatVariations(productCategoryList.value).filter((item) => matchesSearch(item.variation.title)),
+);
+const filteredCategoryVariations = computed(() =>
+  toFlatVariations(pageCategoryList.value).filter((item) => matchesSearch(item.variation.title)),
+);
+
+const showLayoutSeparator = computed(
+  () =>
+    showLayout.value &&
+    filteredPresets.value.length > 0 &&
+    ((showProduct.value && filteredProductVariations.value.length > 0) ||
+      (showCategory.value && filteredCategoryVariations.value.length > 0) ||
+      (showContent.value && filteredContentVariations.value.length > 0)),
+);
+const showProductSeparator = computed(
+  () =>
+    showProduct.value &&
+    filteredProductVariations.value.length > 0 &&
+    ((showCategory.value && filteredCategoryVariations.value.length > 0) ||
+      (showContent.value && filteredContentVariations.value.length > 0)),
+);
+const showCategorySeparator = computed(
+  () =>
+    showCategory.value &&
+    filteredCategoryVariations.value.length > 0 &&
+    showContent.value &&
+    filteredContentVariations.value.length > 0,
+);
+
+const hasNoResults = computed(
+  () =>
+    ![
+      showLayout.value && filteredPresets.value.length > 0,
+      showProduct.value && filteredProductVariations.value.length > 0,
+      showCategory.value && filteredCategoryVariations.value.length > 0,
+      showContent.value && filteredContentVariations.value.length > 0,
+    ].some(Boolean),
+);
+
+const targetUuid = computed(() => popoverState.value?.targetUuid ?? '');
+
+const isNestedMultigridDisabled = (category: BlockListCategory) =>
+  category.blockName === 'MultiGrid' && getBlockDepth(targetUuid.value) > 0;
+const isForbiddenBlockDisabled = (category: BlockListCategory) =>
+  ['BannerCarousel', 'ImageText'].includes(category.blockName) && getBlockDepth(targetUuid.value) > 0;
+
+const isVariationDisabled = (category: BlockListCategory, variation: BlockTemplateVariation) => {
+  const blockName = variation.template.en.name;
+  return (
+    isNestedMultigridDisabled(category) ||
+    isForbiddenBlockDisabled(category) ||
+    (['SortFilter', 'ItemGrid', 'Navigation'].includes(blockName) && blockExistsOnPage(blockName))
+  );
+};
+
+const selectVariation = async (category: BlockListCategory, variationIndex: number) => {
+  if (!popoverState.value) return;
+  const { targetUuid: uuid, position } = popoverState.value;
+  closeAddBlockPopover();
+  await addNewBlock(category.category, variationIndex, uuid, position);
+};
+
+const onPickPreset = (spans: readonly number[]) => {
+  if (!popoverState.value) return;
+  const { targetUuid: uuid, position } = popoverState.value;
+  const multiGridBlock = {
+    name: 'MultiGrid',
+    type: 'structure',
+    meta: { uuid: '' },
+    configuration: { columnWidths: spans, fullWidth: false, visible: true },
+    content: spans.map((_, i) => ({
+      name: 'EmptyGridBlock',
+      type: 'content',
+      meta: { uuid: '' },
+      parent_slot: i,
+      content: [],
+    })),
+  };
+  closeAddBlockPopover();
+  insertCustomBlock(multiGridBlock as never, uuid, position);
+};
 </script>
 
 <style scoped>
@@ -146,18 +273,18 @@ const {
 <i18n lang="json">
 {
   "en": {
-    "layout-preset": "Layout Presets",
-    "section-content": "Content Blocks",
     "loading": "Loading blocks...",
-    "filter-product": "Product",
-    "filter-category": "Category"
+    "layout-preset": "Layout Presets",
+    "section-product": "Product",
+    "section-category": "Category",
+    "section-content": "Content Blocks"
   },
   "de": {
-    "layout-preset": "Layout-Vorlagen",
-    "section-content": "Content Blocks",
     "loading": "Blöcke werden geladen...",
-    "filter-product": "Product",
-    "filter-category": "Category"
+    "layout-preset": "Layout-Vorlagen",
+    "section-product": "Product",
+    "section-category": "Category",
+    "section-content": "Content Blocks"
   }
 }
 </i18n>

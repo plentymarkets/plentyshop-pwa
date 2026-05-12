@@ -4,7 +4,6 @@
       <span class="text-[11px] font-semibold text-[#1a1a1a]">
         {{ getEditorTranslation('title') }}
       </span>
-
       <div class="flex items-center gap-1.5 bg-[#f5f5f5] rounded-[6px] px-2 py-[3px] max-w-[120px]">
         <svg width="11" height="11" viewBox="0 0 12 12" fill="none" class="flex-shrink-0 text-[#aaa]">
           <circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.4" />
@@ -40,9 +39,27 @@
 </template>
 
 <script setup lang="ts">
-import type { FilterId } from '~/composables/useAddBlockPopoverPanel/types';
+import type { BlockListCategory } from '~/composables/useBlocksList/types';
+import type { FilterId } from '~/composables/useAddBlockPopover/types';
 
-const { searchQuery, activeFilters, hasProductBlocks, hasCategoryBlocks, toggleFilter } = useAddBlockPopoverPanel();
+const { searchQuery, activeFilters, toggleFilter } = useAddBlockPopover();
+const { blocksLists, pageHasAccessToCategory } = useBlocksList();
+
+const isProductOnlyBlock = (category: BlockListCategory) =>
+  !!category.accessControl && category.accessControl.length === 1 && category.accessControl[0] === 'product';
+const isCategoryOnlyBlock = (category: BlockListCategory) =>
+  !!category.accessControl && category.accessControl.length === 1 && category.accessControl[0] === 'productCategory';
+
+const hasProductBlocks = computed(() =>
+  Object.values(blocksLists.value).some(
+    (category) => pageHasAccessToCategory(category) && isProductOnlyBlock(category),
+  ),
+);
+const hasCategoryBlocks = computed(() =>
+  Object.values(blocksLists.value).some(
+    (category) => pageHasAccessToCategory(category) && isCategoryOnlyBlock(category),
+  ),
+);
 
 const availableFilters = computed(() => {
   const filters: { id: FilterId; label: string }[] = [
