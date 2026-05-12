@@ -146,6 +146,7 @@ export const useTableOfContents = () => {
     selectedUuid,
     hoveredUuid,
     highlightedUuid,
+    highlightTimeoutToken,
     expandedBlocks,
     headerOpen,
     contentOpen,

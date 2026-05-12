@@ -40,7 +40,7 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
-const { scrollToBlock } = useTableOfContents();
+const { scrollToBlock, highlightTimeoutToken } = useTableOfContents();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
@@ -107,6 +107,8 @@ const selectBlock = (index: number) => {
   const block = blocks.value[index];
   if (block) {
     scrollToBlock(block.meta.uuid);
+    // Prevent auto-clear by invalidating the timeout
+    highlightTimeoutToken.value++;
   }
 };
 
@@ -117,6 +119,8 @@ const editBlock = (index: number) => {
   const block = blocks.value[index];
   if (block) {
     scrollToBlock(block.meta.uuid);
+    // Prevent auto-clear by invalidating the timeout
+    highlightTimeoutToken.value++;
   }
   setEditTitle(blockLabels.value[index]!);
 };
@@ -174,6 +178,8 @@ const updateBlocks = (newBlocks: SlideBlock[]) => {
     const activeBlock = blocks.value[currentActiveBlockIndex.value];
     if (activeBlock) {
       scrollToBlock(activeBlock.meta.uuid);
+      // Prevent auto-clear by invalidating the timeout
+      highlightTimeoutToken.value++;
     }
   }
 };
