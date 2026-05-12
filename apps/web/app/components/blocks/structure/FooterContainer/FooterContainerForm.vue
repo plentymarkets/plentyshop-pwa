@@ -7,6 +7,7 @@
         :item-labels="blockLabels"
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
+        @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
@@ -85,6 +86,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { footer } = useBlocks();
+const { scrollToBlock, highlightTimeoutToken, highlightedUuid } = useTableOfContents();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
@@ -154,10 +156,28 @@ const resolveBlockLabels = async () => {
   blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
 };
 
+const hasValidActiveBlock = computed(() => 
+  currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length
+);
+
+const selectBlock = (index: number) => {
+  currentActiveBlockIndex.value = index;
+  const block = blocks.value[index];
+  if (block) {
+    scrollToBlock(block.meta.uuid);
+    highlightTimeoutToken.value++;
+  }
+};
+
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = footerContainer.value?.content?.[index]?.name;
   currentActiveBlockIndex.value = index;
+  const block = blocks.value[index];
+  if (block) {
+    scrollToBlock(block.meta.uuid);
+    highlightTimeoutToken.value++;
+  }
   setEditTitle(blockLabels.value[index]!);
 };
 
@@ -201,7 +221,7 @@ const deleteBlock = async (index: number) => {
     return;
   }
   blocks.value = blocks.value.filter((_: Block, i: number) => i !== index);
-  currentActiveBlockIndex.value = 0;
+  currentActiveBlockIndex.value = -1;
   await nextTick();
   if (editingBlockIndex.value === index) {
     exitEditMode();
@@ -210,6 +230,14 @@ const deleteBlock = async (index: number) => {
 
 const updateBlocks = (newBlocks: Block[]) => {
   blocks.value = newBlocks;
+  
+  if (hasValidActiveBlock.value) {
+    const activeBlock = blocks.value[currentActiveBlockIndex.value];
+    if (activeBlock) {
+      scrollToBlock(activeBlock.meta.uuid);
+      highlightTimeoutToken.value++;
+    }
+  }
 };
 
 const toggleBlockVisibilityHandler = (index: number) => {
@@ -228,13 +256,27 @@ const toggleBlockVisibilityHandler = (index: number) => {
   blocks.value = updatedBlocks;
 };
 
+const previousBlocksLength = ref(blocks.value.length);
+
 watch(
   () => blocks.value.map((block) => block.meta.uuid),
-  () => {
+  (newUuids) => {
     resolveBlockLabels();
+    
+    if (newUuids.length > previousBlocksLength.value) {
+      const newBlockIndex = blocks.value.length - 1;
+      selectBlock(newBlockIndex);
+    }
+    
+    previousBlocksLength.value = newUuids.length;
   },
   { immediate: true },
 );
+
+onBeforeUnmount(() => {
+  highlightedUuid.value = '';
+  currentActiveBlockIndex.value = -1;
+});
 
 defineExpose({
   exitEditMode,
