@@ -95,6 +95,17 @@ export default {
           border: '#e8e8e8',
           'accent-border-hover': '#c0d4ff',
           accent: 'rgb(29 94 199 / <alpha-value>)',
+          // grid canvas tokens
+          'canvas-border': '#e2e2e2',
+          'canvas-cell': '#f3f3f3',
+          'text-dim': '#c4c4c4',
+          'cell-border': '#c8cdd4',
+          'cell-empty-text': '#9aa3ad',
+          'cell-empty-sub': '#bcc2c9',
+          'cell-handle': '#dadde2',
+          'free-border': '#d4d4d4',
+          'free-border-hover': '#999999',
+          'input-border': '#a0a0a0',
         },
 
         header: {
@@ -110,6 +121,10 @@ export default {
           '900': 'rgb(var(--colors-2-header-900) / <alpha-value>)',
           '950': 'rgb(var(--colors-2-header-950) / <alpha-value>)',
         },
+      },
+      backgroundImage: {
+        'editor-hatched':
+          'repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)',
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],

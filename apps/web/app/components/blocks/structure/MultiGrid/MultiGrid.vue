@@ -60,13 +60,10 @@
         <div
           v-if="gridRow.free > 0 && shouldEnableEditorFeatures && enableMultiGridEditor"
           :class="`col-span-${gridRow.free}`"
-          class="self-stretch rounded-[6px] border border-dashed border-[#e2e2e2] flex items-center justify-center"
-          style="
-            background: repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px);
-          "
+          class="self-stretch rounded-[6px] border border-dashed border-editor-canvas-border bg-editor-hatched flex items-center justify-center"
           aria-hidden="true"
         >
-          <span class="text-[10px] text-[#c4c4c4] tracking-[0.04em]">{{ gridRow.free }}/12 free</span>
+          <span class="text-[10px] text-editor-text-dim tracking-[0.04em]">{{ gridRow.free }}/12 free</span>
         </div>
       </ClientOnly>
     </template>

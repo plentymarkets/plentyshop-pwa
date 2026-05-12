@@ -1,35 +1,35 @@
 <template>
   <div>
     <div class="flex pb-1 px-px select-none">
-      <div v-for="i in 12" :key="i" class="flex-1 text-center text-[9px] text-[#c8c8c8] leading-none">
+      <div v-for="i in 12" :key="i" class="flex-1 text-center text-[9px] text-editor-text-dim leading-none">
         {{ i }}
       </div>
     </div>
 
     <div
       ref="containerRef"
-      class="border border-[#e2e2e2] rounded-lg overflow-hidden bg-white relative select-none"
+      class="border border-editor-canvas-border rounded-lg overflow-hidden bg-white relative select-none"
       @pointermove="onPointerMove"
       @pointerup="onPointerUp"
     >
       <div class="absolute inset-0 flex pointer-events-none z-0">
-        <div v-for="i in 12" :key="i" class="flex-1" :class="i > 1 ? 'border-l border-dashed border-[#ededed]' : ''" />
+        <div v-for="i in 12" :key="i" class="flex-1" :class="i > 1 ? 'border-l border-dashed border-editor-canvas-border' : ''" />
       </div>
 
       <div class="relative z-[1]">
-        <div v-for="(row, rIdx) in rows" :key="rIdx" class="flex h-[50px] border-b border-[#eeeeee] last:border-b-0">
+        <div v-for="(row, rIdx) in rows" :key="rIdx" class="flex h-[50px] border-b border-editor-canvas-border last:border-b-0">
           <div
             v-for="cell in row.cells"
             :key="cell.colIndex"
             :style="{ flex: cell.span }"
-            class="relative box-border border-r border-[#f3f3f3] p-1"
+            class="relative box-border border-r border-editor-canvas-cell p-1"
           >
             <div
               class="w-full h-full rounded-[5px] flex items-center px-2 overflow-hidden"
               :class="[
                 cell.hasContent
-                  ? 'bg-[rgba(29,94,199,0.1)] border border-[rgba(29,94,199,0.25)]'
-                  : 'border border-dashed border-[#c8cdd4] cursor-pointer hover:border-[#1D5EC7] hover:bg-[rgba(29,94,199,0.04)]',
+                  ? 'bg-editor-accent/10 border border-editor-accent/25'
+                  : 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]',
               ]"
               @click.stop="!cell.hasContent && onClickCell($event, cell.colIndex)"
             >
@@ -37,11 +37,11 @@
                 <div
                   v-if="cell.span >= 3"
                   class="text-[11px] font-semibold truncate"
-                  :class="cell.hasContent ? 'text-[#1D5EC7]' : 'text-[#9aa3ad]'"
+                  :class="cell.hasContent ? 'text-editor-accent' : 'text-editor-cell-empty-text'"
                 >
                   {{ cell.hasContent ? getEditorTranslation('filled') : getEditorTranslation('empty') }}
                 </div>
-                <div class="text-[10px]" :class="cell.hasContent ? 'text-[rgba(29,94,199,0.6)]' : 'text-[#bcc2c9]'">
+                <div class="text-[10px]" :class="cell.hasContent ? 'text-editor-accent/60' : 'text-editor-cell-empty-sub'">
                   {{ cell.span }}/12
                 </div>
               </div>
@@ -54,7 +54,7 @@
             >
               <div
                 class="w-[3px] h-[22px] rounded-[2px] transition-colors"
-                :class="cell.hasContent ? 'bg-[rgba(29,94,199,0.35)]' : 'bg-[#dadde2]'"
+                :class="cell.hasContent ? 'bg-editor-accent/35' : 'bg-editor-cell-handle'"
               />
             </div>
           </div>
@@ -66,7 +66,7 @@
             @click="onClickFree($event, row.free)"
           >
             <div
-              class="flex-1 border border-dashed border-[#d4d4d4] rounded-[5px] flex items-center justify-center text-[#bbb] text-sm transition-all duration-[120ms] hover:border-[#999] hover:text-[#888]"
+              class="flex-1 border border-dashed border-editor-free-border rounded-[5px] flex items-center justify-center text-editor-text-ghost text-sm transition-all duration-[120ms] hover:border-editor-free-border-hover hover:text-editor-text-faint"
             >
               +
             </div>
@@ -74,7 +74,7 @@
         </div>
 
         <div
-          class="h-8 flex items-center justify-center gap-[5px] cursor-pointer text-[#1D5EC7] text-[12px] bg-[#f4f8ff] font-semibold tracking-[0.01em] border-t border-[#e3ecfd] transition-all duration-[120ms] hover:bg-[#e8f0ff]"
+          class="h-8 flex items-center justify-center gap-[5px] cursor-pointer text-editor-accent text-[12px] bg-editor-toc-hover font-semibold tracking-[0.01em] border-t border-editor-toc-highlight transition-all duration-[120ms] hover:bg-editor-toc-highlight"
           @click="emit('click-add-row', $event.currentTarget as HTMLElement)"
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
