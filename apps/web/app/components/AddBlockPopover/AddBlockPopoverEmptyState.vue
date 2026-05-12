@@ -1,20 +1,20 @@
 <template>
-  <div class="text-[11px] text-[#888] text-center py-4 leading-relaxed px-2">
-    No blocks found.
+  <div class="text-[11px] text-editor-text-faint text-center py-4 leading-relaxed px-2">
+    {{ getEditorTranslation('no-blocks-found') }}
     <template v-if="hasActiveFilters || hasActiveSearch">
       <br />
-      Try clearing
+      {{ getEditorTranslation('try-clearing') }}
       <button
         v-if="hasActiveFilters"
         class="underline text-editor-toc-selected hover:opacity-80 transition-opacity"
         @click="activeFilters = []"
-      >your filters</button>
-      <template v-if="hasActiveFilters && hasActiveSearch"> or </template>
+      >{{ getEditorTranslation('your-filters') }}</button>
+      <template v-if="hasActiveFilters && hasActiveSearch"> {{ getEditorTranslation('or') }} </template>
       <button
         v-if="hasActiveSearch"
         class="underline text-editor-toc-selected hover:opacity-80 transition-opacity"
         @click="searchQuery = ''"
-      >your search</button>.
+      >{{ getEditorTranslation('your-search') }}</button>.
     </template>
   </div>
 </template>
@@ -25,3 +25,22 @@ const { activeFilters, searchQuery } = useAddBlockPopover();
 const hasActiveFilters = computed(() => activeFilters.value.length > 0);
 const hasActiveSearch = computed(() => searchQuery.value.length > 0);
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "no-blocks-found": "No blocks found.",
+    "try-clearing": "Try clearing",
+    "your-filters": "your filters",
+    "or": "or",
+    "your-search": "your search"
+  },
+  "de": {
+    "no-blocks-found": "No blocks found.",
+    "try-clearing": "Try clearing",
+    "your-filters": "your filters",
+    "or": "or",
+    "your-search": "your search"
+  }
+}
+</i18n>

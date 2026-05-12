@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 overflow-y-scroll px-3 py-3 scroll-area min-h-0">
-    <div v-if="isLoading" class="text-[12px] text-[#aaa] text-center py-4">
+    <div v-if="isLoading" class="text-[12px] text-editor-text-placeholder text-center py-4">
       {{ getEditorTranslation('loading') }}
     </div>
 
@@ -8,7 +8,7 @@
 
     <template v-else>
       <AddBlockPopoverLayoutPresets />
-      <div v-if="hasLayoutContent && hasVariationContent" class="h-px bg-[#f0f0f0] -mx-3 my-3" />
+      <div v-if="hasLayoutContent && hasVariationContent" class="h-px bg-editor-surface-muted -mx-3 my-3" />
       <AddBlockPopoverVariationSections />
     </template>
   </div>
@@ -42,11 +42,11 @@ const isCategoryOnly = (c: BlockListCategory) =>
 
 const hasVariationContent = computed(() => {
   const filters = activeFilters.value;
-  return Object.values(blocksLists.value).some((cat) => {
-    if (!pageHasAccessToCategory(cat) || isLayoutBlock(cat)) return false;
-    const filter = isProductOnly(cat) ? 'product' : isCategoryOnly(cat) ? 'category' : 'content';
+  return Object.values(blocksLists.value).some((block) => {
+    if (!pageHasAccessToCategory(block) || isLayoutBlock(block)) return false;
+    const filter = isProductOnly(block) ? 'product' : isCategoryOnly(block) ? 'category' : 'content';
     if (!noFilter.value && !filters.includes(filter)) return false;
-    return cat.variations.some((v) => matchesSearch(v.title));
+    return block.variations.some((variation) => matchesSearch(variation.title));
   });
 });
 
@@ -76,6 +76,6 @@ const hasNoResults = computed(() => !hasLayoutContent.value && !hasVariationCont
 <i18n lang="json">
 {
   "en": { "loading": "Loading blocks..." },
-  "de": { "loading": "Blöcke werden geladen..." }
+  "de": { "loading": "Loading blocks..." }
 }
 </i18n>

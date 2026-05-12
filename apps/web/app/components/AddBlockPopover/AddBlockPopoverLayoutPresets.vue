@@ -5,7 +5,7 @@
       <button
         v-for="preset in filteredPresets"
         :key="preset.label"
-        class="px-1 pt-2 pb-[7px] rounded-[7px] border border-[#e8e8e8] bg-white cursor-pointer flex flex-col items-center gap-[5px] hover:bg-[#f4f8ff] hover:border-[#b8ccf8] transition-all duration-[120ms]"
+        class="px-1 pt-2 pb-[7px] rounded-[7px] border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-[5px] hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-[120ms]"
         @click="pickPreset(preset.spans)"
       >
         <div class="flex gap-[2px] w-full h-[10px]">
@@ -16,7 +16,7 @@
             :style="{ flex: span, background: 'rgba(29,94,199,0.18)', border: '1px dashed rgba(29,94,199,0.5)' }"
           />
         </div>
-        <span class="text-[10px] text-[#666]">{{ preset.label }}</span>
+        <span class="text-[10px] text-editor-text-subtle">{{ preset.label }}</span>
       </button>
     </div>
   </template>
@@ -46,7 +46,7 @@ const pickPreset = (spans: readonly number[]) => {
 
 <style scoped>
 .section-label {
-  @apply text-[9px] text-[#bbb] font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase;
+  @apply text-[9px] text-editor-text-ghost font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase;
 }
 </style>
 
