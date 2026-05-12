@@ -128,7 +128,11 @@ export const useTableOfContents = () => {
     if (footerBlock) {
       if (useRuntimeConfig().public.enableAddBlockPopover) {
         const { openAddBlockPopover } = useAddBlockPopover();
-        openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: footerBlock.meta.uuid, position: 'top' });
+        openAddBlockPopover({
+          anchorEl: event.currentTarget as HTMLElement,
+          targetUuid: footerBlock.meta.uuid,
+          position: 'top',
+        });
       } else {
         const { openDrawerWithView } = useSiteConfiguration();
         const { togglePlaceholder } = useBlockManager();

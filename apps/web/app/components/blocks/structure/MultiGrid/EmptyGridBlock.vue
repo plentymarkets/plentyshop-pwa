@@ -41,7 +41,11 @@ const isActiveColumnOpen = computed(() => {
 
 const addBlockToColumn = (event: MouseEvent) => {
   if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: props.meta.uuid, position: 'inside' });
+    openAddBlockPopover({
+      anchorEl: event.currentTarget as HTMLElement,
+      targetUuid: props.meta.uuid,
+      position: 'inside',
+    });
   } else {
     const { openDrawerWithView } = useSiteConfiguration();
     setInsertColumnUuid(props.meta.uuid);

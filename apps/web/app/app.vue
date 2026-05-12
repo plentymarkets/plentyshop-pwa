@@ -249,9 +249,7 @@ const UnlinkCategoryModal = defineAsyncComponent(
 const ResetProductPageModal = defineAsyncComponent(
   () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
-const AddBlockPopoverComponent = defineAsyncComponent(
-  () => import('~/components/AddBlockPopover/AddBlockPopover.vue'),
-);
+const AddBlockPopoverComponent = defineAsyncComponent(() => import('~/components/AddBlockPopover/AddBlockPopover.vue'));
 </script>
 
 <style lang="scss">

@@ -106,13 +106,14 @@ export const useAddBlockPopoverPanel: UseAddBlockPopoverPanelReturn = () => {
       filteredContentVariations.value.length > 0,
   );
 
-  const hasNoResults = computed(() =>
-    ![
-      showLayout.value && filteredPresets.value.length > 0,
-      showProduct.value && filteredProductVariations.value.length > 0,
-      showCategory.value && filteredCategoryVariations.value.length > 0,
-      showContent.value && filteredContentVariations.value.length > 0,
-    ].some(Boolean),
+  const hasNoResults = computed(
+    () =>
+      ![
+        showLayout.value && filteredPresets.value.length > 0,
+        showProduct.value && filteredProductVariations.value.length > 0,
+        showCategory.value && filteredCategoryVariations.value.length > 0,
+        showContent.value && filteredContentVariations.value.length > 0,
+      ].some(Boolean),
   );
 
   const isNestedMultigridDisabled = (category: BlockListCategory) =>

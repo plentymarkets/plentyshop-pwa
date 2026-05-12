@@ -7,8 +7,7 @@
       left: `${pos.arrowLeft}px`,
       top: `${pos.arrowTop}px`,
       transform: 'translateX(-50%) rotate(45deg)',
-      boxShadow:
-        pos.arrowDir === 'down' ? '2px 2px 4px rgba(0,0,0,0.07)' : '-1px -1px 4px rgba(0,0,0,0.07)',
+      boxShadow: pos.arrowDir === 'down' ? '2px 2px 4px rgba(0,0,0,0.07)' : '-1px -1px 4px rgba(0,0,0,0.07)',
     }"
   />
 </template>

@@ -146,7 +146,11 @@ const addHeaderBlock = (event: MouseEvent) => {
   const lastChild = headerBlocks.value[headerBlocks.value.length - 1];
   if (!lastChild) return;
   if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: lastChild.meta.uuid, position: 'bottom' });
+    openAddBlockPopover({
+      anchorEl: event.currentTarget as HTMLElement,
+      targetUuid: lastChild.meta.uuid,
+      position: 'bottom',
+    });
   } else {
     const { openDrawerWithView } = useSiteConfiguration();
     const { togglePlaceholder } = useBlockManager();

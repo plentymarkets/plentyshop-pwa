@@ -16,13 +16,17 @@
             v-if="hasActiveFilters"
             class="underline text-editor-toc-selected hover:opacity-80 transition-opacity"
             @click="activeFilters = []"
-          >your filters</button>
+          >
+            your filters
+          </button>
           <template v-if="hasActiveFilters && hasActiveSearch"> or </template>
           <button
             v-if="hasActiveSearch"
             class="underline text-editor-toc-selected hover:opacity-80 transition-opacity"
             @click="searchQuery = ''"
-          >your search</button>.
+          >
+            your search</button
+          >.
         </template>
       </div>
     </template>
