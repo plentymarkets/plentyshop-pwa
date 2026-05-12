@@ -40,7 +40,7 @@ import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
-const { scrollToBlock, highlightTimeoutToken } = useTableOfContents();
+const { scrollToBlock, highlightTimeoutToken, highlightedUuid } = useTableOfContents();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
@@ -218,6 +218,11 @@ watch(
   },
   { immediate: true },
 );
+
+onBeforeUnmount(() => {
+  highlightedUuid.value = '';
+  currentActiveBlockIndex.value = -1;
+});
 
 defineExpose({
   exitEditMode,
