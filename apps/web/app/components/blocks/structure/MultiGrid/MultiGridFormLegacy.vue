@@ -1,0 +1,239 @@
+<template>
+  <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
+    <UiAccordionItem
+      v-model="textSettings"
+      data-testid="open-layout-settings"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('layout-settings') }}</h2>
+      </template>
+
+      <div data-testid="image-text-form">
+        <div v-if="isTwoColumnMultigrid" class="py-4">
+          <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
+          <ColumnWidthInput
+            :multi-grid-structure="multiGridStructure"
+            @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
+          />
+        </div>
+
+        <div v-if="multiGridStructure.configuration.layout" class="py-2">
+          <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
+          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowUpward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.marginTop"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="margin-top"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowDownward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.marginBottom"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="margin-bottom"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div v-if="multiGridStructure.configuration.layout" class="py-2">
+          <UiFormLabel>{{ getEditorTranslation('gap-label') }}</UiFormLabel>
+          <div class="border-b py-1 flex gap-2">
+            <button
+              v-for="gapOption in gapOptions"
+              :key="gapOption"
+              type="button"
+              data-testid="gap-btn"
+              :class="[
+                gapBtnClasses,
+                { 'bg-editor-button text-white': gapOption === multiGridStructure.configuration.layout.gap },
+              ]"
+              @click="multiGridStructure.configuration.layout.gap = gapOption"
+            >
+              {{ getEditorTranslation('gap-size-' + gapOption.toLowerCase()) }}
+            </button>
+          </div>
+          <div class="mt-2 text-xs text-neutral-700">
+            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
+          </div>
+        </div>
+      </div>
+      <div v-if="multiGridStructure.configuration.columnWidths?.length" class="py-4">
+        <UiFormLabel>{{ getEditorTranslation('sticky-columns') }}</UiFormLabel>
+
+        <div class="grid grid-cols-3 gap-2 mt-2">
+          <button
+            v-for="i in numColumns"
+            :key="`sticky-col-${i}`"
+            type="button"
+            class="px-3 py-2 rounded-md border text-sm"
+            :class="
+              isSticky(i - 1)
+                ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
+                : 'border-neutral-300 hover:border-neutral-400'
+            "
+            @click="toggleSticky(i - 1)"
+          >
+            {{ getEditorTranslation('column') }} {{ i }}
+          </button>
+        </div>
+      </div>
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
+    </UiAccordionItem>
+
+    <UiAccordionItem
+      v-model="layoutBackground"
+      data-testid="open-layout-background-settings"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('layout-background') }}</h2>
+      </template>
+
+      <div v-if="multiGridStructure.configuration.layout" class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+        </div>
+        <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <label>
+              <SfInput
+                v-model="multiGridStructure.configuration.layout.backgroundColor"
+                type="text"
+                data-testid="input-background-color"
+              >
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
+            </label>
+          </template>
+        </EditorColorPicker>
+      </div>
+    </UiAccordionItem>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
+import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
+
+const props = defineProps<{ uuid?: string }>();
+
+const { blockUuid } = useSiteConfiguration();
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
+const { allBlocks: data } = useBlocks();
+const { findOrDeleteBlockByUuid } = useBlockManager();
+const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
+const blockSize = computed(() => getBlockSize());
+const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
+const isTwoColumnMultigrid = computed(() => {
+  return multiGridStructure.value.configuration?.columnWidths?.length === 2;
+});
+
+const multiGridStructure = computed(() => {
+  const block = (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
+  if (!block.configuration.layout) {
+    block.configuration.layout = {
+      marginTop: 0,
+      marginBottom: defaultMarginBottom.value,
+      backgroundColor: '#ffffff',
+      gap: 'M',
+    };
+  } else {
+    if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
+    if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
+    if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
+      block.configuration.layout.marginBottom = defaultMarginBottom.value;
+    }
+  }
+  return block;
+});
+
+const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
+
+const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
+const gapBtnClasses =
+  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
+type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
+const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
+
+const getGapPx = (gap: string | undefined): number => {
+  const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
+  return gapPxMap[validGap as GapSize];
+};
+
+if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
+
+const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
+
+const isSticky = (columnIndex: number) => {
+  return (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
+};
+
+const toggleSticky = (columnIndex: number) => {
+  const configuration = multiGridStructure.value.configuration;
+  if (!Array.isArray(configuration?.sticky)) configuration.sticky = [];
+  const position = configuration.sticky.indexOf(columnIndex);
+  if (position === -1) {
+    configuration.sticky.push(columnIndex);
+  } else {
+    configuration.sticky.splice(position, 1);
+  }
+};
+
+const textSettings = ref(false);
+const layoutBackground = ref(false);
+</script>
+
+<i18n lang="json">
+{
+  "en": {
+    "layout-settings": "Layout Settings",
+    "margin-label": "Margin (px)",
+    "background-color-label": "Background Color",
+    "gap-label": "Gap",
+    "gap-size-none": "None",
+    "gap-size-s": "S",
+    "gap-size-m": "M",
+    "gap-size-l": "L",
+    "gap-size-xl": "XL",
+    "spacing-between": "Spacing between Blocks:",
+    "layout-background": "Layout Background",
+    "sticky-columns": "Sticky columns",
+    "column-size": "Column Size",
+    "column": "Column"
+  },
+  "de": {
+    "layout-settings": "Layout Settings",
+    "margin-label": "Margin (px)",
+    "background-color-label": "Background Color",
+    "gap-label": "Gap",
+    "gap-size-none": "None",
+    "gap-size-s": "S",
+    "gap-size-m": "M",
+    "gap-size-l": "L",
+    "gap-size-xl": "XL",
+    "spacing-between": "Spacing between Blocks:",
+    "layout-background": "Layout Background",
+    "sticky-columns": "Sticky columns",
+    "column-size": "Column Size",
+    "column": "Column"
+  }
+}
+</i18n>

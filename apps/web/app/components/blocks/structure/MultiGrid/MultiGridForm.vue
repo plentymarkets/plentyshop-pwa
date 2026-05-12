@@ -1,5 +1,6 @@
 <template>
-  <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
+  <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
+  <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
 
     <div
       class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-[#f7f7f7] border-t border-b border-[#ebebeb] select-none"
@@ -191,6 +192,9 @@ import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types'
 import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
+import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
+
+const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
 const props = defineProps<{ uuid?: string }>();
 

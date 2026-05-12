@@ -54,7 +54,7 @@
 
       <ClientOnly>
         <div
-          v-if="gridRow.free > 0 && shouldEnableEditorFeatures"
+          v-if="gridRow.free > 0 && shouldEnableEditorFeatures && enableMultiGridEditor"
           :class="`col-span-${gridRow.free}`"
           class="self-stretch rounded-[6px] border border-dashed border-[#e2e2e2] flex items-center justify-center"
           style="background: repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)"
@@ -88,6 +88,7 @@ const onRowLeave = () => {
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
+const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 const { isDragging, shouldDisplayPlaceholder } = useBlockManager();
 const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
 const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
