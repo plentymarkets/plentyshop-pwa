@@ -82,7 +82,6 @@ export default {
           'toc-hover': '#F5FAFF',
           'toc-selected': '#538AEA',
           'icon-hover': 'rgba(6, 38, 51, 0.08)',
-          // text scale
           'text-strong': '#1a1a1a',
           'text-default': '#444444',
           'text-subtle': '#666666',
@@ -90,11 +89,9 @@ export default {
           'text-faint': '#888888',
           'text-placeholder': '#aaaaaa',
           'text-ghost': '#bbbbbb',
-          // surfaces (preset-hover and block-hover reuse toc-hover; surface-cool reuses body-bg)
           surface: '#f5f5f5',
           'surface-cool-hover': '#e4e8f0',
           'surface-muted': '#f0f0f0',
-          // borders
           border: '#e8e8e8',
           'accent-border-hover': '#c0d4ff',
         },
