@@ -20,6 +20,16 @@
 
 <script setup lang="ts">
 import type { PopoverPosition } from './types';
+import {
+  VIEWPORT_EDGE_MARGIN,
+  clampHorizontal,
+  placeBelow,
+  placeAbove,
+  fitsBelow,
+  fitsAbove,
+  clampArrowHorizontal,
+  arrowVerticalPosition,
+} from './positioning';
 
 const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
 const { blocksLists, getBlocksLists } = useBlocksList();
@@ -52,30 +62,31 @@ const recalcPosition = async (state: typeof popoverState.value) => {
   if (!panelRef.value) return;
 
   const { width, height } = panelRef.value.getBoundingClientRect();
-  const margin = 8;
   const { anchorCenterX, anchorTop, anchorBottom } = state;
-  const left = Math.max(margin, Math.min(anchorCenterX - width / 2, window.innerWidth - width - margin));
 
-  let top = anchorBottom + 12;
+  const left = clampHorizontal(anchorCenterX, width);
+
+  let top = placeBelow(anchorBottom);
   let arrowDirection: 'up' | 'down' = 'up';
-  if (top + height + margin > window.innerHeight) {
-    top = anchorTop - height - 12;
+
+  if (!fitsBelow(top, height)) {
+    top = placeAbove(anchorTop, height);
     arrowDirection = 'down';
-    if (top < margin) {
-      top = Math.max(margin, window.innerHeight - height - margin);
+    if (!fitsAbove(top)) {
+      top = Math.max(VIEWPORT_EDGE_MARGIN, window.innerHeight - height - VIEWPORT_EDGE_MARGIN);
       arrowDirection = 'up';
     }
   }
 
-  const arrowLeft = Math.max(left + 12, Math.min(anchorCenterX, left + width - 12));
-  const arrowTop = arrowDirection === 'down' ? top + height - 7 : top - 7;
+  const arrowLeft = clampArrowHorizontal(left, anchorCenterX, width);
+  const arrowTop = arrowVerticalPosition(arrowDirection, top, height);
   popoverPosition.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDirection };
 };
 
 watch(() => popoverState.value, recalcPosition);
 
-const handleKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') closeAddBlockPopover();
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') closeAddBlockPopover();
 };
 
 onMounted(async () => {
