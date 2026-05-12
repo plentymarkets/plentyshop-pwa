@@ -1,5 +1,9 @@
 <template>
-  <div data-testid="multi-grid-structure"     :class="[getGridClasses(), { 'px-4': shouldApplyPadding }]" :style="gridInlineStyle">
+  <div
+    data-testid="multi-grid-structure"
+    :class="[getGridClasses(), { 'px-4': shouldApplyPadding }]"
+    :style="gridInlineStyle"
+  >
     <template v-for="(gridRow, rIdx) in gridRows" :key="rIdx">
       <div
         v-for="cell in gridRow.cells"
@@ -57,7 +61,9 @@
           v-if="gridRow.free > 0 && shouldEnableEditorFeatures && enableMultiGridEditor"
           :class="`col-span-${gridRow.free}`"
           class="self-stretch rounded-[6px] border border-dashed border-[#e2e2e2] flex items-center justify-center"
-          style="background: repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)"
+          style="
+            background: repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px);
+          "
           aria-hidden="true"
         >
           <span class="text-[10px] text-[#c4c4c4] tracking-[0.04em]">{{ gridRow.free }}/12 free</span>

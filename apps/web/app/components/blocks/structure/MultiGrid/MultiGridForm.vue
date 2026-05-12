@@ -1,7 +1,6 @@
 <template>
   <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
   <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-
     <div
       class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-[#f7f7f7] border-t border-b border-[#ebebeb] select-none"
       @click="gridLayoutOpen = !gridLayoutOpen"
@@ -10,7 +9,10 @@
         {{ getEditorTranslation('grid-layout') }}
       </span>
       <svg
-        width="10" height="6" viewBox="0 0 10 6" fill="none"
+        width="10"
+        height="6"
+        viewBox="0 0 10 6"
+        fill="none"
         :style="{ transform: gridLayoutOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.18s' }"
       >
         <path d="M1 1l4 4 4-4" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -18,7 +20,6 @@
     </div>
 
     <div v-if="gridLayoutOpen" class="px-3.5 py-3">
-
       <div v-if="allEmpty" class="mb-3.5">
         <div class="text-[10px] text-[#b8b8b8] font-bold tracking-[0.07em] mb-2 uppercase">
           {{ getEditorTranslation('layout-preset') }}
@@ -86,7 +87,10 @@
         {{ getEditorTranslation('layout') }}
       </span>
       <svg
-        width="10" height="6" viewBox="0 0 10 6" fill="none"
+        width="10"
+        height="6"
+        viewBox="0 0 10 6"
+        fill="none"
         :style="{ transform: layoutOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.18s' }"
       >
         <path d="M1 1l4 4 4-4" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -94,7 +98,6 @@
     </div>
 
     <div v-if="layoutOpen" class="px-3.5 py-3 flex flex-col gap-3">
-
       <div v-if="multiGridStructure.configuration.layout">
         <div class="text-[11px] text-[#888] mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
         <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -150,7 +153,10 @@
         {{ getEditorTranslation('layout-background') }}
       </span>
       <svg
-        width="10" height="6" viewBox="0 0 10 6" fill="none"
+        width="10"
+        height="6"
+        viewBox="0 0 10 6"
+        fill="none"
         :style="{ transform: backgroundOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.18s' }"
       >
         <path d="M1 1l4 4 4-4" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -183,7 +189,6 @@
         </EditorColorPicker>
       </div>
     </div>
-
   </div>
 </template>
 

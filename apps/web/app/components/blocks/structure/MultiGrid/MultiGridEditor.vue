@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="flex pb-1 px-px select-none">
-      <div
-        v-for="i in 12"
-        :key="i"
-        class="flex-1 text-center text-[9px] text-[#c8c8c8] leading-none"
-      >
+      <div v-for="i in 12" :key="i" class="flex-1 text-center text-[9px] text-[#c8c8c8] leading-none">
         {{ i }}
       </div>
     </div>
@@ -17,21 +13,11 @@
       @pointerup="onPointerUp"
     >
       <div class="absolute inset-0 flex pointer-events-none z-0">
-        <div
-          v-for="i in 12"
-          :key="i"
-          class="flex-1"
-          :class="i > 1 ? 'border-l border-dashed border-[#ededed]' : ''"
-        />
+        <div v-for="i in 12" :key="i" class="flex-1" :class="i > 1 ? 'border-l border-dashed border-[#ededed]' : ''" />
       </div>
 
       <div class="relative z-[1]">
-        <div
-          v-for="(row, rIdx) in rows"
-          :key="rIdx"
-          class="flex h-[50px] border-b border-[#eeeeee] last:border-b-0"
-        >
-
+        <div v-for="(row, rIdx) in rows" :key="rIdx" class="flex h-[50px] border-b border-[#eeeeee] last:border-b-0">
           <div
             v-for="cell in row.cells"
             :key="cell.colIndex"
@@ -55,10 +41,7 @@
                 >
                   {{ cell.hasContent ? getEditorTranslation('filled') : getEditorTranslation('empty') }}
                 </div>
-                <div
-                  class="text-[10px]"
-                  :class="cell.hasContent ? 'text-[rgba(29,94,199,0.6)]' : 'text-[#bcc2c9]'"
-                >
+                <div class="text-[10px]" :class="cell.hasContent ? 'text-[rgba(29,94,199,0.6)]' : 'text-[#bcc2c9]'">
                   {{ cell.span }}/12
                 </div>
               </div>
@@ -143,9 +126,7 @@ const rows = computed((): GridRow[] => {
       cells = [];
       used = 0;
     }
-    const hasContent = props.blocks.some(
-      (b) => b.parent_slot === colIndex && b.name !== 'EmptyGridBlock',
-    );
+    const hasContent = props.blocks.some((b) => b.parent_slot === colIndex && b.name !== 'EmptyGridBlock');
     cells.push({ colIndex, span, hasContent });
     used += span;
   });
@@ -154,9 +135,7 @@ const rows = computed((): GridRow[] => {
 });
 
 const onClickCell = (event: MouseEvent, colIndex: number) => {
-  const emptyBlock = props.blocks.find(
-    (b) => b.parent_slot === colIndex && b.name === 'EmptyGridBlock',
-  );
+  const emptyBlock = props.blocks.find((b) => b.parent_slot === colIndex && b.name === 'EmptyGridBlock');
   if (!emptyBlock) return;
   openAddBlockPopover({
     anchorEl: event.currentTarget as HTMLElement,
@@ -198,7 +177,6 @@ const onPointerMove = (e: PointerEvent) => {
 const onPointerUp = () => {
   dragRef.value = null;
 };
-
 </script>
 
 <i18n lang="json">
