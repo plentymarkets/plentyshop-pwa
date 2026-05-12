@@ -76,7 +76,7 @@ const fetchCacheableInitData: SetInitialData = async () => {
   try {
     const { data } = await useAsyncData(() =>
       useSdk().plentysystems.getInit({
-        exclude: { settings: true, session: true, categories: true },
+        exclude: { settings: true, session: true },
       }),
     );
     if (data.value?.data) {
@@ -96,7 +96,7 @@ const fetchCacheableInitData: SetInitialData = async () => {
 const fetchSessionAndCategoryTree = async () => {
   try {
     const { data } = await useAsyncData(() =>
-      useSdk().plentysystems.getInit({ exclude: { settings: true, robots: true, customAssets: true } }),
+      useSdk().plentysystems.getInit({ exclude: { settings: true, robots: true, customAssets: true, categories: true } }),
     );
     if (data.value?.data) {
       const { session, categories } = data.value.data;
