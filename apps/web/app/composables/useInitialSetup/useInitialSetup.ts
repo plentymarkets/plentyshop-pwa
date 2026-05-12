@@ -72,6 +72,7 @@ const fetchCacheableInitData: SetInitialData = async () => {
   const { setRobots } = useRobots();
   const { setInitialData: setInitialAssetsData } = useCustomAssets();
   const { setPattern } = usePriceFormatter();
+  const { setCategoryTree } = useCategoryTree();
 
   try {
     const { data } = await useAsyncData(() =>
@@ -81,6 +82,8 @@ const fetchCacheableInitData: SetInitialData = async () => {
     );
     if (data.value?.data) {
       setInitialAssetsData(data.value.data.customAssets || []);
+      setCategoryTree(data.value.data.categories);
+
       if (data.value.data.robots) {
         setRobots(data.value.data.robots);
       }
