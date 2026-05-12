@@ -20,10 +20,7 @@
               :class="{
                 'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
               }"
-              @click="
-                closeSiteConfigurationDrawer();
-                addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
-              "
+              @click="handleAddBlock(category.category, variationIndex)"
             >
               <SfTooltip
                 v-if="isSingleInstanceOnPage(variation.template.en.name)"
@@ -93,6 +90,11 @@ const blockPosition = computed(() => {
   if (insertColumnUuid.value) return 'inside';
   return visiblePlaceholder.value.position;
 });
+
+const handleAddBlock = (categoryName: string, variationIndex: number) => {
+  closeSiteConfigurationDrawer();
+  addNewBlock(categoryName, variationIndex, targetUuid.value, blockPosition.value);
+};
 </script>
 
 <i18n lang="json">
