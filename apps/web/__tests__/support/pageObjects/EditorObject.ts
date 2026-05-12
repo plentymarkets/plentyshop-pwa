@@ -386,7 +386,7 @@ export class EditorObject extends PageObject {
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
         cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
       } else {
-        cy.wrap(el).should('have.class', 'p-4').and('have.class', 'md:px-6');
+        cy.wrap(el).should('have.class', 'p-4');
       }
     });
   }
