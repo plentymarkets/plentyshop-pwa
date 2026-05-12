@@ -1,6 +1,6 @@
 <template>
   <div class="flex-shrink-0 bg-white px-3 pt-3">
-    <div class="flex items-center justify-between mb-2.5">
+    <div class="flex items-center justify-between mb-4">
       <span class="text-[11px] font-semibold text-[#1a1a1a]">
         {{ getEditorTranslation('title') }}
       </span>
