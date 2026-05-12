@@ -1,13 +1,19 @@
-export const createMultiGridBlock = (columnWidths: readonly number[]) => ({
-  name: 'MultiGrid' as const,
-  type: 'structure' as const,
+import type { Block } from '@plentymarkets/shop-api';
+
+export const createMultiGridBlock = (columnWidths: readonly number[]): Block => ({
+  name: 'MultiGrid',
+  type: 'structure',
   meta: { uuid: '' },
-  configuration: { columnWidths: [...columnWidths], fullWidth: false, visible: true },
-  content: columnWidths.map((_, i) => ({
-    name: 'EmptyGridBlock' as const,
-    type: 'content' as const,
+  configuration: {
+    visible: true,
+    columnWidths: [...columnWidths],
+    layout: { fullWidth: false },
+  },
+  content: columnWidths.map((_, i): Block => ({
+    name: 'EmptyGridBlock',
+    type: 'content',
     meta: { uuid: '' },
     parent_slot: i,
-    content: [] as never[],
+    content: [],
   })),
 });

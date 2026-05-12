@@ -40,7 +40,7 @@ const pickPreset = (columnWidths: readonly number[]) => {
   if (!popoverState.value) return;
   const { targetUuid: uuid, position } = popoverState.value;
   closeAddBlockPopover();
-  insertCustomBlock(createMultiGridBlock(columnWidths) as never, uuid, position);
+  insertCustomBlock(createMultiGridBlock(columnWidths), uuid, position);
 };
 </script>
 

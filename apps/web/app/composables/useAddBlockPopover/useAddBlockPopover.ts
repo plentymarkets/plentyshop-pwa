@@ -15,12 +15,7 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
       index >= 0 ? state.value.activeFilters.filter((f) => f !== id) : [...state.value.activeFilters, id];
   };
 
-  const openAddBlockPopover = ({
-    anchorEl,
-    targetUuid,
-    position,
-    showLayoutPresets = false,
-  }: OpenAddBlockPopoverParams) => {
+  const openAddBlockPopover = ({ anchorEl, targetUuid, position }: OpenAddBlockPopoverParams) => {
     const rect = anchorEl.getBoundingClientRect();
 
     if (position === 'inside') {
@@ -37,7 +32,6 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
       anchorBottom: rect.bottom,
       targetUuid,
       position,
-      showLayoutPresets,
     };
   };
 
