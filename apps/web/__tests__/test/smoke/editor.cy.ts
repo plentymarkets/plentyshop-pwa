@@ -78,8 +78,8 @@ describe('Editor Smoke Tests', () => {
       .assertNotMovableOrDeletable()
       .openSettingsDrawer()
       .assertSettingsSections()
-      .assertColumnInteractive()
-      .changeColumnTitle('Smoke Legal')
-      .assertColumnTitleValue('Smoke Legal');
+      .assertColorSectionInteractive()
+      .changeBackgroundColor('#abcdef')
+      .assertBackgroundColorValue('#abcdef');
   });
 });
