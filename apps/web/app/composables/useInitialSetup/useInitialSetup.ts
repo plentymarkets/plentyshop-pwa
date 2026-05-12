@@ -102,11 +102,10 @@ const fetchSessionAndCategoryTree = async () => {
       useSdk().plentysystems.getInit({ exclude: { settings: true, robots: true, customAssets: true, categories: true } }),
     );
     if (data.value?.data) {
-      const { session, categories } = data.value.data;
+      const { session } = data.value.data;
       useCustomer().setUser(session.user);
       useCart().setCart(session?.basket);
       useWishlist().setWishlistItemIds(Object.values(session?.basket?.itemWishListIds || []));
-      useCategoryTree().setCategoryTree(categories);
     }
   } catch (error) {
     useHandleError(error as ApiError);
