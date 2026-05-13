@@ -8,7 +8,7 @@
   >
     <div class="relative">
       <div class="drift-zoom-image">
-        <section class="p-4 xl:p-6">
+        <section class="md:p-4">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">

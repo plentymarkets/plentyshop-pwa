@@ -2,7 +2,7 @@
   <div>
     <UiHeaderBlocks />
 
-    <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+    <NarrowContainer v-if="breadcrumbs?.length" class="p-4">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
     <main>
