@@ -41,6 +41,8 @@ const props = defineProps<CategorySelectProps>();
 
 const emit = defineEmits<{
   'update:modelValue': [value: string | null];
+  'update:selectedEntry': [value: CategoryEntry | null];
+  'update:selectedPath': [value: string | null];
 }>();
 
 const multiselectRef = ref<InstanceType<typeof Multiselect> | null>(null);
@@ -58,13 +60,33 @@ const { send } = useNotification();
 
 const infoMessageClasses = 'py-2 px-4 text-left text-sm text-gray-400 select-none cursor-default';
 
+const categoryEntryMap = ref<Map<string, CategoryEntry>>(new Map());
+
 const mapSearchResultsToOptions = (entries: CategoryEntry[]): CategoryOption[] => {
   return entries
     .filter((category) => category.right !== 'customer')
-    .map((category) => ({
-      id: category.id.toString(),
-      name: category.details[0]?.name ?? '',
-    }));
+    .map((category) => {
+      categoryEntryMap.value.set(category.id.toString(), category);
+      return {
+        id: category.id.toString(),
+        name: category.details[0]?.name ?? '',
+      };
+    });
+};
+
+const buildFullPath = (entry: CategoryEntry): string => {
+  const segments: string[] = [];
+  let current: CategoryEntry | undefined = entry;
+
+  while (current) {
+    const nameUrl = current.details[0]?.nameUrl;
+    if (nameUrl) segments.unshift(nameUrl);
+
+    const parentId: number | null = current.parentCategoryId;
+    current = parentId ? categoryEntryMap.value.get(String(parentId)) : undefined;
+  }
+
+  return '/' + segments.join('/');
 };
 
 const loadCategories = async (query: string, page: number, append: boolean = false) => {
@@ -172,7 +194,10 @@ const selectedCategory = computed(() => {
 });
 
 const onCategorySelected = (category: CategoryOption | null) => {
+  const entry = category ? (categoryEntryMap.value.get(category.id) ?? null) : null;
   emit('update:modelValue', category?.id ?? null);
+  emit('update:selectedEntry', category ? (categoryEntryMap.value.get(category.id) ?? null) : null);
+  emit('update:selectedPath', entry ? buildFullPath(entry) : null);
 };
 
 onMounted(() => handleSearch(''));
