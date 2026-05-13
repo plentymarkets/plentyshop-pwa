@@ -85,7 +85,7 @@
               type="button"
               class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
               data-testid="toc-add-block"
-              @click="handleAddBlockAtBottom()"
+              @click="handleAddBlockAtBottom"
             >
               <SfIconAdd />
               {{ getEditorTranslation('add-element-label') }}
@@ -114,10 +114,11 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { DragEvent } from '~/components/EditableBlocks/types';
 
-const { closeSiteConfigurationDrawer, openDrawerWithView } = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen } = useTableOfContents();
 const { headerContainer, pageBlocks, footer, updateBlocks, reorderHeaderBlocks } = useBlocks();
-const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
+const { scrollIntoBlockView } = useBlockManager();
+const { openAddBlockPopover } = useAddBlockPopover();
 const { logToCCreateBlock } = useLogEvent();
 
 const accordionProps = {
@@ -142,18 +143,30 @@ const handleHeaderDragChange = (evt: DragEvent) => {
   }
 };
 
-const handleAddBlockAtBottom = () => {
-  addBlockAtBottom();
+const handleAddBlockAtBottom = (event: MouseEvent) => {
+  addBlockAtBottom(event);
   logToCCreateBlock();
 };
 
-const addHeaderBlock = () => {
+const addHeaderBlock = (event: MouseEvent) => {
   const lastChild = headerBlocks.value[headerBlocks.value.length - 1];
   if (!lastChild) return;
-  multigridColumnUuid.value = null;
-  togglePlaceholder(lastChild.meta.uuid, 'bottom');
+  if (useRuntimeConfig().public.enableAddBlockPopover) {
+    openAddBlockPopover({
+      anchorEl: event.currentTarget as HTMLElement,
+      targetUuid: lastChild.meta.uuid,
+      position: 'bottom',
+    });
+  } else {
+    const { openDrawerWithView } = useSiteConfiguration();
+    const { togglePlaceholder } = useBlockManager();
+    const { clearInsertColumnUuid } = useBlocksMutations();
+    togglePlaceholder(lastChild.meta.uuid, 'bottom');
+    openDrawerWithView('blocksList');
+    clearInsertColumnUuid();
+  }
+
   logToCCreateBlock();
-  openDrawerWithView('blocksList');
 };
 
 const draggablePageBlocks = computed({

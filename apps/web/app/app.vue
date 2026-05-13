@@ -42,6 +42,7 @@
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
+    <component :is="AddBlockPopoverComponent" v-if="enablePopover && clientPreview" />
   </ClientOnly>
 </template>
 
@@ -56,6 +57,8 @@ const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
+
+const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
 const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
 const contentRef = ref<HTMLElement | null>(null);
@@ -248,6 +251,7 @@ const UnlinkCategoryModal = defineAsyncComponent(
 const ResetProductPageModal = defineAsyncComponent(
   () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
+const AddBlockPopoverComponent = defineAsyncComponent(() => import('~/components/AddBlockPopover/AddBlockPopover.vue'));
 </script>
 
 <style lang="scss">

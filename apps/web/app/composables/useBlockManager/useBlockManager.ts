@@ -43,11 +43,6 @@ export const useBlockManager = () => {
   const lazyLoadRefs = ref<Record<string, HTMLElement | null>>({});
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
-  const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
-
-  const updateMultigridColumnUuid = (uuid: string) => {
-    multigridColumnUuid.value = uuid;
-  };
 
   const insertBlock = ({
     targetBlock,
@@ -117,6 +112,9 @@ export const useBlockManager = () => {
     if (!pageBlocks.value) return false;
 
     if (pageBlocks.value.length === 0) {
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
       updateBlocks([newBlock]);
       openDrawerWithView('blocksSettings', newBlock);
       return false;
@@ -156,6 +154,36 @@ export const useBlockManager = () => {
     if (!pageBlocks.value) return;
 
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+    newBlock.meta.uuid = uuid();
+
+    const isTargetInHeader =
+      !!headerContainer.value &&
+      !!findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
+
+    const isTargetInFooter =
+      !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
+
+    if (isTargetInHeader) {
+      addBlockToHeader(newBlock, targetUuid, position);
+    } else if (isTargetInFooter) {
+      addBlockToFooter(newBlock, targetUuid, position);
+    } else if (!addBlockToPage(newBlock, targetUuid, position)) {
+      return;
+    }
+
+    visiblePlaceholder.value = { uuid: '', position: 'top' };
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+
+    scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
+
+    const selectedUuid = useState<string>('toc-selected-uuid');
+    selectedUuid.value = newBlock.meta.uuid;
+    openDrawerWithView('TableOfContents');
+  };
+
+  const insertCustomBlock = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
+    if (!pageBlocks.value) return;
+
     newBlock.meta.uuid = uuid();
 
     const isTargetInHeader =
@@ -484,8 +512,6 @@ export const useBlockManager = () => {
     lazyLoadStates,
     lazyLoadRefs,
     isTablet,
-    multigridColumnUuid,
-    updateMultigridColumnUuid,
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,
@@ -496,6 +522,7 @@ export const useBlockManager = () => {
     isLastNonFooterBlock,
     isFirstContentBlock,
     addNewBlock,
+    insertCustomBlock,
     scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,
