@@ -85,7 +85,7 @@
               type="button"
               class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
               data-testid="toc-add-block"
-              @click="addBlockAtBottom"
+              @click="handleAddBlockAtBottom"
             >
               <SfIconAdd />
               {{ getEditorTranslation('add-element-label') }}
@@ -119,6 +119,7 @@ const { addBlockAtBottom, blockToFlatBlock, headerOpen, contentOpen, footerOpen 
 const { headerContainer, pageBlocks, footer, updateBlocks, reorderHeaderBlocks } = useBlocks();
 const { scrollIntoBlockView } = useBlockManager();
 const { openAddBlockPopover } = useAddBlockPopover();
+const { logToCCreateBlock } = useLogEvent();
 
 const accordionProps = {
   summaryClass: 'w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b',
@@ -142,6 +143,11 @@ const handleHeaderDragChange = (evt: DragEvent) => {
   }
 };
 
+const handleAddBlockAtBottom = (event: MouseEvent) => {
+  addBlockAtBottom(event);
+  logToCCreateBlock();
+};
+
 const addHeaderBlock = (event: MouseEvent) => {
   const lastChild = headerBlocks.value[headerBlocks.value.length - 1];
   if (!lastChild) return;
@@ -159,6 +165,8 @@ const addHeaderBlock = (event: MouseEvent) => {
     openDrawerWithView('blocksList');
     clearInsertColumnUuid();
   }
+
+  logToCCreateBlock();
 };
 
 const draggablePageBlocks = computed({

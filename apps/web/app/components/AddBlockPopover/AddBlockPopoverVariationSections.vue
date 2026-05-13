@@ -80,7 +80,7 @@ const visibleSections = computed((): VariationSection[] => {
 
 <style scoped>
 .section-label {
-  @apply text-[9px] text-editor-text-ghost font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase;
+  @apply text-4xs text-editor-text-ghost font-bold tracking-widest mb-2 pl-0.5 uppercase;
 }
 </style>
 
