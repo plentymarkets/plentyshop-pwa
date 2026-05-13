@@ -3,6 +3,7 @@ import type { FooterContainerBlock } from '~/components/blocks/structure/FooterC
 import type { FooterColumn, FooterContent } from '~/components/blocks/Footer/types';
 import { FOOTER_SWITCH_DEFINITIONS } from '~/components/blocks/Footer/constants';
 import { v4 as uuid } from 'uuid';
+import { SfButtonVariant } from '@storefront-ui/vue';
 
 export const FOOTER_CONTAINER_BLOCK_NAME = 'FooterContainer' as const;
 const LEGACY_FOOTER_BLOCK_NAME = 'Footer' as const;
@@ -31,7 +32,7 @@ function buildColumnHtml(columnGroup: string, groupLabel: string): string {
   return `${buildColumnTitleHtml(groupLabel)}${links}`;
 }
 
-type ButtonConfig = { label: string; link: string; variant: string };
+type ButtonConfig = { label: string; link: string; variant: SfButtonVariant };
 
 function createFooterColumnTextCard(parentSlot: number, htmlDescription = '', button?: ButtonConfig): Block {
   return {
@@ -51,7 +52,7 @@ function createFooterColumnTextCard(parentSlot: number, htmlDescription = '', bu
       button: {
         label: button?.label ?? '',
         link: button?.link ?? '',
-        variant: button?.variant ?? 'primary',
+        variant: button?.variant ?? SfButtonVariant.primary,
       },
       layout: {
         backgroundColor: '',
@@ -123,7 +124,7 @@ function createFooterMultiGrid(): Block {
       createFooterColumnTextCard(4, '', {
         label: t('legal.withdrawButton'),
         link: paths.cancellationForm,
-        variant: 'primary',
+        variant: SfButtonVariant.primary,
       }),
     ],
   };
@@ -190,7 +191,7 @@ function createMigratedFootnoteTextCard(legacy: FooterContent): Block {
       button: {
         label: '',
         link: '',
-        variant: 'primary',
+        variant: SfButtonVariant.primary,
       },
       layout: {
         backgroundColor: legacy.colors?.footnoteBackground ?? '#161a16',
@@ -236,7 +237,7 @@ export function migrateLegacyFooterToContainer(legacy: Block): FooterContainerBl
       createFooterColumnTextCard(4, '', {
         label: t('legal.withdrawButton'),
         link: paths.cancellationForm,
-        variant: 'primary',
+        variant: SfButtonVariant.primary,
       }),
     ],
   };
