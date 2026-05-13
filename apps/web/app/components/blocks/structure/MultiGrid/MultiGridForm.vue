@@ -11,7 +11,11 @@
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('grid-layout') }}
       </span>
-      <SfIconExpandMore size="xs" class="text-editor-text-placeholder transition-transform duration-200" :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'" />
+      <SfIconExpandMore
+        size="xs"
+        class="text-editor-text-placeholder transition-transform duration-200"
+        :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'"
+      />
     </button>
 
     <div v-if="gridLayoutOpen" id="multigrid-panel-grid-layout" class="px-3.5 py-3">
@@ -84,7 +88,11 @@
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('layout') }}
       </span>
-      <SfIconExpandMore size="xs" class="text-editor-text-placeholder transition-transform duration-200" :class="layoutOpen ? 'rotate-0' : '-rotate-90'" />
+      <SfIconExpandMore
+        size="xs"
+        class="text-editor-text-placeholder transition-transform duration-200"
+        :class="layoutOpen ? 'rotate-0' : '-rotate-90'"
+      />
     </button>
 
     <div v-if="layoutOpen" id="multigrid-panel-layout" class="px-3.5 py-3 flex flex-col gap-3">
@@ -145,7 +153,11 @@
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('layout-background') }}
       </span>
-      <SfIconExpandMore size="xs" class="text-editor-text-placeholder transition-transform duration-200" :class="backgroundOpen ? 'rotate-0' : '-rotate-90'" />
+      <SfIconExpandMore
+        size="xs"
+        class="text-editor-text-placeholder transition-transform duration-200"
+        :class="backgroundOpen ? 'rotate-0' : '-rotate-90'"
+      />
     </button>
 
     <div v-if="backgroundOpen" id="multigrid-panel-background" class="px-3.5 py-3">
