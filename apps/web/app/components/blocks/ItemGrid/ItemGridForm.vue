@@ -201,7 +201,6 @@ const fieldLabels: Record<string, string> = {
   title: getEditorTranslation('field-item-title'),
   rating: getEditorTranslation('field-item-rating'),
   previewText: getEditorTranslation('field-preview-text'),
-  shippingBadge: getEditorTranslation('field-shipping-badge'),
   price: getEditorTranslation('field-price'),
   addToCart: getEditorTranslation('field-add-to-cart'),
 };
@@ -238,7 +237,6 @@ const {
     "field-item-title": "Item title",
     "field-item-rating": "Item rating",
     "field-preview-text": "Preview text",
-    "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
     "content-alignment": "Content alignment",
@@ -271,7 +269,6 @@ const {
     "field-item-title": "Item title",
     "field-item-rating": "Item rating",
     "field-preview-text": "Preview text",
-    "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
     "content-alignment": "Content alignment",
