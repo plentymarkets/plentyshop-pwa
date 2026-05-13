@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async ({ query }) => {
-  if(import.meta.server) return;
+  if (import.meta.server) return;
 
   const actionCall = query.ActionCall;
   const token = query.token?.toString();
