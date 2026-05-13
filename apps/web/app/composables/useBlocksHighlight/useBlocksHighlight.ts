@@ -7,8 +7,8 @@ export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
   const currentActiveBlockIndex = ref<number>(-1);
   const previousBlocksLength = ref(blocks.value.length);
 
-  const hasValidActiveBlock = computed(() => 
-    currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length
+  const hasValidActiveBlock = computed(
+    () => currentActiveBlockIndex.value >= 0 && currentActiveBlockIndex.value < blocks.value.length,
   );
 
   const selectBlock = (index: number) => {
@@ -42,7 +42,7 @@ export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
         const newBlockIndex = blocks.value.length - 1;
         selectBlock(newBlockIndex);
       }
-      
+
       previousBlocksLength.value = newUuids.length;
     },
   );

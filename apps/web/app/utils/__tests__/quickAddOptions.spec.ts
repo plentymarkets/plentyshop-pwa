@@ -8,9 +8,7 @@ const { getBlockDisplayName } = await import('../blocks/get-block-display-name')
 
 vi.stubGlobal('getBlockDisplayName', getBlockDisplayName);
 
-const { headerQuickAddOptions, footerQuickAddOptions, multiGridQuickAddOptions } = await import(
-  '../quick-add-options'
-);
+const { headerQuickAddOptions, footerQuickAddOptions, multiGridQuickAddOptions } = await import('../quick-add-options');
 
 describe('headerQuickAddOptions', () => {
   it('should contain 3 options', () => {

@@ -103,12 +103,10 @@ const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBl
 
 const quickAddOptions = footerQuickAddOptions;
 
-const { quickAddBlock } = useQuickAdd(
-  () => {
-    const content = footerContainer.value.content ?? [];
-    return content[content.length - 1];
-  },
-);
+const { quickAddBlock } = useQuickAdd(() => {
+  const content = footerContainer.value.content ?? [];
+  return content[content.length - 1];
+});
 
 const blockForm = computed(() => {
   if (!editingBlockName.value) {
