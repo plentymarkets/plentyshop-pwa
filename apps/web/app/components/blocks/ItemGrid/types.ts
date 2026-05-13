@@ -5,16 +5,9 @@ export type ContentAlignment = 'left' | 'center' | 'right';
 export type PaginationPosition = 'top' | 'bottom' | 'both';
 export type AddToCartStyle = 'primary' | 'secondary';
 
-export type ItemGridFieldKey =
-  | 'title'
-  | 'rating'
-  | 'previewText'
-  | 'price'
-  | 'addToCart'
-  | 'manufacturer'
-  | 'shippingBadge';
+export type ItemGridFieldKey = 'title' | 'rating' | 'previewText' | 'price' | 'addToCart' | 'manufacturer';
 
-export type ItemGridFieldsVisibility = Partial<Record<ItemGridFieldKey, boolean>>;
+export type ItemGridFieldsVisibility = Record<ItemGridFieldKey, boolean>;
 
 export type ItemGridProps = {
   name: string;

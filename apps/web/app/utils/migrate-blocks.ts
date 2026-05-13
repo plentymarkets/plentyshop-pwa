@@ -2,7 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
-import type { ItemGridContent, ItemGridFieldKey } from '~/components/blocks/ItemGrid/types';
+import type { ItemGridContent, ItemGridFieldsVisibility } from '~/components/blocks/ItemGrid/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
@@ -74,19 +74,20 @@ export function migrateAllBlocks(blocks: Block[]): void {
 
       if (block.name === 'ItemGrid' && block.content) {
         const content = block.content as ItemGridContent;
-        const newFields: ItemGridFieldKey[] = ['manufacturer', 'shippingBadge'];
+        const legacyFields = content.fields as Record<string, boolean>;
 
-        content.fields ??= {};
+        content.fields ??= {} as ItemGridFieldsVisibility;
         content.fieldsOrder ??= [];
 
-        for (const field of newFields) {
-          if (content.fields[field] === undefined) {
-            content.fields[field] = true;
-          }
-          if (!content.fieldsOrder.includes(field)) {
-            content.fieldsOrder.push(field);
-          }
+        if (legacyFields['manufacturer'] === undefined) {
+          content.fields['manufacturer'] = true;
         }
+        if (!content.fieldsOrder.includes('manufacturer')) {
+          content.fieldsOrder.push('manufacturer');
+        }
+
+        delete legacyFields['shippingBadge'];
+        content.fieldsOrder = content.fieldsOrder.filter((f) => (f as string) !== 'shippingBadge');
       }
 
       if (Array.isArray(block.content)) {
