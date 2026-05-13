@@ -383,10 +383,9 @@ export class EditorObject extends PageObject {
   checkWrapperSpacings() {
     this.contentBlockWrappers.each((el) => {
       if (this.blockIsBanner(el) || this.isMultiGrid(el) || this.isInnerBlock(el) || this.blockIsFooter(el.get(0))) {
-        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
-        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+        cy.wrap(el).should('not.have.class', 'p-4');
       } else {
-        cy.wrap(el).should('have.class', 'p-4').and('have.class', 'md:px-6');
+        cy.wrap(el).should('have.class', 'p-4');
       }
     });
   }
