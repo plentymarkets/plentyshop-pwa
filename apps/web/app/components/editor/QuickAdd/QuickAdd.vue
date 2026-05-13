@@ -1,5 +1,5 @@
 <template>
-  <div v-if="options.length" class="grid grid-cols-3 gap-1.5 px-4 pt-3">
+  <div v-if="isEnabled && options.length" class="grid grid-cols-3 gap-1.5 px-4 pt-3">
     <button
       v-for="option in options"
       :key="option.blockName"
@@ -24,6 +24,8 @@
 import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import type { QuickAddOption } from './types';
+
+const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
 defineProps<{
   options: QuickAddOption[];
