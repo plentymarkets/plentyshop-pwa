@@ -85,7 +85,6 @@
 import { SfInput } from '@storefront-ui/vue';
 import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { QuickAddOption } from '~/components/editor/QuickAdd/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { footer } = useBlocks();
@@ -102,11 +101,7 @@ const blockLabels = ref<string[]>([]);
 
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
 
-const quickAddOptions: QuickAddOption[] = [
-  { blockName: 'Image', label: getBlockDisplayName('Image'), category: 'image', variationIndex: 0 },
-  { blockName: 'TextCard', label: getBlockDisplayName('TextCard'), category: 'text', variationIndex: 0 },
-  { blockName: 'MultiGrid', label: getBlockDisplayName('MultiGrid'), category: 'layout', variationIndex: 0 },
-];
+const quickAddOptions = footerQuickAddOptions;
 
 const { quickAddBlock } = useQuickAdd(
   () => {

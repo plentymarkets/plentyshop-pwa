@@ -39,7 +39,6 @@
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
-import type { QuickAddOption } from '~/components/editor/QuickAdd/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
@@ -155,11 +154,7 @@ const addBlock = (event?: MouseEvent) => {
   }
 };
 
-const quickAddOptions: QuickAddOption[] = [
-  { blockName: 'UtilityBar', label: getBlockDisplayName('UtilityBar'), category: 'header', variationIndex: 0 },
-  { blockName: 'Navigation', label: getBlockDisplayName('Navigation'), category: 'header', variationIndex: 1 },
-  { blockName: 'AnnouncementBar', label: getBlockDisplayName('AnnouncementBar'), category: 'header', variationIndex: 2 },
-];
+const quickAddOptions = headerQuickAddOptions;
 
 const { quickAddBlock } = useQuickAdd(
   () => headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1],
