@@ -31,7 +31,9 @@ function buildColumnHtml(columnGroup: string, groupLabel: string): string {
   return `${buildColumnTitleHtml(groupLabel)}${links}`;
 }
 
-function createFooterColumnTextCard(parentSlot: number, htmlDescription = ''): Block {
+type ButtonConfig = { label: string; link: string; variant: string };
+
+function createFooterColumnTextCard(parentSlot: number, htmlDescription = '', button?: ButtonConfig): Block {
   return {
     name: 'TextCard',
     type: 'content',
@@ -47,9 +49,9 @@ function createFooterColumnTextCard(parentSlot: number, htmlDescription = ''): B
         color: '',
       },
       button: {
-        label: '',
-        link: '',
-        variant: 'primary',
+        label: button?.label ?? '',
+        link: button?.link ?? '',
+        variant: button?.variant ?? 'primary',
       },
       layout: {
         backgroundColor: '',
@@ -118,6 +120,9 @@ function createFooterMultiGrid(): Block {
       createFooterColumnTextCard(1, buildColumnHtml('services', t('footer.services.label'))),
       createFooterColumnTextCard(2),
       createFooterColumnTextCard(3),
+      createFooterColumnTextCard(4, '', { label: t('legal.withdrawButton'),
+        link: paths.cancellationForm,
+        variant: 'primary'}),
     ],
   };
 }
@@ -215,7 +220,7 @@ export function migrateLegacyFooterToContainer(legacy: Block): FooterContainerBl
     },
     configuration: {
       visible: true,
-      columnWidths: [3, 3, 3, 3],
+      columnWidths: [3, 3, 3, 3, 3],
       layout: {
         gap: 'XL',
         marginTop: 0,
@@ -223,7 +228,24 @@ export function migrateLegacyFooterToContainer(legacy: Block): FooterContainerBl
         backgroundColor: 'transparent',
       },
     },
-    content: columns.map((column, index) => createFooterColumnTextCard(index, buildLegacyColumnHtml(column))),
+    content: [
+      ...columns.map((column, index) =>
+        createFooterColumnTextCard(
+          index,
+          buildLegacyColumnHtml(column)
+        )
+      ),
+
+      createFooterColumnTextCard(
+        4,
+        '',
+        { 
+          label: t('legal.withdrawButton'),
+          link: paths.cancellationForm,
+          variant: 'primary'
+        }
+      )
+    ]
   };
 
   return {
