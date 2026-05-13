@@ -19,9 +19,8 @@
     </button>
   </div>
 </template>
- 
+
 <script setup lang="ts">
-import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import type { QuickAddOption } from './types';
 
