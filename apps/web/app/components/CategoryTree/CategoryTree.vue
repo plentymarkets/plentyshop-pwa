@@ -35,7 +35,6 @@ import type { CategoryTreeProps } from '~/components/CategoryTree/types';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 
 const props = defineProps<CategoryTreeProps>();
-const localePath = useLocalePath();
 const { t } = useI18n();
 
 const categoryItems = computed(() => categoryGetters.getSubCategories(props.category));
@@ -50,6 +49,6 @@ const parentCategory = computed(() => breadcrumbGetters.getParent(props.breadcru
 const buildSubcategoryHref = (subcategory: SubCategory): string => {
   const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
   const slug = categoryGetters.getSubCategoryNameUrl(subcategory);
-  return localePath(`${base}/${slug}`);
+  return `${base}/${slug}`;
 };
 </script>

@@ -10,10 +10,6 @@ const breadcrumbsMock: CategoryBreadcrumb[] = [
 ];
 
 describe('<CategoryTree/>', () => {
-  mockNuxtImport('useLocalePath', () => {
-    return () => (path: string) => path;
-  });
-
   it('should render component', () => {
     const { getByTestId } = mount(CategoryTree, {
       props: {
