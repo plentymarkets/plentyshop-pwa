@@ -11,6 +11,8 @@
       class="border border-editor-canvas-border rounded-lg overflow-hidden bg-white relative select-none"
       @pointermove="onPointerMove"
       @pointerup="onPointerUp"
+      @pointercancel="onPointerUp"
+      @lostpointercapture="onPointerUp"
     >
       <div class="absolute inset-0 flex pointer-events-none z-0">
         <div
