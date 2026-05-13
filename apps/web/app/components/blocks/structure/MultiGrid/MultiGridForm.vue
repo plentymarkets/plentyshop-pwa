@@ -1,6 +1,7 @@
 <template>
   <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
     <UiAccordionItem
+      v-if="isEnabled"
       v-model="elementSettings"
       data-testid="element-settings"
       summary-active-class="bg-neutral-100 border-t-0"
@@ -147,6 +148,7 @@ import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const props = defineProps<{ uuid?: string }>();
+const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
