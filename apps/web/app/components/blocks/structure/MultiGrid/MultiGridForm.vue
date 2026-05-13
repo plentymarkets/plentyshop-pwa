@@ -5,7 +5,7 @@
       class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       @click="gridLayoutOpen = !gridLayoutOpen"
     >
-      <span class="flex-1 text-[11px] font-bold text-editor-text-subtle tracking-[0.05em] uppercase">
+      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('grid-layout') }}
       </span>
       <svg
@@ -13,7 +13,7 @@
         height="6"
         viewBox="0 0 10 6"
         fill="none"
-        class="text-editor-text-placeholder transition-transform duration-[180ms]"
+        class="text-editor-text-placeholder transition-transform duration-200"
         :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'"
       >
         <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -22,26 +22,26 @@
 
     <div v-if="gridLayoutOpen" class="px-3.5 py-3">
       <div v-if="allEmpty" class="mb-3.5">
-        <div class="text-[10px] text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
+        <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
           {{ getEditorTranslation('layout-preset') }}
         </div>
-        <div class="grid grid-cols-3 gap-[5px]">
+        <div class="grid grid-cols-3 gap-1.5">
           <button
             v-for="preset in LAYOUT_PRESETS"
             :key="preset.label"
-            class="px-1 pt-2 pb-[7px] rounded-[7px] border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-[5px] hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-[120ms]"
+            class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
             @click="applyPreset(preset.spans)"
           >
-            <div class="flex gap-[2px] w-full h-[9px]">
+            <div class="flex gap-0.5 w-full h-[9px]">
               <div
                 v-for="(span, i) in preset.spans"
                 :key="i"
-                class="h-full rounded-[2px]"
+                class="h-full rounded-sm"
                 class="bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
                 :style="{ flex: span }"
               />
             </div>
-            <span class="text-[10px] text-editor-text-subtle">{{ preset.label }}</span>
+            <span class="text-3xs text-editor-text-subtle">{{ preset.label }}</span>
           </button>
         </div>
       </div>
@@ -56,14 +56,14 @@
 
       <div v-if="multiGridStructure.configuration.layout" class="mt-3.5 pt-3 border-t border-editor-surface-muted">
         <div class="flex items-center gap-2">
-          <span class="flex-1 text-[12px] text-editor-text-subtle">{{ getEditorTranslation('gap-label') }}</span>
-          <div class="flex gap-[3px]">
+          <span class="flex-1 text-xs text-editor-text-subtle">{{ getEditorTranslation('gap-label') }}</span>
+          <div class="flex gap-1">
             <button
               v-for="gapOption in gapOptions"
               :key="gapOption"
               type="button"
               data-testid="gap-btn"
-              class="w-7 h-6 rounded-[5px] text-[10px] cursor-pointer transition-colors"
+              class="w-7 h-6 rounded-md text-3xs cursor-pointer transition-colors"
               :class="
                 gapOption === multiGridStructure.configuration.layout.gap
                   ? 'border border-editor-accent bg-editor-accent/[8%] text-editor-accent font-bold'
@@ -75,7 +75,7 @@
             </button>
           </div>
         </div>
-        <div class="mt-1.5 text-[11px] text-editor-text-placeholder">
+        <div class="mt-1.5 text-2xs text-editor-text-placeholder">
           {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
         </div>
       </div>
@@ -85,7 +85,7 @@
       class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       @click="layoutOpen = !layoutOpen"
     >
-      <span class="flex-1 text-[11px] font-bold text-editor-text-subtle tracking-[0.05em] uppercase">
+      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('layout') }}
       </span>
       <svg
@@ -93,7 +93,7 @@
         height="6"
         viewBox="0 0 10 6"
         fill="none"
-        class="text-editor-text-placeholder transition-transform duration-[180ms]"
+        class="text-editor-text-placeholder transition-transform duration-200"
         :class="layoutOpen ? 'rotate-0' : '-rotate-90'"
       >
         <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -102,7 +102,7 @@
 
     <div v-if="layoutOpen" class="px-3.5 py-3 flex flex-col gap-3">
       <div v-if="multiGridStructure.configuration.layout">
-        <div class="text-[11px] text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
+        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
         <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
           <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
             <span><SfIconArrowUpward /></span>
@@ -126,7 +126,7 @@
       </div>
 
       <div v-if="multiGridStructure.configuration.columnWidths?.length">
-        <div class="text-[11px] text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
+        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
         <div class="grid grid-cols-3 gap-2">
           <button
             v-for="i in numColumns"
@@ -152,7 +152,7 @@
       class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       @click="backgroundOpen = !backgroundOpen"
     >
-      <span class="flex-1 text-[11px] font-bold text-editor-text-subtle tracking-[0.05em] uppercase">
+      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('layout-background') }}
       </span>
       <svg
@@ -160,7 +160,7 @@
         height="6"
         viewBox="0 0 10 6"
         fill="none"
-        class="text-editor-text-placeholder transition-transform duration-[180ms]"
+        class="text-editor-text-placeholder transition-transform duration-200"
         :class="backgroundOpen ? 'rotate-0' : '-rotate-90'"
       >
         <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -169,7 +169,7 @@
 
     <div v-if="backgroundOpen" class="px-3.5 py-3">
       <div v-if="multiGridStructure.configuration.layout">
-        <div class="text-[11px] text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
+        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
         <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
           <template #trigger="{ color, toggle }">
             <label>

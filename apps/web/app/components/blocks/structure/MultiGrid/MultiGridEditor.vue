@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex pb-1 px-px select-none">
-      <div v-for="i in 12" :key="i" class="flex-1 text-center text-[9px] text-editor-text-dim leading-none">
+      <div v-for="i in 12" :key="i" class="flex-1 text-center text-4xs text-editor-text-dim leading-none">
         {{ i }}
       </div>
     </div>
@@ -25,7 +25,7 @@
             class="relative box-border border-r border-editor-canvas-cell p-1"
           >
             <div
-              class="w-full h-full rounded-[5px] flex items-center px-2 overflow-hidden"
+              class="w-full h-full rounded-md flex items-center px-2 overflow-hidden"
               :class="[
                 cell.hasContent
                   ? 'bg-editor-accent/10 border border-editor-accent/25'
@@ -36,12 +36,12 @@
               <div class="flex-1 overflow-hidden min-w-0">
                 <div
                   v-if="cell.span >= 3"
-                  class="text-[11px] font-semibold truncate"
+                  class="text-2xs font-semibold truncate"
                   :class="cell.hasContent ? 'text-editor-accent' : 'text-editor-cell-empty-text'"
                 >
                   {{ cell.hasContent ? getEditorTranslation('filled') : getEditorTranslation('empty') }}
                 </div>
-                <div class="text-[10px]" :class="cell.hasContent ? 'text-editor-accent/60' : 'text-editor-cell-empty-sub'">
+                <div class="text-3xs" :class="cell.hasContent ? 'text-editor-accent/60' : 'text-editor-cell-empty-sub'">
                   {{ cell.span }}/12
                 </div>
               </div>
@@ -53,7 +53,7 @@
               @click.stop
             >
               <div
-                class="w-[3px] h-[22px] rounded-[2px] transition-colors"
+                class="w-[3px] h-[22px] rounded-sm transition-colors"
                 :class="cell.hasContent ? 'bg-editor-accent/35' : 'bg-editor-cell-handle'"
               />
             </div>
@@ -66,7 +66,7 @@
             @click="onClickFree($event, row.free)"
           >
             <div
-              class="flex-1 border border-dashed border-editor-free-border rounded-[5px] flex items-center justify-center text-editor-text-ghost text-sm transition-all duration-[120ms] hover:border-editor-free-border-hover hover:text-editor-text-faint"
+              class="flex-1 border border-dashed border-editor-free-border rounded-md flex items-center justify-center text-editor-text-ghost text-sm transition-all duration-150 hover:border-editor-free-border-hover hover:text-editor-text-faint"
             >
               +
             </div>
@@ -74,7 +74,7 @@
         </div>
 
         <div
-          class="h-8 flex items-center justify-center gap-[5px] cursor-pointer text-editor-accent text-[12px] bg-editor-toc-hover font-semibold tracking-[0.01em] border-t border-editor-toc-highlight transition-all duration-[120ms] hover:bg-editor-toc-highlight"
+          class="h-8 flex items-center justify-center gap-1.5 cursor-pointer text-editor-accent text-xs bg-editor-toc-hover font-semibold tracking-[0.01em] border-t border-editor-toc-highlight transition-all duration-150 hover:bg-editor-toc-highlight"
           @click="emit('click-add-row', $event.currentTarget as HTMLElement)"
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
