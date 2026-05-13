@@ -201,6 +201,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
+import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/types';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
