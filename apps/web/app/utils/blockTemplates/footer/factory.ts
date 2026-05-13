@@ -120,9 +120,11 @@ function createFooterMultiGrid(): Block {
       createFooterColumnTextCard(1, buildColumnHtml('services', t('footer.services.label'))),
       createFooterColumnTextCard(2),
       createFooterColumnTextCard(3),
-      createFooterColumnTextCard(4, '', { label: t('legal.withdrawButton'),
+      createFooterColumnTextCard(4, '', {
+        label: t('legal.withdrawButton'),
         link: paths.cancellationForm,
-        variant: 'primary'}),
+        variant: 'primary',
+      }),
     ],
   };
 }
@@ -229,23 +231,14 @@ export function migrateLegacyFooterToContainer(legacy: Block): FooterContainerBl
       },
     },
     content: [
-      ...columns.map((column, index) =>
-        createFooterColumnTextCard(
-          index,
-          buildLegacyColumnHtml(column)
-        )
-      ),
+      ...columns.map((column, index) => createFooterColumnTextCard(index, buildLegacyColumnHtml(column))),
 
-      createFooterColumnTextCard(
-        4,
-        '',
-        { 
-          label: t('legal.withdrawButton'),
-          link: paths.cancellationForm,
-          variant: 'primary'
-        }
-      )
-    ]
+      createFooterColumnTextCard(4, '', {
+        label: t('legal.withdrawButton'),
+        link: paths.cancellationForm,
+        variant: 'primary',
+      }),
+    ],
   };
 
   return {
