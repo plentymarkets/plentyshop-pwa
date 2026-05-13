@@ -142,6 +142,7 @@
 
 <script setup lang="ts">
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
@@ -231,6 +232,23 @@ const { quickAddBlock } = useQuickAdd(
   () => {
     const content = multiGridStructure.value.content ?? [];
     return content[content.length - 1];
+  },
+  (newBlock) => {
+    const content = (multiGridStructure.value.content ?? []) as Block[];
+    const columnWidths = multiGridStructure.value.configuration.columnWidths ?? [];
+    const numCols = columnWidths.length;
+
+    const columnCounts = new Array(numCols).fill(0) as number[];
+    for (const block of content) {
+      const slot = block.parent_slot ?? 0;
+      if (slot < numCols && columnCounts[slot] !== undefined) {
+        columnCounts[slot]++;
+      }
+    }
+
+    const targetSlot = columnCounts.indexOf(Math.min(...columnCounts));
+    newBlock.parent_slot = targetSlot;
+    content.push(newBlock);
   },
 );
 </script>
