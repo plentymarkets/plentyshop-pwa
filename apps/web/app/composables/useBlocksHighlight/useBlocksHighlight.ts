@@ -38,7 +38,6 @@ export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
   watch(
     () => blocks.value.map((block) => block.meta.uuid),
     (newUuids) => {
-      // Auto-select newly added blocks
       if (newUuids.length > previousBlocksLength.value) {
         const newBlockIndex = blocks.value.length - 1;
         selectBlock(newBlockIndex);
