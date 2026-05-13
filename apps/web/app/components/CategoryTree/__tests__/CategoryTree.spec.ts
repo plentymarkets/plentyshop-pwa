@@ -1,6 +1,5 @@
 import { CategoryTree } from '#components';
 import { CategoryMock } from '../../../../__tests__/__mocks__/category.mock';
-import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { mount } from '@vue/test-utils';
 import type { CategoryBreadcrumb } from '@plentymarkets/shop-api';
 
