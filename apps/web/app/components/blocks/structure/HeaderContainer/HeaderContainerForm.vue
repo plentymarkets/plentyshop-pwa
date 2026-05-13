@@ -156,9 +156,10 @@ const addBlock = (event?: MouseEvent) => {
 
 const quickAddOptions = headerQuickAddOptions;
 
-const { quickAddBlock } = useQuickAdd(
-  () => headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1],
-);
+const { quickAddBlock } = useQuickAdd(() => {
+  const content = headerContainerStructure.value.content ?? [];
+  return content[content.length - 1];
+});
 
 const deleteBlock = async (index: number) => {
   if (blocks.value.length <= 1) {
