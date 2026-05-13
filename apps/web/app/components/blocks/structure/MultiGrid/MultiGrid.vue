@@ -6,55 +6,55 @@
   >
     <template v-for="(gridRow, rowIndex) in gridRows" :key="rowIndex">
       <template v-for="cell in gridRow.cells" :key="cell.colIndex">
-      <div
-        v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
-        :class="getColumnClasses(cell.colIndex)"
-        class="group/col relative md:z-[1]"
-        data-testid="multi-grid-column"
-      >
         <div
-          v-for="row in columns[cell.colIndex]"
-          :key="row.meta.uuid"
-          class="group/row relative"
-          :class="{ 'min-h-[60px]': showOverlay(row) }"
-          :data-uuid="row.meta.uuid"
-          @mouseenter="onRowEnter(row)"
-          @mouseleave="onRowLeave"
+          v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
+          :class="getColumnClasses(cell.colIndex)"
+          class="group/col relative md:z-[1]"
+          data-testid="multi-grid-column"
         >
-          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
-          <ClientOnly>
-            <template v-if="showOverlay(row)">
-              <div
-                class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
-                style="box-shadow: inset 0 0 0 2px #7c3aed"
-              />
-
-              <div
-                class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
-              />
-
-              <div
-                class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
-              >
-                <UiBlockActions
-                  data-testid="multigrid-block-actions"
-                  :block="row"
-                  :index="cell.colIndex"
-                  :actions="getBlockActions()"
+          <div
+            v-for="row in columns[cell.colIndex]"
+            :key="row.meta.uuid"
+            class="group/row relative"
+            :class="{ 'min-h-[60px]': showOverlay(row) }"
+            :data-uuid="row.meta.uuid"
+            @mouseenter="onRowEnter(row)"
+            @mouseleave="onRowLeave"
+          >
+            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
+            <ClientOnly>
+              <template v-if="showOverlay(row)">
+                <div
+                  class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+                  style="box-shadow: inset 0 0 0 2px #7c3aed"
                 />
-              </div>
-            </template>
-          </ClientOnly>
 
-          <slot
-            name="content"
-            :content-block="row"
-            :column-length="(columns[cell.colIndex] ?? []).length"
-            :is-row-hovered="showOverlay(row) && isRowHovered(row)"
-          />
-          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+                <div
+                  class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+                />
+
+                <div
+                  class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
+                >
+                  <UiBlockActions
+                    data-testid="multigrid-block-actions"
+                    :block="row"
+                    :index="cell.colIndex"
+                    :actions="getBlockActions()"
+                  />
+                </div>
+              </template>
+            </ClientOnly>
+
+            <slot
+              name="content"
+              :content-block="row"
+              :column-length="(columns[cell.colIndex] ?? []).length"
+              :is-row-hovered="showOverlay(row) && isRowHovered(row)"
+            />
+            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+          </div>
         </div>
-      </div>
       </template>
 
       <ClientOnly>

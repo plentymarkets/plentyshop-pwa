@@ -32,7 +32,7 @@
 
     <div v-if="gridLayoutOpen" id="multigrid-panel-grid-layout" class="px-3.5 py-3">
       <div v-if="allEmpty" class="mb-3.5">
-        <div class="text-3xs  text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
+        <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
           {{ getEditorTranslation('layout-preset') }}
         </div>
         <div class="grid grid-cols-3 gap-1.5">
