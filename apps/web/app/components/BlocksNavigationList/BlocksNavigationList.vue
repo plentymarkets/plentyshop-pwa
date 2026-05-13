@@ -62,9 +62,10 @@ const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList()
 await getBlocksLists();
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
-const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
+const { visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
+const { insertColumnUuid } = useBlocksMutations();
 
-const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
+const targetUuid = computed(() => insertColumnUuid.value || visiblePlaceholder.value.uuid);
 const isNestedMultigrid = (category: BlockListCategory, uuid: string) => {
   return category.blockName === 'MultiGrid' && getBlockDepth(uuid) > 0;
 };
@@ -86,7 +87,7 @@ const isAddDisabled = (category: BlockListCategory, variation: BlockTemplateVari
 };
 
 const blockPosition = computed(() => {
-  if (multigridColumnUuid.value) return 'inside';
+  if (insertColumnUuid.value) return 'inside';
   return visiblePlaceholder.value.position;
 });
 
