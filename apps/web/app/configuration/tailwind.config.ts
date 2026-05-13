@@ -100,7 +100,6 @@ export default {
           border: '#e8e8e8',
           'accent-border-hover': '#c0d4ff',
           accent: 'rgb(29 94 199 / <alpha-value>)',
-          // grid canvas tokens
           'canvas-border': '#e2e2e2',
           'canvas-cell': '#f3f3f3',
           'text-dim': '#c4c4c4',

@@ -3,7 +3,7 @@ export default {
   enableContractWithdrawalButton: process.env?.ENABLE_CONTRACT_WITHDRAWAL_BUTTON === '1',
   /** @description Enables the new menu entry in settings for cancellation email  */
   enableCancellationForm: process.env?.ENABLE_CANCELLATION_FORM === '1',
-  /** @description Enables the new way of adding blocks, via a popover.  */
+  /** @description Enables the new popover for adding blocks & presets  */
   enableAddBlockPopover: true,
   /** @description Enables the new MultiGrid editor with visual column resizing, row management and free-space display. */
   enableMultiGridEditor: true,
