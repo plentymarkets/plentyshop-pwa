@@ -1,6 +1,6 @@
 import type { Editor } from '@tiptap/core';
 
-export const setupRichTextEditorLinksFormatting = (editor: Ref<Editor | null> | null) => {
+export const setupRichTextEditorLinksFormatting = (editor: Ref<Editor | null> | null, onOpenLinkModal?: () => void) => {
   const toggleLink = () => {
     const editorVal = editor?.value;
     if (!editorVal) return;
@@ -10,10 +10,7 @@ export const setupRichTextEditorLinksFormatting = (editor: Ref<Editor | null> | 
       return;
     }
 
-    const url = window.prompt('Enter URL', 'https://');
-    if (!url) return;
-
-    editorVal.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+    onOpenLinkModal?.();
   };
 
   const clearFormatting = () => {

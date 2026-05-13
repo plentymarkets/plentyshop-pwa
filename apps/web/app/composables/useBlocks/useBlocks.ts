@@ -101,12 +101,7 @@ export const useBlocks: UseBlocksReturn = () => {
 
       state.value.hasSnapshot = true;
 
-      const assembled = assembleBlocks(
-        (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
-        type,
-        identifier,
-        state.value.hasSnapshot,
-      );
+      const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
       setBlocks(assembled);
 
       return true;

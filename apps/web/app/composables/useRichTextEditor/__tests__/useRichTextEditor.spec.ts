@@ -13,8 +13,6 @@ const {
   undoSpy,
   redoSpy,
   unsetLinkSpy,
-  setLinkSpy,
-  extendMarkRangeSpy,
   runSpy,
   focusSpy,
   isActiveSpy,
@@ -141,8 +139,6 @@ const {
     undoSpy,
     redoSpy,
     unsetLinkSpy,
-    setLinkSpy,
-    extendMarkRangeSpy,
     runSpy,
     focusSpy,
     isActiveSpy,
@@ -381,7 +377,7 @@ describe('useRichTextEditor', () => {
 
     isActiveSpy.mockReturnValue(false);
 
-    const promptSpy = vi.spyOn(window, 'prompt').mockReturnValue('https://example.com');
+    const onOpenLinkModal = vi.fn();
 
     const { toggleLink } = useRichTextEditor({
       modelValue,
@@ -389,17 +385,11 @@ describe('useRichTextEditor', () => {
       expanded,
       onUpdateExpanded,
       textAlign,
+      onOpenLinkModal,
     } as UseRichTextEditorArgs);
 
     toggleLink();
 
-    expect(promptSpy).toHaveBeenCalled();
-    expect(chainSpy).toHaveBeenCalled();
-    expect(focusSpy).toHaveBeenCalled();
-    expect(extendMarkRangeSpy).toHaveBeenCalledWith('link');
-    expect(setLinkSpy).toHaveBeenCalledWith({ href: 'https://example.com' });
-    expect(runSpy).toHaveBeenCalled();
-
-    promptSpy.mockRestore();
+    expect(onOpenLinkModal).toHaveBeenCalled();
   });
 });

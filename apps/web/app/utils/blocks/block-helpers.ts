@@ -12,20 +12,32 @@ const isBlockEmpty = (block: Block | null | undefined): boolean => {
   return !Array.isArray(block.content) || block.content.length === 0;
 };
 
-const getDefaultPageBlocks = (type: string, identifier: string | number): Block[] => {
-  switch (type) {
-    case 'immutable':
-      return createHomepage();
-    case 'category':
-      if (typeof identifier === 'number' && identifier > 0) {
-        return [];
-      }
-      return createCategory();
-    case 'product':
-      return createProduct();
-    default:
-      return [];
-  }
+const DEFAULT_PAGE_BLOCKS_MAP: Record<string, (identifier: string | number) => Block[]> = {
+  immutable: () => createHomepage(),
+  category: (identifier) => (typeof identifier === 'number' && identifier > 0 ? [] : createCategory()),
+  product: () => createProduct(),
+};
+
+const getDefaultPageBlocks = (type: string, identifier: string | number): Block[] =>
+  (DEFAULT_PAGE_BLOCKS_MAP[type] ?? (() => []))(identifier);
+
+const resolveFooter = (raw: GetBlocksResponse): Block => {
+  const rawFooterContainer = raw?.FooterContainer as Block | undefined;
+  if (rawFooterContainer && !isBlockEmpty(rawFooterContainer)) return rawFooterContainer;
+  if (isLegacyFooterBlock(raw?.Footer) && raw.Footer) return migrateLegacyFooterToContainer(raw.Footer);
+  if (!raw.Footer || isBlockEmpty(raw.Footer)) return createFooterContainer();
+  return raw.Footer;
+};
+
+const resolvePageBlocks = (
+  raw: GetBlocksResponse,
+  type: string,
+  identifier: string | number,
+  hasSnapshot?: boolean,
+): Block[] => {
+  if (Array.isArray(raw?.blocks) && raw.blocks.length > 0) return raw.blocks;
+  if (hasSnapshot) return [];
+  return getDefaultPageBlocks(type, identifier);
 };
 
 export const assembleBlocks = (
@@ -38,19 +50,10 @@ export const assembleBlocks = (
     ? createDefaultHeaderContainerBlock()
     : raw?.HeaderContainer;
 
-  const rawFooterContainer = raw?.FooterContainer as Block | undefined;
-  const Footer = !isBlockEmpty(rawFooterContainer)
-    ? rawFooterContainer
-    : isLegacyFooterBlock(raw?.Footer)
-      ? migrateLegacyFooterToContainer(raw.Footer as Block)
-      : isBlockEmpty(raw?.Footer)
-        ? createFooterContainer()
-        : raw?.Footer;
-
-  const hasApiBlocks = Array.isArray(raw?.blocks) && raw?.blocks.length > 0;
-  const pageBlocks = hasApiBlocks ? raw?.blocks : hasSnapshot ? [] : getDefaultPageBlocks(type, identifier);
+  const Footer = resolveFooter(raw);
+  const pageBlocks = resolvePageBlocks(raw, type, identifier, hasSnapshot);
 
   migrateAllBlocks(pageBlocks);
 
-  return { HeaderContainer, blocks: pageBlocks, Footer } as GetBlocksResponse;
+  return { HeaderContainer, blocks: pageBlocks, Footer };
 };
