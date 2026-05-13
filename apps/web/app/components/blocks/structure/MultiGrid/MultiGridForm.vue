@@ -36,8 +36,7 @@
               <div
                 v-for="(span, i) in preset.spans"
                 :key="i"
-                class="h-full rounded-sm"
-                class="bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
+                class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
                 :style="{ flex: span }"
               />
             </div>
