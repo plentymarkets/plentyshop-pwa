@@ -3,7 +3,7 @@
   <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
     <button
       type="button"
-      class="w-full flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       :aria-expanded="gridLayoutOpen"
       aria-controls="multigrid-panel-grid-layout"
       @click="gridLayoutOpen = !gridLayoutOpen"
@@ -32,7 +32,7 @@
 
     <div v-if="gridLayoutOpen" id="multigrid-panel-grid-layout" class="px-3.5 py-3">
       <div v-if="allEmpty" class="mb-3.5">
-        <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
+        <div class="text-3xs  text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
           {{ getEditorTranslation('layout-preset') }}
         </div>
         <div class="grid grid-cols-3 gap-1.5">
@@ -92,7 +92,7 @@
 
     <button
       type="button"
-      class="w-full flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       :aria-expanded="layoutOpen"
       aria-controls="multigrid-panel-layout"
       @click="layoutOpen = !layoutOpen"
@@ -169,7 +169,7 @@
 
     <button
       type="button"
-      class="w-full flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       :aria-expanded="backgroundOpen"
       aria-controls="multigrid-panel-background"
       @click="backgroundOpen = !backgroundOpen"
