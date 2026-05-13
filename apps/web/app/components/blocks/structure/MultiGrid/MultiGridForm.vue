@@ -1,6 +1,18 @@
 <template>
   <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
     <UiAccordionItem
+      v-model="elementSettings"
+      data-testid="element-settings"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>{{ getEditorTranslation('element-settings') }}</h2>
+      </template>
+      <EditorQuickAdd :options="quickAddOptions" @add="quickAddBlock" />
+    </UiAccordionItem>
+
+    <UiAccordionItem
       v-model="textSettings"
       data-testid="open-layout-settings"
       summary-active-class="bg-neutral-100 border-t-0"
@@ -209,8 +221,18 @@ const toggleSticky = (columnIndex: number) => {
   }
 };
 
+const elementSettings = ref(true);
 const textSettings = ref(false);
 const layoutBackground = ref(false);
+
+const quickAddOptions = multiGridQuickAddOptions;
+
+const { quickAddBlock } = useQuickAdd(
+  () => {
+    const content = multiGridStructure.value.content ?? [];
+    return content[content.length - 1];
+  },
+);
 </script>
 
 <i18n lang="json">
@@ -218,6 +240,7 @@ const layoutBackground = ref(false);
   "en": {
     "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
+    "element-settings": "Elements",
     "background-color-label": "Background Color",
     "gap-label": "Gap",
     "gap-size-none": "None",
@@ -235,6 +258,7 @@ const layoutBackground = ref(false);
   "de": {
     "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
+    "element-settings": "Elements",
     "background-color-label": "Background Color",
     "gap-label": "Gap",
     "gap-size-none": "None",
