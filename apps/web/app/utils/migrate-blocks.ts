@@ -74,19 +74,19 @@ export function migrateAllBlocks(blocks: Block[]): void {
 
       if (block.name === 'ItemGrid' && block.content) {
         const content = block.content as ItemGridContent;
-        const legacyFields = content.fields as Record<string, boolean>;
+        const fields = (content.fields ?? {}) as ItemGridFieldsVisibility;
 
-        content.fields ??= {} as ItemGridFieldsVisibility;
+        content.fields = fields;
         content.fieldsOrder ??= [];
 
-        if (legacyFields['manufacturer'] === undefined) {
-          content.fields['manufacturer'] = true;
+        if (fields['manufacturer'] === undefined) {
+          fields['manufacturer'] = true;
         }
         if (!content.fieldsOrder.includes('manufacturer')) {
           content.fieldsOrder.push('manufacturer');
         }
 
-        delete legacyFields['shippingBadge'];
+        delete fields['shippingBadge'];
         content.fieldsOrder = content.fieldsOrder.filter((f) => (f as string) !== 'shippingBadge');
       }
 
