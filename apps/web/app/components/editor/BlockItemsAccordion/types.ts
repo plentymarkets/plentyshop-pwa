@@ -12,7 +12,7 @@ export interface BlockItemsAccordionProps {
 export interface BlockItemsAccordionEmits {
   'edit-item': [index: number];
   'select-item': [index: number];
-  'add-item': [];
+  'add-item': [event?: MouseEvent];
   'delete-item': [index: number];
   'toggle-item-visibility': [index: number];
   'update:items': [items: SlideBlock[]];

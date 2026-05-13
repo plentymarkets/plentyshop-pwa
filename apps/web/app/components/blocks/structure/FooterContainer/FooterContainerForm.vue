@@ -181,10 +181,7 @@ const exitEditMode = (shouldEmit = true): boolean => {
   return true;
 };
 
-const addBlock = () => {
-  const { openDrawerWithView } = useSiteConfiguration();
-  const { togglePlaceholder } = useBlockManager();
-
+const addBlock = (event?: MouseEvent) => {
   const content = footerContainer.value.content ?? [];
   const lastChild = content[content.length - 1];
 
@@ -192,8 +189,19 @@ const addBlock = () => {
     return;
   }
 
-  togglePlaceholder(lastChild.meta.uuid, 'bottom');
-  openDrawerWithView('blocksList');
+  if (useRuntimeConfig().public.enableAddBlockPopover) {
+    if (!event) return;
+    const { openAddBlockPopover } = useAddBlockPopover();
+    const anchorEl = (event.target as HTMLElement).closest('button') ?? (event.target as HTMLElement);
+    openAddBlockPopover({ anchorEl, targetUuid: lastChild.meta.uuid, position: 'bottom' });
+  } else {
+    const { openDrawerWithView } = useSiteConfiguration();
+    const { togglePlaceholder } = useBlockManager();
+    const { clearInsertColumnUuid } = useBlocksMutations();
+    togglePlaceholder(lastChild.meta.uuid, 'bottom');
+    openDrawerWithView('blocksList');
+    clearInsertColumnUuid();
+  }
 };
 
 const deleteBlock = async (index: number) => {
