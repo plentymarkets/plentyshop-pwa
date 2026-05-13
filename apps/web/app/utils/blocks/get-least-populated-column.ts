@@ -6,6 +6,9 @@ import type { Block } from '@plentymarkets/shop-api';
  */
 export const getLeastPopulatedColumn = (content: Block[], numColumns: number): number => {
   const columnCounts = new Array(numColumns).fill(0) as number[];
+  if (numColumns <= 0) {
+    return 0;
+  }
 
   for (const block of content) {
     const slot = block.parent_slot ?? 0;

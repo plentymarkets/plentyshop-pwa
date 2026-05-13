@@ -4,6 +4,7 @@
       v-for="option in options"
       :key="option.blockName"
       :data-testid="`quick-add-${option.blockName}`"
+      type="button"
       class="px-2 py-1 rounded-full border border-editor-border bg-white cursor-pointer flex items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
       @click="$emit('add', option)"
     >

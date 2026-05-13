@@ -237,8 +237,11 @@ const { quickAddBlock } = useQuickAdd(
   },
   (newBlock) => {
     const content = (multiGridStructure.value.content ?? []) as Block[];
-    const numCols = multiGridStructure.value.configuration.columnWidths?.length ?? 0;
-
+    const columnWidths = multiGridStructure.value.configuration.columnWidths;
+    const numCols = columnWidths?.length ?? 0;
+    if (numCols < 1) {
+      return;
+    }
     newBlock.parent_slot = getLeastPopulatedColumn(content, numCols);
     content.push(newBlock);
   },

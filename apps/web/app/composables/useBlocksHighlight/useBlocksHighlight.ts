@@ -2,7 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { ComputedRef } from 'vue';
 
 export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
-  const { scrollToBlock, highlightTimeoutToken, highlightedUuid } = useTableOfContents();
+  const { scrollToBlock, highlightedUuid } = useTableOfContents();
 
   const currentActiveBlockIndex = ref<number>(-1);
   const previousBlocksLength = ref(blocks.value.length);
@@ -16,7 +16,6 @@ export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
     const block = blocks.value[index];
     if (block) {
       scrollToBlock(block.meta.uuid);
-      highlightTimeoutToken.value++;
     }
   };
 
@@ -25,7 +24,6 @@ export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
       const activeBlock = blocks.value[currentActiveBlockIndex.value];
       if (activeBlock) {
         scrollToBlock(activeBlock.meta.uuid);
-        highlightTimeoutToken.value++;
       }
     }
   };

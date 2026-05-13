@@ -3,12 +3,10 @@ import type { Block } from '@plentymarkets/shop-api';
 import { useBlocksHighlight } from '../useBlocksHighlight';
 
 const mockScrollToBlock = vi.fn();
-const highlightTimeoutToken = ref(0);
 const highlightedUuid = ref('');
 
 mockNuxtImport('useTableOfContents', () => () => ({
   scrollToBlock: mockScrollToBlock,
-  highlightTimeoutToken,
   highlightedUuid,
 }));
 
@@ -17,7 +15,6 @@ const createBlock = (uuid: string): Block => ({ meta: { uuid } }) as unknown as 
 describe('useBlocksHighlight - selectBlock', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    highlightTimeoutToken.value = 0;
     highlightedUuid.value = '';
   });
 
@@ -29,7 +26,6 @@ describe('useBlocksHighlight - selectBlock', () => {
 
     expect(currentActiveBlockIndex.value).toBe(1);
     expect(mockScrollToBlock).toHaveBeenCalledWith('block-2');
-    expect(highlightTimeoutToken.value).toBe(1);
   });
 
   it('should not scroll if the index is out of bounds', () => {
@@ -45,7 +41,6 @@ describe('useBlocksHighlight - selectBlock', () => {
 describe('useBlocksHighlight - highlightActiveBlock', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    highlightTimeoutToken.value = 0;
     highlightedUuid.value = '';
   });
 
@@ -55,12 +50,10 @@ describe('useBlocksHighlight - highlightActiveBlock', () => {
 
     selectBlock(0);
     vi.clearAllMocks();
-    highlightTimeoutToken.value = 0;
 
     highlightActiveBlock();
 
     expect(mockScrollToBlock).toHaveBeenCalledWith('block-1');
-    expect(highlightTimeoutToken.value).toBe(1);
   });
 
   it('should not scroll when no block is selected', () => {
@@ -76,7 +69,6 @@ describe('useBlocksHighlight - highlightActiveBlock', () => {
 describe('useBlocksHighlight - clearSelection', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    highlightTimeoutToken.value = 0;
     highlightedUuid.value = '';
   });
 
@@ -95,7 +87,6 @@ describe('useBlocksHighlight - clearSelection', () => {
 describe('useBlocksHighlight - hasValidActiveBlock', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    highlightTimeoutToken.value = 0;
     highlightedUuid.value = '';
   });
 
@@ -119,7 +110,6 @@ describe('useBlocksHighlight - hasValidActiveBlock', () => {
 describe('useBlocksHighlight - watcher', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    highlightTimeoutToken.value = 0;
     highlightedUuid.value = '';
   });
 
