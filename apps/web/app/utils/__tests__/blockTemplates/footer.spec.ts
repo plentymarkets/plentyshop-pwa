@@ -71,6 +71,16 @@ describe('createFooterContainer', () => {
     expect(footer.configuration?.colors?.background).toBeDefined();
     expect(footer.configuration?.colors?.text).toBeDefined();
   });
+
+  it('should have a button with cancellation form link in the fifth column', () => {
+    const footer = createFooterContainer();
+    const multiGrid = (footer.content as Block[])[0];
+    const columns = multiGrid?.content as Block[];
+    const lastColumn = columns[4];
+    const button = (lastColumn?.content as { button: { label: string; link: string } }).button;
+    expect(button.link).toBe(paths.cancellationForm);
+    expect(button.label).toBeTruthy();
+  });
 });
 
 describe('migrateLegacyFooterToContainer', () => {
@@ -153,7 +163,6 @@ describe('migrateLegacyFooterToContainer', () => {
     const html = (column1?.content as { text: { htmlDescription: string } }).text.htmlDescription as string;
 
     expect(html).toContain('Legal');
-    expect(html).toContain(paths.cancellationForm);
     expect(html).toContain(paths.cancellationRights);
     expect(html).toContain(paths.declarationOfAccessibility);
     expect(html).toContain(paths.legalDisclosure);
@@ -217,5 +226,15 @@ describe('migrateLegacyFooterToContainer', () => {
     expect(content.text.textAlignment).toBe('right');
     expect(content.text.color).toBe('#8b8d8b');
     expect(content.layout.backgroundColor).toBe('#161a16');
+  });
+
+  it('should have a button with cancellation form link in the fifth column', () => {
+    const migrated = migrateLegacyFooterToContainer(legacyFooter);
+    const multiGrid = (migrated.content as Block[])[0];
+    const columns = multiGrid?.content as Block[];
+    const lastColumn = columns[4];
+    const button = (lastColumn?.content as { button: { label: string; link: string } }).button;
+    expect(button.link).toBe(paths.cancellationForm);
+    expect(button.label).toBeTruthy();
   });
 });
