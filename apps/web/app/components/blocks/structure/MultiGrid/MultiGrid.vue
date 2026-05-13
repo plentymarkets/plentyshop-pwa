@@ -5,9 +5,9 @@
     :style="gridInlineStyle"
   >
     <template v-for="(gridRow, rowIndex) in gridRows" :key="rowIndex">
+      <template v-for="cell in gridRow.cells" :key="cell.colIndex">
       <div
-        v-for="cell in gridRow.cells"
-        :key="cell.colIndex"
+        v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
         :class="getColumnClasses(cell.colIndex)"
         class="group/col relative md:z-[1]"
         data-testid="multi-grid-column"
@@ -55,6 +55,7 @@
           <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </div>
+      </template>
 
       <ClientOnly>
         <div
