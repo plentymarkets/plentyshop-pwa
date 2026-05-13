@@ -8,6 +8,7 @@
     </div>
     <template v-if="parentCategory">
       <CategoryTreeItem
+        data-testid="category-parent-link"
         :name="breadcrumbGetters.getName(parentCategory)"
         :href="breadcrumbGetters.getUrl(parentCategory)"
         :count="breadcrumbGetters.getItemCount(parentCategory)"
