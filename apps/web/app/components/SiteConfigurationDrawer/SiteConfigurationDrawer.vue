@@ -1,6 +1,8 @@
 <template>
   <Transition name="drawer-left" appear>
-    <div class="flex-shrink-0 w-1/4 min-w-[250px] max-w-[300px] bg-neutral-50 border-0 border-gray-300 z-[15] relative">
+    <div
+      class="flex-shrink-0 w-1/4 min-w-[250px] max-w-[300px] bg-neutral-50 border-0 border-gray-300 z-[15] relative h-full overflow-y-auto"
+    >
       <Transition v-if="siteConfigurationDrawerView" :name="transitionName" mode="out-in" appear>
         <div :key="siteConfigurationDrawerView">
           <component :is="getDrawerView(siteConfigurationDrawerView)" />

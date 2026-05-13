@@ -11,7 +11,7 @@
     <component
       :is="SiteConfigurationDrawer"
       v-if="siteConfigurationDrawerOpen"
-      class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
+      class="flex-shrink-0 bg-white font-editor border-r border-gray-300"
     />
 
     <div

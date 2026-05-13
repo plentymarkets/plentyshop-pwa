@@ -6,11 +6,19 @@ vi.mock('~/utils/migrate-blocks', () => ({
   migrateAllBlocks: vi.fn(),
 }));
 
-const makeBlock = (name: string, content: unknown = {}): Block =>
-  ({ name, type: 'content', meta: { uuid: `${name}-uuid` }, content }) as unknown as Block;
+const makeBlock = (name: string, content: unknown = {}): Block => ({
+  name,
+  type: 'content',
+  meta: { uuid: `${name}-uuid` },
+  content,
+});
 
-const makeStructureBlock = (name: string, content: Block[] = []): Block =>
-  ({ name, type: 'structure', meta: { uuid: `${name}-uuid` }, content }) as unknown as Block;
+const makeStructureBlock = (name: string, content: Block[] = []): Block => ({
+  name,
+  type: 'structure',
+  meta: { uuid: `${name}-uuid` },
+  content,
+});
 
 describe('utils/block-helpers', () => {
   describe('isHeaderBlock', () => {
@@ -126,6 +134,13 @@ describe('utils/block-helpers', () => {
     it('should return empty blocks for unknown type with no raw blocks', () => {
       const raw = { blocks: [] } as unknown as GetBlocksResponse;
       const result = assembleBlocks(raw, 'unknown', 'x');
+
+      expect(result.blocks).toEqual([]);
+    });
+
+    it('should return empty blocks when hasSnapshot is true and raw blocks are empty', () => {
+      const raw = { blocks: [] } as unknown as GetBlocksResponse;
+      const result = assembleBlocks(raw, 'immutable', 'index', true);
 
       expect(result.blocks).toEqual([]);
     });
