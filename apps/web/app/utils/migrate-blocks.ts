@@ -86,7 +86,7 @@ export function migrateAllBlocks(blocks: Block[]): void {
           content.fieldsOrder.push('manufacturer');
         }
 
-        delete fields['shippingBadge'];
+        delete (fields as Record<string, unknown>)['shippingBadge'];
         content.fieldsOrder = content.fieldsOrder.filter((f) => (f as string) !== 'shippingBadge');
       }
 
