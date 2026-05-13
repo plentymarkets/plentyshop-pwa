@@ -267,13 +267,13 @@ const toggleSticky = (columnIndex: number) => {
 const allEmpty = computed(() => {
   const blocks = multiGridStructure.value.content as Block[] | undefined;
   if (!blocks || blocks.length === 0) return true;
-  return blocks.every((b) => b.name === 'EmptyGridBlock');
+  return blocks.every((block) => block.name === 'EmptyGridBlock');
 });
 
 const applyPreset = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   block.configuration.columnWidths = [...spans];
-  block.content = spans.map((_, i) => createEmptyGridBlock(i)) as unknown as Block[];
+  block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
 };
 
 const handleColumnWidthsUpdate = (widths: number[]) => {
@@ -285,7 +285,7 @@ const addRowSpans = (spans: readonly number[]) => {
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
   if (!block.content) block.content = [];
-  block.content.push(...(spans.map((_, i) => createEmptyGridBlock(currentLength + i)) as unknown as Block[]));
+  block.content.push(...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]));
 };
 
 const handleClickAddRow = (anchorEl: HTMLElement) => {
@@ -294,12 +294,12 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   const newBlock = createEmptyGridBlock(newSlot);
 
   const cleanupTempBlock = () => {
-    const b = multiGridStructure.value as ColumnBlock;
-    const blocks = b.content as Block[];
-    const idx = blocks.findIndex((x) => x.meta.uuid === newBlock.meta.uuid && x.name === 'EmptyGridBlock');
-    if (idx !== -1) {
-      blocks.splice(idx, 1);
-      b.configuration.columnWidths.splice(newSlot, 1);
+    const gridBlock = multiGridStructure.value as ColumnBlock;
+    const blocks = gridBlock.content as Block[];
+    const index = blocks.findIndex((block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock');
+    if (index !== -1) {
+      blocks.splice(index, 1);
+      gridBlock.configuration.columnWidths.splice(newSlot, 1);
     }
   };
 
@@ -328,12 +328,12 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
     targetUuid: newBlock.meta.uuid,
     position: 'inside',
     onCancel: () => {
-      const b = multiGridStructure.value as ColumnBlock;
-      const blocks = b.content as Block[];
-      const idx = blocks.findIndex((x) => x.meta.uuid === newBlock.meta.uuid && x.name === 'EmptyGridBlock');
-      if (idx !== -1) {
-        blocks.splice(idx, 1);
-        b.configuration.columnWidths.splice(newSlot, 1);
+      const gridBlock = multiGridStructure.value as ColumnBlock;
+      const blocks = gridBlock.content as Block[];
+      const index = blocks.findIndex((block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock');
+      if (index !== -1) {
+        blocks.splice(index, 1);
+        gridBlock.configuration.columnWidths.splice(newSlot, 1);
       }
     },
   });

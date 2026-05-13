@@ -17,7 +17,7 @@
       </div>
 
       <div class="relative z-[1]">
-        <div v-for="(row, rIdx) in rows" :key="rIdx" class="flex h-[50px] border-b border-editor-canvas-border last:border-b-0">
+        <div v-for="(row, rowIndex) in rows" :key="rowIndex" class="flex h-[50px] border-b border-editor-canvas-border last:border-b-0">
           <div
             v-for="cell in row.cells"
             :key="cell.colIndex"
@@ -126,7 +126,7 @@ const rows = computed((): GridRow[] => {
       cells = [];
       used = 0;
     }
-    const hasContent = props.blocks.some((b) => b.parent_slot === colIndex && b.name !== 'EmptyGridBlock');
+    const hasContent = props.blocks.some((block) => block.parent_slot === colIndex && block.name !== 'EmptyGridBlock');
     cells.push({ colIndex, span, hasContent });
     used += span;
   });
@@ -135,7 +135,7 @@ const rows = computed((): GridRow[] => {
 });
 
 const onClickCell = (event: MouseEvent, colIndex: number) => {
-  const emptyBlock = props.blocks.find((b) => b.parent_slot === colIndex && b.name === 'EmptyGridBlock');
+  const emptyBlock = props.blocks.find((block) => block.parent_slot === colIndex && block.name === 'EmptyGridBlock');
   if (!emptyBlock) return;
   openAddBlockPopover({
     anchorEl: event.currentTarget as HTMLElement,
@@ -156,17 +156,17 @@ interface DragState {
 }
 const dragRef = ref<DragState | null>(null);
 
-const startDrag = (e: PointerEvent, colIndex: number, span: number) => {
+const startDrag = (event: PointerEvent, colIndex: number, span: number) => {
   if (!containerRef.value) return;
   const { width } = containerRef.value.getBoundingClientRect();
-  dragRef.value = { colIndex, startX: e.clientX, startSpan: span, unitW: width / 12 };
-  (e.currentTarget as Element).setPointerCapture(e.pointerId);
+  dragRef.value = { colIndex, startX: event.clientX, startSpan: span, unitW: width / 12 };
+  (event.currentTarget as Element).setPointerCapture(event.pointerId);
 };
 
-const onPointerMove = (e: PointerEvent) => {
+const onPointerMove = (event: PointerEvent) => {
   if (!dragRef.value) return;
   const { colIndex, startX, startSpan, unitW } = dragRef.value;
-  const newSpan = Math.max(1, Math.min(12, startSpan + Math.round((e.clientX - startX) / unitW)));
+  const newSpan = Math.max(1, Math.min(12, startSpan + Math.round((event.clientX - startX) / unitW)));
   if (newSpan !== props.columnWidths[colIndex]) {
     const updated = [...props.columnWidths];
     updated[colIndex] = newSpan;

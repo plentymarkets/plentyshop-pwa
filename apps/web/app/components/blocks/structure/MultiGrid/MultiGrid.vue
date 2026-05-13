@@ -4,7 +4,7 @@
     :class="[getGridClasses(), { 'px-4': shouldApplyPadding }]"
     :style="gridInlineStyle"
   >
-    <template v-for="(gridRow, rIdx) in gridRows" :key="rIdx">
+    <template v-for="(gridRow, rowIndex) in gridRows" :key="rowIndex">
       <div
         v-for="cell in gridRow.cells"
         :key="cell.colIndex"
@@ -182,12 +182,12 @@ const gridRows = computed((): GridRow[] => {
   return result;
 });
 
-const isAlignable = (b: Block): b is AlignableBlock =>
-  typeof b.content === 'object' && b.content !== null && ('imageAlignment' in b.content || 'alignment' in b.content);
+const isAlignable = (block: Block): block is AlignableBlock =>
+  typeof block.content === 'object' && block.content !== null && ('imageAlignment' in block.content || 'alignment' in block.content);
 
 const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
-  const a = block.content?.imageAlignment ?? block.content?.alignment;
-  return a === 'left' || a === 'right' ? a : undefined;
+  const alignmentValue = block.content?.imageAlignment ?? block.content?.alignment;
+  return alignmentValue === 'left' || alignmentValue === 'right' ? alignmentValue : undefined;
 };
 
 const pairWithSlots = computed<Block[]>(() => {
