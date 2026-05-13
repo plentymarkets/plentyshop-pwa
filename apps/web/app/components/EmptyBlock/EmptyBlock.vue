@@ -12,6 +12,7 @@ import { SfIconAdd } from '@storefront-ui/vue';
 import type { BlockPosition } from '~/composables/useBlockManager/types';
 
 const { openAddBlockPopover } = useAddBlockPopover();
+const { logContentCreateBlock } = useLogEvent();
 
 const addNewBlock = (event: MouseEvent, position: BlockPosition) => {
   if (useRuntimeConfig().public.enableAddBlockPopover) {
@@ -24,5 +25,6 @@ const addNewBlock = (event: MouseEvent, position: BlockPosition) => {
     openDrawerWithView('blocksList');
     clearInsertColumnUuid();
   }
+  logContentCreateBlock();
 };
 </script>

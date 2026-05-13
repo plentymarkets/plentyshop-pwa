@@ -135,6 +135,7 @@ const { openAddBlockPopover, popoverState } = useAddBlockPopover();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
+const { logContentCreateBlock } = useLogEvent();
 
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
@@ -230,6 +231,7 @@ const addNewBlock = (block: Block, position: BlockPosition, event: MouseEvent) =
     openDrawerWithView('blocksList');
     clearInsertColumnUuid();
   }
+  logContentCreateBlock();
 };
 
 const showTopAddBlockButton = computed(
