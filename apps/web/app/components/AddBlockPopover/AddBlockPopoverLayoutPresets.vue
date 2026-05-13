@@ -1,22 +1,22 @@
 <template>
   <template v-if="showLayout && filteredPresets.length > 0">
     <div class="section-label">{{ getEditorTranslation('layout-preset') }}</div>
-    <div class="grid grid-cols-3 gap-[5px]">
+    <div class="grid grid-cols-3 gap-1.5">
       <button
         v-for="preset in filteredPresets"
         :key="preset.label"
-        class="px-1 pt-2 pb-[7px] rounded-[7px] border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-[5px] hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-[120ms]"
+        class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
         @click="pickPreset(preset.columnWidths)"
       >
-        <div class="flex gap-[2px] w-full h-[10px]">
+        <div class="flex gap-0.5 w-full h-2.5">
           <div
             v-for="(columnWidth, i) in preset.columnWidths"
             :key="i"
-            class="h-full rounded-[2px] bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
+            class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
             :style="{ flex: columnWidth }"
           />
         </div>
-        <span class="text-[10px] text-editor-text-subtle">{{ preset.label }}</span>
+        <span class="text-3xs text-editor-text-subtle">{{ preset.label }}</span>
       </button>
     </div>
   </template>
@@ -46,7 +46,7 @@ const pickPreset = (columnWidths: readonly number[]) => {
 
 <style scoped>
 .section-label {
-  @apply text-[9px] text-editor-text-ghost font-bold tracking-[0.1em] mb-2 pl-0.5 uppercase;
+  @apply text-4xs text-editor-text-ghost font-bold tracking-widest mb-2 pl-0.5 uppercase;
 }
 </style>
 

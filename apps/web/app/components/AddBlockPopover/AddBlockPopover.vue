@@ -7,7 +7,7 @@
 
       <div
         ref="panelRef"
-        class="fixed z-[201] w-[296px] max-h-[350px] bg-white rounded-[10px] border border-editor-border flex flex-col overflow-hidden"
+        class="fixed z-[201] w-[296px] max-h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
         :style="panelStyle"
         @click.stop
       >

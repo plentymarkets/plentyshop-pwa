@@ -1,10 +1,10 @@
 <template>
-  <div class="grid grid-cols-4 gap-[5px]">
+  <div class="grid grid-cols-4 gap-1.5">
     <button
       v-for="item in variations"
       :key="`${item.category.category}-${item.idx}`"
       :disabled="isDisabled(item)"
-      class="flex flex-col items-center gap-[3px] py-2 px-1 rounded-[7px] border border-editor-border bg-white transition-all duration-[120ms]"
+      class="flex flex-col items-center gap-1 py-2 px-1 rounded-lg border border-editor-border bg-white transition-all duration-150"
       :class="
         isDisabled(item)
           ? 'opacity-40 cursor-not-allowed'
@@ -18,7 +18,7 @@
         v-html="getBlockIconSvg(item.category.blockName)"
       />
       <span v-else class="w-5 h-5 rounded bg-editor-surface-muted block flex-shrink-0" />
-      <span class="text-[9px] text-editor-text-muted leading-tight text-center break-words w-full line-clamp-2">
+      <span class="text-4xs text-editor-text-muted leading-tight text-center break-words w-full line-clamp-2">
         {{ item.variation.title }}
       </span>
     </button>

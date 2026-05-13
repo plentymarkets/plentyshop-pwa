@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 overflow-y-scroll px-3 py-3 scroll-area min-h-0">
-    <div v-if="isLoading" class="text-[12px] text-editor-text-placeholder text-center py-4">
+    <div v-if="isLoading" class="text-xs text-editor-text-placeholder text-center py-4">
       {{ getEditorTranslation('loading') }}
     </div>
 

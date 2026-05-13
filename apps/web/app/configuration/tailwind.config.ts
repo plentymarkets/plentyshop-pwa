@@ -44,6 +44,11 @@ export default {
           fontFamily: 'inherit',
         },
       }),
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }],    // 11px
+        '3xs': ['0.625rem', { lineHeight: '0.875rem' }],  // 10px
+        '4xs': ['0.5625rem', { lineHeight: '0.75rem' }],  // 9px
+      },
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
         editor: ['Red Hat Text', ...defaultTheme.fontFamily.sans],

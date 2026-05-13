@@ -1,5 +1,5 @@
 <template>
-  <div class="text-[11px] text-editor-text-faint text-center py-4 leading-relaxed px-2">
+  <div class="text-2xs text-editor-text-faint text-center py-4 leading-relaxed px-2">
     {{ getEditorTranslation('no-blocks-found') }}
     <template v-if="hasActiveFilters || hasActiveSearch">
       <br />
