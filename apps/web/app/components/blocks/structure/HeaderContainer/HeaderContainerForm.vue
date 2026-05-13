@@ -46,8 +46,6 @@ const { headerContainer } = useBlocks();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const { logHeaderContainerEditBlock } = useLogEvent();
-const { insertCustomBlock } = useBlockManager();
-const { getBlockTemplateByLanguage } = useBlocksList();
 
 const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
@@ -163,15 +161,9 @@ const quickAddOptions: QuickAddOption[] = [
   { blockName: 'AnnouncementBar', label: getBlockDisplayName('AnnouncementBar'), category: 'header', variationIndex: 2 },
 ];
 
-const quickAddBlock = async (option: QuickAddOption) => {
-  const { $i18n } = useNuxtApp();
-  const newBlock = await getBlockTemplateByLanguage(option.category, option.variationIndex, $i18n.locale.value);
-
-  const lastChild = headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1];
-  if (!lastChild) return;
-
-  insertCustomBlock(newBlock, lastChild.meta.uuid, 'bottom');
-};
+const { quickAddBlock } = useQuickAdd(
+  () => headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1],
+);
 
 const deleteBlock = async (index: number) => {
   if (blocks.value.length <= 1) {

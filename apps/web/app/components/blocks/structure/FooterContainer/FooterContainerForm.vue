@@ -7,12 +7,14 @@
         :item-labels="blockLabels"
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
+        :quick-add-options="quickAddOptions"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
         @toggle-item-visibility="toggleBlockVisibilityHandler"
         @update:items="updateBlocks"
+        @quick-add-item="quickAddBlock"
       />
 
       <UiAccordionItem
@@ -83,6 +85,7 @@
 import { SfInput } from '@storefront-ui/vue';
 import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
+import type { QuickAddOption } from '~/components/editor/QuickAdd/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { footer } = useBlocks();
@@ -98,6 +101,19 @@ const editingBlockName = ref<string | undefined>(undefined);
 const blockLabels = ref<string[]>([]);
 
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
+
+const quickAddOptions: QuickAddOption[] = [
+  { blockName: 'Image', label: getBlockDisplayName('Image'), category: 'image', variationIndex: 0 },
+  { blockName: 'TextCard', label: getBlockDisplayName('TextCard'), category: 'text', variationIndex: 0 },
+  { blockName: 'MultiGrid', label: getBlockDisplayName('MultiGrid'), category: 'layout', variationIndex: 0 },
+];
+
+const { quickAddBlock } = useQuickAdd(
+  () => {
+    const content = footerContainer.value.content ?? [];
+    return content[content.length - 1];
+  },
+);
 
 const blockForm = computed(() => {
   if (!editingBlockName.value) {
