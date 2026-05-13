@@ -2,6 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
+import type { ItemGridContent, ItemGridFieldsVisibility } from '~/components/blocks/ItemGrid/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
@@ -69,6 +70,24 @@ export function migrateAllBlocks(blocks: Block[]): void {
           content.button = content.button ?? {};
           content.button.alignment = textAlignment;
         }
+      }
+
+      if (block.name === 'ItemGrid' && block.content) {
+        const content = block.content as ItemGridContent;
+        const fields = (content.fields ?? {}) as ItemGridFieldsVisibility;
+
+        content.fields = fields;
+        content.fieldsOrder ??= [];
+
+        if (fields['manufacturer'] === undefined) {
+          fields['manufacturer'] = true;
+        }
+        if (!content.fieldsOrder.includes('manufacturer')) {
+          content.fieldsOrder.push('manufacturer');
+        }
+
+        delete (fields as Record<string, unknown>)['shippingBadge'];
+        content.fieldsOrder = content.fieldsOrder.filter((f) => (f as string) !== 'shippingBadge');
       }
 
       if (Array.isArray(block.content)) {
