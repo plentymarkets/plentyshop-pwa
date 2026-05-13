@@ -113,7 +113,7 @@
         <button
           data-testid="actions-add-block-button"
           class="border border-editor-button w-full py-1 rounded-md flex items-center justify-center gap-1 text-editor-button"
-          @click="$emit('add-item')"
+          @click="$emit('add-item', $event)"
         >
           <SfIconAdd />
           {{ getEditorTranslation('add-element-label') }}

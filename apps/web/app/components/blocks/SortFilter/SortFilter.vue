@@ -68,7 +68,7 @@
       </template>
     </CategorySidebar>
 
-    <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+    <UiButton variant="tertiary" class="md:hidden whitespace-nowrap !px-0" @click="open">
       <template #prefix>
         <SfIconTune />
       </template>

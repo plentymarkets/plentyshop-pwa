@@ -44,6 +44,11 @@ export default {
           fontFamily: 'inherit',
         },
       }),
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }], // 11px
+        '3xs': ['0.625rem', { lineHeight: '0.875rem' }], // 10px
+        '4xs': ['0.5625rem', { lineHeight: '0.75rem' }], // 9px
+      },
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
         editor: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
@@ -82,6 +87,19 @@ export default {
           'toc-hover': '#F5FAFF',
           'toc-selected': '#538AEA',
           'icon-hover': 'rgba(6, 38, 51, 0.08)',
+          'text-strong': '#1a1a1a',
+          'text-default': '#444444',
+          'text-subtle': '#666666',
+          'text-muted': '#777777',
+          'text-faint': '#888888',
+          'text-placeholder': '#aaaaaa',
+          'text-ghost': '#bbbbbb',
+          surface: '#f5f5f5',
+          'surface-cool-hover': '#e4e8f0',
+          'surface-muted': '#f0f0f0',
+          border: '#e8e8e8',
+          'accent-border-hover': '#c0d4ff',
+          accent: 'rgb(29 94 199 / <alpha-value>)',
         },
 
         header: {
