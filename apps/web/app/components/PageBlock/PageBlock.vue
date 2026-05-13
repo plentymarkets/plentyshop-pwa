@@ -131,6 +131,7 @@ const {
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
+const { logContentCreateBlock } = useLogEvent();
 
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
@@ -214,6 +215,7 @@ const addNewBlock = (block: Block, position: BlockPosition) => {
   togglePlaceholder(block.meta.uuid, position);
   openDrawerWithView('blocksList');
   multigridColumnUuid.value = null;
+  logContentCreateBlock();
 };
 
 const showTopAddBlockButton = computed(
