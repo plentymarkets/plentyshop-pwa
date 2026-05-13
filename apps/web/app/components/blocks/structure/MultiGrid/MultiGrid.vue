@@ -72,8 +72,9 @@
 </template>
 
 <script setup lang="ts">
-import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
+import type { AlignableBlock, GridRow, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
+import { computeGridRows } from '~/components/blocks/structure/MultiGrid/multiGridRows';
 
 const props = defineProps<MultiGridProps>();
 const route = useRoute();
@@ -159,28 +160,7 @@ const showOverlay = computed(
     enableActions.value && shouldEnableEditorFeatures.value && !isDragging.value && blockHasData(block),
 );
 
-interface GridRow {
-  cells: { colIndex: number; span: number }[];
-  free: number;
-}
-
-const gridRows = computed((): GridRow[] => {
-  const result: GridRow[] = [];
-  let cells: { colIndex: number; span: number }[] = [];
-  let used = 0;
-
-  props.configuration.columnWidths.forEach((span, colIndex) => {
-    if (used + span > 12) {
-      result.push({ cells, free: 12 - used });
-      cells = [];
-      used = 0;
-    }
-    cells.push({ colIndex, span });
-    used += span;
-  });
-  if (cells.length > 0) result.push({ cells, free: 12 - used });
-  return result;
-});
+const gridRows = computed((): GridRow[] => computeGridRows(props.configuration.columnWidths));
 
 const isAlignable = (block: Block): block is AlignableBlock =>
   typeof block.content === 'object' &&

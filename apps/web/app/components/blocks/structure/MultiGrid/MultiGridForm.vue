@@ -11,23 +11,7 @@
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('grid-layout') }}
       </span>
-      <svg
-        width="10"
-        height="6"
-        viewBox="0 0 10 6"
-        fill="none"
-        aria-hidden="true"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'"
-      >
-        <path
-          d="M1 1l4 4 4-4"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <SfIconExpandMore size="xs" class="text-editor-text-placeholder transition-transform duration-200" :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'" />
     </button>
 
     <div v-if="gridLayoutOpen" id="multigrid-panel-grid-layout" class="px-3.5 py-3">
@@ -100,23 +84,7 @@
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('layout') }}
       </span>
-      <svg
-        width="10"
-        height="6"
-        viewBox="0 0 10 6"
-        fill="none"
-        aria-hidden="true"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="layoutOpen ? 'rotate-0' : '-rotate-90'"
-      >
-        <path
-          d="M1 1l4 4 4-4"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <SfIconExpandMore size="xs" class="text-editor-text-placeholder transition-transform duration-200" :class="layoutOpen ? 'rotate-0' : '-rotate-90'" />
     </button>
 
     <div v-if="layoutOpen" id="multigrid-panel-layout" class="px-3.5 py-3 flex flex-col gap-3">
@@ -177,23 +145,7 @@
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
         {{ getEditorTranslation('layout-background') }}
       </span>
-      <svg
-        width="10"
-        height="6"
-        viewBox="0 0 10 6"
-        fill="none"
-        aria-hidden="true"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="backgroundOpen ? 'rotate-0' : '-rotate-90'"
-      >
-        <path
-          d="M1 1l4 4 4-4"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <SfIconExpandMore size="xs" class="text-editor-text-placeholder transition-transform duration-200" :class="backgroundOpen ? 'rotate-0' : '-rotate-90'" />
     </button>
 
     <div v-if="backgroundOpen" id="multigrid-panel-background" class="px-3.5 py-3">
@@ -228,7 +180,7 @@
 <script setup lang="ts">
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
+import { SfInput, SfIconArrowUpward, SfIconArrowDownward, SfIconExpandMore } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/types';

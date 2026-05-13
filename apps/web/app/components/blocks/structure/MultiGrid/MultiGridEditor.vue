@@ -88,9 +88,7 @@
           class="h-8 flex items-center justify-center gap-1.5 cursor-pointer text-editor-accent text-xs bg-editor-toc-hover font-semibold tracking-[0.01em] border-t border-editor-toc-highlight transition-all duration-150 hover:bg-editor-toc-highlight"
           @click="emit('click-add-row', $event.currentTarget as HTMLElement)"
         >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-          </svg>
+          <SfIconAdd size="xs" />
           <span>{{ getEditorTranslation('add-row') }}</span>
         </div>
       </div>
@@ -100,6 +98,9 @@
 
 <script setup lang="ts">
 import type { Block } from '@plentymarkets/shop-api';
+import type { DragState, GridRow } from './types';
+import { SfIconAdd } from '@storefront-ui/vue';
+import { computeGridRows } from './multiGridRows';
 
 const props = defineProps<{
   columnWidths: number[];
@@ -116,37 +117,7 @@ const { openAddBlockPopover } = useAddBlockPopover();
 
 const containerRef = ref<HTMLElement | null>(null);
 
-interface RowCell {
-  colIndex: number;
-  span: number;
-  hasContent: boolean;
-}
-interface GridRow {
-  cells: RowCell[];
-  free: number;
-}
-
-const rows = computed((): GridRow[] => {
-  const filledSlots = new Set(
-    props.blocks.filter((block) => block.name !== 'EmptyGridBlock').map((block) => block.parent_slot),
-  );
-
-  const result: GridRow[] = [];
-  let cells: RowCell[] = [];
-  let used = 0;
-
-  props.columnWidths.forEach((span, colIndex) => {
-    if (used + span > 12) {
-      result.push({ cells, free: 12 - used });
-      cells = [];
-      used = 0;
-    }
-    cells.push({ colIndex, span, hasContent: filledSlots.has(colIndex) });
-    used += span;
-  });
-  if (cells.length > 0) result.push({ cells, free: 12 - used });
-  return result;
-});
+const rows = computed((): GridRow[] => computeGridRows(props.columnWidths, props.blocks));
 
 const onClickCell = (event: MouseEvent, colIndex: number) => {
   const emptyBlock = props.blocks.find((block) => block.parent_slot === colIndex && block.name === 'EmptyGridBlock');
@@ -162,12 +133,6 @@ const onClickFree = (event: MouseEvent, span: number) => {
   emit('add-free-column', span, event.currentTarget as HTMLElement);
 };
 
-interface DragState {
-  colIndex: number;
-  startX: number;
-  startSpan: number;
-  unitW: number;
-}
 const dragRef = ref<DragState | null>(null);
 
 const startDrag = (event: PointerEvent, colIndex: number, span: number) => {
