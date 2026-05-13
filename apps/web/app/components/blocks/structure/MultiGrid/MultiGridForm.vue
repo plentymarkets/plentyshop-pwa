@@ -30,11 +30,11 @@
             v-for="preset in LAYOUT_PRESETS"
             :key="preset.label"
             class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
-            @click="applyPreset(preset.spans)"
+            @click="applyPreset(preset.columnWidths)"
           >
             <div class="flex gap-0.5 w-full h-[9px]">
               <div
-                v-for="(span, i) in preset.spans"
+                v-for="(span, i) in preset.columnWidths"
                 :key="i"
                 class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
                 :style="{ flex: span }"
