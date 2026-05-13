@@ -41,6 +41,7 @@ const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
+const { logHeaderContainerEditBlock } = useLogEvent();
 
 const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
@@ -105,6 +106,7 @@ const editBlock = (index: number) => {
   editingBlockName.value = headerContainerStructure.value?.content?.[index]?.name;
   currentActiveBlockIndex.value = index;
   setEditTitle(blockLabels.value[index]!);
+  logHeaderContainerEditBlock();
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
@@ -127,18 +129,26 @@ const exitEditMode = (shouldEmit = true): boolean => {
   return true;
 };
 
-const addBlock = () => {
-  const { openDrawerWithView } = useSiteConfiguration();
-  const { togglePlaceholder } = useBlockManager();
-
+const addBlock = (event?: MouseEvent) => {
   const lastChild = headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1];
 
   if (!lastChild) {
     return;
   }
 
-  togglePlaceholder(lastChild.meta.uuid, 'bottom');
-  openDrawerWithView('blocksList');
+  if (useRuntimeConfig().public.enableAddBlockPopover) {
+    if (!event) return;
+    const { openAddBlockPopover } = useAddBlockPopover();
+    const anchorEl = (event.target as HTMLElement).closest('button') ?? (event.target as HTMLElement);
+    openAddBlockPopover({ anchorEl, targetUuid: lastChild.meta.uuid, position: 'bottom' });
+  } else {
+    const { openDrawerWithView } = useSiteConfiguration();
+    const { togglePlaceholder } = useBlockManager();
+    const { clearInsertColumnUuid } = useBlocksMutations();
+    togglePlaceholder(lastChild.meta.uuid, 'bottom');
+    openDrawerWithView('blocksList');
+    clearInsertColumnUuid();
+  }
 };
 
 const deleteBlock = async (index: number) => {
