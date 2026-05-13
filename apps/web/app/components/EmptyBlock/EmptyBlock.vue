@@ -13,10 +13,12 @@ import type { BlockPosition } from '~/composables/useBlockManager/types';
 
 const { openDrawerWithView } = useSiteConfiguration();
 const { togglePlaceholder, multigridColumnUuid } = useBlockManager();
+const { logContentCreateBlock } = useLogEvent();
 
 const addNewBlock = (position: BlockPosition) => {
   togglePlaceholder('0', position);
   openDrawerWithView('blocksList');
   multigridColumnUuid.value = null;
+  logContentCreateBlock();
 };
 </script>
