@@ -34,7 +34,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       }),
       Underline,
       Link.configure({
-        openOnClick: false,
+        openOnClick: true,
         autolink: true,
         linkOnPaste: true,
       }),
@@ -123,7 +123,10 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     args.textAlign,
   );
   const { canUndo, canRedo, undo, redo } = setupRichTextEditorHistory(editor as Ref<Editor | null> | null, focusChain);
-  const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(editor as Ref<Editor | null> | null);
+  const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(
+    editor as Ref<Editor | null> | null,
+    args.onOpenLinkModal,
+  );
 
   const focus = () => editor.value?.commands.focus();
 
