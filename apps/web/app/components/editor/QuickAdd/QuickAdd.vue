@@ -1,21 +1,21 @@
 <template>
-  <div v-if="isEnabled && options.length" class="grid grid-cols-3 gap-1.5 px-4 pt-3">
+  <div v-if="isEnabled && options.length" class="flex flex-wrap justify-center gap-1.5 px-4 pt-3">
     <button
       v-for="option in options"
       :key="option.blockName"
       :data-testid="`quick-add-${option.blockName}`"
-      class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
+      class="px-2 py-1 rounded-full border border-editor-border bg-white cursor-pointer flex items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
       @click="$emit('add', option)"
     >
-      <div class="shrink-0 w-5 h-5">
+      <div class="shrink-0 w-3.5 h-3.5">
         <span
           v-if="getBlockIconSvg(option.blockName)"
-          class="block w-5 h-5 [&>svg]:w-full [&>svg]:h-full"
+          class="block w-3.5 h-3.5 [&>svg]:w-full [&>svg]:h-full"
           v-html="getBlockIconSvg(option.blockName)"
         />
-        <NuxtImg v-else :src="defaultBlockIcon" class="w-5 h-5" />
+        <NuxtImg v-else :src="defaultBlockIcon" class="w-3.5 h-3.5" />
       </div>
-      <span class="text-3xs text-editor-text-subtle text-center truncate w-full">{{ option.label }}</span>
+      <span class="text-3xs text-editor-text-subtle whitespace-nowrap">{{ option.label }}</span>
     </button>
   </div>
 </template>
