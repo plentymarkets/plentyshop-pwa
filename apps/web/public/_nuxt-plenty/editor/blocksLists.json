@@ -447,6 +447,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
@@ -605,6 +606,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
@@ -760,6 +762,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 title",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
@@ -1210,7 +1213,7 @@
                 "color": "#000"
               },
               "button": {
-                "buttonText": "Button",
+                "label": "Button",
                 "link": "/",
                 "variant": "primary"
               },
@@ -1230,7 +1233,7 @@
                 "color": "#000"
               },
               "button": {
-                "buttonText": "Button",
+                "label": "Button",
                 "link": "/",
                 "variant": "primary"
               },

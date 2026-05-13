@@ -21,12 +21,12 @@ const DEFAULT_PAGE_BLOCKS_MAP: Record<string, (identifier: string | number) => B
 const getDefaultPageBlocks = (type: string, identifier: string | number): Block[] =>
   (DEFAULT_PAGE_BLOCKS_MAP[type] ?? (() => []))(identifier);
 
-const resolveFooter = (raw: GetBlocksResponse): Block | undefined => {
+const resolveFooter = (raw: GetBlocksResponse): Block => {
   const rawFooterContainer = raw?.FooterContainer as Block | undefined;
-  if (!isBlockEmpty(rawFooterContainer)) return rawFooterContainer;
+  if (rawFooterContainer && !isBlockEmpty(rawFooterContainer)) return rawFooterContainer;
   if (isLegacyFooterBlock(raw?.Footer) && raw.Footer) return migrateLegacyFooterToContainer(raw.Footer);
-  if (isBlockEmpty(raw?.Footer)) return createFooterContainer();
-  return raw?.Footer;
+  if (!raw.Footer || isBlockEmpty(raw.Footer)) return createFooterContainer();
+  return raw.Footer;
 };
 
 const resolvePageBlocks = (
