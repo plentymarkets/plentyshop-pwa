@@ -1,8 +1,11 @@
 <template>
   <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
   <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-    <div
-      class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+    <button
+      type="button"
+      class="w-full flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      :aria-expanded="gridLayoutOpen"
+      aria-controls="multigrid-panel-grid-layout"
       @click="gridLayoutOpen = !gridLayoutOpen"
     >
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
@@ -13,6 +16,7 @@
         height="6"
         viewBox="0 0 10 6"
         fill="none"
+        aria-hidden="true"
         class="text-editor-text-placeholder transition-transform duration-200"
         :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'"
       >
@@ -24,9 +28,9 @@
           stroke-linejoin="round"
         />
       </svg>
-    </div>
+    </button>
 
-    <div v-if="gridLayoutOpen" class="px-3.5 py-3">
+    <div v-if="gridLayoutOpen" id="multigrid-panel-grid-layout" class="px-3.5 py-3">
       <div v-if="allEmpty" class="mb-3.5">
         <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
           {{ getEditorTranslation('layout-preset') }}
@@ -86,8 +90,11 @@
       </div>
     </div>
 
-    <div
-      class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+    <button
+      type="button"
+      class="w-full flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      :aria-expanded="layoutOpen"
+      aria-controls="multigrid-panel-layout"
       @click="layoutOpen = !layoutOpen"
     >
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
@@ -98,6 +105,7 @@
         height="6"
         viewBox="0 0 10 6"
         fill="none"
+        aria-hidden="true"
         class="text-editor-text-placeholder transition-transform duration-200"
         :class="layoutOpen ? 'rotate-0' : '-rotate-90'"
       >
@@ -109,9 +117,9 @@
           stroke-linejoin="round"
         />
       </svg>
-    </div>
+    </button>
 
-    <div v-if="layoutOpen" class="px-3.5 py-3 flex flex-col gap-3">
+    <div v-if="layoutOpen" id="multigrid-panel-layout" class="px-3.5 py-3 flex flex-col gap-3">
       <div v-if="multiGridStructure.configuration.layout">
         <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
         <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -159,8 +167,11 @@
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
     </div>
 
-    <div
-      class="flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+    <button
+      type="button"
+      class="w-full flex items-center gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      :aria-expanded="backgroundOpen"
+      aria-controls="multigrid-panel-background"
       @click="backgroundOpen = !backgroundOpen"
     >
       <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
@@ -171,6 +182,7 @@
         height="6"
         viewBox="0 0 10 6"
         fill="none"
+        aria-hidden="true"
         class="text-editor-text-placeholder transition-transform duration-200"
         :class="backgroundOpen ? 'rotate-0' : '-rotate-90'"
       >
@@ -182,9 +194,9 @@
           stroke-linejoin="round"
         />
       </svg>
-    </div>
+    </button>
 
-    <div v-if="backgroundOpen" class="px-3.5 py-3">
+    <div v-if="backgroundOpen" id="multigrid-panel-background" class="px-3.5 py-3">
       <div v-if="multiGridStructure.configuration.layout">
         <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
         <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">

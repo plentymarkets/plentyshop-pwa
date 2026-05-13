@@ -14,6 +14,8 @@ export interface UseAddBlockPopoverState {
   popoverState: AddBlockPopoverState | null;
   searchQuery: string;
   activeFilters: FilterId[];
+  pendingCancelCallback: (() => void) | null;
+  pendingPresetCallback: ((spans: readonly number[]) => void) | null;
 }
 
 export interface OpenAddBlockPopoverParams {

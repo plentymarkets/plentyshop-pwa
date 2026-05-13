@@ -127,6 +127,10 @@ interface GridRow {
 }
 
 const rows = computed((): GridRow[] => {
+  const filledSlots = new Set(
+    props.blocks.filter((block) => block.name !== 'EmptyGridBlock').map((block) => block.parent_slot),
+  );
+
   const result: GridRow[] = [];
   let cells: RowCell[] = [];
   let used = 0;
@@ -137,8 +141,7 @@ const rows = computed((): GridRow[] => {
       cells = [];
       used = 0;
     }
-    const hasContent = props.blocks.some((block) => block.parent_slot === colIndex && block.name !== 'EmptyGridBlock');
-    cells.push({ colIndex, span, hasContent });
+    cells.push({ colIndex, span, hasContent: filledSlots.has(colIndex) });
     used += span;
   });
   if (cells.length > 0) result.push({ cells, free: 12 - used });
