@@ -107,7 +107,7 @@ function createFooterMultiGrid(): Block {
     },
     configuration: {
       visible: true,
-      columnWidths: [3, 3, 3, 3],
+      columnWidths: [3, 3, 3, 3, 3],
       layout: {
         gap: 'XL',
         marginTop: 0,

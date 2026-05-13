@@ -41,16 +41,16 @@ describe('createFooterContainer', () => {
     expect(content[1]?.name).toBe('TextCard');
   });
 
-  it('should have a MultiGrid with four TextCard columns', () => {
+  it('should have a MultiGrid with five TextCard columns', () => {
     const footer = createFooterContainer();
     const multiGrid = (footer.content as Block[])[0];
     const columns = multiGrid?.content as Block[];
     expect(Array.isArray(columns)).toBe(true);
-    expect(columns).toHaveLength(4);
+    expect(columns).toHaveLength(5);
     columns.forEach((col) => expect(col.name).toBe('TextCard'));
   });
 
-  it('should assign parent_slot 0–3 to the four column blocks', () => {
+  it('should assign parent_slot 0–4 to the five column blocks', () => {
     const footer = createFooterContainer();
     const multiGrid = (footer.content as Block[])[0];
     const columns = multiGrid?.content as Block[];
@@ -59,11 +59,11 @@ describe('createFooterContainer', () => {
     });
   });
 
-  it('should have MultiGrid with four equal column widths', () => {
+  it('should have MultiGrid with five equal column widths', () => {
     const footer = createFooterContainer();
     const multiGrid = (footer.content as Block[])[0];
     const config = multiGrid?.configuration as unknown as { columnWidths: number[] };
-    expect(config?.columnWidths).toEqual([3, 3, 3, 3]);
+    expect(config?.columnWidths).toEqual([3, 3, 3, 3, 3]);
   });
 
   it('should have color configuration in footer container', () => {
@@ -135,11 +135,11 @@ describe('migrateLegacyFooterToContainer', () => {
     expect(migrated.configuration?.colors?.text).toBe('#1c1c1c');
   });
 
-  it('should produce four column TextCards with parent_slot 0–3', () => {
+  it('should produce five column TextCards with parent_slot 0–4', () => {
     const migrated = migrateLegacyFooterToContainer(legacyFooter);
     const multiGrid = (migrated.content as Block[])[0];
     const columns = multiGrid?.content as Block[];
-    expect(columns).toHaveLength(4);
+    expect(columns).toHaveLength(5);
     columns.forEach((col, i) => {
       expect(col.name).toBe('TextCard');
       expect((col as Block & { parent_slot: number }).parent_slot).toBe(i);
