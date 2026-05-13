@@ -7,12 +7,14 @@
         :item-labels="blockLabels"
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
+        :quick-add-options="quickAddOptions"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
         @toggle-item-visibility="toggleBlockVisibilityHandler"
         @update:items="updateBlocks"
+        @quick-add-item="quickAddBlock"
       />
 
       <UiAccordionItem
@@ -37,12 +39,15 @@
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
+import type { QuickAddOption } from '~/components/editor/QuickAdd/types';
 
 const { toggleBlockVisibility } = useBlocksVisibility();
 const { headerContainer } = useBlocks();
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const { logHeaderContainerEditBlock } = useLogEvent();
+const { insertCustomBlock } = useBlockManager();
+const { getBlockTemplateByLanguage } = useBlocksList();
 
 const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
@@ -150,6 +155,22 @@ const addBlock = (event?: MouseEvent) => {
     openDrawerWithView('blocksList');
     clearInsertColumnUuid();
   }
+};
+
+const quickAddOptions: QuickAddOption[] = [
+  { blockName: 'UtilityBar', label: getBlockDisplayName('UtilityBar'), category: 'header', variationIndex: 0 },
+  { blockName: 'Navigation', label: getBlockDisplayName('Navigation'), category: 'header', variationIndex: 1 },
+  { blockName: 'AnnouncementBar', label: getBlockDisplayName('AnnouncementBar'), category: 'header', variationIndex: 2 },
+];
+
+const quickAddBlock = async (option: QuickAddOption) => {
+  const { $i18n } = useNuxtApp();
+  const newBlock = await getBlockTemplateByLanguage(option.category, option.variationIndex, $i18n.locale.value);
+
+  const lastChild = headerContainerStructure.value.content?.[headerContainerStructure.value.content.length - 1];
+  if (!lastChild) return;
+
+  insertCustomBlock(newBlock, lastChild.meta.uuid, 'bottom');
 };
 
 const deleteBlock = async (index: number) => {

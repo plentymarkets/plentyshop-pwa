@@ -119,6 +119,8 @@
           {{ getEditorTranslation('add-element-label') }}
         </button>
       </div>
+
+      <EditorQuickAdd :options="quickAddOptions" @add="$emit('quick-add-item', $event)" />
     </div>
   </UiAccordionItem>
 </template>
@@ -136,6 +138,7 @@ const props = withDefaults(defineProps<BlockItemsAccordionProps>(), {
   minItems: 1,
   modelValue: true,
   currentActiveIndex: -1,
+  quickAddOptions: () => [],
 });
 
 const emit = defineEmits<BlockItemsAccordionEmits>();

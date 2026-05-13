@@ -7,6 +7,7 @@ export interface BlockItemsAccordionProps {
   currentActiveIndex?: number;
   minItems?: number;
   modelValue?: boolean;
+  quickAddOptions?: import('~/components/editor/QuickAdd/types').QuickAddOption[];
 }
 
 export interface BlockItemsAccordionEmits {
@@ -17,4 +18,5 @@ export interface BlockItemsAccordionEmits {
   'toggle-item-visibility': [index: number];
   'update:items': [items: SlideBlock[]];
   'update:modelValue': [isOpen: boolean];
+  'quick-add-item': [option: import('~/components/editor/QuickAdd/types').QuickAddOption];
 }
