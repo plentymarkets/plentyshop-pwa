@@ -182,7 +182,9 @@ const gridRows = computed((): GridRow[] => {
 });
 
 const isAlignable = (block: Block): block is AlignableBlock =>
-  typeof block.content === 'object' && block.content !== null && ('imageAlignment' in block.content || 'alignment' in block.content);
+  typeof block.content === 'object' &&
+  block.content !== null &&
+  ('imageAlignment' in block.content || 'alignment' in block.content);
 
 const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
   const alignmentValue = block.content?.imageAlignment ?? block.content?.alignment;

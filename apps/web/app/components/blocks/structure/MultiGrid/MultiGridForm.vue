@@ -16,7 +16,13 @@
         class="text-editor-text-placeholder transition-transform duration-200"
         :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'"
       >
-        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M1 1l4 4 4-4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </div>
 
@@ -95,7 +101,13 @@
         class="text-editor-text-placeholder transition-transform duration-200"
         :class="layoutOpen ? 'rotate-0' : '-rotate-90'"
       >
-        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M1 1l4 4 4-4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </div>
 
@@ -162,7 +174,13 @@
         class="text-editor-text-placeholder transition-transform duration-200"
         :class="backgroundOpen ? 'rotate-0' : '-rotate-90'"
       >
-        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M1 1l4 4 4-4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </div>
 
@@ -286,7 +304,9 @@ const addRowSpans = (spans: readonly number[]) => {
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
   if (!block.content) block.content = [];
-  block.content.push(...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]));
+  block.content.push(
+    ...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]),
+  );
 };
 
 const handleClickAddRow = (anchorEl: HTMLElement) => {
@@ -297,7 +317,9 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   const cleanupTempBlock = () => {
     const gridBlock = multiGridStructure.value as ColumnBlock;
     const blocks = gridBlock.content as Block[];
-    const index = blocks.findIndex((block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock');
+    const index = blocks.findIndex(
+      (block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock',
+    );
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(newSlot, 1);
@@ -331,7 +353,9 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
     onCancel: () => {
       const gridBlock = multiGridStructure.value as ColumnBlock;
       const blocks = gridBlock.content as Block[];
-      const index = blocks.findIndex((block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock');
+      const index = blocks.findIndex(
+        (block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock',
+      );
       if (index !== -1) {
         blocks.splice(index, 1);
         gridBlock.configuration.columnWidths.splice(newSlot, 1);

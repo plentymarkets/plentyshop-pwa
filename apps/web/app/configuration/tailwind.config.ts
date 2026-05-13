@@ -127,8 +127,7 @@ export default {
         },
       },
       backgroundImage: {
-        'editor-hatched':
-          'repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)',
+        'editor-hatched': 'repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)',
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],

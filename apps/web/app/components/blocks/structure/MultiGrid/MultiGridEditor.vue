@@ -13,11 +13,20 @@
       @pointerup="onPointerUp"
     >
       <div class="absolute inset-0 flex pointer-events-none z-0">
-        <div v-for="i in 12" :key="i" class="flex-1" :class="i > 1 ? 'border-l border-dashed border-editor-canvas-border' : ''" />
+        <div
+          v-for="i in 12"
+          :key="i"
+          class="flex-1"
+          :class="i > 1 ? 'border-l border-dashed border-editor-canvas-border' : ''"
+        />
       </div>
 
       <div class="relative z-[1]">
-        <div v-for="(row, rowIndex) in rows" :key="rowIndex" class="flex h-[50px] border-b border-editor-canvas-border last:border-b-0">
+        <div
+          v-for="(row, rowIndex) in rows"
+          :key="rowIndex"
+          class="flex h-[50px] border-b border-editor-canvas-border last:border-b-0"
+        >
           <div
             v-for="cell in row.cells"
             :key="cell.colIndex"
