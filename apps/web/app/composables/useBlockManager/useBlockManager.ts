@@ -174,6 +174,7 @@ export const useBlockManager = () => {
     }
 
     visiblePlaceholder.value = { uuid: '', position: 'top' };
+    multigridColumnUuid.value = null;
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
 
     scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
