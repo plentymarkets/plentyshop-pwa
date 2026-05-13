@@ -168,7 +168,7 @@ const gridRows = computed((): GridRow[] => {
   let cells: { colIndex: number; span: number }[] = [];
   let used = 0;
 
-  configuration.columnWidths.forEach((span, colIndex) => {
+  props.configuration.columnWidths.forEach((span, colIndex) => {
     if (used + span > 12) {
       result.push({ cells, free: 12 - used });
       cells = [];
