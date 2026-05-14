@@ -7,9 +7,10 @@ import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
 import { migrateRecommendedContent, type OldContent } from '~/utils/migrate-recommended-content';
+import type { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
 
 const HEADER_BLOCK_NAME = 'Header';
-const TEXT_CONTENT_BLOCKS = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
+const TEXT_CONTENT_BLOCKS = ['TextCard', 'Banner', 'ProductRecommendedProducts'];
 
 const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NAME;
 
@@ -19,7 +20,7 @@ const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NA
  */
 export function migrateAllBlocks(blocks: Block[]): void {
   /**
-   * TECH DEBT: Identify the first text content block (TextCard, Banner, ProductRecommendedProducts, or NewsletterSubscribe)
+   * TECH DEBT: Identify the first text content block (TextCard, Banner, ProductRecommendedProducts)
    * that appears outside of the header/navigation area. This block receives special migration handling to ensure
    * proper text formatting initialization. The logic skips header-related blocks and nested content within the header
    * container to focus on main page content blocks.
@@ -62,7 +63,24 @@ export function migrateAllBlocks(blocks: Block[]): void {
           block === firstTextContentBlock,
         );
       }
+      if (block.name === 'NewsletterSubscribe' && block.content) {
+        const content = block.content as Partial<NewsletterSubscribeContent>;
 
+        const title = content.text?.title || 'Newsletter';
+        const description = content.text?.htmlDescription ?? '';
+        const hasTitleInHtml = description.toLowerCase().includes('<h2');
+
+        content.text = {
+          bgColor: '#f5f5f5',
+          textAlignment: 'center',
+          ...content.text,
+          htmlDescription: hasTitleInHtml
+            ? description
+            : `<h2 style="text-align: center;"><strong>${title}</strong></h2>${description}`,
+        };
+
+        block.content = content;
+      }
       if (block.name === 'Banner' && block.content) {
         const content = (block as BannerProps).content;
         const textAlignment = content.text?.textAlignment;
