@@ -174,7 +174,7 @@ const pairWithSlots = computed<Block[]>(() => {
 const columns = computed<Block[][]>(() => {
   const blocks: Block[][] = [];
   pairWithSlots.value.forEach((block) => {
-    if (typeof block.parent_slot === 'number' && block.parent_slot >= 0) {
+    if (block.parent_slot !== undefined) {
       if (!blocks[block.parent_slot]) {
         blocks[block.parent_slot] = [];
       }
