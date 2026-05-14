@@ -28,7 +28,8 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
-  const { data, cleanData, pageBlocks, allBlocks, headerContainer, footer, updateBlocks } = useBlocks();
+  const { data, cleanData, pageBlocks, allBlocks, headerContainer, footer, updateBlocks, cancelCleanDataSync } =
+    useBlocks();
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
@@ -152,6 +153,7 @@ export const useBlockManager = () => {
 
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!pageBlocks.value) return;
+    cancelCleanDataSync();
 
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
@@ -162,6 +164,8 @@ export const useBlockManager = () => {
 
     const isTargetInFooter =
       !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
+
+    isEditingEnabled.value = true;
 
     if (isTargetInHeader) {
       addBlockToHeader(newBlock, targetUuid, position);
@@ -183,6 +187,7 @@ export const useBlockManager = () => {
 
   const insertCustomBlock = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
     if (!pageBlocks.value) return;
+    cancelCleanDataSync();
 
     newBlock.meta.uuid = uuid();
 
@@ -192,6 +197,8 @@ export const useBlockManager = () => {
 
     const isTargetInFooter =
       !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
+
+    isEditingEnabled.value = true;
 
     if (isTargetInHeader) {
       addBlockToHeader(newBlock, targetUuid, position);
