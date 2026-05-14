@@ -46,6 +46,7 @@ export const useBlocks: UseBlocksReturn = () => {
   const headerContainer = computed(() => state.value.data.HeaderContainer);
   const footer = computed(() => state.value.data.Footer);
   const pageBlocks = computed(() => state.value.data.blocks ?? []);
+  console.log('useBlocks - pageBlocks:', pageBlocks.value);
   const allBlocks = computed(() => [
     ...(headerContainer.value ? [headerContainer.value] : []),
     ...pageBlocks.value,
