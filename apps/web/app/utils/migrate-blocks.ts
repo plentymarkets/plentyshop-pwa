@@ -68,13 +68,14 @@ export function migrateAllBlocks(blocks: Block[]): void {
 
         const title = content.text?.title || 'Newsletter';
         const description = content.text?.htmlDescription ?? '';
-        const hasTitleInHtml = description.toLowerCase().includes('<h2');
+
+        const hasHeading = /<h[1-6]\b/i.test(description);
 
         content.text = {
           bgColor: '#f5f5f5',
           textAlignment: 'center',
           ...content.text,
-          htmlDescription: hasTitleInHtml
+          htmlDescription: hasHeading
             ? description
             : `<h2 style="text-align: center;"><strong>${title}</strong></h2>${description}`,
         };

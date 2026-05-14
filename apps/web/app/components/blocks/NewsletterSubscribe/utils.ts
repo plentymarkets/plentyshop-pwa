@@ -1,7 +1,9 @@
 import type { NewsletterSubscribeContent } from './types';
 
 const getNewsletterDescription = (title: string, htmlDescription: string) => {
-  if (htmlDescription.toLowerCase().includes('<h2')) {
+  const hasHeading = /<h[1-6]\b/i.test(htmlDescription);
+
+  if (hasHeading) {
     return htmlDescription;
   }
 
