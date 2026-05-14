@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky z-[2]" data-testid="localization-management-drawer">
+  <div class="pages-view sticky z-[2] h-full flex flex-col" data-testid="localization-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
@@ -14,7 +14,7 @@
       </div>
     </header>
 
-    <div class="h-[80vh] overflow-y-auto">
+    <div class="flex-1 min-h-0 overflow-y-auto">
       <p class="m-4">{{ getEditorTranslation('description') }}</p>
 
       <UiAccordionItem
