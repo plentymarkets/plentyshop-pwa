@@ -14,9 +14,9 @@
       </div>
     </header>
 
-    <p class="m-4">{{ getEditorTranslation('description') }}</p>
+    <div class="h-[80vh] overflow-y-auto">
+      <p class="m-4">{{ getEditorTranslation('description') }}</p>
 
-    <div>
       <UiAccordionItem
         v-model="editLanguagesOpen"
         data-testid="content-pages-section"
