@@ -187,21 +187,4 @@ const columns = computed<Block[][]>(() => {
   });
   return blocks;
 });
-
-// const columns = computed<Block[][]>(() => {
-//   const blocks: Block[][] = [];
-//   pairWithSlots.value.forEach((block) => {
-//     if (block.parent_slot !== undefined) {
-//       if (!blocks[block.parent_slot]) {
-//         blocks[block.parent_slot] = [];
-//       }
-
-//       const slot = blocks[block.parent_slot];
-//       if (slot) {
-//         slot.push(block);
-//       }
-//     }
-//   });
-//   return blocks;
-// });
 </script>
