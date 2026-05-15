@@ -1,13 +1,5 @@
 <template>
-  <UiAccordionItem
-    v-model="isOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    content-padding-class="py-4"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('elements-group-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="isOpen" :title="getEditorTranslation('elements-group-label')" content-class="py-4">
 
     <div>
       <div v-if="sections.length" class="space-y-0">
@@ -76,7 +68,7 @@
         </template>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">

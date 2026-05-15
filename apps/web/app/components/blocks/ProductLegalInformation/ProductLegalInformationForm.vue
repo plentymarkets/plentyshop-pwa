@@ -1,14 +1,6 @@
 <template>
   <div>
-    <UiAccordionItem
-      v-model="textOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="customer-review-text"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('text-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="textOpen" :title="getEditorTranslation('text-label')" data-testid="customer-review-text">
       <div data-testid="customer-review-form">
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -50,16 +42,8 @@
           </label>
         </div>
       </div>
-    </UiAccordionItem>
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="customer-review-layout"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
-      </template>
+    </EditorFormPanel>
+    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-group-label')" data-testid="customer-review-layout">
 
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
 
@@ -104,7 +88,7 @@
           </div>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
     <div
       class="bg-[#FEDCA5] border border-[#BBC6BE] text-[#151A16] px-4 py-3 rounded-md mx-5 mt-1 mb-0 shadow-md shadow-[#0000000F]"

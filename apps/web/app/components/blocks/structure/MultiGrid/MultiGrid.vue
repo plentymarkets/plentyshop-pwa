@@ -15,42 +15,17 @@
           <div
             v-for="row in columns[cell.colIndex]"
             :key="row.meta.uuid"
-            class="group/row relative"
-            :class="{ 'min-h-[60px]': showOverlay(row) }"
+            class="relative"
             :data-uuid="row.meta.uuid"
             @mouseenter="onRowEnter(row)"
             @mouseleave="onRowLeave"
           >
             <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
-            <ClientOnly>
-              <template v-if="showOverlay(row)">
-                <div
-                  class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
-                  style="box-shadow: inset 0 0 0 2px #7c3aed"
-                />
-
-                <div
-                  class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
-                />
-
-                <div
-                  class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
-                >
-                  <UiBlockActions
-                    data-testid="multigrid-block-actions"
-                    :block="row"
-                    :index="cell.colIndex"
-                    :actions="getBlockActions()"
-                  />
-                </div>
-              </template>
-            </ClientOnly>
-
             <slot
               name="content"
               :content-block="row"
               :column-length="(columns[cell.colIndex] ?? []).length"
-              :is-row-hovered="showOverlay(row) && isRowHovered(row)"
+              :is-row-hovered="isRowHovered(row)"
             />
             <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
           </div>
@@ -94,9 +69,8 @@ const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
-const { isDragging, shouldDisplayPlaceholder } = useBlockManager();
+const { shouldDisplayPlaceholder } = useBlockManager();
 const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
-const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 
@@ -141,24 +115,6 @@ const getColumnClasses = (colIndex: number) => {
 
   return classes;
 };
-
-const getBlockActions = () => ({
-  isEditable: true,
-  isMovable: false,
-  isDeletable: false,
-  classes: ['bg-purple-400', 'hover:bg-purple-500', 'transition'],
-  buttonClasses: ['border-2', 'border-purple-600'],
-  hoverBackground: ['hover:bg-purple-500'],
-});
-
-const enableActions = computed(() => attrs.enableActions === true);
-
-const blockHasData = (block: Block): boolean => !!block.content && Object.keys(block.content).length > 0;
-
-const showOverlay = computed(
-  () => (block: Block) =>
-    enableActions.value && shouldEnableEditorFeatures.value && !isDragging.value && blockHasData(block),
-);
 
 const gridRows = computed((): GridRow[] => computeGridRows(props.configuration.columnWidths));
 

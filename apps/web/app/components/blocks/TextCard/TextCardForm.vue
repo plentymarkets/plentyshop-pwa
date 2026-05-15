@@ -1,30 +1,14 @@
 <template>
-  <UiAccordionItem
-    v-model="textSettings"
-    data-testid="open-text-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('text-group-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="textSettings" :title="getEditorTranslation('text-group-label')" data-testid="open-text-settings">
 
     <EditorRichTextEditorForm
       v-model="contentModel"
       :text-align="textCardBlock.text.textAlignment"
       :placeholder="getEditorTranslation('placeholder')"
     />
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="buttonSettings"
-    data-testid="button-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('button-group-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="buttonSettings" :title="getEditorTranslation('button-group-label')" data-testid="button-settings">
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
@@ -64,17 +48,9 @@
         :options="buttonVariantOptions"
       />
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="layoutSettings"
-    data-testid="layout-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="layoutSettings" :title="getEditorTranslation('layout-group-label')" data-testid="layout-settings">
 
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">
@@ -160,7 +136,7 @@
         </span>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">

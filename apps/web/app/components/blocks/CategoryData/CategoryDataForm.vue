@@ -1,14 +1,6 @@
 <template>
   <div>
-    <UiAccordionItem
-      v-model="textOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-card"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('item-card-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="textOpen" :title="getEditorTranslation('item-card-label')" data-testid="item-grid-card">
 
       <div class="py-2">
         <div class="flex items-center justify-between px-2 pb-2 text-sm font-medium text-gray-700">
@@ -64,17 +56,9 @@
           </span>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="imageOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="category-data-image"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('image-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="imageOpen" :title="getEditorTranslation('image-label')" data-testid="category-data-image">
 
       <div class="py-2">
         <EditorOptionsTabs
@@ -253,16 +237,8 @@
           :options="textAlignOptions"
         />
       </div>
-    </UiAccordionItem>
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-card"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
+    </EditorFormPanel>
+    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="item-grid-card">
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       <div
         class="py-2"
@@ -312,7 +288,7 @@
           </div>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 

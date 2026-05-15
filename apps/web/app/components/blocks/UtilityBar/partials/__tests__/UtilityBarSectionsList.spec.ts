@@ -48,8 +48,8 @@ describe('UtilityBarSectionsList', () => {
       },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            template: '<div><slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',

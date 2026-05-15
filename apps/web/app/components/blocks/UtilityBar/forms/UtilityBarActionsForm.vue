@@ -1,13 +1,6 @@
 <template>
   <div class="block-form-section">
-    <UiAccordionItem
-      v-model="actionsOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('actions-section-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="actionsOpen" :title="getEditorTranslation('actions-section-label')">
 
       <div class="space-y-6 py-4">
         <div>
@@ -37,7 +30,7 @@
           </draggable>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 

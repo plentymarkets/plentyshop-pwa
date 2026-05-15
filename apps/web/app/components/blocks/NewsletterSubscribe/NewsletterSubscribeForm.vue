@@ -1,14 +1,5 @@
 <template>
-  <div>
-    <UiAccordionItem
-      v-model="textGroup"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('text-group-label') }}</h2>
-      </template>
-
+  <EditorFormPanel v-model="textGroup" :title="getEditorTranslation('text-group-label')">
       <div>
         <EditorRichTextEditorForm
           :model-value="newsletterBlock.text.htmlDescription ?? ''"
@@ -45,18 +36,8 @@
           </label>
         </div>
       </div>
-    </UiAccordionItem>
-  </div>
-  <div>
-    <UiAccordionItem
-      v-model="buttonGroup"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('button-group-label') }}</h2>
-      </template>
-
+  </EditorFormPanel>
+  <EditorFormPanel v-model="buttonGroup" :title="getEditorTranslation('button-group-label')">
       <div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
@@ -69,17 +50,9 @@
           />
         </div>
       </div>
-    </UiAccordionItem>
-  </div>
+  </EditorFormPanel>
   <div>
-    <UiAccordionItem
-      v-model="settingsGroup"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('settings-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="settingsGroup" :title="getEditorTranslation('settings-group-label')">
       <div class="mb-6">
         <div class="mb-2 flex items-center gap-2">
           <div class="flex items-center">
@@ -118,18 +91,10 @@
           </template>
         </EditorColorPicker>
       </div>
-    </UiAccordionItem>
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
-
+    </EditorFormPanel>
+    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 

@@ -1,14 +1,6 @@
 <template>
   <div>
-    <UiAccordionItem
-      v-model="textSettings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="technical-data-settings"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('text-settings-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="textSettings" :title="getEditorTranslation('text-settings-label')" data-testid="technical-data-settings">
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -24,17 +16,9 @@
           </SfInput>
         </label>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="layoutSettings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="technical-data-layout"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="layoutSettings" :title="getEditorTranslation('layout-settings-label')" data-testid="technical-data-layout">
 
       <div class="flex justify-between my-5">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
@@ -98,7 +82,7 @@
           </div>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 

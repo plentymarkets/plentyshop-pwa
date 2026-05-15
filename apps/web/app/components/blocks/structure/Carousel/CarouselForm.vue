@@ -20,14 +20,7 @@
     </div>
 
     <template v-if="editingSlideIndex === undefined">
-      <UiAccordionItem
-        v-model="controlsOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>{{ getEditorTranslation('controls-group-label') }}</h2>
-        </template>
+      <EditorFormPanel v-model="controlsOpen" :title="getEditorTranslation('controls-group-label')">
 
         <div class="controls">
           <div class="mb-6 mt-4">
@@ -49,19 +42,12 @@
             </EditorColorPicker>
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
       <!-- Layout Section (Carousel-wide) -->
-      <UiAccordionItem
-        v-model="layoutOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-        </template>
+      <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
         <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-      </UiAccordionItem>
+      </EditorFormPanel>
     </template>
   </div>
 </template>

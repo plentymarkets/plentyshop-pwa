@@ -1,13 +1,5 @@
 <template>
-  <UiAccordionItem
-    v-model="layoutSettings"
-    data-testid="layout-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="layoutSettings" :title="getEditorTranslation('layout-group-label')" data-testid="layout-settings">
 
     <div class="py-2">
       <EditorOptionsTabs
@@ -135,7 +127,7 @@
         </div>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">

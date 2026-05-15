@@ -1,12 +1,5 @@
 <template>
-  <UiAccordionItem
-    v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2 data-testid="per-page-form-layout-label">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="per-page-form-layout-label">
 
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
@@ -64,7 +57,7 @@
         </div>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 <script setup lang="ts">
 import {

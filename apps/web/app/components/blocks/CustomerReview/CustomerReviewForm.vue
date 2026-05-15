@@ -1,14 +1,6 @@
 <template>
   <div>
-    <UiAccordionItem
-      v-model="reviewsOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="customer-review-text"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('text-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="reviewsOpen" :title="getEditorTranslation('text-label')" data-testid="customer-review-text">
       <div data-testid="customer-review-form">
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -25,16 +17,8 @@
           </label>
         </div>
       </div>
-    </UiAccordionItem>
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="customer-review-layout"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
-      </template>
+    </EditorFormPanel>
+    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-group-label')" data-testid="customer-review-layout">
       <div class="py-2 flex items-center justify-between gap-3">
         <UiFormLabel for="display-collapsible" class="m-0">
           {{ getEditorTranslation('display-collapsible-label') }}
@@ -105,7 +89,7 @@
           </div>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 

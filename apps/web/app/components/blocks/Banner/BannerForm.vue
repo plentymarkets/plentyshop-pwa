@@ -1,15 +1,11 @@
 <template>
   <div class="block-slider-edit">
     <div :data-testid="`slide-settings-${activeSlide}`">
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="imagesOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-        data-testid="slider-image-group"
+        :title="getEditorTranslation('images-group-label')"
+        data-testid="slider-image-group-title"
       >
-        <template #summary>
-          <h2 data-testid="slider-image-group-title">{{ getEditorTranslation('images-group-label') }}</h2>
-        </template>
 
         <div class="images">
           <UiImagePicker
@@ -61,17 +57,13 @@
           <SfInput v-model="banner.content.image.alt" name="alt" type="text" data-testid="slide-alt-text" />
           <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Alternative image text</div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="textOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-        data-testid="banner-text-group"
+        :title="getEditorTranslation('text-group-label')"
+        data-testid="slider-text-group-title"
       >
-        <template #summary>
-          <h2 data-testid="slider-text-group-title">{{ getEditorTranslation('text-group-label') }}</h2>
-        </template>
 
         <div>
           <EditorRichTextEditorForm
@@ -153,17 +145,9 @@
             />
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
-      <UiAccordionItem
-        v-model="buttonOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('button-group-label') }}</h2>
-        </template>
-
+      <EditorFormPanel v-model="buttonOpen" :title="getEditorTranslation('button-group-label')" data-testid="slider-button-group-title">
         <div class="images">
           <div class="mb-6 mt-4">
             <label>
@@ -205,7 +189,7 @@
             />
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
     </div>
   </div>
 </template>

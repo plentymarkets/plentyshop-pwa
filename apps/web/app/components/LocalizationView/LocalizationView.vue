@@ -17,28 +17,12 @@
     <div class="flex-1 min-h-0 overflow-y-auto">
       <p class="m-4">{{ getEditorTranslation('description') }}</p>
 
-      <UiAccordionItem
-        v-model="editLanguagesOpen"
-        data-testid="content-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
-      >
-        <template #summary>
-          <h2>{{ getEditorTranslation('shop-languages') }}</h2>
-        </template>
+      <EditorFormPanel v-model="editLanguagesOpen" :title="getEditorTranslation('shop-languages')" data-testid="content-pages-section">
         <EditorLocalizationShopLanguages />
-      </UiAccordionItem>
-      <UiAccordionItem
-        v-model="editTranslationsOpen"
-        data-testid="content-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
-      >
-        <template #summary>
-          <h2>{{ getEditorTranslation('edit-translations') }}</h2>
-        </template>
+      </EditorFormPanel>
+      <EditorFormPanel v-model="editTranslationsOpen" :title="getEditorTranslation('edit-translations')" data-testid="content-pages-section">
         <EditorLocalizationLanguageSelect />
-      </UiAccordionItem>
+      </EditorFormPanel>
     </div>
   </div>
   <EditorLocalizationDrawer v-if="keys.length > 0 && drawerOpen" />

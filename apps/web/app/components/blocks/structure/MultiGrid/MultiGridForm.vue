@@ -1,24 +1,13 @@
 <template>
   <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
-  <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-    <button
-      type="button"
-      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
-      :aria-expanded="gridLayoutOpen"
-      aria-controls="multigrid-panel-grid-layout"
-      @click="gridLayoutOpen = !gridLayoutOpen"
-    >
-      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
-        {{ getEditorTranslation('grid-layout') }}
-      </span>
-      <SfIconExpandMore
-        size="xs"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="gridLayoutOpen ? 'rotate-0' : '-rotate-90'"
-      />
-    </button>
+  <template v-else>
+    <div v-if="editingBlock" class="sticky h-[calc(100vh-52px)] overflow-y-auto">
+      <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
+    </div>
+    <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
+      <EditorGridElementsPanel v-model="elementsOpen" :uuid="resolvedUuid" @edit-element="editElement" />
 
-    <div v-if="gridLayoutOpen" id="multigrid-panel-grid-layout" class="px-3.5 py-3">
+    <EditorFormPanel v-model="gridLayoutOpen" :title="getEditorTranslation('grid-layout')">
       <div v-if="allEmpty" class="mb-3.5">
         <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
           {{ getEditorTranslation('layout-preset') }}
@@ -76,26 +65,9 @@
           {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
         </div>
       </div>
-    </div>
+    </EditorFormPanel>
 
-    <button
-      type="button"
-      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
-      :aria-expanded="layoutOpen"
-      aria-controls="multigrid-panel-layout"
-      @click="layoutOpen = !layoutOpen"
-    >
-      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
-        {{ getEditorTranslation('layout') }}
-      </span>
-      <SfIconExpandMore
-        size="xs"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="layoutOpen ? 'rotate-0' : '-rotate-90'"
-      />
-    </button>
-
-    <div v-if="layoutOpen" id="multigrid-panel-layout" class="px-3.5 py-3 flex flex-col gap-3">
+    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout')" content-class="px-3.5 py-3 flex flex-col gap-3">
       <div v-if="multiGridStructure.configuration.layout">
         <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
         <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
@@ -141,26 +113,9 @@
       </div>
 
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-    </div>
+    </EditorFormPanel>
 
-    <button
-      type="button"
-      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
-      :aria-expanded="backgroundOpen"
-      aria-controls="multigrid-panel-background"
-      @click="backgroundOpen = !backgroundOpen"
-    >
-      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
-        {{ getEditorTranslation('layout-background') }}
-      </span>
-      <SfIconExpandMore
-        size="xs"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="backgroundOpen ? 'rotate-0' : '-rotate-90'"
-      />
-    </button>
-
-    <div v-if="backgroundOpen" id="multigrid-panel-background" class="px-3.5 py-3">
+    <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
       <div v-if="multiGridStructure.configuration.layout">
         <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
         <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
@@ -185,17 +140,19 @@
           </template>
         </EditorColorPicker>
       </div>
-    </div>
+    </EditorFormPanel>
   </div>
+  </template>
 </template>
 
 <script setup lang="ts">
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { SfInput, SfIconArrowUpward, SfIconArrowDownward, SfIconExpandMore } from '@storefront-ui/vue';
+import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/types';
+import { getBlockFormLoader } from '~/utils/blocks/blocks-imports';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -285,7 +242,8 @@ const addRowSpans = (spans: readonly number[]) => {
   );
 };
 
-const handleClickAddRow = (anchorEl: HTMLElement) => {
+const handleClickAddRow = (anchorEl: HTMLElement | MouseEvent) => {
+  if (anchorEl instanceof MouseEvent) anchorEl = anchorEl.currentTarget as HTMLElement;
   const block = multiGridStructure.value as ColumnBlock;
   const newSlot = block.configuration.columnWidths.length;
   const newBlock = createEmptyGridBlock(newSlot);
@@ -343,6 +301,30 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
+// ── Block edit navigation ──
+const { setEditTitle, clearEditTitle } = useBlockEditTitle();
+const editingBlock = ref<Block | null>(null);
+
+const blockForm = computed(() => {
+  if (!editingBlock.value) return null;
+  const loader = getBlockFormLoader(editingBlock.value.name);
+  return loader ? defineAsyncComponent(loader) : null;
+});
+
+const editElement = (block: Block) => {
+  editingBlock.value = block;
+  setEditTitle(getBlockDisplayName(block.name));
+};
+
+const exitEditMode = (shouldEmit = true): boolean => {
+  editingBlock.value = null;
+  if (shouldEmit) clearEditTitle();
+  return true;
+};
+
+defineExpose({ exitEditMode });
+
+const elementsOpen = ref(true);
 const gridLayoutOpen = ref(true);
 const layoutOpen = ref(true);
 const backgroundOpen = ref(false);

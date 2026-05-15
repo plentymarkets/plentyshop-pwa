@@ -1,14 +1,6 @@
 <template>
   <div class="footer-settings-view sticky" data-testid="footer-settings-drawer">
-    <UiAccordionItem
-      v-model="firstColumnOpen"
-      data-testid="first-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('column-1-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="firstColumnOpen" :title="getEditorTranslation('column-1-group-label')" data-testid="first-column-section">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-1-title-label') }}</UiFormLabel>
@@ -51,17 +43,9 @@
           />
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="secondColumnOpen"
-      data-testid="second-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('column-2-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="secondColumnOpen" :title="getEditorTranslation('column-2-group-label')" data-testid="second-column-section">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-2-title-label') }}</UiFormLabel>
@@ -100,17 +84,9 @@
           @update:model-value="footerContent.column2.description = $event"
         />
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="thirdColumnOpen"
-      data-testid="third-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('column-3-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="thirdColumnOpen" :title="getEditorTranslation('column-3-group-label')" data-testid="third-column-section">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-3-title-label') }}</UiFormLabel>
@@ -138,17 +114,9 @@
           @update:model-value="footerContent.column3.description = $event"
         />
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="fourthColumnOpen"
-      data-testid="fourth-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('column-4-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="fourthColumnOpen" :title="getEditorTranslation('column-4-group-label')" data-testid="fourth-column-section">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-4-title-label') }}</UiFormLabel>
@@ -176,17 +144,9 @@
           @update:model-value="footerContent.column4.description = $event"
         />
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="footNoteOpen"
-      data-testid="footnote-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('footnotes-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="footNoteOpen" :title="getEditorTranslation('footnotes-group-label')" data-testid="footnote-column-section">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('footnotes-text-label') }}</UiFormLabel>
@@ -207,17 +167,9 @@
         test-id-prefix="footnote-align"
         :options="footnoteAlignOptions"
       />
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="footerColors"
-      data-testid="color-column-section"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('colors-group-label') }}</h2>
-      </template>
+    <EditorFormPanel v-model="footerColors" :title="getEditorTranslation('colors-group-label')" data-testid="color-column-section">
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-text-label') }}</UiFormLabel>
@@ -310,7 +262,7 @@
           </template>
         </EditorColorPicker>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 
