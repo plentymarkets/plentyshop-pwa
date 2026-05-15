@@ -29,8 +29,8 @@ definePageMeta({
 
 const { setPageMeta } = usePageMeta();
 const { getSetting } = useSiteSettings('shippingTextCategoryId');
-const { categoryTemplateData, fetchCategoryTemplate } = useBlockTemplates();
-const { fetchBlocks, pageBlocks } = useBlocks();
+const { categoryTemplateData, fetchCategoryTemplate, clearCategoryTemplate } = useBlockTemplates();
+const { fetchBlocks, pageBlocks, updateBlocks } = useBlocks();
 const { setBlocksListContext } = useBlocksList();
 const { isInEditor } = useEditorState();
 
@@ -42,7 +42,9 @@ const route = useRoute();
 route.meta.identifier = categoryId.value;
 route.meta.type = 'category';
 
-await Promise.all([fetchBlocks(categoryId.value, 'category'), fetchCategoryTemplate(categoryId.value)]);
+if (categoryId.value > 0) {
+  await Promise.all([fetchBlocks(categoryId.value, 'category'), fetchCategoryTemplate(categoryId.value)]);
+}
 
 setPageMeta(t('orderConfirmation.shipping'), 'page');
 
@@ -52,6 +54,11 @@ const templateText = computed(() => (!hasEditorContent.value ? (categoryTemplate
 
 watch(categoryId, async (newCategoryId) => {
   route.meta.identifier = newCategoryId;
-  await Promise.all([fetchBlocks(newCategoryId, 'category'), fetchCategoryTemplate(newCategoryId)]);
+  if (newCategoryId > 0) {
+    await Promise.all([fetchBlocks(newCategoryId, 'category'), fetchCategoryTemplate(newCategoryId)]);
+  } else {
+    updateBlocks([]);
+    clearCategoryTemplate();
+  }
 });
 </script>
