@@ -40,10 +40,11 @@
 
           <div
             class="w-2.5 h-2.5 flex-shrink-0 rounded-sm"
-            :class="
+            :class="block.name === 'EmptyGridBlock' ? 'border border-dashed border-editor-text-ghost' : ''"
+            :style="
               block.name !== 'EmptyGridBlock'
-                ? (isVisible(block) ? 'bg-editor-accent/60' : 'bg-editor-text-ghost/40')
-                : 'border border-dashed border-editor-text-ghost'
+                ? { backgroundColor: getBlockColor(block.name, isVisible(block) ? 1 : 0.35) }
+                : undefined
             "
           />
 

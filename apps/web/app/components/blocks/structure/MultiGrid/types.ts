@@ -4,6 +4,7 @@ export interface GridCell {
   colIndex: number;
   span: number;
   hasContent: boolean;
+  blockName?: string;
 }
 
 export interface GridRow {

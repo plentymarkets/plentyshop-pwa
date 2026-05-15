@@ -37,22 +37,24 @@
           >
             <div
               class="w-full h-full rounded-md flex items-center px-2 overflow-hidden"
-              :class="[
-                cell.hasContent
-                  ? 'bg-editor-accent/10 border border-editor-accent/25'
-                  : 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]',
-              ]"
+              :class="!cell.blockName ? 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]' : ''"
+              :style="cell.blockName ? { backgroundColor: getBlockColor(cell.blockName, 0.12), border: `1px solid ${getBlockColor(cell.blockName, 0.3)}` } : undefined"
               @click.stop="!cell.hasContent && onClickCell($event, cell.colIndex)"
             >
               <div class="flex-1 overflow-hidden min-w-0">
                 <div
                   v-if="cell.span >= 3"
                   class="text-2xs font-semibold truncate"
-                  :class="cell.hasContent ? 'text-editor-accent' : 'text-editor-cell-empty-text'"
+                  :class="!cell.blockName ? 'text-editor-cell-empty-text' : ''"
+                  :style="cell.blockName ? { color: getBlockColor(cell.blockName) } : undefined"
                 >
-                  {{ cell.hasContent ? getEditorTranslation('filled') : getEditorTranslation('empty') }}
+                  {{ cell.blockName ? getBlockDisplayName(cell.blockName) : getEditorTranslation('empty') }}
                 </div>
-                <div class="text-3xs" :class="cell.hasContent ? 'text-editor-accent/60' : 'text-editor-cell-empty-sub'">
+                <div
+                  class="text-3xs"
+                  :class="!cell.blockName ? 'text-editor-cell-empty-sub' : ''"
+                  :style="cell.blockName ? { color: getBlockColor(cell.blockName, 0.7) } : undefined"
+                >
                   {{ cell.span }}/12
                 </div>
               </div>
@@ -65,7 +67,8 @@
             >
               <div
                 class="w-[3px] h-[22px] rounded-sm transition-colors"
-                :class="cell.hasContent ? 'bg-editor-accent/35' : 'bg-editor-cell-handle'"
+                :class="!cell.blockName ? 'bg-editor-cell-handle' : ''"
+                :style="cell.blockName ? { backgroundColor: getBlockColor(cell.blockName, 0.4) } : undefined"
               />
             </div>
           </div>
