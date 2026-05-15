@@ -17,8 +17,13 @@ export const useBlockTemplates = () => {
     state.value.categoryTemplateData = data?.value?.data ?? state.value.categoryTemplateData;
   };
 
+  const clearCategoryTemplate = () => {
+    state.value.categoryTemplateData = null;
+  };
+
   return {
     fetchCategoryTemplate,
+    clearCategoryTemplate,
     categoryTemplateData: computed(() => state.value.categoryTemplateData),
   };
 };
