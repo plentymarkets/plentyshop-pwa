@@ -35,24 +35,16 @@ const route = useRoute();
 route.meta.identifier = categoryId.value;
 route.meta.type = 'category';
 
-await Promise.all([
-  fetchBlocks(categoryId.value, 'category'),
-  fetchCategoryTemplate(categoryId.value),
-]);
+await Promise.all([fetchBlocks(categoryId.value, 'category'), fetchCategoryTemplate(categoryId.value)]);
 
 setPageMeta(t('orderConfirmation.shipping'), 'page');
 
 const hasEditorContent = computed(() => pageBlocks.value.length > 0);
 
-const templateText = computed(() =>
-  !hasEditorContent.value ? (categoryTemplateData?.value?.data ?? null) : null,
-);
+const templateText = computed(() => (!hasEditorContent.value ? (categoryTemplateData?.value?.data ?? null) : null));
 
 watch(categoryId, async (newCategoryId) => {
   route.meta.identifier = newCategoryId;
-  await Promise.all([
-    fetchBlocks(newCategoryId, 'category'),
-    fetchCategoryTemplate(newCategoryId),
-  ]);
+  await Promise.all([fetchBlocks(newCategoryId, 'category'), fetchCategoryTemplate(newCategoryId)]);
 });
 </script>
