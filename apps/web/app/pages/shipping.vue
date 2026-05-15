@@ -53,8 +53,4 @@ watch(categoryId, async (newCategoryId) => {
     fetchCategoryTemplate(newCategoryId),
   ]);
 });
-
-onMounted(async () => {
-  await fetchBlocks(categoryId.value, 'category');
-});
 </script>
