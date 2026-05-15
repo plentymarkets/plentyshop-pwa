@@ -74,7 +74,7 @@
             v-if="row.free > 0"
             :style="{ flex: row.free }"
             class="p-[7px_5px] flex items-stretch cursor-pointer"
-            @click="onClickFree($event, row.free)"
+            @click="onClickFree($event, row)"
           >
             <div
               class="flex-1 border border-dashed border-editor-free-border rounded-md flex items-center justify-center text-editor-text-ghost text-sm transition-all duration-150 hover:border-editor-free-border-hover hover:text-editor-text-faint"
@@ -110,7 +110,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:column-widths': [widths: number[]];
   'click-add-row': [anchorEl: HTMLElement];
-  'add-free-column': [span: number, anchorEl: HTMLElement];
+  'add-free-column': [span: number, anchorEl: HTMLElement, insertIndex: number];
 }>();
 
 const { openAddBlockPopover } = useAddBlockPopover();
@@ -129,8 +129,9 @@ const onClickCell = (event: MouseEvent, colIndex: number) => {
   });
 };
 
-const onClickFree = (event: MouseEvent, span: number) => {
-  emit('add-free-column', span, event.currentTarget as HTMLElement);
+const onClickFree = (event: MouseEvent, row: GridRow) => {
+  const insertIndex = (row.cells.at(-1)?.colIndex ?? -1) + 1;
+  emit('add-free-column', row.free, event.currentTarget as HTMLElement, insertIndex);
 };
 
 const dragRef = ref<DragState | null>(null);

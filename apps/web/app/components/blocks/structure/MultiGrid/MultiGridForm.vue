@@ -242,6 +242,19 @@ const addRowSpans = (spans: readonly number[]) => {
   );
 };
 
+const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
+  const block = multiGridStructure.value as ColumnBlock;
+  const content = (block.content as Block[] | undefined) ?? [];
+  content.forEach((b) => {
+    if ((b.parent_slot ?? 0) >= insertIndex) b.parent_slot = (b.parent_slot ?? 0) + spans.length;
+  });
+  block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
+  if (!block.content) block.content = [];
+  (block.content as Block[]).push(
+    ...(spans.map((_, i) => createEmptyGridBlock(insertIndex + i)) as unknown as Block[]),
+  );
+};
+
 const handleClickAddRow = (anchorEl: HTMLElement | MouseEvent) => {
   if (anchorEl instanceof MouseEvent) anchorEl = anchorEl.currentTarget as HTMLElement;
   const block = multiGridStructure.value as ColumnBlock;
@@ -276,32 +289,43 @@ const handleClickAddRow = (anchorEl: HTMLElement | MouseEvent) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
-const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
+const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, insertIndex: number) => {
   const block = multiGridStructure.value as ColumnBlock;
-  const newSlot = block.configuration.columnWidths.length;
-  const newBlock = createEmptyGridBlock(newSlot);
+  const newBlock = createEmptyGridBlock(insertIndex);
+
+  const content = (block.content as Block[] | undefined) ?? [];
+  content.forEach((b) => {
+    if ((b.parent_slot ?? 0) >= insertIndex) b.parent_slot = (b.parent_slot ?? 0) + 1;
+  });
+  block.configuration.columnWidths.splice(insertIndex, 0, span);
+  if (!block.content) block.content = [];
+  (block.content as Block[]).push(newBlock as unknown as Block);
+
+  const cleanupTempBlock = () => {
+    const gridBlock = multiGridStructure.value as ColumnBlock;
+    const blocks = gridBlock.content as Block[];
+    const index = blocks.findIndex((b) => b.meta.uuid === newBlock.meta.uuid && b.name === 'EmptyGridBlock');
+    if (index !== -1) {
+      blocks.splice(index, 1);
+      gridBlock.configuration.columnWidths.splice(insertIndex, 1);
+      (gridBlock.content as Block[]).forEach((b) => {
+        if ((b.parent_slot ?? 0) > insertIndex) b.parent_slot = (b.parent_slot ?? 0) - 1;
+      });
+    }
+  };
+
   openAddBlockPopover({
     anchorEl,
     targetUuid: newBlock.meta.uuid,
     position: 'inside',
-    onCancel: () => {
-      const gridBlock = multiGridStructure.value as ColumnBlock;
-      const blocks = gridBlock.content as Block[];
-      const index = blocks.findIndex(
-        (block) => block.meta.uuid === newBlock.meta.uuid && block.name === 'EmptyGridBlock',
-      );
-      if (index !== -1) {
-        blocks.splice(index, 1);
-        gridBlock.configuration.columnWidths.splice(newSlot, 1);
-      }
+    onCancel: cleanupTempBlock,
+    onPresetPick: (spans) => {
+      cleanupTempBlock();
+      addRowSpansAt(spans, insertIndex);
     },
   });
-  block.configuration.columnWidths.push(span);
-  if (!block.content) block.content = [];
-  (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
-// ── Block edit navigation ──
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const editingBlock = ref<Block | null>(null);
 
