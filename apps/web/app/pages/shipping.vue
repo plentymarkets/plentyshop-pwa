@@ -3,7 +3,9 @@
     <EditableBlocks :identifier="categoryId" type="category" :prevent-blocks-request="true" />
   </div>
   <div v-else-if="templateText" class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="templateText" />
-  <EditableBlocks v-else :identifier="categoryId" type="category" :prevent-blocks-request="true" />
+  <div v-else class="w-full p-5 break-words">
+    {{ t('shipping.noShippingMessage') }}
+  </div>
 </template>
 
 <script setup lang="ts">
