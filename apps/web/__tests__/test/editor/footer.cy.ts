@@ -50,6 +50,7 @@ describe('Footer Block', () => {
 
   it('should navigate to cancellation form when clicking the withdrawal button', () => {
     getFooter().within(() => {
+      cy.getByTestId('text-button').should('have.attr', 'href').and('include', paths.cancellationForm);
       cy.getByTestId('text-button').click();
     });
     cy.url().should('include', paths.cancellationForm);
