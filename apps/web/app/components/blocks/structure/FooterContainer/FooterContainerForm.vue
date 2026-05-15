@@ -158,7 +158,10 @@ const textColor = computed({
 });
 
 const linkColor = computed({
-  get: () => footerContainer.value.configuration?.colors?.linkColor || footerContainer.value.configuration?.colors?.text || '#000000',
+  get: () =>
+    footerContainer.value.configuration?.colors?.linkColor ||
+    footerContainer.value.configuration?.colors?.text ||
+    '#000000',
   set: (value: string) => {
     if (!footerContainer.value.configuration) {
       footerContainer.value.configuration = { visible: true };
