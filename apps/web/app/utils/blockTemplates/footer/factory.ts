@@ -144,6 +144,7 @@ export function createFooterContainer(): FooterContainerBlock {
       colors: {
         background: '#cfe4ec',
         text: '#1c1c1c',
+        linkColor: '#1c1c1c',
       },
     },
   };
@@ -255,6 +256,7 @@ export function migrateLegacyFooterToContainer(legacy: Block): FooterContainerBl
       colors: {
         background: legacyContent.colors?.background ?? '#cfe4ec',
         text: legacyContent.colors?.text ?? '#1c1c1c',
+        linkColor: legacyContent.colors?.text ?? '#1c1c1c',
       },
     },
   };

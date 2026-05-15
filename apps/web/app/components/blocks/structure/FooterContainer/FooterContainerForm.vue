@@ -69,6 +69,29 @@
             </template>
           </EditorColorPicker>
         </div>
+
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel>{{ getEditorTranslation('colors-link-label') }}</UiFormLabel>
+          </div>
+          <EditorColorPicker v-model="linkColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <label>
+                <SfInput v-model="linkColor" type="text" data-testid="footer-link-color-select">
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </label>
+            </template>
+          </EditorColorPicker>
+        </div>
       </UiAccordionItem>
     </div>
 
@@ -131,6 +154,22 @@ const textColor = computed({
       footerContainer.value.configuration.colors = { background: '', text: '' };
     }
     footerContainer.value.configuration.colors.text = value;
+  },
+});
+
+const linkColor = computed({
+  get: () =>
+    footerContainer.value.configuration?.colors?.linkColor ||
+    footerContainer.value.configuration?.colors?.text ||
+    '#000000',
+  set: (value: string) => {
+    if (!footerContainer.value.configuration) {
+      footerContainer.value.configuration = { visible: true };
+    }
+    if (!footerContainer.value.configuration.colors) {
+      footerContainer.value.configuration.colors = { background: '', text: '' };
+    }
+    footerContainer.value.configuration.colors.linkColor = value;
   },
 });
 
@@ -254,12 +293,14 @@ defineExpose({
   "en": {
     "colors-group-label": "Colour",
     "colors-background-label": "Background colour",
-    "colors-text-label": "Text colour"
+    "colors-text-label": "Text colour",
+    "colors-link-label": "Link colour"
   },
   "de": {
     "colors-group-label": "Colour",
     "colors-background-label": "Background colour",
-    "colors-text-label": "Text colour"
+    "colors-text-label": "Text colour",
+    "colors-link-label": "Link colour"
   }
 }
 </i18n>

@@ -3,6 +3,7 @@ import type { Block } from '@plentymarkets/shop-api';
 export interface FooterContainerColors {
   background: string;
   text: string;
+  linkColor?: string;
 }
 
 export type FooterContainerBlock = Block & {

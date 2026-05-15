@@ -5,6 +5,7 @@
     :style="{
       backgroundColor: props.configuration?.colors?.background,
       color: props.configuration?.colors?.text,
+      '--footer-link-color': props.configuration?.colors?.linkColor || props.configuration?.colors?.text,
     }"
   >
     <div
@@ -43,5 +44,9 @@ const drawerView = computed(() => siteConfigurationDrawerView.value);
 
 :deep([data-testid='multi-grid-column'] .rte-prose a:hover) {
   @apply underline;
+}
+
+:deep(.rte-prose a) {
+  color: var(--footer-link-color);
 }
 </style>
