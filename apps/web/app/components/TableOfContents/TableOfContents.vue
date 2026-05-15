@@ -17,8 +17,7 @@
       </p>
 
       <div v-if="headerContainer" class="mt-2">
-        <UiAccordionItem v-model="headerOpen" v-bind="accordionProps" data-testid="toc-section-header">
-          <template #summary>{{ getEditorTranslation('header-section-label') }}</template>
+        <EditorFormPanel v-model="headerOpen" :title="getEditorTranslation('header-section-label')" content-class="p-0" data-testid="toc-section-header">
           <div class="px-2 mt-2 mb-4">
             <draggable
               v-if="headerBlocks.length"
@@ -47,12 +46,11 @@
               {{ getEditorTranslation('add-element-label') }}
             </button>
           </div>
-        </UiAccordionItem>
+        </EditorFormPanel>
       </div>
 
       <div>
-        <UiAccordionItem v-model="contentOpen" v-bind="accordionProps" data-testid="toc-section-content">
-          <template #summary>{{ getEditorTranslation('content-section-label') }}</template>
+        <EditorFormPanel v-model="contentOpen" :title="getEditorTranslation('content-section-label')" content-class="p-0" data-testid="toc-section-content">
           <div class="px-2">
             <draggable
               v-if="pageBlocks.length"
@@ -64,15 +62,9 @@
               class="mt-2 mb-4"
               @change="handleDragChange"
             >
-              <template #item="{ element: block, index }">
+              <template #item="{ element: block }">
                 <div>
-                  <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top class="toc-insert-line" />
                   <TableOfContentsItem :item="blockToFlatBlock(block)" />
-                  <TableOfContentsInsertBlockLine
-                    v-if="index < pageBlocks.length - 1"
-                    :block="block"
-                    class="toc-insert-line"
-                  />
                 </div>
               </template>
             </draggable>
@@ -91,16 +83,15 @@
               {{ getEditorTranslation('add-element-label') }}
             </button>
           </div>
-        </UiAccordionItem>
+        </EditorFormPanel>
       </div>
 
       <div v-if="footer">
-        <UiAccordionItem v-model="footerOpen" v-bind="accordionProps" data-testid="toc-section-footer">
-          <template #summary>{{ getEditorTranslation('footer-section-label') }}</template>
+        <EditorFormPanel v-model="footerOpen" :title="getEditorTranslation('footer-section-label')" content-class="p-0" data-testid="toc-section-footer">
           <div class="px-2 mt-2 mb-4">
             <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
           </div>
-        </UiAccordionItem>
+        </EditorFormPanel>
       </div>
     </div>
   </div>
@@ -120,12 +111,6 @@ const { headerContainer, pageBlocks, footer, updateBlocks, reorderHeaderBlocks }
 const { scrollIntoBlockView } = useBlockManager();
 const { openAddBlockPopover } = useAddBlockPopover();
 const { logToCCreateBlock } = useLogEvent();
-
-const accordionProps = {
-  summaryClass: 'w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b',
-  summaryActiveClass: 'bg-neutral-100 border-t-0',
-  contentPaddingClass: '',
-};
 
 const headerBlocks = computed(() => ((headerContainer.value as HeaderContainerBlock)?.content ?? []) as Block[]);
 

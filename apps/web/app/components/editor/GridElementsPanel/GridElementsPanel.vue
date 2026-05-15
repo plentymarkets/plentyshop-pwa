@@ -42,19 +42,29 @@
             class="w-2.5 h-2.5 flex-shrink-0 rounded-sm"
             :class="
               block.name !== 'EmptyGridBlock'
-                ? 'bg-editor-accent/60'
+                ? (isVisible(block) ? 'bg-editor-accent/60' : 'bg-editor-text-ghost/40')
                 : 'border border-dashed border-editor-text-ghost'
             "
           />
 
           <span
             class="flex-1 text-xs truncate min-w-0"
-            :class="block.name !== 'EmptyGridBlock' ? 'text-editor-text-default' : 'text-editor-text-ghost italic'"
+            :class="
+              block.name !== 'EmptyGridBlock'
+                ? (isVisible(block) ? 'text-editor-text-default' : 'text-editor-text-ghost line-through')
+                : 'text-editor-text-ghost italic'
+            "
           >
             {{
               block.name !== 'EmptyGridBlock' ? getBlockDisplayName(block.name) : getEditorTranslation('empty-block')
             }}
           </span>
+
+          <SfIconVisibilityOff
+            v-if="block.name !== 'EmptyGridBlock' && !isVisible(block)"
+            size="xs"
+            class="flex-shrink-0 text-editor-text-ghost"
+          />
 
           <span
             v-if="isGridMode && (hoveredUuid === block.meta.uuid || openMenuUuid === block.meta.uuid)"
@@ -134,7 +144,7 @@
         ref="addButtonRef"
         type="button"
         class="w-full py-1.5 rounded-md border border-editor-accent/40 flex items-center justify-center gap-1.5 text-xs text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
-        @click="onAddElement"
+        @click="props.customAdd ? emit('add-element') : onAddElement()"
       >
         <SfIconAdd size="xs" />
         {{ getEditorTranslation('add-element') }}
@@ -144,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch, SfIconMoreVert, SfIconDelete, SfIconAdd, SfIconBase } from '@storefront-ui/vue';
+import { SfSwitch, SfIconMoreVert, SfIconDelete, SfIconAdd, SfIconBase, SfIconVisibilityOff } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
@@ -154,6 +164,7 @@ import { editPath } from '~/assets/icons/paths/edit';
 const props = withDefaults(defineProps<GridElementsPanelProps>(), {
   modelValue: true,
   minItems: 0,
+  customAdd: false,
 });
 const emit = defineEmits<GridElementsPanelEmits>();
 

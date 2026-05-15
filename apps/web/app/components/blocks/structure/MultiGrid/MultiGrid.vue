@@ -20,14 +20,12 @@
             @mouseenter="onRowEnter(row)"
             @mouseleave="onRowLeave"
           >
-            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'top', drawerOpen, drawerView)" />
             <slot
               name="content"
               :content-block="row"
               :column-length="(columns[cell.colIndex] ?? []).length"
               :is-row-hovered="isRowHovered(row)"
             />
-            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(row.meta.uuid, 'bottom', drawerOpen, drawerView)" />
           </div>
         </div>
       </template>
@@ -69,13 +67,8 @@ const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
-const { shouldDisplayPlaceholder } = useBlockManager();
-const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
-
-const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
-const drawerView = computed(() => siteConfigurationDrawerView.value);
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => props.configuration));
 const shouldApplyPadding = computed(() => !isFullWidth.value);
