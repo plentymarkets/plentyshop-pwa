@@ -1,9 +1,9 @@
 <template>
-  <div v-if="categoryId">
+  <div v-if="hasEditorContent">
     <EditableBlocks :identifier="categoryId" type="category" :prevent-blocks-request="true" />
   </div>
   <div v-else-if="templateText" class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="templateText" />
-  <h5 v-else class="text-center m-5 p-5">{{ t('shipping.noShippingMessage') }}</h5>
+  <EditableBlocks v-else :identifier="categoryId" type="category" :prevent-blocks-request="true" />
 </template>
 
 <script setup lang="ts">
@@ -24,12 +24,12 @@ definePageMeta({
 const { setPageMeta } = usePageMeta();
 const { getSetting } = useSiteSettings('shippingTextCategoryId');
 const { categoryTemplateData, fetchCategoryTemplate } = useBlockTemplates();
-const { fetchBlocks } = useBlocks();
+const { fetchBlocks, pageBlocks } = useBlocks();
 const { setBlocksListContext } = useBlocksList();
 
 setBlocksListContext('content');
 
-const categoryId = computed(() => Number(getSetting()));
+const categoryId = computed(() => Number(getSetting()) || 0);
 
 const route = useRoute();
 route.meta.identifier = categoryId.value;
@@ -40,11 +40,13 @@ await Promise.all([
   fetchCategoryTemplate(categoryId.value),
 ]);
 
-const icon = 'page';
-setPageMeta(t('orderConfirmation.shipping'), icon);
+setPageMeta(t('orderConfirmation.shipping'), 'page');
 
+const hasEditorContent = computed(() => pageBlocks.value.length > 0);
 
-const templateText = computed(() => (!categoryId.value ? categoryTemplateData?.value?.data : null));
+const templateText = computed(() =>
+  !hasEditorContent.value ? (categoryTemplateData?.value?.data ?? null) : null,
+);
 
 watch(categoryId, async (newCategoryId) => {
   route.meta.identifier = newCategoryId;
