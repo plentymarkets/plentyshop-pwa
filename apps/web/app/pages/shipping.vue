@@ -2,8 +2,12 @@
   <div v-if="hasEditorContent">
     <EditableBlocks :identifier="categoryId" type="category" :prevent-blocks-request="true" />
   </div>
+
   <div v-else-if="templateText" class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="templateText" />
-  <div v-else class="w-full p-5 break-words">
+
+  <EditableBlocks v-else-if="isInEditor" :identifier="categoryId" type="category" :prevent-blocks-request="true" />
+
+  <div v-else class="w-full p-5 break-words flex items-center justify-center text-center min-h-[200px]">
     {{ t('shipping.noShippingMessage') }}
   </div>
 </template>
@@ -28,6 +32,7 @@ const { getSetting } = useSiteSettings('shippingTextCategoryId');
 const { categoryTemplateData, fetchCategoryTemplate } = useBlockTemplates();
 const { fetchBlocks, pageBlocks } = useBlocks();
 const { setBlocksListContext } = useBlocksList();
+const { isInEditor } = useEditorState();
 
 setBlocksListContext('content');
 
