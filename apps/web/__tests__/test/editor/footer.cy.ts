@@ -34,6 +34,14 @@ describe('Footer Block', () => {
     });
   });
 
+  it('should render cancellation rights before the withdrawal button', () => {
+    getFooter().then(($footer) => {
+      const text = $footer.text();
+
+      expect(text.indexOf('Cancellation Rights')).to.be.lessThan(text.indexOf('Withdraw from contract here'));
+    });
+  });
+
   it('should apply footer colors', () => {
     getFooter()
       .should('have.css', 'background-color', 'rgb(207, 228, 236)')
@@ -42,7 +50,8 @@ describe('Footer Block', () => {
 
   it('should navigate to cancellation form when clicking the withdrawal button', () => {
     getFooter().within(() => {
-      cy.getByTestId('text-button').should('have.attr', 'href').and('include', paths.cancellationForm);
+      cy.getByTestId('text-button').click();
     });
+    cy.url().should('include', paths.cancellationForm);
   });
 });
