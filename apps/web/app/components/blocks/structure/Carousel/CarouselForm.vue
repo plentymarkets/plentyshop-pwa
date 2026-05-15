@@ -98,7 +98,7 @@ const editSlide = (block: Block) => {
   const idx = slides.value.findIndex((s) => s.meta.uuid === block.meta.uuid);
   editingBlock.value = block;
   if (idx >= 0) setIndex(resolvedUuid.value, idx);
-  setEditTitle(getBlockDisplayName(block.name));
+  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
 };
 
 const addSlide = async () => {

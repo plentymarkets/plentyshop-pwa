@@ -116,14 +116,14 @@ const textColor = computed({
 
 const editElement = (block: Block) => {
   editingBlock.value = block;
-  setEditTitle(getBlockDisplayName(block.name));
+  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
   if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
     innerFormRef.value.exitEditMode(false);
     if (editingBlock.value) {
-      setEditTitle(getBlockDisplayName(editingBlock.value.name));
+      setEditTitle(getBlockDisplayName(editingBlock.value.name), editingBlock.value.meta.uuid);
     }
     return false;
   }

@@ -95,11 +95,54 @@ const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
 
-const getColumnClasses = (colIndex: number) => {
-  const columnWidth = props.configuration.columnWidths[colIndex];
+const invisibleSlots = computed(() => {
+  const slots = new Set<number>();
+  props.content.forEach((block) => {
+    if (
+      (block.configuration as Record<string, unknown>)?.visible === false &&
+      block.parent_slot !== undefined
+    ) {
+      slots.add(block.parent_slot);
+    }
+  });
+  return slots;
+});
+
+const filteredToOriginalSlot = computed(() => {
+  const invisible = invisibleSlots.value;
+  const map: number[] = [];
+  for (let i = 0; i < props.configuration.columnWidths.length; i++) {
+    if (!invisible.has(i)) map.push(i);
+  }
+  return map;
+});
+
+const originalToFilteredSlot = computed(() => {
+  const map: Record<number, number> = {};
+  filteredToOriginalSlot.value.forEach((origIdx, filtIdx) => {
+    map[origIdx] = filtIdx;
+  });
+  return map;
+});
+
+const effectiveColumnWidths = computed(() =>
+  filteredToOriginalSlot.value.map((i) => props.configuration.columnWidths[i] ?? 0),
+);
+
+const effectiveContent = computed(() => {
+  const invisible = invisibleSlots.value;
+  const remap = originalToFilteredSlot.value;
+  return props.content
+    .filter((b) => b.parent_slot === undefined || !invisible.has(b.parent_slot))
+    .map((b) => (b.parent_slot !== undefined ? { ...b, parent_slot: remap[b.parent_slot] } : { ...b }));
+});
+
+const getColumnClasses = (filteredColIndex: number) => {
+  const columnWidth = effectiveColumnWidths.value[filteredColIndex];
   const classes = [`col-span-${columnWidth}`];
 
-  if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(colIndex)) {
+  const originalIdx = filteredToOriginalSlot.value[filteredColIndex] ?? -1;
+  if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(originalIdx)) {
     classes.push('md:sticky');
 
     const topValue = route.meta?.type === 'product' ? 'md:top-40' : 'md:top-5';
@@ -109,7 +152,7 @@ const getColumnClasses = (colIndex: number) => {
   return classes;
 };
 
-const gridRows = computed((): GridRow[] => computeGridRows(props.configuration.columnWidths));
+const gridRows = computed((): GridRow[] => computeGridRows(effectiveColumnWidths.value));
 
 const isAlignable = (block: Block): block is AlignableBlock =>
   typeof block.content === 'object' &&
@@ -122,7 +165,7 @@ const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
 };
 
 const pairWithSlots = computed<Block[]>(() => {
-  const list = props.content.map((block) => ({ ...block }));
+  const list = effectiveContent.value.map((block) => ({ ...block }));
 
   const alignableIndex = list.findIndex(isAlignable);
 

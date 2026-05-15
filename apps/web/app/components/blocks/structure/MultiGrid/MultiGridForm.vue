@@ -33,8 +33,8 @@
       </div>
 
       <MultiGridEditor
-        :column-widths="multiGridStructure.configuration.columnWidths"
-        :blocks="(multiGridStructure.content as Block[]) ?? []"
+        :column-widths="editorColumnWidths"
+        :blocks="editorBlocks"
         @update:column-widths="handleColumnWidthsUpdate"
         @click-add-row="handleClickAddRow"
         @add-free-column="handleAddFreeColumn"
@@ -188,6 +188,49 @@ const multiGridStructure = computed(() => {
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
+const invisibleSlotsEditor = computed(() => {
+  const blocks = (multiGridStructure.value.content as Block[]) ?? [];
+  const slots = new Set<number>();
+  blocks.forEach((b) => {
+    if ((b.configuration as Record<string, unknown>)?.visible === false && b.parent_slot !== undefined) {
+      slots.add(b.parent_slot);
+    }
+  });
+  return slots;
+});
+
+// filtered-index → original-index
+const editorSlotMap = computed(() => {
+  const widths = multiGridStructure.value.configuration.columnWidths ?? [];
+  const invisible = invisibleSlotsEditor.value;
+  const map: number[] = [];
+  for (let i = 0; i < widths.length; i++) {
+    if (!invisible.has(i)) map.push(i);
+  }
+  return map;
+});
+
+const editorColumnWidths = computed(() => {
+  const widths = multiGridStructure.value.configuration.columnWidths ?? [];
+  return editorSlotMap.value.map((i) => widths[i] ?? 0);
+});
+
+const editorBlocks = computed(() => {
+  const blocks = (multiGridStructure.value.content as Block[]) ?? [];
+  const invisible = invisibleSlotsEditor.value;
+  const origToFiltered: Record<number, number> = {};
+  editorSlotMap.value.forEach((origIdx, filtIdx) => {
+    origToFiltered[origIdx] = filtIdx;
+  });
+  return blocks
+    .filter((b) => b.parent_slot === undefined || !invisible.has(b.parent_slot ?? 0))
+    .map((b) =>
+      b.parent_slot !== undefined
+        ? { ...b, parent_slot: origToFiltered[b.parent_slot] ?? b.parent_slot }
+        : { ...b },
+    ) as Block[];
+});
+
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
 const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
@@ -228,8 +271,12 @@ const applyPreset = (spans: readonly number[]) => {
   block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
 };
 
-const handleColumnWidthsUpdate = (widths: number[]) => {
-  multiGridStructure.value.configuration.columnWidths = widths;
+const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
+  const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
+  editorSlotMap.value.forEach((origIdx, filtIdx) => {
+    if (filtIdx < filteredWidths.length) fullWidths[origIdx] = filteredWidths[filtIdx];
+  });
+  multiGridStructure.value.configuration.columnWidths = fullWidths;
 };
 
 const addRowSpans = (spans: readonly number[]) => {
@@ -289,7 +336,9 @@ const handleClickAddRow = (anchorEl: HTMLElement | MouseEvent) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
-const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, insertIndex: number) => {
+const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsertIndex: number) => {
+  const insertIndex =
+    filteredInsertIndex > 0 ? (editorSlotMap.value[filteredInsertIndex - 1] ?? -1) + 1 : 0;
   const block = multiGridStructure.value as ColumnBlock;
   const newBlock = createEmptyGridBlock(insertIndex);
 
@@ -337,7 +386,7 @@ const blockForm = computed(() => {
 
 const editElement = (block: Block) => {
   editingBlock.value = block;
-  setEditTitle(getBlockDisplayName(block.name));
+  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {

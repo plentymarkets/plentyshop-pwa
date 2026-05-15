@@ -86,11 +86,10 @@
           :key="isDragging ? 'dragging' : 'not-dragging'"
           class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[
+            'rounded-[18px]',
             {
               'opacity-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
-              'bg-purple-600 rounded-none': shouldShowBottomAddInGrid,
-              'rounded-[18px]': !shouldShowBottomAddInGrid,
             },
           ]"
           data-testid="bottom-add-block"
@@ -128,8 +127,6 @@ const {
   getLazyLoadKey,
   getLazyLoadConfig,
   getLazyLoadRef,
-  getBlockDepth,
-  showBottomAddInGrid,
 } = useBlockManager();
 const { openAddBlockPopover, popoverState } = useAddBlockPopover();
 const { shouldShowBlock } = useBlocksVisibility();
@@ -137,14 +134,6 @@ const { blockUuid } = useSiteConfiguration();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
 const { logContentCreateBlock } = useLogEvent();
 
-const shouldShowBottomAddInGrid = computed(() =>
-  showBottomAddInGrid({
-    blockMetaUuid: props.block.meta.uuid,
-    blockName: props.block.name,
-    isRowHovered: props.isRowHovered,
-    getBlockDepth,
-  }),
-);
 const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
 const buttonLabel = 'Insert a new block at this position.';
 
@@ -249,7 +238,7 @@ const showBottomAddBlockButton = computed(
     clientPreview.value &&
     !isDragging.value &&
     !isFooterContainerBlock(props.block) &&
-    (props.root || shouldShowBottomAddInGrid.value),
+    props.root,
 );
 
 const onBlockHover = () => {
