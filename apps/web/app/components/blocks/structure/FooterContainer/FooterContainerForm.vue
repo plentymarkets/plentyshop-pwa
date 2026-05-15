@@ -138,7 +138,7 @@ const backgroundColor = computed({
       footerContainer.value.configuration = { visible: true };
     }
     if (!footerContainer.value.configuration.colors) {
-      footerContainer.value.configuration.colors = { background: '', text: '', linkColor: '' };
+      footerContainer.value.configuration.colors = { background: '', text: '' };
     }
     footerContainer.value.configuration.colors.background = value;
   },
@@ -151,20 +151,20 @@ const textColor = computed({
       footerContainer.value.configuration = { visible: true };
     }
     if (!footerContainer.value.configuration.colors) {
-      footerContainer.value.configuration.colors = { background: '', text: '', linkColor: '' };
+      footerContainer.value.configuration.colors = { background: '', text: '' };
     }
     footerContainer.value.configuration.colors.text = value;
   },
 });
 
 const linkColor = computed({
-  get: () => footerContainer.value.configuration?.colors?.linkColor || '#000000',
+  get: () => footerContainer.value.configuration?.colors?.linkColor || footerContainer.value.configuration?.colors?.text || '#000000',
   set: (value: string) => {
     if (!footerContainer.value.configuration) {
       footerContainer.value.configuration = { visible: true };
     }
     if (!footerContainer.value.configuration.colors) {
-      footerContainer.value.configuration.colors = { background: '', text: '', linkColor: '' };
+      footerContainer.value.configuration.colors = { background: '', text: '' };
     }
     footerContainer.value.configuration.colors.linkColor = value;
   },

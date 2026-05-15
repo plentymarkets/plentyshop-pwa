@@ -5,7 +5,7 @@
     :style="{
       backgroundColor: props.configuration?.colors?.background,
       color: props.configuration?.colors?.text,
-      '--footer-link-color': props.configuration?.colors?.linkColor || '#000000',
+      '--footer-link-color': props.configuration?.colors?.linkColor || props.configuration?.colors?.text,
     }"
   >
     <div
