@@ -70,6 +70,7 @@ describe('createFooterContainer', () => {
     const footer = createFooterContainer();
     expect(footer.configuration?.colors?.background).toBeDefined();
     expect(footer.configuration?.colors?.text).toBeDefined();
+    expect(footer.configuration?.colors?.linkColor).toBeDefined();
   });
 
   it('should have a button with cancellation form link in the fifth column', () => {
@@ -143,6 +144,7 @@ describe('migrateLegacyFooterToContainer', () => {
     const migrated = migrateLegacyFooterToContainer(legacyFooter);
     expect(migrated.configuration?.colors?.background).toBe('#cfe4ec');
     expect(migrated.configuration?.colors?.text).toBe('#1c1c1c');
+    expect(migrated.configuration?.colors?.linkColor).toBe('#1c1c1c');
   });
 
   it('should produce five column TextCards with parent_slot 0–4', () => {
