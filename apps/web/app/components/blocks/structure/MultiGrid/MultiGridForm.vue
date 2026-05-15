@@ -274,7 +274,10 @@ const applyPreset = (spans: readonly number[]) => {
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
   const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
   editorSlotMap.value.forEach((origIdx, filtIdx) => {
-    if (filtIdx < filteredWidths.length) fullWidths[origIdx] = filteredWidths[filtIdx];
+    const width = filteredWidths[filtIdx];
+    if (width !== undefined) {
+      fullWidths[origIdx] = width;
+    }
   });
   multiGridStructure.value.configuration.columnWidths = fullWidths;
 };
