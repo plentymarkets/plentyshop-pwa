@@ -1,16 +1,18 @@
 const EXCLUDED_STATE_KEYS = new Set<string>([
   '$sviewportState',
+  '$toc-hovered-uuid', // local hover state; fires on every mouseenter — never needs bridge sync
 ]);
 
-type TickListener = () => void;
+type TickListener = (changedKey?: string) => void;
 
 interface EditorBridge {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pinia: any;
   state: Record<string, unknown>;
   listeners: Set<TickListener>;
-  notify: () => void;
+  notify: (changedKey?: string) => void;
   subscribe: (fn: TickListener) => () => void;
+  onIframeNavigate?: (path: string) => void;
 }
 
 const wrappedObjects = new WeakSet<object>();
@@ -119,10 +121,10 @@ export default defineNuxtPlugin({
     if (!isInIframe || !isPreviewMode) {
       // ─────────── PARENT ───────────
       const listeners = new Set<TickListener>();
-      const notify = () => {
+      const notify = (changedKey?: string) => {
         listeners.forEach((fn) => {
           try {
-            fn();
+            fn(changedKey);
           } catch {
             /* ignore */
           }
@@ -131,7 +133,7 @@ export default defineNuxtPlugin({
 
       Object.keys(nuxtApp.payload.state).forEach((key) => {
         if (EXCLUDED_STATE_KEYS.has(key)) return;
-        wrapDeepReactive((nuxtApp.payload.state as Record<string, unknown>)[key], notify);
+        wrapDeepReactive((nuxtApp.payload.state as Record<string, unknown>)[key], () => notify(key));
       });
 
       const originalState = nuxtApp.payload.state as Record<string, unknown>;
@@ -139,8 +141,8 @@ export default defineNuxtPlugin({
         set(target, prop: string, value) {
           target[prop] = value;
           if (!EXCLUDED_STATE_KEYS.has(prop)) {
-            wrapDeepReactive(value, notify);
-            notify();
+            wrapDeepReactive(value, () => notify(prop));
+            notify(prop);
           }
           return true;
         },
@@ -158,6 +160,15 @@ export default defineNuxtPlugin({
       };
 
       w.__editorBridge = bridge;
+      nuxtApp.hook('app:mounted', () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const router = (nuxtApp as any).$router;
+        bridge.onIframeNavigate = (path: string) => {
+          if (!router) return;
+          const currentPath = (router.currentRoute.value.fullPath as string).replace(/[?&]__preview=1$/, '');
+          if (path !== currentPath) router.push(path);
+        };
+      });
       return;
     }
 
@@ -174,6 +185,11 @@ export default defineNuxtPlugin({
     }
 
 
+    // Suppresses write-backs while syncKey is pushing parent values into a mirror.
+    let isSyncing = false;
+    // Tracks the first mirror created per key so updates can be applied in-place.
+    const mirrorMap = new Map<string, Record<string, unknown>>();
+
     const makeReactiveMirror = (clonedVal: unknown, bridgeKey: string): unknown => {
       if (clonedVal === null || typeof clonedVal !== 'object' || Array.isArray(clonedVal)) {
         return clonedVal;
@@ -182,12 +198,14 @@ export default defineNuxtPlugin({
         new Proxy(clonedVal as Record<string, unknown>, {
           set(target, prop: string, value) {
             Reflect.set(target, prop, value);
-            try {
-              const parentTarget = (bridge.state as Record<string, unknown>)[bridgeKey];
-              if (parentTarget !== null && typeof parentTarget === 'object') {
-                (parentTarget as Record<string, unknown>)[prop] = value;
-              }
-            } catch { /* ignore */ }
+            if (!isSyncing) {
+              try {
+                const parentTarget = (bridge.state as Record<string, unknown>)[bridgeKey];
+                if (parentTarget !== null && typeof parentTarget === 'object') {
+                  (parentTarget as Record<string, unknown>)[prop] = value;
+                }
+              } catch { /* ignore */ }
+            }
             return true;
           },
         }),
@@ -197,25 +215,61 @@ export default defineNuxtPlugin({
     const existingState = nuxtApp.payload.state as Record<string, unknown>;
     const reactiveState = shallowReactive({ ...existingState });
 
-    const syncFromBridge = () => {
-      const bridgeState = bridge.state as Record<string, unknown>;
-      Object.keys(bridgeState).forEach((key) => {
-        if (EXCLUDED_STATE_KEYS.has(key)) return;
-        const val = bridgeState[key];
-        try {
-          const clone =
-            val === null || typeof val !== 'object' ? val : JSON.parse(JSON.stringify(val));
-          reactiveState[key] = makeReactiveMirror(clone, key);
-        } catch {
+    const syncKey = (key: string) => {
+      if (EXCLUDED_STATE_KEYS.has(key)) return;
+      const val = (bridge.state as Record<string, unknown>)[key];
+      try {
+        if (val === null || typeof val !== 'object') {
           reactiveState[key] = val;
+          mirrorMap.delete(key);
+          return;
         }
-      });
+        const newClone = JSON.parse(JSON.stringify(val)) as Record<string, unknown>;
+        const existingMirror = mirrorMap.get(key);
+        if (existingMirror !== undefined) {
+          // Update in-place: refs from toRefs(state.value) stay valid, Vue detects each change.
+          isSyncing = true;
+          try {
+            for (const k of Object.keys(existingMirror)) {
+              // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+              if (!(k in newClone)) delete existingMirror[k];
+            }
+            for (const k of Object.keys(newClone)) {
+              if (existingMirror[k] !== newClone[k]) existingMirror[k] = newClone[k];
+            }
+          } finally {
+            isSyncing = false;
+          }
+        } else {
+          const mirror = makeReactiveMirror(newClone, key) as Record<string, unknown>;
+          mirrorMap.set(key, mirror);
+          reactiveState[key] = mirror;
+        }
+      } catch {
+        reactiveState[key] = val;
+      }
+    };
+
+    const syncFromBridge = (changedKey?: string) => {
+      if (changedKey !== undefined) {
+        syncKey(changedKey);
+      } else {
+        Object.keys(bridge.state as Record<string, unknown>).forEach(syncKey);
+      }
     };
 
     syncFromBridge();
     nuxtApp.payload.state = reactiveState;
 
     const unsubscribe = bridge.subscribe(syncFromBridge);
+
+    nuxtApp.hook('page:finish', () => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('__preview');
+      const path = url.pathname + url.search + (url.hash || '');
+      if (typeof bridge.onIframeNavigate === 'function') bridge.onIframeNavigate(path);
+    });
+
     window.addEventListener('beforeunload', () => {
       unsubscribe();
     });
