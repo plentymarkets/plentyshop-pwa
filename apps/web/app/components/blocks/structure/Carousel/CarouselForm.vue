@@ -7,6 +7,7 @@
       :item-labels="slideLabels"
       :current-active-index="currentActiveSlideIndex"
       :min-items="1"
+      :get-last-child="getLastChild"
       @select-item="selectSlide"
       @edit-item="editSlide"
       @add-item="addSlide"
@@ -130,6 +131,11 @@ const slides = computed({
   },
   set: (value: SlideBlock[]) => updateCarouselItems(value, resolvedUuid.value),
 });
+
+const getLastChild = () => {
+  const content = carouselStructure.value.content ?? [];
+  return content[content.length - 1];
+};
 
 const resolveSlideLabels = async () => {
   slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));

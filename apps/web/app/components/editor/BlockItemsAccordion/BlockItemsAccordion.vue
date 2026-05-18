@@ -120,10 +120,7 @@
         </button>
       </div>
 
-      <EditorQuickAdd
-        :options="quickAddOptions"
-        :get-last-child="getLastChild ?? (() => undefined)"
-      />
+      <EditorQuickAdd :options="quickAddOptions" :get-last-child="getLastChild" />
     </div>
   </UiAccordionItem>
 </template>
