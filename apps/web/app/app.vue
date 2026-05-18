@@ -28,12 +28,22 @@
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <div
-        :style="isConstrainedPreview ? { width: previewWidth, maxWidth: '100%', transform: 'translateZ(0)', height: previewHeight, overflowY: 'auto' } : undefined"
-        :class="isConstrainedPreview ? 'mx-auto bg-white shadow-md @container' : '@container'"
+        :style="isConstrainedPreview ? { width: previewWidth, maxWidth: '100%', transform: 'translateZ(0)', height: previewHeight, display: 'flex', flexDirection: 'column' } : undefined"
+        :class="isConstrainedPreview ? 'mx-auto bg-white my-auto shadow-md @container mt-32' : '@container'"
       >
-        <NuxtLayout>
-          <NuxtPage />
-        </NuxtLayout>
+        <template v-if="isConstrainedPreview">
+          <div style="flex: 1; min-height: 0; overflow-y: auto;">
+            <NuxtLayout>
+              <NuxtPage />
+            </NuxtLayout>
+          </div>
+          <div id="preview-bottom-slot" class="relative z-10 flex-shrink-0"></div>
+        </template>
+        <template v-else>
+          <NuxtLayout>
+            <NuxtPage />
+          </NuxtLayout>
+        </template>
       </div>
     </div>
 

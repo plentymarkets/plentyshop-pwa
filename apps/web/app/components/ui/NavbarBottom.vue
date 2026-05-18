@@ -1,5 +1,6 @@
 <template>
-  <nav class="w-full fixed bottom-0 left-0 flex flex-row items-stretch @md:hidden z-10" data-testid="navbar-bottom">
+  <Teleport to="#preview-bottom-slot" :disabled="!usePreviewSlot">
+  <nav :class="['w-full flex flex-row items-stretch @md:hidden', usePreviewSlot ? '' : 'fixed bottom-0 left-0 z-10']" data-testid="navbar-bottom">
     <UiButton
       v-for="{ label, icon, link } in items"
       :key="label"
@@ -34,6 +35,7 @@
       {{ label }}
     </UiButton>
   </nav>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -77,4 +79,8 @@ const items = computed(() => [
 
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const NuxtLink = resolveComponent('NuxtLink');
+
+const { isInEditorClient } = useEditorState();
+const { device } = useEditorPreview();
+const usePreviewSlot = computed(() => isInEditorClient.value && device.value !== 'desktop');
 </script>
