@@ -199,3 +199,74 @@ describe('useMultiGridQuickAdd', () => {
     expect(mockAddNewBlock).toHaveBeenCalled();
   });
 });
+
+describe('addRowToGrid', () => {
+  beforeEach(() => {
+    emptyGridBlockCounter = 0;
+  });
+
+  it('should add a new full-width row when last row is at max capacity', () => {
+    const { addRowToGrid } = useMultiGridQuickAdd();
+    const block = {
+      name: 'MultiGrid',
+      type: 'structure',
+      meta: { uuid: 'grid-uuid' },
+      configuration: { columnWidths: [6, 6] },
+      content: [
+        { name: 'ImageBlock', meta: { uuid: 'block-1' }, parent_slot: 0 },
+        { name: 'TextCard', meta: { uuid: 'block-2' }, parent_slot: 1 },
+      ],
+    } as unknown as Block;
+
+    addRowToGrid(block);
+
+    const config = block.configuration as unknown as { columnWidths: number[] };
+    const content = block.content as Block[];
+    expect(config.columnWidths).toEqual([6, 6, 12]);
+    expect(content).toHaveLength(3);
+    expect(content[2]!.name).toBe('EmptyGridBlock');
+    expect(content[2]!.parent_slot).toBe(2);
+  });
+
+  it('should grow the last row when below max capacity', () => {
+    const { addRowToGrid } = useMultiGridQuickAdd();
+    const block = {
+      name: 'MultiGrid',
+      type: 'structure',
+      meta: { uuid: 'grid-uuid' },
+      configuration: { columnWidths: [6, 6, 12] },
+      content: [
+        { name: 'ImageBlock', meta: { uuid: 'block-1' }, parent_slot: 0 },
+        { name: 'TextCard', meta: { uuid: 'block-2' }, parent_slot: 1 },
+        { name: 'ImageBlock', meta: { uuid: 'block-3' }, parent_slot: 2 },
+      ],
+    } as unknown as Block;
+
+    addRowToGrid(block);
+
+    const config = block.configuration as unknown as { columnWidths: number[] };
+    const content = block.content as Block[];
+    expect(config.columnWidths).toEqual([6, 6, 6, 6]);
+    expect(content).toHaveLength(4);
+    expect(content[3]!.name).toBe('EmptyGridBlock');
+    expect(content[3]!.parent_slot).toBe(3);
+  });
+
+  it('should not call addNewBlock (structural only)', () => {
+    const { addRowToGrid } = useMultiGridQuickAdd();
+    const block = {
+      name: 'MultiGrid',
+      type: 'structure',
+      meta: { uuid: 'grid-uuid' },
+      configuration: { columnWidths: [6, 6] },
+      content: [
+        { name: 'ImageBlock', meta: { uuid: 'block-1' }, parent_slot: 0 },
+        { name: 'TextCard', meta: { uuid: 'block-2' }, parent_slot: 1 },
+      ],
+    } as unknown as Block;
+
+    addRowToGrid(block);
+
+    expect(mockAddNewBlock).not.toHaveBeenCalled();
+  });
+});

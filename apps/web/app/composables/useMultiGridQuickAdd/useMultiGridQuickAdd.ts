@@ -92,5 +92,24 @@ export const useMultiGridQuickAdd = () => {
     await addNewBlock(option.category, option.variationIndex, newEmptyBlock.meta.uuid, 'inside');
   };
 
-  return { addBlockToGrid };
+  /**
+   * Adds a structural row to the grid without inserting a content block.
+   * Grows the last row if possible, otherwise adds a new full-width row.
+   */
+  const addRowToGrid = (block: Block) => {
+    const configuration = block.configuration as unknown as { columnWidths: number[] };
+    const columnWidths = configuration.columnWidths ?? [];
+
+    if (isLastRowFull(columnWidths)) {
+      addNewFullWidthRow(columnWidths);
+    } else {
+      growLastRow(columnWidths);
+    }
+
+    const newEmptyBlock = createEmptyGridBlock(columnWidths.length - 1);
+    if (!block.content) block.content = [];
+    (block.content as Block[]).push(newEmptyBlock as unknown as Block);
+  };
+
+  return { addBlockToGrid, addRowToGrid };
 };

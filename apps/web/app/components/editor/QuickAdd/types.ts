@@ -3,6 +3,7 @@ export interface QuickAddOption {
   label: string;
   category: string;
   variationIndex: number;
+  type?: 'content' | 'row';
 }
 
 export interface QuickAddProps {

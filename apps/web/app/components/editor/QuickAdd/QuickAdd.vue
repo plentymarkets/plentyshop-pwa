@@ -33,7 +33,7 @@ defineProps<QuickAddProps>();
 const { blockUuid } = useSiteConfiguration();
 const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid, addNewBlock } = useBlockManager();
-const { addBlockToGrid } = useMultiGridQuickAdd();
+const { addBlockToGrid, addRowToGrid } = useMultiGridQuickAdd();
 
 const getBlock = () => {
   const uuid = blockUuid.value;
@@ -54,7 +54,11 @@ const handleAdd = async (option: QuickAddOption) => {
   if (!block) return;
 
   if (block.name === 'MultiGrid') {
-    await addBlockToGrid(block, option);
+    if (option.type === 'row') {
+      addRowToGrid(block);
+    } else {
+      await addBlockToGrid(block, option);
+    }
   } else {
     await handleDefaultAdd(block, option);
   }

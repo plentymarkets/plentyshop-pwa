@@ -13,12 +13,20 @@ export const headerQuickAddOptions: QuickAddOption[] = [
 const sharedFooterAndMultiGridQuickAddOptions: QuickAddOption[] = [
   { blockName: 'Image', label: getBlockDisplayName('Image'), category: 'image', variationIndex: 0 },
   { blockName: 'TextCard', label: getBlockDisplayName('TextCard'), category: 'text', variationIndex: 0 },
-  { blockName: 'MultiGrid', label: getBlockDisplayName('MultiGrid'), category: 'layout', variationIndex: 0 },
 ];
+
+const gridRowOption: QuickAddOption = {
+  blockName: 'MultiGrid',
+  label: 'Grid',
+  category: 'row',
+  variationIndex: 0,
+  type: 'row',
+};
 
 export const footerQuickAddOptions: QuickAddOption[] = sharedFooterAndMultiGridQuickAddOptions.map((option) => ({
   ...option,
 }));
-export const multiGridQuickAddOptions: QuickAddOption[] = sharedFooterAndMultiGridQuickAddOptions.map((option) => ({
-  ...option,
-}));
+export const multiGridQuickAddOptions: QuickAddOption[] = [
+  ...sharedFooterAndMultiGridQuickAddOptions.map((option) => ({ ...option })),
+  gridRowOption,
+];
