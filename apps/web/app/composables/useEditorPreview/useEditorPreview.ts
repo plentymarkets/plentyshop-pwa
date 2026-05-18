@@ -14,12 +14,10 @@ export const useEditorPreview = () => {
   const device = getDevice();
 
   const setDevice = (d: PreviewDevice) => {
-    console.log('[editor-preview] setDevice', d);
     device.value = d;
   };
 
   const width = computed(() => {
-    console.log('[editor-preview] width computed, device:', device.value);
     if (device.value === 'mobile') return '375px';
     if (device.value === 'tablet') return '768px';
     return '100%';

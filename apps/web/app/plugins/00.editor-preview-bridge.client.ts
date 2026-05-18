@@ -113,6 +113,7 @@ export default defineNuxtPlugin({
     const isInIframe = window.parent !== window;
     const isPreviewMode = new URLSearchParams(window.location.search).has('__preview');
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
 
     if (!isInIframe || !isPreviewMode) {
@@ -162,7 +163,6 @@ export default defineNuxtPlugin({
 
     const bridge = w.parent.__editorBridge as EditorBridge | undefined;
     if (!bridge) {
-      // eslint-disable-next-line no-console
       console.warn('[editor-preview] Parent bridge not available');
       return;
     }
