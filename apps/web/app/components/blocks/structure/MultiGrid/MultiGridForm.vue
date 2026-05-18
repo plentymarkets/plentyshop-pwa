@@ -4,6 +4,27 @@
     <button
       type="button"
       class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
+      :aria-expanded="elementLayoutOpen"
+      aria-controls="element-panel-element-layout"
+      @click="elementLayoutOpen = !elementLayoutOpen"
+    >
+      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
+        {{ getEditorTranslation('element-settings') }}
+      </span>
+      <SfIconExpandMore
+        size="xs"
+        class="text-editor-text-placeholder transition-transform duration-200"
+        :class="elementLayoutOpen ? 'rotate-0' : '-rotate-90'"
+      />
+    </button>
+
+    <div v-if="elementLayoutOpen" id="element-panel-element-layout" class="px-3.5 py-3">
+      <EditorQuickAdd :options="quickAddOptions" @add="quickAddBlock" />
+    </div>
+
+    <button
+      type="button"
+      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       :aria-expanded="gridLayoutOpen"
       aria-controls="multigrid-panel-grid-layout"
       @click="gridLayoutOpen = !gridLayoutOpen"
@@ -200,7 +221,6 @@ import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/types';
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
 const props = defineProps<{ uuid?: string }>();
-const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
 const { openAddBlockPopover } = useAddBlockPopover();
 const { blockUuid } = useSiteConfiguration();
@@ -344,12 +364,10 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
+const elementLayoutOpen = ref(true);
 const gridLayoutOpen = ref(true);
 const layoutOpen = ref(true);
 const backgroundOpen = ref(false);
-const elementSettings = ref(true);
-const textSettings = ref(false);
-const layoutBackground = ref(false);
 
 const quickAddOptions = multiGridQuickAddOptions;
 
@@ -377,20 +395,10 @@ const { quickAddBlock } = useQuickAdd(
     "grid-layout": "Grid Layout",
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
+    "element-settings": "Elements",
     "spacing-between": "Spacing between blocks:",
     "layout": "Layout",
     "margin-label": "Margin (px)",
-    "element-settings": "Elements",
-    "background-color-label": "Background Color",
-    "gap-label": "Gap",
-    "gap-size-none": "None",
-    "gap-size-s": "S",
-    "gap-size-m": "M",
-    "gap-size-l": "L",
-    "gap-size-xl": "XL",
-    "spacing-around": "Spacing around",
-    "spacing-between": "Spacing between Blocks:",
-    "layout-background": "Layout Background",
     "sticky-columns": "Sticky columns",
     "column": "Column",
     "layout-background": "Background",
@@ -399,8 +407,8 @@ const { quickAddBlock } = useQuickAdd(
   "de": {
     "grid-layout": "Grid Layout",
     "layout-preset": "Layout Preset",
-     "element-settings": "Elements",
     "gap-label": "Column Gap",
+    "element-settings": "Elements",
     "spacing-between": "Spacing between blocks:",
     "layout": "Layout",
     "margin-label": "Margin (px)",
