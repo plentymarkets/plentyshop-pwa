@@ -74,7 +74,7 @@ const SKIP_BUILTINS = new Set([
   'process',
 ]);
 
-export function extractImports(content: string): string[] {
+export const extractImports = (content: string): string[] => {
   const stripped = content.replace(BLOCK_COMMENT_RE, '').replace(LINE_COMMENT_RE, '');
   const imports: string[] = [];
   const lines = stripped.split('\n');
@@ -103,19 +103,20 @@ export function extractImports(content: string): string[] {
   }
 
   return imports;
-}
+};
 
-export function getPackageName(importPath: string): string {
+export const getPackageName = (importPath: string): string => {
   if (importPath.startsWith('@')) {
     const parts = importPath.split('/');
     return parts.length >= 2 ? `${parts[0]}/${parts[1]}` : importPath;
   }
 
   return importPath.split('/')[0] ?? importPath;
-}
+};
 
-export function shouldSkip(importPath: string): boolean {
+export const shouldSkip = (importPath: string): boolean => {
   if (importPath.startsWith('.')) return true;
+  if (/\.(css|scss|sass|less|styl)$/.test(importPath)) return true;
 
   for (const prefix of SKIP_PREFIXES) {
     if (importPath.startsWith(prefix)) return true;
@@ -126,21 +127,16 @@ export function shouldSkip(importPath: string): boolean {
   if (SKIP_BUILTINS.has(importPath)) return true;
 
   return false;
-}
+};
 
-export function isCovered(importPath: string, includeList: string[]): boolean {
-  if (includeList.includes(importPath)) return true;
+export const isCovered = (importPath: string, includeList: string[]): boolean => {
+  return includeList.includes(importPath);
+};
 
-  const pkgName = getPackageName(importPath);
-  if (includeList.includes(pkgName)) return true;
-
-  return false;
-}
-
-function findSourceFiles(dir: string, exts: string[]): string[] {
+const findSourceFiles = (dir: string, exts: string[]): string[] => {
   const results: string[] = [];
 
-  function walk(current: string): void {
+  const walk = (current: string): void => {
     let entries: string[];
 
     try {
@@ -150,7 +146,16 @@ function findSourceFiles(dir: string, exts: string[]): string[] {
     }
 
     for (const entry of entries) {
-      if (entry === 'node_modules' || entry === '.nuxt' || entry === '__tests__' || entry === 'coverage') continue;
+      if (
+        entry === 'node_modules' ||
+        entry === '.nuxt' ||
+        entry === '__tests__' ||
+        entry === 'coverage' ||
+        entry === 'tailwind.config.ts'
+      ) {
+        continue;
+      }
+
       const full = `${current}/${entry}`;
       const stat = statSync(full);
 
@@ -160,13 +165,13 @@ function findSourceFiles(dir: string, exts: string[]): string[] {
         results.push(full);
       }
     }
-  }
+  };
 
   walk(dir);
   return results;
-}
+};
 
-function checkNodeModulesExistence(pkg: string): boolean {
+const checkNodeModulesExistence = (pkg: string): boolean => {
   const pkgName = getPackageName(pkg);
 
   try {
@@ -179,9 +184,9 @@ function checkNodeModulesExistence(pkg: string): boolean {
 
     return existsSync(rootPkgDir);
   }
-}
+};
 
-function reportResults(staleInInclude: string[], missingFromInclude: Map<string, string[]>): boolean {
+const reportResults = (staleInInclude: string[], missingFromInclude: Map<string, string[]>): boolean => {
   if (staleInInclude.length > 0) {
     console.warn('\nStale entries in optimizeDeps.include (package not found in node_modules):');
     for (const dep of staleInInclude) {
@@ -201,9 +206,9 @@ function reportResults(staleInInclude: string[], missingFromInclude: Map<string,
   }
 
   return staleInInclude.length > 0 || missingFromInclude.size > 0;
-}
+};
 
-function checkStaleEntries(): string[] {
+const checkStaleEntries = (): string[] => {
   const stale: string[] = [];
 
   for (const dep of optimizeDepsInclude) {
@@ -213,9 +218,9 @@ function checkStaleEntries(): string[] {
   }
 
   return stale;
-}
+};
 
-function checkMissingEntries(allSourceFiles: string[]): Map<string, string[]> {
+const checkMissingEntries = (allSourceFiles: string[]): Map<string, string[]> => {
   const missing = new Map<string, string[]>();
 
   for (const file of allSourceFiles) {
@@ -234,9 +239,9 @@ function checkMissingEntries(allSourceFiles: string[]): Map<string, string[]> {
   }
 
   return missing;
-}
+};
 
-function main(): void {
+const main = (): void => {
   const staleInInclude = checkStaleEntries();
   const allSourceFiles: string[] = [];
 
@@ -252,7 +257,7 @@ function main(): void {
   }
 
   console.warn('\x1b[32m✔\x1b[0m Vite dependency pre-bundling is configured correctly');
-}
+};
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   main();

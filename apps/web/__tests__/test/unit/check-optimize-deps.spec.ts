@@ -125,6 +125,14 @@ describe('shouldSkip', () => {
   it('should not skip scoped third-party packages like @tiptap/core', () => {
     expect(shouldSkip('@tiptap/core')).toBe(false);
   });
+
+  it('should skip css style imports', () => {
+    expect(shouldSkip('some-lib/dist/style.css')).toBe(true);
+  });
+
+  it('should skip scss style imports', () => {
+    expect(shouldSkip('some-lib/dist/theme.scss')).toBe(true);
+  });
 });
 
 describe('isCovered', () => {
@@ -132,8 +140,8 @@ describe('isCovered', () => {
     expect(isCovered('uuid', ['uuid', 'yup'])).toBe(true);
   });
 
-  it('should treat a sub-path import as covered when the package name is in the include list', () => {
-    expect(isCovered('uuid/v4', ['uuid'])).toBe(true);
+  it('should not treat a sub-path import as covered when only the package root is listed', () => {
+    expect(isCovered('uuid/v4', ['uuid'])).toBe(false);
   });
 
   it('should treat a sub-path import as covered when the full path is listed exactly', () => {
