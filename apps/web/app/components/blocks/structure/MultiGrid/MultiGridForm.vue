@@ -1,5 +1,5 @@
 <template>
-  <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
+  <MultiGridFormLegacy v-if="!enableMultiGridEditor" ref="legacyFormRef" :uuid="uuid" />
   <template v-else>
     <div v-if="editingBlock" class="sticky h-[calc(100vh-52px)] overflow-y-auto">
       <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
@@ -364,6 +364,7 @@ const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const editingBlock = ref<Block | null>(null);
+const legacyFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean } | null>(null);
 
 const blockForm = computed(() => {
   if (!editingBlock.value) return null;
@@ -377,6 +378,9 @@ const editElement = (block: Block) => {
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
+  if (!enableMultiGridEditor && legacyFormRef.value?.exitEditMode) {
+    return legacyFormRef.value.exitEditMode(shouldEmit);
+  }
   editingBlock.value = null;
   if (shouldEmit) clearEditTitle();
   return true;
