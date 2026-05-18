@@ -17,6 +17,7 @@
     "build:analyze": "npm run turbo:disable-telemetry && turbo run build:analyze",
     "dev": "npm run turbo:disable-telemetry && turbo run dev",
     "start": "npm run turbo:disable-telemetry && turbo run start",
+    "check:optimize-deps": "npm --prefix apps/web run check:optimize-deps",
     "lint": "npm run turbo:disable-telemetry && turbo run lint",
     "lint:fix": "npm run turbo:disable-telemetry && turbo run lint:fix",
     "typecheck": "npm run turbo:disable-telemetry && turbo run typecheck",
