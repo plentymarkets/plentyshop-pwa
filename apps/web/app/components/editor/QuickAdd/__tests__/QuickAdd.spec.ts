@@ -167,7 +167,6 @@ describe('QuickAdd', () => {
 
       await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
 
-      // Last row [12] grows to [6, 6]
       expect(multiGridBlock.configuration.columnWidths).toEqual([6, 6, 6, 6]);
       expect(multiGridBlock.content).toHaveLength(4);
       expect(multiGridBlock.content[3]!.name).toBe('EmptyGridBlock');
@@ -189,7 +188,6 @@ describe('QuickAdd', () => {
 
       await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
 
-      // Full 2-col row → new row with width 12
       expect(multiGridBlock.configuration.columnWidths).toEqual([6, 6, 12]);
       expect(multiGridBlock.content).toHaveLength(3);
       expect(multiGridBlock.content[2]!.name).toBe('EmptyGridBlock');
@@ -212,7 +210,6 @@ describe('QuickAdd', () => {
 
       await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
 
-      // Full 3-col row → new row with width 12
       expect(multiGridBlock.configuration.columnWidths).toEqual([4, 4, 4, 12]);
       expect(multiGridBlock.content).toHaveLength(4);
       expect(multiGridBlock.content[3]!.parent_slot).toBe(3);

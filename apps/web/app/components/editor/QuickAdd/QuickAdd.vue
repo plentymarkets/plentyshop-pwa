@@ -33,75 +33,12 @@ defineProps<QuickAddProps>();
 const { blockUuid } = useSiteConfiguration();
 const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid, addNewBlock } = useBlockManager();
+const { addBlockToGrid } = useMultiGridQuickAdd();
 
 const getBlock = () => {
   const uuid = blockUuid.value;
   if (!uuid) return undefined;
   return findOrDeleteBlockByUuid(allBlocks.value, uuid) ?? undefined;
-};
-
-const isMultiGrid = (block: Block) => block.name === 'MultiGrid';
-
-const getMaxColumnsPerRow = (columnWidths: number[]): number => {
-  let maxCols = 0;
-  let count = 0;
-  let used = 0;
-  for (const span of columnWidths) {
-    if (used + span > 12) {
-      if (used === 12) maxCols = Math.max(maxCols, count);
-      count = 0;
-      used = 0;
-    }
-    count++;
-    used += span;
-  }
-  if (used === 12) maxCols = Math.max(maxCols, count);
-  return maxCols > 1 ? maxCols : 2;
-};
-
-const getLastRow = (columnWidths: number[]): { startIndex: number; count: number } => {
-  let startIndex = 0;
-  let used = 0;
-  for (let i = 0; i < columnWidths.length; i++) {
-    if (used + columnWidths[i]! > 12) {
-      startIndex = i;
-      used = 0;
-    }
-    used += columnWidths[i]!;
-  }
-  return { startIndex, count: columnWidths.length - startIndex };
-};
-
-const handleMultiGridAdd = async (block: Block, option: QuickAddOption) => {
-  const content = block.content as Block[] | undefined;
-  const configuration = block.configuration as unknown as { columnWidths: number[] };
-  const columnWidths = configuration.columnWidths ?? [];
-
-  const emptyBlock = content?.find((b) => b.name === 'EmptyGridBlock');
-  if (emptyBlock) {
-    await addNewBlock(option.category, option.variationIndex, emptyBlock.meta.uuid, 'inside');
-    return;
-  }
-
-  const maxColumnsPerRow = getMaxColumnsPerRow(columnWidths);
-  const lastRow = getLastRow(columnWidths);
-
-  if (lastRow.count < maxColumnsPerRow) {
-    const newColCount = lastRow.count + 1;
-    const equalWidth = Math.floor(12 / newColCount);
-    for (let i = lastRow.startIndex; i < columnWidths.length; i++) {
-      columnWidths[i] = equalWidth;
-    }
-    columnWidths.push(equalWidth);
-  } else {
-    columnWidths.push(12);
-  }
-
-  const newEmptyBlock = createEmptyGridBlock(columnWidths.length - 1);
-  if (!block.content) block.content = [];
-  (block.content as Block[]).push(newEmptyBlock as unknown as Block);
-
-  await addNewBlock(option.category, option.variationIndex, newEmptyBlock.meta.uuid, 'inside');
 };
 
 const handleDefaultAdd = async (block: Block, option: QuickAddOption) => {
@@ -116,8 +53,8 @@ const handleAdd = async (option: QuickAddOption) => {
   const block = getBlock();
   if (!block) return;
 
-  if (isMultiGrid(block)) {
-    await handleMultiGridAdd(block, option);
+  if (block.name === 'MultiGrid') {
+    await addBlockToGrid(block, option);
   } else {
     await handleDefaultAdd(block, option);
   }
