@@ -3,9 +3,6 @@
     <p class="mb-4">{{ getEditorTranslation('description') }}</p>
     <div class="flex justify-between mb-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
-        <SfIconInfo :size="'sm'" />
-      </SfTooltip>
     </div>
 
     <EditorCategorySelect
@@ -16,8 +13,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-
 const { updateSetting, getSetting } = useSiteSettings('shippingTextCategoryId');
 
 const shippingTextCategoryId = computed({
@@ -31,14 +26,12 @@ const shippingTextCategoryId = computed({
 <i18n lang="json">
 {
   "en": {
-    "description": "Select the category whose template data will be used for the /shipping page. By default, this page is also referenced wherever shipping prices are mentioned.",
-    "label": "Category for shipping information page",
-    "tooltip": "Which category should be used to provide the template for the shipping information?"
+    "description": "Select the category which should be used for the /shipping page. This page is by default linked wherever shipping prices are mentioned.",
+    "label": "Category for shipping information page"
   },
   "de": {
-    "description": "Select the category whose template data will be used for the /shipping page. By default, this page is also referenced wherever shipping prices are mentioned.",
-    "label": "Category for shipping information page",
-    "tooltip": "Which category should be used to provide the template for the shipping information?"
+    "description": "Select the category which should be used for the /shipping page. This page is by default linked wherever shipping prices are mentioned.",
+    "label": "Category for shipping information page"
   }
 }
 </i18n>
