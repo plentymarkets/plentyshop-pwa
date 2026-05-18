@@ -11,4 +11,5 @@ export type GridElementsPanelEmits = {
   'update:modelValue': [value: boolean];
   'edit-element': [block: Block];
   'add-element': [];
+  'insert-before': [block: Block, anchorEl: HTMLElement];
 };

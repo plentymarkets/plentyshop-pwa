@@ -5,7 +5,7 @@
       <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
     </div>
     <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-      <EditorGridElementsPanel v-model="elementsOpen" :uuid="resolvedUuid" @edit-element="editElement" />
+      <EditorGridElementsPanel v-model="elementsOpen" :uuid="resolvedUuid" @edit-element="editElement" @insert-before="handleInsertBefore" />
 
     <EditorFormPanel v-model="gridLayoutOpen" :title="getEditorTranslation('grid-layout')">
       <div v-if="allEmpty" class="mb-3.5">
@@ -339,9 +339,7 @@ const handleClickAddRow = (anchorEl: HTMLElement | MouseEvent) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
-const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsertIndex: number) => {
-  const insertIndex =
-    filteredInsertIndex > 0 ? (editorSlotMap.value[filteredInsertIndex - 1] ?? -1) + 1 : 0;
+const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTMLElement) => {
   const block = multiGridStructure.value as ColumnBlock;
   const newBlock = createEmptyGridBlock(insertIndex);
 
@@ -349,11 +347,11 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsert
   content.forEach((b) => {
     if ((b.parent_slot ?? 0) >= insertIndex) b.parent_slot = (b.parent_slot ?? 0) + 1;
   });
-  block.configuration.columnWidths.splice(insertIndex, 0, span);
+  block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
-  const cleanupTempBlock = () => {
+  const cleanup = () => {
     const gridBlock = multiGridStructure.value as ColumnBlock;
     const blocks = gridBlock.content as Block[];
     const index = blocks.findIndex((b) => b.meta.uuid === newBlock.meta.uuid && b.name === 'EmptyGridBlock');
@@ -370,12 +368,21 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsert
     anchorEl,
     targetUuid: newBlock.meta.uuid,
     position: 'inside',
-    onCancel: cleanupTempBlock,
+    onCancel: cleanup,
     onPresetPick: (spans) => {
-      cleanupTempBlock();
+      cleanup();
       addRowSpansAt(spans, insertIndex);
     },
   });
+};
+
+const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsertIndex: number) => {
+  const insertIndex = filteredInsertIndex > 0 ? (editorSlotMap.value[filteredInsertIndex - 1] ?? -1) + 1 : 0;
+  insertColumnAt(insertIndex, span, anchorEl);
+};
+
+const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
+  insertColumnAt(block.parent_slot ?? 0, 12, anchorEl);
 };
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();

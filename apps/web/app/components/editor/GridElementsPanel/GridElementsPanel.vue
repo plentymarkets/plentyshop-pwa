@@ -24,13 +24,33 @@
       @end="onDragEnd"
     >
       <template #item="{ element: block }">
-        <div
-          data-el-item
-          class="group/el flex items-center gap-1.5 px-2 py-1.5 border-b border-editor-border transition-colors hover:bg-editor-toc-hover"
-          :class="{ 'bg-editor-toc-hover': openMenuUuid === block.meta.uuid }"
-          @mouseenter="hoveredUuid = block.meta.uuid"
-          @mouseleave="hoveredUuid = null"
-        >
+        <div class="relative">
+          <div
+            v-if="!props.customAdd"
+            class="no-drag absolute inset-x-0 top-0 -translate-y-1/2 h-3 z-20 flex items-center justify-center cursor-pointer"
+            @mouseenter="insertHoveredUuid = block.meta.uuid"
+            @mouseleave="insertHoveredUuid = null"
+            @click.stop="onInsertBefore(block, $event)"
+          >
+            <div
+              class="absolute inset-x-0 top-1/2 h-px transition-opacity duration-150"
+              :class="insertHoveredUuid === block.meta.uuid ? 'bg-editor-accent opacity-100' : 'opacity-0'"
+            />
+            <div
+              v-show="insertHoveredUuid === block.meta.uuid"
+              class="relative w-4 h-4 rounded-full bg-editor-accent text-white flex items-center justify-center flex-shrink-0 z-10 shadow-sm"
+            >
+              <SfIconAdd size="xs" />
+            </div>
+          </div>
+
+          <div
+            data-el-item
+            class="group/el flex items-center gap-1.5 px-2 py-1.5 border-b border-editor-border transition-colors hover:bg-editor-toc-hover"
+            :class="{ 'bg-editor-toc-hover': openMenuUuid === block.meta.uuid }"
+            @mouseenter="hoveredUuid = block.meta.uuid"
+            @mouseleave="hoveredUuid = null"
+          >
           <button
             class="el-drag-handle cursor-grab active:cursor-grabbing text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0 text-3xs tracking-[0.3px] leading-none"
             :aria-label="getEditorTranslation('drag-handle-aria')"
@@ -133,6 +153,7 @@
             </div>
           </div>
         </div>
+        </div>
       </template>
     </draggable>
 
@@ -209,6 +230,19 @@ const minItemsReached = computed(() => sortedItems.value.length <= props.minItem
 
 const hoveredUuid = ref<string | null>(null);
 const openMenuUuid = ref<string | null>(null);
+const insertHoveredUuid = ref<string | null>(null);
+
+const onInsertBefore = (block: Block, event: MouseEvent) => {
+  if (isGridMode.value) {
+    emit('insert-before', block, event.currentTarget as HTMLElement);
+  } else {
+    openAddBlockPopover({
+      anchorEl: event.currentTarget as HTMLElement,
+      targetUuid: block.meta.uuid,
+      position: 'top',
+    });
+  }
+};
 
 const toggleMenu = (uuid: string) => {
   openMenuUuid.value = openMenuUuid.value === uuid ? null : uuid;
