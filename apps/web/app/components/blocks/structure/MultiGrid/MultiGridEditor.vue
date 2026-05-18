@@ -154,7 +154,7 @@ const startDrag = (event: PointerEvent, colIndex: number, span: number) => {
   if (!containerRef.value) return;
   const { width } = containerRef.value.getBoundingClientRect();
   dragRef.value = { colIndex, startX: event.clientX, startSpan: span, unitW: width / 12 };
-  (event.currentTarget as Element).setPointerCapture(event.pointerId);
+  containerRef.value.setPointerCapture(event.pointerId);
 };
 
 const onPointerMove = (event: PointerEvent) => {
@@ -168,7 +168,14 @@ const onPointerMove = (event: PointerEvent) => {
   }
 };
 
-const onPointerUp = () => {
+const onPointerUp = (event?: PointerEvent) => {
+  if (event && dragRef.value) {
+    try {
+      (event.currentTarget as Element).releasePointerCapture(event.pointerId);
+    } catch (error) {
+      console.warn('Failed to release pointer capture:', error);
+    }
+  }
   dragRef.value = null;
 };
 </script>
