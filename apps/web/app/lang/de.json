@@ -471,7 +471,7 @@
     "name": "Vollständiger Name",
     "email": "Kontaktmail",
     "reason": "Grund für den Widerruf",
-    "submit": "Vertrag kündigen",
+    "submit": "Widerruf bestätigen",
     "asterixHint": "markierte Felder sind Pflichtfelder",
     "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
     "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
