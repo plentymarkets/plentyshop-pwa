@@ -27,7 +27,7 @@
             @click.stop="onInsertBefore(block, $event)"
           >
             <div
-              class="absolute inset-x-0 top-1/2 h-px transition-opacity duration-150"
+              class="absolute inset-x-0 top-1/2 h-px"
               :class="insertHoveredUuid === block.meta.uuid ? 'bg-editor-accent opacity-100' : 'opacity-0'"
             />
             <div
@@ -95,9 +95,10 @@
             >
 
             <button
-              v-show="hoveredUuid === block.meta.uuid && block.name !== 'EmptyGridBlock'"
+              v-show="block.name !== 'EmptyGridBlock'"
               :data-testid="`actions-edit-item-${index}`"
-              class="no-drag p-0.5 rounded cursor-pointer text-editor-text-placeholder hover:text-editor-accent flex-shrink-0"
+              class="no-drag p-0.5 rounded cursor-pointer text-editor-icon hover:text-editor-accent flex-shrink-0 transition-colors"
+              :class="{ 'text-editor-icon/40': !isVisible(block) }"
               :aria-label="getEditorTranslation('edit-aria')"
               @click.stop="emit('edit-element', block)"
             >
@@ -118,8 +119,8 @@
 
             <div class="no-drag relative flex-shrink-0">
               <button
-                class="p-0.5 rounded cursor-pointer text-editor-text-placeholder hover:text-editor-text-subtle opacity-0 group-hover/el:opacity-100 transition-opacity"
-                :class="{ 'opacity-100': openMenuUuid === block.meta.uuid }"
+                class="p-0.5 rounded cursor-pointer text-editor-icon hover:text-editor-accent transition-colors"
+                :class="{ '!text-editor-icon': openMenuUuid === block.meta.uuid, 'text-editor-icon/40': !isVisible(block) }"
                 :aria-label="getEditorTranslation('actions-aria')"
                 @click.stop="toggleMenu(block.meta.uuid)"
               >

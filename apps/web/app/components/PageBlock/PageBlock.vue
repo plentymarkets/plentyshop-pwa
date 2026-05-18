@@ -14,13 +14,13 @@
         'relative block-wrapper h-full',
         {
           'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
-            clientPreview && enableActions && !isTablet && root && !isDragging,
+            clientPreview && enableActions && !isTablet && root && !isDragging && !isPopoverTarget,
         },
       ]"
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-0 ring-4 ring-inset ring-editor-toc-selected z-[200]"
+        class="pointer-events-none absolute inset-0 ring-4 ring-editor-toc-selected z-[200]"
       />
       <ClientOnly>
         <button
@@ -30,6 +30,7 @@
             {
               'opacity-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
+              '!z-[201]': isPopoverTarget && popoverState?.position === 'top',
             },
           ]"
           data-testid="top-add-block"
@@ -90,6 +91,7 @@
             {
               'opacity-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
+              '!z-[201]': isPopoverTarget && popoverState?.position === 'bottom',
             },
           ]"
           data-testid="bottom-add-block"
