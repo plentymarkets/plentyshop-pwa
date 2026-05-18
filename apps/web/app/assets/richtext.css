@@ -110,3 +110,14 @@
   outline-offset: 1px;
   border-radius: 2px;
 }
+
+.editor-parent:focus-within {
+  border-color: #111827;
+  border-width: 2px;
+}
+
+.editor-parent .ProseMirror {
+  width: 100%;
+  min-height: 100%;
+  outline: none;
+}
