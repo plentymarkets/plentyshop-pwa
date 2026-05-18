@@ -45,6 +45,7 @@ describe('composables index exports', () => {
     'useNearViewport',
     'useEditorOptionsTabs',
     'useBlocksHighlight',
+    'useMultiGridQuickAdd',
   ];
 
   const allFileModules = fs
