@@ -18,6 +18,12 @@ const FROM_IMPORT_RE = /from\s+['"]([^'"]+)['"]/g;
 const DYNAMIC_IMPORT_RE = /\bimport\s*\(\s*['"]([^'"]+)['"]\s*\)/g;
 const SIDE_EFFECT_IMPORT_RE = /^\s*import\s+['"]([^'"]+)['"]/gm;
 const SKIP_PREFIXES = ['@nuxt/', '@nuxtjs/', '#', '~', '@/', 'node:', '/'];
+
+/**
+ * Packages imported in the app that should never be in 'optimizeDeps.include'.
+ * Vue/Nuxt internals are handled automatically; build/dev-only tools (eslint, sass, etc.) don't need pre-bundling.
+ * Add entries here when a framework-level import causes a false positive.
+ */
 const SKIP_PACKAGES = new Set([
   'vue',
   'vue-router',
