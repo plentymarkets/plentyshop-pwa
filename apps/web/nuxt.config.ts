@@ -79,6 +79,7 @@ export default defineNuxtConfig({
         'vue-tel-input',
         'vuedraggable/src/vuedraggable',
         'yup',
+        'validator/es/lib/isURL',
       ],
     },
     build: {

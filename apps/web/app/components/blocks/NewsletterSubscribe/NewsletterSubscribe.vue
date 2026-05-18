@@ -145,7 +145,6 @@ const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 const textContentProps = computed(() =>
   mapToTextContentProps({
-    title: props.content.text?.title,
     htmlDescription: props.content.text?.htmlDescription,
     textAlignment: props.content.text?.textAlignment ?? 'center',
   }),

@@ -26,10 +26,15 @@
         <button
           v-if="showTopAddBlockButton"
           class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[40] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
-          :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+          :class="[
+            {
+              'opacity-100':
+                (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
+            },
+          ]"
           data-testid="top-add-block"
           aria-label="top add block"
-          @click.stop="addNewBlock(block, 'top')"
+          @click.stop="addNewBlock(block, 'top', $event)"
         >
           <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
             <SfIconAdd class="cursor-pointer" />
@@ -82,14 +87,15 @@
           class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[
             {
-              'opacity-100': isClicked && clickedBlockIndex === index,
+              'opacity-100':
+                (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
               'bg-purple-600 rounded-none': shouldShowBottomAddInGrid,
               'rounded-[18px]': !shouldShowBottomAddInGrid,
             },
           ]"
           data-testid="bottom-add-block"
           aria-label="bottom add block"
-          @click.stop="addNewBlock(block, 'bottom')"
+          @click.stop="addNewBlock(block, 'bottom', $event)"
         >
           <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
             <SfIconAdd class="cursor-pointer" />
@@ -113,12 +119,9 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
 
 const viewport = useViewport();
 const { isInEditorClient } = useEditorState();
-const { openDrawerWithView } = useSiteConfiguration();
 const attrs = useAttrs();
 const {
   isDragging,
-  togglePlaceholder,
-  multigridColumnUuid,
   lazyLoadStates,
   lazyLoadRefs,
   shouldLazyLoad,
@@ -128,9 +131,11 @@ const {
   getBlockDepth,
   showBottomAddInGrid,
 } = useBlockManager();
+const { openAddBlockPopover, popoverState } = useAddBlockPopover();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
+const { logContentCreateBlock } = useLogEvent();
 
 const shouldShowBottomAddInGrid = computed(() =>
   showBottomAddInGrid({
@@ -199,6 +204,10 @@ onNuxtReady(() => {
   if (shouldLazyLoad(props.block.name)) observeLazyLoadSection(props.block.name);
 });
 
+const isPopoverTarget = computed(
+  () => clientPreview.value && props.enableActions && popoverState.value?.targetUuid === props.block.meta.uuid,
+);
+
 const showOutline = computed(() => {
   return (
     (clientPreview.value &&
@@ -206,14 +215,23 @@ const showOutline = computed(() => {
       props.isClicked &&
       props.isTablet &&
       props.clickedBlockIndex === props.index) ||
-    highlightedUuid.value === props.block.meta.uuid
+    highlightedUuid.value === props.block.meta.uuid ||
+    isPopoverTarget.value
   );
 });
 
-const addNewBlock = (block: Block, position: BlockPosition) => {
-  togglePlaceholder(block.meta.uuid, position);
-  openDrawerWithView('blocksList');
-  multigridColumnUuid.value = null;
+const addNewBlock = (block: Block, position: BlockPosition, event: MouseEvent) => {
+  if (useRuntimeConfig().public.enableAddBlockPopover) {
+    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position });
+  } else {
+    const { openDrawerWithView } = useSiteConfiguration();
+    const { togglePlaceholder } = useBlockManager();
+    const { clearInsertColumnUuid } = useBlocksMutations();
+    togglePlaceholder(block.meta.uuid, position);
+    openDrawerWithView('blocksList');
+    clearInsertColumnUuid();
+  }
+  logContentCreateBlock();
 };
 
 const showTopAddBlockButton = computed(
@@ -230,7 +248,7 @@ const showBottomAddBlockButton = computed(
     props.enableActions &&
     clientPreview.value &&
     !isDragging.value &&
-    !isFooterBlock(props.block) &&
+    !isFooterContainerBlock(props.block) &&
     (props.root || shouldShowBottomAddInGrid.value),
 );
 

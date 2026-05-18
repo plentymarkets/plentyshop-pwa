@@ -116,20 +116,31 @@ export const useTableOfContents = () => {
     openDrawerWithView('blocksSettings', block);
   };
 
-  const addBlockAtBottom = () => {
-    const { togglePlaceholder, multigridColumnUuid, scrollIntoBlockView } = useBlockManager();
-    const { openDrawerWithView } = useSiteConfiguration();
+  const addBlockAtBottom = (event: MouseEvent) => {
+    const { scrollIntoBlockView } = useBlockManager();
 
     const blocks = data.value;
     if (!blocks.length) return;
 
-    const footerIndex = blocks.findIndex((block: Block) => isFooterBlock(block));
+    const footerIndex = blocks.findIndex((block: Block) => isFooterContainerBlock(block));
     const footerBlock = footerIndex >= 0 ? blocks[footerIndex] : null;
 
     if (footerBlock) {
-      togglePlaceholder(footerBlock.meta.uuid, 'top');
-      openDrawerWithView('blocksList');
-      multigridColumnUuid.value = null;
+      if (useRuntimeConfig().public.enableAddBlockPopover) {
+        const { openAddBlockPopover } = useAddBlockPopover();
+        openAddBlockPopover({
+          anchorEl: event.currentTarget as HTMLElement,
+          targetUuid: footerBlock.meta.uuid,
+          position: 'top',
+        });
+      } else {
+        const { openDrawerWithView } = useSiteConfiguration();
+        const { togglePlaceholder } = useBlockManager();
+        const { clearInsertColumnUuid } = useBlocksMutations();
+        togglePlaceholder(footerBlock.meta.uuid, 'top');
+        openDrawerWithView('blocksList');
+        clearInsertColumnUuid();
+      }
       scrollIntoBlockView(footerBlock);
     }
   };

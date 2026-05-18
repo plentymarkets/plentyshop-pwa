@@ -1,5 +1,9 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
+  <div
+    data-testid="multi-grid-structure"
+    :class="[getGridClasses(), { 'px-4': shouldApplyPadding }]"
+    :style="gridInlineStyle"
+  >
     <div
       v-for="(column, colIndex) in columns"
       :key="colIndex"
@@ -11,6 +15,7 @@
         v-for="row in column"
         :key="row.meta.uuid"
         class="group/row relative"
+        :class="{ 'min-h-[60px]': showOverlay(row) }"
         :data-uuid="row.meta.uuid"
         @mouseenter="onRowEnter(row)"
         @mouseleave="onRowLeave"
@@ -56,7 +61,7 @@
 import type { AlignableBlock, MultiGridProps } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { content, configuration } = defineProps<MultiGridProps>();
+const props = defineProps<MultiGridProps>();
 const route = useRoute();
 
 const hoveredRowUuid = ref<string | null>(null);
@@ -82,6 +87,9 @@ const blockSize = computed(() => getBlockSize());
 const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
 const drawerView = computed(() => siteConfigurationDrawerView.value);
 
+const { isFullWidth } = useFullWidthToggleForConfig(computed(() => props.configuration));
+const shouldApplyPadding = computed(() => !isFullWidth.value);
+
 const gapClassMap: Record<string, string> = {
   None: 'gap-x-0',
   S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
@@ -89,15 +97,15 @@ const gapClassMap: Record<string, string> = {
   L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
   XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
 };
-const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
+const gridGapClass = computed(() => gapClassMap[props.configuration.layout?.gap || 'M']);
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 
 const gridInlineStyle = computed(() => ({
-  backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
-  marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
+  backgroundColor: props.configuration.layout?.backgroundColor ?? 'transparent',
+  marginTop: props.configuration.layout?.marginTop !== undefined ? `${props.configuration.layout.marginTop}px` : '0px',
   marginBottom:
-    configuration.layout?.marginBottom !== undefined
-      ? `${configuration.layout.marginBottom}px`
+    props.configuration.layout?.marginBottom !== undefined
+      ? `${props.configuration.layout.marginBottom}px`
       : `${defaultMarginBottom.value}px`,
 }));
 const getGridClasses = () => {
@@ -105,10 +113,10 @@ const getGridClasses = () => {
 };
 
 const getColumnClasses = (colIndex: number) => {
-  const columnWidth = configuration.columnWidths[colIndex];
+  const columnWidth = props.configuration.columnWidths[colIndex];
   const classes = [`col-span-${columnWidth}`];
 
-  if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
+  if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(colIndex)) {
     classes.push('md:sticky');
 
     const topValue = route.meta?.type === 'product' ? 'md:top-40' : 'md:top-5';
@@ -145,7 +153,7 @@ const readAlignment = (block: AlignableBlock): 'left' | 'right' | undefined => {
 };
 
 const pairWithSlots = computed<Block[]>(() => {
-  const list = content.map((block) => ({ ...block }));
+  const list = props.content.map((block) => ({ ...block }));
 
   const alignableIndex = list.findIndex(isAlignable);
 
@@ -164,19 +172,19 @@ const pairWithSlots = computed<Block[]>(() => {
 });
 
 const columns = computed<Block[][]>(() => {
-  const blocks = ref([] as Block[][]);
+  const blocks: Block[][] = [];
   pairWithSlots.value.forEach((block) => {
     if (block.parent_slot !== undefined) {
-      if (!blocks.value[block.parent_slot]) {
-        blocks.value[block.parent_slot] = [];
+      if (!blocks[block.parent_slot]) {
+        blocks[block.parent_slot] = [];
       }
 
-      const slot = blocks.value[block.parent_slot];
+      const slot = blocks[block.parent_slot];
       if (slot) {
         slot.push(block);
       }
     }
   });
-  return blocks.value;
+  return blocks;
 });
 </script>

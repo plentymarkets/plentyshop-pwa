@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky z-[2]" data-testid="localization-management-drawer">
+  <div class="pages-view sticky z-[2] h-full flex flex-col" data-testid="localization-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
@@ -8,22 +8,15 @@
         <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" :show-arrow="true" class="flex">
           <SfIconHelp class="cursor-pointer" />
         </SfTooltip>
-        <button
-          data-testid="pages-view-close"
-          class="!p-0"
-          @click="
-            closeSiteConfigurationDrawer();
-            drawerOpen = false;
-          "
-        >
+        <button data-testid="pages-view-close" class="!p-0" @click="handleClose">
           <SfIconClose />
         </button>
       </div>
     </header>
 
-    <p class="m-4">{{ getEditorTranslation('description') }}</p>
+    <div class="flex-1 min-h-0 overflow-y-auto">
+      <p class="m-4">{{ getEditorTranslation('description') }}</p>
 
-    <div>
       <UiAccordionItem
         v-model="editLanguagesOpen"
         data-testid="content-pages-section"
@@ -61,6 +54,11 @@ initializeLocales();
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const editTranslationsOpen = ref(false);
 const editLanguagesOpen = ref(false);
+
+const handleClose = () => {
+  closeSiteConfigurationDrawer();
+  drawerOpen.value = false;
+};
 </script>
 
 <i18n lang="json">

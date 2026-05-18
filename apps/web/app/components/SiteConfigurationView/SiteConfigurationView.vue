@@ -97,13 +97,6 @@ const groups = computed(() => {
   const allGroups = getSettingsGroups(activeSetting.value ?? '', activeSubCategory.value ?? '');
   const excludedGroups = runtimeConfig.public.disabledEditorSettings as string[];
 
-  return allGroups
-    .filter((group) => !excludedGroups.includes(group.slug))
-    .filter((group) => {
-      if (group.slug === 'cancellation-form') {
-        return runtimeConfig.public.enableCancellationForm;
-      }
-      return true;
-    });
+  return allGroups.filter((group) => !excludedGroups.includes(group.slug));
 });
 </script>

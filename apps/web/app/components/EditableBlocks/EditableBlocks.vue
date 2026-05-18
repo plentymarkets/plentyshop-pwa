@@ -112,7 +112,7 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = pageBlocks.value.findIndex((block: Block) => isFooterBlock(block));
+  const footerIndex = pageBlocks.value.findIndex((block: Block) => isFooterContainerBlock(block));
   const lastIndex = pageBlocks.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = pageBlocks.value.splice(footerIndex, 1)[0];
