@@ -56,6 +56,9 @@ jobs:
       - name: Run typecheck
         run: npm run typecheck
 
+      - name: Validate Vite dependency pre-bundling
+        run: npm run check:optimize-deps
+
       - name: Run shellcheck
         uses: ludeeus/action-shellcheck@master
         with:
