@@ -1,8 +1,4 @@
-import type { CategoryTemplate } from '@plentymarkets/shop-api';
-
-interface UseBlockTemplatesState {
-  categoryTemplateData: CategoryTemplate | null;
-}
+import type { UseBlockTemplatesState } from './types';
 
 export const useBlockTemplates = () => {
   const state = useState<UseBlockTemplatesState>('useBlockTemplates', () => ({

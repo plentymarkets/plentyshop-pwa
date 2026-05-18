@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { LAYOUT_PRESETS } from './types';
+import { LAYOUT_PRESETS } from './constants';
 
 const { activeFilters, searchQuery, popoverState, closeAddBlockPopover, clearPendingCancel, consumePresetPick } =
   useAddBlockPopover();

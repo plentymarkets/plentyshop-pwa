@@ -1,18 +1,6 @@
 import type { PaletteConfig } from '@plentymarkets/tailwind-colors';
 import { createPaletteFromColor } from '@plentymarkets/tailwind-colors';
-
-interface RGB {
-  r: number;
-  g: number;
-  b: number;
-}
-
-export interface Shade {
-  weight: string;
-  rgb: string;
-}
-
-export type TailwindPalette = Array<Shade>;
+import type { RGB, TailwindPalette } from './types';
 
 const hex2rgb = (hex: string): RGB => {
   const r = Number.parseInt(hex.slice(1, 3), 16);

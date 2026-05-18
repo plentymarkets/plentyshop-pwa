@@ -1,4 +1,4 @@
-export type GridSettings = { mobile?: number | null; tablet?: number | null; desktop?: number | null };
+import type { GridSettings } from './types';
 
 const BASE = [
   'grid-cols-1',

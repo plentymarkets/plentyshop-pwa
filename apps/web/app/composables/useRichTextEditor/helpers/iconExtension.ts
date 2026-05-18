@@ -3,6 +3,7 @@ import { userIcons } from '~/components/editor/RichTextEditor/utils/icons';
 import type { DOMOutputSpec } from '@tiptap/pm/model';
 
 declare module '@tiptap/core' {
+  // eslint-disable-next-line custom-rules/file-organization-types
   interface Commands<ReturnType> {
     icon: {
       insertIcon: (name: string) => ReturnType;

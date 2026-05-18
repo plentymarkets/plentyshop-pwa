@@ -129,7 +129,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
@@ -170,7 +170,6 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStru
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
   'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
-type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
 const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
 
 const getGapPx = (gap: string | undefined): number => {
