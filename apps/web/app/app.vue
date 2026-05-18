@@ -72,13 +72,7 @@ const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
-const { device, width: previewWidth } = useEditorPreview();
-
-const previewHeight = computed(() => {
-  if (device.value === 'mobile') return '812px';
-  if (device.value === 'tablet') return '1024px';
-  return undefined;
-});
+const { device, width: previewWidth, height: previewHeight } = useEditorPreview();
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 

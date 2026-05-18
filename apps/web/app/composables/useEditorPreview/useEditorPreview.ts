@@ -1,5 +1,3 @@
-export type PreviewDevice = 'mobile' | 'tablet' | 'desktop';
-
 const getDevice = () => {
   if (typeof window === 'undefined') return ref<PreviewDevice>('desktop');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,9 +9,23 @@ const getDevice = () => {
 };
 
 export const useEditorPreview = () => {
+  const viewport = useViewport();
   const device = getDevice();
 
   const setDevice = (d: PreviewDevice) => {
+    if (d === 'mobile') {
+        viewport.breakpoint.value = 'xs';
+    } else if (d === 'tablet') {
+        viewport.breakpoint.value = 'md';
+    } else {
+        for (const [key, { mediaQuery }] of Object.entries(viewport.queries.value)) {
+            if (window.matchMedia(mediaQuery).matches) {
+                viewport.breakpoint.value = key;
+                break;
+            }
+        }
+    }
+
     device.value = d;
   };
 
@@ -23,5 +35,12 @@ export const useEditorPreview = () => {
     return '100%';
   });
 
-  return { device, setDevice, width };
+
+    const height = computed(() => {
+    if (device.value === 'mobile') return '812px';
+    if (device.value === 'tablet') return '1024px';
+    return undefined;
+    });
+
+  return { device, setDevice, width, height };
 };
