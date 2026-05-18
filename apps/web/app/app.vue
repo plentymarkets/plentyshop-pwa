@@ -30,7 +30,7 @@
       <UiNotifications />
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
-      <NuxtLayout :key="previewRenderKey">
+      <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
     </div>
@@ -61,21 +61,6 @@ const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont 
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
 const { width: previewWidth } = useEditorPreview();
-
-const editorPreviewTick = (typeof window !== 'undefined' && (window as any).__editorPreviewSyncTick) || ref(0);
-
-const previewRenderKey = ref(0);
-
-if (import.meta.client) {
-  let previewRenderTimer: ReturnType<typeof setTimeout> | null = null;
-  watch(editorPreviewTick, () => {
-    if (previewRenderTimer) clearTimeout(previewRenderTimer);
-    previewRenderTimer = setTimeout(() => {
-      previewRenderKey.value++;
-      previewRenderTimer = null;
-    }, 150);
-  });
-}
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 

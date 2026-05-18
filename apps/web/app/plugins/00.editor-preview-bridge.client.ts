@@ -173,40 +173,49 @@ export default defineNuxtPlugin({
       (nuxtApp as any).$pinia = bridge.pinia;
     }
 
-    if (bridge.state) {
-      const iframeState = nuxtApp.payload.state as Record<string, unknown>;
-      Object.keys(bridge.state).forEach((key) => {
+
+    const makeReactiveMirror = (clonedVal: unknown, bridgeKey: string): unknown => {
+      if (clonedVal === null || typeof clonedVal !== 'object' || Array.isArray(clonedVal)) {
+        return clonedVal;
+      }
+      return reactive(
+        new Proxy(clonedVal as Record<string, unknown>, {
+          set(target, prop: string, value) {
+            Reflect.set(target, prop, value);
+            try {
+              const parentTarget = (bridge.state as Record<string, unknown>)[bridgeKey];
+              if (parentTarget !== null && typeof parentTarget === 'object') {
+                (parentTarget as Record<string, unknown>)[prop] = value;
+              }
+            } catch { /* ignore */ }
+            return true;
+          },
+        }),
+      );
+    };
+
+    const existingState = nuxtApp.payload.state as Record<string, unknown>;
+    const reactiveState = shallowReactive({ ...existingState });
+
+    const syncFromBridge = () => {
+      const bridgeState = bridge.state as Record<string, unknown>;
+      Object.keys(bridgeState).forEach((key) => {
         if (EXCLUDED_STATE_KEYS.has(key)) return;
-        iframeState[key] = (bridge.state as Record<string, unknown>)[key];
+        const val = bridgeState[key];
+        try {
+          const clone =
+            val === null || typeof val !== 'object' ? val : JSON.parse(JSON.stringify(val));
+          reactiveState[key] = makeReactiveMirror(clone, key);
+        } catch {
+          reactiveState[key] = val;
+        }
       });
+    };
 
-      nuxtApp.payload.state = new Proxy(iframeState, {
-        get(target, prop: string) {
-          if (EXCLUDED_STATE_KEYS.has(prop)) return target[prop];
-          if (prop in (bridge.state as Record<string, unknown>)) {
-            return (bridge.state as Record<string, unknown>)[prop];
-          }
-          return target[prop];
-        },
-        set(target, prop: string, value) {
-          target[prop] = value;
-          if (!EXCLUDED_STATE_KEYS.has(prop)) {
-            (bridge.state as Record<string, unknown>)[prop] = value;
-            wrapDeepReactive(value, bridge.notify);
-            bridge.notify();
-          }
-          return true;
-        },
-      });
-    }
+    syncFromBridge();
+    nuxtApp.payload.state = reactiveState;
 
-    const syncTick = ref(0);
-    w.__editorPreviewSyncTick = syncTick;
-
-    const unsubscribe = bridge.subscribe(() => {
-      syncTick.value++;
-    });
-
+    const unsubscribe = bridge.subscribe(syncFromBridge);
     window.addEventListener('beforeunload', () => {
       unsubscribe();
     });
