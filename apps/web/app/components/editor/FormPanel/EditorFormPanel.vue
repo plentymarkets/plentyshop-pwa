@@ -1,7 +1,6 @@
 <template>
   <div>
     <button
-      v-bind="$attrs"
       type="button"
       class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       :aria-expanded="internalValue"
@@ -27,7 +26,6 @@
 import { SfIconExpandMore } from '@storefront-ui/vue';
 import { useVModel } from '@vueuse/core';
 
-defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
