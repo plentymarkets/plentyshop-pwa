@@ -11,6 +11,13 @@ const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
 });
 const togglePlaceholder = (uuid: string, position: BlockPosition) => {
   visiblePlaceholder.value = { uuid, position };
+  if (import.meta.client && window.parent !== window) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parentBridge = (window.parent as any).__editorBridge;
+    if (typeof parentBridge?.onTogglePlaceholder === 'function') {
+      parentBridge.onTogglePlaceholder(uuid, position);
+    }
+  }
 };
 
 const dragState = reactive({
@@ -379,8 +386,11 @@ export const useBlockManager = () => {
 
     if (getBlockDepth(uuid) > 0) {
       await deleteBlockFromColumn(uuid);
+      updateBlocks([...pageBlocks.value]);
     } else if (!findOrDeleteBlockByUuid(pageBlocks.value, uuid, true)) {
       deleteFromHeaderContainer(uuid);
+    } else {
+      updateBlocks([...pageBlocks.value]);
     }
 
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);

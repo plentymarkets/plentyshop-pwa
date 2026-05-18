@@ -13,6 +13,8 @@ interface EditorBridge {
   notify: (changedKey?: string) => void;
   subscribe: (fn: TickListener) => () => void;
   onIframeNavigate?: (path: string) => void;
+  onTogglePlaceholder?: (uuid: string, position: string) => void;
+  onSetInsertColumnUuid?: (uuid: string) => void;
 }
 
 const wrappedObjects = new WeakSet<object>();
@@ -167,6 +169,14 @@ export default defineNuxtPlugin({
           if (!router) return;
           const currentPath = (router.currentRoute.value.fullPath as string).replace(/[?&]__preview=1$/, '');
           if (path !== currentPath) router.push(path);
+        };
+        const { togglePlaceholder } = useBlockManager();
+        bridge.onTogglePlaceholder = (uuid: string, position: string) => {
+          togglePlaceholder(uuid, position as Parameters<typeof togglePlaceholder>[1]);
+        };
+        const { setInsertColumnUuid } = useBlocksMutations();
+        bridge.onSetInsertColumnUuid = (uuid: string) => {
+          setInsertColumnUuid(uuid);
         };
       });
       return;

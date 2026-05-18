@@ -124,7 +124,7 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const updateBlocks = (blocks: Block[]) => {
-    state.value.data.blocks = blocks;
+    state.value.data = { ...state.value.data, blocks };
   };
 
   const reorderHeaderBlocks = (blocks: Block[]) => {
