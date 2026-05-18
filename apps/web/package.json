@@ -6,7 +6,7 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "build": "tsx ./build/index.ts && nuxt build",
-    "dev": "tsx ./build/index.ts && tsx ./build/check-optimize-deps.ts && nuxt dev",
+    "dev": "tsx ./build/index.ts && npm run check:optimize-deps && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "publish-typedoc": "npx typedoc --options typedoc.json && mkdir -p docs/reference && rsync -av --delete reference/composables/ docs/reference/composables/",

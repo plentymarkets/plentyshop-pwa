@@ -256,7 +256,8 @@ const main = (): void => {
     process.exit(1);
   }
 
-  console.warn('\x1b[32m✔\x1b[0m Vite dependency pre-bundling is configured correctly');
+  // eslint-disable-next-line no-console
+  console.info('\x1b[32m✔\x1b[0m Vite dependency pre-bundling is configured correctly');
 };
 
 if (import.meta.url === `file://${process.argv[1]}`) {
