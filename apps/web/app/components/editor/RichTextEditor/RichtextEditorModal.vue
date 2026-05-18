@@ -100,7 +100,6 @@ const emit = defineEmits<{
 }>();
 </script>
 
-
 <i18n lang="json">
 {
   "en": {
