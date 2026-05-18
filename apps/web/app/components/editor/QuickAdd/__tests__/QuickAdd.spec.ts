@@ -14,8 +14,25 @@ mockNuxtImport('getBlockIconSvg', () => (blockName: string) => {
 });
 
 const mockAddNewBlock = vi.fn();
+const mockFindOrDeleteBlockByUuid = vi.fn();
 mockNuxtImport('useBlockManager', () => () => ({
   addNewBlock: mockAddNewBlock,
+  findOrDeleteBlockByUuid: mockFindOrDeleteBlockByUuid,
+}));
+
+const mockBlockUuid = ref('parent-block-uuid');
+mockNuxtImport('useSiteConfiguration', () => () => ({
+  blockUuid: mockBlockUuid,
+}));
+
+const mockAllBlocks = ref([
+  {
+    meta: { uuid: 'parent-block-uuid' },
+    content: [{ meta: { uuid: 'last-child-uuid' } }],
+  },
+]);
+mockNuxtImport('useBlocks', () => () => ({
+  allBlocks: mockAllBlocks,
 }));
 
 const options: QuickAddOption[] = [
@@ -24,14 +41,10 @@ const options: QuickAddOption[] = [
   { blockName: 'MultiGrid', label: 'Layout', category: 'layout', variationIndex: 0 },
 ];
 
-const mockLastChild = { meta: { uuid: 'last-child-uuid' } } as unknown as Block;
-const getLastChild = () => mockLastChild;
-
-const createWrapper = (props?: { options?: QuickAddOption[]; getLastChild?: () => Block | undefined }) => {
+const createWrapper = (props?: { options?: QuickAddOption[] }) => {
   return mount(QuickAdd, {
     props: {
       options,
-      getLastChild,
       ...props,
     },
     global: {
@@ -45,6 +58,10 @@ const createWrapper = (props?: { options?: QuickAddOption[]; getLastChild?: () =
 describe('QuickAdd', () => {
   beforeEach(() => {
     mockAddNewBlock.mockReset();
+    mockFindOrDeleteBlockByUuid.mockReset();
+    mockFindOrDeleteBlockByUuid.mockReturnValue({
+      content: [{ meta: { uuid: 'last-child-uuid' } }],
+    });
   });
 
   it('should render buttons for each option', () => {
@@ -70,8 +87,18 @@ describe('QuickAdd', () => {
     expect(mockAddNewBlock).toHaveBeenCalledWith('image', 0, 'last-child-uuid', 'bottom');
   });
 
-  it('should not call addNewBlock when getLastChild returns undefined', async () => {
-    const wrapper = createWrapper({ getLastChild: () => undefined });
+  it('should not call addNewBlock when block has no content', async () => {
+    mockFindOrDeleteBlockByUuid.mockReturnValue({ content: [] });
+    const wrapper = createWrapper();
+
+    await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
+
+    expect(mockAddNewBlock).not.toHaveBeenCalled();
+  });
+
+  it('should not call addNewBlock when block is not found', async () => {
+    mockFindOrDeleteBlockByUuid.mockReturnValue(undefined);
+    const wrapper = createWrapper();
 
     await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
 

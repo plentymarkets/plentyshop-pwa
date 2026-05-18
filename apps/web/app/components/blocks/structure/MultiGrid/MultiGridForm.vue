@@ -19,7 +19,7 @@
     </button>
 
     <div v-if="elementLayoutOpen" id="element-panel-element-layout" class="px-3.5 py-3">
-      <EditorQuickAdd :options="quickAddOptions" :get-last-child="getLastChild" />
+      <EditorQuickAdd :options="quickAddOptions" />
     </div>
 
     <button
@@ -370,11 +370,6 @@ const layoutOpen = ref(true);
 const backgroundOpen = ref(false);
 
 const quickAddOptions = multiGridQuickAddOptions;
-
-const getLastChild = () => {
-  const content = multiGridStructure.value.content ?? [];
-  return content[content.length - 1];
-};
 </script>
 
 <i18n lang="json">

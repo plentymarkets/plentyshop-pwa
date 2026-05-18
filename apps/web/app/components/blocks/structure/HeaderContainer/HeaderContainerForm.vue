@@ -8,7 +8,6 @@
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
         :quick-add-options="quickAddOptions"
-        :get-last-child="getLastChild"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
@@ -155,11 +154,6 @@ const addBlock = (event?: MouseEvent) => {
 };
 
 const quickAddOptions = headerQuickAddOptions;
-
-const getLastChild = () => {
-  const content = headerContainerStructure.value.content ?? [];
-  return content[content.length - 1];
-};
 
 const deleteBlock = async (index: number) => {
   if (blocks.value.length <= 1) {

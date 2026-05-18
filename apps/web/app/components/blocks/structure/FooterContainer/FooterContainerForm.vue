@@ -8,7 +8,6 @@
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
         :quick-add-options="quickAddOptions"
-        :get-last-child="getLastChild"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
@@ -102,11 +101,6 @@ const blockLabels = ref<string[]>([]);
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
 
 const quickAddOptions = footerQuickAddOptions;
-
-const getLastChild = () => {
-  const content = footerContainer.value.content ?? [];
-  return content[content.length - 1];
-};
 
 const blockForm = computed(() => {
   if (!editingBlockName.value) {

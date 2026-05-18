@@ -1,5 +1,3 @@
-import type { Block } from '@plentymarkets/shop-api';
-
 export interface QuickAddOption {
   blockName: string;
   label: string;
@@ -9,5 +7,4 @@ export interface QuickAddOption {
 
 export interface QuickAddProps {
   options: QuickAddOption[];
-  getLastChild: () => Block | undefined;
 }

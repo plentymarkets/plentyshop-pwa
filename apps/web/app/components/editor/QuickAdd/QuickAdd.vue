@@ -27,12 +27,22 @@ import type { QuickAddOption, QuickAddProps } from './types';
 
 const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
-const props = defineProps<QuickAddProps>();
+defineProps<QuickAddProps>();
 
-const { addNewBlock } = useBlockManager();
+const { blockUuid } = useSiteConfiguration();
+const { allBlocks } = useBlocks();
+const { findOrDeleteBlockByUuid, addNewBlock } = useBlockManager();
+
+const getLastChild = () => {
+  const uuid = blockUuid.value;
+  if (!uuid) return undefined;
+  const block = findOrDeleteBlockByUuid(allBlocks.value, uuid);
+  if (!block?.content || !Array.isArray(block.content) || block.content.length === 0) return undefined;
+  return block.content[block.content.length - 1];
+};
 
 const handleAdd = async (option: QuickAddOption) => {
-  const lastChild = props.getLastChild();
+  const lastChild = getLastChild();
   if (!lastChild) return;
   await addNewBlock(option.category, option.variationIndex, lastChild.meta.uuid, 'bottom');
 };

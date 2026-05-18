@@ -9,7 +9,6 @@ export interface BlockItemsAccordionProps {
   minItems?: number;
   modelValue?: boolean;
   quickAddOptions?: QuickAddOption[];
-  getLastChild: () => Block | undefined;
 }
 
 export interface BlockItemsAccordionEmits {
