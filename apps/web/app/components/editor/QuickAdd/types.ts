@@ -8,4 +8,5 @@ export interface QuickAddOption {
 
 export interface QuickAddProps {
   options: QuickAddOption[];
+  blockUuid?: string;
 }

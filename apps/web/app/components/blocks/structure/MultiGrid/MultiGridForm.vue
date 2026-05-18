@@ -19,7 +19,7 @@
     </button>
 
     <div v-if="elementLayoutOpen" id="element-panel-element-layout" class="px-3.5 py-3">
-      <EditorQuickAdd :options="quickAddOptions" />
+      <EditorQuickAdd :options="quickAddOptions" :block-uuid="resolvedUuid" />
     </div>
 
     <button

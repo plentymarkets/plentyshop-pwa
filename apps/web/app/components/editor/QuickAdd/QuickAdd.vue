@@ -28,7 +28,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
-defineProps<QuickAddProps>();
+const props = defineProps<QuickAddProps>();
 
 const { blockUuid } = useSiteConfiguration();
 const { allBlocks } = useBlocks();
@@ -36,7 +36,7 @@ const { findOrDeleteBlockByUuid, addNewBlock } = useBlockManager();
 const { addBlockToGrid, addRowToGrid } = useMultiGridQuickAdd();
 
 const getBlock = () => {
-  const uuid = blockUuid.value;
+  const uuid = props.blockUuid || blockUuid.value;
   if (!uuid) return undefined;
   return findOrDeleteBlockByUuid(allBlocks.value, uuid) ?? undefined;
 };
