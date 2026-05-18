@@ -22,6 +22,5 @@ defineProps<DefaultLayoutProps>();
 
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
-const viewport = useViewport();
 setLogoMeta();
 </script>
