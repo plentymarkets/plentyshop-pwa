@@ -8,7 +8,6 @@
     <main>
       <slot />
     </main>
-    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
     <UiFooterBlocks />
