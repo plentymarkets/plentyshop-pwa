@@ -147,6 +147,7 @@
                   />
                 </div>
                 <button
+                  :data-testid="`actions-delete-item-${index}`"
                   class="w-full text-left px-3 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 rounded-b-lg disabled:opacity-40 disabled:cursor-not-allowed"
                   :disabled="minItemsReached"
                   @click="onDelete(block)"
@@ -169,6 +170,7 @@
       <button
         ref="addButtonRef"
         type="button"
+        data-testid="actions-add-block-button"
         class="w-full py-1.5 rounded-md border border-editor-accent/40 flex items-center justify-center gap-1.5 text-xs text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
         @click="props.customAdd ? emit('add-element') : onAddElement()"
       >
