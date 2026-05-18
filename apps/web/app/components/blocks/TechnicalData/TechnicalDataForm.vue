@@ -120,8 +120,8 @@ const itemTextBlock = computed<TechnicalDataContent>(() => {
 });
 
 const { isFullWidth } = useFullWidthToggleForContent(itemTextBlock);
-const textSettings = ref(false);
-const layoutSettings = ref(false);
+const textSettings = ref(true);
+const layoutSettings = ref(true);
 watch(
   () => itemTextBlock.value.layout.displayAsCollapsable,
   (newValue) => {

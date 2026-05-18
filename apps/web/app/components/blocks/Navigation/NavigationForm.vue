@@ -144,7 +144,7 @@ import {
 
 import type { NavigationFormProps, NavigationContent } from './types';
 const props = defineProps<NavigationFormProps>();
-const layoutSettings = ref(false);
+const layoutSettings = ref(true);
 
 const { allBlocks } = useBlocks();
 
