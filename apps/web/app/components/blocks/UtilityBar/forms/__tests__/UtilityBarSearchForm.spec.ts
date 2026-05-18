@@ -62,7 +62,8 @@ describe('UtilityBarSearchForm', () => {
       global: {
         stubs: {
           EditorFormPanel: {
-            template: '<div><slot /></div>',
+            props: ['title'],
+            template: '<div>{{ title }}<slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',
@@ -83,7 +84,8 @@ describe('UtilityBarSearchForm', () => {
       global: {
         stubs: {
           EditorFormPanel: {
-            template: '<div><slot /></div>',
+            props: ['title'],
+            template: '<div>{{ title }}<slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',
@@ -106,7 +108,8 @@ describe('UtilityBarSearchForm', () => {
       global: {
         stubs: {
           EditorFormPanel: {
-            template: '<div><slot /></div>',
+            props: ['title'],
+            template: '<div>{{ title }}<slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',

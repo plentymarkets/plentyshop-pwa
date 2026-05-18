@@ -15,7 +15,7 @@
           <div
             v-for="row in columns[cell.colIndex]"
             :key="row.meta.uuid"
-            class="relative"
+            class="group/row relative"
             :data-uuid="row.meta.uuid"
             @mouseenter="onRowEnter(row)"
             @mouseleave="onRowLeave"

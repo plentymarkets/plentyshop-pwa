@@ -36,6 +36,7 @@ const props = withDefaults(
     contentClass?: string;
   }>(),
   {
+    title: '',
     modelValue: true,
     contentClass: 'px-3.5 py-3',
   },

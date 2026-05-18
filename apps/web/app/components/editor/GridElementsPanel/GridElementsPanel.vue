@@ -17,7 +17,7 @@
     </template>
 
     <draggable v-model="localItems" item-key="meta.uuid" handle=".el-drag-handle" :filter="'.no-drag'" @end="onDragEnd">
-      <template #item="{ element: block }">
+      <template #item="{ element: block, index }">
         <div class="relative">
           <div
             v-if="!props.customAdd"
@@ -95,7 +95,8 @@
             >
 
             <button
-              v-if="hoveredUuid === block.meta.uuid && block.name !== 'EmptyGridBlock'"
+              v-show="hoveredUuid === block.meta.uuid && block.name !== 'EmptyGridBlock'"
+              :data-testid="`actions-edit-item-${index}`"
               class="no-drag p-0.5 rounded cursor-pointer text-editor-text-placeholder hover:text-editor-accent flex-shrink-0"
               :aria-label="getEditorTranslation('edit-aria')"
               @click.stop="emit('edit-element', block)"
