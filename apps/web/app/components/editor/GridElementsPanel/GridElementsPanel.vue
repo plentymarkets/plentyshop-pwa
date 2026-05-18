@@ -197,10 +197,14 @@ const isOpen = computed({
   set: (v) => emit('update:modelValue', v),
 });
 
+const enableAddBlockPopover = useRuntimeConfig().public.enableAddBlockPopover as boolean;
+
 const { allBlocks: data } = useBlocks();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, togglePlaceholder } = useBlockManager();
 const { openAddBlockPopover } = useAddBlockPopover();
 const { toggleBlockVisibility } = useBlocksVisibility();
+const { openDrawerWithView } = useSiteConfiguration();
+const { clearInsertColumnUuid, setInsertColumnUuid } = useBlocksMutations();
 
 const structure = computed(() => findOrDeleteBlockByUuid(data.value, props.uuid) as ColumnBlock | undefined);
 const isGridMode = computed(() => Array.isArray(structure.value?.configuration?.columnWidths));
@@ -235,12 +239,12 @@ const insertHoveredUuid = ref<string | null>(null);
 const onInsertBefore = (block: Block, event: MouseEvent) => {
   if (isGridMode.value) {
     emit('insert-before', block, event.currentTarget as HTMLElement);
+  } else if (enableAddBlockPopover) {
+    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position: 'top' });
   } else {
-    openAddBlockPopover({
-      anchorEl: event.currentTarget as HTMLElement,
-      targetUuid: block.meta.uuid,
-      position: 'top',
-    });
+    togglePlaceholder(block.meta.uuid, 'top');
+    openDrawerWithView('blocksList');
+    clearInsertColumnUuid();
   }
 };
 
@@ -280,11 +284,12 @@ const onDelete = (block: Block) => {
 };
 
 const onReplaceEmpty = (event: MouseEvent, block: Block) => {
-  openAddBlockPopover({
-    anchorEl: event.currentTarget as HTMLElement,
-    targetUuid: block.meta.uuid,
-    position: 'inside',
-  });
+  if (enableAddBlockPopover) {
+    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position: 'inside' });
+  } else {
+    setInsertColumnUuid(block.meta.uuid);
+    openDrawerWithView('blocksList');
+  }
 };
 
 const onDragEnd = () => {
@@ -322,38 +327,44 @@ const onAddElement = () => {
     const newSlot = block.configuration.columnWidths.length;
     const newBlock = createEmptyGridBlock(newSlot);
 
-    const cleanupTempBlock = () => {
-      const content = block.content as Block[];
-      const index = content.findIndex((b) => b.meta.uuid === newBlock.meta.uuid && b.name === 'EmptyGridBlock');
-      if (index !== -1) {
-        content.splice(index, 1);
-        block.configuration.columnWidths.splice(newSlot, 1);
-      }
-    };
-
-    openAddBlockPopover({
-      anchorEl,
-      targetUuid: newBlock.meta.uuid,
-      position: 'inside',
-      onCancel: cleanupTempBlock,
-      onPresetPick: (spans) => {
-        cleanupTempBlock();
-        addRowSpans(spans);
-      },
-    });
-
     block.configuration.columnWidths.push(12);
     if (!block.content) block.content = [];
     (block.content as Block[]).push(newBlock as unknown as Block);
+
+    if (enableAddBlockPopover) {
+      const cleanupTempBlock = () => {
+        const content = block.content as Block[];
+        const index = content.findIndex((b) => b.meta.uuid === newBlock.meta.uuid && b.name === 'EmptyGridBlock');
+        if (index !== -1) {
+          content.splice(index, 1);
+          block.configuration.columnWidths.splice(newSlot, 1);
+        }
+      };
+      openAddBlockPopover({
+        anchorEl,
+        targetUuid: newBlock.meta.uuid,
+        position: 'inside',
+        onCancel: cleanupTempBlock,
+        onPresetPick: (spans) => {
+          cleanupTempBlock();
+          addRowSpans(spans);
+        },
+      });
+    } else {
+      setInsertColumnUuid(newBlock.meta.uuid);
+      openDrawerWithView('blocksList');
+    }
   } else {
     const content = (structure.value.content as Block[] | undefined) ?? [];
     const lastBlock = content.at(-1);
     if (!lastBlock) return;
-    openAddBlockPopover({
-      anchorEl,
-      targetUuid: lastBlock.meta.uuid,
-      position: 'bottom',
-    });
+    if (enableAddBlockPopover) {
+      openAddBlockPopover({ anchorEl, targetUuid: lastBlock.meta.uuid, position: 'bottom' });
+    } else {
+      togglePlaceholder(lastBlock.meta.uuid, 'bottom');
+      openDrawerWithView('blocksList');
+      clearInsertColumnUuid();
+    }
   }
 };
 </script>
