@@ -19,7 +19,7 @@
     </button>
 
     <div v-if="elementLayoutOpen" id="element-panel-element-layout" class="px-3.5 py-3">
-      <EditorQuickAdd :options="quickAddOptions" :get-last-child="getLastChild" :custom-insert="customInsert" />
+      <EditorQuickAdd :options="quickAddOptions" :get-last-child="getLastChild" />
     </div>
 
     <button
@@ -374,17 +374,6 @@ const quickAddOptions = multiGridQuickAddOptions;
 const getLastChild = () => {
   const content = multiGridStructure.value.content ?? [];
   return content[content.length - 1];
-};
-
-const customInsert = (newBlock: Block) => {
-  const content = (multiGridStructure.value.content ?? []) as Block[];
-  const columnWidths = multiGridStructure.value.configuration.columnWidths;
-  const numCols = columnWidths?.length ?? 0;
-  if (numCols < 1) {
-    return;
-  }
-  newBlock.parent_slot = getLeastPopulatedColumn(content, numCols);
-  content.push(newBlock);
 };
 </script>
 

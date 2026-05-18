@@ -7,10 +7,7 @@ export interface QuickAddOption {
   variationIndex: number;
 }
 
-export type InsertBlockFn = (newBlock: Block) => void;
-
 export interface QuickAddProps {
   options: QuickAddOption[];
   getLastChild: () => Block | undefined;
-  customInsert?: InsertBlockFn;
 }

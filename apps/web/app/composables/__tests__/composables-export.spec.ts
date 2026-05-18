@@ -44,7 +44,6 @@ describe('composables index exports', () => {
     'useSliderImagePreload',
     'useNearViewport',
     'useEditorOptionsTabs',
-    'useQuickAdd',
     'useBlocksHighlight',
   ];
 

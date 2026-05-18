@@ -23,18 +23,17 @@
 
 <script setup lang="ts">
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
-import type { QuickAddProps } from './types';
+import type { QuickAddOption, QuickAddProps } from './types';
 
 const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
 const props = defineProps<QuickAddProps>();
 
-const { quickAddBlock } = useQuickAdd(
-  () => props.getLastChild(),
-  props.customInsert,
-);
+const { addNewBlock } = useBlockManager();
 
-const handleAdd = (option: Parameters<typeof quickAddBlock>[0]) => {
-  quickAddBlock(option);
+const handleAdd = async (option: QuickAddOption) => {
+  const lastChild = props.getLastChild();
+  if (!lastChild) return;
+  await addNewBlock(option.category, option.variationIndex, lastChild.meta.uuid, 'bottom');
 };
 </script>

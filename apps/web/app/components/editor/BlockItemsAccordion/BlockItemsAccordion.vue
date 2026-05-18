@@ -123,7 +123,6 @@
       <EditorQuickAdd
         :options="quickAddOptions"
         :get-last-child="getLastChild ?? (() => undefined)"
-        :custom-insert="customInsert"
       />
     </div>
   </UiAccordionItem>
