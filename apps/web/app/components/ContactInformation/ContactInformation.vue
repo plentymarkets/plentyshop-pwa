@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="contact-information" class="md:px-4 py-6">
+  <div data-testid="contact-information" class="@md:px-4 py-6">
     <h2 class="w-full text-neutral-900 text-lg font-bold mb-4">
       {{ t('contact.info.heading') }}
     </h2>
@@ -42,9 +42,9 @@
       />
     </form>
 
-    <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col sm:flex-row mt-4">
+    <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col @sm:flex-row mt-4">
       <div>{{ t('authentication.signup.alreadyHaveAccount') }}</div>
-      <SfLink class="select-none hover:cursor-pointer sm:ml-2" @click="openAuthentication">
+      <SfLink class="select-none hover:cursor-pointer @sm:ml-2" @click="openAuthentication">
         {{ t('authentication.signup.logInLinkLabel') }}
       </SfLink>
     </div>
@@ -53,7 +53,7 @@
       v-if="isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full w-full overflow-auto md:w-[500px] md:h-fit"
+      class="h-full w-full overflow-auto @md:w-[500px] @md:h-fit"
     >
       <header>
         <UiButton

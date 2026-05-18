@@ -1,14 +1,14 @@
 <template>
   <form
-    class="md:rounded-md"
-    :class="{ 'md:shadow-lg': configuration?.dropShadow, 'md:border md:border-neutral-100': configuration?.borders }"
+    class="@md:rounded-md"
+    :class="{ '@md:shadow-lg': configuration?.dropShadow, '@md:border @md:border-neutral-100': configuration?.borders }"
     :style="inlineStyle"
     data-testid="purchase-card"
     @submit.prevent="handleAddToCart()"
   >
     <div class="relative">
       <div class="drift-zoom-image">
-        <section class="md:p-4">
+        <section class="@md:p-4">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
@@ -122,7 +122,7 @@
                 :product="product"
               />
               <div class="mt-4">
-                <div class="flex flex-col md:flex-row flex-wrap gap-4">
+                <div class="flex flex-col @md:flex-row flex-wrap gap-4">
                   <UiQuantitySelector
                     :min-value="productGetters.getMinimumOrderQuantity(product)"
                     :value="quantitySelectorValue"

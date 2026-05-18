@@ -16,8 +16,8 @@
 
     <div
       ref="contentRef"
-      class="flex-1 w-full bg-white relative"
-      :class="clientPreview ? 'overflow-auto' : 'overflow-visible'"
+      class="flex-1 w-full relative"
+      :class="clientPreview ? ['overflow-auto', isConstrainedPreview ? 'bg-editor-body-bg' : 'bg-white'] : 'overflow-visible bg-white'"
     >
       <Body
         class="font-body bg-editor-body-bg"
@@ -27,9 +27,14 @@
       <UiNotifications />
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
+      <div
+        :style="isConstrainedPreview ? { width: previewWidth, maxWidth: '100%' } : undefined"
+        :class="isConstrainedPreview ? 'mx-auto bg-white shadow-md min-h-full @container' : '@container'"
+      >
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
+      </div>
     </div>
 
     <component
@@ -47,20 +52,23 @@
 </template>
 
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core';
 import { isCssUrl, isJsUrl } from '~/utils/assets';
 import { categoryGetters } from '@plentymarkets/shop-api';
 
 const bodyClass = ref('');
 const route = useRoute();
-const viewport = useViewport();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
+const { device, width: previewWidth } = useEditorPreview();
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
-const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
+const isLargeScreen = useMediaQuery('(min-width: 1024px)');
+const clientPreview = computed(() => isInEditorClient.value && isLargeScreen.value);
+const isConstrainedPreview = computed(() => clientPreview.value && device.value !== 'desktop');
 const contentRef = ref<HTMLElement | null>(null);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');

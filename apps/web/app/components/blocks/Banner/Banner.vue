@@ -14,7 +14,7 @@
 
     <div
       v-if="banner.text"
-      :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': banner.text.bgcolor }]"
+      :class="['absolute inset-0 p-4 flex flex-col @md:basis-2/4', { '@md:p-10': banner.text.bgcolor }]"
       :style="{
         color: banner.text.color,
         textAlign: getTextAlignment(rteAlignment ?? ''),
@@ -33,7 +33,7 @@
         <TextContent :text="banner.text" :index="props.slideIndex" />
         <UiButton
           v-if="banner.button && banner.button.label && banner.button.link"
-          class="flex flex-col md:flex-row gap-4 mt-6"
+          class="flex flex-col @md:flex-row gap-4 mt-6"
           :tag="NuxtLink"
           :to="localePath(banner.button.link ?? '')"
           :variant="banner.button.variant ?? 'primary'"

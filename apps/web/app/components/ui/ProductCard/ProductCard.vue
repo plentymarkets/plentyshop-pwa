@@ -130,7 +130,7 @@
           <div v-if="showBasePrice" class="mb-2">
             <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
           </div>
-          <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
+          <div class="flex flex-col-reverse items-start @md:flex-row @md:items-center mt-auto">
             <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
               <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
@@ -138,7 +138,7 @@
             </span>
             <span
               v-if="crossedPrice && differentPrices(price, crossedPrice)"
-              class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
+              class="typography-text-sm text-neutral-500 line-through @md:ml-3 @md:pb-2"
             >
               {{ format(crossedPrice) }}
             </span>

@@ -1,8 +1,8 @@
 <template>
   <ClientOnly>
-    <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+    <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
     <h2
-      class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+      class="hidden @md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
       data-testid="account-returns-heading"
     >
       {{ t('account.ordersAndReturns.returnsHeading') }}
@@ -59,11 +59,11 @@
               {{ t('account.ordersAndReturns.details') }}
             </UiButton>
           </li>
-          <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+          <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
         </ul>
       </template>
 
-      <table v-else class="md:block text-left typography-text-sm mx-4">
+      <table v-else class="@md:block text-left typography-text-sm mx-4">
         <caption class="hidden">
           {{
             t('account.ordersAndReturns.listOfOrders')
@@ -71,18 +71,18 @@
         </caption>
         <thead class="border-b-2 border-neutral-200">
           <tr>
-            <th class="lg:py-4 py-2 lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.returnId') }}</th>
-            <th class="lg:p-4 p-2 font-medium lg:whitespace-nowrap">{{ t('account.ordersAndReturns.returnDate') }}</th>
-            <th class="lg:p-4 p-2 font-medium w-full">
+            <th class="@lg:py-4 py-2 @lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.returnId') }}</th>
+            <th class="@lg:p-4 p-2 font-medium @lg:whitespace-nowrap">{{ t('account.ordersAndReturns.returnDate') }}</th>
+            <th class="@lg:p-4 p-2 font-medium w-full">
               {{ t('account.ordersAndReturns.orderDetails.paymentMethod') }}
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="orderReturn in data.entries" :key="orderReturn.order.id" class="border-b border-neutral-200">
-            <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getId(orderReturn) }}</td>
-            <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn, locale) }}</td>
-            <td class="lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
+            <td class="@lg:p-4 p-2 @lg:whitespace-nowrap">{{ orderGetters.getId(orderReturn) }}</td>
+            <td class="@lg:p-4 p-2 @lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn, locale) }}</td>
+            <td class="@lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
             <td>
               <UiButton
                 :tag="NuxtLink"

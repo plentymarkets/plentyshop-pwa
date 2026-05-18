@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 max-md:bottom-[3.9rem] shadow-2xl p-3 bg-white rounded overflow-auto end-0 sm:top-auto"
+    class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full @xl:w-3/5 @xl:right-2 bottom-0 max-md:bottom-[3.9rem] shadow-2xl p-3 bg-white rounded overflow-auto end-0 @sm:top-auto"
   >
     <div v-if="!furtherSettingsOn">
       <!-- cookie info -->
@@ -19,7 +19,7 @@
         </i18n-t>
       </div>
       <!-- checkboxes -->
-      <div v-if="cookieGroups" class="flex flex-wrap gap-4 sm:grid sm:grid-cols-4 mt-2">
+      <div v-if="cookieGroups" class="flex flex-wrap gap-4 @sm:grid @sm:grid-cols-4 mt-2">
         <template v-for="(cookieGroup, index) in cookieGroups" :key="index">
           <div v-if="cookieGroup?.cookies?.length" class="flex items-center space-x-2">
             <SfCheckbox
@@ -118,9 +118,9 @@
         {{ furtherSettingsOn ? t('CookieBar.Back') : t('CookieBar.Further Settings') }}
       </SfLink>
     </div>
-    <div class="flex flex-col gap-4 sm:flex-row">
+    <div class="flex flex-col gap-4 @sm:flex-row">
       <UiButton
-        class="w-full h-10 md:h-12"
+        class="w-full h-10 @md:h-12"
         :aria-disabled="false"
         type="button"
         :aria-label="t('CookieBar.Accept All')"
@@ -130,7 +130,7 @@
         {{ t('CookieBar.Accept All') }}
       </UiButton>
       <UiButton
-        class="w-full h-10 md:h-12"
+        class="w-full h-10 @md:h-12"
         :aria-disabled="false"
         type="button"
         :aria-label="t('CookieBar.Reject All')"
@@ -140,7 +140,7 @@
       </UiButton>
       <UiButton
         variant="secondary"
-        class="w-full h-10 md:h-12"
+        class="w-full h-10 @md:h-12"
         :aria-disabled="false"
         type="button"
         :aria-label="t('CookieBar.Accept Selection')"
@@ -152,7 +152,7 @@
   </div>
 
   <!-- Button to Open Cookie Tab -->
-  <div v-if="!visible" class="z-10 h-auto w-12 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2">
+  <div v-if="!visible" class="z-10 h-auto w-12 fixed bottom-[4.3rem] @md:bottom-2 left-2 @xl:left-auto @xl:right-2">
     <SfTooltip :label="t('CookieBar.Cookie Settings')" placement="left">
       <UiButton
         variant="secondary"

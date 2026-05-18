@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex border-neutral-200 border-b p-4">
-    <div class="relative overflow-hidden flex-shrink-0 rounded-md w-24 h-24 sm:h-40 sm:w-40">
+    <div class="relative overflow-hidden flex-shrink-0 rounded-md w-24 h-24 @sm:h-40 @sm:w-40">
       <NuxtImg
         ref="img"
         :src="
@@ -16,7 +16,7 @@
     </div>
 
     <div class="ml-3 w-full flex flex-col">
-      <h1 class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word" data-testid="product-name">
+      <h1 class="w-fit no-underline typography-text-sm @sm:typography-text-lg break-word" data-testid="product-name">
         {{ orderGetters.getItemQty(item) }}x {{ orderGetters.getItemName(item) }}
       </h1>
       <Price
@@ -26,13 +26,13 @@
       />
       <div
         v-if="orderGetters.getItemShortDescription(order, item)"
-        class="mb-2 font-normal typography-text-sm whitespace-pre-wrap break-words text-center sm:text-left"
+        class="mb-2 font-normal typography-text-sm whitespace-pre-wrap break-words text-center @sm:text-left"
         data-testid="product-description"
       >
         {{ orderGetters.getItemShortDescription(order, item) }}
       </div>
       <div v-if="!orderGetters.isBundleComponents(item)" class="mb-2">
-        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+        <ul class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(item)" :key="index">
             <span v-if="orderGetters.getOrderItemAttributeName(attribute)" class="mr-1">
               {{ orderGetters.getOrderItemAttributeName(attribute) }}:
@@ -42,7 +42,7 @@
             </span>
           </li>
         </ul>
-        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+        <ul class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700">
           <li
             v-for="(property, index) in orderGetters.getItemOrderProperties(item)"
             :key="index"

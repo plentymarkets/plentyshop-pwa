@@ -8,7 +8,7 @@
 
     <div
       v-if="turnstileSiteKey.length === 0 || cancellationEmail.length === 0"
-      class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+      class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
     >
       <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
       <div class="py-2">{{ t('cancellationForm.misConfigured') }}</div>
@@ -99,7 +99,7 @@
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
 
-      <div class="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+      <div class="flex flex-col-reverse @md:flex-row @md:items-start @md:justify-between gap-4">
         <div>
           <NuxtTurnstile
             v-if="turnstileSiteKey.length > 0 && turnstileLoad"

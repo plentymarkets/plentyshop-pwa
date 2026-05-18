@@ -30,7 +30,7 @@
 
     <section
       v-if="isDropdownVisible"
-      class="w-full grid md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-md border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
+      class="w-full grid @md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-md border border-neutral-100 mt-[2px] gap-8 max-h-[calc(100vh-120px)] overflow-y-auto"
       aria-live="polite"
       aria-relevant="all"
       :aria-label="t('searchBar.searchSuggestions')"

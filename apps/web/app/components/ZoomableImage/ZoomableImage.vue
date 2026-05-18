@@ -113,7 +113,7 @@ const nuxtImgProps = computed<Record<string, unknown>>(() => ({
   'data-zoom': imageUrl,
   quality: 80,
   srcset: getSourceSet(image.value),
-  sizes: '2xs:370px xs:720px sm:740px md:1400px',
+  sizes: '@2xs:370px xs:720px sm:740px md:1400px',
   draggable: 'false',
   loading: isFirstImage.value ? 'eager' : 'lazy',
   fetchpriority: isFirstImage.value ? 'high' : 'auto',

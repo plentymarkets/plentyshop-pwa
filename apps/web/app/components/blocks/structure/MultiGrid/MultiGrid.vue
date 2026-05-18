@@ -9,7 +9,7 @@
         <div
           v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
           :class="getColumnClasses(cell.colIndex)"
-          class="group/col relative md:z-[1]"
+          class="group/col relative @md:z-[1]"
           data-testid="multi-grid-column"
         >
           <div
@@ -133,9 +133,9 @@ const getColumnClasses = (colIndex: number) => {
   const classes = [`col-span-${columnWidth}`];
 
   if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(colIndex)) {
-    classes.push('md:sticky');
+    classes.push('@md:sticky');
 
-    const topValue = route.meta?.type === 'product' ? 'md:top-40' : 'md:top-5';
+    const topValue = route.meta?.type === 'product' ? '@md:top-40' : '@md:top-5';
     classes.push(topValue);
   }
 
