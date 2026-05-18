@@ -123,8 +123,8 @@ const itemTextBlock = computed<ItemTextContent>(() => {
 
 const { isFullWidth } = useFullWidthToggleForContent(itemTextBlock);
 
-const textSettings = ref(false);
-const layoutSettings = ref(false);
+const textSettings = ref(true);
+const layoutSettings = ref(true);
 
 const isCollapsibleInit = itemTextBlock.value.layout.displayAsCollapsable;
 const isCollapsible = ref(isCollapsibleInit);

@@ -207,9 +207,9 @@ const { buttonVariantModel, buttonVariantOptions } = useEditorOptionsTabs(
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
-const textSettings = ref(false);
-const buttonSettings = ref(false);
-const layoutSettings = ref(false);
+const textSettings = ref(true);
+const buttonSettings = ref(true);
+const layoutSettings = ref(true);
 
 const backgroundColorInit = textCardBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
