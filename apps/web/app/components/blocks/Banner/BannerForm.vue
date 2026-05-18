@@ -6,7 +6,6 @@
         :title="getEditorTranslation('images-group-label')"
         data-testid="slider-image-group-title"
       >
-
         <div class="images">
           <UiImagePicker
             v-for="type in imageTypes"
@@ -64,7 +63,6 @@
         :title="getEditorTranslation('text-group-label')"
         data-testid="slider-text-group-title"
       >
-
         <div>
           <EditorRichTextEditorForm
             :model-value="banner.content.text.htmlDescription ?? ''"
@@ -147,7 +145,11 @@
         </div>
       </EditorFormPanel>
 
-      <EditorFormPanel v-model="buttonOpen" :title="getEditorTranslation('button-group-label')" data-testid="slider-button-group-title">
+      <EditorFormPanel
+        v-model="buttonOpen"
+        :title="getEditorTranslation('button-group-label')"
+        data-testid="slider-button-group-title"
+      >
         <div class="images">
           <div class="mb-6 mt-4">
             <label>

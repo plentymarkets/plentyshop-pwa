@@ -1,15 +1,13 @@
 <template>
   <div data-testid="footer-settings-drawer" class="block-footer-edit sticky h-[80vh] overflow-y-auto">
     <div v-if="!editingBlock" class="space-y-0">
-      <EditorGridElementsPanel
-        v-model="elementsOpen"
-        :uuid="footerUuid"
-        :min-items="1"
-        @edit-element="editElement"
-      />
+      <EditorGridElementsPanel v-model="elementsOpen" :uuid="footerUuid" :min-items="1" @edit-element="editElement" />
 
-      <EditorFormPanel v-model="colorsOpen" :title="getEditorTranslation('colors-group-label')" data-testid="color-column-section">
-
+      <EditorFormPanel
+        v-model="colorsOpen"
+        :title="getEditorTranslation('colors-group-label')"
+        data-testid="color-column-section"
+      >
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>{{ getEditorTranslation('colors-background-label') }}</UiFormLabel>

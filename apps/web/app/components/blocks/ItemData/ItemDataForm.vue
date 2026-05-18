@@ -1,6 +1,5 @@
 <template>
   <EditorFormPanel v-model="textOpen" :title="getEditorTranslation('text-settings-label')" data-testid="item-data-text">
-
     <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
@@ -9,8 +8,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="fieldsOpen" :title="getEditorTranslation('item-table-section-label')" data-testid="item-table-fields">
-
+  <EditorFormPanel
+    v-model="fieldsOpen"
+    :title="getEditorTranslation('item-table-section-label')"
+    data-testid="item-table-fields"
+  >
     <div class="py-4">
       <UiFormLabel class="block mb-4">
         {{ getEditorTranslation('elements-display-order') }}
@@ -47,8 +49,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-settings-label')" data-testid="item-table-layout">
-
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-settings-label')"
+    data-testid="item-table-layout"
+  >
     <div class="py-2">
       <div class="flex justify-between my-3">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>

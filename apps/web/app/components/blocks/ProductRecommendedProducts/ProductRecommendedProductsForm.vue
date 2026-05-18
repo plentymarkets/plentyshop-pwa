@@ -1,6 +1,10 @@
 <template>
   <div class="sticky h-[80vh] overflow-y-auto">
-    <EditorFormPanel v-model="textsOpen" :title="getEditorTranslation('texts-label')" data-testid="open-recommended-products-form-texts">
+    <EditorFormPanel
+      v-model="textsOpen"
+      :title="getEditorTranslation('texts-label')"
+      data-testid="open-recommended-products-form-texts"
+    >
       <EditorRichTextEditorForm
         v-if="recommendedBlock.text"
         :model-value="recommendedBlock.text.htmlDescription ?? ''"
@@ -9,8 +13,11 @@
       />
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="sourceOpen" :title="getEditorTranslation('source-label')" data-testid="open-recommended-products-form-source">
-
+    <EditorFormPanel
+      v-model="sourceOpen"
+      :title="getEditorTranslation('source-label')"
+      data-testid="open-recommended-products-form-source"
+    >
       <div class="py-2">
         <EditorOptionsTabs
           v-model="sourceTypeModel"
@@ -60,7 +67,11 @@
       </div>
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
+    <EditorFormPanel
+      v-model="layoutOpen"
+      :title="getEditorTranslation('layout-label')"
+      data-testid="slider-button-group-title"
+    >
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     </EditorFormPanel>
   </div>

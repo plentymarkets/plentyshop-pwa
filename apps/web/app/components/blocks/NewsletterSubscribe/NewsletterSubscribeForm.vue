@@ -1,55 +1,55 @@
 <template>
   <EditorFormPanel v-model="textGroup" :title="getEditorTranslation('text-group-label')">
-      <div>
-        <EditorRichTextEditorForm
-          :model-value="newsletterBlock.text.htmlDescription ?? ''"
-          :text-align="newsletterBlock.text.textAlignment ?? 'center'"
-          @update:model-value="newsletterBlock.text.htmlDescription = $event"
-        />
-        <div class="mb-4">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('ask-name-label') }}</UiFormLabel>
-        </div>
-        <div class="mb-4">
-          <label for="display-name-input" class="flex items-center">
-            <SfSwitch
-              v-model="newsletterBlock.input.displayNameInput"
-              data-testid="newsletter-form-display-name"
-              @change="
-                newsletterBlock.input.displayNameInput === false ? (newsletterBlock.input.nameIsRequired = false) : null
-              "
-            />
-            <span class="text-sm ml-2 align-top cursor-pointer font-body">{{
-              getEditorTranslation('display-name-input-label')
-            }}</span>
-          </label>
-        </div>
-        <div class="mb-6">
-          <label for="name-input-required" class="flex items-center">
-            <SfSwitch
-              v-model="newsletterBlock.input.nameIsRequired"
-              :disabled="!newsletterBlock.input.displayNameInput"
-              data-testid="newsletter-form-mandatory-name"
-            />
-            <span class="text-sm ml-2 align-top cursor-pointer font-body">{{
-              getEditorTranslation('name-required-label')
-            }}</span>
-          </label>
-        </div>
+    <div>
+      <EditorRichTextEditorForm
+        :model-value="newsletterBlock.text.htmlDescription ?? ''"
+        :text-align="newsletterBlock.text.textAlignment ?? 'center'"
+        @update:model-value="newsletterBlock.text.htmlDescription = $event"
+      />
+      <div class="mb-4">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('ask-name-label') }}</UiFormLabel>
       </div>
+      <div class="mb-4">
+        <label for="display-name-input" class="flex items-center">
+          <SfSwitch
+            v-model="newsletterBlock.input.displayNameInput"
+            data-testid="newsletter-form-display-name"
+            @change="
+              newsletterBlock.input.displayNameInput === false ? (newsletterBlock.input.nameIsRequired = false) : null
+            "
+          />
+          <span class="text-sm ml-2 align-top cursor-pointer font-body">{{
+            getEditorTranslation('display-name-input-label')
+          }}</span>
+        </label>
+      </div>
+      <div class="mb-6">
+        <label for="name-input-required" class="flex items-center">
+          <SfSwitch
+            v-model="newsletterBlock.input.nameIsRequired"
+            :disabled="!newsletterBlock.input.displayNameInput"
+            data-testid="newsletter-form-mandatory-name"
+          />
+          <span class="text-sm ml-2 align-top cursor-pointer font-body">{{
+            getEditorTranslation('name-required-label')
+          }}</span>
+        </label>
+      </div>
+    </div>
   </EditorFormPanel>
   <EditorFormPanel v-model="buttonGroup" :title="getEditorTranslation('button-group-label')">
-      <div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
-          <SfInput
-            v-model="newsletterBlock.button.label"
-            name="label"
-            type="text"
-            :placeholder="getEditorTranslation('button-text-placeholder')"
-            data-testid="newsletter-form-button-text"
-          />
-        </div>
+    <div>
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+        <SfInput
+          v-model="newsletterBlock.button.label"
+          name="label"
+          type="text"
+          :placeholder="getEditorTranslation('button-text-placeholder')"
+          data-testid="newsletter-form-button-text"
+        />
       </div>
+    </div>
   </EditorFormPanel>
   <div>
     <EditorFormPanel v-model="settingsGroup" :title="getEditorTranslation('settings-group-label')">
@@ -92,7 +92,11 @@
         </EditorColorPicker>
       </div>
     </EditorFormPanel>
-    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
+    <EditorFormPanel
+      v-model="layoutOpen"
+      :title="getEditorTranslation('layout-label')"
+      data-testid="slider-button-group-title"
+    >
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
     </EditorFormPanel>
   </div>

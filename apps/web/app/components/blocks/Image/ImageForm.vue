@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="imageGroupOpen" :title="getEditorTranslation('images-group-label')" data-testid="image-group">
-
+  <EditorFormPanel
+    v-model="imageGroupOpen"
+    :title="getEditorTranslation('images-group-label')"
+    data-testid="image-group"
+  >
     <div class="images">
       <UiImagePicker
         v-for="type in imageTypes"
@@ -87,7 +90,6 @@
     </div>
   </EditorFormPanel>
   <EditorFormPanel v-model="textGroupOpen" :title="getEditorTranslation('text-overlay-label')" data-testid="text-group">
-
     <EditorRichTextEditorForm
       :model-value="uiImageTextBlock.text.textOverlay ?? ''"
       :text-align="uiImageTextBlock.text.textOverlayAlignX"
@@ -105,8 +107,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="buttonOpen" :title="getEditorTranslation('button-group-label')" data-testid="slider-button-group-title">
-
+  <EditorFormPanel
+    v-model="buttonOpen"
+    :title="getEditorTranslation('button-group-label')"
+    data-testid="slider-button-group-title"
+  >
     <div class="images">
       <div class="mb-6 mt-4">
         <label>
@@ -140,8 +145,11 @@
       </div>
     </div>
   </EditorFormPanel>
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
-
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
+  >
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">
         {{ getEditorTranslation('keep-transparent-label') }}

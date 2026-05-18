@@ -2,7 +2,6 @@
   <div v-if="!loading" class="sticky h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-seo-settings-drawer">
     <form data-testid="basic-settings-form" class="w-full shadow-[inset_0px_0px_20px_-20px_#111] absolute bg-white">
       <EditorFormPanel v-model="metaData" title="Meta Data" data-testid="open-basic-settings">
-
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Title</UiFormLabel>

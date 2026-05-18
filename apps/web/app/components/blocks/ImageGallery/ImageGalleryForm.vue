@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="thumbsOpen" :title="getEditorTranslation('item-image-label')" data-testid="item-image-thumbnails">
-
+  <EditorFormPanel
+    v-model="thumbsOpen"
+    :title="getEditorTranslation('item-image-label')"
+    data-testid="item-image-thumbnails"
+  >
     <div class="space-y-5">
       <div class="flex items-center justify-between">
         <UiFormLabel>{{ getEditorTranslation('show-thumbnails') }}</UiFormLabel>
@@ -42,7 +45,11 @@
       </div>
     </div>
   </EditorFormPanel>
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
+  >
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
   </EditorFormPanel>
 </template>

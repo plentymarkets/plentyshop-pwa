@@ -43,8 +43,11 @@
         </div>
       </div>
     </EditorFormPanel>
-    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-group-label')" data-testid="customer-review-layout">
-
+    <EditorFormPanel
+      v-model="layoutOpen"
+      :title="getEditorTranslation('layout-group-label')"
+      data-testid="customer-review-layout"
+    >
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
 
       <div class="py-2">

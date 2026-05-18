@@ -1,7 +1,6 @@
 <template>
   <div class="block-form-section">
     <EditorFormPanel v-model="actionsOpen" :title="getEditorTranslation('actions-section-label')">
-
       <div class="space-y-6 py-4">
         <div>
           <UiFormLabel class="mb-3 block">{{ getEditorTranslation('actions-order-label') }}</UiFormLabel>

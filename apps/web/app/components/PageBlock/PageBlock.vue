@@ -119,15 +119,8 @@ const props = withDefaults(defineProps<PageBlockProps>(), {
 const viewport = useViewport();
 const { isInEditorClient } = useEditorState();
 const attrs = useAttrs();
-const {
-  isDragging,
-  lazyLoadStates,
-  lazyLoadRefs,
-  shouldLazyLoad,
-  getLazyLoadKey,
-  getLazyLoadConfig,
-  getLazyLoadRef,
-} = useBlockManager();
+const { isDragging, lazyLoadStates, lazyLoadRefs, shouldLazyLoad, getLazyLoadKey, getLazyLoadConfig, getLazyLoadRef } =
+  useBlockManager();
 const { openAddBlockPopover, popoverState } = useAddBlockPopover();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();

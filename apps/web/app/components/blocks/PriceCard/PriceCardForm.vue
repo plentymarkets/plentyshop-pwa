@@ -1,6 +1,5 @@
 <template>
   <EditorFormPanel v-model="cardOpen" :title="getEditorTranslation('card-section-label')" data-testid="price-card">
-
     <div class="py-4">
       <UiFormLabel class="block mb-4">{{ getEditorTranslation('elements-display-order') }}</UiFormLabel>
 
@@ -58,8 +57,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-settings-label')" data-testid="price-card-layout">
-
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-settings-label')"
+    data-testid="price-card-layout"
+  >
     <div class="flex items-center justify-between py-4">
       <UiFormLabel>{{ getEditorTranslation('drop-shadow-label') }}</UiFormLabel>
       <SfSwitch v-model="priceCardBlock.dropShadow" data-testid="price-card-drop-shadow" />

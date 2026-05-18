@@ -17,7 +17,12 @@
       </p>
 
       <div v-if="headerContainer" class="mt-2">
-        <EditorFormPanel v-model="headerOpen" :title="getEditorTranslation('header-section-label')" content-class="p-0" data-testid="toc-section-header">
+        <EditorFormPanel
+          v-model="headerOpen"
+          :title="getEditorTranslation('header-section-label')"
+          content-class="p-0"
+          data-testid="toc-section-header"
+        >
           <div class="px-2 mt-2 mb-4">
             <draggable
               v-if="headerBlocks.length"
@@ -50,7 +55,12 @@
       </div>
 
       <div>
-        <EditorFormPanel v-model="contentOpen" :title="getEditorTranslation('content-section-label')" content-class="p-0" data-testid="toc-section-content">
+        <EditorFormPanel
+          v-model="contentOpen"
+          :title="getEditorTranslation('content-section-label')"
+          content-class="p-0"
+          data-testid="toc-section-content"
+        >
           <div class="px-2">
             <draggable
               v-if="pageBlocks.length"
@@ -89,7 +99,12 @@
       </div>
 
       <div v-if="footer">
-        <EditorFormPanel v-model="footerOpen" :title="getEditorTranslation('footer-section-label')" content-class="p-0" data-testid="toc-section-footer">
+        <EditorFormPanel
+          v-model="footerOpen"
+          :title="getEditorTranslation('footer-section-label')"
+          content-class="p-0"
+          data-testid="toc-section-footer"
+        >
           <div class="px-2 mt-2 mb-4">
             <TableOfContentsItem :item="blockToFlatBlock(footer!)" />
           </div>

@@ -1,7 +1,6 @@
 <template>
   <div class="block-form-section">
     <EditorFormPanel v-model="searchOpen" :title="getEditorTranslation('search-section-label')">
-
       <div class="py-2">
         <div class="flex items-center justify-between">
           <UiFormLabel class="mb-1">{{ getEditorTranslation('icon-only-label') }}</UiFormLabel>

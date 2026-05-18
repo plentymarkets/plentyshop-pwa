@@ -1,7 +1,6 @@
 <template>
   <div>
     <EditorFormPanel v-model="textOpen" :title="getEditorTranslation('item-card-label')" data-testid="item-grid-card">
-
       <div class="py-2">
         <div class="flex items-center justify-between px-2 pb-2 text-sm font-medium text-gray-700">
           <span>{{ getEditorTranslation('item-card-text') }}</span>
@@ -59,7 +58,6 @@
     </EditorFormPanel>
 
     <EditorFormPanel v-model="imageOpen" :title="getEditorTranslation('image-label')" data-testid="category-data-image">
-
       <div class="py-2">
         <EditorOptionsTabs
           v-model="displayCategoryImageModel"

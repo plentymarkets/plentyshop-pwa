@@ -1,6 +1,5 @@
 <template>
   <EditorFormPanel v-model="isOpen" :title="getEditorTranslation('layout-label')">
-
     <div class="space-y-4 py-4">
       <div>
         <UiFormLabel class="mb-1">{{ getEditorTranslation('header-bg-color-label') }}</UiFormLabel>

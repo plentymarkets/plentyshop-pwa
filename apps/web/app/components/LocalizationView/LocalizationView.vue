@@ -17,10 +17,18 @@
     <div class="flex-1 min-h-0 overflow-y-auto">
       <p class="m-4">{{ getEditorTranslation('description') }}</p>
 
-      <EditorFormPanel v-model="editLanguagesOpen" :title="getEditorTranslation('shop-languages')" data-testid="content-pages-section">
+      <EditorFormPanel
+        v-model="editLanguagesOpen"
+        :title="getEditorTranslation('shop-languages')"
+        data-testid="content-pages-section"
+      >
         <EditorLocalizationShopLanguages />
       </EditorFormPanel>
-      <EditorFormPanel v-model="editTranslationsOpen" :title="getEditorTranslation('edit-translations')" data-testid="content-pages-section">
+      <EditorFormPanel
+        v-model="editTranslationsOpen"
+        :title="getEditorTranslation('edit-translations')"
+        data-testid="content-pages-section"
+      >
         <EditorLocalizationLanguageSelect />
       </EditorFormPanel>
     </div>

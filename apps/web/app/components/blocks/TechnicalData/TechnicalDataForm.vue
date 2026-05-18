@@ -1,7 +1,10 @@
 <template>
   <div>
-    <EditorFormPanel v-model="textSettings" :title="getEditorTranslation('text-settings-label')" data-testid="technical-data-settings">
-
+    <EditorFormPanel
+      v-model="textSettings"
+      :title="getEditorTranslation('text-settings-label')"
+      data-testid="technical-data-settings"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
@@ -18,8 +21,11 @@
       </div>
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="layoutSettings" :title="getEditorTranslation('layout-settings-label')" data-testid="technical-data-layout">
-
+    <EditorFormPanel
+      v-model="layoutSettings"
+      :title="getEditorTranslation('layout-settings-label')"
+      data-testid="technical-data-layout"
+    >
       <div class="flex justify-between my-5">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
         <span>

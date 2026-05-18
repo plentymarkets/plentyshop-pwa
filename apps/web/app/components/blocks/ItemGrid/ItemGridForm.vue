@@ -1,5 +1,9 @@
 <template>
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-settings-label')" data-testid="item-grid-layout">
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-settings-label')"
+    data-testid="item-grid-layout"
+  >
     <div class="space-y-4">
       <div>
         <UiFormLabel class="flex justify-between">
@@ -57,7 +61,6 @@
   </EditorFormPanel>
 
   <EditorFormPanel v-model="cardOpen" :title="getEditorTranslation('item-card-label')" data-testid="item-grid-card">
-
     <div class="py-4">
       <draggable
         v-if="uiItemGridBlock.fieldsOrder.length"
@@ -126,8 +129,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="paginationOpen" :title="getEditorTranslation('pagination-label')" data-testid="item-grid-pagination">
-
+  <EditorFormPanel
+    v-model="paginationOpen"
+    :title="getEditorTranslation('pagination-label')"
+    data-testid="item-grid-pagination"
+  >
     <div class="space-y-4">
       <div>
         <UiFormLabel>{{ getEditorTranslation('pagination-position') }}</UiFormLabel>

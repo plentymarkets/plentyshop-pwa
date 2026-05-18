@@ -5,143 +5,152 @@
       <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
     </div>
     <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-      <EditorGridElementsPanel v-model="elementsOpen" :uuid="resolvedUuid" @edit-element="editElement" @insert-before="handleInsertBefore" />
-
-    <EditorFormPanel v-model="gridLayoutOpen" :title="getEditorTranslation('grid-layout')">
-      <div v-if="allEmpty" class="mb-3.5">
-        <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
-          {{ getEditorTranslation('layout-preset') }}
-        </div>
-        <div class="grid grid-cols-3 gap-1.5">
-          <button
-            v-for="preset in LAYOUT_PRESETS"
-            :key="preset.label"
-            class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
-            @click="applyPreset(preset.columnWidths)"
-          >
-            <div class="flex gap-0.5 w-full h-[9px]">
-              <div
-                v-for="(span, i) in preset.columnWidths"
-                :key="i"
-                class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
-                :style="{ flex: span }"
-              />
-            </div>
-            <span class="text-3xs text-editor-text-subtle">{{ preset.label }}</span>
-          </button>
-        </div>
-      </div>
-
-      <MultiGridEditor
-        :column-widths="visibleGrid.columnWidths"
-        :blocks="visibleGrid.blocks"
-        @update:column-widths="handleColumnWidthsUpdate"
-        @click-add-row="handleClickAddRow"
-        @add-free-column="handleAddFreeColumn"
+      <EditorGridElementsPanel
+        v-model="elementsOpen"
+        :uuid="resolvedUuid"
+        @edit-element="editElement"
+        @insert-before="handleInsertBefore"
       />
 
-      <div v-if="multiGridStructure.configuration.layout" class="mt-3.5 pt-3 border-t border-editor-surface-muted">
-        <div class="flex items-center gap-2">
-          <span class="flex-1 text-xs text-editor-text-subtle">{{ getEditorTranslation('gap-label') }}</span>
-          <div class="flex gap-1">
+      <EditorFormPanel v-model="gridLayoutOpen" :title="getEditorTranslation('grid-layout')">
+        <div v-if="allEmpty" class="mb-3.5">
+          <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
+            {{ getEditorTranslation('layout-preset') }}
+          </div>
+          <div class="grid grid-cols-3 gap-1.5">
             <button
-              v-for="gapOption in gapOptions"
-              :key="gapOption"
-              type="button"
-              data-testid="gap-btn"
-              class="w-7 h-6 rounded-md text-3xs cursor-pointer transition-colors"
-              :class="
-                gapOption === multiGridStructure.configuration.layout.gap
-                  ? 'border border-editor-accent bg-editor-accent/[8%] text-editor-accent font-bold'
-                  : 'border border-editor-canvas-border bg-white text-editor-text-faint'
-              "
-              @click="multiGridStructure.configuration.layout.gap = gapOption"
+              v-for="preset in LAYOUT_PRESETS"
+              :key="preset.label"
+              class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
+              @click="applyPreset(preset.columnWidths)"
             >
-              {{ gapOption }}
+              <div class="flex gap-0.5 w-full h-[9px]">
+                <div
+                  v-for="(span, i) in preset.columnWidths"
+                  :key="i"
+                  class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
+                  :style="{ flex: span }"
+                />
+              </div>
+              <span class="text-3xs text-editor-text-subtle">{{ preset.label }}</span>
             </button>
           </div>
         </div>
-        <div class="mt-1.5 text-2xs text-editor-text-placeholder">
-          {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
-        </div>
-      </div>
-    </EditorFormPanel>
 
-    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout')" content-class="px-3.5 py-3 flex flex-col gap-3">
-      <div v-if="multiGridStructure.configuration.layout">
-        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
-        <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-            <span><SfIconArrowUpward /></span>
-            <input
-              v-model.number="multiGridStructure.configuration.layout.marginTop"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="margin-top"
-            />
-          </div>
-          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-            <span><SfIconArrowDownward /></span>
-            <input
-              v-model.number="multiGridStructure.configuration.layout.marginBottom"
-              type="number"
-              class="w-12 text-center outline-none"
-              data-testid="margin-bottom"
-            />
-          </div>
-        </div>
-      </div>
+        <MultiGridEditor
+          :column-widths="visibleGrid.columnWidths"
+          :blocks="visibleGrid.blocks"
+          @update:column-widths="handleColumnWidthsUpdate"
+          @click-add-row="handleClickAddRow"
+          @add-free-column="handleAddFreeColumn"
+        />
 
-      <div v-if="multiGridStructure.configuration.columnWidths?.length">
-        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
-        <div class="grid grid-cols-3 gap-2">
-          <button
-            v-for="i in numColumns"
-            :key="`sticky-col-${i}`"
-            type="button"
-            class="px-3 py-2 rounded-md border text-sm"
-            :class="
-              isSticky(i - 1)
-                ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
-                : 'border-neutral-300 hover:border-neutral-400'
-            "
-            @click="toggleSticky(i - 1)"
-          >
-            {{ getEditorTranslation('column') }} {{ i }}
-          </button>
-        </div>
-      </div>
-
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-    </EditorFormPanel>
-
-    <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
-      <div v-if="multiGridStructure.configuration.layout">
-        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
-        <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <label>
-              <SfInput
-                v-model="multiGridStructure.configuration.layout.backgroundColor"
-                type="text"
-                data-testid="input-background-color"
+        <div v-if="multiGridStructure.configuration.layout" class="mt-3.5 pt-3 border-t border-editor-surface-muted">
+          <div class="flex items-center gap-2">
+            <span class="flex-1 text-xs text-editor-text-subtle">{{ getEditorTranslation('gap-label') }}</span>
+            <div class="flex gap-1">
+              <button
+                v-for="gapOption in gapOptions"
+                :key="gapOption"
+                type="button"
+                data-testid="gap-btn"
+                class="w-7 h-6 rounded-md text-3xs cursor-pointer transition-colors"
+                :class="
+                  gapOption === multiGridStructure.configuration.layout.gap
+                    ? 'border border-editor-accent bg-editor-accent/[8%] text-editor-accent font-bold'
+                    : 'border border-editor-canvas-border bg-white text-editor-text-faint'
+                "
+                @click="multiGridStructure.configuration.layout.gap = gapOption"
               >
-                <template #suffix>
-                  <button
-                    type="button"
-                    class="border border-editor-input-border rounded-lg cursor-pointer w-10 h-8"
-                    :style="{ backgroundColor: color }"
-                    @mousedown.stop
-                    @click.stop="toggle"
-                  />
-                </template>
-              </SfInput>
-            </label>
-          </template>
-        </EditorColorPicker>
-      </div>
-    </EditorFormPanel>
-  </div>
+                {{ gapOption }}
+              </button>
+            </div>
+          </div>
+          <div class="mt-1.5 text-2xs text-editor-text-placeholder">
+            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
+          </div>
+        </div>
+      </EditorFormPanel>
+
+      <EditorFormPanel
+        v-model="layoutOpen"
+        :title="getEditorTranslation('layout')"
+        content-class="px-3.5 py-3 flex flex-col gap-3"
+      >
+        <div v-if="multiGridStructure.configuration.layout">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
+          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowUpward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.marginTop"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="margin-top"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+              <span><SfIconArrowDownward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.marginBottom"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="margin-bottom"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div v-if="multiGridStructure.configuration.columnWidths?.length">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
+          <div class="grid grid-cols-3 gap-2">
+            <button
+              v-for="i in numColumns"
+              :key="`sticky-col-${i}`"
+              type="button"
+              class="px-3 py-2 rounded-md border text-sm"
+              :class="
+                isSticky(i - 1)
+                  ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
+                  : 'border-neutral-300 hover:border-neutral-400'
+              "
+              @click="toggleSticky(i - 1)"
+            >
+              {{ getEditorTranslation('column') }} {{ i }}
+            </button>
+          </div>
+        </div>
+
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
+      </EditorFormPanel>
+
+      <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
+        <div v-if="multiGridStructure.configuration.layout">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
+          <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <label>
+                <SfInput
+                  v-model="multiGridStructure.configuration.layout.backgroundColor"
+                  type="text"
+                  data-testid="input-background-color"
+                >
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-editor-input-border rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </label>
+            </template>
+          </EditorColorPicker>
+        </div>
+      </EditorFormPanel>
+    </div>
   </template>
 </template>
 
@@ -261,7 +270,8 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
   const block = multiGridStructure.value as ColumnBlock;
   const content = (block.content as Block[] | undefined) ?? [];
   content.forEach((childBlock) => {
-    if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
+    if ((childBlock.parent_slot ?? 0) >= insertIndex)
+      childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
   if (!block.content) block.content = [];
@@ -319,7 +329,9 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
   const cleanup = () => {
     const gridBlock = multiGridStructure.value as ColumnBlock;
     const blocks = gridBlock.content as Block[];
-    const index = blocks.findIndex((childBlock) => childBlock.meta.uuid === newBlock.meta.uuid && childBlock.name === 'EmptyGridBlock');
+    const index = blocks.findIndex(
+      (childBlock) => childBlock.meta.uuid === newBlock.meta.uuid && childBlock.name === 'EmptyGridBlock',
+    );
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(insertIndex, 1);
@@ -342,7 +354,8 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
 };
 
 const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsertIndex: number) => {
-  const insertIndex = filteredInsertIndex > 0 ? (visibleGrid.value.filteredToOriginal[filteredInsertIndex - 1] ?? -1) + 1 : 0;
+  const insertIndex =
+    filteredInsertIndex > 0 ? (visibleGrid.value.filteredToOriginal[filteredInsertIndex - 1] ?? -1) + 1 : 0;
   insertColumnAt(insertIndex, span, anchorEl);
 };
 

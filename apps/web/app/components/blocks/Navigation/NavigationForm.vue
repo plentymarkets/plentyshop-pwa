@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="layoutSettings" :title="getEditorTranslation('layout-group-label')" data-testid="layout-settings">
-
+  <EditorFormPanel
+    v-model="layoutSettings"
+    :title="getEditorTranslation('layout-group-label')"
+    data-testid="layout-settings"
+  >
     <div class="py-2">
       <EditorOptionsTabs
         v-model="textAlignModel"

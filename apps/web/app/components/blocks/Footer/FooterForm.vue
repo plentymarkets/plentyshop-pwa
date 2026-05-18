@@ -1,6 +1,10 @@
 <template>
   <div class="footer-settings-view sticky" data-testid="footer-settings-drawer">
-    <EditorFormPanel v-model="firstColumnOpen" :title="getEditorTranslation('column-1-group-label')" data-testid="first-column-section">
+    <EditorFormPanel
+      v-model="firstColumnOpen"
+      :title="getEditorTranslation('column-1-group-label')"
+      data-testid="first-column-section"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-1-title-label') }}</UiFormLabel>
@@ -45,7 +49,11 @@
       </div>
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="secondColumnOpen" :title="getEditorTranslation('column-2-group-label')" data-testid="second-column-section">
+    <EditorFormPanel
+      v-model="secondColumnOpen"
+      :title="getEditorTranslation('column-2-group-label')"
+      data-testid="second-column-section"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-2-title-label') }}</UiFormLabel>
@@ -86,7 +94,11 @@
       </div>
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="thirdColumnOpen" :title="getEditorTranslation('column-3-group-label')" data-testid="third-column-section">
+    <EditorFormPanel
+      v-model="thirdColumnOpen"
+      :title="getEditorTranslation('column-3-group-label')"
+      data-testid="third-column-section"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-3-title-label') }}</UiFormLabel>
@@ -116,7 +128,11 @@
       </div>
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="fourthColumnOpen" :title="getEditorTranslation('column-4-group-label')" data-testid="fourth-column-section">
+    <EditorFormPanel
+      v-model="fourthColumnOpen"
+      :title="getEditorTranslation('column-4-group-label')"
+      data-testid="fourth-column-section"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('column-4-title-label') }}</UiFormLabel>
@@ -146,7 +162,11 @@
       </div>
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="footNoteOpen" :title="getEditorTranslation('footnotes-group-label')" data-testid="footnote-column-section">
+    <EditorFormPanel
+      v-model="footNoteOpen"
+      :title="getEditorTranslation('footnotes-group-label')"
+      data-testid="footnote-column-section"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('footnotes-text-label') }}</UiFormLabel>
@@ -169,7 +189,11 @@
       />
     </EditorFormPanel>
 
-    <EditorFormPanel v-model="footerColors" :title="getEditorTranslation('colors-group-label')" data-testid="color-column-section">
+    <EditorFormPanel
+      v-model="footerColors"
+      :title="getEditorTranslation('colors-group-label')"
+      data-testid="color-column-section"
+    >
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('colors-text-label') }}</UiFormLabel>

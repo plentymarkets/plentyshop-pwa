@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="per-page-form-layout-label">
-
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="per-page-form-layout-label"
+  >
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
         {{ getEditorTranslation('show-selectionModeCompact-label') }}

@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="sortFilterOpen" :title="getEditorTranslation('display-and-order-label')" data-testid="open-sorting-and-filters-settings">
-
+  <EditorFormPanel
+    v-model="sortFilterOpen"
+    :title="getEditorTranslation('display-and-order-label')"
+    data-testid="open-sorting-and-filters-settings"
+  >
     <div data-testid="text-card-form">
       <div class="py-4">
         <draggable
@@ -75,7 +78,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
+  <EditorFormPanel
+    v-model="layoutOpen"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
+  >
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
   </EditorFormPanel>
 </template>

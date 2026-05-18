@@ -1,6 +1,5 @@
 <template>
   <EditorFormPanel v-model="isOpen" :title="getEditorTranslation('elements-group-label')" content-class="py-4">
-
     <div>
       <div v-if="sections.length" class="space-y-0">
         <template v-for="(section, index) in sections" :key="section.id">

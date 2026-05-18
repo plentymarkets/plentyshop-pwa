@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="globalPagesOpen" :title="getEditorTranslation('global-pages-label')" data-testid="global-pages-section">
-
+  <EditorFormPanel
+    v-model="globalPagesOpen"
+    :title="getEditorTranslation('global-pages-label')"
+    data-testid="global-pages-section"
+  >
     <div class="mt-4">
       <p class="mb-4">{{ getEditorTranslation('global-pages-description') }}</p>
     </div>

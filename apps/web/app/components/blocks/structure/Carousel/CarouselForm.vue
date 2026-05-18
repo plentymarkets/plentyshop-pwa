@@ -33,7 +33,11 @@
         </div>
       </EditorFormPanel>
 
-      <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="slider-button-group-title">
+      <EditorFormPanel
+        v-model="layoutOpen"
+        :title="getEditorTranslation('layout-label')"
+        data-testid="slider-button-group-title"
+      >
         <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
       </EditorFormPanel>
     </div>

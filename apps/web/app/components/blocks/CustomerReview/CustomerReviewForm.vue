@@ -1,6 +1,10 @@
 <template>
   <div>
-    <EditorFormPanel v-model="reviewsOpen" :title="getEditorTranslation('text-label')" data-testid="customer-review-text">
+    <EditorFormPanel
+      v-model="reviewsOpen"
+      :title="getEditorTranslation('text-label')"
+      data-testid="customer-review-text"
+    >
       <div data-testid="customer-review-form">
         <div class="py-2">
           <div class="flex justify-between mb-2">
@@ -18,7 +22,11 @@
         </div>
       </div>
     </EditorFormPanel>
-    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-group-label')" data-testid="customer-review-layout">
+    <EditorFormPanel
+      v-model="layoutOpen"
+      :title="getEditorTranslation('layout-group-label')"
+      data-testid="customer-review-layout"
+    >
       <div class="py-2 flex items-center justify-between gap-3">
         <UiFormLabel for="display-collapsible" class="m-0">
           {{ getEditorTranslation('display-collapsible-label') }}

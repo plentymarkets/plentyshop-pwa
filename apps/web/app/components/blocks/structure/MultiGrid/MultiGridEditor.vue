@@ -37,8 +37,19 @@
           >
             <div
               class="w-full h-full rounded-md flex items-center px-2 overflow-hidden"
-              :class="!cell.blockName ? 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]' : ''"
-              :style="cell.blockName ? { backgroundColor: getBlockColor(cell.blockName, 0.12), border: `1px solid ${getBlockColor(cell.blockName, 0.3)}` } : undefined"
+              :class="
+                !cell.blockName
+                  ? 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]'
+                  : ''
+              "
+              :style="
+                cell.blockName
+                  ? {
+                      backgroundColor: getBlockColor(cell.blockName, 0.12),
+                      border: `1px solid ${getBlockColor(cell.blockName, 0.3)}`,
+                    }
+                  : undefined
+              "
               @click.stop="!cell.hasContent && onClickCell($event, cell.colIndex)"
             >
               <div class="flex-1 overflow-hidden min-w-0">

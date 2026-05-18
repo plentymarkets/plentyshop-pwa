@@ -1,6 +1,9 @@
 <template>
-  <EditorFormPanel v-model="textSettings" :title="getEditorTranslation('text-group-label')" data-testid="open-text-settings">
-
+  <EditorFormPanel
+    v-model="textSettings"
+    :title="getEditorTranslation('text-group-label')"
+    data-testid="open-text-settings"
+  >
     <EditorRichTextEditorForm
       v-model="contentModel"
       :text-align="textCardBlock.text.textAlignment"
@@ -8,8 +11,11 @@
     />
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="buttonSettings" :title="getEditorTranslation('button-group-label')" data-testid="button-settings">
-
+  <EditorFormPanel
+    v-model="buttonSettings"
+    :title="getEditorTranslation('button-group-label')"
+    data-testid="button-settings"
+  >
     <div class="py-2">
       <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
@@ -50,8 +56,11 @@
     </div>
   </EditorFormPanel>
 
-  <EditorFormPanel v-model="layoutSettings" :title="getEditorTranslation('layout-group-label')" data-testid="layout-settings">
-
+  <EditorFormPanel
+    v-model="layoutSettings"
+    :title="getEditorTranslation('layout-group-label')"
+    data-testid="layout-settings"
+  >
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">
         {{ getEditorTranslation('keep-transparent-label') }}

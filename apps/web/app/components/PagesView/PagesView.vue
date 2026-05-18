@@ -70,8 +70,11 @@
         <span class="italic">{{ getEditorTranslation('reload-hint') }}</span>
       </div>
 
-      <EditorFormPanel v-model="contentPagesOpen" :title="getEditorTranslation('content-pages-label')" data-testid="content-pages-section">
-
+      <EditorFormPanel
+        v-model="contentPagesOpen"
+        :title="getEditorTranslation('content-pages-label')"
+        data-testid="content-pages-section"
+      >
         <div
           :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']"
           @scroll="(e: Event) => handleScroll(e, 'content')"
@@ -97,8 +100,11 @@
         </div>
       </EditorFormPanel>
 
-      <EditorFormPanel v-model="productPagesOpen" :title="getEditorTranslation('product-categories-label')" data-testid="product-pages-section">
-
+      <EditorFormPanel
+        v-model="productPagesOpen"
+        :title="getEditorTranslation('product-categories-label')"
+        data-testid="product-pages-section"
+      >
         <div
           :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']"
           @scroll="(e: Event) => handleScroll(e, 'item')"
