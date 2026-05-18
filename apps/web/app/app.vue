@@ -10,31 +10,48 @@
 
     <component
       :is="SiteConfigurationDrawer"
-      v-if="siteConfigurationDrawerOpen"
+      v-if="clientPreview && siteConfigurationDrawerOpen"
       class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
     />
 
-    <div
-      ref="contentRef"
-      class="flex-1 w-full bg-white relative"
-      :class="clientPreview ? 'overflow-auto' : 'overflow-visible'"
-    >
-      <Body
-        class="font-body bg-editor-body-bg"
-        :class="[bodyClass, { 'overflow-hidden': clientPreview }]"
-        :style="currentFont"
-      />
+    <!-- Editor-Modus (Parent): Device-Switch + Iframe-Preview -->
+    <div v-if="clientPreview" class="flex-1 w-full bg-gray-100 relative flex flex-col">
+      <!-- Temporärer Device-Switch (später in Toolbar verschieben) -->
+      <div class="flex gap-2 p-2 border-b bg-white">
+        <button
+          v-for="d in (['mobile', 'tablet', 'desktop'] as const)"
+          :key="d"
+          class="px-3 py-1 rounded text-sm"
+          :class="device === d ? 'bg-blue-500 text-white' : 'bg-gray-200'"
+          @click="setDevice(d)"
+        >
+          {{ d }}
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-auto flex items-start justify-center p-4">
+        <iframe
+          :src="previewUrl"
+          :style="{ width: previewWidth, height: '100%' }"
+          class="bg-white shadow-lg transition-all duration-300 border-0 max-w-full"
+        />
+      </div>
+    </div>
+
+    <!-- Storefront- ODER Iframe-Render-Modus: nur App-Content, kein Editor-Chrome -->
+    <div v-else ref="contentRef" class="flex-1 w-full bg-white relative overflow-visible">
+      <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
-      <NuxtLayout>
+      <NuxtLayout :key="previewRenderKey">
         <NuxtPage />
       </NuxtLayout>
     </div>
 
     <component
       :is="BlocksConfigurationDrawer"
-      v-if="blocksConfigurationDrawerOpen"
+      v-if="clientPreview && blocksConfigurationDrawerOpen"
       class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
     />
   </div>
@@ -57,11 +74,50 @@ const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
+const { device, setDevice, width: previewWidth } = useEditorPreview();
+
+// Sync-Tick: im Iframe ist das eine Reactive-Ref, die bei jeder Parent-State-Mutation
+// hochzählt. Außerhalb des Iframes (Parent / Storefront) ist es einfach ein ref(0)
+// ohne Effekt.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const editorPreviewTick =
+  (typeof window !== 'undefined' && (window as any).__editorPreviewSyncTick) || ref(0);
+
+// Debounced Re-Render Key: zählt erst nach 150ms Tipp-Pause hoch.
+// Verhindert, dass NuxtLayout bei jedem Keystroke neu mountet.
+const previewRenderKey = ref(0);
+
+if (import.meta.client) {
+  let previewRenderTimer: ReturnType<typeof setTimeout> | null = null;
+  watch(editorPreviewTick, () => {
+    if (previewRenderTimer) clearTimeout(previewRenderTimer);
+    previewRenderTimer = setTimeout(() => {
+      previewRenderKey.value++;
+      previewRenderTimer = null;
+    }, 150);
+  });
+}
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
-const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
+// Iframe-Render: wir sind im Iframe und sollen NUR den Storefront-Content zeigen, kein Editor-Chrome
+const isPreviewIframe = computed(() => {
+  if (import.meta.server) return false;
+  return window.parent !== window && new URLSearchParams(window.location.search).has('__preview');
+});
+
+// clientPreview: zeigt Editor-Chrome — niemals im Iframe selbst
+const clientPreview = computed(
+  () => isInEditorClient.value && viewport.isGreaterOrEquals('lg') && !isPreviewIframe.value,
+);
+
 const contentRef = ref<HTMLElement | null>(null);
+
+// Iframe-URL — bleibt stabil, ändert sich nicht bei Device-Wechsel (sonst Full-Reload)
+const previewUrl = computed(() => {
+  const sep = route.fullPath.includes('?') ? '&' : '?';
+  return `${route.fullPath}${sep}__preview=1`;
+});
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
