@@ -161,14 +161,14 @@ const props = defineProps<{ uuid?: string }>();
 const { openAddBlockPopover } = useAddBlockPopover();
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
-const { allBlocks: data } = useBlocks();
+const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 
 const multiGridStructure = computed(() => {
-  const block = (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
+  const block = (findOrDeleteBlockByUuid(allBlocks.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
   if (!block.configuration.layout) {
     block.configuration.layout = {
       marginTop: 0,
@@ -191,43 +191,42 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStru
 const invisibleSlotsEditor = computed(() => {
   const blocks = (multiGridStructure.value.content as Block[]) ?? [];
   const slots = new Set<number>();
-  blocks.forEach((b) => {
-    if ((b.configuration as Record<string, unknown>)?.visible === false && b.parent_slot !== undefined) {
-      slots.add(b.parent_slot);
+  blocks.forEach((block) => {
+    if ((block.configuration as Record<string, unknown>)?.visible === false && block.parent_slot !== undefined) {
+      slots.add(block.parent_slot);
     }
   });
   return slots;
 });
 
-// filtered-index → original-index
 const editorSlotMap = computed(() => {
   const widths = multiGridStructure.value.configuration.columnWidths ?? [];
   const invisible = invisibleSlotsEditor.value;
-  const map: number[] = [];
-  for (let i = 0; i < widths.length; i++) {
-    if (!invisible.has(i)) map.push(i);
+  const filteredToOriginal: number[] = [];
+  for (let slotIndex = 0; slotIndex < widths.length; slotIndex++) {
+    if (!invisible.has(slotIndex)) filteredToOriginal.push(slotIndex);
   }
-  return map;
+  return filteredToOriginal;
 });
 
 const editorColumnWidths = computed(() => {
   const widths = multiGridStructure.value.configuration.columnWidths ?? [];
-  return editorSlotMap.value.map((i) => widths[i] ?? 0);
+  return editorSlotMap.value.map((originalSlotIndex) => widths[originalSlotIndex] ?? 0);
 });
 
 const editorBlocks = computed(() => {
   const blocks = (multiGridStructure.value.content as Block[]) ?? [];
   const invisible = invisibleSlotsEditor.value;
-  const origToFiltered: Record<number, number> = {};
-  editorSlotMap.value.forEach((origIdx, filtIdx) => {
-    origToFiltered[origIdx] = filtIdx;
+  const originalToFiltered: Record<number, number> = {};
+  editorSlotMap.value.forEach((originalIndex, filteredIndex) => {
+    originalToFiltered[originalIndex] = filteredIndex;
   });
   return blocks
-    .filter((b) => b.parent_slot === undefined || !invisible.has(b.parent_slot ?? 0))
-    .map((b) =>
-      b.parent_slot !== undefined
-        ? { ...b, parent_slot: origToFiltered[b.parent_slot] ?? b.parent_slot }
-        : { ...b },
+    .filter((block) => block.parent_slot === undefined || !invisible.has(block.parent_slot ?? 0))
+    .map((block) =>
+      block.parent_slot !== undefined
+        ? { ...block, parent_slot: originalToFiltered[block.parent_slot] ?? block.parent_slot }
+        : { ...block },
     ) as Block[];
 });
 
@@ -273,10 +272,10 @@ const applyPreset = (spans: readonly number[]) => {
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
   const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
-  editorSlotMap.value.forEach((origIdx, filtIdx) => {
-    const width = filteredWidths[filtIdx];
+  editorSlotMap.value.forEach((originalIndex, filteredIndex) => {
+    const width = filteredWidths[filteredIndex];
     if (width !== undefined) {
-      fullWidths[origIdx] = width;
+      fullWidths[originalIndex] = width;
     }
   });
   multiGridStructure.value.configuration.columnWidths = fullWidths;
@@ -295,13 +294,13 @@ const addRowSpans = (spans: readonly number[]) => {
 const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
   const block = multiGridStructure.value as ColumnBlock;
   const content = (block.content as Block[] | undefined) ?? [];
-  content.forEach((b) => {
-    if ((b.parent_slot ?? 0) >= insertIndex) b.parent_slot = (b.parent_slot ?? 0) + spans.length;
+  content.forEach((childBlock) => {
+    if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
-    ...(spans.map((_, i) => createEmptyGridBlock(insertIndex + i)) as unknown as Block[]),
+    ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
   );
 };
 
@@ -344,8 +343,8 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
   const newBlock = createEmptyGridBlock(insertIndex);
 
   const content = (block.content as Block[] | undefined) ?? [];
-  content.forEach((b) => {
-    if ((b.parent_slot ?? 0) >= insertIndex) b.parent_slot = (b.parent_slot ?? 0) + 1;
+  content.forEach((childBlock) => {
+    if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + 1;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
@@ -354,12 +353,12 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
   const cleanup = () => {
     const gridBlock = multiGridStructure.value as ColumnBlock;
     const blocks = gridBlock.content as Block[];
-    const index = blocks.findIndex((b) => b.meta.uuid === newBlock.meta.uuid && b.name === 'EmptyGridBlock');
+    const index = blocks.findIndex((childBlock) => childBlock.meta.uuid === newBlock.meta.uuid && childBlock.name === 'EmptyGridBlock');
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(insertIndex, 1);
-      (gridBlock.content as Block[]).forEach((b) => {
-        if ((b.parent_slot ?? 0) > insertIndex) b.parent_slot = (b.parent_slot ?? 0) - 1;
+      (gridBlock.content as Block[]).forEach((childBlock) => {
+        if ((childBlock.parent_slot ?? 0) > insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) - 1;
       });
     }
   };
