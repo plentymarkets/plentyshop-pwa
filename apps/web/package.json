@@ -6,7 +6,7 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "build": "tsx ./build/index.ts && nuxt build",
-    "dev": "tsx ./build/index.ts && nuxt dev",
+    "dev": "tsx ./build/index.ts && tsx ./build/check-optimize-deps.ts && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "publish-typedoc": "npx typedoc --options typedoc.json && mkdir -p docs/reference && rsync -av --delete reference/composables/ docs/reference/composables/",
@@ -28,7 +28,8 @@
     "test:cypress-post-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/post-quarantine/*.cy.{js,jsx,ts,tsx}'",
     "test:cypress": "cypress run --browser chrome --headless --spec '__tests__/test/smoke/shop.cy.ts'",
     "test:cypress-smoke-editor": "cypress run --browser chrome --headless --spec '__tests__/test/smoke/editor.cy.ts'",
-    "test:cypress-dev": "cypress open --e2e"
+    "test:cypress-dev": "cypress open --e2e",
+    "check:optimize-deps": "tsx ./build/check-optimize-deps.ts"
   },
   "dependencies": {
     "@codemirror/lang-css": "^6.3.1",
