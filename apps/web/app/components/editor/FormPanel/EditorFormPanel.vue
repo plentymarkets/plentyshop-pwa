@@ -44,5 +44,5 @@ const props = withDefaults(
 
 const emit = defineEmits(['update:modelValue']);
 const internalValue = useVModel(props, 'modelValue', emit, { passive: true });
-const panelId = `editor-panel-${Math.random().toString(36).slice(2, 9)}`;
+const panelId = `editor-panel-${useId()}`;
 </script>

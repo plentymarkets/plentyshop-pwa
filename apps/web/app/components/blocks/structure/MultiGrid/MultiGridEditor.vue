@@ -169,9 +169,9 @@ const onPointerMove = (event: PointerEvent) => {
 };
 
 const onPointerUp = (event?: PointerEvent) => {
-  if (event && dragRef.value) {
+  if (event && dragRef.value && containerRef.value) {
     try {
-      (event.currentTarget as Element).releasePointerCapture(event.pointerId);
+      containerRef.value.releasePointerCapture(event.pointerId);
     } catch (error) {
       console.warn('Failed to release pointer capture:', error);
     }

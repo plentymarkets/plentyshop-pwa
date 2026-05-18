@@ -263,12 +263,16 @@ const toggleMenu = (uuid: string) => {
   openMenuUuid.value = openMenuUuid.value === uuid ? null : uuid;
 };
 
+const closeMenu = () => {
+  openMenuUuid.value = null;
+};
+
 onMounted(() => {
-  const close = () => {
-    openMenuUuid.value = null;
-  };
-  document.addEventListener('click', close);
-  onBeforeUnmount(() => document.removeEventListener('click', close));
+  document.addEventListener('click', closeMenu);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', closeMenu);
 });
 
 const getBlockSpan = (block: Block): number => columnWidths.value[block.parent_slot ?? 0] ?? 0;

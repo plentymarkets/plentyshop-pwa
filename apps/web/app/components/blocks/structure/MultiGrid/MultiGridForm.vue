@@ -280,8 +280,7 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
   );
 };
 
-const handleClickAddRow = (anchorEl: HTMLElement | MouseEvent) => {
-  if (anchorEl instanceof MouseEvent) anchorEl = anchorEl.currentTarget as HTMLElement;
+const handleClickAddRow = (anchorEl: HTMLElement) => {
   const block = multiGridStructure.value as ColumnBlock;
   const newSlot = block.configuration.columnWidths.length;
   const newBlock = createEmptyGridBlock(newSlot);
