@@ -64,6 +64,13 @@
         :options="wishlistSizeOptions"
       />
     </div>
+    <SfButton
+      type="button" variant="secondary" @click="openSelectModal">open modal</SfButton>
+
+    <PriceCardSelectModal
+      v-if="isSelectModalOpen"
+      :close="closeSelectModal"
+    />
   </UiAccordionItem>
 
   <UiAccordionItem
@@ -163,11 +170,12 @@ import {
   SfIconArrowForward,
   SfIconArrowBack,
   SfIconInfo,
-  SfTooltip,
+  SfTooltip, SfButton,
 } from '@storefront-ui/vue';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
+import PriceCardSelectModal from '~/components/blocks/PriceCard/PriceCardSelectModal.vue';
 
 const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
@@ -185,6 +193,15 @@ const { isFullWidth } = useFullWidthToggleForContent(priceCardBlock);
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';
 
+const isSelectModalOpen = ref(false);
+
+const openSelectModal = () => {
+  isSelectModalOpen.value = true;
+};
+
+const closeSelectModal = () => {
+  isSelectModalOpen.value = false;
+};
 const fieldLabels = {
   itemName: getEditorTranslation('field-itemName'),
   price: getEditorTranslation('field-price'),
