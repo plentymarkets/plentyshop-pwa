@@ -46,11 +46,11 @@
             @mouseleave="hoveredUuid = null"
           >
             <button
-              class="el-drag-handle cursor-grab active:cursor-grabbing text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0 text-3xs tracking-[0.3px] leading-none"
+              class="el-drag-handle cursor-grab text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0"
               :data-testid="`actions-drag-item-handle-${index}`"
               :aria-label="getEditorTranslation('drag-handle-aria')"
             >
-              ⋮⋮
+              <SfIconMenu size="xs" />
             </button>
 
             <div
@@ -120,8 +120,12 @@
 
             <div class="no-drag relative flex-shrink-0">
               <button
+                :data-testid="`actions-menu-item-${index}`"
                 class="p-0.5 rounded cursor-pointer text-editor-icon hover:text-editor-accent transition-colors"
-                :class="{ '!text-editor-icon': openMenuUuid === block.meta.uuid, 'text-editor-icon/40': !isVisible(block) }"
+                :class="{
+                  '!text-editor-icon': openMenuUuid === block.meta.uuid,
+                  'text-editor-icon/40': !isVisible(block),
+                }"
                 :aria-label="getEditorTranslation('actions-aria')"
                 @click.stop="toggleMenu(block.meta.uuid)"
               >
@@ -175,7 +179,15 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch, SfIconMoreVert, SfIconDelete, SfIconAdd, SfIconBase, SfIconVisibilityOff } from '@storefront-ui/vue';
+import {
+  SfSwitch,
+  SfIconMoreVert,
+  SfIconDelete,
+  SfIconAdd,
+  SfIconBase,
+  SfIconVisibilityOff,
+  SfIconMenu,
+} from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
