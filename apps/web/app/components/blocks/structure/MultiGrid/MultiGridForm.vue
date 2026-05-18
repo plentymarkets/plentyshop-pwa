@@ -388,7 +388,7 @@ defineExpose({ exitEditMode });
 const elementsOpen = ref(true);
 const gridLayoutOpen = ref(true);
 const layoutOpen = ref(true);
-const backgroundOpen = ref(false);
+const backgroundOpen = ref(true);
 </script>
 
 <i18n lang="json">

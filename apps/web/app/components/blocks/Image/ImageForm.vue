@@ -323,10 +323,10 @@ watch(fillModeModel, (newMode) => {
   }
 });
 
-const imageGroupOpen = ref(false);
-const textGroupOpen = ref(false);
-const buttonOpen = ref(false);
-const layoutOpen = ref(false);
+const imageGroupOpen = ref(true);
+const textGroupOpen = ref(true);
+const buttonOpen = ref(true);
+const layoutOpen = ref(true);
 
 const fillTooltip =
   'Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.';

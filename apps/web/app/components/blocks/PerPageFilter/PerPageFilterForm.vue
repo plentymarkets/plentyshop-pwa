@@ -101,7 +101,7 @@ const perPageBlock = computed<PerPageContent>(() => {
 });
 
 const { isFullWidth } = useFullWidthToggleForContent(perPageBlock);
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
 </script>
 
 <i18n lang="json">

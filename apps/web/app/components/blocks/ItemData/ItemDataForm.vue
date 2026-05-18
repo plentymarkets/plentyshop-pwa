@@ -221,7 +221,7 @@ const fieldLabels: ItemDataFieldLabels = {
 
 const textOpen = ref(true);
 const fieldsOpen = ref(true);
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
 
 const isCollapsible = ref(itemTableBlock.layout.displayAsCollapsable ?? false);
 const isInitiallyCollapsed = ref(itemTableBlock.layout.initiallyCollapsed ?? false);

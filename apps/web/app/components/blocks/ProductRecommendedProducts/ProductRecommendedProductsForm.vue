@@ -123,8 +123,8 @@ const debouncedFn = useDebounceFn((event: Event) => {
   recommendedBlock.value.source.itemId = target.value.toString();
 }, 1000);
 
-const sourceOpen = ref(false);
-const textsOpen = ref(false);
+const sourceOpen = ref(true);
+const textsOpen = ref(true);
 const crossSellingOptions = [
   { value: 'Accessory', label: getEditorTranslation('cross-selling-relation-accessory') },
   { value: 'ReplacementPart', label: getEditorTranslation('cross-selling-relation-replacement') },

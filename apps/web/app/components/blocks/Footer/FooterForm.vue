@@ -298,12 +298,12 @@ import { FOOTER_SWITCH_DEFINITIONS } from './constants';
 const { footer } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
 
-const firstColumnOpen = ref(false);
-const secondColumnOpen = ref(false);
-const thirdColumnOpen = ref(false);
-const fourthColumnOpen = ref(false);
-const footNoteOpen = ref(false);
-const footerColors = ref(false);
+const firstColumnOpen = ref(true);
+const secondColumnOpen = ref(true);
+const thirdColumnOpen = ref(true);
+const fourthColumnOpen = ref(true);
+const footNoteOpen = ref(true);
+const footerColors = ref(true);
 
 const footerBlock = computed(() => footer.value as FooterBlock);
 const footerContent = computed(() => footerBlock.value?.content as FooterContent);

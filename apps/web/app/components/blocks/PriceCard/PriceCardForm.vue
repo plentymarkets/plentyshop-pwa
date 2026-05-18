@@ -190,7 +190,7 @@ const fieldLabels = {
 };
 
 const cardOpen = ref(true);
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
 
 const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
   () => priceCardBlock.value,

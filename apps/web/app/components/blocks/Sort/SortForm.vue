@@ -102,7 +102,7 @@ const sortBlock = computed<SortContent>(() => {
 
 const { isFullWidth } = useFullWidthToggleForContent(sortBlock);
 
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
 </script>
 
 <i18n lang="json">
