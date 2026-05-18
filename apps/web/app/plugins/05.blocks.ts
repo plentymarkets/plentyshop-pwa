@@ -11,6 +11,8 @@ export default defineNuxtPlugin({
 
     const fetchForRoute = async (to: RouteLocationNormalized) => {
       const { meta } = to;
+
+      if (meta.skipBlocksFetch) return;
       const hasBlockIdentifier = meta.isBlockified && meta.identifier !== undefined;
       const type = (hasBlockIdentifier && meta.type ? meta.type : 'immutable') as string;
 
