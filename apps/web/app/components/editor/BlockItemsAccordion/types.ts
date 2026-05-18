@@ -1,5 +1,6 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
+import type { QuickAddOption, InsertBlockFn } from '~/components/editor/QuickAdd/types';
 
 export interface BlockItemsAccordionProps {
   items: Block[];
@@ -7,7 +8,9 @@ export interface BlockItemsAccordionProps {
   currentActiveIndex?: number;
   minItems?: number;
   modelValue?: boolean;
-  quickAddOptions?: import('~/components/editor/QuickAdd/types').QuickAddOption[];
+  quickAddOptions?: QuickAddOption[];
+  getLastChild?: () => Block | undefined;
+  customInsert?: InsertBlockFn;
 }
 
 export interface BlockItemsAccordionEmits {
@@ -18,5 +21,4 @@ export interface BlockItemsAccordionEmits {
   'toggle-item-visibility': [index: number];
   'update:items': [items: SlideBlock[]];
   'update:modelValue': [isOpen: boolean];
-  'quick-add-item': [option: import('~/components/editor/QuickAdd/types').QuickAddOption];
 }

@@ -120,7 +120,11 @@
         </button>
       </div>
 
-      <EditorQuickAdd :options="quickAddOptions" @add="$emit('quick-add-item', $event)" />
+      <EditorQuickAdd
+        :options="quickAddOptions"
+        :get-last-child="getLastChild ?? (() => undefined)"
+        :custom-insert="customInsert"
+      />
     </div>
   </UiAccordionItem>
 </template>

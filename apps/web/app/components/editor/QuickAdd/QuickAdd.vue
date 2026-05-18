@@ -6,7 +6,7 @@
       :data-testid="`quick-add-${option.blockName}`"
       type="button"
       class="px-2 py-1 rounded-full border border-editor-border bg-white cursor-pointer flex items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
-      @click="$emit('add', option)"
+      @click="handleAdd(option)"
     >
       <div class="shrink-0 w-3.5 h-3.5">
         <span
@@ -23,15 +23,18 @@
 
 <script setup lang="ts">
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
-import type { QuickAddOption } from './types';
+import type { QuickAddProps } from './types';
 
 const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
-defineProps<{
-  options: QuickAddOption[];
-}>();
+const props = defineProps<QuickAddProps>();
 
-defineEmits<{
-  add: [option: QuickAddOption];
-}>();
+const { quickAddBlock } = useQuickAdd(
+  () => props.getLastChild(),
+  props.customInsert,
+);
+
+const handleAdd = (option: Parameters<typeof quickAddBlock>[0]) => {
+  quickAddBlock(option);
+};
 </script>

@@ -8,13 +8,13 @@
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
         :quick-add-options="quickAddOptions"
+        :get-last-child="getLastChild"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
         @toggle-item-visibility="toggleBlockVisibilityHandler"
         @update:items="updateBlocks"
-        @quick-add-item="quickAddBlock"
       />
 
       <UiAccordionItem
@@ -156,10 +156,10 @@ const addBlock = (event?: MouseEvent) => {
 
 const quickAddOptions = headerQuickAddOptions;
 
-const { quickAddBlock } = useQuickAdd(() => {
+const getLastChild = () => {
   const content = headerContainerStructure.value.content ?? [];
   return content[content.length - 1];
-});
+};
 
 const deleteBlock = async (index: number) => {
   if (blocks.value.length <= 1) {

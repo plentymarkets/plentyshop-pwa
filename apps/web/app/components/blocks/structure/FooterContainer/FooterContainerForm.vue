@@ -8,13 +8,13 @@
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
         :quick-add-options="quickAddOptions"
+        :get-last-child="getLastChild"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
         @toggle-item-visibility="toggleBlockVisibilityHandler"
         @update:items="updateBlocks"
-        @quick-add-item="quickAddBlock"
       />
 
       <UiAccordionItem
@@ -103,10 +103,10 @@ const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBl
 
 const quickAddOptions = footerQuickAddOptions;
 
-const { quickAddBlock } = useQuickAdd(() => {
+const getLastChild = () => {
   const content = footerContainer.value.content ?? [];
   return content[content.length - 1];
-});
+};
 
 const blockForm = computed(() => {
   if (!editingBlockName.value) {
