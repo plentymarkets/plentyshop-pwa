@@ -12,7 +12,10 @@
         </div>
         <Coupon v-if="viewport.isLessThan('lg')" class="mb-2" />
       </div>
-      <div class="relative col-span-5 @md:sticky @md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
+      <div
+        class="relative col-span-5 @md:sticky @md:top-10 h-fit"
+        :class="{ 'pointer-events-none opacity-50': loading }"
+      >
         <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
         <OrderSummary :cart="cart">
           <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />

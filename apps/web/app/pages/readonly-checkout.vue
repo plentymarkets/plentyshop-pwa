@@ -30,7 +30,10 @@
         <div v-for="cartItem in cart?.items" :key="cartItem.id">
           <UiCartProductCard disabled :cart-item="cartItem" />
         </div>
-        <div class="relative @md:sticky mt-4 @md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
+        <div
+          class="relative @md:sticky mt-4 @md:top-20 h-fit"
+          :class="{ 'pointer-events-none opacity-50': cartLoading }"
+        >
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />

@@ -14,16 +14,16 @@ export const useEditorPreview = () => {
 
   const setDevice = (d: PreviewDevice) => {
     if (d === 'mobile') {
-        viewport.breakpoint.value = 'xs';
+      viewport.breakpoint.value = 'xs';
     } else if (d === 'tablet') {
-        viewport.breakpoint.value = 'md';
+      viewport.breakpoint.value = 'md';
     } else {
-        for (const [key, { mediaQuery }] of Object.entries(viewport.queries.value)) {
-            if (window.matchMedia(mediaQuery).matches) {
-                viewport.breakpoint.value = key;
-                break;
-            }
+      for (const [key, { mediaQuery }] of Object.entries(viewport.queries.value)) {
+        if (window.matchMedia(mediaQuery).matches) {
+          viewport.breakpoint.value = key;
+          break;
         }
+      }
     }
 
     device.value = d;
@@ -35,12 +35,11 @@ export const useEditorPreview = () => {
     return '100%';
   });
 
-
-    const height = computed(() => {
+  const height = computed(() => {
     if (device.value === 'mobile') return '812px';
     if (device.value === 'tablet') return '1024px';
     return undefined;
-    });
+  });
 
   return { device, setDevice, width, height };
 };

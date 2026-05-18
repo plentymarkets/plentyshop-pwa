@@ -17,7 +17,11 @@
     <div
       ref="contentRef"
       class="flex-1 w-full relative"
-      :class="clientPreview ? ['overflow-auto', isConstrainedPreview ? 'bg-editor-body-bg' : 'bg-white'] : 'overflow-visible bg-white'"
+      :class="
+        clientPreview
+          ? ['overflow-auto', isConstrainedPreview ? 'bg-editor-body-bg' : 'bg-white']
+          : 'overflow-visible bg-white'
+      "
     >
       <Body
         class="font-body bg-editor-body-bg"
@@ -28,16 +32,27 @@
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <div
-        :style="isConstrainedPreview ? { width: previewWidth, maxWidth: '100%', transform: 'translateZ(0)', height: previewHeight, display: 'flex', flexDirection: 'column' } : undefined"
+        :style="
+          isConstrainedPreview
+            ? {
+                width: previewWidth,
+                maxWidth: '100%',
+                transform: 'translateZ(0)',
+                height: previewHeight,
+                display: 'flex',
+                flexDirection: 'column',
+              }
+            : undefined
+        "
         :class="isConstrainedPreview ? 'mx-auto bg-white my-auto shadow-md @container mt-32' : '@container'"
       >
         <template v-if="isConstrainedPreview">
-          <div style="flex: 1; min-height: 0; overflow-y: auto;">
+          <div style="flex: 1; min-height: 0; overflow-y: auto">
             <NuxtLayout>
               <NuxtPage />
             </NuxtLayout>
           </div>
-          <div id="preview-bottom-slot" class="relative z-10 flex-shrink-0"></div>
+          <div id="preview-bottom-slot" class="relative z-10 flex-shrink-0" />
         </template>
         <template v-else>
           <NuxtLayout>

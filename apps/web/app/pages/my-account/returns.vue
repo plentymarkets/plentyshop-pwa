@@ -72,7 +72,9 @@
         <thead class="border-b-2 border-neutral-200">
           <tr>
             <th class="@lg:py-4 py-2 @lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.returnId') }}</th>
-            <th class="@lg:p-4 p-2 font-medium @lg:whitespace-nowrap">{{ t('account.ordersAndReturns.returnDate') }}</th>
+            <th class="@lg:p-4 p-2 font-medium @lg:whitespace-nowrap">
+              {{ t('account.ordersAndReturns.returnDate') }}
+            </th>
             <th class="@lg:p-4 p-2 font-medium w-full">
               {{ t('account.ordersAndReturns.orderDetails.paymentMethod') }}
             </th>
