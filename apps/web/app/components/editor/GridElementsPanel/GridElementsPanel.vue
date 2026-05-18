@@ -47,6 +47,7 @@
           >
             <button
               class="el-drag-handle cursor-grab active:cursor-grabbing text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0 text-3xs tracking-[0.3px] leading-none"
+              :data-testid="`actions-drag-item-handle-${index}`"
               :aria-label="getEditorTranslation('drag-handle-aria')"
             >
               ⋮⋮
