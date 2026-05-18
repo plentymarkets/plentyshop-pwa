@@ -62,9 +62,11 @@
               class="mt-2 mb-4"
               @change="handleDragChange"
             >
-              <template #item="{ element: block }">
+              <template #item="{ element: block, index }">
                 <div>
+                  <TableOfContentsInsertBlockLine v-if="index === 0" :block="block" is-top />
                   <TableOfContentsItem :item="blockToFlatBlock(block)" />
+                  <TableOfContentsInsertBlockLine v-if="index < pageBlocks.length - 1" :block="block" />
                 </div>
               </template>
             </draggable>

@@ -33,8 +33,8 @@
       </div>
 
       <MultiGridEditor
-        :column-widths="editorColumnWidths"
-        :blocks="editorBlocks"
+        :column-widths="visibleGrid.columnWidths"
+        :blocks="visibleGrid.blocks"
         @update:column-widths="handleColumnWidthsUpdate"
         @click-add-row="handleClickAddRow"
         @add-free-column="handleAddFreeColumn"
@@ -153,6 +153,7 @@ import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/types';
 import { getBlockFormLoader } from '~/utils/blocks/blocks-imports';
+import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -188,47 +189,12 @@ const multiGridStructure = computed(() => {
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
-const invisibleSlotsEditor = computed(() => {
-  const blocks = (multiGridStructure.value.content as Block[]) ?? [];
-  const slots = new Set<number>();
-  blocks.forEach((block) => {
-    if ((block.configuration as Record<string, unknown>)?.visible === false && block.parent_slot !== undefined) {
-      slots.add(block.parent_slot);
-    }
-  });
-  return slots;
-});
-
-const editorSlotMap = computed(() => {
-  const widths = multiGridStructure.value.configuration.columnWidths ?? [];
-  const invisible = invisibleSlotsEditor.value;
-  const filteredToOriginal: number[] = [];
-  for (let slotIndex = 0; slotIndex < widths.length; slotIndex++) {
-    if (!invisible.has(slotIndex)) filteredToOriginal.push(slotIndex);
-  }
-  return filteredToOriginal;
-});
-
-const editorColumnWidths = computed(() => {
-  const widths = multiGridStructure.value.configuration.columnWidths ?? [];
-  return editorSlotMap.value.map((originalSlotIndex) => widths[originalSlotIndex] ?? 0);
-});
-
-const editorBlocks = computed(() => {
-  const blocks = (multiGridStructure.value.content as Block[]) ?? [];
-  const invisible = invisibleSlotsEditor.value;
-  const originalToFiltered: Record<number, number> = {};
-  editorSlotMap.value.forEach((originalIndex, filteredIndex) => {
-    originalToFiltered[originalIndex] = filteredIndex;
-  });
-  return blocks
-    .filter((block) => block.parent_slot === undefined || !invisible.has(block.parent_slot ?? 0))
-    .map((block) =>
-      block.parent_slot !== undefined
-        ? { ...block, parent_slot: originalToFiltered[block.parent_slot] ?? block.parent_slot }
-        : { ...block },
-    ) as Block[];
-});
+const visibleGrid = computed(() =>
+  computeVisibleGrid(
+    (multiGridStructure.value.content as Block[]) ?? [],
+    multiGridStructure.value.configuration.columnWidths ?? [],
+  ),
+);
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
@@ -272,7 +238,7 @@ const applyPreset = (spans: readonly number[]) => {
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
   const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
-  editorSlotMap.value.forEach((originalIndex, filteredIndex) => {
+  visibleGrid.value.filteredToOriginal.forEach((originalIndex, filteredIndex) => {
     const width = filteredWidths[filteredIndex];
     if (width !== undefined) {
       fullWidths[originalIndex] = width;
@@ -376,7 +342,7 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
 };
 
 const handleAddFreeColumn = (span: number, anchorEl: HTMLElement, filteredInsertIndex: number) => {
-  const insertIndex = filteredInsertIndex > 0 ? (editorSlotMap.value[filteredInsertIndex - 1] ?? -1) + 1 : 0;
+  const insertIndex = filteredInsertIndex > 0 ? (visibleGrid.value.filteredToOriginal[filteredInsertIndex - 1] ?? -1) + 1 : 0;
   insertColumnAt(insertIndex, span, anchorEl);
 };
 
