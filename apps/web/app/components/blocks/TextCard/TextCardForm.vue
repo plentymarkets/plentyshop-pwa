@@ -11,50 +11,48 @@
     />
   </EditorFormPanel>
 
-  <EditorFormPanel
-    v-model="buttonSettings"
-    :title="getEditorTranslation('button-group-label')"
-    data-testid="button-settings"
-  >
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+  <div data-testid="button-settings">
+    <EditorFormPanel v-model="buttonSettings" :title="getEditorTranslation('button-group-label')">
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
+            <template #suffix>
+              <label for="text-button-label" class="rounded-lg cursor-pointer">
+                <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
-          <template #suffix>
-            <label for="text-button-label" class="rounded-lg cursor-pointer">
-              <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
+            <template #suffix>
+              <label for="text-button-link" class="rounded-lg cursor-pointer">
+                <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
-          <template #suffix>
-            <label for="text-button-link" class="rounded-lg cursor-pointer">
-              <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <EditorOptionsTabs
-        v-model="buttonVariantModel"
-        :legend="getEditorTranslation('outline-label')"
-        test-id-prefix="button-variant"
-        :options="buttonVariantOptions"
-      />
-    </div>
-  </EditorFormPanel>
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="buttonVariantModel"
+          :legend="getEditorTranslation('outline-label')"
+          test-id-prefix="button-variant"
+          :options="buttonVariantOptions"
+        />
+      </div>
+    </EditorFormPanel>
+  </div>
 
   <EditorFormPanel
     v-model="layoutSettings"
