@@ -96,19 +96,19 @@ describe('Image Text Block Form', () => {
 
   const changeButtonLabel = () => {
     cy.get('[data-testid="input-button-label"]').should('exist').clear().type('New Button Label', { delay: 0 });
-    cy.get('[data-testid="text-button"]').should('have.text', 'New Button Label');
+    cy.get('[data-testid="text-button"]').first().should('have.text', 'New Button Label');
   };
 
   const changeButtonLink = () => {
     cy.get('[data-testid="input-button-link"]').should('exist').clear().type('https://www.google.com', { delay: 0 });
-    cy.get('[data-testid="text-button"]').should('have.attr', 'href', 'https://www.google.com');
+    cy.get('[data-testid="text-button"]').first().should('have.attr', 'href', 'https://www.google.com');
   };
 
   const changeButtonVariants = () => {
     cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
-    cy.get('[data-testid="text-button"]').should('have.class', 'active:text-primary-900');
+    cy.get('[data-testid="text-button"]').first().should('have.class', 'active:text-primary-900');
     cy.get('[data-testid="button-variant-primary"]').should('exist').click();
-    cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
+    cy.get('[data-testid="text-button"]').first().should('have.class', 'active:bg-primary-700');
   };
 
   const cookieBar = new CookieBarObject();

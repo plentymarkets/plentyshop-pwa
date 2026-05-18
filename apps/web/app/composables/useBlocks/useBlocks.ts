@@ -43,6 +43,15 @@ export const useBlocks: UseBlocksReturn = () => {
     }, 150);
   };
 
+  const cancelCleanDataSync = () => {
+    const nuxtApp = useNuxtApp();
+    if (nuxtApp._settleTimer) {
+      clearTimeout(nuxtApp._settleTimer);
+      nuxtApp._settleTimer = null;
+    }
+    state.value.isSettling = false;
+  };
+
   const headerContainer = computed(() => state.value.data.HeaderContainer);
   const footer = computed(() => state.value.data.Footer);
   const pageBlocks = computed(() => state.value.data.blocks ?? []);
@@ -101,12 +110,7 @@ export const useBlocks: UseBlocksReturn = () => {
 
       state.value.hasSnapshot = true;
 
-      const assembled = assembleBlocks(
-        (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
-        type,
-        identifier,
-        state.value.hasSnapshot,
-      );
+      const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
       setBlocks(assembled);
 
       return true;
@@ -157,6 +161,7 @@ export const useBlocks: UseBlocksReturn = () => {
     discardChanges,
     setDefaultTemplate,
     scheduleCleanDataSync,
+    cancelCleanDataSync,
     isSettling: computed(() => state.value.isSettling),
   };
 };
