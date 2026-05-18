@@ -92,10 +92,6 @@ export const useMultiGridQuickAdd = () => {
     await addNewBlock(option.category, option.variationIndex, newEmptyBlock.meta.uuid, 'inside');
   };
 
-  /**
-   * Adds a structural row to the grid without inserting a content block.
-   * Grows the last row if possible, otherwise adds a new full-width row.
-   */
   const addRowToGrid = (block: Block) => {
     const configuration = block.configuration as unknown as { columnWidths: number[] };
     const columnWidths = configuration.columnWidths ?? [];
