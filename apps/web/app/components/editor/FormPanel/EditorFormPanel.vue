@@ -26,7 +26,6 @@
 import { SfIconExpandMore } from '@storefront-ui/vue';
 import { useVModel } from '@vueuse/core';
 
-
 const props = withDefaults(
   defineProps<{
     title?: string;
