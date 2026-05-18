@@ -28,8 +28,8 @@
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <div
-        :style="isConstrainedPreview ? { width: previewWidth, maxWidth: '100%' } : undefined"
-        :class="isConstrainedPreview ? 'mx-auto bg-white shadow-md min-h-full @container' : '@container'"
+        :style="isConstrainedPreview ? { width: previewWidth, maxWidth: '100%', transform: 'translateZ(0)', height: previewHeight, overflowY: 'auto' } : undefined"
+        :class="isConstrainedPreview ? 'mx-auto bg-white shadow-md @container' : '@container'"
       >
         <NuxtLayout>
           <NuxtPage />
@@ -63,6 +63,12 @@ const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont 
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient } = useEditorState();
 const { device, width: previewWidth } = useEditorPreview();
+
+const previewHeight = computed(() => {
+  if (device.value === 'mobile') return '812px';
+  if (device.value === 'tablet') return '1024px';
+  return undefined;
+});
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
