@@ -18,147 +18,21 @@
 
     <draggable v-model="localItems" item-key="meta.uuid" handle=".el-drag-handle" :filter="'.no-drag'" @end="onDragEnd">
       <template #item="{ element: block, index }">
-        <div class="relative">
-          <div
-            v-if="!props.customAdd"
-            class="no-drag absolute inset-x-0 top-0 -translate-y-1/2 h-3 z-20 flex items-center justify-center cursor-pointer"
-            @mouseenter="insertHoveredUuid = block.meta.uuid"
-            @mouseleave="insertHoveredUuid = null"
-            @click.stop="onInsertBefore(block, $event)"
-          >
-            <div
-              class="absolute inset-x-0 top-1/2 h-px"
-              :class="insertHoveredUuid === block.meta.uuid ? 'bg-editor-accent opacity-100' : 'opacity-0'"
-            />
-            <div
-              v-show="insertHoveredUuid === block.meta.uuid"
-              class="relative w-4 h-4 rounded-full bg-editor-accent text-white flex items-center justify-center flex-shrink-0 z-10 shadow-sm"
-            >
-              <SfIconAdd size="xs" />
-            </div>
-          </div>
-
-          <div
-            data-el-item
-            class="group/el flex items-center gap-1.5 px-2 py-1.5 border-b border-editor-border transition-colors hover:bg-editor-toc-hover"
-            :class="{ 'bg-editor-toc-hover': openMenuUuid === block.meta.uuid }"
-            @mouseenter="hoveredUuid = block.meta.uuid"
-            @mouseleave="hoveredUuid = null"
-          >
-            <button
-              class="el-drag-handle cursor-grab text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0"
-              :data-testid="`actions-drag-item-handle-${index}`"
-              :aria-label="getEditorTranslation('drag-handle-aria')"
-            >
-              <SfIconMenu size="xs" />
-            </button>
-
-            <div
-              class="w-2.5 h-2.5 flex-shrink-0 rounded-sm"
-              :class="block.name === 'EmptyGridBlock' ? 'border border-dashed border-editor-text-ghost' : ''"
-              :style="
-                block.name !== 'EmptyGridBlock'
-                  ? { backgroundColor: getBlockColor(block.name, isVisible(block) ? 1 : 0.35) }
-                  : undefined
-              "
-            />
-
-            <span
-              class="flex-1 text-xs truncate min-w-0"
-              :class="
-                block.name !== 'EmptyGridBlock'
-                  ? isVisible(block)
-                    ? 'text-editor-text-default'
-                    : 'text-editor-text-ghost line-through'
-                  : 'text-editor-text-ghost italic'
-              "
-            >
-              {{
-                block.name !== 'EmptyGridBlock' ? getBlockDisplayName(block.name) : getEditorTranslation('empty-block')
-              }}
-            </span>
-
-            <SfIconVisibilityOff
-              v-if="block.name !== 'EmptyGridBlock' && !isVisible(block)"
-              size="xs"
-              class="flex-shrink-0 text-editor-text-ghost"
-            />
-
-            <span
-              v-if="isGridMode && (hoveredUuid === block.meta.uuid || openMenuUuid === block.meta.uuid)"
-              class="text-3xs font-bold px-1 py-0.5 rounded flex-shrink-0"
-              :class="
-                block.name !== 'EmptyGridBlock'
-                  ? 'bg-editor-accent/10 text-editor-accent'
-                  : 'bg-editor-surface-muted text-editor-text-ghost'
-              "
-              >{{ getBlockSpan(block) }}/12</span
-            >
-
-            <button
-              v-show="block.name !== 'EmptyGridBlock'"
-              :data-testid="`actions-edit-item-${index}`"
-              class="no-drag p-0.5 rounded cursor-pointer text-editor-icon hover:text-editor-accent flex-shrink-0 transition-colors"
-              :class="{ 'text-editor-icon/40': !isVisible(block) }"
-              :aria-label="getEditorTranslation('edit-aria')"
-              @click.stop="emit('edit-element', block)"
-            >
-              <SfIconBase size="xs" viewBox="0 0 18 18">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path :d="editPath" fill="currentColor" />
-                </svg>
-              </SfIconBase>
-            </button>
-
-            <button
-              v-if="hoveredUuid === block.meta.uuid && block.name === 'EmptyGridBlock'"
-              class="no-drag text-3xs font-bold tracking-wider uppercase text-editor-accent flex-shrink-0 cursor-pointer"
-              @click.stop="onReplaceEmpty($event, block)"
-            >
-              {{ getEditorTranslation('replace') }}
-            </button>
-
-            <div class="no-drag relative flex-shrink-0">
-              <button
-                :data-testid="`actions-menu-item-${index}`"
-                class="p-0.5 rounded cursor-pointer text-editor-icon hover:text-editor-accent transition-colors"
-                :class="{
-                  '!text-editor-icon': openMenuUuid === block.meta.uuid,
-                  'text-editor-icon/40': !isVisible(block),
-                }"
-                :aria-label="getEditorTranslation('actions-aria')"
-                @click.stop="toggleMenu(block.meta.uuid)"
-              >
-                <SfIconMoreVert size="xs" />
-              </button>
-
-              <div
-                v-if="openMenuUuid === block.meta.uuid"
-                class="absolute right-0 mt-1 w-44 bg-white rounded-lg shadow-lg border border-editor-border z-50"
-                @click.stop
-              >
-                <div class="px-3 py-2.5 border-b border-editor-border flex items-center justify-between gap-2">
-                  <span class="text-xs text-editor-text-subtle">{{ getEditorTranslation('visibility') }}</span>
-                  <SfSwitch
-                    :model-value="isVisible(block)"
-                    :data-testid="`actions-toggle-visibility-item-${index}`"
-                    class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
-                    @update:model-value="onToggleVisibility(block)"
-                  />
-                </div>
-                <button
-                  :data-testid="`actions-delete-item-${index}`"
-                  class="w-full text-left px-3 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 rounded-b-lg disabled:opacity-40 disabled:cursor-not-allowed"
-                  :disabled="minItemsReached"
-                  @click="onDelete(block)"
-                >
-                  <SfIconDelete size="xs" />
-                  {{ getEditorTranslation('delete') }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <EditorGridElementsPanelGridElementsItem
+          :block="block"
+          :index="index"
+          :menu-open="openMenuUuid === block.meta.uuid"
+          :custom-add="props.customAdd"
+          :is-grid-mode="isGridMode"
+          :block-span="columnWidths[block.parent_slot ?? 0] ?? 0"
+          :min-items-reached="minItemsReached"
+          @insert-before="onInsertBefore"
+          @edit-element="emit('edit-element', $event)"
+          @replace-empty="onReplaceEmpty"
+          @toggle-menu="toggleMenu"
+          @toggle-visibility="onToggleVisibility"
+          @delete="onDelete"
+        />
       </template>
     </draggable>
 
@@ -182,20 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfSwitch,
-  SfIconMoreVert,
-  SfIconDelete,
-  SfIconAdd,
-  SfIconBase,
-  SfIconVisibilityOff,
-  SfIconMenu,
-} from '@storefront-ui/vue';
+import { SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
 import type { GridElementsPanelProps, GridElementsPanelEmits } from './types';
-import { editPath } from '~/assets/icons/paths/edit';
 
 const props = withDefaults(defineProps<GridElementsPanelProps>(), {
   modelValue: true,
@@ -246,15 +111,13 @@ const totalCount = computed(() => sortedItems.value.length);
 const filledCount = computed(() => sortedItems.value.filter((b) => b.name !== 'EmptyGridBlock').length);
 const minItemsReached = computed(() => sortedItems.value.length <= props.minItems);
 
-const hoveredUuid = ref<string | null>(null);
 const openMenuUuid = ref<string | null>(null);
-const insertHoveredUuid = ref<string | null>(null);
 
-const onInsertBefore = (block: Block, event: MouseEvent) => {
+const onInsertBefore = (block: Block, anchorEl: HTMLElement) => {
   if (isGridMode.value) {
-    emit('insert-before', block, event.currentTarget as HTMLElement);
+    emit('insert-before', block, anchorEl);
   } else if (enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position: 'top' });
+    openAddBlockPopover({ anchorEl, targetUuid: block.meta.uuid, position: 'top' });
   } else {
     togglePlaceholder(block.meta.uuid, 'top');
     openDrawerWithView('blocksList');
@@ -278,9 +141,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', closeMenu);
 });
 
-const getBlockSpan = (block: Block): number => columnWidths.value[block.parent_slot ?? 0] ?? 0;
-const isVisible = (block: Block): boolean => (block.configuration as Record<string, unknown>)?.visible !== false;
-
 const onToggleVisibility = (block: Block) => {
   toggleBlockVisibility(block);
   openMenuUuid.value = null;
@@ -301,13 +161,9 @@ const onDelete = (block: Block) => {
   openMenuUuid.value = null;
 };
 
-const onReplaceEmpty = (event: MouseEvent, block: Block) => {
+const onReplaceEmpty = (anchorEl: HTMLElement, block: Block) => {
   if (enableAddBlockPopover) {
-    openAddBlockPopover({
-      anchorEl: event.currentTarget as HTMLElement,
-      targetUuid: block.meta.uuid,
-      position: 'inside',
-    });
+    openAddBlockPopover({ anchorEl, targetUuid: block.meta.uuid, position: 'inside' });
   } else {
     setInsertColumnUuid(block.meta.uuid);
     openDrawerWithView('blocksList');
@@ -395,27 +251,13 @@ const onAddElement = () => {
 {
   "en": {
     "elements": "Elements",
-    "empty-block": "Empty Block",
-    "replace": "Replace",
-    "visibility": "Visibility",
-    "delete": "Delete",
     "add-element": "Add Element",
-    "no-elements": "No elements yet — choose a layout below.",
-    "drag-handle-aria": "Drag to reorder",
-    "actions-aria": "Block actions",
-    "edit-aria": "Edit block"
+    "no-elements": "No elements yet — choose a layout below."
   },
   "de": {
     "elements": "Elements",
-    "empty-block": "Empty Block",
-    "replace": "Replace",
-    "visibility": "Visibility",
-    "delete": "Delete",
     "add-element": "Add Element",
-    "no-elements": "No elements yet — choose a layout below.",
-    "drag-handle-aria": "Drag to reorder",
-    "actions-aria": "Block actions",
-    "edit-aria": "Edit block"
+    "no-elements": "No elements yet — choose a layout below."
   }
 }
 </i18n>
