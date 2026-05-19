@@ -159,7 +159,7 @@ export const IconNode = Node.create({
 | Hook | Purpose | Tiptap docs |
 |---|---|---|
 | `addAttributes` | Declares persistent data stored per node | [Attributes](https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing#attributes) |
-| `parseHTML` | CSS-selector rules that map existing HTML to this node on paste or load | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#parshtml) |
+| `parseHTML` | CSS-selector rules that map existing HTML to this node on paste or load | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#parsehtml) |
 | `renderHTML` | Returns the DOM structure written when serialising to HTML | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#renderhtml) |
 | `addNodeView` | Returns a live DOM element rendered in the editor canvas | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views) |
 | `addCommands` | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#commands) |
