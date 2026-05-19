@@ -6,6 +6,7 @@
       variantClasses[variant],
       $attrs.class,
     ]"
+    :type="type"
     data-testid="link"
     v-bind="attrsWithoutClass"
   >
@@ -17,7 +18,7 @@
 import type { PropType, ConcreteComponent } from 'vue';
 import { SfLinkVariant } from '@storefront-ui/vue';
 
-defineProps({
+const props = defineProps({
   tag: {
     type: [String, Object] as PropType<string | ConcreteComponent>,
     default: 'a',
@@ -40,5 +41,10 @@ const attrs = useAttrs();
 const attrsWithoutClass = computed(() => {
   const { class: _, ...rest } = attrs;
   return rest;
+});
+
+const type = computed(() => {
+  if (attrs.type) return undefined;
+  return typeof props.tag === 'string' && props.tag.toLowerCase() === 'button' ? 'button' : undefined;
 });
 </script>

@@ -102,7 +102,6 @@
           </div>
           <UiLink
             tag="button"
-            size="sm"
             class="text-primary hover:underline"
             @click="cookieGroup.showMore = !cookieGroup.showMore"
           >
