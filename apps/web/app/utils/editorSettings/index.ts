@@ -1,4 +1,4 @@
-export type SettingOption = { label: string; value: string };
+import type { SettingOption } from './types';
 
 export const seoAvailabilities = [
   { key: 'availabilities.availabilityNotSet', value: '' },

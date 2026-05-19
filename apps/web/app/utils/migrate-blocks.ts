@@ -6,7 +6,8 @@ import type { ItemGridContent, ItemGridFieldsVisibility } from '~/components/blo
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
-import { migrateRecommendedContent, type OldContent } from '~/utils/migrate-recommended-content';
+import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
+import type { OldContent } from '~/utils/migrate-recommended-content/types';
 import type { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
 
 const HEADER_BLOCK_NAME = 'Header';

@@ -1,14 +1,8 @@
+import type { NavigationDependencies } from './types';
+
 export const extractImageName = (url: string) => {
   const fileNameWithExtension = url.slice(Math.max(0, url.lastIndexOf('/') + 1));
   return fileNameWithExtension.slice(0, Math.max(0, fileNameWithExtension.lastIndexOf('.')));
-};
-
-type NavigationDependencies = {
-  router: ReturnType<typeof useRouter>;
-  isAuthorized: boolean;
-  i18n: ReturnType<typeof useNuxtApp>['$i18n'];
-  localePath: ReturnType<typeof useLocalePath>;
-  navigateTo: typeof navigateTo;
 };
 
 export const handlePreviousRouteNavigation = (dependencies: NavigationDependencies) => {

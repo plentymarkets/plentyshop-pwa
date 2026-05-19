@@ -48,8 +48,12 @@
             />
           </div>
 
-          <div class="flex-1 overflow-y-auto p-4">
-            <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
+          <div
+            class="flex-1 overflow-y-auto p-2.5 editor-parent bg-white cursor-text border border-gray-300 rounded-md"
+            data-testid="rte-modal-editor"
+            @mousedown="editor?.chain().focus().run()"
+          >
+            <EditorContent :editor="editor" class="rte__content rte-prose h-full" :style="editorStyle" />
           </div>
         </main>
       </div>

@@ -1,18 +1,4 @@
-type PlainObject = Record<string, unknown>;
-type TreatAsEmpty = (path: string, value: unknown) => boolean;
-
-type MergeContext = {
-  forced: Set<string>;
-  ignored: Set<string>;
-  path: string;
-  treatAsEmpty?: TreatAsEmpty;
-};
-
-export type FillMissingFieldsOptions = {
-  forcedKeys?: ReadonlyArray<string> | ReadonlySet<string>;
-  ignoredKeys?: ReadonlyArray<string> | ReadonlySet<string>;
-  treatAsEmpty?: TreatAsEmpty;
-};
+import type { PlainObject, MergeContext, FillMissingFieldsOptions } from './types';
 
 const toSet = (keys?: ReadonlyArray<string> | ReadonlySet<string>): Set<string> => (keys ? new Set(keys) : new Set());
 
