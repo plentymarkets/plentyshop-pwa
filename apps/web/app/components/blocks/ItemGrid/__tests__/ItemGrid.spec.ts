@@ -27,7 +27,7 @@ describe('ItemGrid.vue', () => {
     const grid = wrapper.find('[data-testid="category-grid"]');
 
     expect(grid.exists()).toBe(true);
-    expect(grid.classes()).toContain('@mb-10');
+    expect(grid.classes()).toContain('mb-10');
     expect(grid.classes()).toContain('gap-4');
     expect(grid.classes()).toContain('@md:gap-6');
     expect(grid.classes()).toContain('@md:mb-5');
