@@ -315,46 +315,6 @@ useHead({
       </div>
     </div>
 
-    <!-- ==================== VERGLEICH ==================== -->
-    <section class="vergleich">
-      <div class="section-head">
-        <div class="section-eyebrow">Im Überblick</div>
-        <h2>Welches Modell passt zu Ihrem Vorhaben?</h2>
-      </div>
-      <div class="vergleich-grid">
-        <div class="v-card">
-          <div class="v-num">01 / Leasing</div>
-          <h3>Bilanzneutral nutzen.</h3>
-          <p>Sie zahlen monatlich für die Nutzung. Das Objekt bleibt Eigentum des Leasinggebers. Am Ende wird verlängert, zurückgegeben oder gekauft.</p>
-          <dl>
-            <dt>Steuerlich</dt><dd>Raten zu 100 % als Betriebsausgabe absetzbar</dd>
-            <dt>Bilanz</dt><dd>Erscheint nicht in der Bilanz</dd>
-            <dt>Empfohlen für</dt><dd>Maschinen mit technischem Fortschritt, Fuhrpark</dd>
-          </dl>
-        </div>
-        <div class="v-card">
-          <div class="v-num">02 / Finanzierung</div>
-          <h3>Eigentum von Beginn an.</h3>
-          <p>Sie kaufen das Objekt mit einem Investitionskredit. Eigentum geht sofort an Sie über. Vorsteuer ist direkt abzugsfähig.</p>
-          <dl>
-            <dt>Steuerlich</dt><dd>AfA über Nutzungsdauer + Zinsen absetzbar</dd>
-            <dt>Bilanz</dt><dd>Aktivierung im Anlagevermögen</dd>
-            <dt>Empfohlen für</dt><dd>Langlebige Maschinen, Werterhalt-Investitionen</dd>
-          </dl>
-        </div>
-        <div class="v-card">
-          <div class="v-num">03 / Mietkauf</div>
-          <h3>Mieten — und behalten.</h3>
-          <p>Mischform: Sie zahlen monatliche Raten, sind aber wirtschaftlicher Eigentümer ab Tag 1. Nach der letzten Rate gehört das Objekt Ihnen.</p>
-          <dl>
-            <dt>Steuerlich</dt><dd>Sofortiger Vorsteuerabzug + AfA</dd>
-            <dt>Bilanz</dt><dd>Aktivierung beim Mietkäufer</dd>
-            <dt>Empfohlen für</dt><dd>Investitionsförderung, mittelfristige Liquiditätsplanung</dd>
-          </dl>
-        </div>
-      </div>
-    </section>
-
     <!-- ==================== ANFRAGE ==================== -->
     <section class="anfrage" id="anfrage">
       <div class="anfrage-inner">
@@ -715,4 +675,37 @@ useHead({
 .disclaimer-inner { max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 .disclaimer-bar strong { color: #fff; font-weight: 600; }
 .disclaimer-bar .dis { max-width: 560px; font-size: 0.75rem; line-height: 1.6; }
+
+/* ==================== MOBILE-OPTIMIERUNG ==================== */
+@media (max-width: 640px) {
+  .hero { padding: 3rem 1.25rem 6rem; }
+  .hero-stats { gap: 1.5rem 2rem; margin-top: 2.5rem; padding-top: 2rem; }
+  .stat .v { font-size: 1.6rem; }
+
+  .calc-wrap { padding: 0 1rem; margin-top: -3.5rem; }
+
+  /* Tabs untereinander statt 3-spaltig gequetscht */
+  .tabs { grid-template-columns: 1fr; }
+  .tab {
+    flex-direction: row; justify-content: space-between;
+    padding: 1rem 1.25rem; font-size: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid transparent;
+  }
+  .tab.active { border-bottom-color: rgba(255,255,255,0.08); border-left-color: var(--gold); }
+  .tab small { font-size: 0.65rem; }
+
+  .inputs { padding: 1.5rem 1.25rem 2rem; }
+  .result { padding: 1.75rem 1.25rem; }
+  .result-rate { font-size: 2.75rem; }
+
+  .anfrage { padding: 3rem 1rem; }
+  .anfrage-inner { padding: 1.75rem 1.25rem 2rem; }
+  .summary { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .submit-row { flex-direction: column; align-items: stretch; gap: 1rem; }
+  .btn { justify-content: center; }
+  .privacy { max-width: 100%; }
+
+  .disclaimer-inner { flex-direction: column; }
+}
 </style>
