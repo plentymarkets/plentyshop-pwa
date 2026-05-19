@@ -5,15 +5,7 @@
     data-testid="pages-general-settings-drawer"
   >
     <form data-testid="basic-settings-form" class="w-full shadow-[inset_0px_0px_20px_-20px_#111] absolute bg-white">
-      <UiAccordionItem
-        v-model="basicSettingsOpen"
-        data-testid="open-basic-settings"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Basics</h2>
-        </template>
+      <EditorFormPanel v-model="basicSettingsOpen" title="Basics" data-testid="open-basic-settings">
         <div class="py-2">
           <div class="flex justify-between">
             <UiFormLabel class="mb-1">Page ID </UiFormLabel>
@@ -201,7 +193,7 @@
             />
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
     </form>
   </div>
   <div v-else class="flex justify-center items-center mt-5">

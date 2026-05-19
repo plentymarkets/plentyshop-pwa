@@ -12,7 +12,7 @@
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="!isGlobalBlock(block)" class="flex items-center space-x-2">
-          <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
+          <button data-testid="delete-form-block-button" @click="deleteBlock(customUuid ?? blockUuid)">
             <SfIconDelete />
           </button>
           <div class="w-px h-4 bg-gray-300" />
@@ -54,7 +54,7 @@ watch(
 );
 const { deleteBlock } = useBlockManager();
 
-const { editTitle: customTitle, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
+const { editTitle: customTitle, editUuid: customUuid, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
 onBeforeUnmount(() => clearCustomTitle());
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
 const handleBackClick = () => {
