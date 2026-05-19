@@ -82,6 +82,6 @@ const getImageUrl = () => {
 };
 
 const bannerContentClass = computed(() => {
-  return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%] mx-5';
+  return isMobile.value ? 'p-4 @md:p-6 rounded-lg w-full' : 'p-4 @md:p-6 rounded-lg @md:max-w-[50%] mx-5';
 });
 </script>

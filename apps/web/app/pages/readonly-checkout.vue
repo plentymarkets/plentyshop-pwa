@@ -158,7 +158,7 @@ const {
 } = useCheckout();
 
 const paypalOrderId = route?.query?.orderId?.toString() || '';
-const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
+const dividerClass = 'w-screen @md:w-auto -mx-4 @md:mx-0';
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const interactionDisabled = computed(
   () =>
