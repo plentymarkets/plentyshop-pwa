@@ -214,7 +214,6 @@ const getCookiePropertyValue = (cookie: Cookie, propertyKey: string) => {
   return cookie[propertyKey as keyof Cookie]?.toString() || '';
 };
 
-const { isInEditorClient } = useEditorState();
-const { device } = useEditorPreview();
+const { isInEditorClient, device } = useEditorState();
 const usePreviewSlot = computed(() => isInEditorClient.value && device.value !== 'desktop');
 </script>

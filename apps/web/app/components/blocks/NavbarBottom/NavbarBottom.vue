@@ -134,7 +134,6 @@ const badgeStyle = computed(() => ({
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const NuxtLink = resolveComponent('NuxtLink');
 
-const { isInEditorClient } = useEditorState();
-const { device } = useEditorPreview();
+const { isInEditorClient, device } = useEditorState();
 const usePreviewSlot = computed(() => isInEditorClient.value && device.value !== 'desktop');
 </script>

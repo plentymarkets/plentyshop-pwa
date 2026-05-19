@@ -45,5 +45,5 @@
 <script setup lang="ts">
 import { SfIconBase, SfTooltip } from '@storefront-ui/vue';
 
-const { device: currentDevice, setDevice } = useEditorPreview();
+const { device: currentDevice, setDevice } = useEditorDevice();
 </script>

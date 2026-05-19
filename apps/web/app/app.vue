@@ -19,7 +19,7 @@
       class="flex-1 w-full relative"
       :class="
         clientPreview
-          ? ['overflow-auto flex flex-col', isConstrainedPreview ? 'bg-editor-body-bg' : 'bg-white']
+          ? ['overflow-auto flex flex-col', isMobilePreview ? 'bg-editor-body-bg' : 'bg-white']
           : 'overflow-visible bg-white'
       "
     >
@@ -33,7 +33,7 @@
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <div
         :style="
-          isConstrainedPreview
+          isMobilePreview
             ? {
                 width: previewWidth,
                 maxWidth: '100%',
@@ -44,9 +44,9 @@
               }
             : undefined
         "
-        :class="isConstrainedPreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
+        :class="isMobilePreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
       >
-        <template v-if="isConstrainedPreview">
+        <template v-if="isMobilePreview">
           <div style="flex: 1; min-height: 0; overflow-y: auto">
             <NuxtLayout>
               <NuxtPage />
@@ -86,14 +86,12 @@ const route = useRoute();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
-const { isInEditorClient } = useEditorState();
-const { device, width: previewWidth, height: previewHeight } = useEditorPreview();
+const { isInEditorClient, isMobilePreview, previewWidth, previewHeight } = useEditorState();
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 const clientPreview = computed(() => isInEditorClient.value && isLargeScreen.value);
-const isConstrainedPreview = computed(() => clientPreview.value && device.value !== 'desktop');
 const contentRef = ref<HTMLElement | null>(null);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');

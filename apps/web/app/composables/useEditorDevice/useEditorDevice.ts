@@ -8,7 +8,7 @@ const getDevice = () => {
   return w.__editorPreviewDevice as Ref<PreviewDevice>;
 };
 
-export const useEditorPreview = () => {
+export const useEditorDevice = () => {
   const viewport = useViewport();
   const device = getDevice();
 
