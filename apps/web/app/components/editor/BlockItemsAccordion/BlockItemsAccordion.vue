@@ -25,7 +25,7 @@
             :key="item.meta.uuid"
             class="mb-3 flex items-center justify-between transition-colors"
             :style="
-              currentActiveIndex === index
+              currentActiveIndex === index && isBannerBlock(item)
                 ? { backgroundColor: 'rgba(83, 138, 234, 0.1)', borderLeft: '4px solid #538AEA' }
                 : { backgroundColor: 'white', borderLeft: '4px solid transparent' }
             "
@@ -119,8 +119,6 @@
           {{ getEditorTranslation('add-element-label') }}
         </button>
       </div>
-
-      <EditorQuickAdd :options="quickAddOptions" />
     </div>
   </UiAccordionItem>
 </template>
@@ -138,7 +136,6 @@ const props = withDefaults(defineProps<BlockItemsAccordionProps>(), {
   minItems: 1,
   modelValue: true,
   currentActiveIndex: -1,
-  quickAddOptions: () => [],
 });
 
 const emit = defineEmits<BlockItemsAccordionEmits>();
