@@ -19,7 +19,7 @@
       class="flex-1 w-full relative"
       :class="
         clientPreview
-          ? ['overflow-auto', isConstrainedPreview ? 'bg-editor-body-bg' : 'bg-white']
+          ? ['overflow-auto flex flex-col', isConstrainedPreview ? 'bg-editor-body-bg' : 'bg-white']
           : 'overflow-visible bg-white'
       "
     >
@@ -44,7 +44,7 @@
               }
             : undefined
         "
-        :class="isConstrainedPreview ? 'mx-auto bg-white my-auto shadow-md @container mt-32' : '@container'"
+        :class="isConstrainedPreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
       >
         <template v-if="isConstrainedPreview">
           <div style="flex: 1; min-height: 0; overflow-y: auto">
