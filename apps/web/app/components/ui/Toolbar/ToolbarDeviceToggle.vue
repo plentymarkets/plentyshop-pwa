@@ -2,6 +2,7 @@
   <div class="flex items-center rounded-md border border-gray-200 overflow-hidden">
     <SfTooltip label="Mobile (375px)" placement="bottom" :show-arrow="true">
       <button
+        data-testid="device-toggle-mobile"
         class="px-2 py-1.5 transition-colors"
         :class="currentDevice === 'mobile' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:bg-gray-50'"
         @click="setDevice('mobile')"
@@ -15,6 +16,7 @@
     </SfTooltip>
     <SfTooltip label="Tablet (768px)" placement="bottom" :show-arrow="true">
       <button
+        data-testid="device-toggle-tablet"
         class="px-2 py-1.5 transition-colors border-l border-gray-200"
         :class="currentDevice === 'tablet' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:bg-gray-50'"
         @click="setDevice('tablet')"
@@ -28,6 +30,7 @@
     </SfTooltip>
     <SfTooltip label="Desktop" placement="bottom" :show-arrow="true">
       <button
+        data-testid="device-toggle-desktop"
         class="px-2 py-1.5 transition-colors border-l border-gray-200"
         :class="currentDevice === 'desktop' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:bg-gray-50'"
         @click="setDevice('desktop')"

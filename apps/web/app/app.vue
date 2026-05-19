@@ -47,6 +47,7 @@
             : undefined
         "
         :class="isMobilePreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
+        data-testid="editor-preview-container"
       >
         <template v-if="isMobilePreview">
           <div style="flex: 1; min-height: 0; overflow-y: auto">
