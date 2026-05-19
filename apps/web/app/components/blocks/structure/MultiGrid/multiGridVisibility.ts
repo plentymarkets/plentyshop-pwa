@@ -1,11 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
-
-export interface VisibleGridState {
-  filteredToOriginal: number[];
-  originalToFiltered: Record<number, number>;
-  columnWidths: number[];
-  blocks: Block[];
-}
+import type { VisibleGridState } from './types';
 
 export function computeVisibleGrid(blocks: Block[], columnWidths: number[]): VisibleGridState {
   const invisibleSlots = new Set<number>();
