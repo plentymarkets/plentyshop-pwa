@@ -12,12 +12,13 @@ const KK_CONFIG = {
 const MODULE = {
   leasing: {
     title: 'Leasing-Rechner',
-    sub: 'Ratenmiete mit Restwert — steuerlich voll absetzbar.',
+    sub: 'Ratenmiete — steuerlich voll absetzbar.',
     label: 'Monatliche Leasingrate',
     sumLabel: 'Ihre Kalkulation · Leasing',
     zins: KK_CONFIG.zinsen.leasing,
     showAnzahlung: false,
-    showRestwert: true,
+    showRestwert: false,
+    fixRestwert: 10,
     vorteile: [
       'Raten 100 % als Betriebsausgabe absetzbar',
       'Bilanzneutral — keine Auswirkung auf Eigenkapitalquote',
@@ -77,10 +78,24 @@ const state = reactive({
 });
 
 const form = reactive({
+  // Firmendaten
   firma: '',
-  name: '',
-  email: '',
+  zusatz: '',
+  strasse: '',
+  plz: '',
+  ort: '',
   telefon: '',
+  email: '',
+  website: '',
+  ustId: '',
+  stNr: '',
+  // Ansprechpartner
+  anrede: '',
+  vorname: '',
+  nachname: '',
+  apEmail: '',
+  mobil: '',
+  // Zur Finanzierung
   artikelId: '',
   objekt: '',
   anmerkungen: ''
@@ -96,7 +111,8 @@ const calc = computed(() => {
   const i = mod.zins / 100 / 12;
   const n = state.laufzeit;
   const anzahlungAbs = mod.showAnzahlung ? state.wert * state.anzahlung / 100 : 0;
-  const restwertAbs = mod.showRestwert ? state.wert * state.restwert / 100 : 0;
+  const restwertPct = mod.showRestwert ? state.restwert : (mod.fixRestwert || 0);
+  const restwertAbs = state.wert * restwertPct / 100;
   const finanzVol = state.wert - anzahlungAbs;
   const rate = (finanzVol - restwertAbs / Math.pow(1 + i, n)) * i / (1 - Math.pow(1 + i, -n));
   const gesamt = rate * n + anzahlungAbs + restwertAbs;
@@ -161,16 +177,27 @@ function submitForm(e) {
     'Anfrage über den Online-Rechner',
     '—'.repeat(40),
     '',
+    'FIRMENDATEN',
     'Firma:           ' + form.firma,
-    'Ansprechpartner: ' + form.name,
+    'Adresszusatz:    ' + (form.zusatz || '—'),
+    'Straße:          ' + form.strasse,
+    'PLZ / Ort:       ' + form.plz + ' ' + form.ort,
+    'Telefon:         ' + form.telefon,
     'E-Mail:          ' + form.email,
-    'Telefon:         ' + (form.telefon || '—'),
+    'Website:         ' + form.website,
+    'USt-IdNr.:       ' + (form.ustId || '—'),
+    'Steuernummer:    ' + (form.stNr || '—'),
     '',
+    'ANSPRECHPARTNER',
+    'Anrede:          ' + form.anrede,
+    'Name:            ' + form.vorname + ' ' + form.nachname,
+    'E-Mail:          ' + form.apEmail,
+    'Mobil:           ' + form.mobil,
+    '',
+    'ZUR FINANZIERUNG',
     'Artikel-ID:      ' + form.artikelId,
     'Objekt:          ' + (form.objekt || '—'),
-    '',
-    'Anmerkungen:',
-    form.anmerkungen || '—',
+    'Anmerkungen:     ' + (form.anmerkungen || '—'),
     '',
     '—'.repeat(40),
     'KALKULATION',
@@ -179,8 +206,6 @@ function submitForm(e) {
     'Objektwert:      ' + fmt(state.wert) + ' €',
     'Laufzeit:        ' + state.laufzeit + ' Monate',
     mod.showAnzahlung ? 'Anzahlung:       ' + state.anzahlung + ' % (' + fmt(r.anzahlungAbs) + ' €)' : null,
-    mod.showRestwert ? 'Restwert:        ' + state.restwert + ' % (' + fmt(r.restwertAbs) + ' €)' : null,
-    'Effektivzins:    ' + mod.zins.toFixed(2).replace('.', ',') + ' % p.a.',
     '',
     'Monatliche Rate: ' + fmt(r.rate) + ' € netto',
     'Gesamtaufwand:   ' + fmt(r.gesamt) + ' €',
@@ -216,7 +241,17 @@ useHead({
       <div class="container">
         <div class="eyebrow">Finanzierungslösungen</div>
         <h1>Investieren ohne <em>Liquidität zu binden.</em></h1>
-        <p class="lead">Maschinen, Anlagen und Industriekomponenten flexibel finanzieren. Konfigurieren Sie Ihre Wunschrate in unter einer Minute — Leasing, Finanzierung oder Mietkauf.</p>
+        <p class="lead">Über unseren europaweiten Finanzierungspartner realisieren wir auch, was am Standardrechner scheitert. <strong>Leasing, Finanzierung oder Mietkauf — länderübergreifend, aus einer Hand.</strong></p>
+        <ul class="hero-list">
+          <li><strong>Europaweit</strong> leasen, finanzieren oder mieten — länderübergreifend abgewickelt</li>
+          <li>Individuelle Leasinglösungen jenseits jeder Standardkalkulation</li>
+          <li>Finanzierung gebrauchter Maschinen, Geräte &amp; technischer Anlagen</li>
+          <li>Flexible Laufzeiten, individuelle An- und Schlusszahlungen</li>
+          <li>Saisonale &amp; atmende Ratenmodelle — angepasst an Ihren Cashflow</li>
+          <li>Lösungen auch bei anspruchsvollen Bonitäts- und Unternehmenskonstellationen</li>
+          <li>Großvolumige Investitionen und projektbezogene Finanzierungen</li>
+          <li>Branchenspezifische Sonderlösungen — auch für Anfragen, die kein Rechner kennt</li>
+        </ul>
       </div>
     </section>
 
@@ -335,7 +370,6 @@ useHead({
               <div class="row" v-if="m.showAnzahlung"><span class="k">Anzahlung</span><span class="v">{{ fmt(calc.anzahlungAbs) }} €</span></div>
               <div class="row" v-if="m.showRestwert"><span class="k">Restwert</span><span class="v">{{ fmt(calc.restwertAbs) }} €</span></div>
               <div class="row"><span class="k">Laufzeit</span><span class="v">{{ state.laufzeit }} Monate</span></div>
-              <div class="row"><span class="k">Effektivzins p.a.</span><span class="v">{{ m.zins.toFixed(2).replace('.', ',') }} %</span></div>
               <div class="row total"><span class="k">Gesamtaufwand</span><span class="v">{{ fmt(calc.gesamt) }} €</span></div>
             </div>
 
@@ -349,28 +383,6 @@ useHead({
         </div>
       </div>
     </div>
-
-    <!-- ==================== LEASINGPARTNER ==================== -->
-    <section class="partner">
-      <div class="partner-inner">
-        <div class="partner-text">
-          <div class="section-eyebrow">Mehr als Standard</div>
-          <h2>Was kein Standardrechner abbildet — <em>wir schon.</em></h2>
-          <p>Ob individuelle Konditionen, gebrauchte Anlagen oder Millionen-Investition: Über unseren europaweiten Finanzierungspartner realisieren wir, was anderswo am Standardrechner scheitert. <strong>Leasing, Finanzierung oder Mietkauf — länderübergreifend, aus einer Hand.</strong> Sie nennen uns Ihr Vorhaben, wir liefern die passende Struktur.</p>
-          <a href="#anfrage" class="partner-cta">Individuelle Anfrage stellen <span class="arrow">→</span></a>
-        </div>
-        <ul class="partner-list">
-          <li><strong>Europaweit</strong> leasen, finanzieren oder mieten — länderübergreifend abgewickelt</li>
-          <li>Individuelle Leasinglösungen jenseits jeder Standardkalkulation</li>
-          <li>Finanzierung gebrauchter Maschinen, Geräte &amp; technischer Anlagen</li>
-          <li>Flexible Laufzeiten, individuelle An- und Schlusszahlungen</li>
-          <li>Saisonale &amp; atmende Ratenmodelle — angepasst an Ihren Cashflow</li>
-          <li>Lösungen auch bei anspruchsvollen Bonitäts- und Unternehmenskonstellationen</li>
-          <li>Großvolumige Investitionen und projektbezogene Finanzierungen</li>
-          <li>Branchenspezifische Sonderlösungen — auch für Anfragen, die kein Rechner kennt</li>
-        </ul>
-      </div>
-    </section>
 
     <!-- ==================== ANFRAGE ==================== -->
     <section class="anfrage" id="anfrage">
@@ -388,23 +400,82 @@ useHead({
         </div>
 
         <form @submit="submitForm" autocomplete="on">
+
+          <div class="form-section-label">Firmendaten</div>
           <div class="form-grid">
-            <div class="input-group">
+            <div class="input-group full">
               <label>Firma <span class="req">*</span></label>
               <input type="text" v-model="form.firma" required>
             </div>
-            <div class="input-group">
-              <label>Ansprechpartner <span class="req">*</span></label>
-              <input type="text" v-model="form.name" required>
+            <div class="input-group full">
+              <label>Adresszusatz</label>
+              <input type="text" v-model="form.zusatz">
+            </div>
+            <div class="input-group full">
+              <label>Straße &amp; Hausnummer <span class="req">*</span></label>
+              <input type="text" v-model="form.strasse" required>
             </div>
             <div class="input-group">
-              <label>E-Mail <span class="req">*</span></label>
+              <label>PLZ <span class="req">*</span></label>
+              <input type="text" v-model="form.plz" required>
+            </div>
+            <div class="input-group">
+              <label>Ort <span class="req">*</span></label>
+              <input type="text" v-model="form.ort" required>
+            </div>
+            <div class="input-group">
+              <label>Telefon <span class="req">*</span></label>
+              <input type="tel" v-model="form.telefon" required>
+            </div>
+            <div class="input-group">
+              <label>E-Mail (Firma) <span class="req">*</span></label>
               <input type="email" v-model="form.email" required>
             </div>
             <div class="input-group">
-              <label>Telefon</label>
-              <input type="tel" v-model="form.telefon">
+              <label>Website <span class="req">*</span></label>
+              <input type="text" v-model="form.website" required>
             </div>
+            <div class="input-group">
+              <label>USt-IdNr.</label>
+              <input type="text" v-model="form.ustId">
+            </div>
+            <div class="input-group">
+              <label>Steuernummer</label>
+              <input type="text" v-model="form.stNr">
+            </div>
+          </div>
+
+          <div class="form-section-label">Ansprechpartner</div>
+          <div class="form-grid">
+            <div class="input-group">
+              <label>Anrede <span class="req">*</span></label>
+              <select v-model="form.anrede" required>
+                <option value="">Bitte wählen</option>
+                <option value="Herr">Herr</option>
+                <option value="Frau">Frau</option>
+                <option value="Divers">Divers</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Mobil <span class="req">*</span></label>
+              <input type="tel" v-model="form.mobil" required>
+            </div>
+            <div class="input-group">
+              <label>Vorname <span class="req">*</span></label>
+              <input type="text" v-model="form.vorname" required>
+            </div>
+            <div class="input-group">
+              <label>Nachname <span class="req">*</span></label>
+              <input type="text" v-model="form.nachname" required>
+            </div>
+            <div class="input-group full">
+              <label>E-Mail (Ansprechpartner) <span class="req">*</span></label>
+              <input type="email" v-model="form.apEmail" required>
+            </div>
+          </div>
+
+          <div class="form-section-label">Zur Finanzierung</div>
+          <div class="form-grid">
             <div class="input-group">
               <label>Artikel-ID <span class="req">*</span></label>
               <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
@@ -415,7 +486,7 @@ useHead({
             </div>
             <div class="input-group full">
               <label>Anmerkungen</label>
-              <textarea v-model="form.anmerkungen" placeholder="Bonität, Eilbedarf, gewünschter Liefertermin …"></textarea>
+              <textarea v-model="form.anmerkungen"></textarea>
             </div>
           </div>
 
@@ -432,7 +503,7 @@ useHead({
 
     <!-- ==================== DISCLAIMER ==================== -->
     <div class="disclaimer-note">
-      <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Der tatsächliche effektive Jahreszins richtet sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
+      <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Die tatsächlichen Konditionen richten sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
     </div>
 
   </div>
@@ -498,14 +569,28 @@ useHead({
 .hero h1 em { font-style: normal; color: var(--gold); }
 .hero .lead {
   font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-  max-width: 640px; color: rgba(255, 255, 255, 0.78); font-weight: 400;
+  max-width: 680px; color: rgba(255, 255, 255, 0.78); font-weight: 400;
 }
-.hero-stats {
-  display: flex; flex-wrap: wrap; gap: 3rem; margin-top: 3.5rem;
-  padding-top: 2.5rem; border-top: 1px solid rgba(255, 255, 255, 0.12);
+.hero .lead strong { color: #fff; font-weight: 600; }
+.hero-list {
+  list-style: none; padding: 0;
+  margin: 2.75rem 0 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 1.5rem;
 }
-.stat .v { font-family: 'Inter Tight', sans-serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
-.stat .l { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.25rem; }
+@media (max-width: 760px) { .hero-list { grid-template-columns: 1fr; gap: 0; } }
+.hero-list li {
+  font-size: 0.95rem; color: rgba(255, 255, 255, 0.85);
+  padding: 0.8rem 0 0.8rem 1.6rem; position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hero-list li::before {
+  content: ""; position: absolute; left: 0; top: 1.3em;
+  width: 10px; height: 2px; background: var(--gold);
+}
+.hero-list li strong { color: var(--gold); font-weight: 700; }
 
 /* ==================== CALCULATOR ==================== */
 .calc-wrap {
@@ -602,16 +687,26 @@ useHead({
 .pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 .laufzeit-custom {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  padding: 0.4rem 0.85rem; border: 1px dashed var(--line);
-  border-radius: 999px; transition: border-color 0.15s ease;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--gold);
+  background: rgba(245, 192, 10, 0.08);
+  border-radius: 999px; transition: all 0.15s ease;
 }
-.laufzeit-custom:focus-within { border-color: var(--gold); border-style: solid; }
+.laufzeit-custom::before {
+  content: "✎"; color: var(--gold-dark);
+  font-size: 0.8rem; margin-right: 0.1rem;
+}
+.laufzeit-custom:focus-within {
+  background: rgba(245, 192, 10, 0.16);
+  box-shadow: 0 0 0 3px rgba(245, 192, 10, 0.2);
+}
 .lz-input {
   width: 3ch; border: none; background: transparent; outline: none;
-  font-family: 'Inter Tight', sans-serif; font-size: 0.85rem; font-weight: 600;
-  color: var(--ink); text-align: center; font-variant-numeric: tabular-nums;
+  font-family: 'Inter Tight', sans-serif; font-size: 0.9rem; font-weight: 700;
+  color: var(--navy); text-align: center; font-variant-numeric: tabular-nums;
 }
-.lz-unit { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+.lz-input::placeholder { color: var(--gold-dark); }
+.lz-unit { font-size: 0.72rem; color: var(--gold-dark); font-weight: 600; }
 
 /* ==================== RESULT ==================== */
 .result {
@@ -706,18 +801,28 @@ useHead({
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 .form-grid .full { grid-column: 1 / -1; }
+.form-grid + .form-section-label { margin-top: 2rem; }
+
+.form-section-label {
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--navy); font-weight: 700;
+  padding-bottom: 0.6rem; margin-bottom: 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+.form-section-label::before { content: "— "; color: var(--gold); }
 
 .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
 .input-group label { font-size: 0.78rem; font-weight: 600; color: var(--navy); }
 .input-group label .req { color: var(--gold-dark); }
-.input-group input, .input-group textarea {
+.input-group input, .input-group textarea, .input-group select {
   font-family: 'Inter', sans-serif; font-size: 0.95rem;
   padding: 0.85rem 1rem;
   border: 1px solid var(--line); border-radius: 4px;
   background: #fafaf6; color: var(--ink);
   transition: all 0.15s ease;
 }
-.input-group input:focus, .input-group textarea:focus {
+.input-group select { cursor: pointer; appearance: auto; }
+.input-group input:focus, .input-group textarea:focus, .input-group select:focus {
   outline: none; border-color: var(--navy); background: #fff;
   box-shadow: 0 0 0 3px rgba(21, 36, 64, 0.08);
 }
