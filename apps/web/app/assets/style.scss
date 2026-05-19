@@ -46,6 +46,17 @@ apple-pay-button {
   }
 }
 
+a {
+  color: rgb(var(--colors-2-primary-700));
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  cursor: pointer;
+}
+
+footer a {
+  color: inherit;
+}
+
 .no-preflight {
   :not(iframe) {
     all: revert;
