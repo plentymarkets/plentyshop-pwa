@@ -1,46 +1,42 @@
 <template>
-  <ClientOnly>
-    <Teleport to="#bottom-slot">
-      <nav class="w-full flex flex-row items-stretch @md:hidden" data-testid="navbar-bottom">
-        <UiButton
-          v-for="{ id, label, icon, link } in items"
-          :key="id"
-          variant="tertiary"
-          :class="[
-            '!p-1 !pt-3 flex flex-col h-full w-full rounded-none !text-xs !font-base',
-            { 'opacity-90': route.path === link && Boolean(link) },
-          ]"
-          :style="buttonStyle"
-          size="sm"
-          :tag="link ? NuxtLink : undefined"
-          :to="link || undefined"
-          @click="id === 'products' && open()"
-        >
-          <template #prefix>
-            <div class="relative">
-              <component :is="icon" />
-              <SfBadge
-                v-if="id === 'cart'"
-                :content="cartItemsCount"
-                :max="99"
-                :style="badgeStyle"
-                class="translate-x-[5px] translate-y-[-3px] outline flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
-              />
-              <SfBadge
-                v-if="id === 'wishlist'"
-                :content="wishlistItemIds.length"
-                :max="99"
-                :style="badgeStyle"
-                class="translate-x-[5px] translate-y-[-3px] outline flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
-                data-testid="wishlist-badge"
-              />
-            </div>
-          </template>
-          {{ label }}
-        </UiButton>
-      </nav>
-    </Teleport>
-  </ClientOnly>
+  <nav class="fixed bottom-0 left-0 z-10 w-full flex flex-row items-stretch @md:hidden" data-testid="navbar-bottom">
+    <UiButton
+      v-for="{ id, label, icon, link } in items"
+      :key="id"
+      variant="tertiary"
+      :class="[
+        '!p-1 !pt-3 flex flex-col h-full w-full rounded-none !text-xs !font-base',
+        { 'opacity-90': route.path === link && Boolean(link) },
+      ]"
+      :style="buttonStyle"
+      size="sm"
+      :tag="link ? NuxtLink : undefined"
+      :to="link || undefined"
+      @click="id === 'products' && open()"
+    >
+      <template #prefix>
+        <div class="relative">
+          <component :is="icon" />
+          <SfBadge
+            v-if="id === 'cart'"
+            :content="cartItemsCount"
+            :max="99"
+            :style="badgeStyle"
+            class="translate-x-[5px] translate-y-[-3px] outline flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+          />
+          <SfBadge
+            v-if="id === 'wishlist'"
+            :content="wishlistItemIds.length"
+            :max="99"
+            :style="badgeStyle"
+            class="translate-x-[5px] translate-y-[-3px] outline flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+            data-testid="wishlist-badge"
+          />
+        </div>
+      </template>
+      {{ label }}
+    </UiButton>
+  </nav>
 </template>
 
 <script setup lang="ts">

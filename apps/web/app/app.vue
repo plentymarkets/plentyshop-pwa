@@ -54,13 +54,11 @@
               <NuxtPage />
             </NuxtLayout>
           </div>
-          <div id="bottom-slot" class="relative z-10 flex-shrink-0" />
         </template>
         <template v-else>
           <NuxtLayout>
             <NuxtPage />
           </NuxtLayout>
-          <div id="bottom-slot" class="fixed bottom-0 left-0 w-full z-10" />
         </template>
       </div>
     </div>
