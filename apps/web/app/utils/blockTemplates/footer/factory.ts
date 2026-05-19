@@ -1,6 +1,9 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
-import type { FooterColumn, FooterContent } from '~/components/blocks/Footer/types';
+import type {
+  FooterContainerBlock,
+  FooterColumn,
+  FooterContent,
+} from '~/components/blocks/structure/FooterContainer/types';
 import type { ButtonConfig } from './types';
 import { FOOTER_SWITCH_DEFINITIONS } from '~/components/blocks/structure/FooterContainer/constants';
 import { v4 as uuid } from 'uuid';
