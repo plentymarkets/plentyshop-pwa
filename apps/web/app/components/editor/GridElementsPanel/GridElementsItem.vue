@@ -37,7 +37,11 @@
       <div
         class="w-2.5 h-2.5 flex-shrink-0 rounded-sm"
         :class="block.name === 'EmptyGridBlock' ? 'border border-dashed border-editor-text-ghost' : ''"
-        :style="block.name !== 'EmptyGridBlock' ? { backgroundColor: getBlockColor(block.name, isVisible ? 1 : 0.35) } : undefined"
+        :style="
+          block.name !== 'EmptyGridBlock'
+            ? { backgroundColor: getBlockColor(block.name, isVisible ? 1 : 0.35) }
+            : undefined
+        "
       />
 
       <span
@@ -62,7 +66,11 @@
       <span
         v-if="isGridMode && (isHovered || menuOpen)"
         class="text-3xs font-bold px-1 py-0.5 rounded flex-shrink-0"
-        :class="block.name !== 'EmptyGridBlock' ? 'bg-editor-accent/10 text-editor-accent' : 'bg-editor-surface-muted text-editor-text-ghost'"
+        :class="
+          block.name !== 'EmptyGridBlock'
+            ? 'bg-editor-accent/10 text-editor-accent'
+            : 'bg-editor-surface-muted text-editor-text-ghost'
+        "
         >{{ blockSpan }}/12</span
       >
 
