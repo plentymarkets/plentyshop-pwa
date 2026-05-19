@@ -51,6 +51,9 @@ html a {
   text-decoration: underline;
   text-decoration-color: currentColor;
   cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 footer a {
