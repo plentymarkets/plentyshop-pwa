@@ -52,10 +52,7 @@ const buildSvg = (name: string | null | undefined): string | null => {
 
 // Creates the <span> wrapper with the SVG inlined.
 // Falls back to an `rte-icon--missing` class when the icon name is unknown.
-const buildIconElement = (
-  name: string | null,
-  extraAttrs: Record<string, unknown> = {},
-): HTMLElement => {
+const buildIconElement = (name: string | null, extraAttrs: Record<string, unknown> = {}): HTMLElement => {
   const icon = name ? userIcons[name] : undefined;
   const svg = buildSvg(name);
 
@@ -84,6 +81,7 @@ The `userIcons` registry is a plain object keyed by icon name. Each entry contai
 
 ```typescript
 declare module '@tiptap/core' {
+  // eslint-disable-next-line custom-rules/file-organization-types
   interface Commands<ReturnType> {
     icon: {
       insertIcon: (name: string) => ReturnType;
@@ -164,18 +162,19 @@ export const IconNode = Node.create({
 | `parseHTML` | CSS-selector rules that map existing HTML to this node on paste or load | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#parshtml) |
 | `renderHTML` | Returns the DOM structure written when serialising to HTML | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#renderhtml) |
 | `addNodeView` | Returns a live DOM element rendered in the editor canvas | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views) |
-| `addCommands` | Registers chainable commands callable as `editor.commands.insertIcon(…)` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#commands) |
+| `addCommands` | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#commands) |
 
 `renderHTML` and `addNodeView` serve different purposes: `renderHTML` controls the **saved HTML** output, while `addNodeView` controls the **live editor canvas** rendering. When both are defined, `addNodeView` takes precedence in the editor and `renderHTML` is used during HTML serialisation.
 
 ## TypeScript: declaring commands
 
-Augment the Tiptap `Commands` interface to keep command calls type-safe:
+Augment the Tiptap `Commands` interface to keep command calls type-safe. By convention the interface key matches the `name` given in `Node.create({ name: '...' })`:
 
 ```typescript
 declare module '@tiptap/core' {
+  // eslint-disable-next-line custom-rules/file-organization-types
   interface Commands<ReturnType> {
-    myExtension: {
+    myNode: {               // matches Node.create({ name: 'myNode' })
       myCommand: (arg: string) => ReturnType;
     };
   }
@@ -196,26 +195,41 @@ Export a single named constant that is the result of `Node.create({...})`, `Mark
 
 ## Step 2 — Register the extension
 
-Open `useRichTextEditor.ts` and add your extension to the `extensions` array passed to `useEditor`:
+Open `useRichTextEditor.ts` and import your extension, then add it to the `extensions` array inside the existing `useEditor` call. Also expose any command helpers you want to make available to toolbar components via the composable's return value:
 
 ```typescript
+// apps/web/app/composables/useRichTextEditor/useRichTextEditor.ts
 import { MyExtension } from './helpers/myExtension';
 
-const editor = useEditor({
-  extensions: [
-    StarterKit,
-    // ...other extensions
-    MyExtension,
-  ],
+export function useRichTextEditor(args: UseRichTextEditorArgs) {
   // ...
-});
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      // ...other existing extensions
+      MyExtension,
+    ],
+    // ...
+  });
+
+  // Wrap the Tiptap command in a plain function so toolbar components
+  // don't need to access the editor instance directly.
+  const insertMyContent = (value: string) => {
+    editor.value?.chain().focus().myCommand(value).run();
+  };
+
+  return {
+    // ...other existing return values
+    insertMyContent,
+  };
+}
 ```
 
 > The order of extensions matters when two extensions define overlapping `parseHTML` rules. Place more specific extensions before broader ones.
 
 ## Step 3 — Integrate with the admin toolbar
 
-To expose your extension in the editor's admin panel, create a toolbar component that calls the registered command:
+To expose your extension in the editor's admin panel, create a toolbar component. Because `useRichTextEditor` requires `modelValue`, `onUpdateModelValue`, and other arguments, toolbar components should **not** call it directly. Instead, receive the `editor` instance and any command helpers as props passed down from `RichTextEditor.vue`.
 
 ```
 apps/web/app/components/editor/RichTextEditor/MyExtensionToolbar.vue
@@ -223,25 +237,36 @@ apps/web/app/components/editor/RichTextEditor/MyExtensionToolbar.vue
 
 ```vue
 <script setup lang="ts">
-const { editor } = useRichTextEditor();
+import type { Editor } from '@tiptap/core';
 
-const isActive = computed(() => editor.value?.isActive('icon', { name: 'star' }));
+const props = defineProps<{
+  editor: Editor | null;
+  insertMyContent: (value: string) => void;
+}>();
+
+const isActive = computed(() => props.editor?.isActive('myNode') ?? false);
 </script>
 
 <template>
   <button
     type="button"
     :aria-pressed="isActive"
-    @click="editor?.commands.insertIcon('star')"
+    @click="insertMyContent('someValue')"
   >
-    Insert icon
+    Insert content
   </button>
 </template>
 ```
 
+Then in `RichTextEditor.vue`, destructure the helper from `useRichTextEditor` and pass it to your toolbar component:
+
+```vue
+<!-- RichTextEditor.vue (excerpt) -->
+<MyExtensionToolbar :editor="editor" :insert-my-content="insertMyContent" />
+```
+
 `editor.isActive(name, attrs?)` reflects the current selection state and should drive the pressed/active style on the toolbar button. See [Tiptap – isActive](https://tiptap.dev/docs/editor/api/editor#isactive).
 
-Then import and render your toolbar component inside the toolbar area defined in `RichTextEditor.vue`.
 
 ## Full data flow
 
@@ -254,7 +279,7 @@ useRichTextEditor.ts  ──  useEditor({ extensions: [..., MyExtension] })
         ▼
 Tiptap schema accepts new node/mark in the document
         │
-        ├── editor.commands.myCommand()  ◄──  toolbar component
+        ├── editor.chain().focus().myCommand()  ◄──  toolbar component
         │
         ▼
 renderHTML / addNodeView produces DOM output
