@@ -110,6 +110,7 @@ export default {
           'free-border': '#d4d4d4',
           'free-border-hover': '#999999',
           'input-border': '#a0a0a0',
+          icon: 'rgb(12 24 31 / <alpha-value>)',
         },
 
         header: {
