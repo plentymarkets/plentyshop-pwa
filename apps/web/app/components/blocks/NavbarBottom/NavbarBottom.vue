@@ -1,9 +1,6 @@
 <template>
   <Teleport to="#bottom-slot">
-    <nav
-      class="w-full flex flex-row items-stretch @md:hidden"
-      data-testid="navbar-bottom"
-    >
+    <nav class="w-full flex flex-row items-stretch @md:hidden" data-testid="navbar-bottom">
       <UiButton
         v-for="{ id, label, icon, link } in items"
         :key="id"
