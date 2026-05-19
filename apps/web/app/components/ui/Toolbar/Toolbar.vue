@@ -67,7 +67,6 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfTooltip } from '@storefront-ui/vue';
-
 import { editPath } from '~/assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 import { deepEqual } from '~/utils/jsonHelper';
