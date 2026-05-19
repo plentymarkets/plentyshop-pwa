@@ -9,9 +9,13 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
     cy.get('[data-testid="multi-grid-structure"]')
       .first()
-      .within(() => {
-        cy.get('[data-testid="Image-open-editor-button"]').first().should('exist').click({ force: true });
-      });
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-0"]').should('exist').click({ force: true });
     cy.get('[data-testid="image-group"]').should('exist').click();
   };
 
@@ -24,9 +28,13 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
     cy.get('[data-testid="multi-grid-structure"]')
       .first()
-      .within(() => {
-        cy.get('[data-testid="TextCard-open-editor-button"]').last().should('exist').click({ force: true });
-      });
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-1"]').should('exist').click({ force: true });
     cy.get('[data-testid="open-text-settings"]').should('exist').click();
   };
 

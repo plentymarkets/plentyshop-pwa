@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click.self="internalValue = !internalValue">
     <button
       type="button"
       class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"

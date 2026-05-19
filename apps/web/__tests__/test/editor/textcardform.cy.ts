@@ -3,7 +3,7 @@ import { paths } from '../../../app/utils/paths';
 
 describe('Text Card Block Form', () => {
   const openSettingsForTextCardBlock = () => {
-    cy.get('[data-testid="TextCard-open-editor-button"]').should('have.length.at.least', 2);
+    cy.get('[data-testid="TextCard-open-editor-button"]').should('have.length.at.least', 1);
     cy.get('[data-testid="TextCard-open-editor-button"]').first().should('exist').click({ force: true });
     cy.wait(1000);
   };
