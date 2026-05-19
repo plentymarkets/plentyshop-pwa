@@ -3,7 +3,7 @@
     <Error404Content v-if="error && error.statusCode == 404" />
     <div v-else class="my-8 flex items-center justify-center p-4">
       <div class="w-full text-center">
-        <h1 class="text-3xl @md:text-4xl font-semibold mb-4">{{ error.statusCode }} - {{ t('error.errorOccured') }}</h1>
+        <h1 class="text-3xl md:text-4xl font-semibold mb-4">{{ error.statusCode }} - {{ t('error.errorOccured') }}</h1>
       </div>
     </div>
   </NuxtLayout>
