@@ -56,8 +56,10 @@ html a {
   }
 }
 
-footer a {
+footer a,
+nav a {
   color: inherit;
+  text-decoration: none;
 }
 
 .no-preflight {
