@@ -1,7 +1,7 @@
 <template>
-  <Teleport to="#preview-bottom-slot" :disabled="!usePreviewSlot">
+  <Teleport to="#bottom-slot">
     <nav
-      :class="['w-full flex flex-row items-stretch @md:hidden', usePreviewSlot ? '' : 'fixed bottom-0 left-0 z-10']"
+      class="w-full flex flex-row items-stretch @md:hidden"
       data-testid="navbar-bottom"
     >
       <UiButton
@@ -82,7 +82,4 @@ const items = computed(() => [
 
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const NuxtLink = resolveComponent('NuxtLink');
-
-const { isInEditorClient, device } = useEditorState();
-const usePreviewSlot = computed(() => isInEditorClient.value && device.value !== 'desktop');
 </script>

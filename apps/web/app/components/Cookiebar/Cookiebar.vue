@@ -1,11 +1,8 @@
 <template>
-  <Teleport to="#preview-bottom-slot" :disabled="!usePreviewSlot">
+  <Teleport to="#bottom-slot">
     <div
       v-if="visible"
-      :class="[
-        'max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full @xl:w-3/5 shadow-2xl p-3 bg-white rounded overflow-auto',
-        usePreviewSlot ? '' : 'fixed @xl:right-2 bottom-0 max-md:bottom-[3.9rem] end-0 @sm:top-auto',
-      ]"
+      class="max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full @xl:w-3/5 shadow-2xl p-3 bg-white rounded overflow-auto fixed @xl:right-2 bottom-0 max-md:bottom-[3.9rem] end-0 @sm:top-auto"
     >
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
@@ -213,7 +210,4 @@ const triggerGroupConsent = (group: CookieGroup) => {
 const getCookiePropertyValue = (cookie: Cookie, propertyKey: string) => {
   return cookie[propertyKey as keyof Cookie]?.toString() || '';
 };
-
-const { isInEditorClient, device } = useEditorState();
-const usePreviewSlot = computed(() => isInEditorClient.value && device.value !== 'desktop');
 </script>

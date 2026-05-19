@@ -39,6 +39,7 @@
                 maxWidth: '100%',
                 transform: 'translateZ(0)',
                 height: previewHeight,
+                overflow: 'clip',
                 display: 'flex',
                 flexDirection: 'column',
               }
@@ -52,12 +53,13 @@
               <NuxtPage />
             </NuxtLayout>
           </div>
-          <div id="preview-bottom-slot" class="relative z-10 flex-shrink-0" />
+          <div id="bottom-slot" class="relative z-10 flex-shrink-0" />
         </template>
         <template v-else>
           <NuxtLayout>
             <NuxtPage />
           </NuxtLayout>
+          <div id="bottom-slot" class="fixed bottom-0 left-0 w-full z-10" />
         </template>
       </div>
     </div>
