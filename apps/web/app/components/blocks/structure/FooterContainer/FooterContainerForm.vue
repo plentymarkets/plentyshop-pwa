@@ -1,7 +1,13 @@
 <template>
   <div data-testid="footer-settings-drawer" class="block-footer-edit sticky h-[80vh] overflow-y-auto">
     <div v-if="!editingBlock" class="space-y-0">
-      <EditorGridElementsPanel v-model="elementsOpen" :uuid="footerUuid" :min-items="1" @edit-element="editElement" />
+      <EditorGridElementsPanel
+        v-model="elementsOpen"
+        :uuid="footerUuid"
+        :min-items="1"
+        :quick-add-options="footerQuickAddOptions"
+        @edit-element="editElement"
+      />
 
       <EditorFormPanel
         v-model="colorsOpen"
