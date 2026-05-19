@@ -21,7 +21,6 @@
 <script setup lang="ts">
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { getBlockFormLoader } from '~/utils/blocks/blocks-imports';
 
 const { headerContainer } = useBlocks();
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
@@ -31,16 +30,10 @@ const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubE
 
 const elementsOpen = ref(true);
 const layoutOpen = ref(true);
-const editingBlock = ref<Block | null>(null);
+const { editingBlock, blockForm } = useNestedBlockForm();
 
 const headerContainerStructure = computed(() => (headerContainer.value ?? {}) as HeaderContainerBlock);
 const headerUuid = computed(() => headerContainerStructure.value.meta?.uuid);
-
-const blockForm = computed(() => {
-  if (!editingBlock.value) return null;
-  const loader = getBlockFormLoader(editingBlock.value.name);
-  return loader ? defineAsyncComponent(loader) : null;
-});
 
 const isStickyToggle = computed({
   get: () => headerContainerStructure.value.configuration?.layout?.sticky ?? false,

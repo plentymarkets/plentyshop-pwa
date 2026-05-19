@@ -65,13 +65,7 @@ const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const elementsOpen = ref(true);
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
-const editingBlock = ref<Block | null>(null);
-
-const blockForm = computed(() => {
-  if (!editingBlock.value) return null;
-  const loader = getBlockFormLoader(editingBlock.value.name);
-  return loader ? defineAsyncComponent(loader) : null;
-});
+const { editingBlock, blockForm } = useNestedBlockForm();
 
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as CarouselStructureProps,

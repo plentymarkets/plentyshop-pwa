@@ -66,7 +66,6 @@
 import { SfInput } from '@storefront-ui/vue';
 import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { getBlockFormLoader } from '~/utils/blocks/blocks-imports';
 
 const { footer } = useBlocks();
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
@@ -75,16 +74,10 @@ const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubE
 
 const elementsOpen = ref(true);
 const colorsOpen = ref(true);
-const editingBlock = ref<Block | null>(null);
+const { editingBlock, blockForm } = useNestedBlockForm();
 
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
 const footerUuid = computed(() => footerContainer.value.meta?.uuid);
-
-const blockForm = computed(() => {
-  if (!editingBlock.value) return null;
-  const loader = getBlockFormLoader(editingBlock.value.name);
-  return loader ? defineAsyncComponent(loader) : null;
-});
 
 const backgroundColor = computed({
   get: () => footerContainer.value.configuration?.colors?.background ?? '',

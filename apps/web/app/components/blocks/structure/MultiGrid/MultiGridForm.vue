@@ -161,7 +161,6 @@ import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
-import { getBlockFormLoader } from '~/utils/blocks/blocks-imports';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
@@ -362,14 +361,8 @@ const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
 };
 
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
-const editingBlock = ref<Block | null>(null);
+const { editingBlock, blockForm } = useNestedBlockForm();
 const legacyFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean } | null>(null);
-
-const blockForm = computed(() => {
-  if (!editingBlock.value) return null;
-  const loader = getBlockFormLoader(editingBlock.value.name);
-  return loader ? defineAsyncComponent(loader) : null;
-});
 
 const editElement = (block: Block) => {
   editingBlock.value = block;
