@@ -60,9 +60,9 @@ const MODULE = {
 const LAUFZEITEN = [24, 36, 48, 60, 72, 84];
 
 const TAB_LABELS = {
-  leasing: { name: 'Leasing', sub: 'Bilanzneutral' },
-  finanzierung: { name: 'Finanzierung', sub: 'Eigentum am Ende' },
-  mietkauf: { name: 'Mietkauf', sub: 'Sofortiger Vorsteuerabzug' }
+  leasing: { name: 'Leasing' },
+  finanzierung: { name: 'Finanzierung' },
+  mietkauf: { name: 'Mietkauf' }
 };
 
 /* ============================================================
@@ -81,6 +81,7 @@ const form = reactive({
   name: '',
   email: '',
   telefon: '',
+  artikelId: '',
   objekt: '',
   anmerkungen: ''
 });
@@ -165,6 +166,7 @@ function submitForm(e) {
     'E-Mail:          ' + form.email,
     'Telefon:         ' + (form.telefon || '—'),
     '',
+    'Artikel-ID:      ' + form.artikelId,
     'Objekt:          ' + (form.objekt || '—'),
     '',
     'Anmerkungen:',
@@ -232,7 +234,6 @@ useHead({
             role="tab"
           >
             <span>{{ label.name }}</span>
-            <small>{{ label.sub }}</small>
           </button>
         </div>
 
@@ -404,9 +405,13 @@ useHead({
               <label>Telefon</label>
               <input type="tel" v-model="form.telefon">
             </div>
-            <div class="input-group full">
+            <div class="input-group">
+              <label>Artikel-ID <span class="req">*</span></label>
+              <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
+            </div>
+            <div class="input-group">
               <label>Was möchten Sie finanzieren?</label>
-              <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse, Förderband …">
+              <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
             </div>
             <div class="input-group full">
               <label>Anmerkungen</label>
@@ -519,22 +524,17 @@ useHead({
 }
 .tab {
   background: transparent; border: 0; cursor: pointer;
-  padding: 1.5rem 1rem; color: rgba(255, 255, 255, 0.55);
+  padding: 1.35rem 1rem; color: rgba(255, 255, 255, 0.55);
   font-family: 'Inter Tight', sans-serif; font-size: 1.05rem; font-weight: 600;
   border-bottom: 3px solid transparent;
   transition: all 0.25s ease;
-  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  display: flex; align-items: center; justify-content: center;
 }
 .tab:hover { color: rgba(255, 255, 255, 0.85); }
-.tab small {
-  font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 400;
-  color: rgba(255, 255, 255, 0.45); letter-spacing: 0.1em; text-transform: uppercase;
-}
 .tab.active {
   color: #fff; border-bottom-color: var(--gold);
   background: linear-gradient(180deg, rgba(245, 192, 10, 0.05) 0%, transparent 100%);
 }
-.tab.active small { color: var(--gold); }
 
 .calc-body { display: grid; grid-template-columns: 1.15fr 1fr; gap: 0; }
 @media (max-width: 900px) { .calc-body { grid-template-columns: 1fr; } }
@@ -825,13 +825,12 @@ useHead({
   /* Tabs untereinander statt 3-spaltig gequetscht */
   .tabs { grid-template-columns: 1fr; }
   .tab {
-    flex-direction: row; justify-content: space-between;
+    justify-content: center;
     padding: 1rem 1.25rem; font-size: 1rem;
     border-bottom: 1px solid rgba(255,255,255,0.08);
     border-left: 3px solid transparent;
   }
   .tab.active { border-bottom-color: rgba(255,255,255,0.08); border-left-color: var(--gold); }
-  .tab small { font-size: 0.65rem; }
 
   .inputs { padding: 1.5rem 1.25rem 2rem; }
   .result { padding: 1.75rem 1.25rem; }
