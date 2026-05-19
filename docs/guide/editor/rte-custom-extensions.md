@@ -16,10 +16,10 @@ Custom extensions live in the `helpers/` subdirectory of that composable and are
 
 ## Extension types
 
-| Type | Purpose | Tiptap docs |
-|---|---|---|
-| **Node** | Block or inline content element (e.g. an icon, a callout box) | [Nodes](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#nodes) |
-| **Mark** | Formatting applied to text (e.g. highlight colour, custom link) | [Marks](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#marks) |
+| Type          | Purpose                                                               | Tiptap docs                                                                                     |
+| ------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Node**      | Block or inline content element (e.g. an icon, a callout box)         | [Nodes](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#nodes)           |
+| **Mark**      | Formatting applied to text (e.g. highlight colour, custom link)       | [Marks](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#marks)           |
 | **Extension** | Behaviour without a document representation (e.g. keyboard shortcuts) | [Extensions](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#extensions) |
 
 This guide focuses on **nodes** because they are the most common extension type needed when adding new content types.
@@ -90,14 +90,14 @@ declare module '@tiptap/core' {
 }
 
 export const IconNode = Node.create({
-  name: 'icon',      // unique schema name
+  name: 'icon', // unique schema name
 
-  group: 'inline',   // participates in inline content groups
-  inline: true,      // renders inline, not as a block
-  atom: true,        // treated as a single unit — not editable inside
+  group: 'inline', // participates in inline content groups
+  inline: true, // renders inline, not as a block
+  atom: true, // treated as a single unit — not editable inside
   selectable: true,
   draggable: false,
-  marks: '_',        // allows all marks on this node
+  marks: '_', // allows all marks on this node
 
   // 1. Persistent attributes stored in the document
   addAttributes() {
@@ -156,13 +156,13 @@ export const IconNode = Node.create({
 
 ### Key concepts
 
-| Hook | Purpose | Tiptap docs |
-|---|---|---|
-| `addAttributes` | Declares persistent data stored per node | [Attributes](https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing#attributes) |
-| `parseHTML` | CSS-selector rules that map existing HTML to this node on paste or load | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#parsehtml) |
-| `renderHTML` | Returns the DOM structure written when serialising to HTML | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#renderhtml) |
-| `addNodeView` | Returns a live DOM element rendered in the editor canvas | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views) |
-| `addCommands` | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#commands) |
+| Hook            | Purpose                                                                               | Tiptap docs                                                                                          |
+| --------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `addAttributes` | Declares persistent data stored per node                                              | [Attributes](https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing#attributes) |
+| `parseHTML`     | CSS-selector rules that map existing HTML to this node on paste or load               | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#parsehtml)        |
+| `renderHTML`    | Returns the DOM structure written when serialising to HTML                            | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#renderhtml)      |
+| `addNodeView`   | Returns a live DOM element rendered in the editor canvas                              | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views)                 |
+| `addCommands`   | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#commands)          |
 
 `renderHTML` and `addNodeView` serve different purposes: `renderHTML` controls the **saved HTML** output, while `addNodeView` controls the **live editor canvas** rendering. When both are defined, `addNodeView` takes precedence in the editor and `renderHTML` is used during HTML serialisation.
 
@@ -174,7 +174,8 @@ Augment the Tiptap `Commands` interface to keep command calls type-safe. By conv
 declare module '@tiptap/core' {
   // eslint-disable-next-line custom-rules/file-organization-types
   interface Commands<ReturnType> {
-    myNode: {               // matches Node.create({ name: 'myNode' })
+    myNode: {
+      // matches Node.create({ name: 'myNode' })
       myCommand: (arg: string) => ReturnType;
     };
   }
@@ -248,13 +249,7 @@ const isActive = computed(() => props.editor?.isActive('myNode') ?? false);
 </script>
 
 <template>
-  <button
-    type="button"
-    :aria-pressed="isActive"
-    @click="insertMyContent('someValue')"
-  >
-    Insert content
-  </button>
+  <button type="button" :aria-pressed="isActive" @click="insertMyContent('someValue')">Insert content</button>
 </template>
 ```
 
@@ -266,7 +261,6 @@ Then in `RichTextEditor.vue`, destructure the helper from `useRichTextEditor` an
 ```
 
 `editor.isActive(name, attrs?)` reflects the current selection state and should drive the pressed/active style on the toolbar button. See [Tiptap – isActive](https://tiptap.dev/docs/editor/api/editor#isactive).
-
 
 ## Full data flow
 
@@ -290,13 +284,12 @@ Saved as HTML string in block content
 
 ## Reference
 
-| Resource | URL |
-|---|---|
-| Tiptap – Create new extension | https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new |
+| Resource                           | URL                                                                         |
+| ---------------------------------- | --------------------------------------------------------------------------- |
+| Tiptap – Create new extension      | https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new      |
 | Tiptap – Extend existing extension | https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing |
-| Tiptap – Node Views | https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views |
-| Tiptap – Nodes reference | https://tiptap.dev/docs/editor/extensions/nodes |
-| Tiptap – Commands API | https://tiptap.dev/docs/editor/api/commands |
-| Tiptap – isActive | https://tiptap.dev/docs/editor/api/editor#isactive |
-| ProseMirror – Node types | https://prosemirror.net/docs/guide/#schema |
-
+| Tiptap – Node Views                | https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views      |
+| Tiptap – Nodes reference           | https://tiptap.dev/docs/editor/extensions/nodes                             |
+| Tiptap – Commands API              | https://tiptap.dev/docs/editor/api/commands                                 |
+| Tiptap – isActive                  | https://tiptap.dev/docs/editor/api/editor#isactive                          |
+| ProseMirror – Node types           | https://prosemirror.net/docs/guide/#schema                                  |
