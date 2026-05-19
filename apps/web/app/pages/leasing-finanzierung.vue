@@ -115,6 +115,26 @@ function fill(val, min, max) {
   return ((val - min) / (max - min)) * 100;
 }
 
+function onWertInput(e) {
+  const digits = e.target.value.replace(/[^\d]/g, '');
+  let n = parseInt(digits || '0', 10);
+  if (n > 500000) n = 500000;
+  state.wert = n;
+}
+function onWertBlur() {
+  if (state.wert < 5000) state.wert = 5000;
+}
+
+function onLaufzeitInput(e) {
+  const digits = e.target.value.replace(/[^\d]/g, '');
+  let n = parseInt(digits || '0', 10);
+  if (n > 120) n = 120;
+  state.laufzeit = n;
+}
+function onLaufzeitBlur() {
+  if (state.laufzeit < 6) state.laufzeit = 6;
+}
+
 const rateParts = computed(() => {
   const [whole, cent] = fmt(calc.value.rate).split(',');
   return { whole, cent };
@@ -195,11 +215,6 @@ useHead({
         <div class="eyebrow">Finanzierungslösungen</div>
         <h1>Investieren ohne <em>Liquidität zu binden.</em></h1>
         <p class="lead">Maschinen, Anlagen und Industriekomponenten flexibel finanzieren. Konfigurieren Sie Ihre Wunschrate in unter einer Minute — Leasing, Finanzierung oder Mietkauf.</p>
-        <div class="hero-stats">
-          <div class="stat"><div class="v">48 h</div><div class="l">Bonitätsprüfung</div></div>
-          <div class="stat"><div class="v">100%</div><div class="l">Bilanzneutral (Leasing)</div></div>
-          <div class="stat"><div class="v">ab 5.000 €</div><div class="l">Objektwert</div></div>
-        </div>
       </div>
     </section>
 
@@ -230,7 +245,16 @@ useHead({
             <div class="field">
               <div class="field-row">
                 <span class="field-label">Objektwert (netto)</span>
-                <span class="field-value">{{ fmtInt(state.wert) }}<span class="unit">€</span></span>
+                <span class="field-value">
+                  <input
+                    type="text"
+                    inputmode="numeric"
+                    class="wert-input"
+                    :value="fmtInt(state.wert)"
+                    @input="onWertInput"
+                    @blur="onWertBlur"
+                  ><span class="unit">€</span>
+                </span>
               </div>
               <input
                 type="range"
@@ -283,6 +307,16 @@ useHead({
                   :class="{ active: state.laufzeit === lz }"
                   @click="state.laufzeit = lz"
                 >{{ lz }}</button>
+                <span class="laufzeit-custom">
+                  <input
+                    type="text"
+                    inputmode="numeric"
+                    class="lz-input"
+                    :value="state.laufzeit"
+                    @input="onLaufzeitInput"
+                    @blur="onLaufzeitBlur"
+                  ><span class="lz-unit">Mon.</span>
+                </span>
               </div>
             </div>
           </div>
@@ -314,6 +348,28 @@ useHead({
         </div>
       </div>
     </div>
+
+    <!-- ==================== LEASINGPARTNER ==================== -->
+    <section class="partner">
+      <div class="partner-inner">
+        <div class="partner-text">
+          <div class="section-eyebrow">Mehr als Standard</div>
+          <h2>Was kein Standardrechner abbildet — <em>wir schon.</em></h2>
+          <p>Ob individuelle Konditionen, gebrauchte Anlagen oder Millionen-Investition: Über unseren europaweiten Finanzierungspartner realisieren wir, was anderswo am Standardrechner scheitert. <strong>Leasing, Finanzierung oder Mietkauf — länderübergreifend, aus einer Hand.</strong> Sie nennen uns Ihr Vorhaben, wir liefern die passende Struktur.</p>
+          <a href="#anfrage" class="partner-cta">Individuelle Anfrage stellen <span class="arrow">→</span></a>
+        </div>
+        <ul class="partner-list">
+          <li><strong>Europaweit</strong> leasen, finanzieren oder mieten — länderübergreifend abgewickelt</li>
+          <li>Individuelle Leasinglösungen jenseits jeder Standardkalkulation</li>
+          <li>Finanzierung gebrauchter Maschinen, Geräte &amp; technischer Anlagen</li>
+          <li>Flexible Laufzeiten, individuelle An- und Schlusszahlungen</li>
+          <li>Saisonale &amp; atmende Ratenmodelle — angepasst an Ihren Cashflow</li>
+          <li>Lösungen auch bei anspruchsvollen Bonitäts- und Unternehmenskonstellationen</li>
+          <li>Großvolumige Investitionen und projektbezogene Finanzierungen</li>
+          <li>Branchenspezifische Sonderlösungen — auch für Anfragen, die kein Rechner kennt</li>
+        </ul>
+      </div>
+    </section>
 
     <!-- ==================== ANFRAGE ==================== -->
     <section class="anfrage" id="anfrage">
@@ -370,11 +426,8 @@ useHead({
     </section>
 
     <!-- ==================== DISCLAIMER ==================== -->
-    <div class="disclaimer-bar">
-      <div class="disclaimer-inner">
-        <strong>Komplett Konzept Verwertungs GmbH</strong> · Industriekomponenten &amp; Maschinen
-        <span class="dis">Alle Berechnungen sind unverbindliche Beispielkalkulationen. Der tatsächliche effektive Jahreszins richtet sich nach Bonität und Objekt. Keine Finanzierungszusage.</span>
-      </div>
+    <div class="disclaimer-note">
+      <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Der tatsächliche effektive Jahreszins richtet sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
     </div>
 
   </div>
@@ -500,6 +553,21 @@ useHead({
   font-variant-numeric: tabular-nums;
 }
 .field-value .unit { font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-left: 0.25rem; }
+.wert-input {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 1.15rem; font-weight: 700; color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  width: 7.5ch;
+  border: none;
+  border-bottom: 2px solid var(--line);
+  background: transparent;
+  padding: 0 0 2px 0;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.wert-input:focus { border-bottom-color: var(--gold); }
+.wert-input:hover { border-bottom-color: var(--navy); }
 
 /* Range slider */
 .lf-page input[type=range] {
@@ -532,6 +600,18 @@ useHead({
 }
 .pill:hover { border-color: var(--navy); background: #fafaf6; }
 .pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.laufzeit-custom {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.4rem 0.85rem; border: 1px dashed var(--line);
+  border-radius: 999px; transition: border-color 0.15s ease;
+}
+.laufzeit-custom:focus-within { border-color: var(--gold); border-style: solid; }
+.lz-input {
+  width: 3ch; border: none; background: transparent; outline: none;
+  font-family: 'Inter Tight', sans-serif; font-size: 0.85rem; font-weight: 600;
+  color: var(--ink); text-align: center; font-variant-numeric: tabular-nums;
+}
+.lz-unit { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
 
 /* ==================== RESULT ==================== */
 .result {
@@ -668,13 +748,71 @@ useHead({
 .summary-rate small { font-size: 0.7rem; color: var(--muted); font-weight: 500; margin-left: 0.25rem; }
 
 /* ==================== DISCLAIMER ==================== */
-.disclaimer-bar {
-  background: var(--navy-2); color: rgba(255, 255, 255, 0.6);
-  padding: 2.5rem 1.5rem; font-size: 0.82rem;
+.disclaimer-note {
+  background: var(--paper);
+  padding: 1.5rem 1.5rem 2.5rem;
 }
-.disclaimer-inner { max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-.disclaimer-bar strong { color: #fff; font-weight: 600; }
-.disclaimer-bar .dis { max-width: 560px; font-size: 0.75rem; line-height: 1.6; }
+.disclaimer-note p {
+  max-width: 1180px; margin: 0 auto;
+  font-size: 0.75rem; line-height: 1.6;
+  color: var(--muted); text-align: center;
+}
+
+/* ==================== LEASINGPARTNER ==================== */
+.partner {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: #fff;
+  padding: 5.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.partner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 90% 10%, rgba(245,192,10,0.10) 0%, transparent 55%);
+  pointer-events: none;
+}
+.partner-inner {
+  max-width: 1180px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  align-items: center; position: relative;
+}
+@media (max-width: 880px) { .partner-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
+.partner-text .section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 1.25rem;
+}
+.partner-text .section-eyebrow::before { content: "— "; }
+.partner-text h2 {
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem); font-weight: 700;
+  line-height: 1.08; margin-bottom: 1.25rem;
+}
+.partner-text h2 em { font-style: normal; color: var(--gold); }
+.partner-text p { color: rgba(255,255,255,0.8); font-size: 1.02rem; margin-bottom: 2rem; }
+.partner-text p strong { color: #fff; font-weight: 600; }
+.partner-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--gold); color: var(--navy);
+  font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 1rem;
+  padding: 0.95rem 1.9rem; border-radius: 4px;
+  text-decoration: none; transition: all 0.2s ease;
+}
+.partner-cta:hover { background: #fff; transform: translateY(-1px); }
+.partner-cta .arrow { transition: transform 0.2s ease; }
+.partner-cta:hover .arrow { transform: translateX(3px); }
+.partner-list { list-style: none; padding: 0; margin: 0; }
+.partner-list li {
+  font-size: 0.98rem; color: rgba(255,255,255,0.88);
+  padding: 0.85rem 0 0.85rem 1.75rem; position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.partner-list li:last-child { border-bottom: 0; }
+.partner-list li::before {
+  content: ""; position: absolute; left: 0; top: 1.35em;
+  width: 10px; height: 2px; background: var(--gold);
+}
+.partner-list li strong { color: var(--gold); font-weight: 700; }
 
 /* ==================== MOBILE-OPTIMIERUNG ==================== */
 @media (max-width: 640px) {
@@ -706,6 +844,7 @@ useHead({
   .btn { justify-content: center; }
   .privacy { max-width: 100%; }
 
-  .disclaimer-inner { flex-direction: column; }
+  .partner { padding: 3.5rem 1.25rem; }
+  .partner-cta { width: 100%; justify-content: center; }
 }
 </style>
