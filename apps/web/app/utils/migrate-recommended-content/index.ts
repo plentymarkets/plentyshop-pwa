@@ -1,11 +1,5 @@
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
-
-export type OldContent = {
-  index?: number;
-  cacheKey?: string;
-  categoryId: string;
-  text: object;
-};
+import type { OldContent } from './types';
 
 function isNewContent(
   content: OldContent | ProductRecommendedProductsContent,
