@@ -7,7 +7,7 @@
         :item-labels="blockLabels"
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
-        :quick-add-options="quickAddOptions"
+        :quick-add-options="headerQuickAddOptions"
         @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
@@ -152,8 +152,6 @@ const addBlock = (event?: MouseEvent) => {
     clearInsertColumnUuid();
   }
 };
-
-const quickAddOptions = headerQuickAddOptions;
 
 const deleteBlock = async (index: number) => {
   if (blocks.value.length <= 1) {

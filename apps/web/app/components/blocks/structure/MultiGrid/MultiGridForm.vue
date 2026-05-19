@@ -19,7 +19,7 @@
     </button>
 
     <div v-if="elementLayoutOpen" id="element-panel-element-layout" class="px-3.5 py-3">
-      <EditorQuickAdd :options="quickAddOptions" :block-uuid="resolvedUuid" />
+      <EditorQuickAdd :options="multiGridQuickAddOptions" :block-uuid="resolvedUuid" />
     </div>
 
     <button
@@ -367,8 +367,6 @@ const elementLayoutOpen = ref(true);
 const gridLayoutOpen = ref(true);
 const layoutOpen = ref(true);
 const backgroundOpen = ref(false);
-
-const quickAddOptions = multiGridQuickAddOptions;
 </script>
 
 <i18n lang="json">
