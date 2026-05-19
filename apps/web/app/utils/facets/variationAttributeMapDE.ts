@@ -1,8 +1,4 @@
-import type { VariationMapProductVariation, VariationMapProductAttribute } from '@plentymarkets/shop-api';
-type variationAttributes = {
-  variations: VariationMapProductVariation[];
-  attributes: VariationMapProductAttribute[];
-};
+import type { variationAttributes } from './types';
 export const variationAttributeMapDE = (variationId: number): variationAttributes => {
   return {
     variations: [
