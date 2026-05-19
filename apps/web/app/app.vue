@@ -38,11 +38,11 @@
                 width: previewWidth,
                 maxWidth: '100%',
                 transform: 'translateZ(0)',
-                height: previewHeight,
+                height: '99%',
                 overflow: 'clip',
                 display: 'flex',
                 flexDirection: 'column',
-                '--viewport-height': previewHeight,
+                '--viewport-height': '90dvh',
               }
             : undefined
         "
@@ -89,7 +89,7 @@ const route = useRoute();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
-const { isInEditorClient, isMobilePreview, previewWidth, previewHeight } = useEditorState();
+const { isInEditorClient, isMobilePreview, previewWidth } = useEditorState();
 
 const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 

@@ -36,6 +36,4 @@ export interface UseEditorStateReturn {
   isMobilePreview: ComputedRef<boolean>;
   /** Preview frame width (e.g. '375px' for mobile, '100%' for desktop) */
   previewWidth: ComputedRef<string>;
-  /** Preview frame height (e.g. '812px' for mobile, undefined for desktop) */
-  previewHeight: ComputedRef<string | undefined>;
 }

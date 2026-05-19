@@ -35,11 +35,5 @@ export const useEditorDevice = () => {
     return '100%';
   });
 
-  const height = computed(() => {
-    if (device.value === 'mobile') return '812px';
-    if (device.value === 'tablet') return '1024px';
-    return undefined;
-  });
-
-  return { device, setDevice, width, height };
+  return { device, setDevice, width };
 };

@@ -10,9 +10,9 @@
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">
         <UiLanguageEditor />
         <UiPageSelector />
-        <UiToolbarDeviceToggle v-if="disableActions" />
+        <UiToolbarDeviceToggle />
       </div>
-      <div class="ml-auto flex items-center space-x-2">
+      <div class="ml-auto flex space-x-2">
         <button
           class="self-start text-[#062633] px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
           data-testid="edit-preview-button"
