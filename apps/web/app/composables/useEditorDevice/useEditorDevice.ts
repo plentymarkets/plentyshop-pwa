@@ -13,20 +13,21 @@ export const useEditorDevice = () => {
   const device = getDevice();
 
   const setDevice = (d: PreviewDevice) => {
-    if (d === 'mobile') {
-      viewport.breakpoint.value = 'xs';
-    } else if (d === 'tablet') {
-      viewport.breakpoint.value = 'md';
-    } else {
-      for (const [key, { mediaQuery }] of Object.entries(viewport.queries.value)) {
-        if (window.matchMedia(mediaQuery).matches) {
-          viewport.breakpoint.value = key;
-          break;
+    device.value = d;
+    nextTick(() => {
+      if (d === 'mobile') {
+        viewport.breakpoint.value = 'xs';
+      } else if (d === 'tablet') {
+        viewport.breakpoint.value = 'md';
+      } else {
+        for (const [key, { mediaQuery }] of Object.entries(viewport.queries.value)) {
+          if (window.matchMedia(mediaQuery).matches) {
+            viewport.breakpoint.value = key;
+            break;
+          }
         }
       }
-    }
-
-    device.value = d;
+    });
   };
 
   const width = computed(() => {
