@@ -4,7 +4,7 @@
       <EditorFormPanel
         v-model="imagesOpen"
         :title="getEditorTranslation('images-group-label')"
-        data-testid="slider-image-group"
+        data-testid="slider-image-group-title"
       >
         <div class="images">
           <UiImagePicker
@@ -61,7 +61,7 @@
       <EditorFormPanel
         v-model="textOpen"
         :title="getEditorTranslation('text-group-label')"
-        data-testid="banner-text-group"
+        data-testid="slider-text-group-title"
       >
         <div>
           <EditorRichTextEditorForm
