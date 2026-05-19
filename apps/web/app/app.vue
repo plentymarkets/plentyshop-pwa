@@ -42,6 +42,7 @@
                 overflow: 'clip',
                 display: 'flex',
                 flexDirection: 'column',
+                '--viewport-height': previewHeight,
               }
             : undefined
         "
