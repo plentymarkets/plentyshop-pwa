@@ -2,6 +2,11 @@
 
 Extend the middleware with custom API endpoints to implement additional functionality beyond the default shop API methods. This is useful when creating a plugin within PlentyONE that provides REST routes.
 
+::: tip Supported Endpoints
+Endpoints provided by a plugin have to be prefixed with `/rest/`.
+Other endpoints the plugin provides aren't available in the shop.
+:::
+
 ## Adding a custom endpoint
 
 Custom endpoints are defined in the middleware configuration file using the `extensions` property. Each extension can add one or more API methods.
