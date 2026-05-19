@@ -1,29 +1,12 @@
 import type { ImageContent } from '~/components/blocks/Image/types';
+import type { OldImageContent } from './types';
 
-type OldContent = {
-  index?: number;
-  wideScreen?: string;
-  desktop?: string;
-  tablet?: string;
-  mobile?: string;
-  alt?: string;
-  imageAlignment?: 'left' | 'right';
-  brightness?: number;
-  textOverlay?: string;
-  textOverlayColor?: string;
-  textOverlayAlignY?: 'top' | 'center' | 'bottom';
-  textOverlayAlignX?: 'left' | 'center' | 'right';
-  label?: string;
-  link?: string;
-  variant?: 'primary' | 'secondary';
-};
-
-export function migrateImageContent(content: OldContent | ImageContent): ImageContent {
+export function migrateImageContent(content: OldImageContent | ImageContent): ImageContent {
   if ('image' in content && typeof content.image === 'object') {
     return content as ImageContent;
   }
 
-  const old = content as OldContent;
+  const old = content as OldImageContent;
 
   return {
     index: old.index,

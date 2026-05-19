@@ -1,6 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import type { FooterColumn, FooterContent } from '~/components/blocks/Footer/types';
+import type { ButtonConfig } from './types';
 import { FOOTER_SWITCH_DEFINITIONS } from '~/components/blocks/Footer/constants';
 import { v4 as uuid } from 'uuid';
 import { SfButtonVariant } from '@storefront-ui/vue';
@@ -31,8 +32,6 @@ function buildColumnHtml(columnGroup: string, groupLabel: string): string {
     .join('');
   return `${buildColumnTitleHtml(groupLabel)}${links}`;
 }
-
-type ButtonConfig = { label: string; link: string; variant: SfButtonVariant };
 
 function createFooterColumnTextCard(parentSlot: number, htmlDescription = '', button?: ButtonConfig): Block {
   return {

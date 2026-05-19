@@ -73,3 +73,5 @@ export type ColumnBlock = Block & {
     };
   };
 };
+
+export type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';

@@ -1,7 +1,4 @@
-interface HandleLogoutOptions {
-  logout: () => Promise<void>;
-  toggle: () => void;
-}
+import type { HandleLogoutOptions } from './types';
 
 export const handleLogout = async ({ logout, toggle }: HandleLogoutOptions) => {
   toggle();

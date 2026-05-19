@@ -131,7 +131,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
@@ -194,7 +194,6 @@ const toggleSticky = (columnIndex: number) => {
 };
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
-type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
 const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
 
 const getGapPx = (gap: string | undefined): number => {

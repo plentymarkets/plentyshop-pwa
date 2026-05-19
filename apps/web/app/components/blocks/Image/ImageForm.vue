@@ -259,7 +259,7 @@ import {
   SfIconInfo,
 } from '@storefront-ui/vue';
 
-import type { ImageFormProps } from './types';
+import type { ImageFormProps, ImageTypeKey } from './types';
 import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
@@ -332,7 +332,6 @@ const fillTooltip =
   'Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.';
 
 const paddingTooltip = 'Padding is only available in Fit mode.';
-type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
   if (uiImageTextBlock.value.image && ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)) {

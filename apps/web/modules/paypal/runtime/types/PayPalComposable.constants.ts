@@ -1,6 +1,3 @@
-import type { PayPalNamespace } from '@paypal/paypal-js';
-
-export type PayPalVisibilityLocations = 'itemPage' | 'quickCheckout' | 'cartPage' | 'guestLoginPage' | 'checkoutPage';
 export const PayPalPaymentKey = 'PAYPAL';
 export const PayPalPayLaterKey = 'PAYPAL_PAY_LATER';
 export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';
@@ -23,15 +20,4 @@ export const PayPalAlternativeFundingSourceMapper = {
   PAYPAL_MYBANK: 'mybank',
   PAYPAL_PRZELEWY24: 'p24',
   PAYPAL_TRUSTLY: 'trustly',
-};
-
-export type PayPalScript = {
-  script: PayPalNamespace | null;
-  locale: string;
-  currency: string;
-  commit: boolean;
-};
-
-export type PayPalLoadScript = {
-  [key: string]: Promise<PayPalNamespace | null>;
 };
