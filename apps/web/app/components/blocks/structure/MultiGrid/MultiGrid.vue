@@ -102,8 +102,8 @@ const getColumnClasses = (filteredColIndex: number) => {
   const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];
   const originalIdx = visibleGrid.value.filteredToOriginal[filteredColIndex] ?? -1;
   if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(originalIdx)) {
-    classes.push('md:sticky');
-    classes.push(route.meta?.type === 'product' ? 'md:top-40' : 'md:top-5');
+    classes.push('@md:sticky');
+    classes.push(route.meta?.type === 'product' ? '@md:top-40' : '@md:top-5');
   }
   return classes;
 };
