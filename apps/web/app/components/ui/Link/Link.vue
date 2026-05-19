@@ -2,10 +2,10 @@
   <component
     :is="tag"
     :class="[
-        'focus-visible:outline focus-visible:outline-offset focus-visible:rounded-xs underline hover:no-underline',
-        variantClasses[variant],
-        $attrs.class,
-      ]"
+      'focus-visible:outline focus-visible:outline-offset focus-visible:rounded-xs underline hover:no-underline',
+      variantClasses[variant],
+      $attrs.class,
+    ]"
     data-testid="link"
     v-bind="attrsWithoutClass"
   >
