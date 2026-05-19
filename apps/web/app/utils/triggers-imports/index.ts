@@ -1,18 +1,16 @@
-import type { Component } from 'vue';
-
-type Loader = () => Promise<Component>;
+import type { TriggerLoader } from './types';
 
 const customerTriggers = import.meta.glob('/node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, TriggerLoader>;
 
 const nuxtModuleTriggers = import.meta.glob('~~/modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, TriggerLoader>;
 
 const coreTriggers = import.meta.glob('@/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, TriggerLoader>;
 
 function slug(path: string) {
   const norm = path.replace(/\\/g, '/');
@@ -20,7 +18,7 @@ function slug(path: string) {
   return match?.[1]?.toLowerCase() ?? '';
 }
 
-const ordered: Record<string, Loader> = {};
+const ordered: Record<string, TriggerLoader> = {};
 
 Object.entries(coreTriggers).forEach(([path, loader]) => (ordered[slug(path)] = loader));
 Object.entries(nuxtModuleTriggers).forEach(([path, loader]) => (ordered[slug(path)] = loader));

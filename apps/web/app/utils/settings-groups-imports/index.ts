@@ -1,18 +1,19 @@
-import type { Component } from 'vue';
-
-type Loader = () => Promise<Component>;
+import type { SettingsGroupLoader } from './types';
 
 // TODO: see if we can use https://github.com/nuxt/nuxt/releases/tag/v3.19.0 to replace the import.meta.glob
 
 const customer = import.meta.glob('/node_modules/*/runtime/components/settings/**/*.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, SettingsGroupLoader>;
 
 const nuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/**/*.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, SettingsGroupLoader>;
 
-const core = import.meta.glob('@/components/**/settings/**/*.vue', { import: 'default' }) as Record<string, Loader>;
+const core = import.meta.glob('@/components/**/settings/**/*.vue', { import: 'default' }) as Record<
+  string,
+  SettingsGroupLoader
+>;
 
 const stripPrefix = (raw: string): string => raw.replace(/^(\d+)\./, '');
 
@@ -32,7 +33,7 @@ const normalize = (path: string) => {
   return path;
 };
 
-const modules: Record<string, Loader> = {};
+const modules: Record<string, SettingsGroupLoader> = {};
 
 Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loader));
 Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));

@@ -24,11 +24,8 @@
 
 <script setup lang="ts">
 import type { Locale } from 'vue-i18n';
+import type { Props } from './types';
 
-interface Props {
-  isOpen?: boolean;
-  activeIndex?: number;
-}
 const { send } = useNotification();
 
 withDefaults(defineProps<Props>(), {

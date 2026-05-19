@@ -1,3 +1,5 @@
+import type { InvalidCb } from './types';
+
 export const ALLOWED_MIME = new Set([
   'image/png',
   'image/jpeg',
@@ -19,8 +21,6 @@ export const MAX_BYTES = 512 * 1024 * 1024;
 export const getAllowedImageExtensions = (): string => {
   return Array.from(ALLOWED_EXT).join(',');
 };
-
-export type InvalidCb = (reason: string) => void;
 
 export const validateImageFile = (file: File): { ok: true } | { ok: false; reason: string } => {
   const ext = file.name.split('.').pop()?.toLowerCase() || '';

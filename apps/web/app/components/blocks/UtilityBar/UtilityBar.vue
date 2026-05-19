@@ -359,14 +359,9 @@ import {
 import { onClickOutside } from '@vueuse/core';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 
-import type { UtilityBarProps } from './types';
+import type { UtilityBarComponentProps } from './types';
 
-interface Props extends Partial<UtilityBarProps> {
-  enableActions?: boolean;
-  root?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<UtilityBarComponentProps>(), {
   enableActions: false,
   root: true,
 });

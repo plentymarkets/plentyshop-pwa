@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { LAYOUT_PRESETS } from './types';
+import { LAYOUT_PRESETS } from './constants';
 import type { BlockListCategory } from '~/composables/useBlocksList/types';
 
 defineProps<{ isLoading: boolean }>();

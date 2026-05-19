@@ -190,12 +190,12 @@
 </template>
 
 <script setup lang="ts">
-import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward, SfIconExpandMore } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
-import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/types';
+import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -232,7 +232,6 @@ const multiGridStructure = computed(() => {
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
-type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
 const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
 
 const getGapPx = (gap: string | undefined): number => {
