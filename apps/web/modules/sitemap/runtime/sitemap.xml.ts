@@ -1,5 +1,6 @@
 import { sitemapPages, buildTime } from '#sitemap-data';
 
+// eslint-disable-next-line custom-rules/file-organization-types
 type SitemapURL = {
   loc: string;
   alternate?: { hreflang: string; href: string }[];

@@ -1,16 +1,17 @@
-import type { Component } from 'vue';
-
-type Loader = () => Promise<Component>;
+import type { BlockLoader } from './types';
 
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, BlockLoader>;
 
 const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
-}) as Record<string, Loader>;
+}) as Record<string, BlockLoader>;
 
-const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import: 'default' }) as Record<string, Loader>;
+const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import: 'default' }) as Record<
+  string,
+  BlockLoader
+>;
 
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
@@ -18,7 +19,7 @@ const normalize = (path: string) => {
   return path;
 };
 
-export const blockLoaders: Record<string, Loader> = {};
+export const blockLoaders: Record<string, BlockLoader> = {};
 
 Object.entries(coreBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(nuxtModuleBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
