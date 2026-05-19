@@ -1,5 +1,6 @@
 import { createResolver, defineNuxtModule, addServerHandler } from 'nuxt/kit';
 
+// eslint-disable-next-line custom-rules/file-organization-types
 export interface ModuleOptions {
   locales?: string[];
   defaultLocale?: string;

@@ -1,4 +1,4 @@
-export type HorizontalSpacingKey = 's' | 'm' | 'l';
+import type { HorizontalSpacingKey } from './types';
 
 const MAP: Record<HorizontalSpacingKey, string> = {
   s: 'max-w-screen-3xl',
