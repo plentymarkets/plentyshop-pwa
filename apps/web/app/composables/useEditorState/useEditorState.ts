@@ -42,7 +42,7 @@ export const useEditorState = (): UseEditorStateReturn => {
   const shouldHideZeroValues = computed(() => isPreviewMode.value || isLiveMode.value);
 
   /** @description Client-side only editor check (guaranteed to be set post-hydration) */
-  const isInEditorClient = ref(false);
+  const isInEditorClient = useState('editor-is-in-editor-client', () => false);
   onNuxtReady(() => {
     isInEditorClient.value = !!$isPreview;
   });
