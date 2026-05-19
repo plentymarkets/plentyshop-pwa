@@ -4,27 +4,6 @@
     <button
       type="button"
       class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
-      :aria-expanded="elementLayoutOpen"
-      aria-controls="element-panel-element-layout"
-      @click="elementLayoutOpen = !elementLayoutOpen"
-    >
-      <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase">
-        {{ getEditorTranslation('element-settings') }}
-      </span>
-      <SfIconExpandMore
-        size="xs"
-        class="text-editor-text-placeholder transition-transform duration-200"
-        :class="elementLayoutOpen ? 'rotate-0' : '-rotate-90'"
-      />
-    </button>
-
-    <div v-if="elementLayoutOpen" id="element-panel-element-layout" class="px-3.5 py-3">
-      <EditorQuickAdd :options="multiGridQuickAddOptions" :block-uuid="resolvedUuid" />
-    </div>
-
-    <button
-      type="button"
-      class="w-full flex items-center text-left gap-1.5 px-3.5 py-2 cursor-pointer bg-editor-surface border-t border-b border-editor-border select-none"
       :aria-expanded="gridLayoutOpen"
       aria-controls="multigrid-panel-grid-layout"
       @click="gridLayoutOpen = !gridLayoutOpen"
@@ -363,7 +342,6 @@ const handleAddFreeColumn = (span: number, anchorEl: HTMLElement) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
-const elementLayoutOpen = ref(true);
 const gridLayoutOpen = ref(true);
 const layoutOpen = ref(true);
 const backgroundOpen = ref(false);
@@ -375,7 +353,6 @@ const backgroundOpen = ref(false);
     "grid-layout": "Grid Layout",
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
-    "element-settings": "Elements",
     "spacing-between": "Spacing between blocks:",
     "layout": "Layout",
     "margin-label": "Margin (px)",
@@ -388,7 +365,6 @@ const backgroundOpen = ref(false);
     "grid-layout": "Grid Layout",
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
-    "element-settings": "Elements",
     "spacing-between": "Spacing between blocks:",
     "layout": "Layout",
     "margin-label": "Margin (px)",

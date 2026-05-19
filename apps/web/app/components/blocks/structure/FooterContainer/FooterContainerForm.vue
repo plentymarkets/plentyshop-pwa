@@ -7,8 +7,6 @@
         :item-labels="blockLabels"
         :current-active-index="currentActiveBlockIndex"
         :min-items="1"
-        :quick-add-options="footerQuickAddOptions"
-        @select-item="selectBlock"
         @edit-item="editBlock"
         @add-item="addBlock"
         @delete-item="deleteBlock"
@@ -97,6 +95,7 @@ const colorsOpen = ref(true);
 const editingBlockIndex = ref<number | undefined>(undefined);
 const editingBlockName = ref<string | undefined>(undefined);
 const blockLabels = ref<string[]>([]);
+const currentActiveBlockIndex = ref<number>(-1);
 
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
 
@@ -151,8 +150,6 @@ const blocks = computed({
   },
 });
 
-const { currentActiveBlockIndex, selectBlock, highlightActiveBlock } = useBlocksHighlight(blocks);
-
 const resolveBlockLabels = async () => {
   blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
 };
@@ -160,7 +157,7 @@ const resolveBlockLabels = async () => {
 const editBlock = (index: number) => {
   editingBlockIndex.value = index;
   editingBlockName.value = footerContainer.value?.content?.[index]?.name;
-  selectBlock(index);
+  currentActiveBlockIndex.value = index;
   setEditTitle(blockLabels.value[index]!);
 };
 
@@ -212,7 +209,7 @@ const deleteBlock = async (index: number) => {
     return;
   }
   blocks.value = blocks.value.filter((_: Block, i: number) => i !== index);
-  currentActiveBlockIndex.value = -1;
+  currentActiveBlockIndex.value = 0;
   await nextTick();
   if (editingBlockIndex.value === index) {
     exitEditMode();
@@ -221,7 +218,6 @@ const deleteBlock = async (index: number) => {
 
 const updateBlocks = (newBlocks: Block[]) => {
   blocks.value = newBlocks;
-  highlightActiveBlock();
 };
 
 const toggleBlockVisibilityHandler = (index: number) => {

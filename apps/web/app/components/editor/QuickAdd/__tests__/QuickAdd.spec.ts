@@ -136,45 +136,7 @@ describe('QuickAdd', () => {
   });
 
   describe('MultiGrid behavior', () => {
-    it('should insert into the first EmptyGridBlock when one exists', async () => {
-      mockFindOrDeleteBlockByUuid.mockReturnValue({
-        name: 'MultiGrid',
-        configuration: { columnWidths: [6, 6] },
-        content: [
-          { name: 'ImageBlock', meta: { uuid: 'block-1' }, parent_slot: 0 },
-          { name: 'EmptyGridBlock', meta: { uuid: 'empty-slot-uuid' }, parent_slot: 1 },
-        ],
-      });
-      const wrapper = createWrapper();
-
-      await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
-
-      expect(mockAddNewBlock).toHaveBeenCalledWith('image', 0, 'empty-slot-uuid', 'inside');
-    });
-
-    it('should grow last row from colspan-12 to colspan-6+6 when below max columns', async () => {
-      const multiGridBlock = {
-        name: 'MultiGrid',
-        configuration: { columnWidths: [6, 6, 12] },
-        content: [
-          { name: 'ImageBlock', meta: { uuid: 'block-1' }, parent_slot: 0 },
-          { name: 'TextCard', meta: { uuid: 'block-2' }, parent_slot: 1 },
-          { name: 'ImageBlock', meta: { uuid: 'block-3' }, parent_slot: 2 },
-        ],
-      };
-      mockFindOrDeleteBlockByUuid.mockReturnValue(multiGridBlock);
-      const wrapper = createWrapper();
-
-      await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
-
-      expect(multiGridBlock.configuration.columnWidths).toEqual([6, 6, 6, 6]);
-      expect(multiGridBlock.content).toHaveLength(4);
-      expect(multiGridBlock.content[3]!.name).toBe('EmptyGridBlock');
-      expect(multiGridBlock.content[3]!.parent_slot).toBe(3);
-      expect(mockAddNewBlock).toHaveBeenCalledWith('image', 0, multiGridBlock.content[3]!.meta.uuid, 'inside');
-    });
-
-    it('should add a new row with colspan-12 when last row is at max capacity', async () => {
+    it('should always add a new col-12 row and insert the block', async () => {
       const multiGridBlock = {
         name: 'MultiGrid',
         configuration: { columnWidths: [6, 6] },
@@ -193,27 +155,6 @@ describe('QuickAdd', () => {
       expect(multiGridBlock.content[2]!.name).toBe('EmptyGridBlock');
       expect(multiGridBlock.content[2]!.parent_slot).toBe(2);
       expect(mockAddNewBlock).toHaveBeenCalledWith('image', 0, multiGridBlock.content[2]!.meta.uuid, 'inside');
-    });
-
-    it('should add a new row for 3-column grid when all columns are filled', async () => {
-      const multiGridBlock = {
-        name: 'MultiGrid',
-        configuration: { columnWidths: [4, 4, 4] },
-        content: [
-          { name: 'ImageBlock', meta: { uuid: 'block-1' }, parent_slot: 0 },
-          { name: 'TextCard', meta: { uuid: 'block-2' }, parent_slot: 1 },
-          { name: 'ImageBlock', meta: { uuid: 'block-3' }, parent_slot: 2 },
-        ],
-      };
-      mockFindOrDeleteBlockByUuid.mockReturnValue(multiGridBlock);
-      const wrapper = createWrapper();
-
-      await wrapper.find('[data-testid="quick-add-Image"]').trigger('click');
-
-      expect(multiGridBlock.configuration.columnWidths).toEqual([4, 4, 4, 12]);
-      expect(multiGridBlock.content).toHaveLength(4);
-      expect(multiGridBlock.content[3]!.parent_slot).toBe(3);
-      expect(mockAddNewBlock).toHaveBeenCalledWith('image', 0, multiGridBlock.content[3]!.meta.uuid, 'inside');
     });
   });
 });
