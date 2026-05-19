@@ -20,7 +20,7 @@
               :key="switchConfig.id"
               class="py-2 !bg-transparent typography-text-sm"
             >
-              <SfLink
+              <UiLink
                 :tag="NuxtLink"
                 :style="{ color: resolvedContent.colors?.text || undefined }"
                 class="no-underline text-neutral-600 hover:underline active:underline"
@@ -28,7 +28,7 @@
                 :to="localePath(switchConfig.link)"
               >
                 {{ switchConfig.translationKey }}
-              </SfLink>
+              </UiLink>
             </SfListItem>
           </ul>
           <div v-if="hasColumn1Button" class="px-4 pt-2 flex">
@@ -59,7 +59,7 @@
                 :key="switchConfig.id"
                 class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
               >
-                <SfLink
+                <UiLink
                   :tag="NuxtLink"
                   variant="secondary"
                   class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
@@ -67,7 +67,7 @@
                   :to="localePath(switchConfig.link)"
                 >
                   {{ switchConfig.translationKey }}
-                </SfLink>
+                </UiLink>
               </SfListItem>
             </ul>
           </div>
@@ -98,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfListItem } from '@storefront-ui/vue';
+import { SfListItem } from '@storefront-ui/vue';
 import type { FooterProps, FooterContent, FooterColumn } from './types';
 import { FOOTER_SWITCH_DEFINITIONS } from './constants';
 

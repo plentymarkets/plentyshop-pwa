@@ -80,9 +80,9 @@
 
       <div class="text-center mt-2">
         <span class="my-5 mr-1">{{ t('authentication.setNewPassword.rememberPassword') }}</span>
-        <SfLink variant="primary" class="cursor-pointer" @click="openAuthentication">
+        <UiLink variant="primary" class="cursor-pointer" @click="openAuthentication">
           {{ t('account.navBottomHeadingLogin') }}
-        </SfLink>
+        </UiLink>
       </div>
     </form>
 
@@ -110,7 +110,7 @@
 
 <script lang="ts" setup>
 import type { ApiError } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
+import { SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({

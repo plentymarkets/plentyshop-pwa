@@ -40,7 +40,7 @@
     </label>
 
     <div class="md:col-span-3">
-      <SfLink
+      <UiLink
         class="select-none hover:cursor-pointer"
         role="button"
         tabindex="0"
@@ -50,7 +50,7 @@
         @keydown.enter.space="hasCompany = !hasCompany"
       >
         {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
-      </SfLink>
+      </UiLink>
     </div>
 
     <label v-if="hasCompany" for="billingCompanyName">
@@ -192,7 +192,7 @@
 
 <script setup lang="ts">
 import { type Address, AddressType, ApiError, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfIconClose, SfInput, SfLink, SfSelect } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfSelect } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { AddressFormBillingProps } from './types';
 
