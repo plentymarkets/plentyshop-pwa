@@ -164,8 +164,8 @@ const changePosition = (position: number) => {
     box-shadow 540ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.group:hover .block-actions-toolbar,
-.group:focus-within .block-actions-toolbar,
+.block-hoverable:hover .block-actions-toolbar,
+.block-hoverable:focus-within .block-actions-toolbar,
 .block-actions-toolbar:hover {
   transform: translateY(0);
 }

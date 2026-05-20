@@ -36,7 +36,7 @@
           aria-label="top add block"
           @click.stop="addNewBlock(block, 'top', $event)"
         >
-          <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
+          <SfTooltip class="flex" :label="buttonLabel" placement="top" :show-arrow="true">
             <SfIconAdd class="cursor-pointer" size="xs" />
           </SfTooltip>
         </button>
@@ -49,7 +49,7 @@
           :class="[
             'opacity-0 block-actions',
             {
-              'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
+              'hover:opacity-100': !isTablet,
               'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
             },
           ]"
@@ -96,7 +96,7 @@
           aria-label="bottom add block"
           @click.stop="addNewBlock(block, 'bottom', $event)"
         >
-          <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
+          <SfTooltip class="flex" :label="buttonLabel" placement="bottom" :show-arrow="true">
             <SfIconAdd class="cursor-pointer" size="xs" />
           </SfTooltip>
         </button>
@@ -362,8 +362,8 @@ const onBlockUnhover = () => {
   transform: translate(-50%, 50%) scale(0.85);
 }
 
-.group:hover .add-block-button--top,
-.group:focus-within .add-block-button--top,
+.block-hoverable:hover .add-block-button--top,
+.block-hoverable:focus-within .add-block-button--top,
 .add-block-button--top:hover,
 .add-block-button--top:focus-visible,
 .add-block-button--top.add-block-button--active {
@@ -371,13 +371,18 @@ const onBlockUnhover = () => {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.group:hover .add-block-button--bottom,
-.group:focus-within .add-block-button--bottom,
+.block-hoverable:hover .add-block-button--bottom,
+.block-hoverable:focus-within .add-block-button--bottom,
 .add-block-button--bottom:hover,
 .add-block-button--bottom:focus-visible,
 .add-block-button--bottom.add-block-button--active {
   opacity: 1;
   transform: translate(-50%, 50%) scale(1);
+}
+
+.block-hoverable:hover :deep(.block-actions),
+.block-hoverable:focus-within :deep(.block-actions) {
+  opacity: 1;
 }
 
 .add-block-button--premium:hover {
