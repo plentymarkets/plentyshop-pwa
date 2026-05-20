@@ -3,7 +3,7 @@
    KONFIGURATION — HIER ANPASSEN
 ============================================================ */
 const KK_CONFIG = {
-  mailto: 'info@komplett-konzept.de',
+  mailto: 'info@komplett-konzept.de,s.schueler@dclease.de',
   firma: 'Komplett Konzept Verwertungs GmbH',
   // Effektive Jahreszinsen (branchenüblich für Industriefinanzierung 2026)
   zinsen: { leasing: 5.5, finanzierung: 6.5, mietkauf: 6.0 }
@@ -12,15 +12,16 @@ const KK_CONFIG = {
 const MODULE = {
   leasing: {
     title: 'Leasing-Rechner',
-    sub: 'Ratenmiete mit Restwert — steuerlich voll absetzbar.',
+    sub: 'Ratenmiete, steuerlich voll absetzbar.',
     label: 'Monatliche Leasingrate',
-    sumLabel: 'Ihre Kalkulation · Leasing',
+    sumLabel: 'Kalkulation Leasing',
     zins: KK_CONFIG.zinsen.leasing,
     showAnzahlung: false,
-    showRestwert: true,
+    showRestwert: false,
+    fixRestwert: 10,
     vorteile: [
       'Raten 100 % als Betriebsausgabe absetzbar',
-      'Bilanzneutral — keine Auswirkung auf Eigenkapitalquote',
+      'Bilanzneutral, keine Auswirkung auf Eigenkapitalquote',
       'Volle Planungssicherheit durch feste Raten',
       'Flexibles Vertragsende: kaufen, verlängern, zurückgeben'
     ]
@@ -29,7 +30,7 @@ const MODULE = {
     title: 'Finanzierungs-Rechner',
     sub: 'Investitionskredit für sofortigen Eigentumserwerb.',
     label: 'Monatliche Kreditrate',
-    sumLabel: 'Ihre Kalkulation · Finanzierung',
+    sumLabel: 'Kalkulation Finanzierung',
     zins: KK_CONFIG.zinsen.finanzierung,
     showAnzahlung: true,
     showRestwert: false,
@@ -42,9 +43,9 @@ const MODULE = {
   },
   mietkauf: {
     title: 'Mietkauf-Rechner',
-    sub: 'Wirtschaftliches Eigentum ab Tag 1 — Eigentum nach letzter Rate.',
+    sub: 'Wirtschaftliches Eigentum ab Tag 1, Eigentum nach letzter Rate.',
     label: 'Monatliche Mietkaufrate',
-    sumLabel: 'Ihre Kalkulation · Mietkauf',
+    sumLabel: 'Kalkulation Mietkauf',
     zins: KK_CONFIG.zinsen.mietkauf,
     showAnzahlung: true,
     showRestwert: false,
@@ -77,14 +78,39 @@ const state = reactive({
 });
 
 const form = reactive({
+  // Firmendaten
   firma: '',
-  name: '',
-  email: '',
+  zusatz: '',
+  strasse: '',
+  plz: '',
+  ort: '',
   telefon: '',
+  email: '',
+  website: '',
+  ustId: '',
+  stNr: '',
+  // Ansprechpartner
+  anrede: '',
+  vorname: '',
+  nachname: '',
+  apEmail: '',
+  mobil: '',
+  // Zur Finanzierung
   artikelId: '',
   objekt: '',
   anmerkungen: ''
 });
+
+/* ============================================================
+   WIZARD — 3 Schritte
+============================================================ */
+const currentStep = ref(1);
+function goNext() {
+  if (currentStep.value < 3) currentStep.value++;
+}
+function goBack() {
+  if (currentStep.value > 1) currentStep.value--;
+}
 
 /* ============================================================
    COMPUTED — Modul + Berechnung
@@ -95,8 +121,9 @@ const calc = computed(() => {
   const mod = m.value;
   const i = mod.zins / 100 / 12;
   const n = state.laufzeit;
-  const anzahlungAbs = mod.showAnzahlung ? state.wert * state.anzahlung / 100 : 0;
-  const restwertAbs = mod.showRestwert ? state.wert * state.restwert / 100 : 0;
+  const anzahlungAbs = mod.showAnzahlung ? state.anzahlung : 0;
+  const restwertPct = mod.showRestwert ? state.restwert : (mod.fixRestwert || 0);
+  const restwertAbs = state.wert * restwertPct / 100;
   const finanzVol = state.wert - anzahlungAbs;
   const rate = (finanzVol - restwertAbs / Math.pow(1 + i, n)) * i / (1 - Math.pow(1 + i, -n));
   const gesamt = rate * n + anzahlungAbs + restwertAbs;
@@ -123,7 +150,7 @@ function onWertInput(e) {
   state.wert = n;
 }
 function onWertBlur() {
-  if (state.wert < 5000) state.wert = 5000;
+  if (state.wert < 2975) state.wert = 2975;
 }
 
 function onLaufzeitInput(e) {
@@ -136,15 +163,25 @@ function onLaufzeitBlur() {
   if (state.laufzeit < 6) state.laufzeit = 6;
 }
 
+function onAnzahlungInput(e) {
+  const digits = e.target.value.replace(/[^\d]/g, '');
+  let n = parseInt(digits || '0', 10);
+  if (n > state.wert) n = state.wert;
+  state.anzahlung = n;
+}
+function onAnzahlungBlur() {
+  if (state.anzahlung < 0) state.anzahlung = 0;
+}
+
 const rateParts = computed(() => {
   const [whole, cent] = fmt(calc.value.rate).split(',');
   return { whole, cent };
 });
 
 const sumDetails = computed(() => {
-  let d = `${fmtInt(state.wert)} € · ${state.laufzeit} Monate`;
-  if (m.value.showAnzahlung) d += ` · ${state.anzahlung} % Anzahlung`;
-  if (m.value.showRestwert) d += ` · ${state.restwert} % Restwert`;
+  let d = `${fmtInt(state.wert)} €, ${state.laufzeit} Monate`;
+  if (m.value.showAnzahlung) d += `, ${fmtInt(state.anzahlung)} € Anzahlung`;
+  if (m.value.showRestwert) d += `, ${state.restwert} % Restwert`;
   return d;
 });
 
@@ -161,16 +198,27 @@ function submitForm(e) {
     'Anfrage über den Online-Rechner',
     '—'.repeat(40),
     '',
+    'FIRMENDATEN',
     'Firma:           ' + form.firma,
-    'Ansprechpartner: ' + form.name,
+    'Adresszusatz:    ' + (form.zusatz || '—'),
+    'Straße:          ' + form.strasse,
+    'PLZ / Ort:       ' + form.plz + ' ' + form.ort,
+    'Telefon:         ' + form.telefon,
     'E-Mail:          ' + form.email,
-    'Telefon:         ' + (form.telefon || '—'),
+    'Website:         ' + form.website,
+    'USt-IdNr.:       ' + (form.ustId || '—'),
+    'Steuernummer:    ' + (form.stNr || '—'),
     '',
+    'ANSPRECHPARTNER',
+    'Anrede:          ' + form.anrede,
+    'Name:            ' + form.vorname + ' ' + form.nachname,
+    'E-Mail:          ' + form.apEmail,
+    'Mobil:           ' + form.mobil,
+    '',
+    'ZUR FINANZIERUNG',
     'Artikel-ID:      ' + form.artikelId,
     'Objekt:          ' + (form.objekt || '—'),
-    '',
-    'Anmerkungen:',
-    form.anmerkungen || '—',
+    'Anmerkungen:     ' + (form.anmerkungen || '—'),
     '',
     '—'.repeat(40),
     'KALKULATION',
@@ -178,12 +226,9 @@ function submitForm(e) {
     'Modell:          ' + modulLabel,
     'Objektwert:      ' + fmt(state.wert) + ' €',
     'Laufzeit:        ' + state.laufzeit + ' Monate',
-    mod.showAnzahlung ? 'Anzahlung:       ' + state.anzahlung + ' % (' + fmt(r.anzahlungAbs) + ' €)' : null,
-    mod.showRestwert ? 'Restwert:        ' + state.restwert + ' % (' + fmt(r.restwertAbs) + ' €)' : null,
-    'Effektivzins:    ' + mod.zins.toFixed(2).replace('.', ',') + ' % p.a.',
+    mod.showAnzahlung ? 'Anzahlung:       ' + fmt(state.anzahlung) + ' €' : null,
     '',
-    'Monatliche Rate: ' + fmt(r.rate) + ' € netto',
-    'Gesamtaufwand:   ' + fmt(r.gesamt) + ' €',
+    'Monatliche Rate: ' + fmt(r.rate) + ' €',
     '',
     '(Unverbindliche Beispielkalkulation)'
   ].filter(Boolean).join('\r\n');
@@ -196,9 +241,9 @@ function submitForm(e) {
    SEO / HEAD
 ============================================================ */
 useHead({
-  title: 'Leasing · Finanzierung · Mietkauf | Komplett Konzept',
+  title: 'Leasing, Finanzierung, Mietkauf | Komplett Konzept',
   meta: [
-    { name: 'description', content: 'Maschinen und Industriekomponenten flexibel finanzieren. Leasing, Finanzierung oder Mietkauf — konfigurieren Sie Ihre Wunschrate in unter einer Minute.' }
+    { name: 'description', content: 'Maschinen und Industriekomponenten flexibel finanzieren. Leasing, Finanzierung oder Mietkauf. Konfigurieren Sie Ihre Wunschrate in unter einer Minute.' }
   ],
   link: [
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -216,13 +261,49 @@ useHead({
       <div class="container">
         <div class="eyebrow">Finanzierungslösungen</div>
         <h1>Investieren ohne <em>Liquidität zu binden.</em></h1>
-        <p class="lead">Maschinen, Anlagen und Industriekomponenten flexibel finanzieren. Konfigurieren Sie Ihre Wunschrate in unter einer Minute — Leasing, Finanzierung oder Mietkauf.</p>
+        <p class="lead">Mit unserem europaweiten Finanzierungspartner setzen wir Verkäufe um, woran die meisten scheitern. <strong>Leasing, Finanzierung oder Mietkauf, länderübergreifend und maßgeschneidert auf Ihr Vorhaben.</strong></p>
+        <ul class="hero-list">
+          <li><strong>Europaweit</strong> leasen, finanzieren oder mieten, länderübergreifend abgewickelt</li>
+          <li>Individuelle Leasinglösungen jenseits jeder Standardkalkulation</li>
+          <li>Finanzierung gebrauchter Maschinen, Geräte und technischer Anlagen</li>
+          <li>Flexible Laufzeiten und individuelle An- oder Schlusszahlungen</li>
+          <li>Saisonale und atmende Ratenmodelle, angepasst an Ihren Cashflow</li>
+          <li>Lösungen auch bei anspruchsvollen Bonitäts- und Unternehmenskonstellationen</li>
+          <li>Großvolumige Investitionen und projektbezogene Finanzierungen</li>
+          <li>Branchenspezifische Sonderlösungen für jede Anfrage</li>
+        </ul>
       </div>
     </section>
 
-    <!-- ==================== CALCULATOR ==================== -->
-    <div class="calc-wrap">
-      <div class="calc-card">
+    <!-- ==================== WIZARD ==================== -->
+    <div class="wizard-wrap">
+
+      <!-- Progress -->
+      <div class="wizard-progress">
+        <div class="step-item" :class="{ active: currentStep === 1, done: currentStep > 1 }">
+          <span class="step-num">1</span>
+          <span class="step-name">Konditionen</span>
+        </div>
+        <div class="step-line" :class="{ done: currentStep > 1 }"></div>
+        <div class="step-item" :class="{ active: currentStep === 2, done: currentStep > 2 }">
+          <span class="step-num">2</span>
+          <span class="step-name">Firmendaten</span>
+        </div>
+        <div class="step-line" :class="{ done: currentStep > 2 }"></div>
+        <div class="step-item" :class="{ active: currentStep === 3 }">
+          <span class="step-num">3</span>
+          <span class="step-name">Ansprechpartner</span>
+        </div>
+      </div>
+
+      <!-- ==================== DISCLAIMER ==================== -->
+      <div class="disclaimer-note">
+        <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Die tatsächlichen Konditionen richten sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
+      </div>
+
+      <!-- ===== Step 1: Konditionen ===== -->
+      <div v-if="currentStep === 1" class="wizard-step">
+        <div class="calc-card">
         <div class="tabs" role="tablist">
           <button
             v-for="(label, key) in TAB_LABELS"
@@ -241,12 +322,12 @@ useHead({
           <!-- Inputs -->
           <div class="inputs">
             <div class="modul-title">{{ m.title }}</div>
-            <div class="modul-sub">{{ m.sub }}</div>
 
             <div class="field">
               <div class="field-row">
-                <span class="field-label">Objektwert (netto)</span>
-                <span class="field-value">
+                <span class="field-label">Objektwert (brutto)</span>
+                <span class="field-value wert-box">
+                  <span class="wert-pen">✎</span>
                   <input
                     type="text"
                     inputmode="numeric"
@@ -257,27 +338,25 @@ useHead({
                   ><span class="unit">€</span>
                 </span>
               </div>
-              <input
-                type="range"
-                v-model.number="state.wert"
-                min="5000" max="500000" step="500"
-                :style="{ '--p': fill(state.wert, 5000, 500000) + '%' }"
-              >
-              <div class="range-info"><span>5.000 €</span><span>500.000 €</span></div>
+              <div class="field-hint">Mindestwert 2.975 €. Bei niedrigeren Beträgen sprechen Sie uns gerne direkt an.</div>
             </div>
 
             <div class="field" v-if="m.showAnzahlung">
               <div class="field-row">
                 <span class="field-label">Anzahlung</span>
-                <span class="field-value">{{ state.anzahlung }}<span class="unit">%</span></span>
+                <span class="field-value wert-box">
+                  <span class="wert-pen">✎</span>
+                  <input
+                    type="text"
+                    inputmode="numeric"
+                    class="wert-input"
+                    :value="fmtInt(state.anzahlung)"
+                    @input="onAnzahlungInput"
+                    @blur="onAnzahlungBlur"
+                  ><span class="unit">€</span>
+                </span>
               </div>
-              <input
-                type="range"
-                v-model.number="state.anzahlung"
-                min="0" max="30" step="1"
-                :style="{ '--p': fill(state.anzahlung, 0, 30) + '%' }"
-              >
-              <div class="range-info"><span>0 %</span><span>30 %</span></div>
+              <div class="field-hint">Optional. Höhere Anzahlung senkt die monatliche Rate.</div>
             </div>
 
             <div class="field" v-if="m.showRestwert">
@@ -327,7 +406,7 @@ useHead({
             <div class="result-eyebrow">{{ m.label }}</div>
             <div class="result-rate">
               {{ rateParts.whole }}<span class="cents">,{{ rateParts.cent }} €</span>
-              <span class="per">netto pro Monat · zzgl. MwSt.</span>
+              <span class="per">pro Monat</span>
             </div>
 
             <div class="result-list">
@@ -335,8 +414,6 @@ useHead({
               <div class="row" v-if="m.showAnzahlung"><span class="k">Anzahlung</span><span class="v">{{ fmt(calc.anzahlungAbs) }} €</span></div>
               <div class="row" v-if="m.showRestwert"><span class="k">Restwert</span><span class="v">{{ fmt(calc.restwertAbs) }} €</span></div>
               <div class="row"><span class="k">Laufzeit</span><span class="v">{{ state.laufzeit }} Monate</span></div>
-              <div class="row"><span class="k">Effektivzins p.a.</span><span class="v">{{ m.zins.toFixed(2).replace('.', ',') }} %</span></div>
-              <div class="row total"><span class="k">Gesamtaufwand</span><span class="v">{{ fmt(calc.gesamt) }} €</span></div>
             </div>
 
             <div class="vorteile">
@@ -348,91 +425,162 @@ useHead({
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- ==================== LEASINGPARTNER ==================== -->
-    <section class="partner">
-      <div class="partner-inner">
-        <div class="partner-text">
-          <div class="section-eyebrow">Mehr als Standard</div>
-          <h2>Was kein Standardrechner abbildet — <em>wir schon.</em></h2>
-          <p>Ob individuelle Konditionen, gebrauchte Anlagen oder Millionen-Investition: Über unseren europaweiten Finanzierungspartner realisieren wir, was anderswo am Standardrechner scheitert. <strong>Leasing, Finanzierung oder Mietkauf — länderübergreifend, aus einer Hand.</strong> Sie nennen uns Ihr Vorhaben, wir liefern die passende Struktur.</p>
-          <a href="#anfrage" class="partner-cta">Individuelle Anfrage stellen <span class="arrow">→</span></a>
+        <div class="wizard-actions wizard-actions-end">
+          <button type="button" class="btn" @click="goNext">
+            Weiter zu Firmendaten
+            <span class="arrow">→</span>
+          </button>
         </div>
-        <ul class="partner-list">
-          <li><strong>Europaweit</strong> leasen, finanzieren oder mieten — länderübergreifend abgewickelt</li>
-          <li>Individuelle Leasinglösungen jenseits jeder Standardkalkulation</li>
-          <li>Finanzierung gebrauchter Maschinen, Geräte &amp; technischer Anlagen</li>
-          <li>Flexible Laufzeiten, individuelle An- und Schlusszahlungen</li>
-          <li>Saisonale &amp; atmende Ratenmodelle — angepasst an Ihren Cashflow</li>
-          <li>Lösungen auch bei anspruchsvollen Bonitäts- und Unternehmenskonstellationen</li>
-          <li>Großvolumige Investitionen und projektbezogene Finanzierungen</li>
-          <li>Branchenspezifische Sonderlösungen — auch für Anfragen, die kein Rechner kennt</li>
-        </ul>
       </div>
-    </section>
 
-    <!-- ==================== ANFRAGE ==================== -->
-    <section class="anfrage" id="anfrage">
-      <div class="anfrage-inner">
-        <div class="section-eyebrow">Unverbindlich anfragen</div>
-        <h2>Konkretes Angebot in 48 Stunden.</h2>
-        <p class="sub">Senden Sie uns die Eckdaten — wir prüfen Konditionen mit unseren Finanzierungspartnern und melden uns mit einem maßgeschneiderten Angebot.</p>
+      <!-- ===== Step 2: Firmendaten ===== -->
+      <div v-if="currentStep === 2" class="wizard-step wizard-form-step">
+        <div class="wizard-card">
+          <div class="section-eyebrow">Schritt 2 von 3</div>
+          <h2>Firmendaten</h2>
+          <p class="sub">Wenige Angaben zu Ihrem Unternehmen, damit wir die Konditionen mit unserem Finanzierungspartner prüfen können.</p>
 
-        <div class="summary">
-          <div>
-            <div class="summary-meta">{{ m.sumLabel }}</div>
-            <div class="summary-details">{{ sumDetails }}</div>
+          <div class="summary">
+            <div>
+              <div class="summary-meta">{{ m.sumLabel }}</div>
+              <div class="summary-details">{{ sumDetails }}</div>
+            </div>
+            <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
           </div>
-          <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat netto</small></div>
+
+          <form @submit.prevent="goNext" autocomplete="on">
+            <div class="form-grid">
+              <div class="input-group full">
+                <label>Firma <span class="req">*</span></label>
+                <input type="text" v-model="form.firma" required>
+              </div>
+              <div class="input-group full">
+                <label>Adresszusatz</label>
+                <input type="text" v-model="form.zusatz">
+              </div>
+              <div class="input-group full">
+                <label>Straße &amp; Hausnummer <span class="req">*</span></label>
+                <input type="text" v-model="form.strasse" required>
+              </div>
+              <div class="input-group">
+                <label>PLZ <span class="req">*</span></label>
+                <input type="text" v-model="form.plz" required>
+              </div>
+              <div class="input-group">
+                <label>Ort <span class="req">*</span></label>
+                <input type="text" v-model="form.ort" required>
+              </div>
+              <div class="input-group">
+                <label>Telefon <span class="req">*</span></label>
+                <input type="tel" v-model="form.telefon" required>
+              </div>
+              <div class="input-group">
+                <label>E-Mail (Firma) <span class="req">*</span></label>
+                <input type="email" v-model="form.email" required>
+              </div>
+              <div class="input-group">
+                <label>Website <span class="req">*</span></label>
+                <input type="text" v-model="form.website" required>
+              </div>
+              <div class="input-group">
+                <label>USt-IdNr.</label>
+                <input type="text" v-model="form.ustId">
+              </div>
+              <div class="input-group">
+                <label>Steuernummer</label>
+                <input type="text" v-model="form.stNr">
+              </div>
+            </div>
+
+            <div class="wizard-actions">
+              <button type="button" class="btn-secondary" @click="goBack">
+                <span class="arrow-back">←</span> Zurück
+              </button>
+              <button type="submit" class="btn">
+                Weiter zu Ansprechpartner
+                <span class="arrow">→</span>
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
 
-        <form @submit="submitForm" autocomplete="on">
-          <div class="form-grid">
-            <div class="input-group">
-              <label>Firma <span class="req">*</span></label>
-              <input type="text" v-model="form.firma" required>
+      <!-- ===== Step 3: Ansprechpartner & Anfrage ===== -->
+      <div v-if="currentStep === 3" class="wizard-step wizard-form-step">
+        <div class="wizard-card">
+          <div class="section-eyebrow">Schritt 3 von 3</div>
+          <h2>Ansprechpartner &amp; Anfrage absenden</h2>
+          <p class="sub">Letzte Angaben, danach öffnet sich Ihr Mail-Programm mit der vorausgefüllten Anfrage.</p>
+
+          <div class="summary">
+            <div>
+              <div class="summary-meta">{{ m.sumLabel }}</div>
+              <div class="summary-details">{{ sumDetails }}</div>
             </div>
-            <div class="input-group">
-              <label>Ansprechpartner <span class="req">*</span></label>
-              <input type="text" v-model="form.name" required>
-            </div>
-            <div class="input-group">
-              <label>E-Mail <span class="req">*</span></label>
-              <input type="email" v-model="form.email" required>
-            </div>
-            <div class="input-group">
-              <label>Telefon</label>
-              <input type="tel" v-model="form.telefon">
-            </div>
-            <div class="input-group">
-              <label>Artikel-ID <span class="req">*</span></label>
-              <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
-            </div>
-            <div class="input-group">
-              <label>Was möchten Sie finanzieren?</label>
-              <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
-            </div>
-            <div class="input-group full">
-              <label>Anmerkungen</label>
-              <textarea v-model="form.anmerkungen" placeholder="Bonität, Eilbedarf, gewünschter Liefertermin …"></textarea>
-            </div>
+            <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
           </div>
 
-          <div class="submit-row">
-            <button type="submit" class="btn">
-              Anfrage senden
-              <span class="arrow">→</span>
-            </button>
+          <form @submit="submitForm" autocomplete="on">
+
+            <div class="form-section-label">Ansprechpartner</div>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Anrede <span class="req">*</span></label>
+                <select v-model="form.anrede" required>
+                  <option value="">Bitte wählen</option>
+                  <option value="Herr">Herr</option>
+                  <option value="Frau">Frau</option>
+                  <option value="Divers">Divers</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>Mobil <span class="req">*</span></label>
+                <input type="tel" v-model="form.mobil" required>
+              </div>
+              <div class="input-group">
+                <label>Vorname <span class="req">*</span></label>
+                <input type="text" v-model="form.vorname" required>
+              </div>
+              <div class="input-group">
+                <label>Nachname <span class="req">*</span></label>
+                <input type="text" v-model="form.nachname" required>
+              </div>
+              <div class="input-group full">
+                <label>E-Mail (Ansprechpartner) <span class="req">*</span></label>
+                <input type="email" v-model="form.apEmail" required>
+              </div>
+            </div>
+
+            <div class="form-section-label">Zur Finanzierung</div>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Artikel-ID <span class="req">*</span></label>
+                <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
+              </div>
+              <div class="input-group">
+                <label>Was möchten Sie finanzieren?</label>
+                <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
+              </div>
+              <div class="input-group full">
+                <label>Anmerkungen</label>
+                <textarea v-model="form.anmerkungen"></textarea>
+              </div>
+            </div>
+
+            <div class="wizard-actions">
+              <button type="button" class="btn-secondary" @click="goBack">
+                <span class="arrow-back">←</span> Zurück
+              </button>
+              <button type="submit" class="btn">
+                Anfrage senden
+                <span class="arrow">→</span>
+              </button>
+            </div>
             <p class="privacy">Mit dem Senden öffnet sich Ihr E-Mail-Programm mit einer vorausgefüllten Anfrage. Wir antworten innerhalb von 48 Std.</p>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </section>
 
-    <!-- ==================== DISCLAIMER ==================== -->
-    <div class="disclaimer-note">
-      <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Der tatsächliche effektive Jahreszins richtet sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
     </div>
 
   </div>
@@ -498,20 +646,146 @@ useHead({
 .hero h1 em { font-style: normal; color: var(--gold); }
 .hero .lead {
   font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-  max-width: 640px; color: rgba(255, 255, 255, 0.78); font-weight: 400;
+  max-width: 680px; color: rgba(255, 255, 255, 0.78); font-weight: 400;
 }
-.hero-stats {
-  display: flex; flex-wrap: wrap; gap: 3rem; margin-top: 3.5rem;
-  padding-top: 2.5rem; border-top: 1px solid rgba(255, 255, 255, 0.12);
+.hero .lead strong { color: #fff; font-weight: 600; }
+.hero-list {
+  list-style: none; padding: 0;
+  margin: 2.75rem 0 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 1.5rem;
 }
-.stat .v { font-family: 'Inter Tight', sans-serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
-.stat .l { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.25rem; }
+@media (max-width: 760px) { .hero-list { grid-template-columns: 1fr; gap: 0; } }
+.hero-list li {
+  font-size: 0.95rem; color: rgba(255, 255, 255, 0.85);
+  padding: 0.8rem 0 0.8rem 1.6rem; position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hero-list li::before {
+  content: ""; position: absolute; left: 0; top: 1.3em;
+  width: 10px; height: 2px; background: var(--gold);
+}
+.hero-list li strong { color: var(--gold); font-weight: 700; }
 
 /* ==================== CALCULATOR ==================== */
 .calc-wrap {
   max-width: 1180px; margin: -4.5rem auto 0; padding: 0 1.5rem;
   position: relative; z-index: 2;
 }
+.wizard-wrap {
+  max-width: 1180px; margin: -3rem auto 0; padding: 0 1.5rem 3rem;
+  position: relative; z-index: 2;
+}
+.wizard-progress {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin: 0 auto 2.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(21, 36, 64, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  max-width: 640px;
+}
+.step-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  color: rgba(255, 255, 255, 0.5); font-size: 0.88rem; font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 0.9rem;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+.step-item.active { color: #fff; }
+.step-item.active .step-num {
+  background: var(--gold); color: var(--navy); border-color: var(--gold);
+  box-shadow: 0 0 0 5px rgba(245, 192, 10, 0.18);
+}
+.step-item.done { color: rgba(255, 255, 255, 0.85); }
+.step-item.done .step-num {
+  background: transparent; border-color: var(--gold); color: var(--gold); font-size: 0;
+}
+.step-item.done .step-num::after { content: "✓"; font-size: 0.95rem; font-weight: 700; }
+.step-line {
+  flex: 1; max-width: 5rem; height: 1.5px;
+  background: rgba(255, 255, 255, 0.18);
+  margin: 0 0.9rem;
+  transition: background 0.25s ease;
+}
+.step-line.done { background: var(--gold); }
+@media (max-width: 640px) {
+  .step-name { display: none; }
+  .step-line { max-width: 2rem; margin: 0 0.4rem; }
+  .step-item { gap: 0; }
+}
+
+.wizard-step { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-card {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+  border-radius: 8px;
+  padding: 3rem 3rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -20px rgba(21, 36, 64, 0.35), 0 10px 25px -10px rgba(21, 36, 64, 0.15);
+}
+.wizard-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 90% 10%, rgba(245,192,10,0.10) 0%, transparent 55%);
+  pointer-events: none;
+}
+.wizard-card > * { position: relative; z-index: 1; }
+@media (max-width: 600px) { .wizard-card { padding: 2rem 1.5rem 2.5rem; } }
+.wizard-card .section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 1rem;
+}
+.wizard-card .section-eyebrow::before { content: "— "; }
+.wizard-card h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 0.6rem; font-weight: 700;
+  color: #fff;
+}
+.wizard-card p.sub { color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem; max-width: 560px; }
+
+.wizard-actions {
+  margin-top: 2.25rem; display: flex; justify-content: space-between;
+  align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.wizard-actions-end { justify-content: flex-end; padding: 1.5rem 0 0; }
+@media (max-width: 600px) {
+  .wizard-actions { flex-direction: column-reverse; }
+  .wizard-actions .btn, .wizard-actions .btn-secondary { width: 100%; justify-content: center; }
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  font-family: 'Inter Tight', sans-serif; font-size: 0.95rem; font-weight: 600;
+  padding: 0.9rem 1.5rem; border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08); color: #fff; border-color: rgba(255, 255, 255, 0.35);
+}
+.btn-secondary .arrow-back { transition: transform 0.2s ease; }
+.btn-secondary:hover .arrow-back { transform: translateX(-3px); }
+
 .calc-card {
   background: #fff; border-radius: 8px;
   box-shadow: 0 30px 80px -20px rgba(21, 36, 64, 0.25), 0 10px 25px -10px rgba(21, 36, 64, 0.1);
@@ -553,21 +827,30 @@ useHead({
   font-variant-numeric: tabular-nums;
 }
 .field-value .unit { font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-left: 0.25rem; }
+.wert-box {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--gold);
+  background: rgba(245, 192, 10, 0.08);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.wert-box:focus-within {
+  background: rgba(245, 192, 10, 0.16);
+  box-shadow: 0 0 0 3px rgba(245, 192, 10, 0.2);
+}
+.wert-pen { color: var(--gold-dark); font-size: 0.85rem; }
 .wert-input {
   font-family: 'Inter Tight', sans-serif;
   font-size: 1.15rem; font-weight: 700; color: var(--navy);
   font-variant-numeric: tabular-nums;
   text-align: right;
-  width: 7.5ch;
+  width: 6.5ch;
   border: none;
-  border-bottom: 2px solid var(--line);
   background: transparent;
-  padding: 0 0 2px 0;
+  padding: 0;
   outline: none;
-  transition: border-color 0.15s ease;
 }
-.wert-input:focus { border-bottom-color: var(--gold); }
-.wert-input:hover { border-bottom-color: var(--navy); }
 
 /* Range slider */
 .lf-page input[type=range] {
@@ -590,6 +873,7 @@ useHead({
 }
 
 .range-info { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); margin-top: 0.45rem; }
+.field-hint { font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.4; }
 
 .laufzeit-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
 .pill {
@@ -602,16 +886,26 @@ useHead({
 .pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 .laufzeit-custom {
   display: inline-flex; align-items: center; gap: 0.35rem;
-  padding: 0.4rem 0.85rem; border: 1px dashed var(--line);
-  border-radius: 999px; transition: border-color 0.15s ease;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--gold);
+  background: rgba(245, 192, 10, 0.08);
+  border-radius: 999px; transition: all 0.15s ease;
 }
-.laufzeit-custom:focus-within { border-color: var(--gold); border-style: solid; }
+.laufzeit-custom::before {
+  content: "✎"; color: var(--gold-dark);
+  font-size: 0.8rem; margin-right: 0.1rem;
+}
+.laufzeit-custom:focus-within {
+  background: rgba(245, 192, 10, 0.16);
+  box-shadow: 0 0 0 3px rgba(245, 192, 10, 0.2);
+}
 .lz-input {
   width: 3ch; border: none; background: transparent; outline: none;
-  font-family: 'Inter Tight', sans-serif; font-size: 0.85rem; font-weight: 600;
-  color: var(--ink); text-align: center; font-variant-numeric: tabular-nums;
+  font-family: 'Inter Tight', sans-serif; font-size: 0.9rem; font-weight: 700;
+  color: var(--navy); text-align: center; font-variant-numeric: tabular-nums;
 }
-.lz-unit { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+.lz-input::placeholder { color: var(--gold-dark); }
+.lz-unit { font-size: 0.72rem; color: var(--gold-dark); font-weight: 600; }
 
 /* ==================== RESULT ==================== */
 .result {
@@ -689,73 +983,111 @@ useHead({
 
 /* ==================== FORM ==================== */
 .anfrage {
-  background: linear-gradient(180deg, var(--paper) 0%, #ede9d8 100%);
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
   padding: 5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.anfrage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 90% 10%, rgba(245,192,10,0.10) 0%, transparent 55%);
+  pointer-events: none;
 }
 .anfrage-inner {
   max-width: 880px; margin: 0 auto;
-  background: #fff; border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 8px;
   padding: 3rem 3rem 3.5rem;
-  border: 1px solid var(--line);
-  box-shadow: 0 20px 50px -20px rgba(21, 36, 64, 0.15);
+  position: relative;
+  backdrop-filter: blur(8px);
 }
 @media (max-width: 600px) { .anfrage-inner { padding: 2rem 1.5rem 2.5rem; } }
-.anfrage h2 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 0.6rem; font-weight: 700; }
-.anfrage p.sub { color: var(--muted); margin-bottom: 2.25rem; max-width: 560px; }
+.anfrage .section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 1rem;
+}
+.anfrage .section-eyebrow::before { content: "— "; }
+.anfrage h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 0.6rem; font-weight: 700;
+  color: #fff;
+}
+.anfrage p.sub { color: rgba(255, 255, 255, 0.7); margin-bottom: 2.25rem; max-width: 560px; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 .form-grid .full { grid-column: 1 / -1; }
+.form-grid + .form-section-label { margin-top: 2rem; }
+
+.form-section-label {
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #fff; font-weight: 700;
+  padding-bottom: 0.6rem; margin-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.form-section-label::before { content: "— "; color: var(--gold); }
 
 .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.input-group label { font-size: 0.78rem; font-weight: 600; color: var(--navy); }
-.input-group label .req { color: var(--gold-dark); }
-.input-group input, .input-group textarea {
+.input-group label { font-size: 0.78rem; font-weight: 600; color: rgba(255, 255, 255, 0.85); }
+.input-group label .req { color: var(--gold); }
+.input-group input, .input-group textarea, .input-group select {
   font-family: 'Inter', sans-serif; font-size: 0.95rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--line); border-radius: 4px;
-  background: #fafaf6; color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
   transition: all 0.15s ease;
 }
-.input-group input:focus, .input-group textarea:focus {
-  outline: none; border-color: var(--navy); background: #fff;
-  box-shadow: 0 0 0 3px rgba(21, 36, 64, 0.08);
+.input-group input::placeholder, .input-group textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
+.input-group select { cursor: pointer; }
+.input-group select option { background: var(--navy-2); color: #fff; }
+.input-group input:focus, .input-group textarea:focus, .input-group select:focus {
+  outline: none; border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 0 3px rgba(245, 192, 10, 0.15);
 }
 .input-group textarea { resize: vertical; min-height: 90px; }
 
 .submit-row { margin-top: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.65rem;
-  background: var(--navy); color: #fff; border: 0; cursor: pointer;
-  font-family: 'Inter Tight', sans-serif; font-size: 1rem; font-weight: 600;
+  background: var(--gold); color: var(--navy); border: 0; cursor: pointer;
+  font-family: 'Inter Tight', sans-serif; font-size: 1rem; font-weight: 700;
   padding: 1rem 2rem; border-radius: 4px;
   transition: all 0.2s ease;
 }
-.btn:hover { background: var(--ink); transform: translateY(-1px); }
+.btn:hover { background: #fff; transform: translateY(-1px); }
 .btn .arrow { transition: transform 0.2s ease; }
 .btn:hover .arrow { transform: translateX(3px); }
 
-.privacy { font-size: 0.78rem; color: var(--muted); max-width: 340px; }
+.privacy { font-size: 0.78rem; color: rgba(255, 255, 255, 0.55); max-width: 340px; }
 
 .summary {
-  background: var(--paper); border: 1px dashed var(--navy); border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
   padding: 1.25rem 1.5rem; margin-bottom: 2rem;
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center;
 }
-.summary-meta { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
-.summary-details { font-size: 0.9rem; margin-top: 0.2rem; color: var(--ink); }
-.summary-rate { font-family: 'Inter Tight', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
-.summary-rate small { font-size: 0.7rem; color: var(--muted); font-weight: 500; margin-left: 0.25rem; }
+.summary-meta { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+.summary-details { font-size: 0.9rem; margin-top: 0.25rem; color: rgba(255, 255, 255, 0.78); }
+.summary-rate { font-family: 'Inter Tight', sans-serif; font-size: 1.6rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+.summary-rate small { font-size: 0.7rem; color: rgba(255, 255, 255, 0.55); font-weight: 500; margin-left: 0.25rem; }
 
 /* ==================== DISCLAIMER ==================== */
 .disclaimer-note {
-  background: var(--paper);
-  padding: 1.5rem 1.5rem 2.5rem;
+  background: transparent;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
 }
 .disclaimer-note p {
-  max-width: 1180px; margin: 0 auto;
-  font-size: 0.75rem; line-height: 1.6;
-  color: var(--muted); text-align: center;
+  max-width: 980px; margin: 0 auto;
+  font-size: 0.88rem; line-height: 1.5;
+  color: var(--gold-dark); text-align: center;
+  font-weight: 700;
 }
 
 /* ==================== LEASINGPARTNER ==================== */
