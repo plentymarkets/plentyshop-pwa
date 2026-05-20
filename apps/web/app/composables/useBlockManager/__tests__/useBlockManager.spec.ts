@@ -179,7 +179,7 @@ describe('useBlockManager', () => {
 
       const content = footer.value.content as Block[];
       expect(content).toHaveLength(2);
-      expect((content[0]?.content as Block[])).toHaveLength(0);
+      expect(content[0]?.content as Block[]).toHaveLength(0);
       expect(closeBlocksConfigurationDrawer).toHaveBeenCalled();
     });
   });
