@@ -1,3 +1,5 @@
+import type { PreviewDevice } from './types';
+
 const getDevice = () => {
   if (typeof window === 'undefined') return ref<PreviewDevice>('desktop');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
