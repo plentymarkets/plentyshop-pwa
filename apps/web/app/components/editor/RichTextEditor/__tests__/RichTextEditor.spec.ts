@@ -231,4 +231,36 @@ describe('RichTextEditor', () => {
 
     expect(setFontSize).toHaveBeenCalledWith('1.5rem');
   });
+
+  it('should render link modal when onOpenLinkModal is called (regression test for teleport)', async () => {
+    let onOpenLinkModal: (() => void) | null = null;
+
+    useRichTextEditor.mockImplementation((options) => {
+      onOpenLinkModal = options.onOpenLinkModal;
+      return createMockUseRichTextEditor();
+    });
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+        },
+      },
+    });
+
+    // Verify onOpenLinkModal callback is passed to useRichTextEditor
+    expect(useRichTextEditor).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onOpenLinkModal: expect.any(Function),
+      }),
+    );
+
+    // Call the onOpenLinkModal callback to open the modal
+    onOpenLinkModal?.();
+    await nextTick();
+
+    // Assert that the link modal component is rendered
+    expect(wrapper.getComponent({ name: 'EditorRichTextEditorLinkModal' }).exists()).toBe(true);
+  });
 });
