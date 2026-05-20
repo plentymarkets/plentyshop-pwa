@@ -1,12 +1,13 @@
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, statSync, lstatSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { optimizeDepsInclude } from '../app/configuration/optimize-deps.config';
+import { thirdPartyDeps, localPackageDeps } from '../app/configuration/optimize-deps.config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const allOptimizeDeps = [...thirdPartyDeps, ...localPackageDeps];
 const APP_ROOT = resolve(__dirname, '..');
 const require = createRequire(join(APP_ROOT, 'package.json'));
 const SOURCE_DIRS = ['app'];
@@ -55,7 +56,6 @@ const SKIP_PACKAGES = new Set([
   'typescript',
   'eslint',
   'nuxt-security',
-  'axios',
 ]);
 
 const SKIP_BUILTINS = new Set([
@@ -177,6 +177,40 @@ const findSourceFiles = (dir: string, exts: string[]): string[] => {
   return results;
 };
 
+const hasTransitiveDep = (symlinkPath: string, pkgName: string): boolean => {
+  try {
+    return lstatSync(symlinkPath).isSymbolicLink() && existsSync(join(symlinkPath, 'node_modules', pkgName));
+  } catch {
+    return false;
+  }
+};
+
+const checkScopedDir = (scopedDirPath: string, pkgName: string): boolean => {
+  try {
+    for (const scoped of readdirSync(scopedDirPath)) {
+      if (hasTransitiveDep(join(scopedDirPath, scoped), pkgName)) return true;
+    }
+  } catch {
+    /* skip */
+  }
+
+  return false;
+};
+
+const checkSymlinkedDeps = (nodeModulesDir: string, pkgName: string): boolean => {
+  if (!existsSync(nodeModulesDir)) return false;
+
+  for (const entry of readdirSync(nodeModulesDir)) {
+    if (entry.startsWith('.')) continue;
+    const entryPath = join(nodeModulesDir, entry);
+
+    if (entry.startsWith('@') && checkScopedDir(entryPath, pkgName)) return true;
+    if (!entry.startsWith('@') && hasTransitiveDep(entryPath, pkgName)) return true;
+  }
+
+  return false;
+};
+
 const checkNodeModulesExistence = (pkg: string): boolean => {
   const pkgName = getPackageName(pkg);
 
@@ -187,8 +221,9 @@ const checkNodeModulesExistence = (pkg: string): boolean => {
     const pkgDir = resolve(APP_ROOT, 'node_modules', pkgName);
     if (existsSync(pkgDir)) return true;
     const rootPkgDir = resolve(APP_ROOT, '../../node_modules', pkgName);
+    if (existsSync(rootPkgDir)) return true;
 
-    return existsSync(rootPkgDir);
+    return checkSymlinkedDeps(resolve(APP_ROOT, '../../node_modules'), pkgName);
   }
 };
 
@@ -217,10 +252,8 @@ const reportResults = (staleInInclude: string[], missingFromInclude: Map<string,
 const checkStaleEntries = (): string[] => {
   const stale: string[] = [];
 
-  for (const dep of optimizeDepsInclude) {
-    if (!checkNodeModulesExistence(dep)) {
-      stale.push(dep);
-    }
+  for (const dep of allOptimizeDeps) {
+    if (!checkNodeModulesExistence(dep)) stale.push(dep);
   }
 
   return stale;
@@ -236,7 +269,8 @@ const checkMissingEntries = (allSourceFiles: string[]): Map<string, string[]> =>
 
     for (const imp of imports) {
       if (shouldSkip(imp)) continue;
-      if (!isCovered(imp, optimizeDepsInclude)) {
+
+      if (!isCovered(imp, allOptimizeDeps)) {
         const existing = missing.get(imp) ?? [];
         existing.push(relPath);
         missing.set(imp, existing);

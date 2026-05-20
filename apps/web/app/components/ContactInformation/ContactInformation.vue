@@ -44,9 +44,9 @@
 
     <div v-if="!disabled && (isGuest || (!isAuthorized && !isGuest))" class="w-full flex flex-col @sm:flex-row mt-4">
       <div>{{ t('authentication.signup.alreadyHaveAccount') }}</div>
-      <SfLink class="select-none hover:cursor-pointer @sm:ml-2" @click="openAuthentication">
+      <UiLink class="select-none hover:cursor-pointer @sm:ml-2" @click="openAuthentication">
         {{ t('authentication.signup.logInLinkLabel') }}
-      </SfLink>
+      </UiLink>
     </div>
 
     <UiModal
@@ -73,7 +73,7 @@
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfIconClose, SfInput, SfLink, useDisclosure, SfLoaderCircular, SfIconCheck } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, useDisclosure, SfLoaderCircular, SfIconCheck } from '@storefront-ui/vue';
 import { ErrorMessage, useForm } from 'vee-validate';
 import type { ContactInformationProps } from './types';
 

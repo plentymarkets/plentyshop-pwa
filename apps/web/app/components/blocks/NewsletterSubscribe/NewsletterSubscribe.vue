@@ -84,13 +84,13 @@
           <label for="terms-checkbox" class="text-left leading-5 select-none">
             <i18n-t keypath="newsletter.policy" scope="global">
               <template #privacyPolicy>
-                <SfLink
+                <UiLink
                   :href="localePath(paths.privacyPolicy)"
                   target="_blank"
                   class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
                   {{ t('legal.privacyPolicy') }}
-                </SfLink>
+                </UiLink>
               </template>
             </i18n-t>
             **
@@ -126,7 +126,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';

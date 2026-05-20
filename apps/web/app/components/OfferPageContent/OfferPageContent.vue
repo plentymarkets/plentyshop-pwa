@@ -60,31 +60,31 @@
             <div>
               <i18n-t keypath="legal.termsInfo" scope="global">
                 <template #terms>
-                  <SfLink
+                  <UiLink
                     :href="localePath(paths.termsAndConditions)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ t('legal.termsAndConditions') }}
-                  </SfLink>
+                  </UiLink>
                 </template>
                 <template #cancellationRights>
-                  <SfLink
+                  <UiLink
                     :href="localePath(paths.cancellationRights)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ t('legal.cancellationRights') }}
-                  </SfLink>
+                  </UiLink>
                 </template>
                 <template #privacyPolicy>
-                  <SfLink
+                  <UiLink
                     :href="localePath(paths.privacyPolicy)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ t('legal.privacyPolicy') }}
-                  </SfLink>
+                  </UiLink>
                 </template>
               </i18n-t>
             </div>
@@ -190,7 +190,7 @@
 
 <script lang="ts" setup>
 import { offerGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import type { OfferPageContentProps } from './types';
 

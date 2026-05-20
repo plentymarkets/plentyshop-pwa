@@ -167,13 +167,13 @@
                   <span>{{ showNetPrices ? t('product.priceExclVAT') : t('product.priceInclVAT') }}</span>
                   <i18n-t keypath="shipping.excludedLabel" scope="global">
                     <template #shipping>
-                      <SfLink
+                      <UiLink
                         :href="localePath(paths.shipping)"
                         target="_blank"
                         class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                       >
                         {{ t('common.labels.delivery') }}
-                      </SfLink>
+                      </UiLink>
                     </template>
                   </i18n-t>
                 </div>
@@ -218,7 +218,7 @@
 
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
-import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
+import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import { paths } from '~/utils/paths';

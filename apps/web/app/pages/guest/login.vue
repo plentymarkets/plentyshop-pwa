@@ -44,9 +44,9 @@
           </label>
 
           <div class="text-end mt-4">
-            <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
+            <UiLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
               {{ t('authentication.login.forgotPasswordLabel') }}
-            </SfLink>
+            </UiLink>
           </div>
 
           <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">
@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';

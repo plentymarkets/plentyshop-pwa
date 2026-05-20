@@ -7,7 +7,7 @@
     <div class="@md:flex flex-none p-2 w-full">
       <div class="flex @md:flex-none w-full @md:w-2/3">
         <div class="rounded-md w-[180px] @sm:w-[176px] @md:w-1/3">
-          <SfLink
+          <UiLink
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
             as="image"
@@ -25,7 +25,7 @@
               loading="lazy"
             />
             <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
-          </SfLink>
+          </UiLink>
           <UiQuantitySelector
             :key="quantity"
             :value="quantity"
@@ -36,14 +36,14 @@
           />
         </div>
         <div class="flex self-start flex-col mx-4 w-2/3">
-          <SfLink
+          <UiLink
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
             variant="secondary"
             class="no-underline @sm:typography-text-lg"
           >
             {{ orderGetters.getItemName(orderItem) }}
-          </SfLink>
+          </UiLink>
           <div class="mt-2 @md:mb-2">
             <ul class="text-xs leading-5 @sm:typography-text-sm text-neutral-700">
               <li>
@@ -121,7 +121,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from '~/utils/debounce';
 

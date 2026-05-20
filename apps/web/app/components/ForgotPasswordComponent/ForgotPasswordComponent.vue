@@ -32,16 +32,16 @@
 
       <div v-if="!isSoftLogin && !isForgotPasswordOnly" class="text-sm text-center">
         {{ t('authentication.login.createAccount') }}
-        <SfLink variant="primary" class="ml-1 cursor-pointer underline" @click="$emit('change-view-register')">
+        <UiLink variant="primary" class="ml-1 cursor-pointer underline" @click="$emit('change-view-register')">
           {{ t('authentication.login.createAccountLinkLabel') }}
-        </SfLink>
+        </UiLink>
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ForgotPasswordProps } from './types';
 
 const { isSoftLogin = false, isForgotPasswordOnly = false } = defineProps<ForgotPasswordProps>();

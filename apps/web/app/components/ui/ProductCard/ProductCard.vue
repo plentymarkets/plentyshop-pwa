@@ -13,7 +13,7 @@
       />
 
       <div ref="imageContainerRef" :class="[{ 'size-48': isFromSlider }, 'relative']">
-        <SfLink
+        <UiLink
           :tag="NuxtLink"
           :to="productPath"
           :aria-label="ariaLabelContent"
@@ -68,7 +68,7 @@
               @error="onHoverImageError"
             />
           </div>
-        </SfLink>
+        </UiLink>
       </div>
 
       <template v-if="configuration?.showWishlistButton">
@@ -92,7 +92,7 @@
     >
       <template v-for="key in configuration?.fieldsOrder" :key="key">
         <template v-if="key === 'title' && configuration?.fields?.title">
-          <SfLink
+          <UiLink
             :tag="NuxtLink"
             :to="productPath"
             class="no-underline"
@@ -100,7 +100,7 @@
             data-testid="productcard-name"
           >
             {{ name }}
-          </SfLink>
+          </UiLink>
         </template>
         <template v-if="key === 'manufacturer' && configuration?.fields?.manufacturer">
           <div
@@ -179,7 +179,7 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
+import { SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
