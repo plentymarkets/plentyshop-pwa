@@ -49,12 +49,6 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
   }
 };
 
-const getQuerySuffix = (fullPath: string) => {
-  const query = fullPath.split('?')[1]?.split('#')[0];
-
-  return query ? `?${query}` : '';
-};
-
 export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
   const state = useState<UseUrlPageMetaState>(`useUrlPageMeta`, () => ({
     loading: false,
@@ -124,12 +118,14 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const route = useRouter().currentRoute.value;
     const localePath = useLocalePath();
     const runtimeConfig = useRuntimeConfig();
-    const querySuffix = getQuerySuffix(route.fullPath);
+
+    const queryString = new URLSearchParams(route.query as Record<string, string>).toString();
+    const querySuffix = queryString ? `?${queryString}` : '';
 
     const canonicalLink =
       canonicalOverride && canonicalOverride.trim() !== ''
         ? canonicalOverride
-        : `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
+        : `${runtimeConfig.public.domain}${localePath(route.path, $i18n.locale.value)}${querySuffix}`;
 
     useHead({
       link: [
