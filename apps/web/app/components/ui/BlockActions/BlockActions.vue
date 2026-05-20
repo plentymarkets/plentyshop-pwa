@@ -73,7 +73,7 @@
       </SfTooltip>
 
       <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true" :class="tooltipWrapperClasses">
-        <button :class="[primaryButtonClasses, 'drag-handle drag-trigger cursor-grab active:cursor-grabbing']" aria-label="Drag to reorder block">
+        <button :class="dragButtonClasses" aria-label="Drag to reorder block">
           <NuxtImg width="16" height="16" :src="dragIcon" class="block" />
         </button>
       </SfTooltip>
@@ -118,27 +118,30 @@ const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
 const { deleteBlock, isLastNonFooterBlock, isFirstContentBlock } = useBlockManager();
 
-const baseButtonClasses = [
+// Visual structure shared by every pill button. `cursor-*` and `no-drag` are
+// NOT here — they're set per variant because the drag handle needs `cursor-grab`
+// and must NOT have `no-drag` (vuedraggable filters those out from being drag triggers).
+const buttonStructure = [
   'w-7 h-7 rounded-full border-0 p-0 shrink-0',
   'inline-flex items-center justify-center leading-none',
-  'bg-transparent text-editor-icon cursor-pointer no-drag',
+  'bg-transparent text-editor-icon',
   'transition-all duration-200 ease-editor-out',
   'hover:scale-110 active:scale-95',
   'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100',
   'focus-visible:outline-2 focus-visible:outline-editor-block-selected focus-visible:outline-offset-1',
 ].join(' ');
 
-const primaryButtonClasses = [
-  baseButtonClasses,
-  'hover:bg-editor-block-selected/10 hover:text-editor-block-selected hover:shadow-block-action-btn',
-  'active:bg-editor-block-selected/20',
-].join(' ');
+const primaryInteraction =
+  'hover:bg-editor-block-selected/10 hover:text-editor-block-selected hover:shadow-block-action-btn active:bg-editor-block-selected/20';
 
-const dangerButtonClasses = [
-  baseButtonClasses,
-  'hover:bg-editor-danger/10 hover:text-editor-danger hover:shadow-block-action-btn-danger',
-  'active:bg-editor-danger/20',
-].join(' ');
+const dangerInteraction =
+  'hover:bg-editor-danger/10 hover:text-editor-danger hover:shadow-block-action-btn-danger active:bg-editor-danger/20';
+
+const primaryButtonClasses = `${buttonStructure} ${primaryInteraction} cursor-pointer no-drag`;
+const dangerButtonClasses = `${buttonStructure} ${dangerInteraction} cursor-pointer no-drag`;
+// Drag handle: same primary hover feedback, but `drag-handle` (the vuedraggable trigger)
+// and NO `no-drag` so it actually starts a drag.
+const dragButtonClasses = `${buttonStructure} ${primaryInteraction} cursor-grab active:cursor-grabbing drag-handle`;
 
 const dividerClasses = 'inline-block w-px h-3.5 bg-slate-900/10 mx-0.5';
 
