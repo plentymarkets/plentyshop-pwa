@@ -121,7 +121,7 @@ const calc = computed(() => {
   const mod = m.value;
   const i = mod.zins / 100 / 12;
   const n = state.laufzeit;
-  const anzahlungAbs = mod.showAnzahlung ? state.wert * state.anzahlung / 100 : 0;
+  const anzahlungAbs = mod.showAnzahlung ? state.anzahlung : 0;
   const restwertPct = mod.showRestwert ? state.restwert : (mod.fixRestwert || 0);
   const restwertAbs = state.wert * restwertPct / 100;
   const finanzVol = state.wert - anzahlungAbs;
@@ -166,7 +166,7 @@ function onLaufzeitBlur() {
 function onAnzahlungInput(e) {
   const digits = e.target.value.replace(/[^\d]/g, '');
   let n = parseInt(digits || '0', 10);
-  if (n > 30) n = 30;
+  if (n > state.wert) n = state.wert;
   state.anzahlung = n;
 }
 function onAnzahlungBlur() {
@@ -180,7 +180,7 @@ const rateParts = computed(() => {
 
 const sumDetails = computed(() => {
   let d = `${fmtInt(state.wert)} €, ${state.laufzeit} Monate`;
-  if (m.value.showAnzahlung) d += `, ${state.anzahlung} % Anzahlung`;
+  if (m.value.showAnzahlung) d += `, ${fmtInt(state.anzahlung)} € Anzahlung`;
   if (m.value.showRestwert) d += `, ${state.restwert} % Restwert`;
   return d;
 });
@@ -226,10 +226,9 @@ function submitForm(e) {
     'Modell:          ' + modulLabel,
     'Objektwert:      ' + fmt(state.wert) + ' €',
     'Laufzeit:        ' + state.laufzeit + ' Monate',
-    mod.showAnzahlung ? 'Anzahlung:       ' + state.anzahlung + ' % (' + fmt(r.anzahlungAbs) + ' €)' : null,
+    mod.showAnzahlung ? 'Anzahlung:       ' + fmt(state.anzahlung) + ' €' : null,
     '',
     'Monatliche Rate: ' + fmt(r.rate) + ' €',
-    'Gesamtaufwand:   ' + fmt(r.gesamt) + ' €',
     '',
     '(Unverbindliche Beispielkalkulation)'
   ].filter(Boolean).join('\r\n');
@@ -345,14 +344,14 @@ useHead({
                   <input
                     type="text"
                     inputmode="numeric"
-                    class="wert-input wert-input-pct"
-                    :value="state.anzahlung"
+                    class="wert-input"
+                    :value="fmtInt(state.anzahlung)"
                     @input="onAnzahlungInput"
                     @blur="onAnzahlungBlur"
-                  ><span class="unit">%</span>
+                  ><span class="unit">€</span>
                 </span>
               </div>
-              <div class="field-hint">0 bis 30 Prozent möglich.</div>
+              <div class="field-hint">Optional. Höhere Anzahlung senkt die monatliche Rate.</div>
             </div>
 
             <div class="field" v-if="m.showRestwert">
@@ -410,7 +409,6 @@ useHead({
               <div class="row" v-if="m.showAnzahlung"><span class="k">Anzahlung</span><span class="v">{{ fmt(calc.anzahlungAbs) }} €</span></div>
               <div class="row" v-if="m.showRestwert"><span class="k">Restwert</span><span class="v">{{ fmt(calc.restwertAbs) }} €</span></div>
               <div class="row"><span class="k">Laufzeit</span><span class="v">{{ state.laufzeit }} Monate</span></div>
-              <div class="row total"><span class="k">Gesamtaufwand</span><span class="v">{{ fmt(calc.gesamt) }} €</span></div>
             </div>
 
             <div class="vorteile">
