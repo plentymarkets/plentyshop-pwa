@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative group py-1"
+    class="toc-insert-line relative group py-1"
     @mouseenter="startHoverTimer"
     @mouseleave="handleMouseLeave"
     @focusin="handleFocusIn"

@@ -1,14 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="thumbsOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('item-image-label')"
     data-testid="item-image-thumbnails"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('item-image-label') }}</h2>
-    </template>
-
     <div class="space-y-5">
       <div class="flex items-center justify-between">
         <UiFormLabel>{{ getEditorTranslation('show-thumbnails') }}</UiFormLabel>
@@ -49,18 +44,14 @@
         <SfSwitch v-model="uiItemImageBlock.thumbnails.enableHoverZoom" data-testid="enable-zoom-on-hover" />
       </div>
     </div>
-  </UiAccordionItem>
-  <UiAccordionItem
+  </EditorFormPanel>
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
   >
-    <template #summary>
-      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
-
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
