@@ -66,6 +66,21 @@ const createHeaderContainer = (children: Block[]): Block => ({
   configuration: { layout: { sticky: false }, visible: true },
 });
 
+const createFooterContainer = (children: Block[]): Block => ({
+  name: 'FooterContainer',
+  type: 'structure',
+  content: children,
+  meta: { uuid: 'footer-uuid' },
+  configuration: { visible: true },
+});
+
+const createStructureBlock = (children: Block[], id = 'structure-uuid'): Block => ({
+  name: 'MultiGrid',
+  type: 'structure',
+  content: children,
+  meta: { uuid: id },
+});
+
 describe('useBlockManager', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -130,6 +145,41 @@ describe('useBlockManager', () => {
 
       const content = headerContainer.value.content as Block[];
       expect(content).toHaveLength(1);
+      expect(closeBlocksConfigurationDrawer).toHaveBeenCalled();
+    });
+
+    it('should remove a top-level child from the footer container', async () => {
+      const child1 = createBlock('TextCard', 'footer-child-1');
+      const child2 = createBlock('TextCard', 'footer-child-2');
+      footer.value = createFooterContainer([child1, child2]);
+      pageBlocks.value = [];
+      data.value = [];
+      allBlocks.value = [];
+      const { deleteBlock } = useBlockManager();
+
+      await deleteBlock('footer-child-1');
+
+      const content = footer.value.content as Block[];
+      expect(content).toHaveLength(1);
+      expect(content.at(0)?.meta.uuid).toBe('footer-child-2');
+      expect(closeBlocksConfigurationDrawer).toHaveBeenCalled();
+    });
+
+    it('should remove a nested child from inside the footer container', async () => {
+      const nested = createBlock('TextCard', 'nested-uuid');
+      const grid = createStructureBlock([nested], 'grid-uuid');
+      const sibling = createBlock('TextCard', 'sibling-uuid');
+      footer.value = createFooterContainer([grid, sibling]);
+      pageBlocks.value = [];
+      data.value = [];
+      allBlocks.value = [];
+      const { deleteBlock } = useBlockManager();
+
+      await deleteBlock('nested-uuid');
+
+      const content = footer.value.content as Block[];
+      expect(content).toHaveLength(2);
+      expect(content[0]?.content as Block[]).toHaveLength(0);
       expect(closeBlocksConfigurationDrawer).toHaveBeenCalled();
     });
   });
