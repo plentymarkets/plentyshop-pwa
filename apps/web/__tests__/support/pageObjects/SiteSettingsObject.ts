@@ -151,6 +151,7 @@ export class SiteSettingsObject extends PageObject {
 
   changeCustomScript() {
     this.customJsAccordion.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.customSettingsSection.find('button').first().click({ force: true });
     this.addSnippetButtonEmpty.should('be.visible').scrollIntoView().click({ force: true });
     cy.wait(500);
     this.positionSelect.should('be.visible').should('have.value', 'head_end');
@@ -195,22 +196,22 @@ export class SiteSettingsObject extends PageObject {
   }
 
   toggleFonts() {
-    this.fontSection.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.fontSection.find('button').first().click({ force: true });
     return this;
   }
 
   toggleColor() {
-    this.colorSection.should('be.visible').click();
+    this.colorSection.find('button').first().click({ force: true });
     return this;
   }
 
   toggleBlockSpacing() {
-    this.blockSpacingSection.should('be.visible').click();
+    this.blockSpacingSection.find('button').first().click({ force: true });
     return this;
   }
 
   toggleItemBundlesSection() {
-    this.itemBundlesSection.should('be.visible').click();
+    this.itemBundlesSection.find('button').first().click({ force: true });
     return this;
   }
 
