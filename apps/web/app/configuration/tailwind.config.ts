@@ -44,6 +44,11 @@ export default {
           fontFamily: 'inherit',
         },
       }),
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }], // 11px
+        '3xs': ['0.625rem', { lineHeight: '0.875rem' }], // 10px
+        '4xs': ['0.5625rem', { lineHeight: '0.75rem' }], // 9px
+      },
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
         editor: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
@@ -82,6 +87,30 @@ export default {
           'toc-hover': '#F5FAFF',
           'toc-selected': '#538AEA',
           'icon-hover': 'rgba(6, 38, 51, 0.08)',
+          'text-strong': '#1a1a1a',
+          'text-default': '#444444',
+          'text-subtle': '#666666',
+          'text-muted': '#777777',
+          'text-faint': '#888888',
+          'text-placeholder': '#aaaaaa',
+          'text-ghost': '#bbbbbb',
+          surface: '#f5f5f5',
+          'surface-cool-hover': '#e4e8f0',
+          'surface-muted': '#f0f0f0',
+          border: '#e8e8e8',
+          'accent-border-hover': '#c0d4ff',
+          accent: 'rgb(29 94 199 / <alpha-value>)',
+          'canvas-border': '#e2e2e2',
+          'canvas-cell': '#f3f3f3',
+          'text-dim': '#c4c4c4',
+          'cell-border': '#c8cdd4',
+          'cell-empty-text': '#9aa3ad',
+          'cell-empty-sub': '#bcc2c9',
+          'cell-handle': '#dadde2',
+          'free-border': '#d4d4d4',
+          'free-border-hover': '#999999',
+          'input-border': '#a0a0a0',
+          icon: 'rgb(12 24 31 / <alpha-value>)',
         },
 
         header: {
@@ -97,6 +126,9 @@ export default {
           '900': 'rgb(var(--colors-2-header-900) / <alpha-value>)',
           '950': 'rgb(var(--colors-2-header-950) / <alpha-value>)',
         },
+      },
+      backgroundImage: {
+        'editor-hatched': 'repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)',
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],

@@ -96,12 +96,15 @@
     @switch-to-html="handleSwitchToHtml"
     @close="closeModal"
   />
+
+  <EditorRichTextEditorLinkModal v-if="linkModalOpen" :editor="editor" :close="closeLinkModal" />
 </template>
 
 <script setup lang="ts">
 import { EditorContent } from '@tiptap/vue-3';
 
 const modalOpen = ref(false);
+const linkModalOpen = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -160,6 +163,9 @@ const {
   onUpdateExpanded: (v) => emit('update:expanded', v),
   textAlign: toRef(props, 'textAlign'),
   placeholder: toRef(props, 'placeholder'),
+  onOpenLinkModal: () => {
+    linkModalOpen.value = true;
+  },
 });
 
 const editorStyle = computed(() => ({
@@ -173,6 +179,10 @@ const openModal = () => {
 
 const closeModal = () => {
   modalOpen.value = false;
+};
+
+const closeLinkModal = () => {
+  linkModalOpen.value = false;
 };
 
 const handleSwitchToHtml = () => {

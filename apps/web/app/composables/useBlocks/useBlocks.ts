@@ -3,6 +3,7 @@ import type { UseBlocksState, UseBlocksReturn } from './types';
 import { assembleBlocks } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
+  // eslint-disable-next-line custom-rules/file-organization-types
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
@@ -41,6 +42,15 @@ export const useBlocks: UseBlocksReturn = () => {
       state.value.isSettling = false;
       nuxtApp._settleTimer = null;
     }, 150);
+  };
+
+  const cancelCleanDataSync = () => {
+    const nuxtApp = useNuxtApp();
+    if (nuxtApp._settleTimer) {
+      clearTimeout(nuxtApp._settleTimer);
+      nuxtApp._settleTimer = null;
+    }
+    state.value.isSettling = false;
   };
 
   const headerContainer = computed(() => state.value.data.HeaderContainer);
@@ -101,12 +111,7 @@ export const useBlocks: UseBlocksReturn = () => {
 
       state.value.hasSnapshot = true;
 
-      const assembled = assembleBlocks(
-        (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
-        type,
-        identifier,
-        state.value.hasSnapshot,
-      );
+      const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
       setBlocks(assembled);
 
       return true;
@@ -157,6 +162,7 @@ export const useBlocks: UseBlocksReturn = () => {
     discardChanges,
     setDefaultTemplate,
     scheduleCleanDataSync,
+    cancelCleanDataSync,
     isSettling: computed(() => state.value.isSettling),
   };
 };

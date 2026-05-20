@@ -2,13 +2,16 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
+import type { ItemGridContent, ItemGridFieldsVisibility } from '~/components/blocks/ItemGrid/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { migrateTextCardContent } from '~/utils/migrate-text-editor';
-import { migrateRecommendedContent, type OldContent } from '~/utils/migrate-recommended-content';
+import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
+import type { OldContent } from '~/utils/migrate-recommended-content/types';
+import type { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
 
 const HEADER_BLOCK_NAME = 'Header';
-const TEXT_CONTENT_BLOCKS = ['TextCard', 'Banner', 'ProductRecommendedProducts', 'NewsletterSubscribe'];
+const TEXT_CONTENT_BLOCKS = ['TextCard', 'Banner', 'ProductRecommendedProducts'];
 
 const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NAME;
 
@@ -18,7 +21,7 @@ const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NA
  */
 export function migrateAllBlocks(blocks: Block[]): void {
   /**
-   * TECH DEBT: Identify the first text content block (TextCard, Banner, ProductRecommendedProducts, or NewsletterSubscribe)
+   * TECH DEBT: Identify the first text content block (TextCard, Banner, ProductRecommendedProducts)
    * that appears outside of the header/navigation area. This block receives special migration handling to ensure
    * proper text formatting initialization. The logic skips header-related blocks and nested content within the header
    * container to focus on main page content blocks.
@@ -61,7 +64,25 @@ export function migrateAllBlocks(blocks: Block[]): void {
           block === firstTextContentBlock,
         );
       }
+      if (block.name === 'NewsletterSubscribe' && block.content) {
+        const content = block.content as Partial<NewsletterSubscribeContent>;
 
+        const title = content.text?.title || 'Newsletter';
+        const description = content.text?.htmlDescription ?? '';
+
+        const hasHeading = /<h[1-6]\b/i.test(description);
+
+        content.text = {
+          bgColor: '#f5f5f5',
+          textAlignment: 'center',
+          ...content.text,
+          htmlDescription: hasHeading
+            ? description
+            : `<h2 style="text-align: center;"><strong>${title}</strong></h2>${description}`,
+        };
+
+        block.content = content;
+      }
       if (block.name === 'Banner' && block.content) {
         const content = (block as BannerProps).content;
         const textAlignment = content.text?.textAlignment;
@@ -69,6 +90,24 @@ export function migrateAllBlocks(blocks: Block[]): void {
           content.button = content.button ?? {};
           content.button.alignment = textAlignment;
         }
+      }
+
+      if (block.name === 'ItemGrid' && block.content) {
+        const content = block.content as ItemGridContent;
+        const fields = (content.fields ?? {}) as ItemGridFieldsVisibility;
+
+        content.fields = fields;
+        content.fieldsOrder ??= [];
+
+        if (fields['manufacturer'] === undefined) {
+          fields['manufacturer'] = true;
+        }
+        if (!content.fieldsOrder.includes('manufacturer')) {
+          content.fieldsOrder.push('manufacturer');
+        }
+
+        delete (fields as Record<string, unknown>)['shippingBadge'];
+        content.fieldsOrder = content.fieldsOrder.filter((f) => (f as string) !== 'shippingBadge');
       }
 
       if (Array.isArray(block.content)) {

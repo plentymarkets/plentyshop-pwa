@@ -152,6 +152,12 @@ describe('Global Blocks Editor', () => {
       blocks
         .assertHeaderContainerVisible()
         .assertFooterVisible();
+
+      // prettier-ignore
+      tableOfContents
+        .openTableOfContents()
+        .checkTableOfContentsVisible();
+
       footerBlock.openSettingsDrawer().assertBackgroundColorValue('#abcdef');
     });
   });

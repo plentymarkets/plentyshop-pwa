@@ -1,14 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="imageGroupOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('images-group-label')"
     data-testid="image-group"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('images-group-label') }}</h2>
-    </template>
-
     <div class="images">
       <UiImagePicker
         v-for="type in imageTypes"
@@ -93,17 +88,8 @@
         </SfInput>
       </label>
     </div>
-  </UiAccordionItem>
-  <UiAccordionItem
-    v-model="textGroupOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    data-testid="text-group"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('text-overlay-label') }}</h2>
-    </template>
-
+  </EditorFormPanel>
+  <EditorFormPanel v-model="textGroupOpen" :title="getEditorTranslation('text-overlay-label')" data-testid="text-group">
     <EditorRichTextEditorForm
       :model-value="uiImageTextBlock.text.textOverlay ?? ''"
       :text-align="uiImageTextBlock.text.textOverlayAlignX"
@@ -119,17 +105,13 @@
         :options="textOverlayAlignYOptions"
       />
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="buttonOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('button-group-label')"
+    data-testid="slider-button-group-title"
   >
-    <template #summary>
-      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('button-group-label') }}</h2>
-    </template>
-
     <div class="images">
       <div class="mb-6 mt-4">
         <label>
@@ -162,16 +144,12 @@
         />
       </div>
     </div>
-  </UiAccordionItem>
-  <UiAccordionItem
+  </EditorFormPanel>
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
   >
-    <template #summary>
-      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
-
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">
         {{ getEditorTranslation('keep-transparent-label') }}
@@ -266,7 +244,7 @@
         </div>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -281,7 +259,7 @@ import {
   SfIconInfo,
 } from '@storefront-ui/vue';
 
-import type { ImageFormProps } from './types';
+import type { ImageFormProps, ImageTypeKey } from './types';
 import type { ImageContent } from '~/components/blocks/Image/types';
 import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
@@ -345,16 +323,15 @@ watch(fillModeModel, (newMode) => {
   }
 });
 
-const imageGroupOpen = ref(false);
-const textGroupOpen = ref(false);
-const buttonOpen = ref(false);
-const layoutOpen = ref(false);
+const imageGroupOpen = ref(true);
+const textGroupOpen = ref(true);
+const buttonOpen = ref(true);
+const layoutOpen = ref(true);
 
 const fillTooltip =
   'Fit: The image maintains its original aspect ratio and fits inside the available space, allowing padding. Fill: The image completely fills the available space, potentially cropping parts of the image, and ignores padding.';
 
 const paddingTooltip = 'Padding is only available in Fit mode.';
-type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 
 const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
   if (uiImageTextBlock.value.image && ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)) {

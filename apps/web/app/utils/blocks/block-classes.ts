@@ -1,10 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
-
-export type BlockLayoutResolvedRule = {
-  container: boolean;
-  padding: boolean;
-  defaultFullWidth: boolean;
-};
+import type { BlockLayoutResolvedRule } from './types';
 
 /**
  * Computes CSS classes for a Plenty block using resolved layout rules and a horizontal spacing key.
@@ -36,6 +31,6 @@ export const buildBlockClasses = (
     [horizontalClass]: !fullWidth && !isContainerExcluded,
     [verticalClass]: shouldApplyVerticalSpacing,
     'mx-auto': !isContainerExcluded,
-    'p-4 md:px-6 lg:px-10': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
+    'p-4': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
   };
 };
