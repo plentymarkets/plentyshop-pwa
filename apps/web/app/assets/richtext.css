@@ -105,7 +105,17 @@
   line-height: 1;
 }
 
+.rte-prose [data-type="emoji"] {
+  display: inline-block;
+}
+
 .ProseMirror-selectednode.rte-icon {
+  outline: 2px solid rgb(100 116 139);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.editor-parent:focus-within .rte-atom-selected {
   outline: 2px solid rgb(100 116 139);
   outline-offset: 1px;
   border-radius: 2px;

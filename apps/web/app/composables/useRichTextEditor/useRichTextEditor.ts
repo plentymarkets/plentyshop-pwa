@@ -17,6 +17,7 @@ import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { FontSize } from './helpers/fontSizeExtension';
 import { IconNode } from './helpers/iconExtension';
+import { AtomSelectionDecoration } from './helpers/atomSelectionDecoration';
 import Placeholder from '@tiptap/extension-placeholder';
 import Emoji, { emojis } from '@tiptap/extension-emoji';
 
@@ -49,6 +50,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
       IconNode,
+      AtomSelectionDecoration,
       Emoji.extend({ selectable: true, marks: '_' }).configure({
         emojis,
         enableEmoticons: true,
