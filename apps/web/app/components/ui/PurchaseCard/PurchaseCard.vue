@@ -63,6 +63,11 @@
                 </div>
 
                 <div class="flex justify-between items-center py-1">
+                  <span class="text-neutral-500 font-medium">Hersteller</span>
+                  <span class="text-neutral-900 font-bold">{{ manufacturerName || '—' }}</span>
+                </div>
+
+                <div class="flex justify-between items-center py-1">
   <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
 
   <span
@@ -480,6 +485,10 @@ const changeQuantity = (quantity: string) => {
 const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('product.notAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('product.attributes.notValidVariation')));
 const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
+const manufacturerName = computed(() => {
+  const manufacturer = productGetters.getManufacturer(props.product);
+  return manufacturer?.name || '';
+});
 
 // const scrollToReviews = () => {
 //   if (!isReviewsAccordionOpen()) {
