@@ -273,29 +273,6 @@ const onBlockUnhover = () => {
     bottom right,
     bottom right;
   background-size:
-    22px 3px,
-    3px 22px,
-    22px 3px,
-    3px 22px,
-    22px 3px,
-    3px 22px,
-    22px 3px,
-    3px 22px;
-  background-repeat: no-repeat;
-  opacity: 0;
-  filter:
-    drop-shadow(1px 0 0 rgba(255, 255, 255, 0.95))
-    drop-shadow(-1px 0 0 rgba(255, 255, 255, 0.95))
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
-    drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
-  transition:
-    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-size 420ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.block-hoverable:hover::before {
-  opacity: 1;
-  background-size:
     50% 3px,
     3px 50%,
     50% 3px,
@@ -304,6 +281,17 @@ const onBlockUnhover = () => {
     3px 50%,
     50% 3px,
     3px 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  filter:
+    drop-shadow(1px 0 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(-1px 0 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
+}
+
+.block-hoverable:hover::before {
+  opacity: 1;
 }
 
 .block-selected-outline::before {
@@ -344,34 +332,6 @@ const onBlockUnhover = () => {
     drop-shadow(-1.5px 0 0 white)
     drop-shadow(0 1.5px 0 white)
     drop-shadow(0 -1.5px 0 white);
-  animation: blockSelectConnect 380ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes blockSelectConnect {
-  from {
-    opacity: 0;
-    background-size:
-      26px 4px,
-      4px 26px,
-      26px 4px,
-      4px 26px,
-      26px 4px,
-      4px 26px,
-      26px 4px,
-      4px 26px;
-  }
-  to {
-    opacity: 1;
-    background-size:
-      50% 4px,
-      4px 50%,
-      50% 4px,
-      4px 50%,
-      50% 4px,
-      4px 50%,
-      50% 4px,
-      4px 50%;
-  }
 }
 
 .add-block-button--premium {
