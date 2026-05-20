@@ -4,6 +4,7 @@ import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './t
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
+import { isFooterContainerBlock } from '~/utils/blockTemplates/footer/factory';
 
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
@@ -374,6 +375,11 @@ export const useBlockManager = () => {
     }
   };
 
+  const deleteFromFooterContainer = (uuid: string) => {
+    if (!isFooterContainerBlock(footer.value) || !Array.isArray(footer.value.content)) return;
+    findOrDeleteBlockByUuid(footer.value.content as Block[], uuid, true);
+  };
+
   const deleteBlock = async (uuid: string) => {
     if (!pageBlocks.value) return;
 
@@ -381,6 +387,7 @@ export const useBlockManager = () => {
       await deleteBlockFromColumn(uuid);
     } else if (!findOrDeleteBlockByUuid(pageBlocks.value, uuid, true)) {
       deleteFromHeaderContainer(uuid);
+      deleteFromFooterContainer(uuid);
     }
 
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
