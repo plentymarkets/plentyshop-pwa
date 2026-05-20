@@ -156,13 +156,13 @@ export const IconNode = Node.create({
 
 ### Key concepts
 
-| Hook            | Purpose                                                                               | Tiptap docs                                                                                          |
-| --------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `addAttributes` | Declares persistent data stored per node                                              | [Attributes](https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing#attributes) |
-| `parseHTML`     | CSS-selector rules that map existing HTML to this node on paste or load               | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#parsehtml)        |
-| `renderHTML`    | Returns the DOM structure written when serialising to HTML                            | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#renderhtml)      |
-| `addNodeView`   | Returns a live DOM element rendered in the editor canvas                              | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#addnodeview-advanced)                 |
-| `addCommands`   | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/extension#addcommands)          |
+| Hook            | Purpose                                                                               | Tiptap docs                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `addAttributes` | Declares persistent data stored per node                                              | [Attributes](https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing#attributes)           |
+| `parseHTML`     | CSS-selector rules that map existing HTML to this node on paste or load               | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#parsehtml)             |
+| `renderHTML`    | Returns the DOM structure written when serialising to HTML                            | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#renderhtml)           |
+| `addNodeView`   | Returns a live DOM element rendered in the editor canvas                              | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#addnodeview-advanced) |
+| `addCommands`   | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/extension#addcommands)       |
 
 `renderHTML` and `addNodeView` serve different purposes: `renderHTML` controls the **saved HTML** output, while `addNodeView` controls the **live editor canvas** rendering. When both are defined, `addNodeView` takes precedence in the editor and `renderHTML` is used during HTML serialisation.
 
@@ -305,11 +305,7 @@ Then forward it to the toolbar component in the template:
 
 ```vue
 <!-- RichTextEditor.vue — <template> (excerpt) -->
-<EditorRichTextEditorExtendedButtons
-  :cmd="cmd"
-  :is-active="isActive"
-  :insert-my-content="insertMyContent"
-/>
+<EditorRichTextEditorExtendedButtons :cmd="cmd" :is-active="isActive" :insert-my-content="insertMyContent" />
 ```
 
 ## Full data flow
