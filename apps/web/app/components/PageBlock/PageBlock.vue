@@ -19,7 +19,7 @@
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-0 z-[200] block-selected-outline"
+        class="pointer-events-none absolute inset-[-6px] z-[200] block-selected-outline"
       />
       <ClientOnly>
         <button
@@ -248,37 +248,129 @@ const onBlockUnhover = () => {
 </script>
 
 <style scoped>
-.block-hoverable {
-  transition: box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1);
+.block-hoverable::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  z-index: 30;
+  background-image:
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7);
+  background-position:
+    top left,
+    top left,
+    top right,
+    top right,
+    bottom left,
+    bottom left,
+    bottom right,
+    bottom right;
+  background-size:
+    22px 3px,
+    3px 22px,
+    22px 3px,
+    3px 22px,
+    22px 3px,
+    3px 22px,
+    22px 3px,
+    3px 22px;
+  background-repeat: no-repeat;
+  opacity: 0;
+  filter:
+    drop-shadow(1px 0 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(-1px 0 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
+    drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-size 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.block-hoverable:hover {
-  box-shadow:
-    0 0 0 1.5px rgba(29, 94, 199, 0.55),
-    0 14px 32px -10px rgba(29, 94, 199, 0.24),
-    0 4px 12px -4px rgba(15, 23, 42, 0.06);
+.block-hoverable:hover::before {
+  opacity: 1;
+  background-size:
+    50% 3px,
+    3px 50%,
+    50% 3px,
+    3px 50%,
+    50% 3px,
+    3px 50%,
+    50% 3px,
+    3px 50%;
 }
 
-.block-selected-outline {
-  box-shadow:
-    0 0 0 2px #1d5ec7,
-    0 22px 44px -10px rgba(29, 94, 199, 0.4),
-    0 10px 22px -6px rgba(29, 94, 199, 0.2);
-  animation: blockSelectFade 260ms cubic-bezier(0.16, 1, 0.3, 1);
+.block-selected-outline::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7),
+    linear-gradient(#1d5ec7, #1d5ec7);
+  background-position:
+    top left,
+    top left,
+    top right,
+    top right,
+    bottom left,
+    bottom left,
+    bottom right,
+    bottom right;
+  background-size:
+    50% 4px,
+    4px 50%,
+    50% 4px,
+    4px 50%,
+    50% 4px,
+    4px 50%,
+    50% 4px,
+    4px 50%;
+  background-repeat: no-repeat;
+  filter:
+    drop-shadow(1.5px 0 0 white)
+    drop-shadow(-1.5px 0 0 white)
+    drop-shadow(0 1.5px 0 white)
+    drop-shadow(0 -1.5px 0 white);
+  animation: blockSelectConnect 380ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes blockSelectFade {
+@keyframes blockSelectConnect {
   from {
-    box-shadow:
-      0 0 0 0 rgba(29, 94, 199, 0),
-      0 0 0 rgba(29, 94, 199, 0),
-      0 0 0 rgba(29, 94, 199, 0);
+    opacity: 0;
+    background-size:
+      26px 4px,
+      4px 26px,
+      26px 4px,
+      4px 26px,
+      26px 4px,
+      4px 26px,
+      26px 4px,
+      4px 26px;
   }
   to {
-    box-shadow:
-      0 0 0 2px #1d5ec7,
-      0 22px 44px -10px rgba(29, 94, 199, 0.4),
-      0 10px 22px -6px rgba(29, 94, 199, 0.2);
+    opacity: 1;
+    background-size:
+      50% 4px,
+      4px 50%,
+      50% 4px,
+      4px 50%,
+      50% 4px,
+      4px 50%,
+      50% 4px,
+      4px 50%;
   }
 }
 
