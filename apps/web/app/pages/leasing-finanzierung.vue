@@ -296,6 +296,11 @@ useHead({
         </div>
       </div>
 
+      <!-- ==================== DISCLAIMER ==================== -->
+      <div class="disclaimer-note">
+        <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Die tatsächlichen Konditionen richten sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
+      </div>
+
       <!-- ===== Step 1: Konditionen ===== -->
       <div v-if="currentStep === 1" class="wizard-step">
         <div class="calc-card">
@@ -576,11 +581,6 @@ useHead({
         </div>
       </div>
 
-    </div>
-
-    <!-- ==================== DISCLAIMER ==================== -->
-    <div class="disclaimer-note">
-      <p>Alle Berechnungen sind unverbindliche Beispielkalkulationen. Die tatsächlichen Konditionen richten sich nach Bonität und Objekt. Keine Finanzierungszusage.</p>
     </div>
 
   </div>
@@ -1079,12 +1079,13 @@ useHead({
 
 /* ==================== DISCLAIMER ==================== */
 .disclaimer-note {
-  background: var(--paper);
-  padding: 2.25rem 1.5rem 3rem;
+  background: transparent;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
 }
 .disclaimer-note p {
   max-width: 980px; margin: 0 auto;
-  font-size: 0.9rem; line-height: 1.55;
+  font-size: 0.88rem; line-height: 1.5;
   color: var(--gold-dark); text-align: center;
   font-weight: 700;
 }
