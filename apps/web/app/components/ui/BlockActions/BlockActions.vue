@@ -1,13 +1,7 @@
 <template>
   <div
     :class="[
-      'absolute',
-      'z-[0]',
-      'md:z-[1]',
-      'lg:z-[40]',
-      'space-x-3',
-      'p-2',
-      'shadow-md',
+      'absolute z-[0] md:z-[1] lg:z-[40] block-actions-toolbar',
       ...(props.actions?.classes || []),
       ...(props.actions?.buttonClasses || []),
     ]"
@@ -16,85 +10,75 @@
     <SfTooltip
       v-if="!props.actions.isEditable"
       :label="getEditorUITranslation('block-edit-homepage-only', { blockName: props.block.name.toLowerCase() })"
-      placement="left"
+      placement="top"
       class="flex"
     >
       <button
-        class="text-black hover:bg-gray-100 rounded no-drag p-1"
+        class="block-actions-btn no-drag"
         :data-testid="`${props.block.name}-open-editor-button`"
         aria-label="editor button"
         :disabled="!props.actions.isEditable"
-        :class="{ 'opacity-40 cursor-not-allowed': !props.actions.isEditable }"
         @click.stop="triggerEdit"
       >
         <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path :d="editPath" fill="black" />
+            <path :d="editPath" fill="currentColor" />
           </svg>
         </SfIconBase>
       </button>
     </SfTooltip>
-    <SfTooltip v-else :label="editLabel" placement="left" :show-arrow="true">
+    <SfTooltip v-else :label="editLabel" placement="top" :show-arrow="true">
       <button
-        :class="['text-black', 'p-1', 'rounded', 'no-drag', ...(props.actions?.hoverBackground || [])]"
+        class="block-actions-btn no-drag"
         :data-testid="`${props.block.name}-open-editor-button`"
         aria-label="editor button"
         @click.stop="triggerEdit"
       >
-        <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
+        <SfIconBase size="xs" viewBox="0 0 18 18" class="cursor-pointer">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path :d="editPath" fill="black" />
+            <path :d="editPath" fill="currentColor" />
           </svg>
         </SfIconBase>
       </button>
     </SfTooltip>
 
     <template v-if="!props.readOnly">
-      <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
+      <span v-if="props.actions.isMovable" class="block-actions-divider" />
 
-      <div class="flex flex-col">
-        <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="left" :show-arrow="true">
-          <button
-            class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-            data-testid="move-up-button"
-            aria-label="move up button"
-            :disabled="isFirstContentBlock(props.index)"
-            :class="{ 'opacity-40 cursor-not-allowed': isFirstContentBlock(props.index) }"
-            @click="changePosition(-1)"
-          >
-            <SfIconExpandLess />
-          </button>
-        </SfTooltip>
-        <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
-          <button
-            class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-            data-testid="move-down-button"
-            aria-label="move down button"
-            :disabled="isLastNonFooterBlock(index)"
-            :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
-            @click="changePosition(1)"
-          >
-            <SfIconExpandMore />
-          </button>
-        </SfTooltip>
-      </div>
-
-      <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
-
-      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
+      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true">
         <button
-          class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
-          aria-label="Drag to reorder block"
+          class="block-actions-btn no-drag"
+          data-testid="move-up-button"
+          aria-label="move up button"
+          :disabled="isFirstContentBlock(props.index)"
+          @click="changePosition(-1)"
         >
+          <SfIconExpandLess />
+        </button>
+      </SfTooltip>
+      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true">
+        <button
+          class="block-actions-btn no-drag"
+          data-testid="move-down-button"
+          aria-label="move down button"
+          :disabled="isLastNonFooterBlock(index)"
+          @click="changePosition(1)"
+        >
+          <SfIconExpandMore />
+        </button>
+      </SfTooltip>
+
+      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true">
+        <button class="block-actions-btn drag-handle drag-trigger" aria-label="Drag to reorder block">
           <NuxtImg width="18" height="18" :src="dragIcon" />
         </button>
       </SfTooltip>
 
-      <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
+      <span v-if="props.actions.isDeletable" class="block-actions-divider" />
 
-      <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="bottom" :show-arrow="true">
+      <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="top" :show-arrow="true">
         <button
-          class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+          class="block-actions-btn block-actions-btn--danger no-drag"
           aria-label="delete block button"
           data-testid="delete-block-button"
           @click="triggerDelete"
@@ -121,9 +105,9 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
     isEditable: true,
     isMovable: true,
     isDeletable: true,
-    classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    classes: ['top-2', 'right-2'],
     buttonClasses: [],
-    hoverBackground: ['hover:bg-gray-100'],
+    hoverBackground: [],
   }),
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);
@@ -157,3 +141,121 @@ const changePosition = (position: number) => {
   }, 100);
 };
 </script>
+
+<style scoped>
+.block-actions-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 10px 28px -10px rgba(15, 23, 42, 0.22),
+    0 4px 10px -4px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-4px);
+  transition:
+    opacity 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .block-actions-toolbar,
+.group:focus-within .block-actions-toolbar,
+.block-actions-toolbar:hover {
+  transform: translateY(0);
+}
+
+.block-actions-toolbar:hover {
+  box-shadow:
+    0 14px 36px -10px rgba(15, 23, 42, 0.3),
+    0 6px 14px -4px rgba(15, 23, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.block-actions-divider {
+  width: 1px;
+  height: 14px;
+  background: rgba(15, 23, 42, 0.08);
+  margin: 0 2px;
+  display: inline-block;
+}
+
+.block-actions-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.block-actions-btn :deep(svg),
+.block-actions-btn :deep(img) {
+  width: 16px !important;
+  height: 16px !important;
+  display: block;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.block-actions-toolbar :deep([data-testid='tooltip']) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.block-actions-btn:hover:not(:disabled) {
+  background: rgba(29, 94, 199, 0.1);
+  color: #1d5ec7;
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px -2px rgba(29, 94, 199, 0.25);
+}
+
+.block-actions-btn:active:not(:disabled) {
+  transform: scale(0.96);
+  background: rgba(29, 94, 199, 0.18);
+  box-shadow: none;
+}
+
+.block-actions-btn:focus-visible {
+  outline: 2px solid #1d5ec7;
+  outline-offset: 1px;
+}
+
+.block-actions-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.block-actions-btn--danger:hover:not(:disabled) {
+  background: rgba(204, 51, 51, 0.1);
+  color: #cc3333;
+  box-shadow: 0 2px 8px -2px rgba(204, 51, 51, 0.25);
+}
+
+.block-actions-btn.drag-handle {
+  cursor: grab;
+}
+
+.block-actions-btn.drag-handle:active {
+  cursor: grabbing;
+}
+</style>

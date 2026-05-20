@@ -86,6 +86,8 @@ export default {
           'toc-highlight': '#E6F0FF',
           'toc-hover': '#F5FAFF',
           'toc-selected': '#538AEA',
+          'block-selected': '#1D5EC7',
+          'block-selected-hover': '#1650AA',
           'icon-hover': 'rgba(6, 38, 51, 0.08)',
           'text-strong': '#1a1a1a',
           'text-default': '#444444',

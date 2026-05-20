@@ -11,24 +11,23 @@
       :id="`block-${index}`"
       :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
       :class="[
-        'relative block-wrapper h-full',
+        'relative block-wrapper h-full block-hover-target',
         {
-          'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
-            clientPreview && enableActions && !isTablet && root && !isDragging && !isPopoverTarget,
+          'block-hoverable': clientPreview && enableActions && !isTablet && root && !isDragging && !isPopoverTarget,
         },
       ]"
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-0 ring-4 ring-editor-toc-selected z-[200]"
+        class="pointer-events-none absolute inset-0 z-[200] block-selected-outline"
       />
       <ClientOnly>
         <button
           v-if="showTopAddBlockButton"
-          class="add-block-button no-drag transition-opacity duration-200 z-[0] md:z-[1] lg:z-[40] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+          class="add-block-button add-block-button--premium add-block-button--top no-drag z-[0] md:z-[1] lg:z-[40] absolute top-0 left-1/2"
           :class="[
             {
-              'opacity-100':
+              'add-block-button--active':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
               '!z-[201]': isPopoverTarget && popoverState?.position === 'top',
             },
@@ -38,7 +37,7 @@
           @click.stop="addNewBlock(block, 'top', $event)"
         >
           <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
-            <SfIconAdd class="cursor-pointer" />
+            <SfIconAdd class="cursor-pointer" size="xs" />
           </SfTooltip>
         </button>
       </ClientOnly>
@@ -85,11 +84,10 @@
         <button
           v-if="showBottomAddBlockButton"
           :key="isDragging ? 'dragging' : 'not-dragging'"
-          class="add-block-button no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+          class="add-block-button add-block-button--premium add-block-button--bottom no-drag z-[0] md:z-[1] lg:z-[40] absolute bottom-0 left-1/2"
           :class="[
-            'rounded-[18px]',
             {
-              'opacity-100':
+              'add-block-button--active':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
               '!z-[201]': isPopoverTarget && popoverState?.position === 'bottom',
             },
@@ -99,7 +97,7 @@
           @click.stop="addNewBlock(block, 'bottom', $event)"
         >
           <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
-            <SfIconAdd class="cursor-pointer" />
+            <SfIconAdd class="cursor-pointer" size="xs" />
           </SfTooltip>
         </button>
       </ClientOnly>
@@ -248,3 +246,98 @@ const onBlockUnhover = () => {
   }
 };
 </script>
+
+<style scoped>
+.block-hoverable {
+  transition: box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.block-hoverable:hover {
+  box-shadow:
+    0 0 0 1.5px rgba(29, 94, 199, 0.55),
+    0 14px 32px -10px rgba(29, 94, 199, 0.24),
+    0 4px 12px -4px rgba(15, 23, 42, 0.06);
+}
+
+.block-selected-outline {
+  box-shadow:
+    0 0 0 2px #1d5ec7,
+    0 22px 44px -10px rgba(29, 94, 199, 0.4),
+    0 10px 22px -6px rgba(29, 94, 199, 0.2);
+  animation: blockSelectFade 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes blockSelectFade {
+  from {
+    box-shadow:
+      0 0 0 0 rgba(29, 94, 199, 0),
+      0 0 0 rgba(29, 94, 199, 0),
+      0 0 0 rgba(29, 94, 199, 0);
+  }
+  to {
+    box-shadow:
+      0 0 0 2px #1d5ec7,
+      0 22px 44px -10px rgba(29, 94, 199, 0.4),
+      0 10px 22px -6px rgba(29, 94, 199, 0.2);
+  }
+}
+
+.add-block-button--premium {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: #1d5ec7;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  opacity: 0;
+  box-shadow: 0 2px 8px rgba(29, 94, 199, 0.3);
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms ease,
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.add-block-button--top {
+  transform: translate(-50%, -50%) scale(0.85);
+}
+
+.add-block-button--bottom {
+  transform: translate(-50%, 50%) scale(0.85);
+}
+
+.group:hover .add-block-button--top,
+.group:focus-within .add-block-button--top,
+.add-block-button--top:hover,
+.add-block-button--top:focus-visible,
+.add-block-button--top.add-block-button--active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.group:hover .add-block-button--bottom,
+.group:focus-within .add-block-button--bottom,
+.add-block-button--bottom:hover,
+.add-block-button--bottom:focus-visible,
+.add-block-button--bottom.add-block-button--active {
+  opacity: 1;
+  transform: translate(-50%, 50%) scale(1);
+}
+
+.add-block-button--premium:hover {
+  background: #1650aa;
+  box-shadow: 0 4px 14px rgba(29, 94, 199, 0.45);
+}
+
+.add-block-button--top:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.add-block-button--bottom:hover {
+  transform: translate(-50%, 50%) scale(1.08);
+}
+</style>
