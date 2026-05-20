@@ -4,7 +4,7 @@
 
       <!-- Header -->
       <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
-        <h2 class="typography-headline-4 font-medium">Properties</h2>
+        <h2 class="typography-headline-4 font-medium">{{ getEditorTranslation('modal-title') }}</h2>
         <SfButton
           type="button"
           variant="tertiary"
@@ -21,7 +21,7 @@
       <div class="px-5 py-3 border-b border-neutral-200">
         <SfInput
           v-model="searchQuery"
-          placeholder="Search placeholders..."
+          :placeholder="getEditorTranslation('search-placeholder')"
           size="sm"
         >
           <template #prefix>
@@ -42,65 +42,75 @@
       <!-- Tree -->
       <div class="overflow-y-auto flex-1">
         <div v-if="filteredGroups.length === 0" class="px-5 py-8 text-center typography-text-sm text-neutral-400">
-          No variables found for "{{ searchQuery }}"
+          {{ getEditorTranslation('no-results', { query: searchQuery }) }}
         </div>
 
         <template v-for="(group, gi) in filteredGroups" :key="group.id">
           <hr v-if="gi > 0" class="border-neutral-100" />
 
           <div>
-            <!-- Group Header -->
-            <button
-              type="button"
-              class="w-full flex items-center gap-2 px-5 py-3 bg-neutral-50 hover:bg-neutral-100 transition-colors select-none"
-              @click="toggleGroup(group.id)"
-            >
-              <SfIconChevronRight
-                size="sm"
-                class="text-neutral-400 transition-transform duration-150"
-                :class="{ 'rotate-90': openGroups.includes(group.id) }"
-              />
-              <span class="typography-text-sm font-medium text-neutral-800 flex-1 text-left">
-                {{ group.name }}
-              </span>
-              <span class="typography-text-xs text-neutral-400 bg-neutral-200 rounded-full px-2 py-0.5">
-                {{ group.properties.length }}
-              </span>
-            </button>
+            <!-- Group Header — with its own checkbox -->
+            <div class="flex items-center gap-2 px-4 py-3 bg-neutral-50 hover:bg-neutral-100 transition-colors">
+              <button
+                type="button"
+                class="flex items-center justify-center w-5 h-5 flex-shrink-0"
+                @click="toggleGroup(group.id)"
+              >
+                <SfIconChevronRight
+                  size="sm"
+                  class="text-neutral-400 transition-transform duration-150"
+                  :class="{ 'rotate-90': openGroups.includes(group.id) }"
+                />
+              </button>
+
+              <label class="checkbox-row flex-1" :class="{ 'is-checked': groupCheckboxState(group).checked }">
+                <SfCheckbox
+                  :model-value="groupCheckboxState(group).checked"
+                  :indeterminate="groupCheckboxState(group).indeterminate"
+                  @update:model-value="(v) => toggleGroupSelection(group, !!v)"
+                />
+                <span class="typography-text-sm font-medium text-neutral-800 select-none">
+                  {{ getGroupName(group) }}
+                </span>
+                <span class="typography-text-xs text-neutral-400 bg-neutral-200 rounded-full px-2 py-0.5 ml-auto">
+                  {{ group.properties.length }}
+                </span>
+              </label>
+            </div>
 
             <!-- Group Items -->
             <Transition name="slide">
               <div v-if="openGroups.includes(group.id)">
                 <div
                   v-for="prop in group.properties"
-                  :key="prop.value"
-                  class="px-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
+                  :key="prop.id"
+                  class="pl-10 pr-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
                 >
-                  <!-- Name row -->
+                  <!-- Property Name row -->
                   <label
                     class="checkbox-row"
-                    :class="{ 'is-checked': selection[prop.value]?.name }"
+                    :class="{ 'is-checked': selection[prop.id]?.name }"
                   >
                     <SfCheckbox
-                      :model-value="selection[prop.value]?.name ?? false"
-                      @update:model-value="(v) => toggleSelection(prop.value, 'name', v)"
+                      :model-value="selection[prop.id]?.name ?? false"
+                      @update:model-value="(v) => toggleSelection(prop.id, 'name', !!v)"
                     />
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
-                      {{ prop.name }}
+                      {{ getPropName(prop) }}
                     </span>
                   </label>
 
-                  <!-- Value row -->
+                  <!-- Property Value (placeholder) row -->
                   <label
                     class="checkbox-row pl-5"
-                    :class="{ 'is-checked': selection[prop.value]?.value }"
+                    :class="{ 'is-checked': selection[prop.id]?.value }"
                   >
                     <SfCheckbox
-                      :model-value="selection[prop.value]?.value ?? false"
-                      @update:model-value="(v) => toggleSelection(prop.value, 'value', v)"
+                      :model-value="selection[prop.id]?.value ?? false"
+                      @update:model-value="(v) => toggleSelection(prop.id, 'value', !!v)"
                     />
                     <span class="variable-pill-static">
-                      {{ prop.value }}
+                      {{ getPropPlaceholder(prop) }}
                     </span>
                   </label>
                 </div>
@@ -113,11 +123,15 @@
       <!-- Footer -->
       <div class="px-5 py-3 border-t border-neutral-200 flex items-center justify-between gap-3">
         <span class="typography-text-xs text-neutral-400">
-          {{ selectionCount === 0 ? 'No items selected' : `${selectionCount} item${selectionCount > 1 ? 's' : ''} selected` }}
+          {{
+            selectionCount === 0
+              ? getEditorTranslation('no-items-selected')
+              : getEditorTranslation('items-selected', { count: selectionCount })
+          }}
         </span>
         <div class="flex gap-2">
           <SfButton type="button" variant="secondary" size="sm" @click="close">
-            Cancel
+            {{ getEditorTranslation('cancel') }}
           </SfButton>
           <SfButton
             type="button"
@@ -126,7 +140,7 @@
             :disabled="selectionCount === 0"
             @click="insertSelected"
           >
-            Insert
+            {{ getEditorTranslation('insert') }}
           </SfButton>
         </div>
       </div>
@@ -144,85 +158,123 @@ import {
   SfIconSearch,
   SfIconChevronRight,
 } from '@storefront-ui/vue';
+import type { ApiGroup, ApiProperty, PropSelection } from './types';
+import { mockGroups } from './PriceCardSelectModal.mock';
 
-interface Property {
-  name: string;
-  value: string;
-}
-
-interface Group {
-  id: string;
-  name: string;
-  properties: Property[];
-}
-
-interface PropSelection {
-  name: boolean;
-  value: boolean;
-}
+// ── Component ─────────────────────────────────────────────────────────────────
 
 const props = defineProps<{
   close: () => void;
+  /** Pass the API response directly; falls back to mock data if omitted */
+  groups?: ApiGroup[];
 }>();
 
 const emit = defineEmits<{
   insert: [tokens: string[]];
 }>();
 
+// ── State ─────────────────────────────────────────────────────────────────────
+
+const { locale } = useI18n();
+const lang = computed(() => (locale.value === 'de' ? 'de' : 'en') as 'de' | 'en');
+
+const sourceGroups = computed<ApiGroup[]>(() => props.groups ?? mockGroups);
+
 const searchQuery = ref('');
-const openGroups = ref<string[]>(['user-profile']);
+// open first group by default
+const openGroups = ref<number[]>(sourceGroups.value[0]?.id !== undefined ? [sourceGroups.value[0].id] : []);
 
-// keyed by prop.value (unique); tracks name/value checkbox state
-const selection = ref<Record<string, PropSelection>>({});
-
-const groups: Group[] = [
-  {
-    id: 'user-profile',
-    name: 'User Profile',
-    properties: [
-      { name: 'First Name',    value: '{{user.firstName}}' },
-      { name: 'Last Name',     value: '{{user.lastName}}' },
-      { name: 'Email Address', value: '{{user.email}}' },
-      { name: 'Join Date',     value: '{{user.joinDate}}' },
-      { name: 'Phone',         value: '{{user.phone}}' },
-    ],
+watch(
+  () => sourceGroups.value[0]?.id,
+  (firstId) => {
+    if (firstId !== undefined && openGroups.value.length === 0) {
+      openGroups.value = [firstId];
+    }
   },
-  {
-    id: 'invoice-details',
-    name: 'Invoice Details',
-    properties: [
-      { name: 'Invoice No.',  value: '{{invoice.number}}' },
-      { name: 'Due Date',     value: '{{invoice.dueDate}}' },
-      { name: 'Total Amount', value: '{{invoice.totalAmount}}' },
-      { name: 'Currency',     value: '{{invoice.currency}}' },
-    ],
-  },
-  {
-    id: 'system-variables',
-    name: 'System Variables',
-    properties: [
-      { name: 'Current Date', value: '{{system.currentDate}}' },
-      { name: 'Company Name', value: '{{system.companyName}}' },
-      { name: 'Support URL',  value: '{{system.supportUrl}}' },
-    ],
-  },
-];
+);
 
-// flat list to preserve insertion order across groups
-const allProperties = groups.flatMap((g) => g.properties);
+// keyed by property id
+const selection = ref<Record<number, PropSelection>>({});
 
-const filteredGroups = computed<Group[]>(() => {
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+const getGroupName = (group: ApiGroup): string => {
+  return group.names[lang.value] ?? group.names.de ?? `Group ${group.id}`;
+};
+
+const getPropName = (prop: ApiProperty): string => {
+  return prop.names[lang.value] ?? prop.names.de ?? `Property ${prop.id}`;
+};
+
+const getPropPlaceholder = (prop: ApiProperty): string => {
+  return `{{property.${prop.id}}}`;
+};
+
+// ── Filtering ─────────────────────────────────────────────────────────────────
+
+const filteredGroups = computed<ApiGroup[]>(() => {
   const q = searchQuery.value.toLowerCase().trim();
-  if (!q) return groups;
-  return groups
+  if (!q) return sourceGroups.value;
+  return sourceGroups.value
     .map((group) => ({
       ...group,
-      properties: group.properties.filter(
-        (p) => p.name.toLowerCase().includes(q) || p.value.toLowerCase().includes(q),
+      properties: group.properties.filter((p) =>
+        getPropName(p).toLowerCase().includes(q) ||
+        getPropPlaceholder(p).toLowerCase().includes(q),
       ),
     }))
-    .filter((group) => group.properties.length > 0);
+    .filter((group) =>
+      group.properties.length > 0 || getGroupName(group).toLowerCase().includes(q),
+    );
 });
+
+watch(searchQuery, (q) => {
+  if (q) openGroups.value = filteredGroups.value.map((g) => g.id);
+});
+
+// ── Group toggle (collapse) ───────────────────────────────────────────────────
+
+const toggleGroup = (id: number) => {
+  const idx = openGroups.value.indexOf(id);
+  if (idx === -1) openGroups.value.push(id);
+  else openGroups.value.splice(idx, 1);
+};
+
+// ── Checkbox logic ────────────────────────────────────────────────────────────
+
+const toggleSelection = (propId: number, field: 'name' | 'value', checked: boolean) => {
+  if (!selection.value[propId]) {
+    selection.value[propId] = { name: false, value: false };
+  }
+  selection.value[propId][field] = checked;
+};
+
+/** Returns checked/indeterminate state for a group's header checkbox */
+const groupCheckboxState = (group: ApiGroup): { checked: boolean; indeterminate: boolean } => {
+  const total = (group.properties?.length ?? 0) * 2; // name + value per prop
+  let selected = 0;
+  for (const prop of group.properties) {
+    const s = selection.value[prop.id];
+    if (s?.name) selected++;
+    if (s?.value) selected++;
+  }
+  if (selected === 0) return { checked: false, indeterminate: false };
+  if (selected === total) return { checked: true, indeterminate: false };
+  return { checked: false, indeterminate: true };
+};
+
+/** Select / deselect all name+value checkboxes in a group */
+const toggleGroupSelection = (group: ApiGroup, checked: boolean) => {
+  for (const prop of group.properties) {
+    selection.value[prop.id] = { name: checked, value: checked };
+  }
+  // open the group when selecting so user can see what was picked
+  if (checked && !openGroups.value.includes(group.id)) {
+    openGroups.value.push(group.id);
+  }
+};
+
+// ── Selection count ───────────────────────────────────────────────────────────
 
 const selectionCount = computed(() =>
   Object.values(selection.value).reduce(
@@ -231,40 +283,53 @@ const selectionCount = computed(() =>
   ),
 );
 
-watch(searchQuery, (q) => {
-  if (q) openGroups.value = filteredGroups.value.map((g) => g.id);
-});
+// ── Insert ────────────────────────────────────────────────────────────────────
 
-function toggleGroup(id: string) {
-  const idx = openGroups.value.indexOf(id);
-  if (idx === -1) openGroups.value.push(id);
-  else openGroups.value.splice(idx, 1);
-}
 
-function toggleSelection(propValue: string, field: 'name' | 'value', checked: boolean) {
-  if (!selection.value[propValue]) {
-    selection.value[propValue] = { name: false, value: false };
-  }
-  selection.value[propValue][field] = checked;
-}
-
-function insertSelected() {
+const insertSelected = () => {
   const tokens: string[] = [];
 
-  for (const prop of allProperties) {
-    const s = selection.value[prop.value];
-    if (!s) continue;
-    if (s.name) tokens.push(prop.name);
-    if (s.value) tokens.push(prop.value);
+  for (const group of sourceGroups.value) {
+    for (const prop of group.properties) {
+      const s = selection.value[prop.id];
+      if (!s) continue;
+      if (s.name) tokens.push(getPropName(prop));
+      if (s.value) tokens.push(getPropPlaceholder(prop));
+    }
   }
 
   if (tokens.length === 0) return;
 
-  navigator.clipboard?.writeText(tokens.join(' ')).catch(() => {});
+  navigator.clipboard?.writeText(tokens.join(' '));
   emit('insert', tokens);
   props.close();
-}
+};
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "modal-title": "Properties",
+    "close-modal-aria": "Close modal",
+    "search-placeholder": "Search placeholders...",
+    "no-results": "No properties found for \"{query}\"",
+    "no-items-selected": "No items selected",
+    "items-selected": "{count} item(s) selected",
+    "cancel": "Cancel",
+    "insert": "Insert"
+  },
+  "de": {
+    "modal-title": "Properties",
+    "close-modal-aria": "Close modal",
+    "search-placeholder": "Search placeholders...",
+    "no-results": "No properties found for \"{query}\"",
+    "no-items-selected": "No items selected",
+    "items-selected": "{count} item(s) selected",
+    "cancel": "Cancel",
+    "insert": "Insert"
+  }
+}
+</i18n>
 
 <style scoped>
 .checkbox-row {
@@ -302,8 +367,8 @@ function insertSelected() {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: max-height 0.2s ease, opacity 0.18s ease;
-  max-height: 500px;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+  max-height: 600px;
   overflow: hidden;
 }
 .slide-enter-from,
