@@ -3,7 +3,7 @@
    KONFIGURATION — HIER ANPASSEN
 ============================================================ */
 const KK_CONFIG = {
-  mailto: 'info@komplett-konzept.de',
+  mailto: 'info@komplett-konzept.de,s.schueler@dclease.de',
   firma: 'Komplett Konzept Verwertungs GmbH',
   // Effektive Jahreszinsen (branchenüblich für Industriefinanzierung 2026)
   zinsen: { leasing: 5.5, finanzierung: 6.5, mietkauf: 6.0 }
@@ -102,6 +102,19 @@ const form = reactive({
 });
 
 /* ============================================================
+   WIZARD — 3 Schritte
+============================================================ */
+const currentStep = ref(1);
+function goNext() {
+  if (currentStep.value < 3) currentStep.value++;
+  if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function goBack() {
+  if (currentStep.value > 1) currentStep.value--;
+  if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
    COMPUTED — Modul + Berechnung
 ============================================================ */
 const m = computed(() => MODULE[state.modul]);
@@ -139,7 +152,7 @@ function onWertInput(e) {
   state.wert = n;
 }
 function onWertBlur() {
-  if (state.wert < 2500) state.wert = 2500;
+  if (state.wert < 2975) state.wert = 2975;
 }
 
 function onLaufzeitInput(e) {
@@ -255,9 +268,30 @@ useHead({
       </div>
     </section>
 
-    <!-- ==================== CALCULATOR ==================== -->
-    <div class="calc-wrap">
-      <div class="calc-card">
+    <!-- ==================== WIZARD ==================== -->
+    <div class="wizard-wrap">
+
+      <!-- Progress -->
+      <div class="wizard-progress">
+        <div class="step-item" :class="{ active: currentStep === 1, done: currentStep > 1 }">
+          <span class="step-num">1</span>
+          <span class="step-name">Konditionen</span>
+        </div>
+        <div class="step-line" :class="{ done: currentStep > 1 }"></div>
+        <div class="step-item" :class="{ active: currentStep === 2, done: currentStep > 2 }">
+          <span class="step-num">2</span>
+          <span class="step-name">Firmendaten</span>
+        </div>
+        <div class="step-line" :class="{ done: currentStep > 2 }"></div>
+        <div class="step-item" :class="{ active: currentStep === 3 }">
+          <span class="step-num">3</span>
+          <span class="step-name">Ansprechpartner</span>
+        </div>
+      </div>
+
+      <!-- ===== Step 1: Konditionen ===== -->
+      <div v-if="currentStep === 1" class="wizard-step">
+        <div class="calc-card">
         <div class="tabs" role="tablist">
           <button
             v-for="(label, key) in TAB_LABELS"
@@ -293,13 +327,7 @@ useHead({
                   ><span class="unit">€</span>
                 </span>
               </div>
-              <input
-                type="range"
-                v-model.number="state.wert"
-                min="2500" max="500000" step="500"
-                :style="{ '--p': fill(state.wert, 2500, 500000) + '%' }"
-              >
-              <div class="range-info"><span>2.500 €</span><span>500.000 €</span></div>
+              <div class="field-hint">Mindestwert 2.975 € — bei darunterliegenden Beträgen sprechen Sie uns direkt an.</div>
             </div>
 
             <div class="field" v-if="m.showAnzahlung">
@@ -383,124 +411,163 @@ useHead({
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- ==================== ANFRAGE ==================== -->
-    <section class="anfrage" id="anfrage">
-      <div class="anfrage-inner">
-        <div class="section-eyebrow">Unverbindlich anfragen</div>
-        <h2>Konkretes Angebot in 48 Stunden.</h2>
-        <p class="sub">Senden Sie uns die Eckdaten — wir prüfen Konditionen mit unseren Finanzierungspartnern und melden uns mit einem maßgeschneiderten Angebot.</p>
-
-        <div class="summary">
-          <div>
-            <div class="summary-meta">{{ m.sumLabel }}</div>
-            <div class="summary-details">{{ sumDetails }}</div>
-          </div>
-          <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
+        <div class="wizard-actions wizard-actions-end">
+          <button type="button" class="btn" @click="goNext">
+            Weiter zu Firmendaten
+            <span class="arrow">→</span>
+          </button>
         </div>
-
-        <form @submit="submitForm" autocomplete="on">
-
-          <div class="form-section-label">Firmendaten</div>
-          <div class="form-grid">
-            <div class="input-group full">
-              <label>Firma <span class="req">*</span></label>
-              <input type="text" v-model="form.firma" required>
-            </div>
-            <div class="input-group full">
-              <label>Adresszusatz</label>
-              <input type="text" v-model="form.zusatz">
-            </div>
-            <div class="input-group full">
-              <label>Straße &amp; Hausnummer <span class="req">*</span></label>
-              <input type="text" v-model="form.strasse" required>
-            </div>
-            <div class="input-group">
-              <label>PLZ <span class="req">*</span></label>
-              <input type="text" v-model="form.plz" required>
-            </div>
-            <div class="input-group">
-              <label>Ort <span class="req">*</span></label>
-              <input type="text" v-model="form.ort" required>
-            </div>
-            <div class="input-group">
-              <label>Telefon <span class="req">*</span></label>
-              <input type="tel" v-model="form.telefon" required>
-            </div>
-            <div class="input-group">
-              <label>E-Mail (Firma) <span class="req">*</span></label>
-              <input type="email" v-model="form.email" required>
-            </div>
-            <div class="input-group">
-              <label>Website <span class="req">*</span></label>
-              <input type="text" v-model="form.website" required>
-            </div>
-            <div class="input-group">
-              <label>USt-IdNr.</label>
-              <input type="text" v-model="form.ustId">
-            </div>
-            <div class="input-group">
-              <label>Steuernummer</label>
-              <input type="text" v-model="form.stNr">
-            </div>
-          </div>
-
-          <div class="form-section-label">Ansprechpartner</div>
-          <div class="form-grid">
-            <div class="input-group">
-              <label>Anrede <span class="req">*</span></label>
-              <select v-model="form.anrede" required>
-                <option value="">Bitte wählen</option>
-                <option value="Herr">Herr</option>
-                <option value="Frau">Frau</option>
-                <option value="Divers">Divers</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Mobil <span class="req">*</span></label>
-              <input type="tel" v-model="form.mobil" required>
-            </div>
-            <div class="input-group">
-              <label>Vorname <span class="req">*</span></label>
-              <input type="text" v-model="form.vorname" required>
-            </div>
-            <div class="input-group">
-              <label>Nachname <span class="req">*</span></label>
-              <input type="text" v-model="form.nachname" required>
-            </div>
-            <div class="input-group full">
-              <label>E-Mail (Ansprechpartner) <span class="req">*</span></label>
-              <input type="email" v-model="form.apEmail" required>
-            </div>
-          </div>
-
-          <div class="form-section-label">Zur Finanzierung</div>
-          <div class="form-grid">
-            <div class="input-group">
-              <label>Artikel-ID <span class="req">*</span></label>
-              <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
-            </div>
-            <div class="input-group">
-              <label>Was möchten Sie finanzieren?</label>
-              <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
-            </div>
-            <div class="input-group full">
-              <label>Anmerkungen</label>
-              <textarea v-model="form.anmerkungen"></textarea>
-            </div>
-          </div>
-
-          <div class="submit-row">
-            <button type="submit" class="btn">
-              Anfrage senden
-              <span class="arrow">→</span>
-            </button>
-            <p class="privacy">Mit dem Senden öffnet sich Ihr E-Mail-Programm mit einer vorausgefüllten Anfrage. Wir antworten innerhalb von 48 Std.</p>
-          </div>
-        </form>
       </div>
-    </section>
+
+      <!-- ===== Step 2: Firmendaten ===== -->
+      <div v-if="currentStep === 2" class="wizard-step wizard-form-step">
+        <div class="wizard-card">
+          <div class="section-eyebrow">Schritt 2 von 3</div>
+          <h2>Firmendaten</h2>
+          <p class="sub">Wenige Angaben zu Ihrem Unternehmen — wir prüfen damit Konditionen mit unserem Finanzierungspartner.</p>
+
+          <div class="summary">
+            <div>
+              <div class="summary-meta">{{ m.sumLabel }}</div>
+              <div class="summary-details">{{ sumDetails }}</div>
+            </div>
+            <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
+          </div>
+
+          <form @submit.prevent="goNext" autocomplete="on">
+            <div class="form-grid">
+              <div class="input-group full">
+                <label>Firma <span class="req">*</span></label>
+                <input type="text" v-model="form.firma" required>
+              </div>
+              <div class="input-group full">
+                <label>Adresszusatz</label>
+                <input type="text" v-model="form.zusatz">
+              </div>
+              <div class="input-group full">
+                <label>Straße &amp; Hausnummer <span class="req">*</span></label>
+                <input type="text" v-model="form.strasse" required>
+              </div>
+              <div class="input-group">
+                <label>PLZ <span class="req">*</span></label>
+                <input type="text" v-model="form.plz" required>
+              </div>
+              <div class="input-group">
+                <label>Ort <span class="req">*</span></label>
+                <input type="text" v-model="form.ort" required>
+              </div>
+              <div class="input-group">
+                <label>Telefon <span class="req">*</span></label>
+                <input type="tel" v-model="form.telefon" required>
+              </div>
+              <div class="input-group">
+                <label>E-Mail (Firma) <span class="req">*</span></label>
+                <input type="email" v-model="form.email" required>
+              </div>
+              <div class="input-group">
+                <label>Website <span class="req">*</span></label>
+                <input type="text" v-model="form.website" required>
+              </div>
+              <div class="input-group">
+                <label>USt-IdNr.</label>
+                <input type="text" v-model="form.ustId">
+              </div>
+              <div class="input-group">
+                <label>Steuernummer</label>
+                <input type="text" v-model="form.stNr">
+              </div>
+            </div>
+
+            <div class="wizard-actions">
+              <button type="button" class="btn-secondary" @click="goBack">
+                <span class="arrow-back">←</span> Zurück
+              </button>
+              <button type="submit" class="btn">
+                Weiter zu Ansprechpartner
+                <span class="arrow">→</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===== Step 3: Ansprechpartner & Anfrage ===== -->
+      <div v-if="currentStep === 3" class="wizard-step wizard-form-step">
+        <div class="wizard-card">
+          <div class="section-eyebrow">Schritt 3 von 3</div>
+          <h2>Ansprechpartner &amp; Anfrage absenden</h2>
+          <p class="sub">Letzte Angaben — danach öffnet sich Ihr Mail-Programm mit der vorausgefüllten Anfrage.</p>
+
+          <div class="summary">
+            <div>
+              <div class="summary-meta">{{ m.sumLabel }}</div>
+              <div class="summary-details">{{ sumDetails }}</div>
+            </div>
+            <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
+          </div>
+
+          <form @submit="submitForm" autocomplete="on">
+
+            <div class="form-section-label">Ansprechpartner</div>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Anrede <span class="req">*</span></label>
+                <select v-model="form.anrede" required>
+                  <option value="">Bitte wählen</option>
+                  <option value="Herr">Herr</option>
+                  <option value="Frau">Frau</option>
+                  <option value="Divers">Divers</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>Mobil <span class="req">*</span></label>
+                <input type="tel" v-model="form.mobil" required>
+              </div>
+              <div class="input-group">
+                <label>Vorname <span class="req">*</span></label>
+                <input type="text" v-model="form.vorname" required>
+              </div>
+              <div class="input-group">
+                <label>Nachname <span class="req">*</span></label>
+                <input type="text" v-model="form.nachname" required>
+              </div>
+              <div class="input-group full">
+                <label>E-Mail (Ansprechpartner) <span class="req">*</span></label>
+                <input type="email" v-model="form.apEmail" required>
+              </div>
+            </div>
+
+            <div class="form-section-label">Zur Finanzierung</div>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Artikel-ID <span class="req">*</span></label>
+                <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
+              </div>
+              <div class="input-group">
+                <label>Was möchten Sie finanzieren?</label>
+                <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
+              </div>
+              <div class="input-group full">
+                <label>Anmerkungen</label>
+                <textarea v-model="form.anmerkungen"></textarea>
+              </div>
+            </div>
+
+            <div class="wizard-actions">
+              <button type="button" class="btn-secondary" @click="goBack">
+                <span class="arrow-back">←</span> Zurück
+              </button>
+              <button type="submit" class="btn">
+                Anfrage senden
+                <span class="arrow">→</span>
+              </button>
+            </div>
+            <p class="privacy">Mit dem Senden öffnet sich Ihr E-Mail-Programm mit einer vorausgefüllten Anfrage. Wir antworten innerhalb von 48 Std.</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
 
     <!-- ==================== DISCLAIMER ==================== -->
     <div class="disclaimer-note">
@@ -598,6 +665,108 @@ useHead({
   max-width: 1180px; margin: -4.5rem auto 0; padding: 0 1.5rem;
   position: relative; z-index: 2;
 }
+.wizard-wrap {
+  max-width: 1180px; margin: -4.5rem auto 0; padding: 0 1.5rem 3rem;
+  position: relative; z-index: 2;
+}
+.wizard-progress {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.5rem; margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  border-radius: 999px;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid rgba(21, 36, 64, 0.08);
+  box-shadow: 0 8px 24px -12px rgba(21, 36, 64, 0.15);
+}
+.step-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  color: var(--muted); font-size: 0.85rem; font-weight: 600;
+  transition: color 0.2s ease;
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.65rem; height: 1.65rem; border-radius: 50%;
+  background: rgba(21, 36, 64, 0.08); color: var(--muted);
+  font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+.step-item.active { color: var(--navy); }
+.step-item.active .step-num { background: var(--gold); color: var(--navy); }
+.step-item.done .step-num { background: var(--navy); color: var(--gold); }
+.step-item.done .step-num::after { content: "✓"; }
+.step-item.done .step-num { font-size: 0; }
+.step-item.done .step-num::after { font-size: 0.9rem; }
+.step-line {
+  width: 2.5rem; height: 2px; background: rgba(21, 36, 64, 0.12);
+  border-radius: 1px; transition: background 0.2s ease;
+}
+.step-line.done { background: var(--gold); }
+@media (max-width: 640px) {
+  .step-name { display: none; }
+  .step-line { width: 1.5rem; }
+  .wizard-progress { padding: 0.7rem 1rem; }
+}
+
+.wizard-step { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-card {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+  border-radius: 8px;
+  padding: 3rem 3rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -20px rgba(21, 36, 64, 0.35), 0 10px 25px -10px rgba(21, 36, 64, 0.15);
+}
+.wizard-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 90% 10%, rgba(245,192,10,0.10) 0%, transparent 55%);
+  pointer-events: none;
+}
+.wizard-card > * { position: relative; z-index: 1; }
+@media (max-width: 600px) { .wizard-card { padding: 2rem 1.5rem 2.5rem; } }
+.wizard-card .section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 1rem;
+}
+.wizard-card .section-eyebrow::before { content: "— "; }
+.wizard-card h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 0.6rem; font-weight: 700;
+  color: #fff;
+}
+.wizard-card p.sub { color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem; max-width: 560px; }
+
+.wizard-actions {
+  margin-top: 2.25rem; display: flex; justify-content: space-between;
+  align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.wizard-actions-end { justify-content: flex-end; padding: 1.5rem 0 0; }
+@media (max-width: 600px) {
+  .wizard-actions { flex-direction: column-reverse; }
+  .wizard-actions .btn, .wizard-actions .btn-secondary { width: 100%; justify-content: center; }
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  font-family: 'Inter Tight', sans-serif; font-size: 0.95rem; font-weight: 600;
+  padding: 0.9rem 1.5rem; border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08); color: #fff; border-color: rgba(255, 255, 255, 0.35);
+}
+.btn-secondary .arrow-back { transition: transform 0.2s ease; }
+.btn-secondary:hover .arrow-back { transform: translateX(-3px); }
+
 .calc-card {
   background: #fff; border-radius: 8px;
   box-shadow: 0 30px 80px -20px rgba(21, 36, 64, 0.25), 0 10px 25px -10px rgba(21, 36, 64, 0.1);
@@ -685,6 +854,7 @@ useHead({
 }
 
 .range-info { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); margin-top: 0.45rem; }
+.field-hint { font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.4; }
 
 .laufzeit-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
 .pill {
