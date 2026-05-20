@@ -139,7 +139,7 @@ function onWertInput(e) {
   state.wert = n;
 }
 function onWertBlur() {
-  if (state.wert < 5000) state.wert = 5000;
+  if (state.wert < 2500) state.wert = 2500;
 }
 
 function onLaufzeitInput(e) {
@@ -207,7 +207,7 @@ function submitForm(e) {
     'Laufzeit:        ' + state.laufzeit + ' Monate',
     mod.showAnzahlung ? 'Anzahlung:       ' + state.anzahlung + ' % (' + fmt(r.anzahlungAbs) + ' €)' : null,
     '',
-    'Monatliche Rate: ' + fmt(r.rate) + ' € netto',
+    'Monatliche Rate: ' + fmt(r.rate) + ' €',
     'Gesamtaufwand:   ' + fmt(r.gesamt) + ' €',
     '',
     '(Unverbindliche Beispielkalkulation)'
@@ -280,8 +280,9 @@ useHead({
 
             <div class="field">
               <div class="field-row">
-                <span class="field-label">Objektwert (netto)</span>
-                <span class="field-value">
+                <span class="field-label">Objektwert (brutto)</span>
+                <span class="field-value wert-box">
+                  <span class="wert-pen">✎</span>
                   <input
                     type="text"
                     inputmode="numeric"
@@ -295,10 +296,10 @@ useHead({
               <input
                 type="range"
                 v-model.number="state.wert"
-                min="5000" max="500000" step="500"
-                :style="{ '--p': fill(state.wert, 5000, 500000) + '%' }"
+                min="2500" max="500000" step="500"
+                :style="{ '--p': fill(state.wert, 2500, 500000) + '%' }"
               >
-              <div class="range-info"><span>5.000 €</span><span>500.000 €</span></div>
+              <div class="range-info"><span>2.500 €</span><span>500.000 €</span></div>
             </div>
 
             <div class="field" v-if="m.showAnzahlung">
@@ -362,7 +363,7 @@ useHead({
             <div class="result-eyebrow">{{ m.label }}</div>
             <div class="result-rate">
               {{ rateParts.whole }}<span class="cents">,{{ rateParts.cent }} €</span>
-              <span class="per">netto pro Monat · zzgl. MwSt.</span>
+              <span class="per">pro Monat</span>
             </div>
 
             <div class="result-list">
@@ -396,7 +397,7 @@ useHead({
             <div class="summary-meta">{{ m.sumLabel }}</div>
             <div class="summary-details">{{ sumDetails }}</div>
           </div>
-          <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat netto</small></div>
+          <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
         </div>
 
         <form @submit="submitForm" autocomplete="on">
@@ -638,21 +639,30 @@ useHead({
   font-variant-numeric: tabular-nums;
 }
 .field-value .unit { font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-left: 0.25rem; }
+.wert-box {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--gold);
+  background: rgba(245, 192, 10, 0.08);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.wert-box:focus-within {
+  background: rgba(245, 192, 10, 0.16);
+  box-shadow: 0 0 0 3px rgba(245, 192, 10, 0.2);
+}
+.wert-pen { color: var(--gold-dark); font-size: 0.85rem; }
 .wert-input {
   font-family: 'Inter Tight', sans-serif;
   font-size: 1.15rem; font-weight: 700; color: var(--navy);
   font-variant-numeric: tabular-nums;
   text-align: right;
-  width: 7.5ch;
+  width: 6.5ch;
   border: none;
-  border-bottom: 2px solid var(--line);
   background: transparent;
-  padding: 0 0 2px 0;
+  padding: 0;
   outline: none;
-  transition: border-color 0.15s ease;
 }
-.wert-input:focus { border-bottom-color: var(--gold); }
-.wert-input:hover { border-bottom-color: var(--navy); }
 
 /* Range slider */
 .lf-page input[type=range] {
@@ -784,19 +794,38 @@ useHead({
 
 /* ==================== FORM ==================== */
 .anfrage {
-  background: linear-gradient(180deg, var(--paper) 0%, #ede9d8 100%);
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
   padding: 5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.anfrage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 90% 10%, rgba(245,192,10,0.10) 0%, transparent 55%);
+  pointer-events: none;
 }
 .anfrage-inner {
   max-width: 880px; margin: 0 auto;
-  background: #fff; border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 8px;
   padding: 3rem 3rem 3.5rem;
-  border: 1px solid var(--line);
-  box-shadow: 0 20px 50px -20px rgba(21, 36, 64, 0.15);
+  position: relative;
+  backdrop-filter: blur(8px);
 }
 @media (max-width: 600px) { .anfrage-inner { padding: 2rem 1.5rem 2.5rem; } }
-.anfrage h2 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 0.6rem; font-weight: 700; }
-.anfrage p.sub { color: var(--muted); margin-bottom: 2.25rem; max-width: 560px; }
+.anfrage .section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 1rem;
+}
+.anfrage .section-eyebrow::before { content: "— "; }
+.anfrage h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-bottom: 0.6rem; font-weight: 700;
+  color: #fff;
+}
+.anfrage p.sub { color: rgba(255, 255, 255, 0.7); margin-bottom: 2.25rem; max-width: 560px; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
@@ -805,52 +834,59 @@ useHead({
 
 .form-section-label {
   font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--navy); font-weight: 700;
+  color: #fff; font-weight: 700;
   padding-bottom: 0.6rem; margin-bottom: 1.1rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 .form-section-label::before { content: "— "; color: var(--gold); }
 
 .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.input-group label { font-size: 0.78rem; font-weight: 600; color: var(--navy); }
-.input-group label .req { color: var(--gold-dark); }
+.input-group label { font-size: 0.78rem; font-weight: 600; color: rgba(255, 255, 255, 0.85); }
+.input-group label .req { color: var(--gold); }
 .input-group input, .input-group textarea, .input-group select {
   font-family: 'Inter', sans-serif; font-size: 0.95rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--line); border-radius: 4px;
-  background: #fafaf6; color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
   transition: all 0.15s ease;
 }
-.input-group select { cursor: pointer; appearance: auto; }
+.input-group input::placeholder, .input-group textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
+.input-group select { cursor: pointer; }
+.input-group select option { background: var(--navy-2); color: #fff; }
 .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
-  outline: none; border-color: var(--navy); background: #fff;
-  box-shadow: 0 0 0 3px rgba(21, 36, 64, 0.08);
+  outline: none; border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 0 3px rgba(245, 192, 10, 0.15);
 }
 .input-group textarea { resize: vertical; min-height: 90px; }
 
 .submit-row { margin-top: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.65rem;
-  background: var(--navy); color: #fff; border: 0; cursor: pointer;
-  font-family: 'Inter Tight', sans-serif; font-size: 1rem; font-weight: 600;
+  background: var(--gold); color: var(--navy); border: 0; cursor: pointer;
+  font-family: 'Inter Tight', sans-serif; font-size: 1rem; font-weight: 700;
   padding: 1rem 2rem; border-radius: 4px;
   transition: all 0.2s ease;
 }
-.btn:hover { background: var(--ink); transform: translateY(-1px); }
+.btn:hover { background: #fff; transform: translateY(-1px); }
 .btn .arrow { transition: transform 0.2s ease; }
 .btn:hover .arrow { transform: translateX(3px); }
 
-.privacy { font-size: 0.78rem; color: var(--muted); max-width: 340px; }
+.privacy { font-size: 0.78rem; color: rgba(255, 255, 255, 0.55); max-width: 340px; }
 
 .summary {
-  background: var(--paper); border: 1px dashed var(--navy); border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
   padding: 1.25rem 1.5rem; margin-bottom: 2rem;
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center;
 }
-.summary-meta { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
-.summary-details { font-size: 0.9rem; margin-top: 0.2rem; color: var(--ink); }
-.summary-rate { font-family: 'Inter Tight', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
-.summary-rate small { font-size: 0.7rem; color: var(--muted); font-weight: 500; margin-left: 0.25rem; }
+.summary-meta { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+.summary-details { font-size: 0.9rem; margin-top: 0.25rem; color: rgba(255, 255, 255, 0.78); }
+.summary-rate { font-family: 'Inter Tight', sans-serif; font-size: 1.6rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+.summary-rate small { font-size: 0.7rem; color: rgba(255, 255, 255, 0.55); font-weight: 500; margin-left: 0.25rem; }
 
 /* ==================== DISCLAIMER ==================== */
 .disclaimer-note {
