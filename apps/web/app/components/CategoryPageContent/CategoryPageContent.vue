@@ -64,13 +64,13 @@
           <span v-else>{{ t('product.priceInclVAT') }}</span>
           <i18n-t keypath="shipping.excludedLabel" scope="global">
             <template #shipping>
-              <SfLink
+              <UiLink
                 :href="localePath(paths.shipping)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
                 {{ t('common.labels.delivery') }}
-              </SfLink>
+              </UiLink>
             </template>
           </i18n-t>
         </div>
@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, useDisclosure, SfLink } from '@storefront-ui/vue';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 import { paths } from '~/utils/paths';
 
