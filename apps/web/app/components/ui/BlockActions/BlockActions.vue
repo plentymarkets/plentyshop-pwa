@@ -118,7 +118,6 @@ const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
 const { deleteBlock, isLastNonFooterBlock, isFirstContentBlock } = useBlockManager();
 
-// Shared button styles — defined once for readability.
 const baseButtonClasses = [
   'w-7 h-7 rounded-full border-0 p-0 shrink-0',
   'inline-flex items-center justify-center leading-none',
@@ -143,7 +142,6 @@ const dangerButtonClasses = [
 
 const dividerClasses = 'inline-block w-px h-3.5 bg-slate-900/10 mx-0.5';
 
-// Centers each tooltip's <span> wrapper inside the pill so buttons sit flush.
 const tooltipWrapperClasses = 'inline-flex items-center leading-none';
 
 const triggerEdit = () => {
