@@ -22,6 +22,7 @@ export const thirdPartyDeps: string[] = [
   '@tiptap/extension-underline',
   '@tiptap/starter-kit',
   '@tiptap/vue-3',
+  '@tiptap/pm/state',
   '@vee-validate/yup',
   '@vue/devtools-kit',
   '@vueuse/core',

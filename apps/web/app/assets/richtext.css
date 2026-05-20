@@ -45,6 +45,12 @@
   line-height: 1.5;
   margin: 0.4rem 0;
 }
+.rte-prose--render p {
+  white-space: pre-wrap;
+}
+.rte-prose--render p:empty {
+  min-height: 1.5em;
+}
 .rte-prose blockquote {
   border-left: 3px solid #dee2e6;
   padding-left: 12px;
