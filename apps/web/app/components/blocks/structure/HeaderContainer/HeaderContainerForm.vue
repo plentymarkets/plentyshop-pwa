@@ -1,7 +1,13 @@
 <template>
   <div data-testid="header-container-form" class="block-header-edit sticky h-[80vh] overflow-y-auto">
     <div v-if="!editingBlock" class="space-y-0">
-      <EditorGridElementsPanel v-model="elementsOpen" :uuid="headerUuid" :min-items="1" @edit-element="editElement" />
+      <EditorGridElementsPanel
+        v-model="elementsOpen"
+        :uuid="headerUuid"
+        :min-items="1"
+        :quick-add-options="headerQuickAddOptions"
+        @edit-element="editElement"
+      />
 
       <EditorFormPanel
         v-model="layoutOpen"
