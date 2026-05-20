@@ -261,6 +261,6 @@ describe('RichTextEditor', () => {
     await nextTick();
 
     // Assert that the link modal component is rendered
-    expect(wrapper.getComponent({ name: 'EditorRichTextEditorLinkModal' }).exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'EditorRichTextEditorLinkModal' }).exists()).toBe(true);
   });
 });
