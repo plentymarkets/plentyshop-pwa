@@ -121,7 +121,7 @@ const { deleteBlock, isLastNonFooterBlock, isFirstContentBlock } = useBlockManag
 const baseButtonClasses = [
   'w-7 h-7 rounded-full border-0 p-0 shrink-0',
   'inline-flex items-center justify-center leading-none',
-  'bg-transparent text-gray-600 cursor-pointer no-drag',
+  'bg-transparent text-editor-icon cursor-pointer no-drag',
   'transition-all duration-200 ease-editor-out',
   'hover:scale-110 active:scale-95',
   'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100',
