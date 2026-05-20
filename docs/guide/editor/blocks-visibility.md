@@ -24,7 +24,7 @@ Use this approach when your block fetches or derives data at runtime and should 
 
 4. Add `{ immediate: true }` to the watch options so the block registers its state on the initial render, not only when the value changes later.
 
-The following example is for a block placed on an item category page. If your block lives on a different page type, substitute `text` with whatever ref holds your block's runtime data.
+The following example is for a block placed on a product page. If your block lives on a different page type, substitute `text` with whatever ref holds your block's runtime data.
 
 ```vue
 <script setup lang="ts">
@@ -51,7 +51,7 @@ watch(
 </script>
 ```
 
-To verify the implementation, place the block on an item category page. Navigate to a page where the backend returns a non-empty value — the block renders normally. Then navigate to a page where the value is empty or absent — the block is suppressed and no empty shell appears in the storefront.
+To verify the implementation, place the block on a product page. Navigate to a page where the backend returns a non-empty value — the block renders normally. Then navigate to a page where the value is empty or absent — the block is suppressed and no empty shell appears in the storefront.
 
 ::: info
 Do not unregister manually in `onBeforeUnmount`. The registry is cleared automatically when the page unmounts.
@@ -63,5 +63,5 @@ In editor mode, all blocks are always shown regardless of the registry. This pre
 
 ## See also
 
-- [Blocks rendering](/guide/editor/blocks-rendering) — How block visibility is evaluated during the render cycle
-- [Blocks architecture](/guide/editor/blocks-architecture) — Overview of the blocks data flow
+- [Blocks rendering](/guide/editor/blocks-rendering.md) — How block visibility is evaluated during the render cycle
+- [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks data flow
