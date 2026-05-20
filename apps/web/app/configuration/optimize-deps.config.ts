@@ -1,12 +1,10 @@
-export const optimizeDepsInclude: string[] = [
+export const thirdPartyDeps: string[] = [
   '@codemirror/lang-css',
   '@codemirror/lang-javascript',
   '@codemirror/state',
   '@floating-ui/vue',
   '@intlify/core-base',
   '@intlify/shared',
-  '@noble/hashes/sha2.js',
-  '@noble/hashes/utils.js',
   '@paypal/paypal-js',
   '@plentymarkets/shop-api',
   '@plentymarkets/tailwind-colors',
@@ -25,12 +23,9 @@ export const optimizeDepsInclude: string[] = [
   '@tiptap/starter-kit',
   '@tiptap/vue-3',
   '@vee-validate/yup',
-  '@vue-storefront/sdk',
-  '@vue/devtools-core',
   '@vue/devtools-kit',
   '@vueuse/core',
   '@vueuse/shared',
-  'axios',
   'blaze-slider',
   'codemirror',
   'cookie',
@@ -48,4 +43,12 @@ export const optimizeDepsInclude: string[] = [
   'vuedraggable/src/vuedraggable',
   'yup',
   'validator/es/lib/isURL',
+];
+
+export const localPackageDeps: string[] = [
+  '@noble/hashes/sha2.js',
+  '@noble/hashes/utils.js',
+  '@vue-storefront/sdk',
+  '@vue/devtools-core',
+  'axios',
 ];

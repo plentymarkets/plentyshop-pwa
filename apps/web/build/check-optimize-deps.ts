@@ -2,11 +2,12 @@ import { readFileSync, existsSync, readdirSync, statSync, lstatSync } from 'node
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { optimizeDepsInclude } from '../app/configuration/optimize-deps.config';
+import { thirdPartyDeps, localPackageDeps } from '../app/configuration/optimize-deps.config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const allOptimizeDeps = [...thirdPartyDeps, ...localPackageDeps];
 const APP_ROOT = resolve(__dirname, '..');
 const require = createRequire(join(APP_ROOT, 'package.json'));
 const SOURCE_DIRS = ['app'];
@@ -251,10 +252,8 @@ const reportResults = (staleInInclude: string[], missingFromInclude: Map<string,
 const checkStaleEntries = (): string[] => {
   const stale: string[] = [];
 
-  for (const dep of optimizeDepsInclude) {
-    if (!checkNodeModulesExistence(dep)) {
-      stale.push(dep);
-    }
+  for (const dep of allOptimizeDeps) {
+    if (!checkNodeModulesExistence(dep)) stale.push(dep);
   }
 
   return stale;
@@ -270,7 +269,8 @@ const checkMissingEntries = (allSourceFiles: string[]): Map<string, string[]> =>
 
     for (const imp of imports) {
       if (shouldSkip(imp)) continue;
-      if (!isCovered(imp, optimizeDepsInclude)) {
+
+      if (!isCovered(imp, allOptimizeDeps)) {
         const existing = missing.get(imp) ?? [];
         existing.push(relPath);
         missing.set(imp, existing);
