@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
+      <UiLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
         <NuxtImg
           v-if="cartItem.variation?.images?.all?.length"
           ref="img"
@@ -20,17 +20,17 @@
           class="w-full h-auto border rounded-md border-neutral-200"
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
-      </SfLink>
+      </UiLink>
     </div>
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
-      <SfLink
+      <UiLink
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
         class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word"
       >
         {{ cartGetters.getItemName(cartItem) }}
-      </SfLink>
+      </UiLink>
 
       <div v-if="!cartItem.variation?.bundleComponents" data-testid="cart-item-price">
         {{ format(cartGetters.getCartItemPrice(cartItem)) }}
@@ -78,7 +78,7 @@
         data-testid="cart-product-card-bundle-components-list"
       >
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
-          <SfLink
+          <UiLink
             v-if="productBundleGetters.isItemBundleSalable(item)"
             :tag="NuxtLink"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
@@ -89,7 +89,7 @@
               {{ productBundleGetters.getBundleItemQuantity(item) }}x
               <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
             </p>
-          </SfLink>
+          </UiLink>
           <p v-else class="text-sm">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
             <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
@@ -139,7 +139,7 @@
 
 <script setup lang="ts">
 import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
 import { debounce } from '../../../utils/debounce';

@@ -66,6 +66,18 @@ export default withNuxt(
             message: 'Use Nuxt auto-imports instead of importing from vue directly.',
             allowTypeImports: true
           }
+        ],
+        paths: [
+          {
+            name: '@storefront-ui/vue',
+            importNames: ['SfButton'],
+            message: `SfButton doesn't conform to the app's design system. Use UiButton instead.`
+          },
+          {
+            name: '@storefront-ui/vue',
+            importNames: ['SfLink'],
+            message: `SfLink doesn't conform to the app's design system. Use UiLink instead.`
+          }
         ]
       }],
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],

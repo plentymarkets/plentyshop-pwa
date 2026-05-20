@@ -1,4 +1,4 @@
-export const optimizeDepsInclude: string[] = [
+export const thirdPartyDeps: string[] = [
   '@codemirror/lang-css',
   '@codemirror/lang-javascript',
   '@codemirror/state',
@@ -43,4 +43,12 @@ export const optimizeDepsInclude: string[] = [
   'vuedraggable/src/vuedraggable',
   'yup',
   'validator/es/lib/isURL',
+];
+
+export const localPackageDeps: string[] = [
+  '@noble/hashes/sha2.js',
+  '@noble/hashes/utils.js',
+  '@vue-storefront/sdk',
+  '@vue/devtools-core',
+  'axios',
 ];
