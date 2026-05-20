@@ -107,11 +107,9 @@ const form = reactive({
 const currentStep = ref(1);
 function goNext() {
   if (currentStep.value < 3) currentStep.value++;
-  if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function goBack() {
   if (currentStep.value > 1) currentStep.value--;
-  if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ============================================================
@@ -264,7 +262,7 @@ useHead({
       <div class="container">
         <div class="eyebrow">Finanzierungslösungen</div>
         <h1>Investieren ohne <em>Liquidität zu binden.</em></h1>
-        <p class="lead">Mit unserem europaweiten Finanzierungspartner setzen wir jede Investition individuell und flexibel um. <strong>Leasing, Finanzierung oder Mietkauf, länderübergreifend und maßgeschneidert auf Ihr Vorhaben.</strong></p>
+        <p class="lead">Mit unserem europaweiten Finanzierungspartner setzen wir Verkäufe um, woran die meisten scheitern. <strong>Leasing, Finanzierung oder Mietkauf, länderübergreifend und maßgeschneidert auf Ihr Vorhaben.</strong></p>
         <ul class="hero-list">
           <li><strong>Europaweit</strong> leasen, finanzieren oder mieten, länderübergreifend abgewickelt</li>
           <li>Individuelle Leasinglösungen jenseits jeder Standardkalkulation</li>
@@ -1084,12 +1082,13 @@ useHead({
 /* ==================== DISCLAIMER ==================== */
 .disclaimer-note {
   background: var(--paper);
-  padding: 1.5rem 1.5rem 2.5rem;
+  padding: 2.25rem 1.5rem 3rem;
 }
 .disclaimer-note p {
-  max-width: 1180px; margin: 0 auto;
-  font-size: 0.75rem; line-height: 1.6;
-  color: var(--muted); text-align: center;
+  max-width: 980px; margin: 0 auto;
+  font-size: 0.9rem; line-height: 1.55;
+  color: var(--gold-dark); text-align: center;
+  font-weight: 700;
 }
 
 /* ==================== LEASINGPARTNER ==================== */
