@@ -120,7 +120,7 @@
         </div>
 
         <div class="grid grid-cols-1">
-          <SfLink
+          <UiLink
             class="select-none hover:cursor-pointer"
             role="button"
             tabindex="0"
@@ -130,7 +130,7 @@
             @keydown.enter.space="hasCompany = !hasCompany"
           >
             {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
-          </SfLink>
+          </UiLink>
         </div>
 
         <div v-if="hasCompany" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -257,13 +257,13 @@
           >
             <i18n-t keypath="form.privacyPolicyLabel" scope="global">
               <template #privacyPolicy>
-                <SfLink
+                <UiLink
                   :href="localePath(paths.privacyPolicy)"
                   target="_blank"
                   class="text-primary-600 hover:text-primary-700 underline focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
                   {{ t('legal.privacyPolicy') }}
-                </SfLink>
+                </UiLink>
               </template>
             </i18n-t>
             {{ t('form.required') }}
@@ -297,7 +297,7 @@
 import { ErrorMessage } from 'vee-validate';
 import { paths } from '~/utils/paths';
 import { useRegisterForm } from '~/composables/useRegisterForm';
-import { SfLink, SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
