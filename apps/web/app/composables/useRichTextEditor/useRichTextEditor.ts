@@ -49,7 +49,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
       IconNode,
-      Emoji.configure({
+      Emoji.extend({ selectable: true, marks: '_' }).configure({
         emojis,
         enableEmoticons: true,
       }),
