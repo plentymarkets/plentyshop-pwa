@@ -57,8 +57,8 @@ export class TableOfContentsObject extends PageObject {
     return cy.get('[data-testid^="banner-image-"]');
   }
 
-  get blockPlaceholder() {
-    return cy.getByTestId('block-placeholder');
+  get addBlockPopover() {
+    return cy.getByTestId('add-block-popover');
   }
 
   getBlockIcon(uuid: string) {
@@ -209,15 +209,12 @@ export class TableOfContentsObject extends PageObject {
   }
 
   checkPlaceholderAppears() {
-    this.blockPlaceholder.scrollIntoView().should('be.visible');
+    this.addBlockPopover.should('be.visible');
     return this;
   }
 
   selectBlockToAdd() {
-    cy.getByTestId('block-category-text').click({ force: true });
-    cy.wait(500);
-
-    cy.get(`[data-testid*="block-add-text-0"]`).click({ force: true });
+    cy.get(`[data-testid="block-add-text-0"]`).click({ force: true });
     cy.wait(1000);
     return this;
   }

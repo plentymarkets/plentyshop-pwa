@@ -3,8 +3,9 @@
     <div class="section-label">{{ getEditorTranslation('layout-preset') }}</div>
     <div class="grid grid-cols-3 gap-1.5">
       <button
-        v-for="preset in filteredPresets"
+        v-for="(preset, presetIndex) in filteredPresets"
         :key="preset.label"
+        :data-testid="`block-add-layout-preset-${presetIndex}`"
         class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
         @click="pickPreset(preset.columnWidths)"
       >

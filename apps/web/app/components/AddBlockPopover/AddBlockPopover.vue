@@ -7,6 +7,7 @@
 
       <div
         ref="panelRef"
+        data-testid="add-block-popover"
         class="fixed z-[201] w-[296px] max-h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
         :style="panelStyle"
         @click.stop

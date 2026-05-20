@@ -41,12 +41,12 @@ export class EditorObject extends PageObject {
     return cy.get('[data-testid*="block-wrapper"]').not('.header-blocks [data-testid*="block-wrapper"]');
   }
 
-  get blocksAccordionLayout() {
-    return cy.get('[data-testid="block-category-layout"]');
+  get addBlockPopover() {
+    return cy.getByTestId('add-block-popover');
   }
 
-  get blocksAccordionImage() {
-    return cy.get('[data-testid="block-category-image"]');
+  get addLayoutPresetButton() {
+    return cy.getByTestId('block-add-layout-preset-1');
   }
 
   get topBlockButton() {
@@ -95,10 +95,6 @@ export class EditorObject extends PageObject {
 
   get multiGridColumns() {
     return cy.getByTestId('multi-grid-column');
-  }
-
-  get addLayoutBlockButton() {
-    return cy.getByTestId('block-add-layout-0');
   }
 
   get addImageBlockButton() {
@@ -309,10 +305,8 @@ export class EditorObject extends PageObject {
       const initialLength = initialBlocks.length;
       this.contentBlockWrappers.first().find('[data-testid="top-add-block"]').invoke('removeClass', 'opacity-0');
       this.contentBlockWrappers.first().find('[data-testid="top-add-block"]').should('exist').click();
-      cy.wait(1000);
-      this.blocksAccordionImage.should('exist').click();
-      cy.wait(1000);
-      this.addImageBlockButton.first().should('exist').click();
+      this.addBlockPopover.should('be.visible');
+      this.addImageBlockButton.first().should('exist').click({ force: true });
       cy.wait(1000);
       this.contentBlockWrappers.should('have.length', initialLength + 1);
     });
@@ -323,10 +317,8 @@ export class EditorObject extends PageObject {
       const initialLength = initialBlocks.length;
       this.contentBlockWrappers.first().find('[data-testid="bottom-add-block"]').invoke('removeClass', 'opacity-0');
       this.contentBlockWrappers.first().find('[data-testid="bottom-add-block"]').should('exist').click();
-      cy.wait(1000);
-      this.blocksAccordionImage.should('exist').click();
-      cy.wait(1000);
-      this.addImageBlockButton.click();
+      this.addBlockPopover.should('be.visible');
+      this.addImageBlockButton.click({ force: true });
       cy.wait(1000);
       this.contentBlockWrappers.should('have.length', initialLength + 1);
     });
@@ -392,19 +384,15 @@ export class EditorObject extends PageObject {
 
   addMultiGridTop() {
     this.contentBlockWrappers.first().find('[data-testid="top-add-block"]').should('exist').click();
-    cy.wait(1000);
-    this.blocksAccordionLayout.click();
-    cy.wait(1000);
-    this.addLayoutBlockButton.click();
+    this.addBlockPopover.should('be.visible');
+    this.addLayoutPresetButton.should('exist').click({ force: true });
     cy.wait(1000);
   }
 
   addBlockInGridColumn(column: number) {
     this.inlineBlockButton.eq(column).should('exist').click();
-    cy.wait(1000);
-    this.blocksAccordionImage.should('exist').click();
-    cy.wait(1000);
-    this.addImageBlockButton.click();
+    this.addBlockPopover.should('be.visible');
+    this.addImageBlockButton.click({ force: true });
     cy.wait(1000);
   }
 
