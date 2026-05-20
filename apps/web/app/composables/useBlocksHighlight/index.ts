@@ -1,0 +1,1 @@
+export { useBlocksHighlight } from './useBlocksHighlight';

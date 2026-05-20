@@ -1,14 +1,5 @@
 <template>
-  <UiAccordionItem
-    v-model="cardOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    data-testid="price-card"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('card-section-label') }}</h2>
-    </template>
-
+  <EditorFormPanel v-model="cardOpen" :title="getEditorTranslation('card-section-label')" data-testid="price-card">
     <div class="py-4">
       <UiFormLabel class="block mb-4">{{ getEditorTranslation('elements-display-order') }}</UiFormLabel>
 
@@ -64,18 +55,13 @@
         :options="wishlistSizeOptions"
       />
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-settings-label')"
     data-testid="price-card-layout"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
-    </template>
-
     <div class="flex items-center justify-between py-4">
       <UiFormLabel>{{ getEditorTranslation('drop-shadow-label') }}</UiFormLabel>
       <SfSwitch v-model="priceCardBlock.dropShadow" data-testid="price-card-drop-shadow" />
@@ -150,7 +136,7 @@
         </span>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -204,7 +190,7 @@ const fieldLabels = {
 };
 
 const cardOpen = ref(true);
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
 
 const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
   () => priceCardBlock.value,

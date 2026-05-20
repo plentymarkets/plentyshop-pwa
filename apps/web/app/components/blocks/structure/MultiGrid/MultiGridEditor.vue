@@ -37,22 +37,35 @@
           >
             <div
               class="w-full h-full rounded-md flex items-center px-2 overflow-hidden"
-              :class="[
-                cell.hasContent
-                  ? 'bg-editor-accent/10 border border-editor-accent/25'
-                  : 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]',
-              ]"
+              :class="
+                !cell.blockName
+                  ? 'border border-dashed border-editor-cell-border cursor-pointer hover:border-editor-accent hover:bg-editor-accent/[4%]'
+                  : ''
+              "
+              :style="
+                cell.blockName
+                  ? {
+                      backgroundColor: getBlockColor(cell.blockName, 0.12),
+                      border: `1px solid ${getBlockColor(cell.blockName, 0.3)}`,
+                    }
+                  : undefined
+              "
               @click.stop="!cell.hasContent && onClickCell($event, cell.colIndex)"
             >
               <div class="flex-1 overflow-hidden min-w-0">
                 <div
                   v-if="cell.span >= 3"
                   class="text-2xs font-semibold truncate"
-                  :class="cell.hasContent ? 'text-editor-accent' : 'text-editor-cell-empty-text'"
+                  :class="!cell.blockName ? 'text-editor-cell-empty-text' : ''"
+                  :style="cell.blockName ? { color: getBlockColor(cell.blockName) } : undefined"
                 >
-                  {{ cell.hasContent ? getEditorTranslation('filled') : getEditorTranslation('empty') }}
+                  {{ cell.blockName ? getBlockDisplayName(cell.blockName) : getEditorTranslation('empty') }}
                 </div>
-                <div class="text-3xs" :class="cell.hasContent ? 'text-editor-accent/60' : 'text-editor-cell-empty-sub'">
+                <div
+                  class="text-3xs"
+                  :class="!cell.blockName ? 'text-editor-cell-empty-sub' : ''"
+                  :style="cell.blockName ? { color: getBlockColor(cell.blockName, 0.7) } : undefined"
+                >
                   {{ cell.span }}/12
                 </div>
               </div>
@@ -65,7 +78,8 @@
             >
               <div
                 class="w-[3px] h-[22px] rounded-sm transition-colors"
-                :class="cell.hasContent ? 'bg-editor-accent/35' : 'bg-editor-cell-handle'"
+                :class="!cell.blockName ? 'bg-editor-cell-handle' : ''"
+                :style="cell.blockName ? { backgroundColor: getBlockColor(cell.blockName, 0.4) } : undefined"
               />
             </div>
           </div>
@@ -74,7 +88,7 @@
             v-if="row.free > 0"
             :style="{ flex: row.free }"
             class="p-[7px_5px] flex items-stretch cursor-pointer"
-            @click="onClickFree($event, row.free)"
+            @click="onClickFree($event, row)"
           >
             <div
               class="flex-1 border border-dashed border-editor-free-border rounded-md flex items-center justify-center text-editor-text-ghost text-sm transition-all duration-150 hover:border-editor-free-border-hover hover:text-editor-text-faint"
@@ -110,7 +124,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:column-widths': [widths: number[]];
   'click-add-row': [anchorEl: HTMLElement];
-  'add-free-column': [span: number, anchorEl: HTMLElement];
+  'add-free-column': [span: number, anchorEl: HTMLElement, insertIndex: number];
 }>();
 
 const { openAddBlockPopover } = useAddBlockPopover();
@@ -129,8 +143,9 @@ const onClickCell = (event: MouseEvent, colIndex: number) => {
   });
 };
 
-const onClickFree = (event: MouseEvent, span: number) => {
-  emit('add-free-column', span, event.currentTarget as HTMLElement);
+const onClickFree = (event: MouseEvent, row: GridRow) => {
+  const insertIndex = (row.cells.at(-1)?.colIndex ?? -1) + 1;
+  emit('add-free-column', row.free, event.currentTarget as HTMLElement, insertIndex);
 };
 
 const dragRef = ref<DragState | null>(null);
@@ -139,7 +154,7 @@ const startDrag = (event: PointerEvent, colIndex: number, span: number) => {
   if (!containerRef.value) return;
   const { width } = containerRef.value.getBoundingClientRect();
   dragRef.value = { colIndex, startX: event.clientX, startSpan: span, unitW: width / 12 };
-  (event.currentTarget as Element).setPointerCapture(event.pointerId);
+  containerRef.value.setPointerCapture(event.pointerId);
 };
 
 const onPointerMove = (event: PointerEvent) => {
@@ -153,7 +168,10 @@ const onPointerMove = (event: PointerEvent) => {
   }
 };
 
-const onPointerUp = () => {
+const onPointerUp = (event?: PointerEvent) => {
+  if (event && dragRef.value && containerRef.value) {
+    containerRef.value.releasePointerCapture(event.pointerId);
+  }
   dragRef.value = null;
 };
 </script>
