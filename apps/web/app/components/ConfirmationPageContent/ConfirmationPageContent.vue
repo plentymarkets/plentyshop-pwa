@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
+    <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="@max-md:w-full mt-6 mb-8" variant="secondary">
       {{ t('common.actions.continueShopping') }}
     </UiButton>
   </div>
