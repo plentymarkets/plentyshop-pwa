@@ -159,10 +159,10 @@ export const IconNode = Node.create({
 | Hook            | Purpose                                                                               | Tiptap docs                                                                                          |
 | --------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `addAttributes` | Declares persistent data stored per node                                              | [Attributes](https://tiptap.dev/docs/editor/extensions/custom-extensions/extend-existing#attributes) |
-| `parseHTML`     | CSS-selector rules that map existing HTML to this node on paste or load               | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#parsehtml)        |
-| `renderHTML`    | Returns the DOM structure written when serialising to HTML                            | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#renderhtml)      |
-| `addNodeView`   | Returns a live DOM element rendered in the editor canvas                              | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views)                 |
-| `addCommands`   | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new#commands)          |
+| `parseHTML`     | CSS-selector rules that map existing HTML to this node on paste or load               | [parseHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#parsehtml)        |
+| `renderHTML`    | Returns the DOM structure written when serialising to HTML                            | [renderHTML](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#renderhtml)      |
+| `addNodeView`   | Returns a live DOM element rendered in the editor canvas                              | [Node Views](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/node#addnodeview-advanced)                 |
+| `addCommands`   | Registers chainable commands callable as `editor.chain().focus().insertIcon(…).run()` | [Commands](https://tiptap.dev/docs/editor/extensions/custom-extensions/create-new/extension#addcommands)          |
 
 `renderHTML` and `addNodeView` serve different purposes: `renderHTML` controls the **saved HTML** output, while `addNodeView` controls the **live editor canvas** rendering. When both are defined, `addNodeView` takes precedence in the editor and `renderHTML` is used during HTML serialisation.
 
@@ -230,37 +230,87 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
 ## Step 3 — Integrate with the admin toolbar
 
-To expose your extension in the editor's admin panel, create a toolbar component. Because `useRichTextEditor` requires `modelValue`, `onUpdateModelValue`, and other arguments, toolbar components should **not** call it directly. Instead, receive the `editor` instance and any command helpers as props passed down from `RichTextEditor.vue`.
+### 3a — Add a toolbar icon
+
+Register a new entry in the `icons` record inside:
 
 ```
-apps/web/app/components/editor/RichTextEditor/MyExtensionToolbar.vue
+apps/web/app/components/editor/RichTextEditor/utils/icons.ts
 ```
+
+Each entry is either a single Material Symbols path string (for icons that fit the `0 -960 960 960` viewBox) or a `{ paths, viewBox }` object for icons with custom viewBoxes:
+
+The `Icon` type supports three forms — pick whichever matches your SVG source:
+
+```typescript
+// icons.ts
+
+// Option A — single path, default viewBox "0 -960 960 960":
+myFeature: 'M…path data…',
+
+// Option B — multiple paths, default viewBox:
+myFeature: ['M…path 1…', 'M…path 2…'],
+
+// Option C — multiple paths with a custom viewBox:
+myFeature: {
+  paths: ['M…path 1…', 'M…path 2…'],
+  viewBox: '0 0 48 48',
+},
+```
+
+The key you choose here is the `icon-name` value you will use in the next step.
+
+### 3b — Add the button to a toolbar component
+
+Open either `RichTextEditorBasicButtons.vue` (for core formatting actions) or `RichTextEditorExtendedButtons.vue` (for secondary/extended actions) and:
+
+1. Add your command function as a new prop.
+2. Render an `EditorRichTextEditorMenuButton` that calls it.
 
 ```vue
-<script setup lang="ts">
-import type { Editor } from '@tiptap/core';
+<!-- RichTextEditorExtendedButtons.vue (excerpt) -->
+<template>
+  <!-- ...existing buttons... -->
+  <EditorRichTextEditorMenuButton
+    :active="isActive('myNode')"
+    icon-name="myFeature"
+    @click="insertMyContent('someValue')"
+  />
+</template>
 
-const props = defineProps<{
-  editor: Editor | null;
+<script setup lang="ts">
+defineProps<{
+  // ...existing props...
+  isActive: (name: string) => boolean;
   insertMyContent: (value: string) => void;
 }>();
-
-const isActive = computed(() => props.editor?.isActive('myNode') ?? false);
 </script>
-
-<template>
-  <button type="button" :aria-pressed="isActive" @click="insertMyContent('someValue')">Insert content</button>
-</template>
 ```
 
-Then in `RichTextEditor.vue`, destructure the helper from `useRichTextEditor` and pass it to your toolbar component:
+`EditorRichTextEditorMenuButton` accepts `icon-name` (matching the key added in `icons.ts`) and `active` as declared props. The `active` boolean drives the pressed/highlighted state. Any other HTML button attributes — such as `disabled` — are passed through to the underlying `<button>` element via Vue's [fallthrough attribute](https://vuejs.org/guide/components/attrs) inheritance. See [Tiptap – isActive](https://tiptap.dev/docs/editor/api/editor#isactive) for details on the `isActive` helper.
+
+### 3c — Pass the command from `RichTextEditor.vue`
+
+`RichTextEditor.vue` is the parent that calls `useRichTextEditor` and passes helpers down as props. Destructure your new command and forward it to the toolbar component:
+
+```typescript
+// RichTextEditor.vue — <script setup>
+const {
+  // ...existing destructured values...
+  insertMyContent,
+} = useRichTextEditor(args);
+```
+
+Then forward it to the toolbar component in the template:
 
 ```vue
-<!-- RichTextEditor.vue (excerpt) -->
-<MyExtensionToolbar :editor="editor" :insert-my-content="insertMyContent" />
+<!-- RichTextEditor.vue — <template> (excerpt) -->
+<EditorRichTextEditorExtendedButtons
+  :cmd="cmd"
+  :is-active="isActive"
+  :insert-my-content="insertMyContent"
+/>
 ```
-
-`editor.isActive(name, attrs?)` reflects the current selection state and should drive the pressed/active style on the toolbar button. See [Tiptap – isActive](https://tiptap.dev/docs/editor/api/editor#isactive).
 
 ## Full data flow
 
@@ -269,11 +319,18 @@ helpers/myExtension.ts
         │
         ▼
 useRichTextEditor.ts  ──  useEditor({ extensions: [..., MyExtension] })
+        │                 exposes insertMyContent() in return value
+        ▼
+RichTextEditor.vue  ──  passes insertMyContent as prop
         │
         ▼
-Tiptap schema accepts new node/mark in the document
+RichTextEditorBasicButtons.vue
+  or RichTextEditorExtendedButtons.vue
+        │  EditorRichTextEditorMenuButton (icon-name from icons.ts)
+        │  calls insertMyContent() on click
         │
-        ├── editor.chain().focus().myCommand()  ◄──  toolbar component
+        ▼
+editor.chain().focus().myCommand().run()
         │
         ▼
 renderHTML / addNodeView produces DOM output
