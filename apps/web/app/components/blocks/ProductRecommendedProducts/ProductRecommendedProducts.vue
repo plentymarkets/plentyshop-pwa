@@ -31,6 +31,7 @@ const categoryId = productGetters.getCategoryIds(currentProduct.value)[0] ?? '';
 const shouldRenderAfterUpdate = ref(false);
 
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.meta.uuid);
+const { registerBlockVisibility } = useBlocksVisibility();
 
 const shouldShowSlider = computed(
   () =>
@@ -52,9 +53,10 @@ const contentSource = computed(() => ({
 
 watch(
   shouldFetch,
-  (visible) => {
+  async (visible) => {
     if (visible) {
-      fetchProductRecommended(contentSource.value);
+      const products = await fetchProductRecommended(contentSource.value);
+      registerBlockVisibility(props.meta.uuid, (products?.length ?? 0) > 0);
       shouldRenderAfterUpdate.value = true;
     }
   },
@@ -69,13 +71,14 @@ watch(
     () => props.content.source?.crossSellingRelation,
     () => locale.value,
   ],
-  () => {
+  async () => {
     if (
       shouldFetch.value &&
       ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
         (props.content.source?.categoryId && props.content.source?.type === 'category'))
     ) {
-      fetchProductRecommended(contentSource.value);
+      const products = await fetchProductRecommended(contentSource.value);
+      registerBlockVisibility(props.meta.uuid, (products?.length ?? 0) > 0);
     }
     shouldRenderAfterUpdate.value = true;
   },

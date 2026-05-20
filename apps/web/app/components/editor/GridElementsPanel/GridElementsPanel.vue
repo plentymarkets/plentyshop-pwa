@@ -26,12 +26,14 @@
           :is-grid-mode="isGridMode"
           :block-span="columnWidths[block.parent_slot ?? 0] ?? 0"
           :min-items-reached="minItemsReached"
+          :is-active="currentActiveBlockIndex === index"
           @insert-before="onInsertBefore"
           @edit-element="emit('edit-element', $event)"
           @replace-empty="onReplaceEmpty"
           @toggle-menu="toggleMenu"
           @toggle-visibility="onToggleVisibility"
           @delete="onDelete"
+          @select="selectBlock"
         />
       </template>
     </draggable>
@@ -40,17 +42,26 @@
       {{ getEditorTranslation('no-elements') }}
     </div>
 
-    <div class="px-3.5 py-2.5 border-t border-editor-border">
-      <button
-        ref="addButtonRef"
-        type="button"
-        data-testid="actions-add-block-button"
-        class="w-full py-1.5 rounded-md border border-editor-accent/40 flex items-center justify-center gap-1.5 text-xs text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
-        @click="props.customAdd ? emit('add-element') : onAddElement()"
-      >
-        <SfIconAdd size="xs" />
-        {{ getEditorTranslation('add-element') }}
-      </button>
+    <div class="border-t border-editor-border">
+      <div class="px-3.5 py-2.5">
+        <button
+          ref="addButtonRef"
+          type="button"
+          data-testid="actions-add-block-button"
+          class="w-full py-1.5 rounded-md border border-editor-accent/40 flex items-center justify-center gap-1.5 text-xs text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
+          @click="props.customAdd ? emit('add-element') : onAddElement()"
+        >
+          <SfIconAdd size="xs" />
+          {{ getEditorTranslation('add-element') }}
+        </button>
+      </div>
+
+      <EditorQuickAdd
+        v-if="!props.customAdd && (props.quickAddOptions?.length ?? 0) > 0"
+        :options="props.quickAddOptions ?? []"
+        :block-uuid="props.uuid"
+        class="pb-2.5"
+      />
     </div>
   </EditorFormPanel>
 </template>
@@ -96,6 +107,8 @@ const sortedItems = computed((): Block[] => {
   }
   return [...content];
 });
+
+const { currentActiveBlockIndex, selectBlock } = useBlocksHighlight(sortedItems);
 
 const localItems = ref<Block[]>([]);
 

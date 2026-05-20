@@ -11,10 +11,10 @@
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
         <i18n-t v-if="cookieJson.barDescription" :keypath="cookieJson.barDescription" scope="global">
           <template #legal
-            ><SfLink :tag="NuxtLink" :to="legalDisclosure">{{ t('CookieBar.legalDisclosure') }}</SfLink></template
+            ><UiLink :tag="NuxtLink" :to="legalDisclosure">{{ t('CookieBar.legalDisclosure') }}</UiLink></template
           >
           <template #policy
-            ><SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.privacyPolicy') }}</SfLink></template
+            ><UiLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.privacyPolicy') }}</UiLink></template
           >
         </i18n-t>
       </div>
@@ -79,14 +79,14 @@
                   </div>
                   <div class="w-3/4 break-words">
                     <template v-if="propKey === 'PrivacyPolicy'">
-                      <SfLink
+                      <UiLink
                         v-if="(cookie[propKey] as string).startsWith('http')"
                         :tag="NuxtLink"
                         target="_blank"
                         :to="cookie[propKey]"
-                        >{{ t('CookieBar.Privacy Settings') }}</SfLink
+                        >{{ t('CookieBar.Privacy Settings') }}</UiLink
                       >
-                      <SfLink v-else :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</SfLink>
+                      <UiLink v-else :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</UiLink>
                     </template>
                     <template v-else-if="getCookiePropertyValue(cookie, propKey)">
                       {{
@@ -100,23 +100,22 @@
               </div>
             </div>
           </div>
-          <SfLink
+          <UiLink
             tag="button"
-            size="sm"
             class="text-primary hover:underline"
             @click="cookieGroup.showMore = !cookieGroup.showMore"
           >
             {{ cookieGroup.showMore ? t('CookieBar.Show less') : t('CookieBar.More information') }}
-          </SfLink>
+          </UiLink>
         </div>
       </template>
     </div>
 
     <!-- Actions -->
     <div class="my-5 text-center">
-      <SfLink tag="button" class="text-base" @click="furtherSettingsOn = !furtherSettingsOn">
+      <UiLink tag="button" class="text-base" @click="furtherSettingsOn = !furtherSettingsOn">
         {{ furtherSettingsOn ? t('CookieBar.Back') : t('CookieBar.Further Settings') }}
-      </SfLink>
+      </UiLink>
     </div>
     <div class="flex flex-col gap-4 sm:flex-row">
       <UiButton
@@ -176,7 +175,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfCheckbox, SfIconBase, SfLink, SfTooltip } from '@storefront-ui/vue';
+import { SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import type { Cookie, CookieGroup } from '@plentymarkets/shop-core';
 const {
   cookieGroups,

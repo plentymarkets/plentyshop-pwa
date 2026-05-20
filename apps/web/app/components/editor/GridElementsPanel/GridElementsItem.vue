@@ -21,10 +21,11 @@
 
     <div
       data-el-item
-      class="group/el flex items-center gap-1.5 px-2 py-1.5 border-b border-editor-border transition-colors hover:bg-editor-toc-hover"
-      :class="{ 'bg-editor-toc-hover': menuOpen }"
+      class="group/el flex items-center gap-1.5 px-2 py-1.5 border-b border-editor-border transition-colors hover:bg-editor-toc-hover cursor-pointer"
+      :class="{ 'bg-editor-toc-hover': menuOpen || isActive }"
       @mouseenter="isHovered = true"
       @mouseleave="isHovered = false"
+      @click="emit('select', index)"
     >
       <button
         class="el-drag-handle cursor-grab text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0"
@@ -123,6 +124,7 @@ const props = defineProps<{
   isGridMode: boolean;
   blockSpan: number;
   minItemsReached: boolean;
+  isActive?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -132,6 +134,7 @@ const emit = defineEmits<{
   'toggle-menu': [uuid: string];
   'toggle-visibility': [block: Block];
   delete: [block: Block];
+  select: [index: number];
 }>();
 
 const isHovered = ref(false);

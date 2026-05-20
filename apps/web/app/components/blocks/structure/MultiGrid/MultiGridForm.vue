@@ -8,6 +8,7 @@
       <EditorGridElementsPanel
         v-model="elementsOpen"
         :uuid="resolvedUuid"
+        :quick-add-options="multiGridQuickAddOptions"
         @edit-element="editElement"
         @insert-before="handleInsertBefore"
       />
