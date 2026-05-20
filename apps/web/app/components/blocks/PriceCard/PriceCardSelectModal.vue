@@ -4,7 +4,7 @@
 
       <!-- Header -->
       <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
-        <h2 class="typography-headline-4 font-medium">Variables</h2>
+        <h2 class="typography-headline-4 font-medium">Properties</h2>
         <SfButton
           type="button"
           variant="tertiary"
