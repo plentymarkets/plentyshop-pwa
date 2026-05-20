@@ -8,9 +8,10 @@
 
 const BREAKPOINTS = ['2xl', 'xl', 'xs', 'sm', 'md', 'lg'];
 
-/** True if classStr contains a bare responsive prefix, e.g. "md:" but not "@md:". */
+/** True if classStr contains a bare responsive prefix, e.g. "md:" or "max-md:" but not "@md:" or "@max-md:". */
 function hasBareBreakpoint(classStr) {
-  return BREAKPOINTS.some((bp) => new RegExp(`(?<![\\w@])${bp}:`).test(classStr));
+  // The lookbehind (?<![\w@-]) ensures we don't match inside already-prefixed variants like @sm: or @max-sm:
+  return BREAKPOINTS.some((bp) => new RegExp(`(?<![\\w@-])(max-|min-)?${bp}:`).test(classStr));
 }
 
 /**
