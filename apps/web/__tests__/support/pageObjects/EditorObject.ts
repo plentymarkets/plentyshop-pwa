@@ -17,8 +17,8 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('edit-block-actions');
   }
 
-  get imageInMultiGridActions() {
-    return cy.getByTestId('Image-open-editor-button');
+  get multiGridEditButton() {
+    return cy.getByTestId('MultiGrid-open-editor-button');
   }
 
   get openEditorButton() {
@@ -413,7 +413,9 @@ export class EditorObject extends PageObject {
   }
 
   deleteBlockInGridColumn(column: number) {
-    this.imageInMultiGridActions.eq(column).should('exist').click({ force: true });
+    this.multiGridEditButton.first().should('exist').click({ force: true });
+    cy.wait(1000);
+    cy.get(`[data-testid="actions-edit-item-${column}"]`).should('exist').click({ force: true });
     cy.wait(1000);
     this.deleteFormBlockButton.should('exist').click();
     cy.wait(1000);

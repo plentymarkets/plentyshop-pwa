@@ -83,7 +83,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   openImageGroup() {
-    cy.get('[data-testid="slider-image-group"]').should('exist').click();
+    cy.get('[data-testid="slider-image-group-title"]').should('exist');
   }
 
   openImageSelector(imageType: string) {
@@ -116,11 +116,11 @@ export class BannerSliderObject extends PageObject {
   }
 
   closeImageGroup() {
-    cy.get('[data-testid="slider-image-group"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-image-group-title"]').scrollIntoView().should('be.visible');
   }
 
   openTextGroup() {
-    cy.get('[data-testid="banner-text-group"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-text-group-title"]').scrollIntoView().should('be.visible');
   }
 
   changeTexts() {
@@ -199,11 +199,11 @@ export class BannerSliderObject extends PageObject {
   }
 
   closeTextGroup() {
-    cy.get('[data-testid="banner-text-group"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-text-group-title"]').scrollIntoView().should('be.visible');
   }
 
   openButtonGroup() {
-    cy.get('[data-testid="slider-button-group-title"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-button-group-title"]').scrollIntoView().should('be.visible');
   }
 
   changeButtonLabelAndLink() {

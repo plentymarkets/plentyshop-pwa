@@ -9,9 +9,13 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
     cy.get('[data-testid="multi-grid-structure"]')
       .first()
-      .within(() => {
-        cy.get('[data-testid="Image-open-editor-button"]').first().should('exist').click({ force: true });
-      });
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-0"]').should('exist').click({ force: true });
     cy.get('[data-testid="image-group"]').should('exist').click();
   };
 
@@ -24,9 +28,13 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
     cy.get('[data-testid="multi-grid-structure"]')
       .first()
-      .within(() => {
-        cy.get('[data-testid="TextCard-open-editor-button"]').last().should('exist').click({ force: true });
-      });
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-1"]').should('exist').click({ force: true });
     cy.get('[data-testid="open-text-settings"]').should('exist').click();
   };
 
@@ -49,11 +57,11 @@ describe('Image Text Block Form', () => {
       .click()
       .type('{selectall}');
 
-    cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
+    cy.get('[data-testid="rte-font-color"]').find('button').first().scrollIntoView().click({ force: true });
 
     cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
 
-    cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
+    cy.get('[data-testid="rte-font-color"]').find('button').first().scrollIntoView().click({ force: true });
 
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
@@ -68,21 +76,21 @@ describe('Image Text Block Form', () => {
       .click()
       .type('{selectall}');
 
-    cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-center"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
       .find('p')
       .first()
       .should('have.css', 'text-align', 'center');
 
-    cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-right"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
       .find('p')
       .first()
       .should('have.css', 'text-align', 'right');
 
-    cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-left"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
       .find('p')
