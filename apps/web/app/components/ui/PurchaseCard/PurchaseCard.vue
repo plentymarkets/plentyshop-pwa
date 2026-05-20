@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="flex justify-between items-center py-1">
-                  <span class="text-neutral-500 font-medium">Hersteller</span>
+                  <span class="text-neutral-500 font-medium">Hersteller </span>
                   <span class="text-neutral-900 font-bold">{{ manufacturerName || '—' }}</span>
                 </div>
 
