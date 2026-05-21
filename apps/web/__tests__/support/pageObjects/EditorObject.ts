@@ -248,16 +248,16 @@ export class EditorObject extends PageObject {
     this.contentBlockWrappers.first().within(() => {
       this.topBlockButton
         .should('exist')
-        .and('have.class', 'group-hover:opacity-100')
-        .and('have.class', 'group-focus:opacity-100');
+        .and('have.class', 'group-hover/block:opacity-100')
+        .and('have.class', 'group-focus-within/block:opacity-100');
       this.bottomBlockButton
         .should('exist')
-        .and('have.class', 'group-hover:opacity-100')
-        .and('have.class', 'group-focus:opacity-100');
+        .and('have.class', 'group-hover/block:opacity-100')
+        .and('have.class', 'group-focus-within/block:opacity-100');
       this.editBlockActions
         .should('exist')
-        .and('have.class', 'group-hover:opacity-100')
-        .and('have.class', 'group-focus:opacity-100');
+        .and('have.class', 'group-hover/block:opacity-100')
+        .and('have.class', 'group-focus-within/block:opacity-100');
     });
   }
 
@@ -326,7 +326,11 @@ export class EditorObject extends PageObject {
 
   checkFirstBlock() {
     this.contentBlockWrappers.first().within(() => {
-      this.topMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+      this.topMoveBlockButton
+        .first()
+        .should('exist')
+        .and('be.disabled')
+        .and('have.class', 'disabled:cursor-not-allowed');
     });
   }
 
@@ -339,7 +343,11 @@ export class EditorObject extends PageObject {
         }
       });
       cy.wrap($blocks[lastNonFooterIndex]).within(() => {
-        this.bottomMoveBlockButton.first().should('exist').and('be.disabled').and('have.class', 'cursor-not-allowed');
+        this.bottomMoveBlockButton
+          .first()
+          .should('exist')
+          .and('be.disabled')
+          .and('have.class', 'disabled:cursor-not-allowed');
       });
     });
   }
