@@ -7,6 +7,18 @@ export type OldContent = {
   text: object;
 };
 
+const defaultLayout: ProductRecommendedProductsContent['layout'] = {
+  fullWidth: false,
+  marginTop: 0,
+  marginBottom: 0,
+  marginLeft: 0,
+  marginRight: 0,
+  paddingTop: 0,
+  paddingBottom: 0,
+  paddingLeft: 0,
+  paddingRight: 0,
+};
+
 function isNewContent(
   content: OldContent | ProductRecommendedProductsContent,
 ): content is ProductRecommendedProductsContent {
@@ -18,7 +30,13 @@ export function migrateRecommendedContent(
   content: OldContent | ProductRecommendedProductsContent,
 ): ProductRecommendedProductsContent {
   if (isNewContent(content)) {
-    return content;
+    return {
+      ...content,
+      layout: {
+        ...defaultLayout,
+        ...(content.layout || {}),
+      },
+    };
   }
 
   const old = content as OldContent;
@@ -33,5 +51,6 @@ export function migrateRecommendedContent(
       crossSellingRelation: 'Similar',
     },
     text: (old.text || {}) as ProductRecommendedProductsContent['text'],
+    layout: defaultLayout,
   };
 }
