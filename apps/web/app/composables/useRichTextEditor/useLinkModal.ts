@@ -1,18 +1,45 @@
 import type { Editor } from '@tiptap/core';
-import type { Node as PmNode } from '@tiptap/pm/model';
+import type { Mark as PmMark, Node as PmNode } from '@tiptap/pm/model';
 import { NodeSelection } from '@tiptap/pm/state';
 import { validateUrl } from '~/composables/useRichTextEditor/helpers/url.helper';
 import type { LinkModalLinkAttrs } from '~/composables/useRichTextEditor/types';
 
+const rangeContainsInlineAtoms = (doc: PmNode, from: number, to: number): boolean => {
+  let found = false;
+  doc.nodesBetween(from, to, (n) => {
+    if (!found && n.isAtom && n.isInline) found = true;
+    return !found;
+  });
+  return found;
+};
+
+const isAtomNode = (n: PmNode) => n.type.name === 'icon' || n.type.name === 'emoji';
+
 const rangeContainsAtoms = (doc: PmNode, from: number, to: number) => {
   let found = false;
   doc.nodesBetween(from, to, (n) => {
-    if (!found && n.isAtom && n.isInline) {
+    if (!found && isAtomNode(n)) {
       found = true;
     }
     return !found;
   });
   return found;
+};
+
+const getLinkMark = (editor: Editor, from: number, to: number): PmMark | undefined => {
+  // Range selection: scan nodes in range
+  if (from !== to) {
+    let found: PmMark | undefined;
+    editor.state.doc.nodesBetween(from, to, (n) => {
+      if (!found) found = n.marks.find((m) => m.type.name === 'link');
+      return !found;
+    });
+    if (found) return found;
+  }
+  // Collapsed cursor or fallback: check marks at cursor position
+  const sel = editor.state.selection;
+  const marks = [...(editor.state.storedMarks ?? []), ...sel.$from.marks()];
+  return marks.find((m) => m.type.name === 'link');
 };
 
 const getLinkAttrsFromRange = (doc: PmNode, from: number, to: number) => {
@@ -41,6 +68,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const linkText = ref('');
   const isAtomSelection = ref(false);
   const isInlineAtomNodeSelection = ref(false);
+  const selectionContainsInlineAtoms = ref(false);
   const isInitializing = ref(false);
   const originalAtomLinkAttrs = ref<{ href: string; target: string } | null>(null);
   const atomDisplayLabel = ref<string | null>(null);
@@ -78,23 +106,29 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     const sel = editor.value.state.selection;
     const { from, to } = sel;
     initialSelection.value = { from, to };
-    linkText.value = selectedText.value;
-    initialText.value = selectedText.value;
 
-    const attrs = editor.value.getAttributes('link') as LinkModalLinkAttrs;
-    initialLinkAttrs.value = {
-      href: attrs.href,
-      target: attrs.target,
-      'data-link-type': attrs['data-link-type'],
-      'data-link-value': attrs['data-link-value'],
-      'data-link-path': attrs['data-link-path'],
-    };
     const isNodeSel = sel instanceof NodeSelection;
-    const isInlineAtomNodeSel = isNodeSel && (sel as NodeSelection).node.isAtom && (sel as NodeSelection).node.isInline;
+    const isInlineAtomNodeSel =
+      isNodeSel && (sel as NodeSelection).node.type.name === 'icon';
     isInlineAtomNodeSelection.value = isInlineAtomNodeSel;
-    isAtomSelection.value = false;
+    isAtomSelection.value = isInlineAtomNodeSel || rangeContainsAtoms(editor.value.state.doc, from, to);
+
     if (!isAtomSelection.value) {
-      linkText.value = initialText.value = selectedText.value;
+      selectionContainsInlineAtoms.value = rangeContainsInlineAtoms(editor.value.state.doc, from, to);
+      linkText.value = selectedText.value;
+      initialText.value = selectedText.value;
+
+      const rawAttrs = (getLinkMark(editor.value, from, to)?.attrs ?? {}) as LinkModalLinkAttrs;
+      const attrs: LinkModalLinkAttrs = {
+        href: rawAttrs.href,
+        target: rawAttrs.target,
+        'data-link-type': rawAttrs['data-link-type'],
+        'data-link-value': rawAttrs['data-link-value'],
+        'data-link-path': rawAttrs['data-link-path'],
+      };
+
+      initialLinkAttrs.value = attrs;
+
       if (attrs.href) {
         openInNewWindow.value = attrs.target === '_blank';
 
@@ -126,25 +160,41 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
           }
         }
       }
+
       nextTick(() => {
         isInitializing.value = false;
       });
-      const node = isInlineAtomNodeSel ? (sel as NodeSelection).node : null;
-      atomDisplayLabel.value = node
-        ? `${(node.attrs.name as string) ?? node.type.name} [${node.type.name === 'emoji' ? 'emoji' : 'icon'}]`
-        : 'generic-atom-text';
-      const linkMark = node?.marks.find((m) => m.type.name === 'link');
-      originalAtomLinkAttrs.value = linkMark
-        ? { href: linkMark.attrs.href as string, target: linkMark.attrs.target as string }
-        : isNodeSel
-          ? null
-          : getLinkAttrsFromRange(editor.value.state.doc, from, to);
-      if (originalAtomLinkAttrs.value) {
-        urlValue.value = originalAtomLinkAttrs.value.href;
-        openInNewWindow.value = originalAtomLinkAttrs.value.target === '_blank';
-      }
-      isInitializing.value = false;
+      return;
     }
+
+    const node = isInlineAtomNodeSel ? (sel as NodeSelection).node : null;
+
+    let rangeAtomNode: PmNode | null = null;
+    if (!node) {
+      const atomsInRange: PmNode[] = [];
+      editor.value.state.doc.nodesBetween(from, to, (n) => {
+        if (isAtomNode(n)) atomsInRange.push(n);
+      });
+      const pureAtomSelection = editor.value.state.doc.textBetween(from, to, ' ').trim().length === 0;
+      if (atomsInRange.length === 1 && pureAtomSelection) rangeAtomNode = atomsInRange[0] ?? null;
+    }
+
+    const displayNode = node ?? rangeAtomNode;
+    atomDisplayLabel.value = displayNode
+      ? `${(displayNode.attrs.name as string) ?? displayNode.type.name} [${displayNode.type.name === 'emoji' ? 'emoji' : 'icon'}]`
+      : 'Content with icon(s)';
+    const linkMark = node?.marks.find((m) => m.type.name === 'link')
+      ?? rangeAtomNode?.marks.find((m) => m.type.name === 'link');
+    originalAtomLinkAttrs.value = linkMark
+      ? { href: linkMark.attrs.href as string, target: linkMark.attrs.target as string }
+      : isInlineAtomNodeSel
+        ? null
+        : getLinkAttrsFromRange(editor.value.state.doc, from, to);
+    if (originalAtomLinkAttrs.value) {
+      urlValue.value = originalAtomLinkAttrs.value.href;
+      openInNewWindow.value = originalAtomLinkAttrs.value.target === '_blank';
+    }
+    isInitializing.value = false;
   };
 
   const applyAtomLink = (href: string, target: string) => {
@@ -168,6 +218,30 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       applyAtomLink(href, target);
       return;
     }
+
+    const buildLinkAttrs = (): ({ href: string; target: string } & LinkModalLinkAttrs) | null => {
+      if (!href) return null;
+      const attrs: { href: string; target: string } & LinkModalLinkAttrs = { href, target };
+      attrs['data-link-type'] = activeTab.value;
+      if (activeTab.value === 'url') {
+        attrs['data-link-value'] = urlValue.value.trim();
+      } else if (activeTab.value === 'static') {
+        attrs['data-link-value'] = staticPageValue.value;
+      } else if (activeTab.value === 'category') {
+        if (categoryValue.value) attrs['data-link-value'] = categoryValue.value;
+        if (selectedCategoryPath.value) attrs['data-link-path'] = selectedCategoryPath.value;
+      }
+      return attrs;
+    };
+
+    if (selectionContainsInlineAtoms.value) {
+      const chain = editor.value.chain().setTextSelection(initialSelection.value);
+      const linkAttrs = buildLinkAttrs();
+      linkAttrs ? chain.setLink(linkAttrs) : chain.unsetLink();
+      chain.run();
+      return;
+    }
+
     const text = linkText.value.trim() || initialText.value;
     const { from } = initialSelection.value;
     const chain = editor.value.chain();
@@ -178,28 +252,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
     chain.setTextSelection(initialSelection.value);
 
-    if (href) {
-      const linkAttrs: { href: string; target: string } & LinkModalLinkAttrs = { href, target };
-
-      linkAttrs['data-link-type'] = activeTab.value;
-
-      if (activeTab.value === 'url') {
-        linkAttrs['data-link-value'] = urlValue.value.trim();
-      } else if (activeTab.value === 'static') {
-        linkAttrs['data-link-value'] = staticPageValue.value;
-      } else if (activeTab.value === 'category') {
-        if (categoryValue.value) {
-          linkAttrs['data-link-value'] = categoryValue.value;
-        }
-        if (selectedCategoryPath.value) {
-          linkAttrs['data-link-path'] = selectedCategoryPath.value;
-        }
-      }
-
-      chain.setLink(linkAttrs);
-    } else {
-      chain.unsetLink();
-    }
+    const linkAttrs = buildLinkAttrs();
+    linkAttrs ? chain.setLink(linkAttrs) : chain.unsetLink();
 
     chain.run();
   };
@@ -228,6 +282,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const handleSubmit = (onClose: () => void) => {
     if (!canSubmit.value || !editor.value) return;
+    applyLivePreview();
     onClose();
   };
 
@@ -236,6 +291,21 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       if (isAtomSelection.value) {
         const attrs = originalAtomLinkAttrs.value;
         applyAtomLink(attrs?.href ?? '', attrs?.target ?? '_self');
+      } else if (selectionContainsInlineAtoms.value) {
+        const chain = editor.value.chain().setTextSelection(initialSelection.value);
+        if (initialLinkAttrs.value?.href) {
+          const revertAttrs: { href: string; target?: string } & LinkModalLinkAttrs = {
+            href: initialLinkAttrs.value.href,
+            target: initialLinkAttrs.value.target,
+            'data-link-type': initialLinkAttrs.value['data-link-type'],
+            'data-link-value': initialLinkAttrs.value['data-link-value'],
+            'data-link-path': initialLinkAttrs.value['data-link-path'],
+          };
+          chain.setLink(revertAttrs);
+        } else {
+          chain.unsetLink();
+        }
+        chain.run();
       } else {
         const { from } = initialSelection.value;
         const to = from + initialText.value.length;
