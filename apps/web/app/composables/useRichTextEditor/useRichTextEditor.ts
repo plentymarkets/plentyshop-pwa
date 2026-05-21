@@ -26,7 +26,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   let isReady = false;
 
-
   const editor = useEditor({
     content: args.modelValue.value ?? '',
     extensions: [
