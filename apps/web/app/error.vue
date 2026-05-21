@@ -25,6 +25,11 @@ const { data: categoryTree } = useCategoryTree();
 const { buildCategoryMenuLink } = useLocalization();
 const { getSetting: getHomepageCategoryId } = useSiteSettings('homepageCategoryId');
 
+const normalizeInternalPath = (path: string) => {
+  const sanitized = path.replace(/\/+/g, '/').replace(/^\/+/g, '');
+  return sanitized ? `/${sanitized}` : '/';
+};
+
 const findCategoryById = (items: CategoryTreeItem[], targetId: number): CategoryTreeItem | null => {
   for (const item of items) {
     if (categoryTreeGetters.getId(item) === targetId) {
@@ -48,11 +53,11 @@ const getHomepageRedirectPath = () => {
   if (!Number.isNaN(homepageCategoryId) && homepageCategoryId > 0 && categoryTree.value.length) {
     const homepageCategory = findCategoryById(categoryTree.value, homepageCategoryId);
     if (homepageCategory) {
-      return localePath(buildCategoryMenuLink(homepageCategory, categoryTree.value));
+      return normalizeInternalPath(localePath(buildCategoryMenuLink(homepageCategory, categoryTree.value)));
     }
   }
 
-  return localePath(paths.home);
+  return normalizeInternalPath(localePath(paths.home));
 };
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
