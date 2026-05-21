@@ -140,7 +140,7 @@ const buttonLabel = 'Insert a new block at this position.';
 
 const addBlockButtonBase = [
   'add-block-button no-drag',
-  'absolute left-1/2 -translate-x-1/2 z-[0] md:z-[1] lg:z-[40]',
+  'absolute left-1/2 -translate-x-1/2 z-[0] @md:z-[1] @lg:z-[40]',
   'flex items-center justify-center w-7 h-7 rounded-full p-0 border-0',
   'bg-editor-block-selected text-white shadow-add-block-btn',
   'opacity-0 scale-90',

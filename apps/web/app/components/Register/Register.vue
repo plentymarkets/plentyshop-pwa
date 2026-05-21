@@ -24,7 +24,7 @@
   </div>
 
   <div class="flex items-center justify-center my-1">
-    <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="onSubmit">
+    <form class="flex flex-col gap-4 p-2 @md:p-6 rounded-md w-full @md:w-[400px]" @submit.prevent="onSubmit">
       <label>
         <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput

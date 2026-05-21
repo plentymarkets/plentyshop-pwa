@@ -1,7 +1,7 @@
 <template>
-  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-10">
+  <header ref="referenceRef" :class="headerClass" class="relative w-full @md:sticky @md:shadow-md z-10">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      class="flex justify-between items-center flex-wrap @md:flex-nowrap px-4 @md:px-10 py-2 @md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
@@ -21,7 +21,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full @lg:w-48 items-center mr-auto text-white @md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -84,7 +84,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
+            class="hidden @md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
             @keydown.down="navigateDropdownItems($event, 'down')"

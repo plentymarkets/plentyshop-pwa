@@ -35,7 +35,7 @@
     </div>
 
     <slot v-if="showDivider">
-      <UiDivider class="col-span-3 mx-4 !w-auto md:mx-0 mt-1 mb-4" />
+      <UiDivider class="col-span-3 mx-4 !w-auto @md:mx-0 mt-1 mb-4" />
     </slot>
   </div>
 </template>

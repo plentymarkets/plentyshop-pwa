@@ -5,8 +5,8 @@
     :back-label-mobile="t('common.actions.back')"
     :heading="t('common.labels.checkout')"
   >
-    <div class="md:w-full md:flex md:justify-center">
-      <div class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-2/3 lg:w-1/2 3xl:w-2/5">
+    <div class="@md:w-full @md:flex @md:justify-center">
+      <div class="flex flex-col gap-4 p-2 @md:p-6 rounded-md w-full @md:w-2/3 @lg:w-1/2 @3xl:w-2/5">
         <h2 class="font-bold text-lg">{{ t('checkout.guestCheckout') }}</h2>
 
         <UiButton
@@ -64,7 +64,7 @@
         v-if="isAuthenticationOpen"
         v-model="isAuthenticationOpen"
         tag="section"
-        class="h-full w-full overflow-auto md:w-[500px] md:h-fit"
+        class="h-full w-full overflow-auto @md:w-[500px] @md:h-fit"
       >
         <header>
           <UiButton

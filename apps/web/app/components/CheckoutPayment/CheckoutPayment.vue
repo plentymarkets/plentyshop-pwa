@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="md:mx-4 my-6" data-testid="checkout-payment">
+  <fieldset class="@md:mx-4 my-6" data-testid="checkout-payment">
     <legend class="text-neutral-900 text-lg font-bold mb-4">{{ t('checkout.payment.heading') }}</legend>
     <div v-if="paymentMethods?.list && paymentMethods.list.length > 0" class="grid gap-4 grid-cols-2">
       <label v-for="paymentMethod in paymentMethods.list" :key="paymentMethod.id" class="relative">
@@ -33,7 +33,7 @@
     </div>
     <div
       v-else
-      class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md"
+      class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md"
       data-testid="no-payment-method-available"
     >
       <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
