@@ -142,9 +142,6 @@ const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
 const { deleteBlock, isLastNonFooterBlock, isFirstContentBlock } = useBlockManager();
 
-// Visual structure shared by every pill button. `cursor-*` and `no-drag` are
-// NOT here — they're set per variant because the drag handle needs `cursor-grab`
-// and must NOT have `no-drag` (vuedraggable filters those out from being drag triggers).
 const buttonStructure = [
   'w-7 h-7 rounded-full border-0 p-0 shrink-0',
   'inline-flex items-center justify-center leading-none',
@@ -163,8 +160,7 @@ const dangerInteraction =
 
 const primaryButtonClasses = `${buttonStructure} ${primaryInteraction} cursor-pointer no-drag`;
 const dangerButtonClasses = `${buttonStructure} ${dangerInteraction} cursor-pointer no-drag`;
-// Drag handle: same primary hover feedback, but `drag-handle` (the vuedraggable trigger)
-// and NO `no-drag` so it actually starts a drag.
+
 const dragButtonClasses = `${buttonStructure} ${primaryInteraction} cursor-grab active:cursor-grabbing drag-handle`;
 
 const dividerClasses = 'inline-block w-px h-3.5 bg-slate-900/10 mx-0.5';
