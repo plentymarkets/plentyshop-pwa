@@ -86,6 +86,9 @@ export default {
           'toc-highlight': '#E6F0FF',
           'toc-hover': '#F5FAFF',
           'toc-selected': '#538AEA',
+          'block-selected': '#1D5EC7',
+          'block-selected-hover': '#1650AA',
+          danger: '#CC3333',
           'icon-hover': 'rgba(6, 38, 51, 0.08)',
           'text-strong': '#1a1a1a',
           'text-default': '#444444',
@@ -129,6 +132,21 @@ export default {
       },
       backgroundImage: {
         'editor-hatched': 'repeating-linear-gradient(45deg, #fafafa 0, #fafafa 6px, transparent 6px, transparent 12px)',
+      },
+      boxShadow: {
+        'block-actions':
+          '0 10px 28px -10px rgba(15, 23, 42, 0.22), 0 4px 10px -4px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        'block-actions-hover':
+          '0 14px 36px -10px rgba(15, 23, 42, 0.3), 0 6px 14px -4px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        'block-action-btn': '0 2px 8px -2px rgba(29, 94, 199, 0.25)',
+        'block-action-btn-danger': '0 2px 8px -2px rgba(204, 51, 51, 0.25)',
+        'add-block-btn': '0 2px 8px rgba(29, 94, 199, 0.3)',
+        'add-block-btn-hover': '0 4px 14px rgba(29, 94, 199, 0.45)',
+        'block-outline': '0 0 0 1px rgba(255, 255, 255, 0.95), inset 0 0 0 1px rgba(255, 255, 255, 0.95)',
+        'block-outline-selected': '0 0 0 1.5px white, inset 0 0 0 1.5px white',
+      },
+      transitionTimingFunction: {
+        'editor-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],

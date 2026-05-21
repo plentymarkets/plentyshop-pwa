@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isEnabled && options.length" class="flex flex-wrap justify-center gap-1.5 px-4 pt-3">
+  <div v-if="isEnabled && options.length" class="flex flex-wrap justify-center gap-1.5 px-4">
     <button
       v-for="option in options"
       :key="option.blockName"
