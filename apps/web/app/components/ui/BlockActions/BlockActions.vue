@@ -3,8 +3,8 @@
     :class="[
       'absolute',
       'z-[0]',
-      'md:z-[1]',
-      'lg:z-[40]',
+      '@md:z-[1]',
+      '@lg:z-[40]',
       'space-x-3',
       'p-2',
       'shadow-md',

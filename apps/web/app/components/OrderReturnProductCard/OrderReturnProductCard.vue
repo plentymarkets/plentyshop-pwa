@@ -1,12 +1,12 @@
 <template>
   <div
     v-if="displayItem"
-    class="flex flex-col sm:flex-none border-t-[1px] border-neutral-200 hover:shadow-lg last:mb-0 px-2 py-4"
+    class="flex flex-col @sm:flex-none border-t-[1px] border-neutral-200 hover:shadow-lg last:mb-0 px-2 py-4"
     data-testid="cart-product-card"
   >
-    <div class="md:flex flex-none p-2 w-full">
-      <div class="flex md:flex-none w-full md:w-2/3">
-        <div class="rounded-md w-[180px] sm:w-[176px] md:w-1/3">
+    <div class="@md:flex flex-none p-2 w-full">
+      <div class="flex @md:flex-none w-full @md:w-2/3">
+        <div class="rounded-md w-[180px] @sm:w-[176px] @md:w-1/3">
           <UiLink
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
@@ -40,12 +40,12 @@
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
             variant="secondary"
-            class="no-underline sm:typography-text-lg"
+            class="no-underline @sm:typography-text-lg"
           >
             {{ orderGetters.getItemName(orderItem) }}
           </UiLink>
-          <div class="mt-2 md:mb-2">
-            <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
+          <div class="mt-2 @md:mb-2">
+            <ul class="text-xs leading-5 @sm:typography-text-sm text-neutral-700">
               <li>
                 <span class="font-bold mr-2">{{ t('account.ordersAndReturns.orderDetails.price') }}:</span>
                 <span>{{ format(orderGetters.getItemPrice(orderItem)) }}</span>
@@ -65,8 +65,8 @@
         </div>
       </div>
 
-      <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-1/3">
-        <div class="w-full md:self-end">
+      <div class="w-full @md:flex @md:flex-col mt-4 @md:mt-0 @md:w-1/3">
+        <div class="w-full @md:self-end">
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ t('returns.returnReason') }} </span>
             <SfSelect
@@ -84,7 +84,7 @@
           </label>
         </div>
 
-        <div v-if="hasProductDetails" class="my-2 w-full md:self-end">
+        <div v-if="hasProductDetails" class="my-2 w-full @md:self-end">
           <div class="border border-neutral-200 rounded-md divide-y text-neutral-900">
             <SfAccordionItem :model-value="opened" @update:model-value="toggleDropdown">
               <template #summary>
