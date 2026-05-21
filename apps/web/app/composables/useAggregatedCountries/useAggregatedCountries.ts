@@ -3,7 +3,6 @@ import type {
   AggregatedCountries,
   ApiError,
   GeoRegulatedCountry,
-  Country,
 } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
@@ -51,8 +50,8 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     state.value.loading = false;
   };
 
-  const setCountries = (defaultCountries: Country[], geoRegulatedCountries: GeoRegulatedCountry[]) => {
-    state.value.default = defaultCountries as ActiveShippingCountry[];
+  const setCountries = (defaultCountries: ActiveShippingCountry[], geoRegulatedCountries: GeoRegulatedCountry[]) => {
+    state.value.default = defaultCountries;
     state.value.geoRegulated = geoRegulatedCountries;
   };
 

@@ -1,4 +1,4 @@
-import type { ActiveShippingCountry, Country, GeoRegulatedCountry } from '@plentymarkets/shop-api';
+import type { ActiveShippingCountry, GeoRegulatedCountry } from '@plentymarkets/shop-api';
 import { useAggregatedCountries } from '../useAggregatedCountries';
 import { ActiveShippingCountryList } from './mocks/ActiveShippingCountriesMock';
 import countryList from '../../../../__tests__/fixtures/postCodeMapper.json';
@@ -30,7 +30,7 @@ describe('useAggregatedCountries', () => {
   describe('saving countries from the API', () => {
     it('should store the default shipping countries', () => {
       const { setCountries, default: defaultCountries } = useAggregatedCountries();
-      setCountries([Austria as Country], []);
+      setCountries([Austria], []);
       expect(defaultCountries.value).toEqual([Austria]);
     });
 
@@ -44,14 +44,20 @@ describe('useAggregatedCountries', () => {
   describe('looking up a country name by ID', () => {
     it('should return the display name for a known country', () => {
       const { setCountries, localeCountryName } = useAggregatedCountries();
-      setCountries([Austria as Country], []);
+      setCountries([Austria], []);
       expect(localeCountryName(String(Austria.id))).toBe(Austria.currLangName);
     });
 
     it('should return the localized name, not the default English name', () => {
-      const germany = { id: 1, name: 'Germany', currLangName: 'Deutschland', isoCode2: 'DE', states: [] } as Country;
+      const Germany = {
+        id: 1,
+        name: 'Germany',
+        currLangName: 'Deutschland',
+        isoCode2: 'DE',
+        states: [],
+      } as unknown as ActiveShippingCountry;
       const { setCountries, localeCountryName } = useAggregatedCountries();
-      setCountries([germany], []);
+      setCountries([Germany], []);
       expect(localeCountryName('1')).toBe('Deutschland');
       expect(localeCountryName('1')).not.toBe('Germany');
     });
@@ -70,12 +76,8 @@ describe('useAggregatedCountries', () => {
   describe('looking up a country ISO code by ID', () => {
     it('should return the lowercase ISO code for a known country', () => {
       const { setCountries, getCountryIsoCode } = useAggregatedCountries();
-      setCountries([Austria as Country], []);
+      setCountries([Austria], []);
       expect(getCountryIsoCode(String(Austria.id))).toBe('at');
-    });
-
-    it('should return an empty string for an unknown country ID', () => {
-      const { getCountryIsoCode } = useAggregatedCountries();
       expect(getCountryIsoCode('9999')).toBe('');
     });
   });
