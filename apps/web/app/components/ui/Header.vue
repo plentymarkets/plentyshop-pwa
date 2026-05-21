@@ -17,7 +17,7 @@
         <img
           src="/_nuxt-plenty/images/image009-2.png"
           alt="Banner"
-          class="h-[34px] lg:h-[42px] min-[1152px]:h-[48px] min-[1280px]:h-[68px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[54px] lg:max-w-[68px] min-[1152px]:max-w-[78px] min-[1280px]:max-w-[100px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+          class="h-[36px] lg:h-[44px] min-[1152px]:h-[50px] min-[1280px]:h-[74px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[58px] lg:max-w-[72px] min-[1152px]:max-w-[84px] min-[1280px]:max-w-[112px] min-[1367px]:max-w-[172px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
       </div>
 
@@ -38,13 +38,13 @@
           <img
             src="/_nuxt-plenty/images/image010.png"
             alt="Ankaufsformular"
-            class="h-[38px] lg:h-[48px] min-[1152px]:h-[56px] min-[1280px]:h-[76px] min-[1367px]:h-[105px] max-w-[58px] lg:max-w-[74px] min-[1152px]:max-w-[86px] min-[1280px]:max-w-[116px] min-[1367px]:max-w-[160px] w-auto object-contain transition-all duration-300"
+            class="h-[40px] lg:h-[50px] min-[1152px]:h-[58px] min-[1280px]:h-[84px] min-[1367px]:h-[110px] max-w-[62px] lg:max-w-[78px] min-[1152px]:max-w-[90px] min-[1280px]:max-w-[128px] min-[1367px]:max-w-[172px] w-auto object-contain transition-all duration-300"
           />
         </NuxtLink>
 
         <div class="flex flex-col items-end justify-center gap-0 lg:gap-1 flex-shrink-0">
           <nav
-            class="flex flex-row flex-nowrap items-center transform scale-[0.55] lg:scale-[0.6] min-[1152px]:scale-[0.68] min-[1280px]:scale-[0.84] min-[1367px]:scale-100 origin-right transition-transform duration-300"
+            class="flex flex-row flex-nowrap items-center gap-0.5"
           >
             <div class="mr-3"><GoogleTranslate /></div>
 
