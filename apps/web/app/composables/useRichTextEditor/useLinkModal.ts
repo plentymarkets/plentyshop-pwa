@@ -83,7 +83,9 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     const linkMark = node?.marks.find((m) => m.type.name === 'link');
     originalAtomLinkAttrs.value = linkMark
       ? { href: linkMark.attrs.href as string, target: linkMark.attrs.target as string }
-      : isNodeSel ? null : getLinkAttrsFromRange(editor.value.state.doc, from, to);
+      : isNodeSel
+        ? null
+        : getLinkAttrsFromRange(editor.value.state.doc, from, to);
     if (originalAtomLinkAttrs.value) {
       urlValue.value = originalAtomLinkAttrs.value.href;
       openInNewWindow.value = originalAtomLinkAttrs.value.target === '_blank';

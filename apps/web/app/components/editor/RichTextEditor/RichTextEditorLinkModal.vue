@@ -41,7 +41,10 @@
             <label class="block text-xs font-medium text-gray-600 mb-1.5">
               {{ getEditorTranslation('text-label') }}
             </label>
-            <p v-if="isAtomSelection" class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500">
+            <p
+              v-if="isAtomSelection"
+              class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
+            >
               {{ atomDisplayLabel }}
             </p>
             <input
