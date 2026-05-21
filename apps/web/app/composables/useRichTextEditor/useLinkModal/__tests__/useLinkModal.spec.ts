@@ -44,7 +44,7 @@ const createEditor = (
     cursorMarks?: object[];
     storedMarks?: object[] | null;
   } = {},
-) => {
+): { editor: Editor | null | undefined; chain: ChainMock } => {
   const { from = 0, to = 0, textBetween = '', nodesInRange = [], cursorMarks = [], storedMarks = null } = opts;
   const chain = createChain();
   const editor = {
@@ -65,6 +65,8 @@ const createEditor = (
   return { editor, chain };
 };
 
+const makeEditorRef = (e: Editor | null | undefined) => shallowRef(e);
+
 describe('useLinkModal', () => {
   beforeEach(() => {
     mockGetCorrectPreviewPathWithLocale.mockImplementation((path: string) => path);
@@ -73,7 +75,7 @@ describe('useLinkModal', () => {
   describe('initFromEditor', () => {
     it('should set empty state for a cursor position with no link', async () => {
       const { editor } = createEditor();
-      const { linkText, urlValue, activeTab, isAtomSelection, initFromEditor } = useLinkModal(ref(editor));
+      const { linkText, urlValue, activeTab, isAtomSelection, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -100,7 +102,7 @@ describe('useLinkModal', () => {
         textBetween: 'hello world',
         nodesInRange: [{ type: { name: 'text' }, marks: [linkMark], isAtom: false, isInline: false, attrs: {} }],
       });
-      const { linkText, urlValue, activeTab, initFromEditor } = useLinkModal(ref(editor));
+      const { linkText, urlValue, activeTab, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -121,7 +123,7 @@ describe('useLinkModal', () => {
         textBetween: 'shoes',
         nodesInRange: [{ type: { name: 'text' }, marks: [linkMark], isAtom: false, isInline: false, attrs: {} }],
       });
-      const { activeTab, categoryValue, initFromEditor } = useLinkModal(ref(editor));
+      const { activeTab, categoryValue, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -141,7 +143,7 @@ describe('useLinkModal', () => {
         textBetween: 'Imprint',
         nodesInRange: [{ type: { name: 'text' }, marks: [linkMark], isAtom: false, isInline: false, attrs: {} }],
       });
-      const { activeTab, staticPageValue, initFromEditor } = useLinkModal(ref(editor));
+      const { activeTab, staticPageValue, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -157,7 +159,7 @@ describe('useLinkModal', () => {
         textBetween: ' ',
         nodesInRange: [{ type: { name: 'icon' }, marks: [], isAtom: true, isInline: true, attrs: { name: 'star' } }],
       });
-      const { isAtomSelection, atomDisplayLabel, initFromEditor } = useLinkModal(ref(editor));
+      const { isAtomSelection, atomDisplayLabel, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -177,7 +179,7 @@ describe('useLinkModal', () => {
         textBetween: 'link',
         nodesInRange: [{ type: { name: 'text' }, marks: [linkMark], isAtom: false, isInline: false, attrs: {} }],
       });
-      const { openInNewWindow, initFromEditor } = useLinkModal(ref(editor));
+      const { openInNewWindow, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -189,7 +191,7 @@ describe('useLinkModal', () => {
   describe('computedHref', () => {
     it('should return urlValue for the url tab', async () => {
       const { editor } = createEditor();
-      const { computedHref, urlValue, initFromEditor } = useLinkModal(ref(editor));
+      const { computedHref, urlValue, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -200,7 +202,7 @@ describe('useLinkModal', () => {
 
     it('should return empty string for static tab when staticPageValue is empty', async () => {
       const { editor } = createEditor();
-      const { computedHref, activeTab, initFromEditor } = useLinkModal(ref(editor));
+      const { computedHref, activeTab, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -212,7 +214,7 @@ describe('useLinkModal', () => {
     it('should resolve via getCorrectPreviewPathWithLocale for static tab', async () => {
       mockGetCorrectPreviewPathWithLocale.mockReturnValue('/en/imprint');
       const { editor } = createEditor();
-      const { computedHref, activeTab, staticPageValue, initFromEditor } = useLinkModal(ref(editor));
+      const { computedHref, activeTab, staticPageValue, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -226,7 +228,7 @@ describe('useLinkModal', () => {
   describe('canSubmit', () => {
     it('should return true for a valid https URL', async () => {
       const { editor } = createEditor();
-      const { canSubmit, urlValue, initFromEditor } = useLinkModal(ref(editor));
+      const { canSubmit, urlValue, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -237,7 +239,7 @@ describe('useLinkModal', () => {
 
     it('should return false for an invalid URL', async () => {
       const { editor } = createEditor();
-      const { canSubmit, urlValue, initFromEditor } = useLinkModal(ref(editor));
+      const { canSubmit, urlValue, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -249,7 +251,7 @@ describe('useLinkModal', () => {
     it('should return true for category tab when a category path resolves', async () => {
       mockGetCorrectPreviewPathWithLocale.mockReturnValue('/c/123');
       const { editor } = createEditor();
-      const { canSubmit, activeTab, selectedCategoryPath, initFromEditor } = useLinkModal(ref(editor));
+      const { canSubmit, activeTab, selectedCategoryPath, initFromEditor } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -263,7 +265,7 @@ describe('useLinkModal', () => {
   describe('applyLivePreview via watcher', () => {
     it('should apply text changes when linkText changes on an existing selection', async () => {
       const { editor, chain } = createEditor({ from: 0, to: 11, textBetween: 'hello world' });
-      const { initFromEditor, linkText } = useLinkModal(ref(editor));
+      const { initFromEditor, linkText } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -277,7 +279,7 @@ describe('useLinkModal', () => {
 
     it('should call setLink with correct attrs when urlValue is set to a valid URL', async () => {
       const { editor, chain } = createEditor();
-      const { initFromEditor, urlValue } = useLinkModal(ref(editor));
+      const { initFromEditor, urlValue } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -292,7 +294,7 @@ describe('useLinkModal', () => {
 
     it('should call unsetLink when href resolves to empty', async () => {
       const { editor, chain } = createEditor();
-      const { initFromEditor, openInNewWindow } = useLinkModal(ref(editor));
+      const { initFromEditor, openInNewWindow } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -306,7 +308,7 @@ describe('useLinkModal', () => {
   describe('handleSubmit', () => {
     it('should call onClose and run the chain when canSubmit is true', async () => {
       const { editor, chain } = createEditor();
-      const { initFromEditor, handleSubmit, urlValue } = useLinkModal(ref(editor));
+      const { initFromEditor, handleSubmit, urlValue } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -322,7 +324,7 @@ describe('useLinkModal', () => {
 
     it('should not call onClose when canSubmit is false', async () => {
       const { editor } = createEditor();
-      const { initFromEditor, handleSubmit } = useLinkModal(ref(editor));
+      const { initFromEditor, handleSubmit } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -337,7 +339,7 @@ describe('useLinkModal', () => {
   describe('cancelAndRevert', () => {
     it('should restore original text and call unsetLink when no initial link existed', async () => {
       const { editor, chain } = createEditor({ from: 0, to: 11, textBetween: 'hello world' });
-      const { initFromEditor, cancelAndRevert } = useLinkModal(ref(editor));
+      const { initFromEditor, cancelAndRevert } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -367,7 +369,7 @@ describe('useLinkModal', () => {
         textBetween: 'hello world',
         nodesInRange: [{ type: { name: 'text' }, marks: [linkMark], isAtom: false, isInline: false, attrs: {} }],
       });
-      const { initFromEditor, cancelAndRevert } = useLinkModal(ref(editor));
+      const { initFromEditor, cancelAndRevert } = useLinkModal(makeEditorRef(editor));
 
       initFromEditor();
       await nextTick();
@@ -384,7 +386,7 @@ describe('useLinkModal', () => {
 
     it('should call onClose even when initialSelection is null (not initialized)', () => {
       const { editor } = createEditor();
-      const { cancelAndRevert } = useLinkModal(ref(editor));
+      const { cancelAndRevert } = useLinkModal(makeEditorRef(editor));
 
       const onClose = vi.fn();
       cancelAndRevert(onClose);
