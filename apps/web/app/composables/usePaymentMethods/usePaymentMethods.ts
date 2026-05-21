@@ -23,6 +23,10 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
   const setPaymentMethods = (list: PaymentMethod[], selectedId: number) => {
     state.value.data.list = list;
     state.value.data.selected = selectedId;
+    const { data: cart } = useCart();
+    if (cart.value) {
+      cart.value.methodOfPaymentId = selectedId;
+    }
   };
 
   /**
