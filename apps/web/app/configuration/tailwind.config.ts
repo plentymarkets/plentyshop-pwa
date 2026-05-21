@@ -12,6 +12,12 @@ export default {
     {
       pattern: /^col-span-(1[0-2]|[1-9])$/,
     },
+    {
+      pattern: /^@md:col-span-(1[0-2]|[1-9])$/,
+    },
+    {
+      pattern: /^@lg:col-span-(1[0-2]|[1-9])$/,
+    },
   ],
   theme: {
     extend: {

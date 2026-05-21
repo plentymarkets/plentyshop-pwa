@@ -38,6 +38,15 @@
           </div>
         </div>
 
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-2xs font-semibold text-editor-text-subtle uppercase tracking-wider">
+            {{ getEditorTranslation(`device-${device}`) }}
+          </span>
+          <span v-if="isUsingInheritedWidths" class="text-2xs text-editor-text-ghost italic">
+            {{ getEditorTranslation('using-parent-layout') }}
+          </span>
+        </div>
+
         <MultiGridEditor
           :column-widths="visibleGrid.columnWidths"
           :blocks="visibleGrid.blocks"
@@ -173,6 +182,7 @@ const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { device } = useEditorState();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
@@ -201,9 +211,33 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStru
 const visibleGrid = computed(() =>
   computeVisibleGrid(
     (multiGridStructure.value.content as Block[]) ?? [],
-    multiGridStructure.value.configuration.columnWidths ?? [],
+    activeColumnWidths.value,
   ),
 );
+
+// Returns column widths for the currently active viewport.
+// Tablet inherits from desktop when not explicitly set.
+// Mobile defaults to all-12 (stacked) when not explicitly set.
+const activeColumnWidths = computed(() => {
+  const cfg = multiGridStructure.value.configuration;
+  if (device.value === 'mobile') return cfg.columnWidthsMobile ?? cfg.columnWidths.map(() => 12);
+  if (device.value === 'tablet') return cfg.columnWidthsTablet ?? cfg.columnWidths;
+  return cfg.columnWidths;
+});
+
+const isUsingInheritedWidths = computed(() => {
+  const cfg = multiGridStructure.value.configuration;
+  if (device.value === 'tablet') return !cfg.columnWidthsTablet;
+  if (device.value === 'mobile') return !cfg.columnWidthsMobile;
+  return false;
+});
+
+const writeActiveColumnWidths = (widths: number[]) => {
+  const cfg = multiGridStructure.value.configuration;
+  if (device.value === 'mobile') cfg.columnWidthsMobile = widths;
+  else if (device.value === 'tablet') cfg.columnWidthsTablet = widths;
+  else cfg.columnWidths = widths;
+};
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
@@ -241,24 +275,31 @@ const allEmpty = computed(() => {
 const applyPreset = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   block.configuration.columnWidths = [...spans];
+  // Clear device overrides — structure changed completely
+  block.configuration.columnWidthsTablet = undefined;
+  block.configuration.columnWidthsMobile = undefined;
   block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
 };
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
-  const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
+  const fullWidths = [...activeColumnWidths.value];
   visibleGrid.value.filteredToOriginal.forEach((originalIndex, filteredIndex) => {
     const width = filteredWidths[filteredIndex];
     if (width !== undefined) {
       fullWidths[originalIndex] = width;
     }
   });
-  multiGridStructure.value.configuration.columnWidths = fullWidths;
+  writeActiveColumnWidths(fullWidths);
 };
 
 const addRowSpans = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
+  // Sync device-specific arrays so they stay the same length as columnWidths
+  const cfg = block.configuration;
+  if (cfg.columnWidthsTablet) cfg.columnWidthsTablet.push(...spans);
+  if (cfg.columnWidthsMobile) cfg.columnWidthsMobile.push(...spans.map(() => 12));
   if (!block.content) block.content = [];
   block.content.push(
     ...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]),
@@ -273,6 +314,9 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
       childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
+  const cfg = block.configuration;
+  if (cfg.columnWidthsTablet) cfg.columnWidthsTablet.splice(insertIndex, 0, ...spans);
+  if (cfg.columnWidthsMobile) cfg.columnWidthsMobile.splice(insertIndex, 0, ...spans.map(() => 12));
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
@@ -293,6 +337,9 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(newSlot, 1);
+      const cfg = gridBlock.configuration;
+      if (cfg.columnWidthsTablet && cfg.columnWidthsTablet.length > newSlot) cfg.columnWidthsTablet.splice(newSlot, 1);
+      if (cfg.columnWidthsMobile && cfg.columnWidthsMobile.length > newSlot) cfg.columnWidthsMobile.splice(newSlot, 1);
     }
   };
 
@@ -308,6 +355,9 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   });
 
   block.configuration.columnWidths.push(12);
+  const cfg = block.configuration;
+  if (cfg.columnWidthsTablet) cfg.columnWidthsTablet.push(12);
+  if (cfg.columnWidthsMobile) cfg.columnWidthsMobile.push(12);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
@@ -321,6 +371,9 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
     if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + 1;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
+  const cfg = block.configuration;
+  if (cfg.columnWidthsTablet) cfg.columnWidthsTablet.splice(insertIndex, 0, defaultSpan);
+  if (cfg.columnWidthsMobile) cfg.columnWidthsMobile.splice(insertIndex, 0, 12);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
@@ -336,6 +389,11 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
       (gridBlock.content as Block[]).forEach((childBlock) => {
         if ((childBlock.parent_slot ?? 0) > insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) - 1;
       });
+      const cfg2 = gridBlock.configuration;
+      if (cfg2.columnWidthsTablet && cfg2.columnWidthsTablet.length > insertIndex)
+        cfg2.columnWidthsTablet.splice(insertIndex, 1);
+      if (cfg2.columnWidthsMobile && cfg2.columnWidthsMobile.length > insertIndex)
+        cfg2.columnWidthsMobile.splice(insertIndex, 1);
     }
   };
 
@@ -399,7 +457,11 @@ const backgroundOpen = ref(true);
     "sticky-columns": "Sticky columns",
     "column": "Column",
     "layout-background": "Background",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "device-desktop": "Desktop",
+    "device-tablet": "Tablet",
+    "device-mobile": "Mobile",
+    "using-parent-layout": "Using parent layout"
   },
   "de": {
     "grid-layout": "Grid Layout",
@@ -411,7 +473,11 @@ const backgroundOpen = ref(true);
     "sticky-columns": "Sticky columns",
     "column": "Column",
     "layout-background": "Background",
-    "background-color-label": "Background Color"
+    "background-color-label": "Background Color",
+    "device-desktop": "Desktop",
+    "device-tablet": "Tablet",
+    "device-mobile": "Mobile",
+    "using-parent-layout": "Using parent layout"
   }
 }
 </i18n>

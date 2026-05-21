@@ -93,14 +93,27 @@ const gridInlineStyle = computed(() => ({
       : `${defaultMarginBottom.value}px`,
 }));
 const getGridClasses = () => {
-  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
+  return gridClassFor({ mobile: 12, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
 
 const visibleGrid = computed(() => computeVisibleGrid(props.content, props.configuration.columnWidths));
 
 const getColumnClasses = (filteredColIndex: number) => {
-  const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];
   const originalIdx = visibleGrid.value.filteredToOriginal[filteredColIndex] ?? -1;
+  const desktopSpan = visibleGrid.value.columnWidths[filteredColIndex] ?? 12;
+
+  const tabletWidths = props.configuration.columnWidthsTablet;
+  const mobileWidths = props.configuration.columnWidthsMobile;
+
+  // Tablet inherits from desktop when not set; mobile defaults to full-width (stacked)
+  const tabletSpan = tabletWidths?.[originalIdx] ?? desktopSpan;
+  const mobileSpan = mobileWidths?.[originalIdx] ?? 12;
+
+  const classes = [
+    `col-span-${mobileSpan}`,
+    `@md:col-span-${tabletSpan}`,
+    `@lg:col-span-${desktopSpan}`,
+  ];
   if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(originalIdx)) {
     classes.push('@md:sticky');
     classes.push(route.meta?.type === 'product' ? '@md:top-40' : '@md:top-5');
