@@ -8,7 +8,7 @@
       href="tel:+4902862587950"
       class="sticky-btn flex items-center justify-center text-white bg-[#3B82F6] shadow-md transition-all duration-300
              w-12 h-12 rounded-full hover:scale-110 hover:bg-[#2563EB]
-             md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none md:hover:-translate-x-1 md:hover:scale-100"
+             md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none"
     >
       <svg
         class="sticky-icon w-5 h-5 md:w-4 md:h-4 shrink-0"
@@ -30,7 +30,7 @@
       href="mailto:info@komplett-konzept.de"
       class="sticky-btn flex items-center justify-center text-white bg-[#F09F39] shadow-md transition-all duration-300
              w-12 h-12 rounded-full hover:scale-110 hover:bg-[#D9822B]
-             md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none md:hover:-translate-x-1 md:hover:scale-100"
+             md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none"
     >
       <svg
         class="sticky-icon w-5 h-5 md:w-4 md:h-4 shrink-0"
@@ -54,7 +54,7 @@
       rel="noopener noreferrer"
       class="sticky-btn flex items-center justify-center text-white bg-[#62D071] shadow-md transition-all duration-300
              w-12 h-12 rounded-full hover:scale-110 hover:bg-[#4EAA5A]
-             md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none md:hover:-translate-x-1 md:hover:scale-100"
+             md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none"
     >
       <svg
         class="sticky-icon w-5 h-5 md:w-4 md:h-4 shrink-0"
@@ -94,6 +94,38 @@
   .sticky-icon {
     width: 1rem;
     height: 1rem;
+  }
+}
+
+@media (min-width: 1367px) {
+  .sticky-label {
+    font-size: 1.125rem;
+  }
+
+  .sticky-btn {
+    padding: 0.8rem 0.975rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .sticky-contact {
+    gap: clamp(0.5rem, 0.25vw, 1rem);
+  }
+
+  .sticky-btn {
+    gap: clamp(0.5rem, 0.25vw, 0.9rem) !important;
+    padding: clamp(0.55rem, 0.35vw, 1rem) clamp(0.95rem, 0.7vw, 1.6rem);
+    border-radius: clamp(0.75rem, 0.3vw, 1.1rem) 0 0 clamp(0.75rem, 0.3vw, 1.1rem);
+  }
+
+  .sticky-icon {
+    width: clamp(1rem, 0.25vw + 0.8rem, 1.35rem);
+    height: clamp(1rem, 0.25vw + 0.8rem, 1.35rem);
+  }
+
+  .sticky-label {
+    font-size: clamp(0.75rem, 0.2vw + 0.6rem, 1.05rem);
+    line-height: 1.2;
   }
 }
 </style>
