@@ -1,4 +1,3 @@
-import { nextTick } from 'vue';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { Editor } from '@tiptap/core';
 import { useLinkModal } from '../useLinkModal';
@@ -14,7 +13,14 @@ const { useCategoryIdHelper } = vi.hoisted(() => ({
 mockNuxtImport('useCategoryIdHelper', () => useCategoryIdHelper);
 
 type ChainMock = Record<
-  'focus' | 'setTextSelection' | 'setNodeSelection' | 'deleteSelection' | 'insertContent' | 'setLink' | 'unsetLink' | 'run',
+  | 'focus'
+  | 'setTextSelection'
+  | 'setNodeSelection'
+  | 'deleteSelection'
+  | 'insertContent'
+  | 'setLink'
+  | 'unsetLink'
+  | 'run',
   ReturnType<typeof vi.fn>
 >;
 
@@ -53,7 +59,7 @@ const createEditor = (
       selection: { from, to, $from: { marks: () => cursorMarks } },
       storedMarks,
       doc: {
-        nodesBetween: vi.fn((_f: number, _t: number, cb: (n: object) => boolean | void) => {
+        nodesBetween: vi.fn((_f: number, _t: number, cb: (n: object) => boolean) => {
           for (const node of nodesInRange) {
             if (cb(node) === false) break;
           }
@@ -171,7 +177,12 @@ describe('useLinkModal', () => {
     it('should set openInNewWindow when the existing link has target _blank', async () => {
       const linkMark = {
         type: { name: 'link' },
-        attrs: { href: 'https://example.com', target: '_blank', 'data-link-type': 'url', 'data-link-value': 'https://example.com' },
+        attrs: {
+          href: 'https://example.com',
+          target: '_blank',
+          'data-link-type': 'url',
+          'data-link-value': 'https://example.com',
+        },
       };
       const { editor } = createEditor({
         from: 0,
@@ -378,9 +389,7 @@ describe('useLinkModal', () => {
       cancelAndRevert(onClose);
 
       expect(chain.insertContent).toHaveBeenCalledWith('hello world');
-      expect(chain.setLink).toHaveBeenCalledWith(
-        expect.objectContaining({ href: 'https://original.com' }),
-      );
+      expect(chain.setLink).toHaveBeenCalledWith(expect.objectContaining({ href: 'https://original.com' }));
       expect(onClose).toHaveBeenCalled();
     });
 

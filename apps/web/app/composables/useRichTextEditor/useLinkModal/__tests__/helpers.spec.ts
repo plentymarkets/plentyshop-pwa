@@ -1,29 +1,36 @@
 import type { Node as PmNode, Mark as PmMark } from '@tiptap/pm/model';
 import type { Editor } from '@tiptap/core';
-import { isAtomNode, rangeContainsInlineAtoms, rangeContainsAtoms, getLinkMark, getLinkAttrsFromRange } from '../helpers';
+import {
+  isAtomNode,
+  rangeContainsInlineAtoms,
+  rangeContainsAtoms,
+  getLinkMark,
+  getLinkAttrsFromRange,
+} from '../helpers';
 
 const makeNode = (overrides: object = {}): PmNode =>
-  ({ isAtom: false, isInline: false, type: { name: 'text' }, marks: [], attrs: {}, ...overrides } as unknown as PmNode);
+  ({ isAtom: false, isInline: false, type: { name: 'text' }, marks: [], attrs: {}, ...overrides }) as unknown as PmNode;
 
-const makeMark = (name: string, attrs: object = {}): PmMark =>
-  ({ type: { name }, attrs } as unknown as PmMark);
+const makeMark = (name: string, attrs: object = {}): PmMark => ({ type: { name }, attrs }) as unknown as PmMark;
 
 const makeDoc = (nodes: PmNode[]): PmNode =>
   ({
-    nodesBetween: vi.fn((_f: number, _t: number, cb: (n: PmNode) => boolean | void) => {
+    nodesBetween: vi.fn((_f: number, _t: number, cb: (n: PmNode) => boolean) => {
       for (const n of nodes) {
         if (cb(n) === false) break;
       }
     }),
-  } as unknown as PmNode);
+  }) as unknown as PmNode;
 
-const makeEditor = (opts: {
-  nodesInRange?: PmNode[];
-  storedMarks?: PmMark[] | null;
-  cursorMarks?: PmMark[];
-  from?: number;
-  to?: number;
-} = {}): Editor =>
+const makeEditor = (
+  opts: {
+    nodesInRange?: PmNode[];
+    storedMarks?: PmMark[] | null;
+    cursorMarks?: PmMark[];
+    from?: number;
+    to?: number;
+  } = {},
+): Editor =>
   ({
     state: {
       doc: makeDoc(opts.nodesInRange ?? []),
@@ -34,7 +41,7 @@ const makeEditor = (opts: {
         $from: { marks: () => opts.cursorMarks ?? [] },
       },
     },
-  } as unknown as Editor);
+  }) as unknown as Editor;
 
 describe('isAtomNode', () => {
   it('should return true for icon nodes', () => {
