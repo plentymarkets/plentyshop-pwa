@@ -13,22 +13,25 @@
       :class="[
         'relative block-wrapper h-full',
         {
-          'hover:outline hover:outline-4 hover:outline-editor-toc-selected':
+          'block-hoverable group/block':
             clientPreview && enableActions && !isTablet && root && !isDragging && !isPopoverTarget,
         },
       ]"
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-0 ring-4 ring-editor-toc-selected z-[200]"
+        class="pointer-events-none absolute inset-[-6px] z-[200] block-selected-outline"
       />
       <ClientOnly>
         <button
           v-if="showTopAddBlockButton"
-          class="add-block-button no-drag transition-opacity duration-200 z-[0] @md:z-[1] @lg:z-[40] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
           :class="[
+            addBlockButtonBase,
+            'top-0 -translate-y-1/2',
+            'group-hover/block:opacity-100 group-hover/block:scale-100',
+            'group-focus-within/block:opacity-100 group-focus-within/block:scale-100',
             {
-              'opacity-100':
+              '!opacity-100 !scale-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
               '!z-[201]': isPopoverTarget && popoverState?.position === 'top',
             },
@@ -37,8 +40,8 @@
           aria-label="top add block"
           @click.stop="addNewBlock(block, 'top', $event)"
         >
-          <SfTooltip :label="buttonLabel" placement="top" :show-arrow="true">
-            <SfIconAdd class="cursor-pointer" />
+          <SfTooltip class="flex" :label="buttonLabel" placement="top" :show-arrow="true">
+            <SfIconAdd class="cursor-pointer" size="xs" />
           </SfTooltip>
         </button>
       </ClientOnly>
@@ -48,10 +51,11 @@
           v-if="enableActions && clientPreview && root && !isDragging"
           :key="`${block.meta.uuid}`"
           :class="[
-            'opacity-0 block-actions',
+            'opacity-0',
             {
-              'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
-              'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
+              'hover:opacity-100 group-hover/block:opacity-100 group-focus-within/block:opacity-100 group-hover/block:translate-y-0 group-focus-within/block:translate-y-0':
+                !isTablet,
+              '!opacity-100 !translate-y-0': isTablet && isClicked && clickedBlockIndex === index,
             },
           ]"
           :index="index"
@@ -85,11 +89,13 @@
         <button
           v-if="showBottomAddBlockButton"
           :key="isDragging ? 'dragging' : 'not-dragging'"
-          class="add-block-button no-drag z-[0] @md:z-[1] @lg:z-[40] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           :class="[
-            'rounded-[18px]',
+            addBlockButtonBase,
+            'bottom-0 translate-y-1/2',
+            'group-hover/block:opacity-100 group-hover/block:scale-100',
+            'group-focus-within/block:opacity-100 group-focus-within/block:scale-100',
             {
-              'opacity-100':
+              '!opacity-100 !scale-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
               '!z-[201]': isPopoverTarget && popoverState?.position === 'bottom',
             },
@@ -98,8 +104,8 @@
           aria-label="bottom add block"
           @click.stop="addNewBlock(block, 'bottom', $event)"
         >
-          <SfTooltip :label="buttonLabel" placement="bottom" :show-arrow="true">
-            <SfIconAdd class="cursor-pointer" />
+          <SfTooltip class="flex" :label="buttonLabel" placement="bottom" :show-arrow="true">
+            <SfIconAdd class="cursor-pointer" size="xs" />
           </SfTooltip>
         </button>
       </ClientOnly>
@@ -131,6 +137,16 @@ const { logContentCreateBlock } = useLogEvent();
 
 const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
 const buttonLabel = 'Insert a new block at this position.';
+
+const addBlockButtonBase = [
+  'add-block-button no-drag',
+  'absolute left-1/2 -translate-x-1/2 z-[0] @md:z-[1] @lg:z-[40]',
+  'flex items-center justify-center w-7 h-7 rounded-full p-0 border-0',
+  'bg-editor-block-selected text-white shadow-add-block-btn',
+  'opacity-0 scale-90',
+  'transition-all duration-200 ease-editor-out',
+  'hover:bg-editor-block-selected-hover hover:scale-110 hover:shadow-add-block-btn-hover',
+].join(' ');
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
@@ -248,3 +264,32 @@ const onBlockUnhover = () => {
   }
 };
 </script>
+
+<style scoped>
+.block-hoverable::before,
+.block-selected-outline::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border-style: solid;
+  @apply border-editor-block-selected;
+}
+
+.block-hoverable::before {
+  inset: -1px;
+  z-index: 30;
+  border-width: 3px;
+  opacity: 0;
+  @apply shadow-block-outline;
+}
+
+.block-hoverable:hover::before {
+  opacity: 1;
+}
+
+.block-selected-outline::before {
+  inset: 6px;
+  border-width: 4px;
+  @apply shadow-block-outline-selected;
+}
+</style>

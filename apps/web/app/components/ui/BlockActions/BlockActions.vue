@@ -1,13 +1,11 @@
 <template>
   <div
     :class="[
-      'absolute',
-      'z-[0]',
-      '@md:z-[1]',
-      '@lg:z-[40]',
-      'space-x-3',
-      'p-2',
-      'shadow-md',
+      'absolute inline-flex items-center gap-0.5 p-1 z-[0] @md:z-[1] @lg:z-[40]',
+      'rounded-full bg-white/95 border border-slate-900/10 backdrop-blur-md',
+      'shadow-block-actions hover:shadow-block-actions-hover',
+      '-translate-y-1 hover:translate-y-0 transition-all duration-[540ms] ease-editor-out',
+      'block-actions',
       ...(props.actions?.classes || []),
       ...(props.actions?.buttonClasses || []),
     ]"
@@ -16,90 +14,104 @@
     <SfTooltip
       v-if="!props.actions.isEditable"
       :label="getEditorUITranslation('block-edit-homepage-only', { blockName: props.block.name.toLowerCase() })"
-      placement="left"
-      class="flex"
+      placement="top"
+      :class="tooltipWrapperClasses"
     >
       <button
-        class="text-black hover:bg-gray-100 rounded no-drag p-1"
+        :class="primaryButtonClasses"
         :data-testid="`${props.block.name}-open-editor-button`"
         aria-label="editor button"
         :disabled="!props.actions.isEditable"
-        :class="{ 'opacity-40 cursor-not-allowed': !props.actions.isEditable }"
         @click.stop="triggerEdit"
       >
-        <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path :d="editPath" fill="black" />
+        <SfIconBase size="xs" viewBox="0 0 18 18">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path :d="editPath" fill="currentColor" />
           </svg>
         </SfIconBase>
       </button>
     </SfTooltip>
-    <SfTooltip v-else :label="editLabel" placement="left" :show-arrow="true">
+    <SfTooltip v-else :label="editLabel" placement="top" :show-arrow="true" :class="tooltipWrapperClasses">
       <button
-        :class="['text-black', 'p-1', 'rounded', 'no-drag', ...(props.actions?.hoverBackground || [])]"
+        :class="primaryButtonClasses"
         :data-testid="`${props.block.name}-open-editor-button`"
         aria-label="editor button"
         @click.stop="triggerEdit"
       >
-        <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path :d="editPath" fill="black" />
+        <SfIconBase size="xs" viewBox="0 0 18 18" class="cursor-pointer">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path :d="editPath" fill="currentColor" />
           </svg>
         </SfIconBase>
       </button>
     </SfTooltip>
 
     <template v-if="!props.readOnly">
-      <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
+      <span v-if="props.actions.isMovable" :class="dividerClasses" />
 
-      <div class="flex flex-col">
-        <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="left" :show-arrow="true">
-          <button
-            class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-            data-testid="move-up-button"
-            aria-label="move up button"
-            :disabled="isFirstContentBlock(props.index)"
-            :class="{ 'opacity-40 cursor-not-allowed': isFirstContentBlock(props.index) }"
-            @click="changePosition(-1)"
-          >
-            <SfIconExpandLess />
-          </button>
-        </SfTooltip>
-        <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
-          <button
-            class="flex items-center justify-center h-[18px] text-black hover:bg-gray-100 rounded no-drag"
-            data-testid="move-down-button"
-            aria-label="move down button"
-            :disabled="isLastNonFooterBlock(index)"
-            :class="{ 'opacity-40 cursor-not-allowed': isLastNonFooterBlock(index) }"
-            @click="changePosition(1)"
-          >
-            <SfIconExpandMore />
-          </button>
-        </SfTooltip>
-      </div>
-
-      <div v-if="props.actions.isMovable" class="w-px h-4 bg-gray-300" />
-
-      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="bottom" :show-arrow="true">
+      <SfTooltip
+        v-if="props.actions.isMovable"
+        :label="positionLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
         <button
-          class="drag-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full drag-trigger"
-          aria-label="Drag to reorder block"
+          :class="primaryButtonClasses"
+          data-testid="move-up-button"
+          aria-label="move up button"
+          :disabled="isFirstContentBlock(props.index)"
+          @click="changePosition(-1)"
         >
-          <NuxtImg width="18" height="18" :src="dragIcon" />
+          <SfIconExpandLess size="xs" />
+        </button>
+      </SfTooltip>
+      <SfTooltip
+        v-if="props.actions.isMovable"
+        :label="positionLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
+        <button
+          :class="primaryButtonClasses"
+          data-testid="move-down-button"
+          aria-label="move down button"
+          :disabled="isLastNonFooterBlock(index)"
+          @click="changePosition(1)"
+        >
+          <SfIconExpandMore size="xs" />
         </button>
       </SfTooltip>
 
-      <div v-if="props.actions.isDeletable" class="w-px h-4 bg-gray-300" />
+      <SfTooltip
+        v-if="props.actions.isMovable"
+        :label="positionLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
+        <button :class="dragButtonClasses" aria-label="Drag to reorder block">
+          <NuxtImg width="16" height="16" :src="dragIcon" class="block" />
+        </button>
+      </SfTooltip>
 
-      <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="bottom" :show-arrow="true">
+      <span v-if="props.actions.isDeletable" :class="dividerClasses" />
+
+      <SfTooltip
+        v-if="props.actions.isDeletable"
+        :label="deleteLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
         <button
-          class="text-black hover:bg-gray-100 p-1 rounded no-drag"
+          :class="dangerButtonClasses"
           aria-label="delete block button"
           data-testid="delete-block-button"
           @click="triggerDelete"
         >
-          <SfIconDelete />
+          <SfIconDelete size="xs" />
         </button>
       </SfTooltip>
     </template>
@@ -121,14 +133,39 @@ const props = withDefaults(defineProps<BlockActionsProps>(), {
     isEditable: true,
     isMovable: true,
     isDeletable: true,
-    classes: ['flex', 'items-center', 'right-0', 'top-0', 'border', 'border-[#538AEA]', 'bg-white'],
+    classes: ['top-2', 'right-2'],
     buttonClasses: [],
-    hoverBackground: ['hover:bg-gray-100'],
+    hoverBackground: [],
   }),
 });
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
 const { deleteBlock, isLastNonFooterBlock, isFirstContentBlock } = useBlockManager();
+
+const buttonStructure = [
+  'w-7 h-7 rounded-full border-0 p-0 shrink-0',
+  'inline-flex items-center justify-center leading-none',
+  'bg-transparent text-editor-icon',
+  'transition-all duration-200 ease-editor-out',
+  'hover:scale-110 active:scale-95',
+  'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100',
+  'focus-visible:outline-2 focus-visible:outline-editor-block-selected focus-visible:outline-offset-1',
+].join(' ');
+
+const primaryInteraction =
+  'hover:bg-editor-block-selected/10 hover:text-editor-block-selected hover:shadow-block-action-btn active:bg-editor-block-selected/20';
+
+const dangerInteraction =
+  'hover:bg-editor-danger/10 hover:text-editor-danger hover:shadow-block-action-btn-danger active:bg-editor-danger/20';
+
+const primaryButtonClasses = `${buttonStructure} ${primaryInteraction} cursor-pointer no-drag`;
+const dangerButtonClasses = `${buttonStructure} ${dangerInteraction} cursor-pointer no-drag`;
+
+const dragButtonClasses = `${buttonStructure} ${primaryInteraction} cursor-grab active:cursor-grabbing drag-handle`;
+
+const dividerClasses = 'inline-block w-px h-3.5 bg-slate-900/10 mx-0.5';
+
+const tooltipWrapperClasses = 'inline-flex items-center leading-none';
 
 const triggerEdit = () => {
   openDrawerWithView('blocksSettings', props.block);
