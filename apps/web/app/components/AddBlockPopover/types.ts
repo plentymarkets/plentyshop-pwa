@@ -16,6 +16,7 @@ export interface FlatVariation {
 }
 
 export interface LayoutPreset {
+  readonly id: string;
   readonly label: string;
   readonly columnWidths: readonly number[];
 }
