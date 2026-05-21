@@ -1,4 +1,4 @@
-import type { ApiError, Address } from '@plentymarkets/shop-api';
+import type { ActiveShippingCountry, ApiError, Address } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 
 export const useFetchAddressesData = () => {
@@ -27,28 +27,24 @@ export const useFetchAddressesData = () => {
     setPrimaryAddressId(shippingAddresses, AddressType.Shipping);
   };
 
+  const getAuthorizedAddresses = (addresses: Address[]) => ({
+    billing: addresses.filter((addr) => addr.typeId === AddressType.Billing),
+    shipping: addresses.filter((addr) => addr.typeId === AddressType.Shipping),
+  });
+
+  const getGuestAddresses = (addresses: Address[]) => {
+    const billing = addresses.find((addr) => addr.id === cart.value.customerInvoiceAddressId);
+    const shipping = addresses.find((addr) => addr.id === cart.value.customerShippingAddressId);
+
+    return {
+      billing: billing ? [{ ...billing, primary: true }] : ([] as Address[]),
+      shipping: shipping ? [{ ...shipping, primary: true }] : ([] as Address[]),
+    };
+  };
+
   const processAddresses = (addresses: Address[]) => {
-    if (isAuthorized.value) {
-      const billingAddresses = addresses.filter((addr) => addr.typeId === AddressType.Billing);
-      const shippingAddresses = addresses.filter((addr) => addr.typeId === AddressType.Shipping);
-      setAddresses(billingAddresses, shippingAddresses);
-    } else {
-      if (addresses.length > 0) {
-        const shippingAddress = addresses.find((addr) => addr.id === cart.value.customerShippingAddressId);
-        const billingAddress = addresses.find((addr) => addr.id === cart.value.customerInvoiceAddressId);
-
-        if (shippingAddress) {
-          shippingAddress.primary = true;
-        }
-        if (billingAddress) {
-          billingAddress.primary = true;
-        }
-
-        setAddresses([billingAddress].filter(Boolean) as Address[], [shippingAddress].filter(Boolean) as Address[]);
-      } else {
-        setAddresses([], []);
-      }
-    }
+    const { billing, shipping } = isAuthorized.value ? getAuthorizedAddresses(addresses) : getGuestAddresses(addresses);
+    setAddresses(billing, shipping);
   };
 
   const fetch = async () => {
@@ -65,9 +61,9 @@ export const useFetchAddressesData = () => {
       }
 
       if (data?.countries) {
-        setCountries(data.countries.default, data.countries.geoRegulated);
+        setCountries(data.countries.default as ActiveShippingCountry[], data.countries.geoRegulated);
       }
-    } catch (error: unknown) {
+    } catch (error) {
       useHandleError(error as ApiError);
       setAddresses([], []);
     } finally {
@@ -92,7 +88,7 @@ export const useFetchAddressesData = () => {
     }
 
     if (responseData?.countries) {
-      setCountries(responseData.countries.default, responseData.countries.geoRegulated);
+      setCountries(responseData.countries.default as ActiveShippingCountry[], responseData.countries.geoRegulated);
     }
 
     state.value.loading = false;

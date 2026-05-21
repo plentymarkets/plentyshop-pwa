@@ -1,7 +1,7 @@
 <template>
   <SfDrawer
     v-model="open"
-    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[calc(50vw+18px)] lg:w-[calc(75vw-66px)] xl:w-[calc(80vw-66px)]"
+    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[calc(50vw+18px)] @lg:w-[calc(75vw-66px)] @xl:w-[calc(80vw-66px)]"
     :placement="placement"
     :disable-click-away="true"
   >

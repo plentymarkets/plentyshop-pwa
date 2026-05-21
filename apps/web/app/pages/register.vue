@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="auth" :heading="''">
-    <div class="w-full max-w-full md:max-w-4xl lg:max-w-3xl xl:max-w-4xl mx-auto md:px-6 lg:px-8">
+    <div class="w-full max-w-full @md:max-w-4xl @lg:max-w-3xl @xl:max-w-4xl mx-auto @md:px-6 @lg:px-8">
       <div class="text-center mb-8">
         <div class="text-2xl font-semibold mb-2">{{ t('authentication.signup.heading') }}</div>
         <div class="text-lg text-gray-600 mb-6">{{ t('authentication.signup.subheading') }}</div>
@@ -8,7 +8,7 @@
 
       <form
         novalidate
-        class="max-w-2xl mx-auto bg-white rounded-lg md:shadow-sm md:border md:border-gray-100 md:p-6 lg:p-8 space-y-4 mb-8"
+        class="max-w-2xl mx-auto bg-white rounded-lg @md:shadow-sm @md:border @md:border-gray-100 @md:p-6 @lg:p-8 space-y-4 mb-8"
         @submit.prevent="onSubmit"
       >
         <label class="w-full">
@@ -24,7 +24,7 @@
           <ErrorMessage as="span" name="email" class="flex text-negative-700 text-sm mt-2" />
         </label>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 @md:grid-cols-2 gap-4">
           <label>
             <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
             <UiFormPasswordInput
@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 @md:grid-cols-2 gap-4">
           <label>
             <UiFormLabel>
               {{ hasCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
@@ -133,7 +133,7 @@
           </UiLink>
         </div>
 
-        <div v-if="hasCompany" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div v-if="hasCompany" class="grid grid-cols-1 @md:grid-cols-2 gap-4">
           <label for="companyName">
             <UiFormLabel for="companyName">{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput
@@ -166,7 +166,7 @@
           </label>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 @md:grid-cols-2 gap-4">
           <label>
             <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput
@@ -192,7 +192,7 @@
           </label>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 @md:grid-cols-2 gap-4">
           <label>
             <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput

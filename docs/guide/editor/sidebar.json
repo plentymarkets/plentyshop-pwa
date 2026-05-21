@@ -12,6 +12,10 @@
         "link": "/guide/editor/site-settings.md"
       },
       {
+        "text": "Control block visibility",
+        "link": "/guide/editor/blocks-visibility.md"
+      },
+      {
         "text": "Migrate site settings",
         "link": "/guide/editor/site-settings-migration.md"
       },

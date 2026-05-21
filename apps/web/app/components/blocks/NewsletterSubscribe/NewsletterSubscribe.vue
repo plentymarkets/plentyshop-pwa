@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative mt-5 p-4 sm:p-10 text-center"
+    class="relative mt-5 p-4 @sm:p-10 text-center"
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
@@ -9,10 +9,10 @@
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div
         v-if="props.content.input?.displayNameInput"
-        class="grid grid-cols-1 sm:grid-cols-2"
+        class="grid grid-cols-1 @sm:grid-cols-2"
         data-testid="newsletter-display-name"
       >
-        <div class="sm:mr-[1rem]">
+        <div class="@sm:mr-[1rem]">
           <label for="newsletter-first-name">
             <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
             <SfInput
@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <div class="sm:ml-[1rem]">
+        <div class="@sm:ml-[1rem]">
           <label for="newsletter-last-name">
             <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
             <SfInput

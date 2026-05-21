@@ -7,7 +7,7 @@
       <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-visible">
         <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <h2 class="text-sm font-semibold text-gray-800">{{ getEditorTranslation('insert-link') }}</h2>
-          <SfButton
+          <UiButton
             type="button"
             variant="tertiary"
             square
@@ -16,7 +16,7 @@
             @click="cancelAndRevert(props.close)"
           >
             <SfIconClose />
-          </SfButton>
+          </UiButton>
         </div>
 
         <div class="flex border-b border-gray-100 px-5 gap-1 pt-2">
@@ -116,11 +116,11 @@
         </div>
 
         <div class="flex items-center justify-end gap-2 px-5 py-4">
-          <SfButton type="button" variant="secondary" @click="cancelAndRevert(props.close)">
+          <UiButton type="button" variant="secondary" @click="cancelAndRevert(props.close)">
             {{ getEditorTranslation('cancel-button') }}
-          </SfButton>
+          </UiButton>
 
-          <SfButton
+          <UiButton
             type="button"
             :disabled="!canSubmit"
             :aria-disabled="!canSubmit"
@@ -130,7 +130,7 @@
             @click="canSubmit && handleSubmit(props.close)"
           >
             {{ getEditorTranslation('add-link-button') }}
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </div>
@@ -138,7 +138,7 @@
 </template>
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
-import { SfButton, SfIconClose, SfSwitch } from '@storefront-ui/vue';
+import { SfIconClose, SfSwitch } from '@storefront-ui/vue';
 
 const props = defineProps<{
   editor: Editor | null | undefined;
