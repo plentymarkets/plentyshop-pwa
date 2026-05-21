@@ -1,4 +1,4 @@
-import type { ApiError, Block, Product, ProductParams } from '@plentymarkets/shop-api';
+import type { Block, Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
@@ -84,11 +84,12 @@ export const useProduct: UseProductReturn = (slug) => {
       () => useSdk().plentysystems.getProduct(params),
     );
 
-    const requestError = error.value as ({ statusCode?: number; data?: { statusCode?: number } } & ApiError) | null;
-    const statusCode = Number(requestError?.statusCode ?? requestError?.data?.statusCode ?? 0);
+    const requestError = error.value;
+    const errorWithStatus = requestError as { statusCode?: number; data?: { statusCode?: number } } | undefined;
+    const statusCode = Number(errorWithStatus?.statusCode ?? errorWithStatus?.data?.statusCode ?? 0);
 
     if (requestError && statusCode !== 404) {
-      useHandleError(requestError as ApiError);
+      useHandleError(requestError);
     }
 
     const fetchedBlocks = data.value?.data.blocks;
