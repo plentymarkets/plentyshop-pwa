@@ -104,7 +104,13 @@ await callOnce(async () => {
 });
 
 if (props.error.statusCode === 404) {
-  await clearError({ redirect: getHomepageRedirectPath() });
+  const redirectPath = getHomepageRedirectPath();
+
+  if (import.meta.client) {
+    window.location.replace(redirectPath);
+  } else {
+    await clearError({ redirect: redirectPath });
+  }
 }
 </script>
 
