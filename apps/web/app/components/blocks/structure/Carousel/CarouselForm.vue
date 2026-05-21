@@ -105,7 +105,6 @@ const addSlide = async () => {
   await nextTick();
   setIndex(resolvedUuid.value, slides.value.length - 1);
 };
-
 </script>
 
 <style scoped>
