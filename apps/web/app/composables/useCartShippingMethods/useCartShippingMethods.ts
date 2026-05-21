@@ -30,8 +30,8 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
 
   /**
    * @description Function to set shipping methods list and selected method id.
-   * @param list
-   * @param selectedId
+   * @param list { ShippingMethod[] }
+   * @param selectedId { number }
    */
   const setShippingMethods = (list: ShippingMethod[], selectedId: number) => {
     state.value.data.list = list;

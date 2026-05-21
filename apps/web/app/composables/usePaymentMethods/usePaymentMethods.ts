@@ -17,8 +17,8 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
 
   /**
    * @description Function for updating the payment methods
-   * @param list
-   * @param selectedId
+   * @param list { PaymentMethod[] }
+   * @param selectedId { number }
    */
   const setPaymentMethods = (list: PaymentMethod[], selectedId: number) => {
     state.value.data.list = list;
