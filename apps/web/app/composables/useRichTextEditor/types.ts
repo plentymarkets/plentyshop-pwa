@@ -29,4 +29,3 @@ export type LinkModalLinkAttrs = {
   'data-link-value'?: string;
   'data-link-path'?: string;
 };
-
