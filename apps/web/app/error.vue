@@ -10,13 +10,50 @@
 </template>
 
 <script setup lang="ts">
+import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
+import { paths } from '~/utils/paths';
+
 interface ErrorProp {
   statusCode: number;
   statusMessage: string;
   [key: string]: unknown;
 }
 const props = defineProps<{ error: ErrorProp }>();
+const localePath = useLocalePath();
 const { setInitialDataSSR } = useInitialSetup();
+const { data: categoryTree } = useCategoryTree();
+const { buildCategoryMenuLink } = useLocalization();
+const { getSetting: getHomepageCategoryId } = useSiteSettings('homepageCategoryId');
+
+const findCategoryById = (items: CategoryTreeItem[], targetId: number): CategoryTreeItem | null => {
+  for (const item of items) {
+    if (categoryTreeGetters.getId(item) === targetId) {
+      return item;
+    }
+
+    if (item.children?.length) {
+      const found = findCategoryById(item.children, targetId);
+      if (found) {
+        return found;
+      }
+    }
+  }
+
+  return null;
+};
+
+const getHomepageRedirectPath = () => {
+  const homepageCategoryId = Number(getHomepageCategoryId());
+
+  if (!Number.isNaN(homepageCategoryId) && homepageCategoryId > 0 && categoryTree.value.length) {
+    const homepageCategory = findCategoryById(categoryTree.value, homepageCategoryId);
+    if (homepageCategory) {
+      return localePath(buildCategoryMenuLink(homepageCategory, categoryTree.value));
+    }
+  }
+
+  return localePath(paths.home);
+};
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
@@ -65,6 +102,10 @@ useHead({
 await callOnce(async () => {
   await setInitialDataSSR();
 });
+
+if (props.error.statusCode === 404) {
+  await clearError({ redirect: getHomepageRedirectPath() });
+}
 </script>
 
 <style lang="scss">
