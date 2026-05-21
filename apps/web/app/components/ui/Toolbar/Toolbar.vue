@@ -10,6 +10,7 @@
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-2">
         <UiLanguageEditor />
         <UiPageSelector />
+        <UiToolbarDeviceToggle />
       </div>
       <div class="ml-auto flex space-x-2">
         <button

@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="auth">
-    <div class="mx-auto text-center rounded-md border border-neutral-200 p-4 md:p-6 mt-2">
+    <div class="mx-auto text-center rounded-md border border-neutral-200 p-4 @md:p-6 mt-2">
       <NuxtImg
         src="/_nuxt-plenty/images/email-sent.png"
         :alt="t('authentication.resetPassword.emailSent')"

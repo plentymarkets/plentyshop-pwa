@@ -2,7 +2,7 @@
   <NuxtLayout name="auth" :heading="t('authentication.setNewPassword.heading')">
     <form
       novalidate
-      class="pb-4 md:p-6 my-10 md:border md:border-neutral-200 rounded-md"
+      class="pb-4 @md:p-6 my-10 @md:border @md:border-neutral-200 rounded-md"
       @submit.prevent="executeResetPassword"
     >
       <p class="mb-6">{{ t('authentication.setNewPassword.description') }}</p>
@@ -90,7 +90,7 @@
       v-if="isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+      class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
     >
       <header>
         <UiButton

@@ -19,8 +19,8 @@
     </header>
     <div v-if="!confirmation">
       <template v-if="currentReturnOrder">
-        <div class="md:flex justify-between items-center mb-5">
-          <div class="md:grid grid-cols-[1fr_1fr] gap-3">
+        <div class="@md:flex justify-between items-center mb-5">
+          <div class="@md:grid grid-cols-[1fr_1fr] gap-3">
             <div class="text-neutral-900">
               <span class="font-bold"> {{ t('returns.returnForOrder') }} </span> #
               {{ orderGetters.getId(currentReturnOrder) }}

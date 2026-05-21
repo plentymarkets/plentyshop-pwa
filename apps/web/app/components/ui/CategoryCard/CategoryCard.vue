@@ -1,10 +1,10 @@
 <template>
   <NuxtLazyHydrate when-visible>
     <div
-      class="max-w-screen-3xl mx-auto md:px-10 px-4 mb-10 flex flex-nowrap md:flex-wrap md:justify-center overflow-x-scroll scrollbar-hidden"
+      class="max-w-screen-3xl mx-auto @md:px-10 px-4 mb-10 flex flex-nowrap @md:flex-wrap @md:justify-center overflow-x-scroll scrollbar-hidden"
       data-testid="category-card"
     >
-      <div v-for="item in items" :key="item.name" class="mr-2 md:mr-6 group">
+      <div v-for="item in items" :key="item.name" class="mr-2 @md:mr-6 group">
         <NuxtLink
           :to="localePath(item.slug)"
           class="w-full h-full z-1 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-md"

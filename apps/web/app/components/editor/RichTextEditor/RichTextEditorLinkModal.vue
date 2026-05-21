@@ -7,7 +7,7 @@
       <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-visible">
         <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <h2 class="text-sm font-semibold text-gray-800">{{ getEditorTranslation('insert-link') }}</h2>
-          <SfButton
+          <UiButton
             type="button"
             variant="tertiary"
             square
@@ -16,7 +16,7 @@
             @click="cancelAndRevert(props.close)"
           >
             <SfIconClose />
-          </SfButton>
+          </UiButton>
         </div>
 
         <div class="flex border-b border-gray-100 px-5 gap-1 pt-2">
@@ -41,7 +41,14 @@
             <label class="block text-xs font-medium text-gray-600 mb-1.5">
               {{ getEditorTranslation('text-label') }}
             </label>
+            <p
+              v-if="isAtomSelection"
+              class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
+            >
+              {{ atomDisplayLabel == 'generic-atom-text' ? getEditorTranslation(atomDisplayLabel) : atomDisplayLabel }}
+            </p>
             <input
+              v-else
               v-model="linkText"
               type="text"
               placeholder="Link text"
@@ -112,11 +119,11 @@
         </div>
 
         <div class="flex items-center justify-end gap-2 px-5 py-4">
-          <SfButton type="button" variant="secondary" @click="cancelAndRevert(props.close)">
+          <UiButton type="button" variant="secondary" @click="cancelAndRevert(props.close)">
             {{ getEditorTranslation('cancel-button') }}
-          </SfButton>
+          </UiButton>
 
-          <SfButton
+          <UiButton
             type="button"
             :disabled="!canSubmit"
             :aria-disabled="!canSubmit"
@@ -126,7 +133,7 @@
             @click="canSubmit && handleSubmit(props.close)"
           >
             {{ getEditorTranslation('add-link-button') }}
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </div>
@@ -134,7 +141,7 @@
 </template>
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core';
-import { SfButton, SfIconClose, SfSwitch } from '@storefront-ui/vue';
+import { SfIconClose, SfSwitch } from '@storefront-ui/vue';
 
 const props = defineProps<{
   editor: Editor | null | undefined;
@@ -150,6 +157,8 @@ const {
   categoryValue,
   openInNewWindow,
   linkText,
+  isAtomSelection,
+  atomDisplayLabel,
   canSubmit,
   tabs,
   initFromEditor,
@@ -170,7 +179,8 @@ onMounted(initFromEditor);
     "page-label": "Page",
     "url-label": "URL link",
     "text-label": "Text",
-    "insert-link": "Insert Link"
+    "insert-link": "Insert Link",
+    "generic-atom-text": "Content with icon(s)"
   },
   "de": {
     "add-link-button": "Add Link",
@@ -180,7 +190,8 @@ onMounted(initFromEditor);
     "page-label": "Page",
     "url-label": "URL link",
     "text-label": "Text",
-    "insert-link": "Insert Link"
+    "insert-link": "Insert Link",
+    "generic-atom-text": "Content with icon(s)"
   }
 }
 </i18n>

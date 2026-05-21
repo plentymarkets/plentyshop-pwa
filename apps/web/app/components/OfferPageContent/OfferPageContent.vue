@@ -5,12 +5,12 @@
     :back-label-mobile="t('common.actions.back')"
     :heading="t('offers.offer')"
   >
-    <div v-if="offer" class="md:grid md:grid-cols-12 md:gap-x-6">
-      <div class="col-span-7 mb-10 md:mb-0">
+    <div v-if="offer" class="@md:grid @md:grid-cols-12 @md:gap-x-6">
+      <div class="col-span-7 mb-10 @md:mb-0">
         <h1 v-if="validUntil" class="px-4 py-6 font-medium">
           {{ t('offers.offerValidUntil', { date: validUntil }) }}
         </h1>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0" />
         <div class="px-4 py-6">
           <h1 class="font-bold text-lg mb-2">{{ t('contact.info.heading') }}</h1>
           <div>
@@ -21,25 +21,25 @@
             }}
           </div>
         </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0" />
         <div class="px-4 py-6">
           <h1 class="font-bold text-lg mb-2">{{ t('billing.heading') }}</h1>
           <AddressDisplay v-if="billingAddress" :address="billingAddress" />
         </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0" />
         <div class="px-4 py-6">
           <h1 class="font-bold text-lg mb-2">{{ t('shipping.heading') }}</h1>
           <AddressDisplay v-if="shippingAddress" :address="shippingAddress" />
         </div>
 
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class-name="w-screen @md:w-auto -mx-4 @md:mx-0" />
         <div class="relative">
           <UiShippingOptionItem
             :shipping-name="offerGetters.getShippingMethodName(offer)"
             :shipping-cost="offerGetters.getShippingMethodCosts(offer)"
             :checked="true"
           />
-          <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0" />
           <UiPaymentOptionItem
             :payment-method-icon-path="offerGetters.getPaymentMethodIconPath(offer)"
             :payment-method-name="offerGetters.getPaymentMethodName(offer)"
@@ -47,8 +47,8 @@
             :disabled="true"
           />
         </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
-        <div class="text-sm mx-4 md:pb-0">
+        <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0 mb-10" />
+        <div class="text-sm mx-4 @md:pb-0">
           <div class="flex items-center">
             <SfCheckbox
               id="terms-checkbox"
@@ -95,7 +95,7 @@
       <div class="col-span-5">
         <UiOfferProductCard :offer="offer" />
         <div
-          class="relative md:sticky mt-4 md:top-20 h-fit"
+          class="relative @md:sticky mt-4 @md:top-20 h-fit"
           :class="{ 'pointer-events-none opacity-50': offerLoading }"
         >
           <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
@@ -112,7 +112,7 @@
               type="submit"
               :disabled="offerLoading"
               size="lg"
-              class="w-full mb-4 md:mb-0 cursor-pointer mt-4"
+              class="w-full mb-4 @md:mb-0 cursor-pointer mt-4"
               @click="order"
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
@@ -125,7 +125,7 @@
               variant="secondary"
               :disabled="offerLoading"
               size="lg"
-              class="w-full mt-4 md:mb-0 cursor-pointer"
+              class="w-full mt-4 @md:mb-0 cursor-pointer"
               @click="toggleModal"
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
@@ -137,7 +137,7 @@
 
           <UiModal
             v-model="openModal"
-            class="h-full w-full overflow-auto md:w-[700px] md:h-fit"
+            class="h-full w-full overflow-auto @md:w-[700px] @md:h-fit"
             aria-labelledby="address-modal-title"
           >
             <UiButton
@@ -154,7 +154,7 @@
             <p>{{ t('returns.commentOptional') }}</p>
             <textarea
               v-model="declineText"
-              class="w-full min-h-32 md:min-w-96 border-2 rounded-md p-4"
+              class="w-full min-h-32 @md:min-w-96 border-2 rounded-md p-4"
               :placeholder="t('offers.inputPlaceholder')"
             />
             <div class="flex space-x-4">
@@ -163,7 +163,7 @@
                 variant="secondary"
                 :disabled="offerLoading"
                 size="lg"
-                class="w-full mt-4 md:mb-0 cursor-pointer"
+                class="w-full mt-4 @md:mb-0 cursor-pointer"
                 @click="toggleModal"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
@@ -174,7 +174,7 @@
                 variant="primary"
                 :disabled="offerLoading"
                 size="lg"
-                class="w-full mt-4 md:mb-0 cursor-pointer"
+                class="w-full mt-4 @md:mb-0 cursor-pointer"
                 @click="handleDecline"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />

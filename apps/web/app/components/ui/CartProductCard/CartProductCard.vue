@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
+    <div class="relative overflow-hidden rounded-md w-[100px] @sm:w-[176px]">
       <UiLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
         <NuxtImg
           v-if="cartItem.variation?.images?.all?.length"
@@ -27,7 +27,7 @@
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
-        class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word"
+        class="w-fit no-underline typography-text-sm @sm:typography-text-lg break-word"
       >
         {{ cartGetters.getItemName(cartItem) }}
       </UiLink>
@@ -47,7 +47,7 @@
           />
         </div>
         <div class="my-2">
-          <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+          <ul class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700">
             <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
               <span class="mr-1">{{ attribute.label }}:</span>
               <span class="font-medium">{{ attribute.value }}</span>
@@ -55,7 +55,7 @@
           </ul>
           <div
             v-if="cartItem.basketItemOrderParams.length > 0"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+            class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700"
           >
             <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
             <CartOrderProperty
@@ -67,7 +67,7 @@
           </div>
           <div
             v-if="cartGetters.getVariation(cartItem)"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
+            class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700 mt-3"
           >
             <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
@@ -97,11 +97,11 @@
         </div>
       </div>
 
-      <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
+      <div class="items-start @sm:items-center @sm:mt-auto flex flex-col @sm:flex-row">
         <span
           v-if="currentFullPrice"
           data-testid="product-full-price"
-          class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-secondary-600 @sm:order-1 font-bold typography-text-sm @sm:typography-text-lg @sm:ml-auto"
         >
           {{ format(currentFullPrice || 0) }}
         </span>
@@ -112,7 +112,7 @@
           :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           :max-value="maximumOrderQuantity"
-          class="mt-6 sm:mt-2"
+          class="mt-6 @sm:mt-2"
           @change-quantity="debounceQuantity"
         />
       </div>
