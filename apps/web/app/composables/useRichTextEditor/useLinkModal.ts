@@ -71,7 +71,6 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     return href.startsWith('/') && !isCategoryHref(href);
   };
 
-
   const initFromEditor = () => {
     if (!editor.value) return;
     isInitializing.value = true;
@@ -93,7 +92,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     const isNodeSel = sel instanceof NodeSelection;
     const isInlineAtomNodeSel = isNodeSel && (sel as NodeSelection).node.isAtom && (sel as NodeSelection).node.isInline;
     isInlineAtomNodeSelection.value = isInlineAtomNodeSel;
-    isAtomSelection.value = isInlineAtomNodeSel || rangeContainsAtoms(editor.value.state.doc, from, to);
+    isAtomSelection.value = false;
     if (!isAtomSelection.value) {
       linkText.value = initialText.value = selectedText.value;
       if (attrs.href) {
@@ -145,7 +144,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
         openInNewWindow.value = originalAtomLinkAttrs.value.target === '_blank';
       }
       isInitializing.value = false;
-    };
+    }
+  };
 
   const applyAtomLink = (href: string, target: string) => {
     if (isInitializing.value) return;
@@ -233,11 +233,10 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const cancelAndRevert = (onClose: () => void) => {
     if (editor.value && initialSelection.value) {
-
       if (isAtomSelection.value) {
         const attrs = originalAtomLinkAttrs.value;
         applyAtomLink(attrs?.href ?? '', attrs?.target ?? '_self');
-      }else {
+      } else {
         const { from } = initialSelection.value;
         const to = from + initialText.value.length;
 
