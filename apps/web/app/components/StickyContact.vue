@@ -72,7 +72,13 @@
 
 <style scoped>
 @media (min-width: 768px) {
+  .sticky-contact {
+    gap: 0.375rem;
+  }
+
   .sticky-label {
+    font-size: 0.75rem;
+    line-height: 1rem;
     max-width: 400px;
     opacity: 1;
     overflow: hidden;
@@ -81,6 +87,13 @@
   
   .sticky-btn {
     gap: 0.5rem !important;
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.75rem 0 0 0.75rem;
+  }
+
+  .sticky-icon {
+    width: 1rem;
+    height: 1rem;
   }
 }
 </style>

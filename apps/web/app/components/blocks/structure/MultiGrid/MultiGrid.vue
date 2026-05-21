@@ -1,6 +1,10 @@
 <template>
   <div :style="outerBackgroundStyle">
-    <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
+    <div
+      data-testid="multi-grid-structure"
+      :class="[getGridClasses(), gridContainerClasses]"
+      :style="gridInlineStyle"
+    >
       <div
         v-for="(column, colIndex) in columns"
         :key="colIndex"
@@ -91,9 +95,7 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
-const shouldStretchBackground = computed(
-  () => Boolean(configuration.layout?.fullWidthBackground) && !(configuration.layout?.fullWidth ?? false),
-);
+const shouldStretchBackground = computed(() => Boolean(configuration.layout?.fullWidthBackground));
 
 const outerBackgroundStyle = computed(() => {
   if (!shouldStretchBackground.value) return {};
@@ -104,6 +106,10 @@ const outerBackgroundStyle = computed(() => {
     marginRight: 'calc(50% - 50vw)',
     backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
   };
+});
+
+const gridContainerClasses = computed(() => {
+  return shouldStretchBackground.value ? ['max-w-screen-3xl', 'mx-auto'] : [];
 });
 
 // FIX: Updated to include Padding styles
