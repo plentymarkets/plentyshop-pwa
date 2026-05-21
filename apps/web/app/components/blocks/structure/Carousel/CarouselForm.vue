@@ -60,12 +60,12 @@ const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { updateCarouselItems, setIndex, createSlide } = useCarousel();
 const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
 const elementsOpen = ref(true);
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
-const { editingBlock, blockForm } = useNestedBlockForm();
+const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
+const { pushEdit } = useBlockEditStack();
 
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as CarouselStructureProps,
@@ -94,9 +94,8 @@ const slides = computed({
 
 const editSlide = (block: Block) => {
   const idx = slides.value.findIndex((s) => s.meta.uuid === block.meta.uuid);
-  editingBlock.value = block;
   if (idx >= 0) setIndex(resolvedUuid.value, idx);
-  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
+  pushEdit(block);
 };
 
 const addSlide = async () => {
@@ -106,21 +105,6 @@ const addSlide = async () => {
   await nextTick();
   setIndex(resolvedUuid.value, slides.value.length - 1);
 };
-
-const exitEditMode = (shouldEmit = true) => {
-  editingBlock.value = null;
-  if (shouldEmit) {
-    clearEditTitle();
-  }
-  return true;
-};
-
-const isSubEditing = computed(() => editingBlock.value !== null);
-
-defineExpose({
-  exitEditMode,
-  isSubEditing,
-});
 </script>
 
 <style scoped>

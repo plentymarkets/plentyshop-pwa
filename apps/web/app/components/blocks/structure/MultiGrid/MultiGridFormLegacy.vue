@@ -136,7 +136,6 @@ import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGr
 import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
-import { getBlockFormLoader } from '~/utils/blocks/blocks-imports';
 
 const props = defineProps<{ uuid?: string }>();
 
@@ -144,8 +143,6 @@ const enableAddBlockPopover = useRuntimeConfig().public.enableAddBlockPopover as
 const { openAddBlockPopover } = useAddBlockPopover();
 const { openDrawerWithView } = useSiteConfiguration();
 const { setInsertColumnUuid } = useBlocksMutations();
-const { setEditTitle, clearEditTitle } = useBlockEditTitle();
-
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks } = useBlocks();
@@ -202,26 +199,12 @@ const getGapPx = (gap: string | undefined): number => {
   return gapPxMap[validGap as GapSize];
 };
 
-const editingBlock = ref<Block | null>(null);
-
-const blockForm = computed(() => {
-  if (!editingBlock.value) return null;
-  const loader = getBlockFormLoader(editingBlock.value.name);
-  return loader ? defineAsyncComponent(loader) : null;
-});
+const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
+const { pushEdit } = useBlockEditStack();
 
 const editElement = (block: Block) => {
-  editingBlock.value = block;
-  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
+  pushEdit(block);
 };
-
-const exitEditMode = (shouldEmit = true): boolean => {
-  editingBlock.value = null;
-  if (shouldEmit) clearEditTitle();
-  return true;
-};
-
-defineExpose({ exitEditMode });
 
 const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
   const insertIndex = block.parent_slot ?? 0;
