@@ -31,5 +31,13 @@ export type ProductRecommendedProductsContent = {
   };
   layout?: {
     fullWidth?: boolean;
+    marginTop?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    marginRight?: number;
+    paddingTop?: number;
+    paddingBottom?: number;
+    paddingLeft?: number;
+    paddingRight?: number;
   };
 };

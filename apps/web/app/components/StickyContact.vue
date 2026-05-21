@@ -71,29 +71,17 @@
 </template>
 
 <style scoped>
-/* From Tablet (768px) up to 2559px (right before 2560px): Show icons only, slide out text on hover */
+/* From Tablet (768px) up to 2559px: Keep labels visible at all times */
 @media (min-width: 768px) and (max-width: 2559px) {
   .sticky-label {
-    max-width: 0;
-    opacity: 0;
+    max-width: 400px;
+    opacity: 1;
     overflow: hidden;
     transition: max-width 0.3s ease-in-out, opacity 0.2s ease-in-out;
   }
   
   .sticky-btn {
-    /* Removes the gap so the icon sits perfectly centered when collapsed */
-    gap: 0 !important; 
-  }
-  
-  /* Trigger the gap on ALL buttons when the ENTIRE container is hovered */
-  .sticky-contact:hover .sticky-btn {
-    gap: 0.5rem !important; 
-  }
-  
-  /* Reveal ALL labels when the ENTIRE container is hovered */
-  .sticky-contact:hover .sticky-label {
-    max-width: 400px; /* Increased to allow the larger 1920px text to fit safely */
-    opacity: 1;
+    gap: 0.5rem !important;
   }
 }
 /* 1920px — Full HD */

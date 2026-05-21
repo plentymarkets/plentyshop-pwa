@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs">
+  <div v-bind="$attrs" :style="layoutStyle">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
     <ProductSlider
       v-if="recommendedProducts?.length && (shouldRender || shouldRenderAfterUpdate)"
@@ -35,6 +35,19 @@ const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
 const shouldFetch = computed(() => shouldRender.value && (isCategory.value || isProduct.value));
+const layoutStyle = computed(() => {
+  const layout = props.content.layout ?? {};
+  return {
+    marginTop: `${layout.marginTop ?? 0}px`,
+    marginBottom: `${layout.marginBottom ?? 0}px`,
+    marginLeft: `${layout.marginLeft ?? 0}px`,
+    marginRight: `${layout.marginRight ?? 0}px`,
+    paddingTop: `${layout.paddingTop ?? 0}px`,
+    paddingBottom: `${layout.paddingBottom ?? 0}px`,
+    paddingLeft: `${layout.paddingLeft ?? 0}px`,
+    paddingRight: `${layout.paddingRight ?? 0}px`,
+  };
+});
 
 const getContentSource = () => {
   return {

@@ -203,13 +203,105 @@
       </template>
 
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+
+      <div class="py-2">
+        <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
+        <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowUpward /></span>
+            <input
+              v-model.number="recommendedBlock.layout.marginTop"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="margin-top"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowDownward /></span>
+            <input
+              v-model.number="recommendedBlock.layout.marginBottom"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="margin-bottom"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowBack /></span>
+            <input
+              v-model.number="recommendedBlock.layout.marginLeft"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="margin-left"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+            <span><SfIconArrowForward /></span>
+            <input
+              v-model.number="recommendedBlock.layout.marginRight"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="margin-right"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="py-2">
+        <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+        <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowUpward /></span>
+            <input
+              v-model.number="recommendedBlock.layout.paddingTop"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-top"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowDownward /></span>
+            <input
+              v-model.number="recommendedBlock.layout.paddingBottom"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-bottom"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <span><SfIconArrowBack /></span>
+            <input
+              v-model.number="recommendedBlock.layout.paddingLeft"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-left"
+            />
+          </div>
+          <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+            <span><SfIconArrowForward /></span>
+            <input
+              v-model.number="recommendedBlock.layout.paddingRight"
+              type="number"
+              class="w-12 text-center outline-none"
+              data-testid="padding-right"
+            />
+          </div>
+        </div>
+      </div>
     </UiAccordionItem>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
-import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfTextarea,
+  SfIconCheck,
+  SfIconArrowUpward,
+  SfIconArrowDownward,
+  SfIconArrowBack,
+  SfIconArrowForward,
+} from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import type { Category } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
@@ -263,8 +355,43 @@ const recommendedBlock = computed(
         categoryId: '',
         crossSellingRelation: 'Similar' as CrossSellingRelationType,
       },
+      layout: {
+        fullWidth: false,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
+      },
     }) as ProductRecommendedProductsContent,
 );
+
+if (!recommendedBlock.value.layout) {
+  recommendedBlock.value.layout = {
+    fullWidth: false,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+  };
+} else {
+  if (recommendedBlock.value.layout.fullWidth === undefined) recommendedBlock.value.layout.fullWidth = false;
+  if (recommendedBlock.value.layout.marginTop === undefined) recommendedBlock.value.layout.marginTop = 0;
+  if (recommendedBlock.value.layout.marginBottom === undefined) recommendedBlock.value.layout.marginBottom = 0;
+  if (recommendedBlock.value.layout.marginLeft === undefined) recommendedBlock.value.layout.marginLeft = 0;
+  if (recommendedBlock.value.layout.marginRight === undefined) recommendedBlock.value.layout.marginRight = 0;
+  if (recommendedBlock.value.layout.paddingTop === undefined) recommendedBlock.value.layout.paddingTop = 0;
+  if (recommendedBlock.value.layout.paddingBottom === undefined) recommendedBlock.value.layout.paddingBottom = 0;
+  if (recommendedBlock.value.layout.paddingLeft === undefined) recommendedBlock.value.layout.paddingLeft = 0;
+  if (recommendedBlock.value.layout.paddingRight === undefined) recommendedBlock.value.layout.paddingRight = 0;
+}
 
 if (Object.keys(currentProduct.value).length) {
   recommendedBlock.value.source.itemId = productGetters.getItemId(currentProduct.value);
@@ -363,6 +490,8 @@ const selectCategoryTab = async () => {
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
     "layout-label": "Layout",
+    "margin-label": "Margin (px)",
+    "padding-label": "Padding (px)",
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
     "cross-selling-relation-replacement": "Replacement part",
@@ -400,6 +529,8 @@ const selectCategoryTab = async () => {
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
+    "margin-label": "Margin (px)",
+    "padding-label": "Padding (px)",
 
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
