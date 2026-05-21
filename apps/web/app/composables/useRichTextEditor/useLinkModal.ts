@@ -76,7 +76,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const isInlineAtomNodeSelection = ref(false);
   const selectionContainsInlineAtoms = ref(false);
   const isInitializing = ref(false);
-  const originalAtomLinkFullAttrs = ref<(({ href: string; target: string } & LinkModalLinkAttrs) | null)>(null);
+  const originalAtomLinkFullAttrs = ref<({ href: string; target: string } & LinkModalLinkAttrs) | null>(null);
   const atomDisplayLabel = ref<string | null>(null);
 
   const { getCorrectPreviewPathWithLocale } = useCategoryIdHelper();
@@ -148,7 +148,10 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     }
   };
 
-  const buildCurrentLinkAttrs = (href: string, target: string): ({ href: string; target: string } & LinkModalLinkAttrs) | null => {
+  const buildCurrentLinkAttrs = (
+    href: string,
+    target: string,
+  ): ({ href: string; target: string } & LinkModalLinkAttrs) | null => {
     if (!href) return null;
     const attrs: { href: string; target: string } & LinkModalLinkAttrs = { href, target };
     attrs['data-link-type'] = activeTab.value;
@@ -183,8 +186,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     initialSelection.value = { from, to };
 
     const isNodeSel = sel instanceof NodeSelection;
-    const isInlineAtomNodeSel =
-      isNodeSel && (sel as NodeSelection).node.type.name === 'icon';
+    const isInlineAtomNodeSel = isNodeSel && (sel as NodeSelection).node.type.name === 'icon';
     isInlineAtomNodeSelection.value = isInlineAtomNodeSel;
     isAtomSelection.value = isInlineAtomNodeSel || rangeContainsAtoms(editor.value.state.doc, from, to);
 
@@ -220,8 +222,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     atomDisplayLabel.value = displayNode
       ? `${(displayNode.attrs.name as string) ?? displayNode.type.name} [${displayNode.type.name === 'emoji' ? 'emoji' : 'icon'}]`
       : 'Content with icon(s)';
-    const linkMark = node?.marks.find((m) => m.type.name === 'link')
-      ?? rangeAtomNode?.marks.find((m) => m.type.name === 'link');
+    const linkMark =
+      node?.marks.find((m) => m.type.name === 'link') ?? rangeAtomNode?.marks.find((m) => m.type.name === 'link');
     const attrs = linkMark
       ? extractLinkAttrs(linkMark.attrs as LinkModalLinkAttrs)
       : isInlineAtomNodeSel
