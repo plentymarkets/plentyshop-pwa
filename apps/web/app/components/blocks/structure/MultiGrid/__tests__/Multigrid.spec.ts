@@ -86,7 +86,7 @@ describe('MultiGrid block', () => {
         },
       },
     });
-    expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-x-5');
+    expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('@md:gap-x-5');
   });
 
   it('should apply layout styles (margin, background color) to the grid container', () => {
@@ -124,8 +124,8 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-12');
-    expect(classes).toContain('lg:grid-cols-12');
+    expect(classes).toContain('@md:grid-cols-12');
+    expect(classes).toContain('@lg:grid-cols-12');
   });
 
   it('should apply responsive grid classes for a three-column grid', () => {
@@ -140,8 +140,8 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-12');
-    expect(classes).toContain('lg:grid-cols-12');
+    expect(classes).toContain('@md:grid-cols-12');
+    expect(classes).toContain('@lg:grid-cols-12');
   });
 
   it('should render a 2 columns multigrid with 2 blocks in the first column and 1 block in the second column', () => {

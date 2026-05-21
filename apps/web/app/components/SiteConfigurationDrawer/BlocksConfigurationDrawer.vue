@@ -1,6 +1,6 @@
 <template>
   <Transition name="drawer-right" appear>
-    <div class="flex-shrink-0 w-1/4 min-w-[250px] max-w-[330px] bg-neutral-50 border-0 border-gray-300 z-[15]">
+    <div class="flex-shrink-0 w-1/4 min-w-[250px] max-w-[340px] bg-neutral-50 border-0 border-gray-300 z-[15]">
       <component :is="getDrawerView(blocksConfigurationDrawerView)" v-if="blocksConfigurationDrawerView" />
     </div>
   </Transition>

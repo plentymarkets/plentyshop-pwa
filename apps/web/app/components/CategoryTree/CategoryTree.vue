@@ -16,7 +16,7 @@
         <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
       </CategoryTreeItem>
     </template>
-    <ul v-if="categoryItems?.length" class="mb-4 md:mt-2" data-testid="categories">
+    <ul v-if="categoryItems?.length" class="mb-4 @md:mt-2" data-testid="categories">
       <CategoryTreeItem
         v-for="categoryItem in categoryItems"
         :key="categoryGetters.getSubCategoryId(categoryItem)"

@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="auth" :heading="t('authentication.resetPassword.heading')">
-    <form class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md" @submit.prevent="resetPassword">
+    <form class="pb-4 @md:p-6 mt-10 @md:border @md:border-neutral-200 rounded-md" @submit.prevent="resetPassword">
       <p class="mb-6">
         {{ t('authentication.resetPassword.info') }}
       </p>
@@ -8,7 +8,7 @@
         <UiFormLabel>{{ t('authentication.resetPassword.email') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput v-model="customerEmail" name="email" type="email" required />
       </label>
-      <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
+      <div class="mt-6 flex flex-col-reverse @md:flex-row gap-4">
         <UiButton :tag="NuxtLink" :to="localePath(paths.authLogin)" class="flex-1" variant="tertiary">
           {{ t('authentication.resetPassword.backToLogin') }}
         </UiButton>
