@@ -17,7 +17,7 @@
         <img
           src="/_nuxt-plenty/images/image009-2.png"
           alt="Banner"
-          class="h-[36px] lg:h-[44px] min-[1152px]:h-[50px] min-[1280px]:h-[74px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[58px] lg:max-w-[72px] min-[1152px]:max-w-[84px] min-[1280px]:max-w-[112px] min-[1367px]:max-w-[172px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+          class="h-[45px] lg:h-[56px] min-[1152px]:h-[56px] min-[1280px]:h-[80px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[68px] lg:max-w-[80px] min-[1152px]:max-w-[100px] min-[1280px]:max-w-[120px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
       </div>
 
