@@ -24,7 +24,7 @@
         :disabled="!props.actions.isEditable"
         @click.stop="triggerEdit"
       >
-        <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900">
+        <SfIconBase size="xs" viewBox="0 0 18 18">
           <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path :d="editPath" fill="currentColor" />
           </svg>
