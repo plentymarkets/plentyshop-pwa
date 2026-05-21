@@ -109,7 +109,7 @@ const outerBackgroundStyle = computed(() => {
 });
 
 const gridContainerClasses = computed(() => {
-  return shouldStretchBackground.value ? ['max-w-screen-3xl', 'mx-auto'] : [];
+  return shouldStretchBackground.value ? ['max-w-screen-3xl', 'mx-auto', 'px-4', 'md:px-6', 'lg:px-10'] : [];
 });
 
 // FIX: Updated to include Padding styles
@@ -121,8 +121,16 @@ const gridInlineStyle = computed(() => ({
     configuration.layout?.marginBottom !== undefined
       ? `${configuration.layout.marginBottom}px`
       : `${defaultMarginBottom.value}px`,
-  marginLeft: configuration.layout?.marginLeft !== undefined ? `${configuration.layout.marginLeft}px` : '40px',
-  marginRight: configuration.layout?.marginRight !== undefined ? `${configuration.layout.marginRight}px` : '40px',
+  marginLeft: shouldStretchBackground.value
+    ? 'auto'
+    : configuration.layout?.marginLeft !== undefined
+      ? `${configuration.layout.marginLeft}px`
+      : '40px',
+  marginRight: shouldStretchBackground.value
+    ? 'auto'
+    : configuration.layout?.marginRight !== undefined
+      ? `${configuration.layout.marginRight}px`
+      : '40px',
   
   // Padding - NEW LOGIC HERE
   paddingTop: configuration.layout?.paddingTop !== undefined ? `${configuration.layout.paddingTop}px` : '0px',
