@@ -27,7 +27,6 @@ const rangeContainsAtoms = (doc: PmNode, from: number, to: number) => {
 };
 
 const getLinkMark = (editor: Editor, from: number, to: number): PmMark | undefined => {
-  // Range selection: scan nodes in range
   if (from !== to) {
     let found: PmMark | undefined;
     editor.state.doc.nodesBetween(from, to, (n) => {
@@ -36,18 +35,25 @@ const getLinkMark = (editor: Editor, from: number, to: number): PmMark | undefin
     });
     if (found) return found;
   }
-  // Collapsed cursor or fallback: check marks at cursor position
   const sel = editor.state.selection;
   const marks = [...(editor.state.storedMarks ?? []), ...sel.$from.marks()];
   return marks.find((m) => m.type.name === 'link');
 };
 
 const getLinkAttrsFromRange = (doc: PmNode, from: number, to: number) => {
-  let result: { href: string; target: string } | null = null;
+  let result: LinkModalLinkAttrs | null = null;
   doc.nodesBetween(from, to, (n) => {
     if (result) return false;
     const m = n.marks.find((m) => m.type.name === 'link');
-    if (m) result = { href: m.attrs.href as string, target: m.attrs.target as string };
+    if (m) {
+      result = {
+        href: m.attrs.href as string,
+        target: m.attrs.target as string,
+        'data-link-type': m.attrs['data-link-type'] as LinkModalLinkAttrs['data-link-type'],
+        'data-link-value': m.attrs['data-link-value'] as string | undefined,
+        'data-link-path': m.attrs['data-link-path'] as string | undefined,
+      };
+    }
   });
   return result;
 };
@@ -70,7 +76,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const isInlineAtomNodeSelection = ref(false);
   const selectionContainsInlineAtoms = ref(false);
   const isInitializing = ref(false);
-  const originalAtomLinkAttrs = ref<{ href: string; target: string } | null>(null);
+  const originalAtomLinkFullAttrs = ref<(({ href: string; target: string } & LinkModalLinkAttrs) | null)>(null);
   const atomDisplayLabel = ref<string | null>(null);
 
   const { getCorrectPreviewPathWithLocale } = useCategoryIdHelper();
@@ -99,6 +105,75 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     return href.startsWith('/') && !isCategoryHref(href);
   };
 
+  const extractLinkAttrs = (rawAttrs?: LinkModalLinkAttrs): LinkModalLinkAttrs => ({
+    href: rawAttrs?.href,
+    target: rawAttrs?.target,
+    'data-link-type': rawAttrs?.['data-link-type'],
+    'data-link-value': rawAttrs?.['data-link-value'],
+    'data-link-path': rawAttrs?.['data-link-path'],
+  });
+
+  const hydrateModalStateFromAttrs = (attrs: LinkModalLinkAttrs) => {
+    if (!attrs.href) return;
+
+    openInNewWindow.value = attrs.target === '_blank';
+
+    const storedLinkType = attrs['data-link-type'];
+    const storedLinkValue = attrs['data-link-value'];
+    const storedLinkPath = attrs['data-link-path'];
+
+    if (storedLinkType) {
+      activeTab.value = storedLinkType;
+      if (storedLinkType === 'url' && storedLinkValue) {
+        urlValue.value = storedLinkValue;
+      } else if (storedLinkType === 'static' && storedLinkValue) {
+        staticPageValue.value = storedLinkValue;
+      } else if (storedLinkType === 'category') {
+        categoryValue.value = storedLinkValue ?? attrs.href ?? null;
+        selectedCategoryPath.value = storedLinkPath || attrs.href || null;
+      }
+      return;
+    }
+
+    if (isCategoryHref(attrs.href)) {
+      activeTab.value = 'category';
+      categoryValue.value = attrs.href;
+      selectedCategoryPath.value = attrs.href;
+    } else if (isStaticPageHref(attrs.href)) {
+      activeTab.value = 'static';
+      staticPageValue.value = attrs.href;
+    } else {
+      activeTab.value = 'url';
+      urlValue.value = attrs.href;
+    }
+  };
+
+  const buildCurrentLinkAttrs = (href: string, target: string): ({ href: string; target: string } & LinkModalLinkAttrs) | null => {
+    if (!href) return null;
+    const attrs: { href: string; target: string } & LinkModalLinkAttrs = { href, target };
+    attrs['data-link-type'] = activeTab.value;
+    if (activeTab.value === 'url') {
+      attrs['data-link-value'] = urlValue.value.trim();
+    } else if (activeTab.value === 'static') {
+      attrs['data-link-value'] = staticPageValue.value;
+    } else if (activeTab.value === 'category') {
+      if (categoryValue.value) attrs['data-link-value'] = categoryValue.value;
+      if (selectedCategoryPath.value) attrs['data-link-path'] = selectedCategoryPath.value;
+    }
+    return attrs;
+  };
+
+  const buildInitialLinkAttrs = (): ({ href: string; target?: string } & LinkModalLinkAttrs) | null => {
+    if (!initialLinkAttrs.value?.href) return null;
+    return {
+      href: initialLinkAttrs.value.href,
+      target: initialLinkAttrs.value.target,
+      'data-link-type': initialLinkAttrs.value['data-link-type'],
+      'data-link-value': initialLinkAttrs.value['data-link-value'],
+      'data-link-path': initialLinkAttrs.value['data-link-path'],
+    };
+  };
+
   const initFromEditor = () => {
     if (!editor.value) return;
     isInitializing.value = true;
@@ -118,48 +193,10 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       linkText.value = selectedText.value;
       initialText.value = selectedText.value;
 
-      const rawAttrs = (getLinkMark(editor.value, from, to)?.attrs ?? {}) as LinkModalLinkAttrs;
-      const attrs: LinkModalLinkAttrs = {
-        href: rawAttrs.href,
-        target: rawAttrs.target,
-        'data-link-type': rawAttrs['data-link-type'],
-        'data-link-value': rawAttrs['data-link-value'],
-        'data-link-path': rawAttrs['data-link-path'],
-      };
+      const attrs = extractLinkAttrs((getLinkMark(editor.value, from, to)?.attrs ?? {}) as LinkModalLinkAttrs);
 
       initialLinkAttrs.value = attrs;
-
-      if (attrs.href) {
-        openInNewWindow.value = attrs.target === '_blank';
-
-        const storedLinkType = attrs['data-link-type'] as LinkTabValue | undefined;
-        const storedLinkValue = attrs['data-link-value'] as string | undefined;
-        const storedLinkPath = attrs['data-link-path'] as string | undefined;
-
-        if (storedLinkType) {
-          activeTab.value = storedLinkType;
-          if (storedLinkType === 'url' && storedLinkValue) {
-            urlValue.value = storedLinkValue;
-          } else if (storedLinkType === 'static' && storedLinkValue) {
-            staticPageValue.value = storedLinkValue;
-          } else if (storedLinkType === 'category') {
-            categoryValue.value = storedLinkValue ?? attrs.href ?? null;
-            selectedCategoryPath.value = storedLinkPath || attrs.href || null;
-          }
-        } else {
-          if (isCategoryHref(attrs.href)) {
-            activeTab.value = 'category';
-            categoryValue.value = attrs.href;
-            selectedCategoryPath.value = attrs.href;
-          } else if (isStaticPageHref(attrs.href)) {
-            activeTab.value = 'static';
-            staticPageValue.value = attrs.href;
-          } else {
-            activeTab.value = 'url';
-            urlValue.value = attrs.href;
-          }
-        }
-      }
+      hydrateModalStateFromAttrs(attrs);
 
       nextTick(() => {
         isInitializing.value = false;
@@ -185,26 +222,35 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       : 'Content with icon(s)';
     const linkMark = node?.marks.find((m) => m.type.name === 'link')
       ?? rangeAtomNode?.marks.find((m) => m.type.name === 'link');
-    originalAtomLinkAttrs.value = linkMark
-      ? { href: linkMark.attrs.href as string, target: linkMark.attrs.target as string }
+    const attrs = linkMark
+      ? extractLinkAttrs(linkMark.attrs as LinkModalLinkAttrs)
       : isInlineAtomNodeSel
         ? null
-        : getLinkAttrsFromRange(editor.value.state.doc, from, to);
-    if (originalAtomLinkAttrs.value) {
-      urlValue.value = originalAtomLinkAttrs.value.href;
-      openInNewWindow.value = originalAtomLinkAttrs.value.target === '_blank';
-    }
+        : extractLinkAttrs(getLinkAttrsFromRange(editor.value.state.doc, from, to) ?? undefined);
+
+    originalAtomLinkFullAttrs.value = attrs?.href
+      ? {
+          href: attrs.href,
+          target: attrs.target ?? '_self',
+          'data-link-type': attrs['data-link-type'],
+          'data-link-value': attrs['data-link-value'],
+          'data-link-path': attrs['data-link-path'],
+        }
+      : null;
+
+    if (attrs) hydrateModalStateFromAttrs(attrs);
+
     isInitializing.value = false;
   };
 
-  const applyAtomLink = (href: string, target: string) => {
+  const applyAtomLink = (linkAttrs: ({ href: string; target: string } & LinkModalLinkAttrs) | null) => {
     if (isInitializing.value) return;
     if (!editor.value || !initialSelection.value) return;
     const chain = editor.value.chain();
     isInlineAtomNodeSelection.value
       ? chain.setNodeSelection(initialSelection.value.from)
       : chain.setTextSelection(initialSelection.value);
-    href ? chain.setLink({ href, target }) : chain.unsetLink();
+    linkAttrs ? chain.setLink(linkAttrs) : chain.unsetLink();
     chain.run();
   };
 
@@ -213,30 +259,15 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
     const href = computedHref.value;
     const target = openInNewWindow.value ? '_blank' : '_self';
+    const linkAttrs = buildCurrentLinkAttrs(href, target);
 
     if (isAtomSelection.value) {
-      applyAtomLink(href, target);
+      applyAtomLink(linkAttrs);
       return;
     }
 
-    const buildLinkAttrs = (): ({ href: string; target: string } & LinkModalLinkAttrs) | null => {
-      if (!href) return null;
-      const attrs: { href: string; target: string } & LinkModalLinkAttrs = { href, target };
-      attrs['data-link-type'] = activeTab.value;
-      if (activeTab.value === 'url') {
-        attrs['data-link-value'] = urlValue.value.trim();
-      } else if (activeTab.value === 'static') {
-        attrs['data-link-value'] = staticPageValue.value;
-      } else if (activeTab.value === 'category') {
-        if (categoryValue.value) attrs['data-link-value'] = categoryValue.value;
-        if (selectedCategoryPath.value) attrs['data-link-path'] = selectedCategoryPath.value;
-      }
-      return attrs;
-    };
-
     if (selectionContainsInlineAtoms.value) {
       const chain = editor.value.chain().setTextSelection(initialSelection.value);
-      const linkAttrs = buildLinkAttrs();
       linkAttrs ? chain.setLink(linkAttrs) : chain.unsetLink();
       chain.run();
       return;
@@ -252,7 +283,6 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
     chain.setTextSelection(initialSelection.value);
 
-    const linkAttrs = buildLinkAttrs();
     linkAttrs ? chain.setLink(linkAttrs) : chain.unsetLink();
 
     chain.run();
@@ -289,18 +319,11 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const cancelAndRevert = (onClose: () => void) => {
     if (editor.value && initialSelection.value) {
       if (isAtomSelection.value) {
-        const attrs = originalAtomLinkAttrs.value;
-        applyAtomLink(attrs?.href ?? '', attrs?.target ?? '_self');
+        applyAtomLink(originalAtomLinkFullAttrs.value);
       } else if (selectionContainsInlineAtoms.value) {
         const chain = editor.value.chain().setTextSelection(initialSelection.value);
-        if (initialLinkAttrs.value?.href) {
-          const revertAttrs: { href: string; target?: string } & LinkModalLinkAttrs = {
-            href: initialLinkAttrs.value.href,
-            target: initialLinkAttrs.value.target,
-            'data-link-type': initialLinkAttrs.value['data-link-type'],
-            'data-link-value': initialLinkAttrs.value['data-link-value'],
-            'data-link-path': initialLinkAttrs.value['data-link-path'],
-          };
+        const revertAttrs = buildInitialLinkAttrs();
+        if (revertAttrs) {
           chain.setLink(revertAttrs);
         } else {
           chain.unsetLink();
@@ -318,16 +341,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
           .insertContent(initialText.value)
           .setTextSelection({ from, to });
 
-        if (initialLinkAttrs.value?.href) {
-          const initialHref = initialLinkAttrs.value.href;
-          const linkAttrs: { href: string; target?: string } & LinkModalLinkAttrs = {
-            href: initialHref,
-            target: initialLinkAttrs.value.target,
-            'data-link-type': initialLinkAttrs.value['data-link-type'],
-            'data-link-value': initialLinkAttrs.value['data-link-value'],
-            'data-link-path': initialLinkAttrs.value['data-link-path'],
-          };
-
+        const linkAttrs = buildInitialLinkAttrs();
+        if (linkAttrs) {
           chain.setLink(linkAttrs);
         } else {
           chain.unsetLink();
