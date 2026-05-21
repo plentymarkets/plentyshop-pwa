@@ -5,7 +5,12 @@ import { validateUrl } from '~/composables/useRichTextEditor/helpers/url.helper'
 
 const rangeContainsAtoms = (doc: PmNode, from: number, to: number) => {
   let found = false;
-  doc.nodesBetween(from, to, (n) => { if (!found && n.isAtom && n.isInline) found = true; return !found; });
+  doc.nodesBetween(from, to, (n) => {
+    if (!found && n.isAtom && n.isInline) {
+      found = true;
+    }
+    return !found;
+  });
   return found;
 };
 
@@ -65,7 +70,10 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     if (!isAtomSelection.value) {
       linkText.value = initialText.value = selectedText.value;
       const attrs = editor.value.getAttributes('link');
-      if (attrs.href) { urlValue.value = attrs.href as string; openInNewWindow.value = attrs.target === '_blank'; }
+      if (attrs.href) {
+        urlValue.value = attrs.href as string;
+        openInNewWindow.value = attrs.target === '_blank';
+      }
       return;
     }
     const node = isNodeSel ? (sel as NodeSelection).node : null;
