@@ -83,7 +83,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     const node = isInlineAtomNodeSel ? (sel as NodeSelection).node : null;
     atomDisplayLabel.value = node
       ? `${(node.attrs.name as string) ?? node.type.name} [${node.type.name === 'emoji' ? 'emoji' : 'icon'}]`
-      : 'Content with icon(s)';
+      : 'generic-atom-text';
     const linkMark = node?.marks.find((m) => m.type.name === 'link');
     originalAtomLinkAttrs.value = linkMark
       ? { href: linkMark.attrs.href as string, target: linkMark.attrs.target as string }

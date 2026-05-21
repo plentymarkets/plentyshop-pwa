@@ -45,7 +45,7 @@
               v-if="isAtomSelection"
               class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
             >
-              {{ atomDisplayLabel }}
+              {{ atomDisplayLabel == 'generic-atom-text' ? getEditorTranslation('generic-atom-text') : atomDisplayLabel }}
             </p>
             <input
               v-else
@@ -179,7 +179,8 @@ onMounted(initFromEditor);
     "page-label": "Page",
     "url-label": "URL link",
     "text-label": "Text",
-    "insert-link": "Insert Link"
+    "insert-link": "Insert Link",
+    "generic-atom-text": "Content with icon(s)"
   },
   "de": {
     "add-link-button": "Add Link",
@@ -189,7 +190,8 @@ onMounted(initFromEditor);
     "page-label": "Page",
     "url-label": "URL link",
     "text-label": "Text",
-    "insert-link": "Insert Link"
+    "insert-link": "Insert Link",
+    "generic-atom-text": "Content with icon(s)"
   }
 }
 </i18n>
