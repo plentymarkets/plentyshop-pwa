@@ -2,7 +2,7 @@ import { Extension } from '@tiptap/core';
 import { NodeSelection, Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 
-const key = new PluginKey('atomInSelection');
+const decorationKey = new PluginKey('atomInSelection');
 
 export const AtomSelectionDecoration = Extension.create({
   name: 'atomSelectionDecoration',
@@ -10,7 +10,7 @@ export const AtomSelectionDecoration = Extension.create({
   addProseMirrorPlugins() {
     return [
       new Plugin({
-        key,
+        key: decorationKey,
         props: {
           decorations(state) {
             const { selection, doc } = state;

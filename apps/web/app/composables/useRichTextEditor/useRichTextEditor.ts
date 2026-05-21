@@ -51,7 +51,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       }),
       IconNode,
       AtomSelectionDecoration,
-      Emoji.extend({ selectable: true, marks: '_' }).configure({
+      Emoji.extend({ marks: '_' }).configure({
         emojis,
         enableEmoticons: true,
       }),
