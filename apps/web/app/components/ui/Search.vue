@@ -55,9 +55,12 @@
 import { ref, computed } from 'vue';
 import { productGetters } from '@plentymarkets/shop-api';
 import { onClickOutside } from '@vueuse/core';
+import { paths } from '~/utils/paths';
 
 const props = defineProps<{
   close?: () => boolean;
+  initialQuery?: string;
+  autoSubmit?: boolean;
 }>();
 
 const router = useRouter();
@@ -140,7 +143,18 @@ const handleSearch = () => {
   if (searchQuery.value.trim().length > 0) {
     showResults.value = false;
     props.close?.();
-    window.location.href = `/search?term=${searchQuery.value}`;
+    const targetPath = localePath(paths.search);
+    window.location.href = `${targetPath}?term=${encodeURIComponent(searchQuery.value)}`;
   }
 };
+
+onMounted(() => {
+  if (props.initialQuery?.trim()) {
+    searchQuery.value = props.initialQuery.trim();
+  }
+
+  if (props.autoSubmit && searchQuery.value.length >= 3) {
+    setTimeout(() => handleSearch(), 0);
+  }
+});
 </script>

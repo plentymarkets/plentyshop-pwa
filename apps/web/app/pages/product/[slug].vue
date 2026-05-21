@@ -91,20 +91,27 @@ const icon = 'sell';
 setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
-
-await fetchProduct(productParams).then(() => {
-  usePlentyEvent().emit('frontend:productLoaded', {
-    product: product.value,
+const fetchProductWithTimeout = async () => {
+  const fetchAttempt = fetchProduct(productParams).then(() => true).catch(() => false);
+  const timeoutAttempt = new Promise<boolean>((resolve) => {
+    setTimeout(() => resolve(false), 8000);
   });
-});
-if (Object.keys(product.value).length === 0) {
-  if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
 
+  return Promise.race([fetchAttempt, timeoutAttempt]);
+};
+
+const productLoaded = await fetchProductWithTimeout();
+
+if (!productLoaded || Object.keys(product.value).length === 0) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Product not found',
   });
 }
+
+usePlentyEvent().emit('frontend:productLoaded', {
+  product: product.value,
+});
 
 setCurrentProduct(productForEditor.value || ({} as Product));
 setProductMeta();

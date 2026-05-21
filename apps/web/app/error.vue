@@ -10,8 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
-import { paths } from '~/utils/paths';
 
 interface ErrorProp {
   statusCode: number;
@@ -19,46 +17,7 @@ interface ErrorProp {
   [key: string]: unknown;
 }
 const props = defineProps<{ error: ErrorProp }>();
-const localePath = useLocalePath();
 const { setInitialDataSSR } = useInitialSetup();
-const { data: categoryTree } = useCategoryTree();
-const { buildCategoryMenuLink } = useLocalization();
-const { getSetting: getHomepageCategoryId } = useSiteSettings('homepageCategoryId');
-
-const normalizeInternalPath = (path: string) => {
-  const sanitized = path.replace(/\/+/g, '/').replace(/^\/+/g, '');
-  return sanitized ? `/${sanitized}` : '/';
-};
-
-const findCategoryById = (items: CategoryTreeItem[], targetId: number): CategoryTreeItem | null => {
-  for (const item of items) {
-    if (categoryTreeGetters.getId(item) === targetId) {
-      return item;
-    }
-
-    if (item.children?.length) {
-      const found = findCategoryById(item.children, targetId);
-      if (found) {
-        return found;
-      }
-    }
-  }
-
-  return null;
-};
-
-const getHomepageRedirectPath = () => {
-  const homepageCategoryId = Number(getHomepageCategoryId());
-
-  if (!Number.isNaN(homepageCategoryId) && homepageCategoryId > 0 && categoryTree.value.length) {
-    const homepageCategory = findCategoryById(categoryTree.value, homepageCategoryId);
-    if (homepageCategory) {
-      return normalizeInternalPath(localePath(buildCategoryMenuLink(homepageCategory, categoryTree.value)));
-    }
-  }
-
-  return normalizeInternalPath(localePath(paths.home));
-};
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
@@ -107,16 +66,6 @@ useHead({
 await callOnce(async () => {
   await setInitialDataSSR();
 });
-
-if (props.error.statusCode === 404) {
-  const redirectPath = getHomepageRedirectPath();
-
-  if (import.meta.client) {
-    window.location.replace(redirectPath);
-  } else {
-    await clearError({ redirect: redirectPath });
-  }
-}
 </script>
 
 <style lang="scss">

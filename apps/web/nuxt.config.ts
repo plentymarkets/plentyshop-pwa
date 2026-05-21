@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   telemetry: false,
   devtools: { enabled: true },
   typescript: {
-    typeCheck: true,
+    typeCheck: process.env.NODE_ENV !== 'development',
   },
   app: appConfiguration,
   experimental: {

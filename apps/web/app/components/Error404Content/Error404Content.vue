@@ -10,7 +10,7 @@
       </p>
 
       <div class="flex justify-center my-8">
-        <UiSearch class="w-96" />
+        <UiSearch class="w-96" :initial-query="suggestedSearchTerm" :auto-submit="shouldAutoSubmit" />
       </div>
 
       <div class="flex justify-center gap-2 overflow-x-auto scrollbar-hide flex-wrap">
@@ -37,7 +37,41 @@ import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const localePath = useLocalePath();
+const route = useRoute();
+const { availableLocales } = useNuxtApp().$i18n;
+const requestUrl = useRequestURL();
 const NuxtLink = resolveComponent('NuxtLink');
+
+const toSearchTerm = (path: string) => {
+  const decodedPath = decodeURIComponent(path || '/');
+  const withoutQuery = decodedPath.split('?')[0] ?? '';
+  const cleanedPath = withoutQuery.split('#')[0] ?? '';
+  const segments = cleanedPath.split('/').filter(Boolean);
+
+  const firstSegment = segments[0];
+  const normalizedSegments = firstSegment && (availableLocales as string[]).includes(firstSegment) ? segments.slice(1) : segments;
+
+  const slug = normalizedSegments.join(' ');
+  const withoutTrailingNumericSuffix = slug.replace(/_[0-9_]+$/g, '');
+  const normalized = withoutTrailingNumericSuffix
+    .replace(/[-_]+/g, ' ')
+    .replace(/[^a-zA-Z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return normalized;
+};
+
+const unresolvedPath = computed(() => {
+  if (import.meta.client && typeof window !== 'undefined') {
+    return window.location.pathname;
+  }
+
+  return route.path || requestUrl.pathname || '/';
+});
+
+const suggestedSearchTerm = computed(() => toSearchTerm(unresolvedPath.value));
+const shouldAutoSubmit = computed(() => suggestedSearchTerm.value.length >= 3);
 
 const { data } = await useAsyncData('404-products', () =>
   useSdk().plentysystems.getFacet({
