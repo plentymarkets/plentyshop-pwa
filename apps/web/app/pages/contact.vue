@@ -103,13 +103,13 @@
             >
               <i18n-t keypath="contact.privacyPolicy" scope="global">
                 <template #privacyPolicy>
-                  <SfLink
+                  <UiLink
                     :href="localePath(paths.privacyPolicy)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ t('legal.privacyPolicy') }}
-                  </SfLink>
+                  </UiLink>
                 </template>
               </i18n-t>
               {{ t('form.required') }}
@@ -151,7 +151,7 @@
 
 <script setup lang="ts">
 import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
-import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
