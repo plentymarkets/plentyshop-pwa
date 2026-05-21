@@ -185,6 +185,8 @@
         <h2>{{ getEditorTranslation('layout-background') }}</h2>
       </template>
 
+      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
+
       <div v-if="multiGridStructure.configuration.layout" class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>

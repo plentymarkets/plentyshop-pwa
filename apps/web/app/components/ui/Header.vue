@@ -2,10 +2,10 @@
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('lg')">
       <div
-        class="hidden lg:flex flex-row items-start justify-start flex-shrink-0 w-fit gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-3 2xl:gap-4 relative z-10 transition-all duration-300"
+        class="hidden lg:flex flex-row items-start justify-start flex-shrink-0 w-fit gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-3 relative z-10 transition-all duration-300"
       >
         <div
-          class="flex flex-col items-end justify-center text-[9px] lg:text-[10px] min-[1152px]:text-[11px] min-[1280px]:text-[13px] min-[1367px]:text-[16px] 2xl:text-xl font-extrabold text-[#062633] leading-tight min-[1280px]:leading-snug min-[1367px]:leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
+          class="flex flex-col items-end justify-center text-[9px] lg:text-[10px] min-[1152px]:text-[11px] min-[1280px]:text-[13px] min-[1367px]:text-[16px] font-extrabold text-[#062633] leading-tight min-[1280px]:leading-snug min-[1367px]:leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
         >
           <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Reparatur und Instandsetzung</NuxtLink>
           <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
@@ -17,7 +17,7 @@
         <img
           src="/_nuxt-plenty/images/image009-2.png"
           alt="Banner"
-          class="h-[34px] lg:h-[42px] min-[1152px]:h-[48px] min-[1280px]:h-[68px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[54px] lg:max-w-[68px] min-[1152px]:max-w-[78px] min-[1280px]:max-w-[100px] min-[1367px]:max-w-[160px] 2xl:max-w-[200px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+          class="h-[34px] lg:h-[42px] min-[1152px]:h-[48px] min-[1280px]:h-[68px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[54px] lg:max-w-[68px] min-[1152px]:max-w-[78px] min-[1280px]:max-w-[100px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
       </div>
 
@@ -25,7 +25,7 @@
         class="hidden lg:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-1 min-[1152px]:mr-2 min-[1280px]:mr-3 min-[1367px]:mr-6 gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-5 transition-all duration-300 min-w-0"
       >
         
-        <div v-if="!isHomePage" class="hidden min-[1500px]:block w-full max-w-[280px] 2xl:max-w-[350px] mr-auto ml-4 lg:ml-8 transition-all duration-300">
+        <div v-if="!isHomePage" class="hidden min-[1500px]:block w-full max-w-[280px] mr-auto ml-4 lg:ml-8 transition-all duration-300">
           <UiSearch />
         </div>
 
@@ -38,7 +38,7 @@
           <img
             src="/_nuxt-plenty/images/image010.png"
             alt="Ankaufsformular"
-            class="h-[38px] lg:h-[48px] min-[1152px]:h-[56px] min-[1280px]:h-[76px] min-[1367px]:h-[105px] 2xl:h-[130px] max-w-[58px] lg:max-w-[74px] min-[1152px]:max-w-[86px] min-[1280px]:max-w-[116px] min-[1367px]:max-w-[160px] 2xl:max-w-[190px] w-auto object-contain transition-all duration-300"
+            class="h-[38px] lg:h-[48px] min-[1152px]:h-[56px] min-[1280px]:h-[76px] min-[1367px]:h-[105px] max-w-[58px] lg:max-w-[74px] min-[1152px]:max-w-[86px] min-[1280px]:max-w-[116px] min-[1367px]:max-w-[160px] w-auto object-contain transition-all duration-300"
           />
         </NuxtLink>
 
@@ -50,20 +50,20 @@
 
             <UiButton
               v-if="!isHomePage"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2 min-[1500px]:hidden"
+              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[1500px]:hidden"
               :aria-label="t('common.actions.search')"
               variant="tertiary"
               :style="{ color: iconColor }"
               square
               @click="searchModalOpen"
             >
-              <SfIconSearch class="min-[2500px]:w-10 min-[2500px]:h-10" />
+              <SfIconSearch />
             </UiButton>
 
             <template v-if="localeCodes.length > 1">
               <UiButton
                 v-if="!isLanguageSelectOpen"
-                class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2"
+                class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
                 :aria-label="t('common.navigation.languageSelector')"
                 variant="tertiary"
                 :style="{ color: iconColor }"
@@ -73,12 +73,12 @@
                 @click="toggleLanguageSelect()"
               >
                 <template #prefix>
-                  <SfIconLanguage class="relative min-[2500px]:w-10 min-[2500px]:h-10" />
+                  <SfIconLanguage class="relative" />
                 </template>
               </UiButton>
               <UiButton
                 v-else
-                class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2"
+                class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
                 :aria-label="t('common.navigation.languageSelector')"
                 :style="{ color: isActive ? iconColor : '' }"
                 variant="tertiary"
@@ -86,13 +86,13 @@
                 data-testid="open-languageselect-button"
               >
                 <template #prefix>
-                  <SfIconLanguage class="relative min-[2500px]:w-10 min-[2500px]:h-10" />
+                  <SfIconLanguage class="relative" />
                 </template>
               </UiButton>
             </template>
             <UiButton
               v-if="wishlistItemIds.length > 0"
-              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
+              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
               :tag="NuxtLink"
               :to="localePath(paths.wishlist)"
               :style="{ color: iconColor }"
@@ -102,7 +102,7 @@
               data-testid="wishlist-page-navigation"
             >
               <template #prefix>
-                <SfIconFavorite class="min-[2500px]:w-10 min-[2500px]:h-10" />
+                <SfIconFavorite />
                 <SfBadge
                   :content="wishlistItemIds.length"
                   :style="{
@@ -110,7 +110,7 @@
                     outlineColor: headerBackgroundColor,
                     color: headerBackgroundColor,
                   }"
-                  class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px] min-[2500px]:min-w-[24px] min-[2500px]:min-h-[24px] min-[2500px]:text-base"
+                  class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
                   data-testid="wishlist-badge"
                   placement="top-right"
                   :max="99"
@@ -118,7 +118,7 @@
               </template>
             </UiButton>
             <UiButton
-              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
+              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
               :tag="NuxtLink"
               :style="{ color: iconColor }"
               :to="localePath(paths.cart)"
@@ -127,7 +127,7 @@
               square
             >
               <template #prefix>
-                <SfIconShoppingCart class="min-[2500px]:w-10 min-[2500px]:h-10" />
+                <SfIconShoppingCart />
                 <SfBadge
                   :content="cartItemsCount"
                   :style="{
@@ -135,7 +135,7 @@
                     outlineColor: headerBackgroundColor,
                     color: headerBackgroundColor,
                   }"
-                  class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px] min-[2500px]:min-w-[24px] min-[2500px]:min-h-[24px] min-[2500px]:text-base"
+                  class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
                   data-testid="cart-badge"
                   placement="top-right"
                   :max="99"
@@ -146,16 +146,16 @@
               <template #trigger>
                 <UiButton
                   variant="tertiary"
-                  class="relative hover:bg-header-400 active:bg-header-400 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
+                  class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
                   :style="{ color: iconColor }"
                   :class="{ 'bg-primary-700': isAccountDropdownOpen }"
                   data-testid="account-dropdown-button"
                   @click="accountDropdownToggle()"
                 >
                   <template #prefix>
-                    <SfIconPerson class="min-[2500px]:w-10 min-[2500px]:h-10" />
+                    <SfIconPerson />
                   </template>
-                  <span class="min-[2500px]:text-[1.3rem]">{{ user?.firstName }}</span>
+                  <span>{{ user?.firstName }}</span>
                 </UiButton>
               </template>
               <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -186,19 +186,19 @@
             <UiButton
               v-else
               :style="{ color: iconColor }"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
+              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
               variant="tertiary"
               :aria-label="t('authentication.login.openLoginForm')"
               square
               @click="navigateToLogin"
             >
-              <SfIconPerson class="min-[2500px]:w-10 min-[2500px]:h-10" />
+              <SfIconPerson />
             </UiButton>
           </nav>
 
           <a
             href="tel:+492862587950"
-            class="text-[10px] lg:text-[11px] min-[1152px]:text-xs min-[1280px]:text-base min-[1367px]:text-xl min-[2500px]:text-2xl font-black transition-all duration-300 whitespace-nowrap pr-1 lg:pr-2 hover:text-blue-600 mt-0 lg:mt-1"
+            class="text-[10px] lg:text-[11px] min-[1152px]:text-xs min-[1280px]:text-base min-[1367px]:text-base font-black transition-all duration-300 whitespace-nowrap pr-1 lg:pr-2 hover:text-blue-600 mt-0 lg:mt-1"
             style="color: #062633"
           >
             +49 2862 58795 0

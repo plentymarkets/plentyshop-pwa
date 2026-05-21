@@ -5,7 +5,7 @@
         ref="logo"
         :src="headerLogo"
         :alt="`${storeName} logo`"
-        class="py-2 w-[160px] md:w-[180px] lg:w-[240px] xl:w-[350px] object-contain transition-all duration-300"
+        class="py-2 w-[132px] md:w-[148px] lg:w-[180px] xl:w-[220px] object-contain transition-all duration-300"
         preload
       />
     </template>
@@ -15,7 +15,7 @@
         ref="logo"
         :src="headerLogo"
         :alt="`${storeName} logo`"
-        class="w-[160px] md:w-[180px] xl:w-[240px] object-contain transition-all duration-300"
+        class="w-[132px] md:w-[148px] lg:w-[180px] xl:w-[220px] object-contain transition-all duration-300"
         preload
       />
     </template>

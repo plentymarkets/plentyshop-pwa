@@ -71,8 +71,7 @@
 </template>
 
 <style scoped>
-/* From Tablet (768px) up to 2559px: Keep labels visible at all times */
-@media (min-width: 768px) and (max-width: 2559px) {
+@media (min-width: 768px) {
   .sticky-label {
     max-width: 400px;
     opacity: 1;
@@ -82,66 +81,6 @@
   
   .sticky-btn {
     gap: 0.5rem !important;
-  }
-}
-/* 1920px — Full HD */
-@media (min-width: 1920px) {
-  .sticky-contact {
-    gap: 1.25rem;
-  }
-  .sticky-btn {
-    gap: 1.125rem;
-    padding: 1.25rem 2.5rem;
-    border-radius: 1rem 0 0 1rem;
-  }
-  .sticky-icon {
-    width: 2rem;
-    height: 2rem;
-  }
-  .sticky-label {
-    font-size: 2.125rem;
-    line-height: 1.1;
-    font-weight: 600;
-  }
-}
-
-/* 2560px — 2K / QHD */
-@media (min-width: 2560px) {
-  .sticky-contact {
-    gap: 1.5rem;
-  }
-  .sticky-btn {
-    gap: 1.5rem;
-    padding: 1.5rem 3rem;
-    border-radius: 1.25rem 0 0 1.25rem;
-  }
-  .sticky-icon {
-    width: 2.25rem;
-    height: 2.25rem;
-  }
-  .sticky-label {
-    font-size: 2.5rem;
-    line-height: 1.1;
-  }
-}
-
-/* 3840px — 4K */
-@media (min-width: 3840px) {
-  .sticky-contact {
-    gap: 2rem;
-  }
-  .sticky-btn {
-    gap: 2rem;
-    padding: 2rem 4rem;
-    border-radius: 1.75rem 0 0 1.75rem;
-  }
-  .sticky-icon {
-    width: 3rem;
-    height: 3rem;
-  }
-  .sticky-label {
-    font-size: 3rem;
-    line-height: 1.1;
   }
 }
 </style>

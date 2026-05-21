@@ -1,7 +1,7 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-[100]">
     <div
-      class="flex justify-between items-center max-w-screen-3xl mx-auto lg:px-0 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      class="flex justify-between items-center max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-10 py-2 md:py-4 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
@@ -21,7 +21,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full max-w-[160px] md:max-w-none lg:w-auto items-center mr-auto text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full max-w-[132px] md:max-w-[148px] lg:max-w-[180px] xl:max-w-[220px] items-center mr-auto text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -30,9 +30,9 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" class="bg-white border-b border-b-neutral-200 border-b-solid w-full">
       <ul
-        class="flex flex-wrap justify-center px-2 py-2 bg-white border-b border-b-neutral-200 border-b-solid w-full"
+        class="flex flex-wrap justify-center max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-10 py-2 w-full"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -47,7 +47,7 @@
             <div
             ref="triggerReference"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base min-[2500px]:text-[2rem] min-[2500px]:px-6 tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
             <NuxtLink 
               :to="localePath(generateCategoryLink(menuNode))" 
@@ -59,7 +59,7 @@
 
             <SfIconChevronRight
               v-if="menuNode.childCount > 0"
-              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4 min-[2500px]:w-6 min-[2500px]:h-6"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4"
             />
           </div>
 
@@ -83,7 +83,7 @@
                 :tag="NuxtLink"
                 size="sm"
                 :to="localePath(generateCategoryLink(node))"
-                class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base min-[2500px]:text-[2rem] min-[2500px]:py-3 min-[2500px]:px-4 text-left"
+                class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base text-left"
                 @click="close()"
               >
                 {{ categoryTreeGetters.getName(node) }}
