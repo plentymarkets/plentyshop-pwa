@@ -29,7 +29,7 @@
         :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
         :uuid="blockUuid"
-        @vue:mounted="handleBackClick"
+        @vue:mounted="resetEditState"
       />
     </div>
   </div>
@@ -55,17 +55,29 @@ watch(
 const { deleteBlock } = useBlockManager();
 
 const { editTitle: customTitle, editUuid: customUuid, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
-onBeforeUnmount(() => clearCustomTitle());
+const { popEdit, clearStack } = useBlockEditStack();
+
+onBeforeUnmount(() => {
+  clearStack();
+  clearCustomTitle();
+});
+
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
 const handleBackClick = () => {
+  if (popEdit()) {
+    return;
+  }
+
   if (childComponentRef.value?.exitEditMode) {
-    const fullyExited = childComponentRef.value.exitEditMode(false);
-    if (fullyExited !== false) {
-      clearCustomTitle();
-    }
+    childComponentRef.value.exitEditMode(true);
   } else {
     clearCustomTitle();
   }
+};
+
+const resetEditState = () => {
+  clearStack();
+  clearCustomTitle();
 };
 
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();

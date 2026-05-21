@@ -63,7 +63,7 @@
     </div>
 
     <div v-else class="space-y-0">
-      <component :is="blockForm" ref="innerFormRef" :uuid="editingBlock.meta.uuid" />
+      <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
     </div>
   </div>
 </template>
@@ -74,16 +74,14 @@ import type { FooterContainerBlock } from '~/components/blocks/structure/FooterC
 import type { Block } from '@plentymarkets/shop-api';
 
 const { footer } = useBlocks();
-const { setEditTitle, clearEditTitle } = useBlockEditTitle();
-
-const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
 const elementsOpen = ref(true);
 const colorsOpen = ref(true);
-const { editingBlock, blockForm } = useNestedBlockForm();
 
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
 const footerUuid = computed(() => footerContainer.value.meta?.uuid);
+const { editingBlock, blockForm } = useNestedBlockForm(footerUuid);
+const { pushEdit } = useBlockEditStack();
 
 const backgroundColor = computed({
   get: () => footerContainer.value.configuration?.colors?.background ?? '',
@@ -112,27 +110,8 @@ const textColor = computed({
 });
 
 const editElement = (block: Block) => {
-  editingBlock.value = block;
-  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
+  pushEdit(block);
 };
-
-const exitEditMode = (shouldEmit = true): boolean => {
-  if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
-    innerFormRef.value.exitEditMode(false);
-    if (editingBlock.value) {
-      setEditTitle(getBlockDisplayName(editingBlock.value.name), editingBlock.value.meta.uuid);
-    }
-    return false;
-  }
-
-  editingBlock.value = null;
-  if (shouldEmit) {
-    clearEditTitle();
-  }
-  return true;
-};
-
-defineExpose({ exitEditMode });
 </script>
 
 <i18n lang="json">

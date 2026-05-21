@@ -1,7 +1,6 @@
-import type { Block } from '@plentymarkets/shop-api';
-
-export const useNestedBlockForm = () => {
-  const editingBlock = ref<Block | null>(null);
+export const useNestedBlockForm = (uuid?: MaybeRefOrGetter<string | undefined>) => {
+  const { nextEditBlock } = useBlockEditStack();
+  const editingBlock = nextEditBlock(uuid);
 
   const blockForm = computed(() => {
     if (!editingBlock.value) return null;

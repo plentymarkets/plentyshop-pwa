@@ -19,7 +19,7 @@
     </div>
 
     <div v-else class="space-y-0">
-      <component :is="blockForm" ref="innerFormRef" :uuid="editingBlock.meta.uuid" />
+      <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
     </div>
   </div>
 </template>
@@ -29,17 +29,15 @@ import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderC
 import type { Block } from '@plentymarkets/shop-api';
 
 const { headerContainer } = useBlocks();
-const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 const { logHeaderContainerEditBlock } = useLogEvent();
-
-const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
 const elementsOpen = ref(true);
 const layoutOpen = ref(true);
-const { editingBlock, blockForm } = useNestedBlockForm();
 
 const headerContainerStructure = computed(() => (headerContainer.value ?? {}) as HeaderContainerBlock);
 const headerUuid = computed(() => headerContainerStructure.value.meta?.uuid);
+const { editingBlock, blockForm } = useNestedBlockForm(headerUuid);
+const { pushEdit } = useBlockEditStack();
 
 const isStickyToggle = computed({
   get: () => headerContainerStructure.value.configuration?.layout?.sticky ?? false,
@@ -55,28 +53,9 @@ const isStickyToggle = computed({
 });
 
 const editElement = (block: Block) => {
-  editingBlock.value = block;
-  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
+  pushEdit(block);
   logHeaderContainerEditBlock();
 };
-
-const exitEditMode = (shouldEmit = true): boolean => {
-  if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
-    innerFormRef.value.exitEditMode(false);
-    if (editingBlock.value) {
-      setEditTitle(getBlockDisplayName(editingBlock.value.name), editingBlock.value.meta.uuid);
-    }
-    return false;
-  }
-
-  editingBlock.value = null;
-  if (shouldEmit) {
-    clearEditTitle();
-  }
-  return true;
-};
-
-defineExpose({ exitEditMode });
 </script>
 
 <i18n lang="json">
