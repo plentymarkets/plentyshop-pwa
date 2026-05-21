@@ -52,30 +52,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   };
 
   const setCountries = (defaultCountries: Country[], geoRegulatedCountries: GeoRegulatedCountry[]) => {
-    state.value.default = defaultCountries.map((country) => ({
-      id: country.id,
-      name: country.name,
-      currLangName: country.name,
-      isoCode2: country.isoCode2,
-      isoCode3: '',
-      lang: useNuxtApp().$i18n.locale.value,
-      states: (country.states || []).map((state) => ({
-        id: state.id,
-        name: state.name,
-        isoCode: '',
-        isoCode3166: '',
-        countryId: String(country.id),
-      })),
-      active: 1,
-      isGeoRegulated: false,
-      isCountryStateMandatory: null,
-      names: [],
-      shippingDestinationId: 0,
-      storehouseId: 0,
-      vatCodes: [],
-      zipCodeRegex: null,
-    })) as ActiveShippingCountry[];
-
+    state.value.default = defaultCountries as ActiveShippingCountry[];
     state.value.geoRegulated = geoRegulatedCountries;
   };
 
@@ -114,7 +91,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
       }
 
       return new RegExp(pattern, flags);
-    } catch (error: unknown) {
+    } catch (error) {
       useHandleError(error as ApiError);
       return null;
     }
