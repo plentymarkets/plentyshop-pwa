@@ -1,6 +1,6 @@
 export const useNestedBlockForm = (uuid?: MaybeRefOrGetter<string | undefined>) => {
   const { nextEditBlock } = useBlockEditStack();
-  const editingBlock = nextEditBlock(uuid);
+  const editingBlock = nextEditBlock(uuid ?? ref(undefined));
 
   const blockForm = computed(() => {
     if (!editingBlock.value) return null;
