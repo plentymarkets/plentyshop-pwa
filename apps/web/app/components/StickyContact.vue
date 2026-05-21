@@ -107,6 +107,12 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 1536px) {
+  .sticky-contact {
+    top: 60%;
+  }
+}
+
 @media (min-width: 1920px) {
   .sticky-contact {
     gap: clamp(0.5rem, 0.25vw, 1rem);
