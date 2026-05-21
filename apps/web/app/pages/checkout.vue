@@ -137,8 +137,4 @@ watch(cartIsEmpty, async () => {
     await navigateTo(localePath(paths.cart));
   }
 });
-
-watch(itemSumNet, async () => {
-  await fetchPaymentMethods();
-});
 </script>
