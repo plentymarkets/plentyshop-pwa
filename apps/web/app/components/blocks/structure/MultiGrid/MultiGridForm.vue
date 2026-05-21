@@ -1,5 +1,5 @@
 <template>
-  <MultiGridFormLegacy v-if="!enableMultiGridEditor" ref="legacyFormRef" :uuid="uuid" />
+  <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
   <template v-else>
     <div v-if="editingBlock" class="sticky h-[calc(100vh-52px)] overflow-y-auto">
       <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
@@ -361,25 +361,12 @@ const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
   insertColumnAt(block.parent_slot ?? 0, 12, anchorEl);
 };
 
-const { setEditTitle, clearEditTitle } = useBlockEditTitle();
-const { editingBlock, blockForm } = useNestedBlockForm();
-const legacyFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean } | null>(null);
+const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
+const { pushEdit } = useBlockEditStack();
 
 const editElement = (block: Block) => {
-  editingBlock.value = block;
-  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
+  pushEdit(block);
 };
-
-const exitEditMode = (shouldEmit = true): boolean => {
-  if (!enableMultiGridEditor && legacyFormRef.value?.exitEditMode) {
-    return legacyFormRef.value.exitEditMode(shouldEmit);
-  }
-  editingBlock.value = null;
-  if (shouldEmit) clearEditTitle();
-  return true;
-};
-
-defineExpose({ exitEditMode });
 
 const elementsOpen = ref(true);
 const gridLayoutOpen = ref(true);

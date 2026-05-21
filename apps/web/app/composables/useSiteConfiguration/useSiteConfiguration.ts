@@ -19,6 +19,8 @@ import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const { isEditingEnabled } = useEditor();
   const { scheduleCleanDataSync } = useBlocks();
+  const { clearStack } = useBlockEditStack();
+  const { clearEditTitle } = useBlockEditTitle();
 
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
@@ -88,6 +90,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.siteConfigurationDrawerView = null;
     state.value.blocksConfigurationDrawerView = null;
     state.value.activeSetting = '';
+    clearStack();
+    clearEditTitle();
   };
 
   const closeSiteConfigurationDrawer = () => {
@@ -99,6 +103,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const closeBlocksConfigurationDrawer = () => {
     state.value.blocksConfigurationDrawerOpen = false;
     state.value.blocksConfigurationDrawerView = null;
+    clearStack();
+    clearEditTitle();
   };
 
   const updateNewBlockPosition = (position: number) => {
