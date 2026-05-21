@@ -15,6 +15,6 @@ export default defineNuxtPlugin({
 
       setShippingMethods(data.checkout.shippingProfileList, data.checkout.shippingProfileId ?? -1);
       setPaymentMethods(data.checkout.paymentDataList, data.checkout.methodOfPaymentId ?? -1);
-    })
+    });
   },
 });

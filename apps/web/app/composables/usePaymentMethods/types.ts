@@ -1,4 +1,4 @@
-import type {PaymentMethod, PaymentProviders} from '@plentymarkets/shop-api';
+import type { PaymentMethod, PaymentProviders } from '@plentymarkets/shop-api';
 
 export interface UsePaymentMethodsState {
   data: PaymentProviders;
