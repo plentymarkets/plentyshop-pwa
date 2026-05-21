@@ -39,7 +39,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const selectedCategoryPath = ref<string | null>(null);
   const linkText = ref('');
   const isAtomSelection = ref(false);
-  const isNodeSelection = ref(false);
+  const isInlineAtomNodeSelection = ref(false);
+  const isInitializing = ref(false);
   const originalAtomLinkAttrs = ref<{ href: string; target: string } | null>(null);
   const atomDisplayLabel = ref<string | null>(null);
 
@@ -61,12 +62,13 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const initFromEditor = () => {
     if (!editor.value) return;
+    isInitializing.value = true;
     const sel = editor.value.state.selection;
     const { from, to } = sel;
     initialSelection.value = { from, to };
     const isNodeSel = sel instanceof NodeSelection;
     const isInlineAtomNodeSel = isNodeSel && (sel as NodeSelection).node.isAtom && (sel as NodeSelection).node.isInline;
-    isNodeSelection.value = isInlineAtomNodeSel;
+    isInlineAtomNodeSelection.value = isInlineAtomNodeSel;
     isAtomSelection.value = isInlineAtomNodeSel || rangeContainsAtoms(editor.value.state.doc, from, to);
     if (!isAtomSelection.value) {
       linkText.value = initialText.value = selectedText.value;
@@ -75,6 +77,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
         urlValue.value = attrs.href as string;
         openInNewWindow.value = attrs.target === '_blank';
       }
+      isInitializing.value = false;
       return;
     }
     const node = isInlineAtomNodeSel ? (sel as NodeSelection).node : null;
@@ -91,12 +94,13 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       urlValue.value = originalAtomLinkAttrs.value.href;
       openInNewWindow.value = originalAtomLinkAttrs.value.target === '_blank';
     }
+    isInitializing.value = false;
   };
 
   const applyAtomLink = (href: string, target: string) => {
     if (!editor.value || !initialSelection.value) return;
     const chain = editor.value.chain();
-    isNodeSelection.value
+    isInlineAtomNodeSelection.value
       ? chain.setNodeSelection(initialSelection.value.from)
       : chain.setTextSelection(initialSelection.value);
     href ? chain.setLink({ href, target }) : chain.unsetLink();
@@ -104,7 +108,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   };
 
   const applyLivePreview = () => {
-    if (!editor.value || !initialSelection.value) return;
+    if (!editor.value || !initialSelection.value || isInitializing.value) return;
 
     const href = computedHref.value;
     const isExternalUrl = activeTab.value === 'url';
