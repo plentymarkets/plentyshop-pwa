@@ -65,8 +65,9 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     const { from, to } = sel;
     initialSelection.value = { from, to };
     const isNodeSel = sel instanceof NodeSelection;
-    isNodeSelection.value = isNodeSel;
-    isAtomSelection.value = isNodeSel || rangeContainsAtoms(editor.value.state.doc, from, to);
+    const isInlineAtomNodeSel = isNodeSel && (sel as NodeSelection).node.isAtom && (sel as NodeSelection).node.isInline;
+    isNodeSelection.value = isInlineAtomNodeSel;
+    isAtomSelection.value = isInlineAtomNodeSel || rangeContainsAtoms(editor.value.state.doc, from, to);
     if (!isAtomSelection.value) {
       linkText.value = initialText.value = selectedText.value;
       const attrs = editor.value.getAttributes('link');
@@ -76,7 +77,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       }
       return;
     }
-    const node = isNodeSel ? (sel as NodeSelection).node : null;
+    const node = isInlineAtomNodeSel ? (sel as NodeSelection).node : null;
     atomDisplayLabel.value = node
       ? `${(node.attrs.name as string) ?? node.type.name} [${node.type.name === 'emoji' ? 'emoji' : 'icon'}]`
       : 'Content with icon(s)';
