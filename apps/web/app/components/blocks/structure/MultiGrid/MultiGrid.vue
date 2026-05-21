@@ -109,7 +109,13 @@ const outerBackgroundStyle = computed(() => {
 });
 
 const gridContainerClasses = computed(() => {
-  return shouldStretchBackground.value ? ['max-w-screen-3xl', 'mx-auto', 'px-4', 'md:px-6', 'lg:px-10'] : [];
+  const classes = ['px-4', 'md:px-6', 'lg:px-8', 'min-[1921px]:px-0'];
+
+  if (shouldStretchBackground.value) {
+    classes.push('max-w-screen-3xl', 'mx-auto');
+  }
+
+  return classes;
 });
 
 // FIX: Updated to include Padding styles

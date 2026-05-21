@@ -7,7 +7,7 @@
     <a
       href="tel:+4902862587950"
       class="sticky-btn flex items-center justify-center text-white bg-[#3B82F6] shadow-md transition-all duration-300
-             w-12 h-12 rounded-full hover:scale-110 hover:bg-[#2563EB]
+             w-12 h-12 rounded-full  hover:bg-[#2563EB]
              md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none"
     >
       <svg
@@ -29,7 +29,7 @@
     <a
       href="mailto:info@komplett-konzept.de"
       class="sticky-btn flex items-center justify-center text-white bg-[#F09F39] shadow-md transition-all duration-300
-             w-12 h-12 rounded-full hover:scale-110 hover:bg-[#D9822B]
+             w-12 h-12 rounded-full  hover:bg-[#D9822B]
              md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none"
     >
       <svg
@@ -53,7 +53,7 @@
       target="_blank"
       rel="noopener noreferrer"
       class="sticky-btn flex items-center justify-center text-white bg-[#62D071] shadow-md transition-all duration-300
-             w-12 h-12 rounded-full hover:scale-110 hover:bg-[#4EAA5A]
+             w-12 h-12 rounded-full  hover:bg-[#4EAA5A]
              md:w-auto md:h-auto md:justify-start md:px-3.5 md:py-2 md:rounded-l-xl md:rounded-r-none"
     >
       <svg
