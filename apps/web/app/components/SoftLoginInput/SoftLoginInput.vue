@@ -1,5 +1,9 @@
 <template>
-  <form method="POST" class="flex flex-col justify-center rounded-md w-full md:w-[400px] mt-5" @submit.prevent="submit">
+  <form
+    method="POST"
+    class="flex flex-col justify-center rounded-md w-full @md:w-[400px] mt-5"
+    @submit.prevent="submit"
+  >
     <label>
       <UiFormLabel>{{ props.title }} {{ t('form.required') }}</UiFormLabel>
       <SfInput v-model="input" type="text" required />

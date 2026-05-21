@@ -1,14 +1,5 @@
-export enum TagVariant {
-  primary = 'primary',
-  secondary = 'secondary',
-  negative = 'negative',
-  positive = 'positive',
-}
-
-export enum TagSize {
-  sm = 'sm',
-  base = 'base',
-}
+import { TagVariant, TagSize } from './enums';
+export { TagVariant, TagSize };
 
 export interface TagProps {
   size?: `${TagSize}`;

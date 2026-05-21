@@ -1,5 +1,5 @@
 <template>
-  <section class="flex flex-col items-center md:mt-16 mb-8">
+  <section class="flex flex-col items-center @md:mt-16 mb-8">
     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="300" height="300">
       <path
         d="M152.9 37c-7.3-1.4-14.2 2.9-15.4 9.5-.4 2.3-.1 4.7.9 6.8l-3.2 5.1 6-1.2a14 14 0 0 0 7.1 3.7c7.3 1.4 14.1-2.9 15.4-9.5 1.3-6.6-3.6-13-10.8-14.4Z"

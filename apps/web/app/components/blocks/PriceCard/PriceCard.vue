@@ -1,5 +1,5 @@
 <template>
-  <section class="grid-in-left-top md:h-full">
+  <section class="grid-in-left-top @md:h-full">
     <UiPurchaseCard :product="currentProduct" :configuration="content" />
   </section>
 </template>

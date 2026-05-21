@@ -9,9 +9,13 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
     cy.get('[data-testid="multi-grid-structure"]')
       .first()
-      .within(() => {
-        cy.get('[data-testid="Image-open-editor-button"]').first().should('exist').click({ force: true });
-      });
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-0"]').should('exist').click({ force: true });
     cy.get('[data-testid="image-group"]').should('exist').click();
   };
 
@@ -24,9 +28,13 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="multi-grid-structure"]').first().children().should('have.length', 2);
     cy.get('[data-testid="multi-grid-structure"]')
       .first()
-      .within(() => {
-        cy.get('[data-testid="TextCard-open-editor-button"]').last().should('exist').click({ force: true });
-      });
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-1"]').should('exist').click({ force: true });
     cy.get('[data-testid="open-text-settings"]').should('exist').click();
   };
 
@@ -49,11 +57,11 @@ describe('Image Text Block Form', () => {
       .click()
       .type('{selectall}');
 
-    cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
+    cy.get('[data-testid="rte-font-color"]').find('button').first().scrollIntoView().click({ force: true });
 
     cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
 
-    cy.get('[data-testid="rte-font-color"]').filter(':visible').click();
+    cy.get('[data-testid="rte-font-color"]').find('button').first().scrollIntoView().click({ force: true });
 
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
@@ -68,21 +76,21 @@ describe('Image Text Block Form', () => {
       .click()
       .type('{selectall}');
 
-    cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-center"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
       .find('p')
       .first()
       .should('have.css', 'text-align', 'center');
 
-    cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-right"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
       .find('p')
       .first()
       .should('have.css', 'text-align', 'right');
 
-    cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-left"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("New image text")')
       .find('p')
@@ -96,19 +104,19 @@ describe('Image Text Block Form', () => {
 
   const changeButtonLabel = () => {
     cy.get('[data-testid="input-button-label"]').should('exist').clear().type('New Button Label', { delay: 0 });
-    cy.get('[data-testid="text-button"]').should('have.text', 'New Button Label');
+    cy.get('[data-testid="text-button"]').first().should('have.text', 'New Button Label');
   };
 
   const changeButtonLink = () => {
     cy.get('[data-testid="input-button-link"]').should('exist').clear().type('https://www.google.com', { delay: 0 });
-    cy.get('[data-testid="text-button"]').should('have.attr', 'href', 'https://www.google.com');
+    cy.get('[data-testid="text-button"]').first().should('have.attr', 'href', 'https://www.google.com');
   };
 
   const changeButtonVariants = () => {
     cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
-    cy.get('[data-testid="text-button"]').should('have.class', 'active:text-primary-900');
+    cy.get('[data-testid="text-button"]').first().should('have.class', 'active:text-primary-900');
     cy.get('[data-testid="button-variant-primary"]').should('exist').click();
-    cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
+    cy.get('[data-testid="text-button"]').first().should('have.class', 'active:bg-primary-700');
   };
 
   const cookieBar = new CookieBarObject();

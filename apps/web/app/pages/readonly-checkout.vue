@@ -6,8 +6,8 @@
     :back-label-mobile="t('common.actions.back')"
     :heading="t('common.labels.checkout')"
   >
-    <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
-      <div class="col-span-7 mb-10 md:mb-0">
+    <div v-if="cart" class="@md:grid @md:grid-cols-12 @md:gap-x-6">
+      <div class="col-span-7 mb-10 @md:mb-0">
         <UiDivider :class="dividerClass" />
         <ContactInformation disabled />
         <UiDivider :class="dividerClass" />
@@ -22,7 +22,7 @@
         <CustomerReference />
         <CustomerWish />
         <UiDivider :class="`${dividerClass} mb-10`" />
-        <div class="text-sm mx-4 md:pb-0">
+        <div class="text-sm mx-4 @md:pb-0">
           <CheckoutGeneralTerms />
         </div>
       </div>
@@ -30,7 +30,10 @@
         <div v-for="cartItem in cart?.items" :key="cartItem.id">
           <UiCartProductCard disabled :cart-item="cartItem" />
         </div>
-        <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
+        <div
+          class="relative @md:sticky mt-4 @md:top-20 h-fit"
+          :class="{ 'pointer-events-none opacity-50': cartLoading }"
+        >
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
@@ -66,7 +69,7 @@
             </div>
             <div v-else>
               <div
-                class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+                class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
               >
                 <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
                 <div class="py-2 mr-2">
@@ -83,7 +86,7 @@
               size="lg"
               :disabled="unreserveLoading || interactionDisabled || loading"
               data-testid="cancel-paypal-order-button"
-              class="w-full mt-4 mb-4 md:mb-0 cursor-pointer"
+              class="w-full mt-4 mb-4 @md:mb-0 cursor-pointer"
               @click="cancelOrder"
             >
               <SfLoaderCircular v-if="unreserveLoading" class="flex justify-center items-center" size="sm" />
@@ -155,7 +158,7 @@ const {
 } = useCheckout();
 
 const paypalOrderId = route?.query?.orderId?.toString() || '';
-const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
+const dividerClass = 'w-screen @md:w-auto -mx-4 @md:mx-0';
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const interactionDisabled = computed(
   () =>

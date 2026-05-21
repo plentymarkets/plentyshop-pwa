@@ -24,7 +24,7 @@ describe('Footer Block', () => {
 
   it('should render the correct cancellation action', () => {
     getFooter().within(() => {
-      cy.getByTestId('footer-cancellation-button')
+      cy.getByTestId('text-button')
         .should('exist')
         .and('contain.text', 'Withdraw from contract here')
         .and('have.attr', 'href')
@@ -49,6 +49,10 @@ describe('Footer Block', () => {
   });
 
   it('should navigate to cancellation form when clicking the withdrawal button', () => {
-    cy.getByTestId('footer-cancellation-button').should('have.attr', 'href').and('include', paths.cancellationForm);
+    getFooter().within(() => {
+      cy.getByTestId('text-button').should('have.attr', 'href').and('include', paths.cancellationForm);
+      cy.getByTestId('text-button').click();
+    });
+    cy.url().should('include', paths.cancellationForm);
   });
 });

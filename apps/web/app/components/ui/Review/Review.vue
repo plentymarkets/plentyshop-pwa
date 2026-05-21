@@ -58,7 +58,7 @@
           v-for="(reply, index) in replies"
           :key="index"
           :class="{ 'mt-5': index === 0, 'mb-5': index < replies.length - 1 }"
-          class="md:mr-16"
+          class="@md:mr-16"
           data-testid="reply-item"
         >
           <div class="flex items-center mb-2 text-xs">

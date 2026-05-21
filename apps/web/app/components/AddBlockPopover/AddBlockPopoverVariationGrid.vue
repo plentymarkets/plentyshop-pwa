@@ -3,6 +3,7 @@
     <button
       v-for="item in variations"
       :key="`${item.category.category}-${item.idx}`"
+      :data-testid="`block-add-${item.category.category}-${item.idx}`"
       :disabled="isDisabled(item)"
       class="flex flex-col items-center gap-1 py-2 px-1 rounded-lg border border-editor-border bg-white transition-all duration-150"
       :class="
@@ -27,11 +28,11 @@
 
 <script setup lang="ts">
 import type { FlatVariation } from './types';
-import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './types';
+import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './constants';
 
 defineProps<{ variations: FlatVariation[] }>();
 
-const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
+const { popoverState, closeAddBlockPopover, clearPendingCancel } = useAddBlockPopover();
 const { addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
 
 const targetUuid = computed(() => popoverState.value?.targetUuid ?? '');
@@ -49,6 +50,7 @@ const isDisabled = (item: FlatVariation): boolean => {
 const select = async (item: FlatVariation) => {
   if (!popoverState.value) return;
   const { targetUuid: uuid, position } = popoverState.value;
+  clearPendingCancel();
   closeAddBlockPopover();
   await addNewBlock(item.category.category, item.idx, uuid, position);
 };

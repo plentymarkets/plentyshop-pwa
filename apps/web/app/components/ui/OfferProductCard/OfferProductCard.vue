@@ -1,8 +1,8 @@
 <template>
   <div v-for="(variation, variationId, key) in props.offer.variations" :key="variationId">
     <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0">
-      <div class="overflow-hidden rounded-md w-[140px] sm:w-[176px] mb-2">
-        <SfLink
+      <div class="overflow-hidden rounded-md w-[140px] @sm:w-[176px] mb-2">
+        <UiLink
           :tag="NuxtLink"
           :to="props.offer.itemURLs[variationId.toString()]"
           class="flex items-center justify-center"
@@ -16,17 +16,17 @@
             loading="lazy"
             class="w-full h-auto border rounded-md border-neutral-200"
           />
-        </SfLink>
+        </UiLink>
       </div>
       <div class="pl-2 w-2/3">
-        <SfLink
+        <UiLink
           :tag="NuxtLink"
           :to="offer.itemURLs[variationId]"
           variant="secondary"
-          class="w-fit no-underline typography-text-sm sm:typography-text-lg"
+          class="w-fit no-underline typography-text-sm @sm:typography-text-lg"
         >
           {{ offerGetters.getOfferItemVariationName(variation) }}
-        </SfLink>
+        </UiLink>
         <p v-if="filteredOffer.order.orderItems[key]">
           {{ format(offerGetters.getOfferItemOriginalPrice(filteredOffer.order.orderItems[key])) }}
         </p>
@@ -44,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink } from '@storefront-ui/vue';
 import type { OfferProductCardProps } from './types';
 import { offerGetters } from '@plentymarkets/shop-api';
 

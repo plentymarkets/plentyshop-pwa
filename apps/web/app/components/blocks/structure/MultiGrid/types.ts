@@ -1,5 +1,24 @@
 import type { Block } from '@plentymarkets/shop-api';
 
+export interface GridCell {
+  colIndex: number;
+  span: number;
+  hasContent: boolean;
+  blockName?: string;
+}
+
+export interface GridRow {
+  cells: GridCell[];
+  free: number;
+}
+
+export interface DragState {
+  colIndex: number;
+  startX: number;
+  startSpan: number;
+  unitW: number;
+}
+
 interface MultiGridLayout {
   marginTop?: number;
   marginBottom?: number;
@@ -54,3 +73,12 @@ export type ColumnBlock = Block & {
     };
   };
 };
+
+export type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
+
+export interface VisibleGridState {
+  filteredToOriginal: number[];
+  originalToFiltered: Record<number, number>;
+  columnWidths: number[];
+  blocks: Block[];
+}

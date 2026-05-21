@@ -1,29 +1,19 @@
 <template>
   <div data-testid="footer-settings-drawer" class="block-footer-edit sticky h-[80vh] overflow-y-auto">
-    <div v-if="editingBlockIndex === undefined" class="space-y-0">
-      <EditorBlockItemsAccordion
+    <div v-if="!editingBlock" class="space-y-0">
+      <EditorGridElementsPanel
         v-model="elementsOpen"
-        :items="blocks"
-        :item-labels="blockLabels"
-        :current-active-index="currentActiveBlockIndex"
+        :uuid="footerUuid"
         :min-items="1"
-        @edit-item="editBlock"
-        @add-item="addBlock"
-        @delete-item="deleteBlock"
-        @toggle-item-visibility="toggleBlockVisibilityHandler"
-        @update:items="updateBlocks"
+        :quick-add-options="footerQuickAddOptions"
+        @edit-element="editElement"
       />
 
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="colorsOpen"
+        :title="getEditorTranslation('colors-group-label')"
         data-testid="color-column-section"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
-        <template #summary>
-          <h2>{{ getEditorTranslation('colors-group-label') }}</h2>
-        </template>
-
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>{{ getEditorTranslation('colors-background-label') }}</UiFormLabel>
@@ -69,11 +59,11 @@
             </template>
           </EditorColorPicker>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
     </div>
 
-    <div v-else-if="blocks[editingBlockIndex]" class="space-y-0">
-      <component :is="blockForm" ref="innerFormRef" :uuid="blocks[editingBlockIndex]!.meta.uuid" />
+    <div v-else class="space-y-0">
+      <component :is="blockForm" ref="innerFormRef" :uuid="editingBlock.meta.uuid" />
     </div>
   </div>
 </template>
@@ -83,30 +73,17 @@ import { SfInput } from '@storefront-ui/vue';
 import type { FooterContainerBlock } from '~/components/blocks/structure/FooterContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-const { toggleBlockVisibility } = useBlocksVisibility();
 const { footer } = useBlocks();
-
 const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
 const innerFormRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => void; isSubEditing?: boolean } | null>(null);
 
 const elementsOpen = ref(true);
 const colorsOpen = ref(true);
-const editingBlockIndex = ref<number | undefined>(undefined);
-const editingBlockName = ref<string | undefined>(undefined);
-const blockLabels = ref<string[]>([]);
-const currentActiveBlockIndex = ref<number>(-1);
+const { editingBlock, blockForm } = useNestedBlockForm();
 
 const footerContainer = computed(() => (footer.value ?? {}) as FooterContainerBlock);
-
-const blockForm = computed(() => {
-  if (!editingBlockName.value) {
-    return null;
-  }
-
-  const loader = getBlockFormLoader(editingBlockName.value);
-  return loader ? defineAsyncComponent(loader) : null;
-});
+const footerUuid = computed(() => footerContainer.value.meta?.uuid);
 
 const backgroundColor = computed({
   get: () => footerContainer.value.configuration?.colors?.background ?? '',
@@ -134,119 +111,28 @@ const textColor = computed({
   },
 });
 
-const blocks = computed({
-  get: () => {
-    const content = (footerContainer.value?.content || []) as Block[];
-    return content.map((block: Block) => ({
-      ...block,
-      configuration: {
-        ...(block.configuration as Record<string, unknown>),
-        visible: (block.configuration as Record<string, unknown>)?.visible !== false,
-      },
-    }));
-  },
-  set: (value: Block[]) => {
-    footerContainer.value.content = value;
-  },
-});
-
-const resolveBlockLabels = async () => {
-  blockLabels.value = await Promise.all(blocks.value.map((block) => getBlockDisplayName(block.name)));
-};
-
-const editBlock = (index: number) => {
-  editingBlockIndex.value = index;
-  editingBlockName.value = footerContainer.value?.content?.[index]?.name;
-  currentActiveBlockIndex.value = index;
-  setEditTitle(blockLabels.value[index]!);
+const editElement = (block: Block) => {
+  editingBlock.value = block;
+  setEditTitle(getBlockDisplayName(block.name), block.meta.uuid);
 };
 
 const exitEditMode = (shouldEmit = true): boolean => {
   if (innerFormRef.value?.isSubEditing && innerFormRef.value?.exitEditMode) {
     innerFormRef.value.exitEditMode(false);
-    const blockLabel = editingBlockIndex.value === undefined ? undefined : blockLabels.value[editingBlockIndex.value];
-    if (blockLabel) {
-      setEditTitle(blockLabel);
+    if (editingBlock.value) {
+      setEditTitle(getBlockDisplayName(editingBlock.value.name), editingBlock.value.meta.uuid);
     }
     return false;
   }
 
-  editingBlockIndex.value = undefined;
-  editingBlockName.value = undefined;
-  currentActiveBlockIndex.value = -1;
+  editingBlock.value = null;
   if (shouldEmit) {
     clearEditTitle();
   }
-  resolveBlockLabels();
   return true;
 };
 
-const addBlock = (event?: MouseEvent) => {
-  const content = footerContainer.value.content ?? [];
-  const lastChild = content[content.length - 1];
-
-  if (!lastChild) {
-    return;
-  }
-
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    if (!event) return;
-    const { openAddBlockPopover } = useAddBlockPopover();
-    const anchorEl = (event.target as HTMLElement).closest('button') ?? (event.target as HTMLElement);
-    openAddBlockPopover({ anchorEl, targetUuid: lastChild.meta.uuid, position: 'bottom' });
-  } else {
-    const { openDrawerWithView } = useSiteConfiguration();
-    const { togglePlaceholder } = useBlockManager();
-    const { clearInsertColumnUuid } = useBlocksMutations();
-    togglePlaceholder(lastChild.meta.uuid, 'bottom');
-    openDrawerWithView('blocksList');
-    clearInsertColumnUuid();
-  }
-};
-
-const deleteBlock = async (index: number) => {
-  if (blocks.value.length <= 1) {
-    return;
-  }
-  blocks.value = blocks.value.filter((_: Block, i: number) => i !== index);
-  currentActiveBlockIndex.value = 0;
-  await nextTick();
-  if (editingBlockIndex.value === index) {
-    exitEditMode();
-  }
-};
-
-const updateBlocks = (newBlocks: Block[]) => {
-  blocks.value = newBlocks;
-};
-
-const toggleBlockVisibilityHandler = (index: number) => {
-  const block = blocks.value[index];
-  if (!block) {
-    return;
-  }
-
-  const updatedBlocks = [...blocks.value];
-  const blockToUpdate = updatedBlocks[index];
-  if (!blockToUpdate) {
-    return;
-  }
-
-  toggleBlockVisibility(blockToUpdate);
-  blocks.value = updatedBlocks;
-};
-
-watch(
-  () => blocks.value.map((block) => block.meta.uuid),
-  () => {
-    resolveBlockLabels();
-  },
-  { immediate: true },
-);
-
-defineExpose({
-  exitEditMode,
-});
+defineExpose({ exitEditMode });
 </script>
 
 <i18n lang="json">

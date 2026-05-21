@@ -89,12 +89,6 @@
   font-weight: 400;
   line-height: 1.5;
 }
-.rte-prose a {
-  color: #5082d9;
-  text-decoration: underline;
-  text-decoration-color: currentColor;
-  cursor: pointer;
-}
 
 .rte-icon {
   display: inline-flex;
@@ -109,4 +103,15 @@
   outline: 2px solid rgb(100 116 139);
   outline-offset: 1px;
   border-radius: 2px;
+}
+
+.editor-parent:focus-within {
+  border-color: #111827;
+  border-width: 2px;
+}
+
+.editor-parent .ProseMirror {
+  width: 100%;
+  min-height: 100%;
+  outline: none;
 }

@@ -45,7 +45,7 @@
       :disabled="disableBuyButton"
       size="lg"
       data-testid="place-order-button"
-      class="w-full mb-4 md:mb-0 cursor-pointer"
+      class="w-full mb-4 @md:mb-0 cursor-pointer"
       @click="handlePreparePayment"
     >
       <template v-if="createOrderLoading || additionalInformationLoading">
@@ -59,7 +59,7 @@
     <UiModal
       v-if="payPalPayUponInvoice"
       v-model="payPalPayUponInvoice"
-      class="h-full w-full md:w-[600px] md:h-fit"
+      class="h-full w-full @md:w-[600px] @md:h-fit"
       tag="section"
       disable-click-away
     >
@@ -68,7 +68,7 @@
     <UiModal
       v-if="paypalCardDialog"
       v-model="paypalCardDialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
       tag="section"
       disable-click-away
     >
