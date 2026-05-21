@@ -41,7 +41,14 @@
             <label class="block text-xs font-medium text-gray-600 mb-1.5">
               {{ getEditorTranslation('text-label') }}
             </label>
+            <p
+              v-if="isAtomSelection"
+              class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
+            >
+              {{ atomDisplayLabel == 'generic-atom-text' ? getEditorTranslation(atomDisplayLabel) : atomDisplayLabel }}
+            </p>
             <input
+              v-else
               v-model="linkText"
               type="text"
               placeholder="Link text"
@@ -150,6 +157,8 @@ const {
   categoryValue,
   openInNewWindow,
   linkText,
+  isAtomSelection,
+  atomDisplayLabel,
   canSubmit,
   tabs,
   initFromEditor,
@@ -170,7 +179,8 @@ onMounted(initFromEditor);
     "page-label": "Page",
     "url-label": "URL link",
     "text-label": "Text",
-    "insert-link": "Insert Link"
+    "insert-link": "Insert Link",
+    "generic-atom-text": "Content with icon(s)"
   },
   "de": {
     "add-link-button": "Add Link",
@@ -180,7 +190,8 @@ onMounted(initFromEditor);
     "page-label": "Page",
     "url-label": "URL link",
     "text-label": "Text",
-    "insert-link": "Insert Link"
+    "insert-link": "Insert Link",
+    "generic-atom-text": "Content with icon(s)"
   }
 }
 </i18n>
