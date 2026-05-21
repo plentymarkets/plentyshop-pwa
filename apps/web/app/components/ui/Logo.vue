@@ -15,7 +15,7 @@
         ref="logo"
         :src="headerLogo"
         :alt="`${storeName} logo`"
-        class="w-[160px] md:w-[180px] lg:w-[240px] xl:w-[350px] object-contain transition-all duration-300"
+        class="w-[160px] md:w-[180px] xl:w-[240px] object-contain transition-all duration-300"
         preload
       />
     </template>

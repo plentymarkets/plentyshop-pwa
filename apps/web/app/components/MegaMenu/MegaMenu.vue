@@ -1,7 +1,7 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-[100]">
     <div
-      class="flex justify-between items-center px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      class="flex justify-between items-center max-w-screen-3xl mx-auto lg:px-0 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
