@@ -2,7 +2,6 @@ import { useEditor } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
-import Link from '@tiptap/extension-link';
 import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
@@ -15,15 +14,18 @@ import { setupRichTextEditorAlignment } from './helpers/alignment';
 import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
+import { CustomLink } from './helpers/customLinkExtension';
 import { FontSize } from './helpers/fontSizeExtension';
 import { IconNode } from './helpers/iconExtension';
 import Placeholder from '@tiptap/extension-placeholder';
 import Emoji, { emojis } from '@tiptap/extension-emoji';
+import { getMarkRange } from '@tiptap/core';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
 
   let isReady = false;
+
 
   const editor = useEditor({
     content: args.modelValue.value ?? '',
@@ -33,8 +35,8 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         underline: false,
       }),
       Underline,
-      Link.configure({
-        openOnClick: true,
+      CustomLink.configure({
+        openOnClick: false,
         autolink: true,
         linkOnPaste: true,
       }),
@@ -55,8 +57,33 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       }),
     ],
     editorProps: {
-      transformPastedHTML: (html) => {
-        return stripInlineFontSizesFromHtml(html);
+      transformPastedHTML: (html) => stripInlineFontSizesFromHtml(html),
+      handleDOMEvents: {
+        mousedown: (view, event) => {
+          const target = event.target as HTMLElement | null;
+          const anchor = target?.closest('a');
+
+          if (!anchor) return false;
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          const linkMark = view.state.schema.marks.link;
+          if (!linkMark) return true;
+
+          const pos = view.posAtDOM(anchor.firstChild ?? anchor, 0);
+          const safePos = Math.max(1, Math.min(pos, view.state.doc.content.size));
+          const $pos = view.state.doc.resolve(safePos);
+          const range = getMarkRange($pos, linkMark);
+
+          if (range) {
+            editor.value?.chain().focus().setTextSelection(range).run();
+          }
+
+          args.onOpenLinkModal?.();
+
+          return true;
+        },
       },
     },
     onCreate: () => {

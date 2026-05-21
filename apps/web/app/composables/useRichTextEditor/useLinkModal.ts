@@ -1,5 +1,6 @@
 import type { Editor } from '@tiptap/core';
 import { validateUrl } from '~/composables/useRichTextEditor/helpers/url.helper';
+import type { LinkModalLinkAttrs } from '~/composables/useRichTextEditor/types';
 
 export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRef<Editor | null | undefined>) => {
   const tabs: { value: LinkTabValue; label: string }[] = [
@@ -18,6 +19,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const { getCorrectPreviewPathWithLocale } = useCategoryIdHelper();
 
+  const initialLinkAttrs = ref<LinkModalLinkAttrs | null>(null);
+
   const categoryHref = computed(() => {
     if (!selectedCategoryPath.value) return '';
     return getCorrectPreviewPathWithLocale(selectedCategoryPath.value);
@@ -32,25 +35,77 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const initialSelection = ref<{ from: number; to: number } | null>(null);
   const initialText = ref('');
 
+  const isCategoryHref = (href: string) => {
+    return href.includes('/c/') || href.includes('/category/');
+  };
+
+  const isStaticPageHref = (href: string) => {
+    return href.startsWith('/') && !isCategoryHref(href);
+  };
+
+  const isInitializing = ref(false);
+
   const initFromEditor = () => {
-    linkText.value = selectedText.value;
-    initialText.value = selectedText.value;
     if (!editor.value) return;
+    isInitializing.value = true;
+
     const { from, to } = editor.value.state.selection;
     initialSelection.value = { from, to };
-    const attrs = editor.value.getAttributes('link');
+
+    linkText.value = selectedText.value;
+    initialText.value = selectedText.value;
+
+    const attrs = editor.value.getAttributes('link') as LinkModalLinkAttrs;
+    initialLinkAttrs.value = {
+      href: attrs.href,
+      target: attrs.target,
+      'data-link-type': attrs['data-link-type'],
+      'data-link-value': attrs['data-link-value'],
+      'data-link-path': attrs['data-link-path'],
+    };
+
     if (attrs.href) {
-      urlValue.value = attrs.href;
       openInNewWindow.value = attrs.target === '_blank';
+
+      const storedLinkType = attrs['data-link-type'] as LinkTabValue | undefined;
+      const storedLinkValue = attrs['data-link-value'] as string | undefined;
+      const storedLinkPath = attrs['data-link-path'] as string | undefined;
+
+      if (storedLinkType) {
+        activeTab.value = storedLinkType;
+        if (storedLinkType === 'url' && storedLinkValue) {
+          urlValue.value = storedLinkValue;
+        } else if (storedLinkType === 'static' && storedLinkValue) {
+          staticPageValue.value = storedLinkValue;
+        } else if (storedLinkType === 'category') {
+          categoryValue.value = storedLinkValue ?? attrs.href ?? null;
+          selectedCategoryPath.value = storedLinkPath || attrs.href || null;
+        }
+      } else {
+        if (isCategoryHref(attrs.href)) {
+          activeTab.value = 'category';
+          categoryValue.value = attrs.href;
+          selectedCategoryPath.value = attrs.href;
+        } else if (isStaticPageHref(attrs.href)) {
+          activeTab.value = 'static';
+          staticPageValue.value = attrs.href;
+        } else {
+          activeTab.value = 'url';
+          urlValue.value = attrs.href;
+        }
+      }
     }
+    nextTick(() => {
+      isInitializing.value = false;
+    });
   };
 
   const applyLivePreview = () => {
+    if (isInitializing.value) return;
     if (!editor.value || !initialSelection.value) return;
 
     const href = computedHref.value;
-    const isExternalUrl = activeTab.value === 'url';
-    const target = isExternalUrl || openInNewWindow.value ? '_blank' : '_self';
+    const target = openInNewWindow.value ? '_blank' : '_self';
     const text = linkText.value.trim() || initialText.value;
     const { from } = initialSelection.value;
     const chain = editor.value.chain();
@@ -62,7 +117,24 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     chain.setTextSelection(initialSelection.value);
 
     if (href) {
-      chain.setLink({ href, target });
+      const linkAttrs: { href: string; target: string } & LinkModalLinkAttrs = { href, target };
+
+      linkAttrs['data-link-type'] = activeTab.value;
+
+      if (activeTab.value === 'url') {
+        linkAttrs['data-link-value'] = urlValue.value.trim();
+      } else if (activeTab.value === 'static') {
+        linkAttrs['data-link-value'] = staticPageValue.value;
+      } else if (activeTab.value === 'category') {
+        if (categoryValue.value) {
+          linkAttrs['data-link-value'] = categoryValue.value;
+        }
+        if (selectedCategoryPath.value) {
+          linkAttrs['data-link-path'] = selectedCategoryPath.value;
+        }
+      }
+
+      chain.setLink(linkAttrs);
     } else {
       chain.unsetLink();
     }
@@ -70,8 +142,10 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     chain.run();
   };
 
-  watch([linkText, urlValue, staticPageValue, categoryValue, openInNewWindow], applyLivePreview);
-
+  watch(
+    [linkText, urlValue, staticPageValue, categoryValue, selectedCategoryPath, openInNewWindow, activeTab],
+    applyLivePreview,
+  );
   const computedHref = computed(() => {
     if (activeTab.value === 'url') return urlValue.value.trim();
 
@@ -97,22 +171,35 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
 
   const cancelAndRevert = (onClose: () => void) => {
     if (editor.value && initialSelection.value) {
-      const chain = editor.value.chain();
-      chain.setTextSelection(initialSelection.value).deleteSelection().insertContent(initialText.value);
-
       const { from } = initialSelection.value;
       const to = from + initialText.value.length;
-      chain.setTextSelection({ from, to });
 
-      const originalAttrs = editor.value.getAttributes('link');
-      if (originalAttrs.href) {
-        chain.setLink({ href: originalAttrs.href, target: originalAttrs.target });
+      const chain = editor.value.chain();
+
+      chain
+        .setTextSelection(initialSelection.value)
+        .deleteSelection()
+        .insertContent(initialText.value)
+        .setTextSelection({ from, to });
+
+      if (initialLinkAttrs.value?.href) {
+        const initialHref = initialLinkAttrs.value.href;
+        const linkAttrs: { href: string; target?: string } & LinkModalLinkAttrs = {
+          href: initialHref,
+          target: initialLinkAttrs.value.target,
+          'data-link-type': initialLinkAttrs.value['data-link-type'],
+          'data-link-value': initialLinkAttrs.value['data-link-value'],
+          'data-link-path': initialLinkAttrs.value['data-link-path'],
+        };
+
+        chain.setLink(linkAttrs);
       } else {
         chain.unsetLink();
       }
 
       chain.run();
     }
+
     onClose();
   };
   return {
