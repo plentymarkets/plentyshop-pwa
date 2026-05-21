@@ -1,4 +1,4 @@
-import type { ApiError, Address } from '@plentymarkets/shop-api';
+import type { ActiveShippingCountry, ApiError, Address } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 
 export const useFetchAddressesData = () => {
@@ -61,7 +61,7 @@ export const useFetchAddressesData = () => {
       }
 
       if (data?.countries) {
-        setCountries(data.countries.default, data.countries.geoRegulated);
+        setCountries(data.countries.default as ActiveShippingCountry[], data.countries.geoRegulated);
       }
     } catch (error) {
       useHandleError(error as ApiError);
@@ -88,7 +88,7 @@ export const useFetchAddressesData = () => {
     }
 
     if (responseData?.countries) {
-      setCountries(responseData.countries.default, responseData.countries.geoRegulated);
+      setCountries(responseData.countries.default as ActiveShippingCountry[], responseData.countries.geoRegulated);
     }
 
     state.value.loading = false;
