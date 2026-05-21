@@ -49,7 +49,13 @@
     <template v-if="!props.readOnly">
       <span v-if="props.actions.isMovable" :class="dividerClasses" />
 
-      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true" :class="tooltipWrapperClasses">
+      <SfTooltip
+        v-if="props.actions.isMovable"
+        :label="positionLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
         <button
           :class="primaryButtonClasses"
           data-testid="move-up-button"
@@ -60,7 +66,13 @@
           <SfIconExpandLess size="xs" />
         </button>
       </SfTooltip>
-      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true" :class="tooltipWrapperClasses">
+      <SfTooltip
+        v-if="props.actions.isMovable"
+        :label="positionLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
         <button
           :class="primaryButtonClasses"
           data-testid="move-down-button"
@@ -72,7 +84,13 @@
         </button>
       </SfTooltip>
 
-      <SfTooltip v-if="props.actions.isMovable" :label="positionLabel" placement="top" :show-arrow="true" :class="tooltipWrapperClasses">
+      <SfTooltip
+        v-if="props.actions.isMovable"
+        :label="positionLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
         <button :class="dragButtonClasses" aria-label="Drag to reorder block">
           <NuxtImg width="16" height="16" :src="dragIcon" class="block" />
         </button>
@@ -80,7 +98,13 @@
 
       <span v-if="props.actions.isDeletable" :class="dividerClasses" />
 
-      <SfTooltip v-if="props.actions.isDeletable" :label="deleteLabel" placement="top" :show-arrow="true" :class="tooltipWrapperClasses">
+      <SfTooltip
+        v-if="props.actions.isDeletable"
+        :label="deleteLabel"
+        placement="top"
+        :show-arrow="true"
+        :class="tooltipWrapperClasses"
+      >
         <button
           :class="dangerButtonClasses"
           aria-label="delete block button"
