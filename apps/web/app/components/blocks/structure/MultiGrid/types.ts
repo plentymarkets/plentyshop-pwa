@@ -13,6 +13,8 @@ interface MultiGridLayout {
   paddingRight?: number;
 
   backgroundColor?: string;
+  fullWidth?: boolean;
+  fullWidthBackground?: boolean;
   gap?: string;
 
   mobileCols?: number;
@@ -70,6 +72,7 @@ export type ColumnBlock = Block & {
 
       backgroundColor?: string;
       fullWidth?: boolean;
+      fullWidthBackground?: boolean;
       
       // 🚨 ADD THIS HERE TOO!
       mobileCols?: number;

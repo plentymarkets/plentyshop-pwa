@@ -1,45 +1,47 @@
 <template>
-  <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
-    <div
-      v-for="(column, colIndex) in columns"
-      :key="colIndex"
-      :class="getColumnClasses(colIndex)"
-      class="group/col relative"
-      data-testid="multi-grid-column"
-    >
+  <div :style="outerBackgroundStyle">
+    <div data-testid="multi-grid-structure" :class="getGridClasses()" :style="gridInlineStyle">
       <div
-        v-for="row in column"
-        :key="row.meta.uuid"
-        class="group/row relative"
-        :data-uuid="row.meta.uuid"
-        @mouseenter="onRowEnter(row)"
-        @mouseleave="onRowLeave"
+        v-for="(column, colIndex) in columns"
+        :key="colIndex"
+        :class="getColumnClasses(colIndex)"
+        class="group/col relative"
+        data-testid="multi-grid-column"
       >
-        <ClientOnly>
-          <template v-if="showOverlay(row)">
-            <div
-              class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
-              style="box-shadow: inset 0 0 0 2px #7c3aed"
-            />
+        <div
+          v-for="row in column"
+          :key="row.meta.uuid"
+          class="group/row relative"
+          :data-uuid="row.meta.uuid"
+          @mouseenter="onRowEnter(row)"
+          @mouseleave="onRowLeave"
+        >
+          <ClientOnly>
+            <template v-if="showOverlay(row)">
+              <div
+                class="pointer-events-none absolute inset-0 opacity-0 group-hover/row:opacity-100"
+                style="box-shadow: inset 0 0 0 2px #7c3aed"
+              />
 
-            <div
-              class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
-            />
+              <div
+                class="pointer-events-none absolute inset-0 z-10 opacity-0 group-hover/row:opacity-100 bg-purple-600/15"
+              />
 
-            <div
-              class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
-            >
-              <UiBlockActions :block="row" :index="colIndex" :actions="getBlockActions()" />
-            </div>
-          </template>
-        </ClientOnly>
+              <div
+                class="absolute inset-0 z-30 flex items-center justify-center opacity-0 invisible pointer-events-none group-hover/row:opacity-100 group-hover/row:visible group-hover/row:pointer-events-auto"
+              >
+                <UiBlockActions :block="row" :index="colIndex" :actions="getBlockActions()" />
+              </div>
+            </template>
+          </ClientOnly>
 
-        <slot
-          name="content"
-          :content-block="row"
-          :column-length="column.length"
-          :is-row-hovered="showOverlay(row) && isRowHovered(row)"
-        />
+          <slot
+            name="content"
+            :content-block="row"
+            :column-length="column.length"
+            :is-row-hovered="showOverlay(row) && isRowHovered(row)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -89,9 +91,24 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
+const shouldStretchBackground = computed(
+  () => Boolean(configuration.layout?.fullWidthBackground) && !(configuration.layout?.fullWidth ?? false),
+);
+
+const outerBackgroundStyle = computed(() => {
+  if (!shouldStretchBackground.value) return {};
+
+  return {
+    width: '100vw',
+    marginLeft: 'calc(50% - 50vw)',
+    marginRight: 'calc(50% - 50vw)',
+    backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+  };
+});
+
 // FIX: Updated to include Padding styles
 const gridInlineStyle = computed(() => ({
-  backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+  backgroundColor: shouldStretchBackground.value ? 'transparent' : configuration.layout?.backgroundColor ?? 'transparent',
   // Margins
   marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
   marginBottom:

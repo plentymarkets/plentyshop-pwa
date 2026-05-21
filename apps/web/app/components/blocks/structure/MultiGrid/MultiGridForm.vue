@@ -213,6 +213,18 @@
           </SfInput>
         </label>
       </div>
+
+      <div v-if="multiGridStructure.configuration.layout" class="py-2 flex items-center justify-between gap-3">
+        <UiFormLabel for="full-width-background-toggle" class="m-0">
+          {{ getEditorTranslation('full-width-background-label') }}
+        </UiFormLabel>
+        <SfSwitch
+          id="full-width-background-toggle"
+          v-model="multiGridStructure.configuration.layout.fullWidthBackground"
+          data-testid="full-width-background-toggle"
+          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+        />
+      </div>
     </UiAccordionItem>
   </div>
 </template>
@@ -225,6 +237,7 @@ import {
   SfIconArrowDownward,
   SfIconArrowBack,
   SfIconArrowForward,
+  SfSwitch,
 } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
@@ -272,12 +285,16 @@ const multiGridStructure = computed(() => {
       paddingLeft: 0,
       paddingRight: 0,
       backgroundColor: '#ffffff',
+      fullWidthBackground: false,
       gap: 'M',
       mobileCols: 1 // NEW: Default to 1 column on mobile
     };
   } else {
     // Safety checks
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
+    if (block.configuration.layout.fullWidthBackground === undefined) {
+      block.configuration.layout.fullWidthBackground = false;
+    }
     if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
     if (block.configuration.layout.mobileCols === undefined) block.configuration.layout.mobileCols = 1; // Default fallback
     if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
@@ -355,6 +372,7 @@ const layoutBackground = ref(false);
     "spacing-around": "Spacing around",
     "spacing-between": "Spacing between Blocks:",
     "layout-background": "Layout Background",
+    "full-width-background-label": "Stretch background to full width",
     "sticky-columns": "Sticky columns",
     "column-size": "Column Size",
     "column": "Column",
@@ -374,6 +392,7 @@ const layoutBackground = ref(false);
     "spacing-around": "Spacing around",
     "spacing-between": "Spacing between Blocks:",
     "layout-background": "Layout Background",
+    "full-width-background-label": "Hintergrund auf volle Breite strecken",
     "sticky-columns": "Sticky columns",
     "column-size": "Column Size",
     "column": "Column",
