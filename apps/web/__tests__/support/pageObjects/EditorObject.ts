@@ -46,7 +46,7 @@ export class EditorObject extends PageObject {
   }
 
   get addLayoutPresetButton() {
-    return cy.getByTestId('block-add-layout-preset-1');
+    return cy.getByTestId('block-add-layout-preset-2-equal');
   }
 
   get topBlockButton() {

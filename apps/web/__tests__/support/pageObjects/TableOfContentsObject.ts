@@ -208,7 +208,7 @@ export class TableOfContentsObject extends PageObject {
     return this;
   }
 
-  checkPlaceholderAppears() {
+  checkAddBlockPopoverVisible() {
     this.addBlockPopover.should('be.visible');
     return this;
   }
