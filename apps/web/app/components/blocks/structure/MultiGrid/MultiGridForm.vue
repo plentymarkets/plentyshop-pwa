@@ -281,8 +281,7 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
   if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.splice(insertIndex, 0, ...spans);
-  if (block.configuration.columsWidthsMobile)
-    block.configuration.columsWidthsMobile.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.splice(insertIndex, 0, ...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
@@ -337,7 +336,8 @@ const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
   if (block.configuration.columsWidthsTablet)
     block.configuration.columsWidthsTablet.splice(insertIndex, 0, defaultSpan);
-  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columsWidthsMobile)
+    block.configuration.columsWidthsMobile.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
