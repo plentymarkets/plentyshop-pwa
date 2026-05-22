@@ -20,3 +20,11 @@ export const validateUrl = (url: string): boolean => {
     return false;
   }
 };
+
+export const isCategoryHref = (href: string) => {
+  return href.includes('/c/') || href.includes('/category/');
+};
+
+export const isStaticPageHref = (href: string) => {
+  return href.startsWith('/') && !isCategoryHref(href);
+};

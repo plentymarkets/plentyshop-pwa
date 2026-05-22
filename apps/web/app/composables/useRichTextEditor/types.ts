@@ -21,3 +21,11 @@ export type RteCommand =
   | 'setHorizontalRule';
 
 export type LinkTabValue = 'url' | 'static' | 'category';
+
+export type LinkModalLinkAttrs = {
+  href?: string;
+  target?: string;
+  'data-link-type'?: LinkTabValue;
+  'data-link-value'?: string;
+  'data-link-path'?: string;
+};
