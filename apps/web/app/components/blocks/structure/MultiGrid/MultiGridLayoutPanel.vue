@@ -133,12 +133,13 @@ const open = ref(true);
 const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
 
-const block = computed(() => findOrDeleteBlockByUuid(allBlocks.value, props.uuid) as ColumnBlock);
-const configuration = computed(() => block.value.configuration);
-const layout = computed(() => configuration.value.layout);
+const block = computed(() => findOrDeleteBlockByUuid(allBlocks.value, props.uuid) as ColumnBlock | null);
+const configuration = computed(() => block.value?.configuration);
+const layout = computed(() => configuration.value?.layout);
 
 const isTopLevelBlock = computed(() => getBlockDepth(props.uuid) === 0);
-const { isFullWidth } = useFullWidthToggleForConfig(configuration);
+const configurationForFullWidth = computed(() => configuration.value ?? { layout: undefined });
+const { isFullWidth } = useFullWidthToggleForConfig(configurationForFullWidth);
 
 const marginTop = computed({
   get: () => layout.value?.marginTop ?? 0,

@@ -144,6 +144,71 @@ describe('MultiGrid block', () => {
     expect(classes).toContain('@lg:grid-cols-12');
   });
 
+  it('should apply items-stretch when alignHeights is true', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, alignHeights: true },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).toContain('items-stretch');
+    expect(classes).not.toContain('items-start');
+  });
+
+  it('should apply items-start when alignHeights is false or unset', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, alignHeights: false },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).toContain('items-start');
+    expect(classes).not.toContain('items-stretch');
+  });
+
+  it('should apply flex-col-reverse classes when reverseOnMobile is true', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, reverseOnMobile: true },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).toContain('flex');
+    expect(classes).toContain('flex-col-reverse');
+    expect(classes).toContain('@md:grid');
+    expect(classes).toContain('@md:grid-cols-12');
+  });
+
+  it('should not apply flex-col-reverse classes when reverseOnMobile is false or unset', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, reverseOnMobile: false },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).not.toContain('flex-col-reverse');
+  });
+
   it('should render a 2 columns multigrid with 2 blocks in the first column and 1 block in the second column', () => {
     const blocks = [
       { name: 'Text', type: 'text', content: { text: 'Test' }, meta: { uuid: 'a' }, parent_slot: 0 },
