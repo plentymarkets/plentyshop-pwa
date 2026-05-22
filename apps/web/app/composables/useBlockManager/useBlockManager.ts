@@ -348,10 +348,14 @@ export const useBlockManager = () => {
 
   const getAncestorChain = (blocks: Block[], targetUuid: string): Block[] | null => {
     for (const block of blocks) {
-      if (block.meta?.uuid === targetUuid) return [block];
+      if (block.meta?.uuid === targetUuid) {
+        return [block];
+      }
       if (Array.isArray(block.content) && block.content.length) {
         const sub = getAncestorChain(block.content as Block[], targetUuid);
-        if (sub) return [block, ...sub];
+        if (sub) {
+          return [block, ...sub];
+        }
       }
     }
     return null;
