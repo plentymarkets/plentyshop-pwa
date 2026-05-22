@@ -1,1 +1,1 @@
-export { useLinkModal } from './useLinkModal';
+export * from './useLinkModal';
