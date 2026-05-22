@@ -137,7 +137,7 @@ const multiGridStructure = computed(() => {
       backgroundColor: '#ffffff',
       gap: 'M',
       reverseOnMobile: false,
-      alignHeights: false,
+      alignHeights: true,
     };
   } else {
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
@@ -146,7 +146,7 @@ const multiGridStructure = computed(() => {
       block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
     if (block.configuration.layout.reverseOnMobile === undefined) block.configuration.layout.reverseOnMobile = false;
-    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = false;
+    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = true;
   }
   return block;
 });

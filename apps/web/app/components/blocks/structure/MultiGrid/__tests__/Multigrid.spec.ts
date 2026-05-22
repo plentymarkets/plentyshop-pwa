@@ -160,7 +160,7 @@ describe('MultiGrid block', () => {
     expect(classes).not.toContain('items-start');
   });
 
-  it('should apply items-start when alignHeights is false or unset', () => {
+  it('should apply items-start when alignHeights is false', () => {
     const wrapper = mount(MultiGrid, {
       props: {
         ...mockMultiGridProps,

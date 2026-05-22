@@ -84,7 +84,7 @@ const gapClassMap: Record<string, string> = {
 const gridGapClass = computed(() => gapClassMap[props.configuration.layout?.gap || 'M']);
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 const reverseOnMobile = computed(() => props.configuration.layout?.reverseOnMobile === true);
-const alignHeights = computed(() => props.configuration.layout?.alignHeights === true);
+const alignHeights = computed(() => props.configuration.layout?.alignHeights !== false);
 
 const gridInlineStyle = computed(() => ({
   backgroundColor: props.configuration.layout?.backgroundColor ?? 'transparent',

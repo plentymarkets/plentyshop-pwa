@@ -169,7 +169,7 @@ const reverseOnMobile = computed({
 });
 
 const alignHeights = computed({
-  get: () => layout.value?.alignHeights ?? false,
+  get: () => layout.value?.alignHeights ?? true,
   set: (value: boolean) => {
     if (layout.value) {
       layout.value.alignHeights = value;
