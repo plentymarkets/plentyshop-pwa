@@ -8,7 +8,7 @@
       <div
         ref="panelRef"
         data-testid="add-block-popover"
-        class="fixed z-[201] w-[296px] max-h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
+        class="fixed z-[201] w-[296px] h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
         :style="panelStyle"
         @click.stop
       >
@@ -98,8 +98,15 @@ const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') closeAddBlockPopover();
 };
 
+const handleWheel = (event: WheelEvent) => {
+  if (!popoverState.value) return;
+  if (panelRef.value?.contains(event.target as Node)) return;
+  event.preventDefault();
+};
+
 onMounted(async () => {
   document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('wheel', handleWheel, { passive: false });
   if (Object.keys(blocksLists.value).length === 0) {
     isLoading.value = true;
     try {
@@ -112,5 +119,6 @@ onMounted(async () => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown);
+  document.removeEventListener('wheel', handleWheel);
 });
 </script>
