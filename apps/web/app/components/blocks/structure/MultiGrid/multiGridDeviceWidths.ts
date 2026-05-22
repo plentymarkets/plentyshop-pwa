@@ -1,16 +1,11 @@
 import type { MultiGridColumnConfig } from './types';
 import type { PreviewDevice } from '~/composables/useEditorDevice/types';
 
-function resolveEffectiveDevice(): ComputedRef<PreviewDevice> {
-  const { isInEditorClient, device } = useEditorState();
-  const viewport = useViewport();
-  return computed(() => {
-    if (isInEditorClient.value) return device.value as PreviewDevice;
-    const bp = viewport.breakpoint.value;
-    if (bp === 'xs' || bp === 'sm') return 'mobile';
-    if (bp === 'md') return 'tablet';
-    return 'desktop';
-  });
+function resolveDevice(isInEditorClient: boolean, device: string, breakpoint: string): PreviewDevice {
+  if (isInEditorClient) return device as PreviewDevice;
+  if (breakpoint === 'xs' || breakpoint === 'sm') return 'mobile';
+  if (breakpoint === 'md') return 'tablet';
+  return 'desktop';
 }
 
 function widthsForDevice(config: MultiGridColumnConfig, device: PreviewDevice): number[] {
@@ -21,13 +16,18 @@ function widthsForDevice(config: MultiGridColumnConfig, device: PreviewDevice): 
 }
 
 export function getDeviceColumnWidths(config: MaybeRef<MultiGridColumnConfig>): ComputedRef<number[]> {
-  const effectiveDevice = resolveEffectiveDevice();
-  return computed(() => widthsForDevice(toValue(config), effectiveDevice.value));
+  const { isInEditorClient, device } = useEditorState();
+  const viewport = useViewport();
+  return computed(() =>
+    widthsForDevice(toValue(config), resolveDevice(isInEditorClient.value, device.value, viewport.breakpoint.value)),
+  );
 }
 
 export function setDeviceColumnWidths(config: MultiGridColumnConfig, widths: number[]): void {
-  const device = resolveEffectiveDevice().value;
-  if (device === 'mobile') config.columnWidthsMobile = widths;
-  else if (device === 'tablet') config.columnWidthsTablet = widths;
+  const { isInEditorClient, device } = useEditorState();
+  const viewport = useViewport();
+  const d = resolveDevice(isInEditorClient.value, device.value, viewport.breakpoint.value);
+  if (d === 'mobile') config.columnWidthsMobile = widths;
+  else if (d === 'tablet') config.columnWidthsTablet = widths;
   else config.columnWidths = widths;
 }

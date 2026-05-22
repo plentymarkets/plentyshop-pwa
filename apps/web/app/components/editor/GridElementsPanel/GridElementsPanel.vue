@@ -212,6 +212,8 @@ const addRowSpans = (spans: readonly number[]) => {
   const block = structure.value;
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(...spans);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, i) => createEmptyGridBlock(currentLength + i)) as unknown as Block[]),
@@ -228,6 +230,8 @@ const onAddElement = () => {
     const newBlock = createEmptyGridBlock(newSlot);
 
     block.configuration.columnWidths.push(12);
+    if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(12);
+    if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(12);
     if (!block.content) block.content = [];
     (block.content as Block[]).push(newBlock as unknown as Block);
 
@@ -238,6 +242,8 @@ const onAddElement = () => {
         if (index !== -1) {
           content.splice(index, 1);
           block.configuration.columnWidths.splice(newSlot, 1);
+          if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.splice(newSlot, 1);
+          if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.splice(newSlot, 1);
         }
       };
       openAddBlockPopover({
