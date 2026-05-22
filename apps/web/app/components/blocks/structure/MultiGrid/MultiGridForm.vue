@@ -163,6 +163,7 @@ import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
+import { getDeviceColumnWidths, setDeviceColumnWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -170,6 +171,7 @@ const props = defineProps<{ uuid?: string }>();
 
 const { openAddBlockPopover } = useAddBlockPopover();
 const { blockUuid } = useSiteConfiguration();
+const { device } = useEditorState();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -198,10 +200,12 @@ const multiGridStructure = computed(() => {
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
+const gridcolumsWidth = computed(() => getDeviceColumnWidths(multiGridStructure.value.configuration, device.value));
+
 const visibleGrid = computed(() =>
   computeVisibleGrid(
     (multiGridStructure.value.content as Block[]) ?? [],
-    multiGridStructure.value.configuration.columnWidths ?? [],
+    gridcolumsWidth.value,
   ),
 );
 
@@ -245,14 +249,14 @@ const applyPreset = (spans: readonly number[]) => {
 };
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
-  const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
+  const config = multiGridStructure.value.configuration;
+  const currentWidths = getDeviceColumnWidths(config, device.value);
+  const updated = [...currentWidths];
   visibleGrid.value.filteredToOriginal.forEach((originalIndex, filteredIndex) => {
     const width = filteredWidths[filteredIndex];
-    if (width !== undefined) {
-      fullWidths[originalIndex] = width;
-    }
+    if (width !== undefined) updated[originalIndex] = width;
   });
-  multiGridStructure.value.configuration.columnWidths = fullWidths;
+  setDeviceColumnWidths(config, device.value, updated);
 };
 
 const addRowSpans = (spans: readonly number[]) => {

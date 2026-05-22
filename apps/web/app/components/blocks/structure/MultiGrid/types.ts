@@ -27,12 +27,17 @@ interface MultiGridLayout {
   fullWidth?: boolean;
 }
 
+export interface MultiGridColumnConfig {
+  columnWidths: number[];
+  columsWidthsTablet?: number[];
+  columsWidthsMobile?: number[];
+}
+
 export type MultiGridProps = {
   name: string;
   type: string;
   content: Block[];
-  configuration: {
-    columnWidths: number[];
+  configuration: MultiGridColumnConfig & {
     layout?: MultiGridLayout;
     sticky?: number[];
   };
@@ -61,8 +66,7 @@ export type AlignableBlock = Block & {
 
 export type ColumnBlock = Block & {
   content?: Block[];
-  configuration: {
-    columnWidths: number[];
+  configuration: MultiGridColumnConfig & {
     sticky?: number[];
     layout?: {
       gap: string;

@@ -49,6 +49,7 @@ import type { AlignableBlock, GridRow, MultiGridProps } from '~/components/block
 import type { Block } from '@plentymarkets/shop-api';
 import { computeGridRows } from '~/components/blocks/structure/MultiGrid/multiGridRows';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
+import { getDeviceColumnWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 
 const props = defineProps<MultiGridProps>();
 const route = useRoute();
@@ -66,7 +67,7 @@ const onRowLeave = () => {
 };
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
-const { shouldEnableEditorFeatures } = useEditorState();
+const { shouldEnableEditorFeatures, device } = useEditorState();
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
@@ -96,7 +97,9 @@ const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
 
-const visibleGrid = computed(() => computeVisibleGrid(props.content, props.configuration.columnWidths));
+const gridcolumsWidth = computed(() => getDeviceColumnWidths(props.configuration, device.value));
+
+const visibleGrid = computed(() => computeVisibleGrid(props.content, gridcolumsWidth.value));
 
 const getColumnClasses = (filteredColIndex: number) => {
   const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];
