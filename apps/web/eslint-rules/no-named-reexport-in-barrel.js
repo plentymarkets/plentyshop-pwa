@@ -27,13 +27,19 @@ export const noNamedReexportInBarrel = {
     return {
       ExportNamedDeclaration(node) {
         if (node.source && node.specifiers.length > 0) {
+          const isSafeToFix = node.specifiers.every(
+            (s) => s.local.name === s.exported.name && s.local.name !== 'default',
+          );
+
           context.report({
             node,
             messageId: 'useExportStar',
             data: { source: node.source.value },
-            fix(fixer) {
-              return fixer.replaceText(node, `export * from '${node.source.value}';`);
-            },
+            ...(isSafeToFix && {
+              fix(fixer) {
+                return fixer.replaceText(node, `export * from '${node.source.value}';`);
+              },
+            }),
           });
         }
       },
