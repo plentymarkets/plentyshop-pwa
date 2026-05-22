@@ -29,8 +29,8 @@ interface MultiGridLayout {
 
 export interface MultiGridColumnConfig {
   columnWidths: number[];
-  columsWidthsTablet?: number[];
-  columsWidthsMobile?: number[];
+  columnWidthsTablet?: number[];
+  columnWidthsMobile?: number[];
 }
 
 export type MultiGridProps = {

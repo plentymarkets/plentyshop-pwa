@@ -15,8 +15,8 @@ function resolveEffectiveDevice(): ComputedRef<PreviewDevice> {
 
 function widthsForDevice(config: MultiGridColumnConfig, device: PreviewDevice): number[] {
   const baseWidths = config.columnWidths ?? [];
-  if (device === 'mobile') return config.columsWidthsMobile ?? baseWidths.map(() => 12);
-  if (device === 'tablet') return config.columsWidthsTablet ?? [...baseWidths];
+  if (device === 'mobile') return config.columnWidthsMobile ?? baseWidths.map(() => 12);
+  if (device === 'tablet') return config.columnWidthsTablet ?? [...baseWidths];
   return baseWidths;
 }
 
@@ -27,7 +27,7 @@ export function getDeviceColumnWidths(config: MaybeRef<MultiGridColumnConfig>): 
 
 export function setDeviceColumnWidths(config: MultiGridColumnConfig, widths: number[]): void {
   const device = resolveEffectiveDevice().value;
-  if (device === 'mobile') config.columsWidthsMobile = widths;
-  else if (device === 'tablet') config.columsWidthsTablet = widths;
+  if (device === 'mobile') config.columnWidthsMobile = widths;
+  else if (device === 'tablet') config.columnWidthsTablet = widths;
   else config.columnWidths = widths;
 }

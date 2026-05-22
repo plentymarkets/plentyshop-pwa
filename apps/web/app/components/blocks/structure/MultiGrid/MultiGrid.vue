@@ -97,9 +97,9 @@ const getGridClasses = () => {
   return gridClassFor({ mobile: 12, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
 
-const gridcolumsWidth = getDeviceColumnWidths(computed(() => props.configuration));
+const gridcolumnsWidth = getDeviceColumnWidths(computed(() => props.configuration));
 
-const visibleGrid = computed(() => computeVisibleGrid(props.content, gridcolumsWidth.value));
+const visibleGrid = computed(() => computeVisibleGrid(props.content, gridcolumnsWidth.value));
 
 const getColumnClasses = (filteredColIndex: number) => {
   const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];

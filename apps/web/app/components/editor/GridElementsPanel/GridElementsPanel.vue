@@ -174,8 +174,8 @@ const onDelete = (block: Block) => {
     const slot = block.parent_slot ?? 0;
     const cfg = structure.value.configuration;
     cfg.columnWidths.splice(slot, 1);
-    if (cfg.columsWidthsTablet) cfg.columsWidthsTablet.splice(slot, 1);
-    if (cfg.columsWidthsMobile) cfg.columsWidthsMobile.splice(slot, 1);
+    if (cfg.columnWidthsTablet) cfg.columnWidthsTablet.splice(slot, 1);
+    if (cfg.columnWidthsMobile) cfg.columnWidthsMobile.splice(slot, 1);
     content.forEach((b) => {
       if ((b.parent_slot ?? 0) > slot) b.parent_slot = (b.parent_slot ?? 0) - 1;
     });
