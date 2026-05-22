@@ -1,5 +1,5 @@
 <template>
-  <div :style="outerBackgroundStyle">
+  <div class="px-4 md:px-6 lg:px-8 2xl:px-0" :style="outerBackgroundStyle">
     <div
       data-testid="multi-grid-structure"
       :class="[getGridClasses(), gridContainerClasses]"
@@ -109,7 +109,7 @@ const outerBackgroundStyle = computed(() => {
 });
 
 const gridContainerClasses = computed(() => {
-  const classes = ['px-4', 'md:px-6', 'lg:px-8', 'min-[1921px]:px-0'];
+  const classes = ['w-full'];
 
   if (shouldStretchBackground.value) {
     classes.push('max-w-screen-3xl', 'mx-auto');
@@ -131,12 +131,12 @@ const gridInlineStyle = computed(() => ({
     ? 'auto'
     : configuration.layout?.marginLeft !== undefined
       ? `${configuration.layout.marginLeft}px`
-      : '40px',
+      : '0px',
   marginRight: shouldStretchBackground.value
     ? 'auto'
     : configuration.layout?.marginRight !== undefined
       ? `${configuration.layout.marginRight}px`
-      : '40px',
+      : '0px',
   
   // Padding - NEW LOGIC HERE
   paddingTop: configuration.layout?.paddingTop !== undefined ? `${configuration.layout.paddingTop}px` : '0px',

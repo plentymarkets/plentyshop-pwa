@@ -1,10 +1,10 @@
 <template>
-  <div v-bind="$attrs" :style="layoutStyle">
-    <TextContent data-testid="recommended-block" class="pb-4 px-4 md:px-6 lg:px-8 2xl:px-0" :text="props.content.text" :index="props.index" />
+  <div v-bind="$attrs" class="px-4 md:px-6 lg:px-8 2xl:px-0" :style="layoutStyle">
+    <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
     <ProductSlider
       v-if="recommendedProducts?.length && (shouldRender || shouldRenderAfterUpdate)"
       :items="recommendedProducts"
-      wrapper-class="px-4 md:px-6 lg:px-8 2xl:px-0"
+      wrapper-class="w-full"
     />
   </div>
 </template>

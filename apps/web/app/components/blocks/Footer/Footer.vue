@@ -91,7 +91,7 @@
                   </summary>
                   
                   <div class="absolute z-[100] left-4 min-w-[260px] bottom-full pb-2">
-                    <ul class="bg-neutral-800 shadow-xl p-3 flex flex-col gap-2 border border-white/10 rounded-md max-h-[300px] overflow-y-auto w-full">
+                    <ul class="footer-submenu-scroll bg-neutral-800 shadow-xl p-3 flex flex-col gap-2 border border-white/10 rounded-md max-h-[300px] overflow-y-auto w-full">
                       <li v-for="child in node.children" :key="child.id">
                         <NuxtLink :to="localePath(generateCategoryLink(child))" class="hover:underline opacity-80 hover:opacity-100 text-sm block py-1">
                           {{ categoryTreeGetters.getName(child) }}
@@ -225,3 +225,27 @@ const closeAccordion = (event: Event) => {
   if (target) target.open = false;
 };
 </script>
+
+<style scoped>
+.footer-submenu-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+.footer-submenu-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.footer-submenu-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.footer-submenu-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 9999px;
+}
+
+.footer-submenu-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+</style>

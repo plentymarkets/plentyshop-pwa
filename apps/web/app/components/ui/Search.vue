@@ -106,7 +106,7 @@ const searchResults = computed(() => {
 const onSearchInput = () => {
   if (debounceTimeout) clearTimeout(debounceTimeout);
   
-  if (searchQuery.value.trim().length < 3) {
+  if (searchQuery.value.trim().length < 2) {
     showResults.value = false;
     return;
   }
@@ -153,7 +153,7 @@ onMounted(() => {
     searchQuery.value = props.initialQuery.trim();
   }
 
-  if (props.autoSubmit && searchQuery.value.length >= 3) {
+  if (props.autoSubmit && searchQuery.value.length >= 2) {
     setTimeout(() => handleSearch(), 0);
   }
 });

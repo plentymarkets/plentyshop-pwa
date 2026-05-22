@@ -32,7 +32,7 @@
 
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" class="bg-white border-b border-b-neutral-200 border-b-solid w-full">
       <ul
-        class="flex flex-wrap justify-center max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-10 py-2 w-full"
+        class="flex flex-wrap justify-center gap-x-3 gap-y-2 md:gap-x-4 lg:gap-x-5 max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-10 py-2 w-full"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -47,7 +47,7 @@
             <div
             ref="triggerReference"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-2 font-medium text-[16px] tracking-tight rounded-md py-2 px-3 group !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
             <NuxtLink 
               :to="localePath(generateCategoryLink(menuNode))" 
@@ -73,7 +73,10 @@
             "
             :key="activeMenu.id"
             ref="megaMenuReference"
-            class="hidden md:flex flex-col absolute top-full left-0 min-w-[280px] bg-white shadow-xl p-3 outline-none z-[110] rounded-b-md border border-neutral-100"
+            :class="[
+              'hidden md:flex flex-col absolute top-full min-w-[280px] max-w-[360px] bg-white shadow-xl p-3 outline-none z-[110] rounded-b-md border border-neutral-100',
+              isNearRightEdge(index) ? 'right-0 left-auto' : 'left-0',
+            ]"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -81,9 +84,8 @@
             <template v-for="node in activeMenu.children" :key="node.id">
               <SfListItem
                 :tag="NuxtLink"
-                size="sm"
                 :to="localePath(generateCategoryLink(node))"
-                class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base text-left"
+                class="mb-2 hover:bg-secondary-100 rounded font-medium !text-[16px] text-left"
                 @click="close()"
               >
                 {{ categoryTreeGetters.getName(node) }}
@@ -105,7 +107,7 @@
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid bg-neutral-50">
             <div class="flex items-center gap-3">
-              <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
+              <p class="font-medium text-[16px]">{{ t('common.actions.browseProducts') }}</p>
               
               <UiButton
                 variant="tertiary"
@@ -139,7 +141,7 @@
               >
                 <div class="flex items-center">
                   <SfIconArrowBack class="text-neutral-500" />
-                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
+                  <p class="ml-5 font-medium text-[16px]">{{ categoryTreeGetters.getName(activeMenu) }}</p>
                 </div>
               </SfListItem>
             </li>
@@ -153,7 +155,7 @@
                   @click="close()"
                 >
                   <div class="flex items-center">
-                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                    <p class="text-left text-[16px]">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                   </div>
                 </SfListItem>
@@ -163,7 +165,7 @@
                   <div class="flex items-center w-100">
                     <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
                       <div class="flex items-center">
-                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                        <p class="text-left text-[16px]">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                       </div>
                     </NuxtLink>
@@ -259,6 +261,8 @@ const activeMenu = computed(() => (category.value ? findNode(activeNode.value, c
 
 // 4. PREVENT Z-INDEX DROP ON MOBILE
 const headerClass = computed(() => ({ 'z-[110]': isOpen.value })); 
+
+const isNearRightEdge = (index: number) => index >= Math.max(0, categoryTree.value.length - 2);
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {

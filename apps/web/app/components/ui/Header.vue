@@ -24,11 +24,6 @@
       <div
         class="hidden lg:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-1 min-[1152px]:mr-2 min-[1280px]:mr-3 min-[1367px]:mr-6 gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-5 transition-all duration-300 min-w-0"
       >
-        
-        <div v-if="!isHomePage" class="hidden min-[1500px]:block w-full max-w-[280px] mr-auto ml-4 lg:ml-8 transition-all duration-300">
-          <UiSearch />
-        </div>
-
         <NuxtLink
             to="https://www.waren-ankauf.de/ankauf/"
             target="_blank"
@@ -47,18 +42,6 @@
             class="flex flex-row flex-nowrap items-center gap-0.5"
           >
             <div class="mr-3"><GoogleTranslate /></div>
-
-            <UiButton
-              v-if="!isHomePage"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[1500px]:hidden"
-              :aria-label="t('common.actions.search')"
-              variant="tertiary"
-              :style="{ color: iconColor }"
-              square
-              @click="searchModalOpen"
-            >
-              <SfIconSearch />
-            </UiButton>
 
             <template v-if="localeCodes.length > 1">
               <UiButton
@@ -203,6 +186,10 @@
           >
             +49 2862 58795 0
           </a>
+
+          <div v-if="!isHomePage" class="w-full max-w-[280px] min-[1280px]:max-w-[320px] min-[1367px]:max-w-[360px] mt-2 transition-all duration-300 self-end">
+            <UiSearch />
+          </div>
         </div>
       </div>
     </template>
@@ -223,11 +210,6 @@
       <div
         class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-3 px-2 sm:px-3 py-2.5 z-[90]"
       >
-        
-        <div v-if="!isHomePage" class="w-full">
-          <UiSearch />
-        </div>
-
         <div class="flex flex-row items-center justify-between w-full">
           <div class="flex flex-row items-center gap-2 sm:gap-3">
             <img
@@ -254,7 +236,7 @@
               <div class="scale-[0.85] transform origin-right">
                 <GoogleTranslate />
               </div>
-              </div>
+            </div>
 
             <a
               href="tel:+492862587950"
@@ -263,6 +245,10 @@
             >
               +49 2862 58795 0
             </a>
+
+            <div v-if="!isHomePage" class="w-full max-w-[360px] mt-2 self-end">
+              <UiSearch />
+            </div>
           </div>
         </div>
       </div>
@@ -294,34 +280,6 @@
     />
     <Register v-else :is-modal="true" @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
-
-  <NuxtLazyHydrate when-idle>
-    <SfModal
-      v-model="isSearchModalOpen"
-      class="w-[95%] max-w-[600px] h-fit max-h-[80vh] rounded-xl shadow-2xl z-[9999] !bg-[#EBE09B] border border-black/10"
-      tag="section"
-      role="dialog"
-      aria-labelledby="search-modal-title"
-    >
-      <header class="mb-4">
-        <UiButton
-          :aria-label="t('common.navigation.closeDialog')"
-          square
-          variant="tertiary"
-          class="absolute right-4 top-2 text-black hover:bg-black/10 active:bg-black/20 transition-colors"
-          @click="searchModalClose"
-        >
-          <SfIconClose />
-        </UiButton>
-        <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4 text-black">
-          {{ t('common.actions.search') }}
-        </h3>
-      </header>
-      <div class="px-2 pb-4">
-        <UiSearch :close="searchModalClose" />
-      </div>
-    </SfModal>
-  </NuxtLazyHydrate>
 </template>
 
 <script setup lang="ts">
@@ -331,10 +289,8 @@ import {
   SfIconClose,
   SfIconLanguage,
   SfIconPerson,
-  SfIconSearch,
   SfIconShoppingCart,
   SfListItem,
-  SfModal,
   SfIconFavorite,
   useDisclosure,
 } from '@storefront-ui/vue';
@@ -359,7 +315,6 @@ const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
-const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const allowedCategoryIds = [895, 490, 1505, 208, 81, 217, 97];
