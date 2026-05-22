@@ -22,13 +22,11 @@
 <script setup lang="ts">
 import type { PopoverPosition } from './types';
 import {
-  VIEWPORT_EDGE_MARGIN,
   clampHorizontal,
   placeBelow,
   placeAbove,
   fitsBelow,
   fitsAbove,
-  clampArrowHorizontal,
   arrowVerticalPosition,
 } from './positioning';
 
@@ -67,19 +65,29 @@ const recalcPosition = async (state: typeof popoverState.value) => {
 
   const left = clampHorizontal(anchorCenterX, width);
 
-  let top = placeBelow(anchorBottom);
-  let arrowDirection: 'up' | 'down' = 'up';
+  const spaceAbove = anchorTop;
+  const spaceBelow = window.innerHeight - anchorBottom;
 
-  if (!fitsBelow(top, height)) {
+  let top: number;
+  let arrowDirection: 'up' | 'down';
+
+  if (spaceAbove >= spaceBelow) {
     top = placeAbove(anchorTop, height);
     arrowDirection = 'down';
     if (!fitsAbove(top)) {
-      top = Math.max(VIEWPORT_EDGE_MARGIN, window.innerHeight - height - VIEWPORT_EDGE_MARGIN);
+      top = placeBelow(anchorBottom);
       arrowDirection = 'up';
+    }
+  } else {
+    top = placeBelow(anchorBottom);
+    arrowDirection = 'up';
+    if (!fitsBelow(top, height)) {
+      top = placeAbove(anchorTop, height);
+      arrowDirection = 'down';
     }
   }
 
-  const arrowLeft = clampArrowHorizontal(left, anchorCenterX, width);
+  const arrowLeft = anchorCenterX;
   const arrowTop = arrowVerticalPosition(arrowDirection, top, height);
   popoverPosition.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDirection };
 };
