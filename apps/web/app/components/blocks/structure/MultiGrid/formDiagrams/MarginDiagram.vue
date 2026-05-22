@@ -46,8 +46,7 @@ const MIN_BAND = 2;
 const MAX_BAND = 16;
 const MARGIN_PX_PER_BAND_UNIT = 3;
 
-const toBandHeight = (marginPx: number) =>
-  Math.max(MIN_BAND, Math.min(MAX_BAND, marginPx / MARGIN_PX_PER_BAND_UNIT));
+const toBandHeight = (marginPx: number) => Math.max(MIN_BAND, Math.min(MAX_BAND, marginPx / MARGIN_PX_PER_BAND_UNIT));
 
 const topBand = computed(() => toBandHeight(props.marginTop ?? 0));
 const bottomBand = computed(() => toBandHeight(props.marginBottom ?? 0));

@@ -104,7 +104,7 @@
         :block-visible="isVisible"
         :min-items-reached="minItemsReached"
         :parent-uuid="isGridMode ? parentUuid : undefined"
-        :column-index="isGridMode ? block.parent_slot ?? 0 : undefined"
+        :column-index="isGridMode ? (block.parent_slot ?? 0) : undefined"
         @toggle="emit('toggle-menu', block.meta.uuid)"
         @toggle-visibility="emit('toggle-visibility', block)"
         @delete="emit('delete', block)"

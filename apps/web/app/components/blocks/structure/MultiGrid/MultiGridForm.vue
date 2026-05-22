@@ -89,7 +89,9 @@
               />
             </div>
             <div class="flex-1 min-w-0">
-              <div class="text-xs font-medium text-editor-text-default">{{ getEditorTranslation('vertical-margin') }}</div>
+              <div class="text-xs font-medium text-editor-text-default">
+                {{ getEditorTranslation('vertical-margin') }}
+              </div>
               <div class="mt-1.5 flex gap-1.5">
                 <label
                   class="flex-1 flex items-center gap-1 pl-2 pr-1.5 py-1 rounded-md border border-editor-canvas-border bg-white focus-within:border-editor-accent focus-within:ring-1 focus-within:ring-editor-accent transition-colors"
@@ -128,8 +130,12 @@
               <ReverseDiagram :on="reverseOnMobile" />
             </div>
             <div class="flex-1 min-w-0">
-              <div class="text-xs font-medium text-editor-text-default">{{ getEditorTranslation('reverse-on-mobile') }}</div>
-              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">{{ getEditorTranslation('reverse-on-mobile-helper') }}</div>
+              <div class="text-xs font-medium text-editor-text-default">
+                {{ getEditorTranslation('reverse-on-mobile') }}
+              </div>
+              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">
+                {{ getEditorTranslation('reverse-on-mobile-helper') }}
+              </div>
             </div>
             <SfSwitch
               v-model="reverseOnMobile"
@@ -147,8 +153,12 @@
               <AlignDiagram :on="alignHeights" />
             </div>
             <div class="flex-1 min-w-0">
-              <div class="text-xs font-medium text-editor-text-default">{{ getEditorTranslation('align-heights') }}</div>
-              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">{{ getEditorTranslation('align-heights-helper') }}</div>
+              <div class="text-xs font-medium text-editor-text-default">
+                {{ getEditorTranslation('align-heights') }}
+              </div>
+              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">
+                {{ getEditorTranslation('align-heights-helper') }}
+              </div>
             </div>
             <SfSwitch
               v-model="alignHeights"
@@ -172,7 +182,9 @@
                   <SfIconInfo size="xs" class="text-editor-text-faint align-middle" />
                 </SfTooltip>
               </div>
-              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">{{ getEditorTranslation('full-width-helper') }}</div>
+              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">
+                {{ getEditorTranslation('full-width-helper') }}
+              </div>
             </div>
             <SfSwitch
               v-model="isFullWidth"
