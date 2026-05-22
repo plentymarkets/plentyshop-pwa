@@ -71,7 +71,7 @@ import { SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
-import { getDeviceColumnWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
+import { getDeviceColumnWidths, setDeviceColumnWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 import type { GridElementsPanelProps, GridElementsPanelEmits } from './types';
 
 const props = withDefaults(defineProps<GridElementsPanelProps>(), {
@@ -99,9 +99,8 @@ const { clearInsertColumnUuid, setInsertColumnUuid } = useBlocksMutations();
 
 const structure = computed(() => findOrDeleteBlockByUuid(data.value, props.uuid) as ColumnBlock | undefined);
 const isGridMode = computed(() => Array.isArray(structure.value?.configuration?.columnWidths));
-const { device } = useEditorState();
-const columnWidths = computed(() =>
-  structure.value ? getDeviceColumnWidths(structure.value.configuration, device.value) : [],
+const { columnWidths, effectiveDevice } = getDeviceColumnWidths(
+  computed(() => structure.value?.configuration ?? { columnWidths: [] as number[] }),
 );
 
 const sortedItems = computed((): Block[] => {
@@ -196,7 +195,7 @@ const onDragEnd = () => {
       const original = content.find((b) => b.meta.uuid === nb.meta.uuid);
       if (original) original.parent_slot = i;
     });
-    structure.value.configuration.columnWidths = newWidths;
+    setDeviceColumnWidths(structure.value.configuration, effectiveDevice.value, newWidths);
   } else {
     structure.value.content = [...localItems.value];
   }

@@ -67,7 +67,7 @@ const onRowLeave = () => {
 };
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
-const { shouldEnableEditorFeatures, device } = useEditorState();
+const { shouldEnableEditorFeatures } = useEditorState();
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
@@ -94,10 +94,10 @@ const gridInlineStyle = computed(() => ({
       : `${defaultMarginBottom.value}px`,
 }));
 const getGridClasses = () => {
-  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
+  return gridClassFor({ mobile: 12, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
 
-const gridcolumsWidth = computed(() => getDeviceColumnWidths(props.configuration, device.value));
+const { columnWidths: gridcolumsWidth } = getDeviceColumnWidths(computed(() => props.configuration));
 
 const visibleGrid = computed(() => computeVisibleGrid(props.content, gridcolumsWidth.value));
 

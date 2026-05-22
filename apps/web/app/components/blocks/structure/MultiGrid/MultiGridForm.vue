@@ -174,7 +174,6 @@ const props = defineProps<{ uuid?: string }>();
 
 const { openAddBlockPopover } = useAddBlockPopover();
 const { blockUuid } = useSiteConfiguration();
-const { device } = useEditorState();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
@@ -203,7 +202,9 @@ const multiGridStructure = computed(() => {
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
-const gridcolumsWidth = computed(() => getDeviceColumnWidths(multiGridStructure.value.configuration, device.value));
+const { columnWidths: gridcolumsWidth, effectiveDevice } = getDeviceColumnWidths(
+  computed(() => multiGridStructure.value.configuration),
+);
 
 const visibleGrid = computed(() =>
   computeVisibleGrid((multiGridStructure.value.content as Block[]) ?? [], gridcolumsWidth.value),
@@ -250,13 +251,12 @@ const applyPreset = (spans: readonly number[]) => {
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
   const config = multiGridStructure.value.configuration;
-  const currentWidths = getDeviceColumnWidths(config, device.value);
-  const updated = [...currentWidths];
+  const updated = [...gridcolumsWidth.value];
   visibleGrid.value.filteredToOriginal.forEach((originalIndex, filteredIndex) => {
     const width = filteredWidths[filteredIndex];
     if (width !== undefined) updated[originalIndex] = width;
   });
-  setDeviceColumnWidths(config, device.value, updated);
+  setDeviceColumnWidths(config, effectiveDevice.value, updated);
 };
 
 const addRowSpans = (spans: readonly number[]) => {
