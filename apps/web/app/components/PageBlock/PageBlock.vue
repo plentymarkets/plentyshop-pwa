@@ -52,8 +52,7 @@
           :class="[
             'opacity-0',
             {
-              'hover:opacity-100 group-hover/block:opacity-100 group-hover/block:translate-y-0':
-                !isTablet,
+              'hover:opacity-100 group-hover/block:opacity-100 group-hover/block:translate-y-0': !isTablet,
               '!opacity-100 !translate-y-0': isTablet && isClicked && clickedBlockIndex === index,
             },
           ]"

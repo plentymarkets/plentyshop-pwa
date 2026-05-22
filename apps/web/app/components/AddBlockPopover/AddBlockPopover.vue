@@ -21,14 +21,7 @@
 
 <script setup lang="ts">
 import type { PopoverPosition } from './types';
-import {
-  clampHorizontal,
-  placeBelow,
-  placeAbove,
-  fitsBelow,
-  fitsAbove,
-  arrowVerticalPosition,
-} from './positioning';
+import { clampHorizontal, placeBelow, placeAbove, fitsBelow, fitsAbove, arrowVerticalPosition } from './positioning';
 
 const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
 const { blocksLists, getBlocksLists } = useBlocksList();
