@@ -32,6 +32,7 @@
           <div
             v-for="cell in row.cells"
             :key="cell.colIndex"
+            :data-mg-cell-index="cell.colIndex"
             :style="{ flex: cell.span }"
             class="relative box-border border-r border-editor-canvas-cell p-1"
           >

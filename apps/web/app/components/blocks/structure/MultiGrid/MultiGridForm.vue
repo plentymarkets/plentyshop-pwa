@@ -312,7 +312,7 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
 
-const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTMLElement) => {
+const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl: HTMLElement) => {
   const block = multiGridStructure.value as ColumnBlock;
   const newBlock = createEmptyGridBlock(insertIndex);
 
@@ -323,6 +323,9 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
+
+  await nextTick();
+  const newCellAnchor = document.querySelector(`[data-mg-cell-index="${insertIndex}"]`) as HTMLElement | null;
 
   const cleanup = () => {
     const gridBlock = multiGridStructure.value as ColumnBlock;
@@ -340,7 +343,7 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
   };
 
   openAddBlockPopover({
-    anchorEl,
+    anchorEl: newCellAnchor ?? anchorEl,
     targetUuid: newBlock.meta.uuid,
     position: 'inside',
     onCancel: cleanup,
