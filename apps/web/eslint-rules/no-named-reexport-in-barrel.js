@@ -11,7 +11,7 @@
 export const noNamedReexportInBarrel = {
   meta: {
     type: 'problem',
-    fixable: 'code',
+    hasSuggestions: true,
     docs: {
       description:
         'Use `export *` instead of named re-exports in barrel index.ts files to avoid Nuxt auto-import duplicates.',
@@ -19,6 +19,10 @@ export const noNamedReexportInBarrel = {
     messages: {
       useExportStar:
         "Use `export * from '{{ source }}'` instead of named re-exports to avoid Nuxt auto-import duplicates.",
+      useExportTypeStar:
+        "Use `export type * from '{{ source }}'` instead of named type re-exports to avoid Nuxt auto-import duplicates.",
+      suggestExportStar: "Replace with `export * from '{{ source }}'`",
+      suggestExportTypeStar: "Replace with `export type * from '{{ source }}'`",
     },
     schema: [],
   },
@@ -26,22 +30,27 @@ export const noNamedReexportInBarrel = {
   create(context) {
     return {
       ExportNamedDeclaration(node) {
-        if (node.source && node.specifiers.length > 0) {
-          const isSafeToFix = node.specifiers.every(
-            (s) => s.local.name === s.exported.name && s.local.name !== 'default',
-          );
+        if (!node.source || node.specifiers.length === 0) return;
 
-          context.report({
-            node,
-            messageId: 'useExportStar',
-            data: { source: node.source.value },
-            ...(isSafeToFix && {
+        const isTypeOnly =
+          node.exportKind === 'type' || node.specifiers.every((s) => s.exportKind === 'type');
+        const source = node.source.value;
+
+        context.report({
+          node,
+          messageId: isTypeOnly ? 'useExportTypeStar' : 'useExportStar',
+          data: { source },
+          suggest: [
+            {
+              messageId: isTypeOnly ? 'suggestExportTypeStar' : 'suggestExportStar',
+              data: { source },
               fix(fixer) {
-                return fixer.replaceText(node, `export * from '${node.source.value}';`);
+                const prefix = isTypeOnly ? 'export type *' : 'export *';
+                return fixer.replaceText(node, `${prefix} from '${source}';`);
               },
-            }),
-          });
-        }
+            },
+          ],
+        });
       },
     };
   },
