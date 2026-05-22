@@ -123,8 +123,8 @@
                           :row-key="virtualRow.item.key"
                           :lang="locale"
                           :translation="virtualRow.item.translations[locale]"
-                          @update="(key, lang, value) => updateTranslationInput(key, lang, value)"
-                          @revert="(key, lang, data) => updateTranslationInput(key, lang, data.default ?? '')"
+                          @update="updateTranslationInput"
+                          @revert="revertToDefault"
                         />
                       </div>
                     </div>
@@ -141,6 +141,7 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconChevronLeft, SfIconSearch, SfInput, SfSwitch } from '@storefront-ui/vue';
+import type { LocalizationMessage } from '@plentymarkets/shop-core';
 import { useDebounceFn } from '@vueuse/core';
 import { useVirtualizer } from '@tanstack/vue-virtual';
 
@@ -161,6 +162,10 @@ const languages = computed(() => {
     })
     .filter((lang): lang is string => lang !== null);
 });
+
+const revertToDefault = (key: string, lang: string, data: LocalizationMessage) => {
+  updateTranslationInput(key, lang, data.default ?? '');
+};
 
 const debouncedSearchTerm = useDebounceFn(() => {
   filterKeys(searchTerm.value, selectedLocales.value, showMissingOnly.value);

@@ -9,7 +9,7 @@
     <textarea
       v-if="translation?.input !== undefined"
       :id="`translation-${rowKey}-${lang}`"
-      :aria-label="lang"
+      :aria-label="`${rowKey} (${lang})`"
       :value="localValue"
       class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
       @input="onInput"
