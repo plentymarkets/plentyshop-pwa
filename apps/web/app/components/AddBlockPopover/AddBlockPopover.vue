@@ -8,7 +8,7 @@
       <div
         ref="panelRef"
         data-testid="add-block-popover"
-        class="fixed z-[201] w-[296px] max-h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
+        class="fixed z-[201] w-[296px] h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
         :style="panelStyle"
         @click.stop
       >
@@ -21,16 +21,7 @@
 
 <script setup lang="ts">
 import type { PopoverPosition } from './types';
-import {
-  VIEWPORT_EDGE_MARGIN,
-  clampHorizontal,
-  placeBelow,
-  placeAbove,
-  fitsBelow,
-  fitsAbove,
-  clampArrowHorizontal,
-  arrowVerticalPosition,
-} from './positioning';
+import { clampHorizontal, placeBelow, placeAbove, fitsBelow, fitsAbove, arrowVerticalPosition } from './positioning';
 
 const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
 const { blocksLists, getBlocksLists } = useBlocksList();
@@ -67,19 +58,29 @@ const recalcPosition = async (state: typeof popoverState.value) => {
 
   const left = clampHorizontal(anchorCenterX, width);
 
-  let top = placeBelow(anchorBottom);
-  let arrowDirection: 'up' | 'down' = 'up';
+  const spaceAbove = anchorTop;
+  const spaceBelow = window.innerHeight - anchorBottom;
 
-  if (!fitsBelow(top, height)) {
+  let top: number;
+  let arrowDirection: 'up' | 'down';
+
+  if (spaceAbove >= spaceBelow) {
     top = placeAbove(anchorTop, height);
     arrowDirection = 'down';
     if (!fitsAbove(top)) {
-      top = Math.max(VIEWPORT_EDGE_MARGIN, window.innerHeight - height - VIEWPORT_EDGE_MARGIN);
+      top = placeBelow(anchorBottom);
       arrowDirection = 'up';
+    }
+  } else {
+    top = placeBelow(anchorBottom);
+    arrowDirection = 'up';
+    if (!fitsBelow(top, height)) {
+      top = placeAbove(anchorTop, height);
+      arrowDirection = 'down';
     }
   }
 
-  const arrowLeft = clampArrowHorizontal(left, anchorCenterX, width);
+  const arrowLeft = anchorCenterX;
   const arrowTop = arrowVerticalPosition(arrowDirection, top, height);
   popoverPosition.value = { left, top, opacity: 1, arrowLeft, arrowTop, arrowDirection };
 };
@@ -90,8 +91,15 @@ const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') closeAddBlockPopover();
 };
 
+const handleWheel = (event: WheelEvent) => {
+  if (!popoverState.value) return;
+  if (panelRef.value?.contains(event.target as Node)) return;
+  event.preventDefault();
+};
+
 onMounted(async () => {
   document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('wheel', handleWheel, { passive: false });
   if (Object.keys(blocksLists.value).length === 0) {
     isLoading.value = true;
     try {
@@ -104,5 +112,6 @@ onMounted(async () => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown);
+  document.removeEventListener('wheel', handleWheel);
 });
 </script>
