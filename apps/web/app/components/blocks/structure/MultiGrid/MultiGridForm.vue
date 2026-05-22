@@ -76,53 +76,112 @@
       <EditorFormPanel
         v-model="layoutOpen"
         :title="getEditorTranslation('layout')"
-        content-class="px-3.5 py-3 flex flex-col gap-3"
+        content-class="px-3.5 py-3 flex flex-col"
       >
         <div v-if="multiGridStructure.configuration.layout">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
-          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowUpward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginTop"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-top"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-              <span><SfIconArrowDownward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginBottom"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-bottom"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div v-if="multiGridStructure.configuration.columnWidths?.length">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
-          <div class="grid grid-cols-3 gap-2">
-            <button
-              v-for="i in numColumns"
-              :key="`sticky-col-${i}`"
-              type="button"
-              class="px-3 py-2 rounded-md border text-sm"
-              :class="
-                isSticky(i - 1)
-                  ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
-                  : 'border-neutral-300 hover:border-neutral-400'
-              "
-              @click="toggleSticky(i - 1)"
+          <div class="flex items-start gap-3 py-2">
+            <div
+              class="flex-none w-11 h-9 flex items-center justify-center rounded-md border border-editor-border bg-white overflow-hidden"
             >
-              {{ getEditorTranslation('column') }} {{ i }}
-            </button>
+              <MarginDiagram
+                :margin-top="multiGridStructure.configuration.layout.marginTop"
+                :margin-bottom="multiGridStructure.configuration.layout.marginBottom"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs font-medium text-editor-text-default">{{ getEditorTranslation('vertical-margin') }}</div>
+              <div class="mt-1.5 flex gap-1.5">
+                <label
+                  class="flex-1 flex items-center gap-1 pl-2 pr-1.5 py-1 rounded-md border border-editor-canvas-border bg-white focus-within:border-editor-accent focus-within:ring-1 focus-within:ring-editor-accent transition-colors"
+                >
+                  <SfIconArrowUpward size="xs" class="text-editor-text-faint flex-none" />
+                  <input
+                    v-model.number="multiGridStructure.configuration.layout.marginTop"
+                    type="number"
+                    class="w-full min-w-0 text-xs outline-none bg-transparent text-editor-text-default [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    data-testid="margin-top"
+                  />
+                  <span class="text-2xs text-editor-text-faint flex-none">px</span>
+                </label>
+                <label
+                  class="flex-1 flex items-center gap-1 pl-2 pr-1.5 py-1 rounded-md border border-editor-canvas-border bg-white focus-within:border-editor-accent focus-within:ring-1 focus-within:ring-editor-accent transition-colors"
+                >
+                  <SfIconArrowDownward size="xs" class="text-editor-text-faint flex-none" />
+                  <input
+                    v-model.number="multiGridStructure.configuration.layout.marginBottom"
+                    type="number"
+                    class="w-full min-w-0 text-xs outline-none bg-transparent text-editor-text-default [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    data-testid="margin-bottom"
+                  />
+                  <span class="text-2xs text-editor-text-faint flex-none">px</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="h-px bg-editor-border/60 mx-1" />
+
+          <div class="flex items-center gap-3 py-2">
+            <div
+              class="flex-none w-11 h-9 flex items-center justify-center rounded-md border border-editor-border bg-white overflow-hidden"
+            >
+              <ReverseDiagram :on="reverseOnMobile" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs font-medium text-editor-text-default">{{ getEditorTranslation('reverse-on-mobile') }}</div>
+              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">{{ getEditorTranslation('reverse-on-mobile-helper') }}</div>
+            </div>
+            <SfSwitch
+              v-model="reverseOnMobile"
+              data-testid="reverse-on-mobile"
+              class="checked:bg-editor-button checked:border-gray-500 hover:border-gray-700 hover:before:bg-gray-700"
+            />
+          </div>
+
+          <div class="h-px bg-editor-border/60 mx-1" />
+
+          <div class="flex items-center gap-3 py-2">
+            <div
+              class="flex-none w-11 h-9 flex items-center justify-center rounded-md border border-editor-border bg-white overflow-hidden"
+            >
+              <AlignDiagram :on="alignHeights" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs font-medium text-editor-text-default">{{ getEditorTranslation('align-heights') }}</div>
+              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">{{ getEditorTranslation('align-heights-helper') }}</div>
+            </div>
+            <SfSwitch
+              v-model="alignHeights"
+              data-testid="align-heights"
+              class="checked:bg-editor-button checked:border-gray-500 hover:border-gray-700 hover:before:bg-gray-700"
+            />
+          </div>
+
+          <div class="h-px bg-editor-border/60 mx-1" />
+
+          <div class="flex items-center gap-3 py-2">
+            <div
+              class="flex-none w-11 h-9 flex items-center justify-center rounded-md border border-editor-border bg-white overflow-hidden"
+            >
+              <FullWidthDiagram :on="isFullWidth" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs font-medium text-editor-text-default flex items-center gap-1">
+                {{ getEditorTranslation('full-width') }}
+                <SfTooltip v-if="!isTopLevelBlock" :label="getEditorTranslation('full-width-tooltip')" placement="top">
+                  <SfIconInfo size="xs" class="text-editor-text-faint align-middle" />
+                </SfTooltip>
+              </div>
+              <div class="text-2xs text-editor-text-faint leading-snug mt-0.5">{{ getEditorTranslation('full-width-helper') }}</div>
+            </div>
+            <SfSwitch
+              v-model="isFullWidth"
+              :disabled="!isTopLevelBlock"
+              data-testid="full-width"
+              class="checked:bg-editor-button checked:border-gray-500 hover:border-gray-700 hover:before:bg-gray-700"
+            />
           </div>
         </div>
-
-        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
       </EditorFormPanel>
 
       <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
@@ -158,9 +217,13 @@
 <script setup lang="ts">
 import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
+import { SfInput, SfIconArrowUpward, SfIconArrowDownward, SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
+import MarginDiagram from './formDiagrams/MarginDiagram.vue';
+import ReverseDiagram from './formDiagrams/ReverseDiagram.vue';
+import AlignDiagram from './formDiagrams/AlignDiagram.vue';
+import FullWidthDiagram from './formDiagrams/FullWidthDiagram.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
 
@@ -172,7 +235,7 @@ const { openAddBlockPopover } = useAddBlockPopover();
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks } = useBlocks();
-const { findOrDeleteBlockByUuid } = useBlockManager();
+const { findOrDeleteBlockByUuid, getBlockDepth } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
@@ -185,6 +248,8 @@ const multiGridStructure = computed(() => {
       marginBottom: defaultMarginBottom.value,
       backgroundColor: '#ffffff',
       gap: 'M',
+      reverseOnMobile: false,
+      alignHeights: false,
     };
   } else {
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
@@ -192,11 +257,32 @@ const multiGridStructure = computed(() => {
     if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
       block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
+    if (block.configuration.layout.reverseOnMobile === undefined) block.configuration.layout.reverseOnMobile = false;
+    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = false;
   }
   return block;
 });
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
+const isTopLevelBlock = computed(() => getBlockDepth(resolvedUuid.value) === 0);
+
+const reverseOnMobile = computed({
+  get: () => multiGridStructure.value.configuration.layout?.reverseOnMobile ?? false,
+  set: (value: boolean) => {
+    if (multiGridStructure.value.configuration.layout) {
+      multiGridStructure.value.configuration.layout.reverseOnMobile = value;
+    }
+  },
+});
+
+const alignHeights = computed({
+  get: () => multiGridStructure.value.configuration.layout?.alignHeights ?? false,
+  set: (value: boolean) => {
+    if (multiGridStructure.value.configuration.layout) {
+      multiGridStructure.value.configuration.layout.alignHeights = value;
+    }
+  },
+});
 
 const visibleGrid = computed(() =>
   computeVisibleGrid(
@@ -214,23 +300,6 @@ const getGapPx = (gap: string | undefined): number => {
 };
 
 if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
-
-const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
-
-const isSticky = (columnIndex: number) => {
-  return (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
-};
-
-const toggleSticky = (columnIndex: number) => {
-  const configuration = multiGridStructure.value.configuration;
-  if (!Array.isArray(configuration?.sticky)) configuration.sticky = [];
-  const position = configuration.sticky.indexOf(columnIndex);
-  if (position === -1) {
-    configuration.sticky.push(columnIndex);
-  } else {
-    configuration.sticky.splice(position, 1);
-  }
-};
 
 const allEmpty = computed(() => {
   const blocks = multiGridStructure.value.content as Block[] | undefined;
@@ -382,9 +451,14 @@ const backgroundOpen = ref(true);
     "gap-label": "Column Gap",
     "spacing-between": "Spacing between blocks:",
     "layout": "Layout",
-    "margin-label": "Margin (px)",
-    "sticky-columns": "Sticky columns",
-    "column": "Column",
+    "vertical-margin": "Vertical margin",
+    "reverse-on-mobile": "Reverse on mobile",
+    "reverse-on-mobile-helper": "Flip column order on phones",
+    "align-heights": "Align heights",
+    "align-heights-helper": "Match all column heights",
+    "full-width": "Full width",
+    "full-width-helper": "Break out of page container",
+    "full-width-tooltip": "Full width is only available for top-level blocks. This option is disabled for nested blocks (e.g., inside MultiGrid).",
     "layout-background": "Background",
     "background-color-label": "Background Color"
   },
@@ -394,9 +468,14 @@ const backgroundOpen = ref(true);
     "gap-label": "Column Gap",
     "spacing-between": "Spacing between blocks:",
     "layout": "Layout",
-    "margin-label": "Margin (px)",
-    "sticky-columns": "Sticky columns",
-    "column": "Column",
+    "vertical-margin": "Vertical margin",
+    "reverse-on-mobile": "Reverse on mobile",
+    "reverse-on-mobile-helper": "Flip column order on phones",
+    "align-heights": "Align heights",
+    "align-heights-helper": "Match all column heights",
+    "full-width": "Full width",
+    "full-width-helper": "Break out of page container",
+    "full-width-tooltip": "Full width is only available for top-level blocks. This option is disabled for nested blocks (e.g., inside MultiGrid).",
     "layout-background": "Background",
     "background-color-label": "Background Color"
   }

@@ -83,6 +83,8 @@ const gapClassMap: Record<string, string> = {
 };
 const gridGapClass = computed(() => gapClassMap[props.configuration.layout?.gap || 'M']);
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
+const reverseOnMobile = computed(() => props.configuration.layout?.reverseOnMobile === true);
+const alignHeights = computed(() => props.configuration.layout?.alignHeights === true);
 
 const gridInlineStyle = computed(() => ({
   backgroundColor: props.configuration.layout?.backgroundColor ?? 'transparent',
@@ -93,7 +95,11 @@ const gridInlineStyle = computed(() => ({
       : `${defaultMarginBottom.value}px`,
 }));
 const getGridClasses = () => {
-  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
+  const alignClass = alignHeights.value ? 'items-stretch' : 'items-start';
+  if (reverseOnMobile.value) {
+    return ['flex flex-col-reverse @md:grid @md:grid-cols-12 @lg:grid-cols-12', gridGapClass.value ?? '', alignClass];
+  }
+  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', alignClass]);
 };
 
 const visibleGrid = computed(() => computeVisibleGrid(props.content, props.configuration.columnWidths));
