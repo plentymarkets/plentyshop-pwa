@@ -97,41 +97,31 @@
   }
 }
 
-@media (min-width: 1367px) {
-  .sticky-label {
-    font-size: 1.125rem;
-  }
-
-  .sticky-btn {
-    padding: 0.8rem 0.975rem;
-  }
-}
-
 @media (min-width: 768px) and (max-width: 1536px) {
   .sticky-contact {
     top: 60%;
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1300px) {
   .sticky-contact {
-    gap: clamp(0.5rem, 0.25vw, 1rem);
-  }
-
-  .sticky-btn {
-    gap: clamp(0.5rem, 0.25vw, 0.9rem) !important;
-    padding: clamp(0.55rem, 0.35vw, 1rem) clamp(0.95rem, 0.7vw, 1.6rem);
-    border-radius: clamp(0.75rem, 0.3vw, 1.1rem) 0 0 clamp(0.75rem, 0.3vw, 1.1rem);
-  }
-
-  .sticky-icon {
-    width: clamp(1rem, 0.25vw + 0.8rem, 1.35rem);
-    height: clamp(1rem, 0.25vw + 0.8rem, 1.35rem);
+    gap: 0.375rem;
   }
 
   .sticky-label {
-    font-size: clamp(0.75rem, 0.2vw + 0.6rem, 1.05rem);
-    line-height: 1.2;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .sticky-btn {
+    gap: 0.5rem !important;
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.75rem 0 0 0.75rem;
+  }
+
+  .sticky-icon {
+    width: 1rem;
+    height: 1rem;
   }
 }
 </style>

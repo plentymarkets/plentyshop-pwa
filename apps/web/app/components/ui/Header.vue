@@ -2,7 +2,7 @@
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('lg')">
       <div
-        class="hidden lg:flex flex-row items-start justify-start flex-shrink-0 w-fit gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-3 relative z-10 transition-all duration-300"
+        class="hidden lg:flex flex-row items-stretch justify-start flex-shrink-0 w-fit gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-3 relative z-10 transition-all duration-300"
       >
         <div
           class="flex flex-col items-end justify-center text-[9px] lg:text-[10px] min-[1152px]:text-[11px] min-[1280px]:text-[13px] min-[1367px]:text-[16px] font-extrabold text-[#062633] leading-tight min-[1280px]:leading-snug min-[1367px]:leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
@@ -17,7 +17,7 @@
         <img
           src="/_nuxt-plenty/images/image009-2.png"
           alt="Banner"
-          class="h-[45px] lg:h-[56px] min-[1152px]:h-[56px] min-[1280px]:h-[80px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[68px] lg:max-w-[80px] min-[1152px]:max-w-[100px] min-[1280px]:max-w-[120px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+          class="self-stretch h-full -mt-2 lg:-mt-2 min-[1367px]:mt-0 max-w-[68px] lg:max-w-[80px] min-[1152px]:max-w-[100px] min-[1280px]:max-w-[120px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
       </div>
 
