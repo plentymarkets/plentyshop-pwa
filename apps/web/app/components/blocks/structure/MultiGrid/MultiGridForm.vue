@@ -265,7 +265,7 @@ const addRowSpans = (spans: readonly number[]) => {
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
   if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.push(...spans);
-  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.push(...spans.map(() => 12));
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.push(...spans);
   if (!block.content) block.content = [];
   block.content.push(
     ...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]),
@@ -282,7 +282,7 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
   if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.splice(insertIndex, 0, ...spans);
   if (block.configuration.columsWidthsMobile)
-    block.configuration.columsWidthsMobile.splice(insertIndex, 0, ...spans.map(() => 12));
+    block.configuration.columsWidthsMobile.splice(insertIndex, 0, ...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
@@ -321,7 +321,7 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
 
   block.configuration.columnWidths.push(12);
   if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.push(12);
-  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.push(12);
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.push(12); // temp placeholder, replaced by addRowSpans
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
@@ -337,7 +337,7 @@ const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
   if (block.configuration.columsWidthsTablet)
     block.configuration.columsWidthsTablet.splice(insertIndex, 0, defaultSpan);
-  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.splice(insertIndex, 0, 12);
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
