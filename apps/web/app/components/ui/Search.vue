@@ -1,17 +1,17 @@
 <template>
   <div class="relative w-full" ref="searchContainer">
-    <form class="flex w-full bg-white border border-gray-400 rounded relative z-[60]" @submit.prevent="handleSearch">
-      <input 
-        v-model="searchQuery" 
+    <form class="flex w-full min-w-0 flex-nowrap bg-white border border-gray-400 rounded relative z-[60]" @submit.prevent="handleSearch">
+      <input
+        v-model="searchQuery"
         @input="onSearchInput"
-        type="text" 
-        :placeholder="t('common.actions.search')" 
-        class="flex-1 px-4 py-2 outline-none text-black rounded-l"
+        type="text"
+        :placeholder="t('common.actions.search')"
+        class="flex-1 min-w-0 px-3 lg:px-4 py-2 outline-none text-black rounded-l"
         autocomplete="off"
       />
-      <button 
-        type="submit" 
-        class="px-6 py-2 font-bold text-black border-l border-gray-300 hover:bg-gray-50 transition-colors"
+      <button
+        type="submit"
+        class="shrink-0 whitespace-nowrap px-3 lg:px-4 py-2 text-sm lg:text-base font-bold text-black border-l border-gray-300 hover:bg-gray-50 transition-colors"
       >
         und los!
       </button>

@@ -1,7 +1,7 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-[100]">
     <div
-      class="flex justify-between items-center max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-10 py-2 md:py-4 w-full border-0 border-neutral-200"
+      class="flex justify-between items-center max-w-screen-3xl mx-auto px-[10px] md:px-6 lg:px-10 py-2 md:py-4 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
@@ -30,9 +30,13 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" class="bg-white border-b border-b-neutral-200 border-b-solid w-full">
+    <nav
+      v-if="viewport.isGreaterOrEquals('lg')"
+      ref="floatingRef"
+      class="bg-white border-b border-b-neutral-200 border-b-solid w-full"
+    >
       <ul
-        class="flex flex-wrap justify-center gap-x-3 gap-y-2 md:gap-x-4 lg:gap-x-5 max-w-screen-3xl mx-auto px-4 md:px-6 lg:px-10 py-2 w-full"
+        class="flex flex-nowrap items-center justify-between xl:justify-center w-full max-w-screen-3xl mx-auto px-[10px] md:px-6 lg:px-10 py-1.5 lg:py-2 gap-x-[5px]"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -43,15 +47,22 @@
       >
         <li v-if="categoryTree.length === 0" class="h-10" />
 
-<li v-for="(menuNode, index) in categoryTree" v-else :key="index" class="relative" @mouseenter="onCategoryMouseEnter(menuNode)" @mouseleave="onMouseLeave">
-            <div
+        <li
+          v-for="(menuNode, index) in categoryTree"
+          v-else
+          :key="index"
+          class="relative min-w-0"
+          @mouseenter="onCategoryMouseEnter(menuNode)"
+          @mouseleave="onMouseLeave"
+        >
+          <div
             ref="triggerReference"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-2 font-medium text-[16px] tracking-tight rounded-md py-2 px-3 group !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-0.5 xl:gap-1 font-medium text-xs lg:text-[13px] min-[1152px]:text-sm xl:text-[15px] min-[1367px]:text-base tracking-tight rounded-md py-1 px-1 min-[1152px]:px-1.5 xl:py-1.5 xl:px-2 min-[1367px]:py-2 min-[1367px]:px-2.5 group !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
-            <NuxtLink 
-              :to="localePath(generateCategoryLink(menuNode))" 
-              class="flex items-center gap-1 w-full"
+            <NuxtLink
+              :to="localePath(generateCategoryLink(menuNode))"
+              class="flex items-center gap-0.5 w-full"
               @click="close()"
             >
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
@@ -59,7 +70,7 @@
 
             <SfIconChevronRight
               v-if="menuNode.childCount > 0"
-              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4"
+              class="rotate-90 shrink-0 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-3.5 h-3.5 xl:w-4 xl:h-4 min-[1367px]:w-4 min-[1367px]:h-4"
             />
           </div>
 
