@@ -58,10 +58,11 @@ watch(
 const { deleteBlock } = useBlockManager();
 
 const { editTitle: customTitle, editUuid: customUuid, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
-const { popEdit, clearStack, consumePendingEditChain } = useBlockEditStack();
+const { popEdit, clearStack, clearPendingEditChain, consumePendingEditChain } = useBlockEditStack();
 
 onBeforeUnmount(() => {
   clearStack();
+  clearPendingEditChain();
   clearCustomTitle();
 });
 

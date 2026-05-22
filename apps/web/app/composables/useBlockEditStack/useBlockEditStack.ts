@@ -54,6 +54,14 @@ export const useBlockEditStack = () => {
     pendingEditChain.value = chain;
   };
 
+  const clearPendingEditChain = () => {
+    if (pendingEditChain.value.length === 0) {
+      return;
+    }
+
+    pendingEditChain.value = [];
+  };
+
   const consumePendingEditChain = () => {
     if (pendingEditChain.value.length === 0) {
       return;
@@ -79,6 +87,7 @@ export const useBlockEditStack = () => {
     truncateStackTo,
     nextEditBlock,
     setPendingEditChain,
+    clearPendingEditChain,
     consumePendingEditChain,
   };
 };
