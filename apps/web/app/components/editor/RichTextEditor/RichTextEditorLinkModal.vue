@@ -45,7 +45,7 @@
               v-if="isAtomSelection"
               class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
             >
-              {{ atomDisplayLabel == 'generic-atom-text' ? getEditorTranslation(atomDisplayLabel) : atomDisplayLabel }}
+              {{ atomDisplayLabel === 'generic-atom-text' ? getEditorTranslation(atomDisplayLabel) : atomDisplayLabel }}
             </p>
             <input
               v-else
