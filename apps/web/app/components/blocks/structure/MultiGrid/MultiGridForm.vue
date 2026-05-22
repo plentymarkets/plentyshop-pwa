@@ -163,7 +163,10 @@ import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
-import { getDeviceColumnWidths, setDeviceColumnWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
+import {
+  getDeviceColumnWidths,
+  setDeviceColumnWidths,
+} from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -203,10 +206,7 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStru
 const gridcolumsWidth = computed(() => getDeviceColumnWidths(multiGridStructure.value.configuration, device.value));
 
 const visibleGrid = computed(() =>
-  computeVisibleGrid(
-    (multiGridStructure.value.content as Block[]) ?? [],
-    gridcolumsWidth.value,
-  ),
+  computeVisibleGrid((multiGridStructure.value.content as Block[]) ?? [], gridcolumsWidth.value),
 );
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
