@@ -36,6 +36,7 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeBlocksConfigurationDrawer } = useSiteConfiguration();
   const { send } = useNotification();
+  const { setPendingEditChain } = useBlockEditStack();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -118,7 +119,7 @@ export const useBlockManager = () => {
         setUuid(newBlock.content as Block[]);
       }
       updateBlocks([newBlock]);
-      openDrawerWithView('blocksSettings', newBlock);
+      openSettingsForNewBlock([newBlock], newBlock);
       return false;
     }
 
@@ -146,10 +147,18 @@ export const useBlockManager = () => {
     updateBlocks(copiedData);
 
     if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
-      openDrawerWithView('blocksSettings', newBlock);
+      openSettingsForNewBlock(copiedData, newBlock);
     }
 
     return true;
+  };
+
+  const openSettingsForNewBlock = (rootBlocks: Block[], newBlock: Block) => {
+    const chain = getAncestorChain(rootBlocks, newBlock.meta.uuid) ?? [newBlock];
+    const rootBlock = chain[0] ?? newBlock;
+
+    setPendingEditChain(chain.slice(1));
+    openDrawerWithView('blocksSettings', rootBlock);
   };
 
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
@@ -335,6 +344,17 @@ export const useBlockManager = () => {
 
   const getRootParent = (blocks: Block[], targetUuid: string): Block | null => {
     return blocks.find((rootBlock) => blockContainsUuid(rootBlock, targetUuid)) ?? null;
+  };
+
+  const getAncestorChain = (blocks: Block[], targetUuid: string): Block[] | null => {
+    for (const block of blocks) {
+      if (block.meta?.uuid === targetUuid) return [block];
+      if (Array.isArray(block.content) && block.content.length) {
+        const sub = getAncestorChain(block.content as Block[], targetUuid);
+        if (sub) return [block, ...sub];
+      }
+    }
+    return null;
   };
 
   const setUuid = (blocks: Block[]) => {

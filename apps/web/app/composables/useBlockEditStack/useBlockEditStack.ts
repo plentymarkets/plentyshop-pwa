@@ -2,6 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 export const useBlockEditStack = () => {
   const stack = useState<Block[]>('block-edit-stack', () => []);
+  const pendingEditChain = useState<Block[]>('block-edit-stack-pending', () => []);
   const { setEditTitle, clearEditTitle } = useBlockEditTitle();
 
   const syncTitle = () => {
@@ -39,6 +40,30 @@ export const useBlockEditStack = () => {
     clearEditTitle();
   };
 
+  const truncateStackTo = (length: number) => {
+    const target = Math.max(0, Math.min(length, stack.value.length));
+    if (target === stack.value.length) {
+      return;
+    }
+
+    stack.value = stack.value.slice(0, target);
+    syncTitle();
+  };
+
+  const setPendingEditChain = (chain: Block[]) => {
+    pendingEditChain.value = chain;
+  };
+
+  const consumePendingEditChain = () => {
+    if (pendingEditChain.value.length === 0) {
+      return;
+    }
+
+    stack.value = [...pendingEditChain.value];
+    pendingEditChain.value = [];
+    syncTitle();
+  };
+
   const nextEditBlock = (parentUuid: MaybeRefOrGetter<string | undefined>) =>
     computed<Block | null>(() => {
       const value = toValue(parentUuid);
@@ -46,5 +71,14 @@ export const useBlockEditStack = () => {
       return stack.value[idx + 1] ?? null;
     });
 
-  return { stack, pushEdit, popEdit, clearStack, nextEditBlock };
+  return {
+    stack,
+    pushEdit,
+    popEdit,
+    clearStack,
+    truncateStackTo,
+    nextEditBlock,
+    setPendingEditChain,
+    consumePendingEditChain,
+  };
 };
