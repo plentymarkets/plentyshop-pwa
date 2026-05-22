@@ -25,11 +25,11 @@
         class="hidden lg:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-1 min-[1152px]:mr-2 min-[1280px]:mr-3 min-[1367px]:mr-6 gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-5 transition-all duration-300 min-w-0"
       >
         <NuxtLink
-            to="https://www.waren-ankauf.de/ankauf/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="active:scale-95 transition-transform duration-200 flex-shrink-0"
-          >
+          to="https://www.waren-ankauf.de/ankauf/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="active:scale-95 transition-transform duration-200 flex-shrink-0"
+        >
           <img
             src="/_nuxt-plenty/images/image010.png"
             alt="Ankaufsformular"
@@ -187,14 +187,17 @@
             +49 2862 58795 0
           </a>
 
-          <div v-if="!isHomePage" class="w-full max-w-[280px] min-[1280px]:max-w-[320px] min-[1367px]:max-w-[360px] mt-2 transition-all duration-300 self-end">
+          <div
+            v-if="!isHomePage"
+            class="w-full min-[992px]:max-w-[280px] lg:max-w-[300px] min-[1280px]:max-w-[320px] min-[1367px]:max-w-[360px] mt-2 transition-all duration-300 self-end"
+          >
             <UiSearch />
           </div>
         </div>
       </div>
     </template>
 
-    <div v-if="viewport.isLessThan('lg')" class="flex items-center justify-end pr-2">
+    <div v-if="viewport.isLessThan('lg')" class="flex items-center justify-end">
       <div
         class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap"
       >
@@ -208,10 +211,10 @@
       </div>
 
       <div
-        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-3 px-2 sm:px-3 py-2.5 z-[90]"
+        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-2 px-2 sm:px-3 py-2.5 z-[90]"
       >
-        <div class="flex flex-row items-center justify-between w-full">
-          <div class="flex flex-row items-center gap-2 sm:gap-3">
+        <div class="flex flex-row items-center justify-between w-full gap-2">
+          <div class="flex flex-row items-center gap-2 sm:gap-3 flex-shrink-0">
             <img
               src="/_nuxt-plenty/images/image009-2.png"
               alt="Banner"
@@ -231,7 +234,7 @@
             </NuxtLink>
           </div>
 
-          <div class="flex flex-col items-end gap-0.5">
+          <div class="flex flex-col items-end gap-0.5 flex-shrink-0">
             <div class="flex flex-row items-center gap-0">
               <div class="scale-[0.85] transform origin-right">
                 <GoogleTranslate />
@@ -245,11 +248,11 @@
             >
               +49 2862 58795 0
             </a>
-
-            <div v-if="!isHomePage" class="w-full max-w-[360px] mt-2 self-end">
-              <UiSearch />
-            </div>
           </div>
+        </div>
+
+        <div v-if="!isHomePage" class="w-full min-[992px]:max-w-[280px] min-[992px]:ml-auto">
+          <UiSearch />
         </div>
       </div>
     </div>
