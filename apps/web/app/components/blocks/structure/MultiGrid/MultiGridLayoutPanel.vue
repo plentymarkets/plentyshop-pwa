@@ -1,9 +1,5 @@
 <template>
-  <EditorFormPanel
-    v-model="open"
-    :title="getEditorTranslation('layout')"
-    content-class="px-3.5 py-3 flex flex-col"
-  >
+  <EditorFormPanel v-model="open" :title="getEditorTranslation('layout')" content-class="px-3.5 py-3 flex flex-col">
     <div v-if="layout">
       <div class="flex items-start gap-3 py-2">
         <div
