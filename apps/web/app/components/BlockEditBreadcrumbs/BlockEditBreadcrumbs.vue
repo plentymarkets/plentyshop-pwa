@@ -2,7 +2,7 @@
   <nav
     v-if="items.length > 1"
     data-testid="block-edit-breadcrumbs"
-    aria-label="Block edit breadcrumbs"
+    :aria-label="getEditorTranslation('breadcrumbs-aria-label')"
     class="flex items-center px-4 py-2 bg-editor-surface border-b border-editor-border text-2xs overflow-hidden"
   >
     <ol class="flex items-center min-w-0 w-full flex-nowrap">
@@ -74,3 +74,14 @@ const onSelect = (index: number) => {
   truncateStackTo(index);
 };
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "breadcrumbs-aria-label": "Block edit breadcrumbs"
+  },
+  "de": {
+    "breadcrumbs-aria-label": "Block edit breadcrumbs"
+  }
+}
+</i18n>
