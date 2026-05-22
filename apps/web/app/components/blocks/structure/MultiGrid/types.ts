@@ -33,8 +33,6 @@ export type MultiGridProps = {
   content: Block[];
   configuration: {
     columnWidths: number[];
-    columnWidthsTablet?: number[];
-    columnWidthsMobile?: number[];
     layout?: MultiGridLayout;
     sticky?: number[];
   };
@@ -65,8 +63,6 @@ export type ColumnBlock = Block & {
   content?: Block[];
   configuration: {
     columnWidths: number[];
-    columnWidthsTablet?: number[];
-    columnWidthsMobile?: number[];
     sticky?: number[];
     layout?: {
       gap: string;
