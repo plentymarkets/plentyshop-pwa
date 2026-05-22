@@ -22,6 +22,9 @@
         </button>
       </div>
     </header>
+
+    <BlockEditBreadcrumbs />
+
     <div class="h-[80vh] overflow-y-auto">
       <component
         :is="currentComponent"
@@ -55,10 +58,11 @@ watch(
 const { deleteBlock } = useBlockManager();
 
 const { editTitle: customTitle, editUuid: customUuid, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
-const { popEdit, clearStack } = useBlockEditStack();
+const { popEdit, clearStack, clearPendingEditChain, consumePendingEditChain } = useBlockEditStack();
 
 onBeforeUnmount(() => {
   clearStack();
+  clearPendingEditChain();
   clearCustomTitle();
 });
 
@@ -78,6 +82,7 @@ const handleBackClick = () => {
 const resetEditState = () => {
   clearStack();
   clearCustomTitle();
+  consumePendingEditChain();
 };
 
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
