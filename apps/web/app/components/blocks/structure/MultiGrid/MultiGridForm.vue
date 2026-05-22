@@ -244,7 +244,6 @@ const allEmpty = computed(() => {
 const applyPreset = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   block.configuration.columnWidths = [...spans];
-  // Clear device arrays — structure is being completely reset via preset
   delete block.configuration.columsWidthsTablet;
   delete block.configuration.columsWidthsMobile;
   block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
