@@ -35,10 +35,14 @@ export const useBlocksHighlight = (blocks: ComputedRef<Block[]>) => {
 
   watch(
     () => blocks.value.map((block) => block.meta.uuid),
-    (newUuids) => {
+    (newUuids, oldUuids) => {
       if (newUuids.length > previousBlocksLength.value) {
-        const newBlockIndex = blocks.value.length - 1;
-        selectBlock(newBlockIndex);
+        const oldSet = new Set(oldUuids ?? []);
+        const addedUuid = newUuids.find((id) => !oldSet.has(id));
+        const addedIndex = addedUuid
+          ? blocks.value.findIndex((block) => block.meta.uuid === addedUuid)
+          : blocks.value.length - 1;
+        selectBlock(addedIndex);
       }
 
       previousBlocksLength.value = newUuids.length;

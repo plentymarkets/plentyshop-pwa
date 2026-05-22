@@ -19,8 +19,9 @@ const richTextBlock = makeBlock(RICHTEXT_UUID, 'TextCard');
 
 describe('useBlockEditStack', () => {
   beforeEach(() => {
-    const { clearStack } = useBlockEditStack();
+    const { clearStack, clearPendingEditChain } = useBlockEditStack();
     clearStack();
+    clearPendingEditChain();
   });
 
   describe('footer → Layout → Rich Text navigation', () => {
@@ -163,6 +164,18 @@ describe('useBlockEditStack', () => {
       expect(stack.value).toEqual([]);
       expect(editTitle.value).toBeNull();
       expect(editUuid.value).toBeNull();
+    });
+  });
+
+  describe('clearPendingEditChain', () => {
+    it('drops a pending chain so a later consume cannot apply it', () => {
+      const { setPendingEditChain, clearPendingEditChain, consumePendingEditChain, stack } = useBlockEditStack();
+
+      setPendingEditChain([layoutBlock, richTextBlock]);
+      clearPendingEditChain();
+      consumePendingEditChain();
+
+      expect(stack.value).toEqual([]);
     });
   });
 });
