@@ -202,9 +202,7 @@ const multiGridStructure = computed(() => {
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
-const { columnWidths: gridcolumsWidth, effectiveDevice } = getDeviceColumnWidths(
-  computed(() => multiGridStructure.value.configuration),
-);
+const gridcolumsWidth = getDeviceColumnWidths(computed(() => multiGridStructure.value.configuration));
 
 const visibleGrid = computed(() =>
   computeVisibleGrid((multiGridStructure.value.content as Block[]) ?? [], gridcolumsWidth.value),
@@ -246,6 +244,9 @@ const allEmpty = computed(() => {
 const applyPreset = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   block.configuration.columnWidths = [...spans];
+  // Clear device arrays — structure is being completely reset via preset
+  delete block.configuration.columsWidthsTablet;
+  delete block.configuration.columsWidthsMobile;
   block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
 };
 
@@ -256,13 +257,15 @@ const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
     const width = filteredWidths[filteredIndex];
     if (width !== undefined) updated[originalIndex] = width;
   });
-  setDeviceColumnWidths(config, effectiveDevice.value, updated);
+  setDeviceColumnWidths(config, updated);
 };
 
 const addRowSpans = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
+  if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.push(...spans);
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.push(...spans.map(() => 12));
   if (!block.content) block.content = [];
   block.content.push(
     ...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]),
@@ -277,6 +280,9 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
       childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columsWidthsMobile)
+    block.configuration.columsWidthsMobile.splice(insertIndex, 0, ...spans.map(() => 12));
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
@@ -297,6 +303,8 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(newSlot, 1);
+      if (gridBlock.configuration.columsWidthsTablet) gridBlock.configuration.columsWidthsTablet.splice(newSlot, 1);
+      if (gridBlock.configuration.columsWidthsMobile) gridBlock.configuration.columsWidthsMobile.splice(newSlot, 1);
     }
   };
 
@@ -312,6 +320,8 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   });
 
   block.configuration.columnWidths.push(12);
+  if (block.configuration.columsWidthsTablet) block.configuration.columsWidthsTablet.push(12);
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.push(12);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
@@ -325,6 +335,9 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
     if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + 1;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columsWidthsTablet)
+    block.configuration.columsWidthsTablet.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columsWidthsMobile) block.configuration.columsWidthsMobile.splice(insertIndex, 0, 12);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
@@ -337,6 +350,8 @@ const insertColumnAt = (insertIndex: number, defaultSpan: number, anchorEl: HTML
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(insertIndex, 1);
+      if (gridBlock.configuration.columsWidthsTablet) gridBlock.configuration.columsWidthsTablet.splice(insertIndex, 1);
+      if (gridBlock.configuration.columsWidthsMobile) gridBlock.configuration.columsWidthsMobile.splice(insertIndex, 1);
       (gridBlock.content as Block[]).forEach((childBlock) => {
         if ((childBlock.parent_slot ?? 0) > insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) - 1;
       });

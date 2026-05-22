@@ -24,7 +24,7 @@
           :menu-open="openMenuUuid === block.meta.uuid"
           :custom-add="props.customAdd"
           :is-grid-mode="isGridMode"
-          :block-span="columnWidths[block.parent_slot ?? 0] ?? 0"
+          :block-span="gridcolumsWidth[block.parent_slot ?? 0] ?? 0"
           :min-items-reached="minItemsReached"
           :is-active="currentActiveBlockIndex === index"
           @insert-before="onInsertBefore"
@@ -71,7 +71,10 @@ import { SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
-import { getDeviceColumnWidths, setDeviceColumnWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
+import {
+  getDeviceColumnWidths,
+  setDeviceColumnWidths,
+} from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 import type { GridElementsPanelProps, GridElementsPanelEmits } from './types';
 
 const props = withDefaults(defineProps<GridElementsPanelProps>(), {
@@ -99,7 +102,7 @@ const { clearInsertColumnUuid, setInsertColumnUuid } = useBlocksMutations();
 
 const structure = computed(() => findOrDeleteBlockByUuid(data.value, props.uuid) as ColumnBlock | undefined);
 const isGridMode = computed(() => Array.isArray(structure.value?.configuration?.columnWidths));
-const { columnWidths, effectiveDevice } = getDeviceColumnWidths(
+const gridcolumsWidth = getDeviceColumnWidths(
   computed(() => structure.value?.configuration ?? { columnWidths: [] as number[] }),
 );
 
@@ -189,13 +192,13 @@ const onReplaceEmpty = (anchorEl: HTMLElement, block: Block) => {
 const onDragEnd = () => {
   if (!structure.value) return;
   if (isGridMode.value) {
-    const newWidths = localItems.value.map((b) => columnWidths.value[b.parent_slot ?? 0] ?? 12);
+    const newWidths = localItems.value.map((b) => gridcolumsWidth.value[b.parent_slot ?? 0] ?? 12);
     const content = structure.value.content as Block[];
     localItems.value.forEach((nb, i) => {
       const original = content.find((b) => b.meta.uuid === nb.meta.uuid);
       if (original) original.parent_slot = i;
     });
-    setDeviceColumnWidths(structure.value.configuration, effectiveDevice.value, newWidths);
+    setDeviceColumnWidths(structure.value.configuration, newWidths);
   } else {
     structure.value.content = [...localItems.value];
   }
