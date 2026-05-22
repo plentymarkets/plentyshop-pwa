@@ -6,9 +6,10 @@ import type { MultiGridColumnConfig } from './types';
  * Call useEditorState() in the component setup and pass device.value here.
  */
 export function getDeviceColumnWidths(config: MultiGridColumnConfig, device: string): number[] {
-  if (device === 'mobile') return config.columsWidthsMobile ?? config.columnWidths.map(() => 12);
-  if (device === 'tablet') return config.columsWidthsTablet ?? [...config.columnWidths];
-  return config.columnWidths;
+  const baseWidths = config.columnWidths ?? [];
+  if (device === 'mobile') return config.columsWidthsMobile ?? baseWidths.map(() => 12);
+  if (device === 'tablet') return config.columsWidthsTablet ?? [...baseWidths];
+  return baseWidths;
 }
 
 /**
