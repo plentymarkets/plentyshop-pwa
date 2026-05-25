@@ -24,6 +24,7 @@ export const thirdPartyDeps: string[] = [
   '@tiptap/vue-3',
   '@tiptap/pm/state',
   '@tiptap/pm/view',
+  '@unleash/proxy-client-vue',
   '@vee-validate/yup',
   '@vue/devtools-kit',
   '@vueuse/core',
