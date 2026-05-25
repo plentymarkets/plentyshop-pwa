@@ -28,7 +28,7 @@
           :class="[
             addBlockButtonBase,
             'top-0 -translate-y-1/2',
-            'group-hover/block:opacity-100 group-hover/block:scale-100 focus-visible:opacity-100 focus-visible:scale-100',
+            'group-hover/block:opacity-100 group-hover/block:scale-100 group-focus-within/block:opacity-100 focus-visible:opacity-100 focus-visible:scale-100',
             {
               '!opacity-100 !scale-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
@@ -52,7 +52,8 @@
           :class="[
             'opacity-0',
             {
-              'hover:opacity-100 group-hover/block:opacity-100 group-hover/block:translate-y-0': !isTablet,
+              'hover:opacity-100 group-hover/block:opacity-100 group-focus-within/block:opacity-100 group-hover/block:translate-y-0':
+                !isTablet,
               '!opacity-100 !translate-y-0': isTablet && isClicked && clickedBlockIndex === index,
             },
           ]"
@@ -90,7 +91,7 @@
           :class="[
             addBlockButtonBase,
             'bottom-0 translate-y-1/2',
-            'group-hover/block:opacity-100 group-hover/block:scale-100',
+            'group-hover/block:opacity-100 group-hover/block:scale-100 group-focus-within/block:opacity-100',
             {
               '!opacity-100 !scale-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
