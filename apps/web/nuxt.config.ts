@@ -99,6 +99,7 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
+    '@plentymarkets/unleash',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
@@ -125,6 +126,13 @@ export default defineNuxtConfig({
         defaultTheme: 'light',
       },
     },
+  },
+  unleash: {
+    url: process.env?.UNLEASH_URL ?? '',
+    clientKey: process.env?.UNLEASH_CLIENT_KEY ?? '',
+    appName: process.env?.UNLEASH_APP_NAME ?? 'plentyshop-pwa',
+    refreshInterval: Number(process.env?.UNLEASH_REFRESH_INTERVAL ?? 15),
+    mockFlags: process.env?.UNLEASH_MOCK_FLAGS ?? '',
   },
   plentySitemap: {
     locales: (process.env.LANGUAGELIST || 'en,de').split(','),

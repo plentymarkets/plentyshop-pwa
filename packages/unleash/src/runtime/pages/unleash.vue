@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto max-w-3xl p-8 font-mono text-sm">
-    <h1 class="mb-6 text-2xl font-bold">Feature Flags - Debug</h1>
+    <h1 class="mb-6 text-2xl font-bold">Unleash Feature Flags — Playground</h1>
 
     <section class="mb-6 rounded border p-4">
       <h2 class="mb-2 font-semibold uppercase tracking-wide text-gray-500">SDK Status</h2>
@@ -8,14 +8,14 @@
         <span :class="flagsReady ? 'text-green-600' : 'text-yellow-600'">
           {{ flagsReady ? 'Ready' : 'Not ready' }}
         </span>
-        <span v-if="flagsError" class="text-red-600">⚠ Error</span>
+        <span v-if="flagsError" class="text-red-600">Error</span>
       </div>
     </section>
 
     <section class="mb-6 rounded border p-4">
       <h2 class="mb-2 font-semibold uppercase tracking-wide text-gray-500">SSR / Hydrated Flags</h2>
-      <p v-if="!ssrFlagKeys.length" class="text-gray-400 italic">
-        No flags - set UNLEASH_MOCK_FLAGS or UNLEASH_URL in .env
+      <p v-if="!ssrFlagKeys.length" class="italic text-gray-400">
+        No flags — set UNLEASH_MOCK_FLAGS or UNLEASH_URL in .env
       </p>
       <table v-else class="w-full">
         <thead>
@@ -26,7 +26,7 @@
         </thead>
         <tbody>
           <tr v-for="name in ssrFlagKeys" :key="name">
-            <td class="pr-4 py-0.5">{{ name }}</td>
+            <td class="py-0.5 pr-4">{{ name }}</td>
             <td :class="ssrFlags[name] ? 'text-green-600' : 'text-red-500'">
               {{ ssrFlags[name] ? 'enabled' : 'disabled' }}
             </td>
@@ -46,7 +46,6 @@
         />
         <button class="rounded bg-gray-800 px-4 py-1 text-white hover:bg-gray-700" @click="probeFlag">Probe</button>
       </div>
-
       <div v-if="probedFlags.length" class="mt-4 space-y-2">
         <div
           v-for="entry in probedFlags"
@@ -69,7 +68,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { UnleashFlagsState } from '~/plugins/06.unleash.server';
+import { useState, computed, ref, navigateTo, definePageMeta } from '#imports';
+import { useFeatureFlag } from '../composables/useFeatureFlag';
+import type { UnleashFlagsState } from '../types';
 
 definePageMeta({ layout: false });
 
@@ -78,6 +79,7 @@ if (!import.meta.dev) await navigateTo('/');
 const { flagsReady, flagsError } = useFeatureFlag();
 const ssrFlags = useState<UnleashFlagsState>('unleash-flags', () => ({}));
 const ssrFlagKeys = computed(() => Object.keys(ssrFlags.value).sort());
+
 const inputFlag = ref('');
 const probedFlags = ref<{ name: string; enabled: boolean }[]>([]);
 
@@ -85,7 +87,6 @@ function probeFlag() {
   const name = inputFlag.value.trim();
   if (!name) return;
 
-  // Read directly from ssrFlags — avoids calling SDK composables outside setup
   const enabled = ssrFlags.value[name] ?? false;
   const existing = probedFlags.value.findIndex((f) => f.name === name);
   if (existing >= 0) {

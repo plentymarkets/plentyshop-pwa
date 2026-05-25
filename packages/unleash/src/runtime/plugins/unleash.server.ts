@@ -1,4 +1,5 @@
-export type UnleashFlagsState = Record<string, boolean>;
+import { defineNuxtPlugin, useState, useRuntimeConfig } from '#imports';
+import type { UnleashFlagsState } from '../types';
 
 interface UnleashConfig {
   url: string;
@@ -10,17 +11,6 @@ interface UnleashConfig {
 
 const LOG_PREFIX = '[unleash:server]';
 
-/**
- * Server-side plugin that fetches evaluated feature flags from the Unleash Frontend API
- * and stores them in shared useState so they are available during SSR and hydrated to
- * the client without an extra round-trip.
- *
- * When UNLEASH_URL is not set but UNLEASH_MOCK_FLAGS is provided, mock flags are used
- * instead, useful for local development without a real Unleash instance.
- *
- * The client plugin (07.unleash.client.ts) picks up from here and keeps the values
- * reactive via the SDK's polling interval.
- */
 export default defineNuxtPlugin({
   name: 'unleash-ssr',
   async setup() {
@@ -52,7 +42,6 @@ export default defineNuxtPlugin({
       return;
     }
 
-    // Fetch real flags from Unleash
     try {
       if (import.meta.dev) {
         console.warn(LOG_PREFIX, `Fetching flags from ${unleash.url} …`);
@@ -68,7 +57,6 @@ export default defineNuxtPlugin({
         console.warn(LOG_PREFIX, `Loaded ${response.toggles.length} flag(s):`, flagState.value);
       }
     } catch (error) {
-      // Unleash unreachable during SSR — flags fall back to disabled (safe default)
       console.error(LOG_PREFIX, 'Failed to fetch flags, all flags default to disabled.', error);
     }
   },
