@@ -7,7 +7,7 @@
       <span>{{ productPropertyGetters.getPropertyName(variationProperty) }}</span>
       <span v-if="productPropertyGetters.getPropertyValue(variationProperty)">:</span>
     </div>
-    <div class="no-preflight" v-html="productPropertyGetters.getPropertyValue(variationProperty)" />
+    <div class="no-preflight" v-html="parsedHtml" />
   </div>
 </template>
 
@@ -16,6 +16,10 @@ import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyHtmlProps } from './types';
 
 const props = defineProps<VariationPropertyHtmlProps>();
+
+const parsedHtml = computed(() =>
+    decodeHtmlEntities(productPropertyGetters.getPropertyValue(props.variationProperty))
+);
 
 const isLongText = computed(() => {
   const value = productPropertyGetters.getPropertyValue(props.variationProperty);
