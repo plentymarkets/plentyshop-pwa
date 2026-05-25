@@ -5,7 +5,7 @@
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
-    "build": "tsx ./build/index.ts && nuxt build",
+    "build": "export NODE_OPTIONS=--max-old-space-size=4096 && tsx ./build/index.ts && nuxt build",
     "dev": "tsx ./build/index.ts && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",

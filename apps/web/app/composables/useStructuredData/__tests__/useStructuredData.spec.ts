@@ -68,12 +68,22 @@ mockNuxtImport('useProductReviewAverage', () => useProductReviewAverage);
 
 import { useStructuredData } from '../useStructuredData';
 
+const getStructuredData = () => {
+  const headConfig = useHead.mock.calls.at(-1)?.[0];
+  const scriptEntry = (headConfig?.script as Array<{ innerHTML: string }> | undefined)?.[0];
+
+  expect(headConfig).toBeDefined();
+  expect(scriptEntry).toBeDefined();
+
+  return JSON.parse(scriptEntry!.innerHTML);
+};
+
 describe('useStructuredData', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useProductReviews.mockReturnValue({ data: ref([{ id: 'review-1' }]) });
     useProductReviewAverage.mockReturnValue({ data: ref(undefined) });
-    productGetters.getTotalReviews.mockReturnValue(0);
+    vi.mocked(productGetters.getTotalReviews).mockReturnValue(0);
   });
 
   it('omits aggregateRating when there are no reviews and sets a return policy', () => {
@@ -86,7 +96,7 @@ describe('useStructuredData', () => {
       {} as never,
     );
 
-    const structuredData = JSON.parse(useHead.mock.calls[0][0].script[0].innerHTML);
+    const structuredData = getStructuredData();
 
     expect(structuredData.aggregateRating).toBeUndefined();
     expect(structuredData.offers.hasMerchantReturnPolicy).toEqual({
@@ -100,7 +110,7 @@ describe('useStructuredData', () => {
   });
 
   it('includes aggregateRating when reviewCount is positive', () => {
-    productGetters.getTotalReviews.mockReturnValue(3);
+    vi.mocked(productGetters.getTotalReviews).mockReturnValue(3);
     useProductReviewAverage.mockReturnValue({ data: ref({}) });
 
     const { setProductMetaData } = useStructuredData();
@@ -112,7 +122,7 @@ describe('useStructuredData', () => {
       {} as never,
     );
 
-    const structuredData = JSON.parse(useHead.mock.calls[0][0].script[0].innerHTML);
+    const structuredData = getStructuredData();
 
     expect(structuredData.aggregateRating).toEqual({
       '@type': 'AggregateRating',
