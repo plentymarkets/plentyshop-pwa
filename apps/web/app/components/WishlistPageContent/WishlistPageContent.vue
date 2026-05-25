@@ -1,5 +1,5 @@
 <template>
-  <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="wishlist-layout">
+  <NarrowContainer class="mb-20 px-4 @md:px-0" data-testid="wishlist-layout">
     <HeaderWithLink
       v-if="withHeader && title"
       :heading="title"
@@ -14,7 +14,7 @@
     >
       <SfLoaderCircular v-if="loading" class="absolute left-0 right-0 top-1/3 mx-auto z-[99999]" size="2xl" />
       <section
-        class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
+        class="grid grid-cols-1 @2xs:grid-cols-2 gap-4 @md:gap-6 @md:grid-cols-2 @lg:grid-cols-3 @3xl:grid-cols-4 mb-10 @md:mb-5"
         data-testid="wishlist-grid"
       >
         <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getId(product)" when-visible>
@@ -44,13 +44,13 @@
       <span v-else>{{ t('product.priceInclVAT') }}</span>
       <i18n-t keypath="shipping.excludedLabel" scope="global">
         <template #shipping>
-          <SfLink
+          <UiLink
             :href="localePath(paths.shipping)"
             target="_blank"
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
           >
             {{ t('common.labels.delivery') }}
-          </SfLink>
+          </UiLink>
         </template>
       </i18n-t>
     </div>
@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular, SfLink } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 import { paths } from '~/utils/paths';
 

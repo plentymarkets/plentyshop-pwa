@@ -438,6 +438,9 @@
       "openSearchModal": "Suche öffnen",
       "previousAriaLabel": "Zur vorherigen Seite navigieren",
       "socialLabel": "Gehe zu {label}"
+    },
+    "accessibility": {
+      "viewDetails": "Details anzeigen für {name}"
     }
   },
   "contact": {
@@ -466,9 +469,9 @@
   "cancellationForm": {
     "orderId": "Auftragsnummer",
     "name": "Vollständiger Name",
-    "email": "Kontaktmail",
+    "email": "Kontakt-E-Mail",
     "reason": "Grund für den Widerruf",
-    "submit": "Vertrag kündigen",
+    "submit": "Widerruf bestätigen",
     "asterixHint": "markierte Felder sind Pflichtfelder",
     "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
     "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
@@ -688,7 +691,7 @@
       "label": "Rechtliches"
     },
     "services": {
-      "label": "Services"
+      "label": "Kontakt"
     },
     "contact": {
       "label": "Kontakt"

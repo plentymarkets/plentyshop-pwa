@@ -24,8 +24,7 @@ describe('Editor Smoke Tests', () => {
       .openTableOfContents()
       .checkTableOfContentsVisible()
       .checkBlocksExist()
-      .checkFirstBlockLabel('Header')
-      .checkLastBlockLabel('Footer');
+      .checkSectionsExist();
 
     headerBlock.assertNotMovableOrDeletable();
 
@@ -79,8 +78,8 @@ describe('Editor Smoke Tests', () => {
       .assertNotMovableOrDeletable()
       .openSettingsDrawer()
       .assertSettingsSections()
-      .assertColumnInteractive()
-      .changeColumnTitle('Smoke Legal')
-      .assertColumnTitleValue('Smoke Legal');
+      .assertColorSectionInteractive()
+      .changeBackgroundColor('#abcdef')
+      .assertBackgroundColorValue('#abcdef');
   });
 });

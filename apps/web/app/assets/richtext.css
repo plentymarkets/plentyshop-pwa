@@ -45,6 +45,12 @@
   line-height: 1.5;
   margin: 0.4rem 0;
 }
+.rte-prose--render p {
+  white-space: pre-wrap;
+}
+.rte-prose--render p:empty {
+  min-height: 1.5em;
+}
 .rte-prose blockquote {
   border-left: 3px solid #dee2e6;
   padding-left: 12px;
@@ -88,4 +94,36 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+}
+
+.rte-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.15em;
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+.ProseMirror-selectednode.rte-icon {
+  outline: 2px solid rgb(100 116 139);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.editor-parent:focus-within .rte-atom-selected {
+  outline: 2px solid rgb(100 116 139);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.editor-parent:focus-within {
+  border-color: #111827;
+  border-width: 2px;
+}
+
+.editor-parent .ProseMirror {
+  width: 100%;
+  min-height: 100%;
+  outline: none;
 }

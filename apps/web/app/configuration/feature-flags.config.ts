@@ -1,8 +1,10 @@
 export default {
-  /** @description Enables the new withdrawal button from the footer */
-  enableContractWithdrawalButton: process.env?.ENABLE_CONTRACT_WITHDRAWAL_BUTTON === '1',
-  /** @description Enables the new menu entry in settings for cancellation email  */
-  enableCancellationForm: process.env?.ENABLE_CANCELLATION_FORM === '1',
+  /** @description Enables the new popover for adding blocks & presets  */
+  enableAddBlockPopover: true,
+  /** @description Enables the new MultiGrid editor with visual column resizing, row management and free-space display. */
+  enableMultiGridEditor: true,
+  /** @description Enables quick-add pills in structure block forms (Header, Footer, MultiGrid) */
+  enableQuickAdd: true,
   /** @description Unleash feature flag configuration */
   unleash: {
     /** @description Unleash frontend API URL */

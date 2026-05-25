@@ -33,7 +33,10 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
         ],
       });
     }
-    if (facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage) {
+    if (
+      productsCatalog.pagination?.totals &&
+      facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage
+    ) {
       useHead({
         link: [
           {
@@ -116,10 +119,13 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const localePath = useLocalePath();
     const runtimeConfig = useRuntimeConfig();
 
+    const queryString = new URLSearchParams(route.query as Record<string, string>).toString();
+    const querySuffix = queryString ? `?${queryString}` : '';
+
     const canonicalLink =
       canonicalOverride && canonicalOverride.trim() !== ''
         ? canonicalOverride
-        : `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
+        : `${runtimeConfig.public.domain}${localePath(route.path, $i18n.locale.value)}${querySuffix}`;
 
     useHead({
       link: [
@@ -136,15 +142,17 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
 
     if (productsCatalog.languageUrls) {
       Object.keys(productsCatalog.languageUrls).forEach((key) => {
+        const localizedPath =
+          key === `x-default`
+            ? localePath(productsCatalog.languageUrls[key] || '/', $i18n.defaultLocale)
+            : localePath(productsCatalog.languageUrls[key] || '/', key as Locale);
+
         useHead({
           link: [
             {
               rel: 'alternate',
               hreflang: key,
-              href:
-                key === `x-default`
-                  ? `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`
-                  : `${runtimeConfig.public.domain}${localePath(route.fullPath, key as Locale)}`,
+              href: `${runtimeConfig.public.domain}${localizedPath}${querySuffix}`,
             },
           ],
         });

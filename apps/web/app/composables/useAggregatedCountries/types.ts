@@ -3,7 +3,6 @@ import type {
   GeoRegulatedCountry,
   AggregatedCountries,
   AddressType,
-  Country,
 } from '@plentymarkets/shop-api';
 
 export interface UseAggregatedCountriesState {
@@ -13,7 +12,10 @@ export interface UseAggregatedCountriesState {
 }
 
 export type FetchAggregatedCountries = () => Promise<void>;
-export type SetCountries = (defaultCountries: Country[], geoRegulatedCountries: GeoRegulatedCountry[]) => void;
+export type SetCountries = (
+  defaultCountries: ActiveShippingCountry[],
+  geoRegulatedCountries: GeoRegulatedCountry[],
+) => void;
 
 export interface UseAggregatedCountries {
   default: Readonly<Ref<UseAggregatedCountriesState['default']>>;

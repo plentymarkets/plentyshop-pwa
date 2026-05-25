@@ -3,6 +3,7 @@ import type { UseBlocksState, UseBlocksReturn } from './types';
 import { assembleBlocks } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
+  // eslint-disable-next-line custom-rules/file-organization-types
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
@@ -15,6 +16,7 @@ export const useBlocks: UseBlocksReturn = () => {
     defaultTemplateData: [] as Block[],
     loading: false,
     isSettling: false,
+    hasSnapshot: false,
   }));
 
   const setBlocks = (blocks: GetBlocksResponse) => {
@@ -33,12 +35,22 @@ export const useBlocks: UseBlocksReturn = () => {
     const nuxtApp = useNuxtApp();
     if (nuxtApp._settleTimer) clearTimeout(nuxtApp._settleTimer);
     nuxtApp._settleTimer = setTimeout(() => {
+      if (!state.value) return;
       state.value.cleanData = markRaw(deepClone(state.value.data));
-      const { isEditingEnabled } = useEditor();
-      isEditingEnabled.value = false;
+      const editor = useEditor();
+      if (editor?.isEditingEnabled) editor.isEditingEnabled.value = false;
       state.value.isSettling = false;
       nuxtApp._settleTimer = null;
     }, 150);
+  };
+
+  const cancelCleanDataSync = () => {
+    const nuxtApp = useNuxtApp();
+    if (nuxtApp._settleTimer) {
+      clearTimeout(nuxtApp._settleTimer);
+      nuxtApp._settleTimer = null;
+    }
+    state.value.isSettling = false;
   };
 
   const headerContainer = computed(() => state.value.data.HeaderContainer);
@@ -65,7 +77,16 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    const assembled = assembleBlocks(data.value?.data || ({} as GetBlocksResponse), type, identifier);
+    state.value.hasSnapshot = data.value?.meta?.hasSnapshot ?? false;
+
+    const fetchedData = data.value?.data || ({} as GetBlocksResponse);
+
+    const assembled = assembleBlocks(fetchedData, type, identifier, state.value.hasSnapshot);
+
+    if (!fetchedData.HeaderContainer && state.value.data?.HeaderContainer) {
+      (assembled as GetBlocksResponse).HeaderContainer = state.value.data.HeaderContainer;
+    }
+
     setBlocks(assembled);
     state.value.loading = false;
 
@@ -88,11 +109,9 @@ export const useBlocks: UseBlocksReturn = () => {
         enableGlobalBlocks: true,
       });
 
-      const assembled = assembleBlocks(
-        (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
-        type,
-        identifier,
-      );
+      state.value.hasSnapshot = true;
+
+      const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
       setBlocks(assembled);
 
       return true;
@@ -105,21 +124,16 @@ export const useBlocks: UseBlocksReturn = () => {
     }
   };
 
-  const setupFakeBlocks = (rawBlocks: Block[], type: string = 'immutable', identifier: string | number = 0) => {
-    const assembled = assembleBlocks(
-      {
-        HeaderContainer: headerContainer.value,
-        blocks: rawBlocks,
-        Footer: footer.value,
-      } as GetBlocksResponse,
-      type,
-      identifier,
-    );
-    setBlocks(assembled);
-  };
-
   const updateBlocks = (blocks: Block[]) => {
     state.value.data.blocks = blocks;
+  };
+
+  const reorderHeaderBlocks = (blocks: Block[]) => {
+    if (!state.value.data.HeaderContainer) return;
+    (state.value.data.HeaderContainer as { content: Block[] }).content = blocks.map((block, index) => ({
+      ...block,
+      parent_slot: index,
+    }));
   };
 
   const discardChanges = () => {
@@ -139,13 +153,16 @@ export const useBlocks: UseBlocksReturn = () => {
     headerContainer,
     footer,
     loading: computed(() => state.value.loading),
+    hasSnapshot: computed(() => state.value.hasSnapshot),
     defaultTemplateData: computed(() => state.value.defaultTemplateData),
     fetchBlocks,
     saveBlocks,
-    setupFakeBlocks,
     updateBlocks,
+    reorderHeaderBlocks,
     discardChanges,
     setDefaultTemplate,
+    scheduleCleanDataSync,
+    cancelCleanDataSync,
     isSettling: computed(() => state.value.isSettling),
   };
 };

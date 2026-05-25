@@ -1,5 +1,4 @@
 import { getPaletteFromColor } from '../utils/tailwindHelper';
-import type { Shade } from '../utils/tailwindHelper';
 
 const paletteCache = new Map<string, Array<Shade & { type: string }>>();
 const MAX_CACHE_SIZE = 50;

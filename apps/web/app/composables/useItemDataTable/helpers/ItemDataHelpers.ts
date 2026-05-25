@@ -1,4 +1,5 @@
 import type { Product } from '@plentymarkets/shop-api';
+import type { AgeRatingDescriptor } from './types';
 
 export const getConditionName = (product: Product): string => {
   const condition = product.item.conditionApi ?? product.item.condition;
@@ -88,8 +89,6 @@ export const formatVariationProperties = (product: Product): string => {
     .filter((text): text is string => text !== '')
     .join('; ');
 };
-
-export type AgeRatingDescriptor = { key: string; params?: Record<string, unknown> } | null;
 
 export const getAgeRatingDescriptor = (age: number | null | undefined): AgeRatingDescriptor => {
   if (age == null) return null;

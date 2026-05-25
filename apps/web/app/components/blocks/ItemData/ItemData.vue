@@ -8,11 +8,11 @@
       <div v-if="displayAsCollapsable">
         <UiAccordionItem
           v-model="isOpen"
-          summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
+          summary-class="@md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
           data-testid="item-data"
         >
           <template #summary>
-            <h2 class="font-bold text-lg leading-6 md:text-2xl">
+            <h2 class="font-bold text-lg leading-6 @md:text-2xl">
               {{ title }}
             </h2>
           </template>
@@ -33,7 +33,7 @@
       </div>
 
       <div v-else>
-        <h2 v-if="title" class="font-bold text-lg leading-6 md:text-2xl mb-2">
+        <h2 v-if="title" class="font-bold text-lg leading-6 @md:text-2xl mb-2">
           {{ title }}
         </h2>
 

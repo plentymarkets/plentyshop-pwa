@@ -1,14 +1,5 @@
 <template>
-  <UiAccordionItem
-    v-model="cardOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    data-testid="price-card"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('card-section-label') }}</h2>
-    </template>
-
+  <EditorFormPanel v-model="cardOpen" :title="getEditorTranslation('card-section-label')" data-testid="price-card">
     <div class="py-4">
       <UiFormLabel class="block mb-4">{{ getEditorTranslation('elements-display-order') }}</UiFormLabel>
 
@@ -57,49 +48,20 @@
     <hr class="my-4" />
 
     <div class="py-4">
-      <UiFormLabel class="block mb-2">{{ getEditorTranslation('wishlist-size-label') }}</UiFormLabel>
-
-      <div
-        class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
-        data-testid="wishlist-size-toggle"
-      >
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': priceCardBlock.wishlistSize === 'small',
-          }"
-          data-testid="wishlist-size-small"
-          @click="priceCardBlock.wishlistSize = 'small'"
-        >
-          <SfIconCheck :class="{ invisible: priceCardBlock.wishlistSize !== 'small' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('wishlist-size-small') }}
-        </div>
-
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{
-            'bg-gray-100 text-gray-900 font-semibold': priceCardBlock.wishlistSize === 'large',
-          }"
-          data-testid="wishlist-size-large"
-          @click="priceCardBlock.wishlistSize = 'large'"
-        >
-          <SfIconCheck :class="{ invisible: priceCardBlock.wishlistSize !== 'large' }" class="mr-1 w-[1.1rem]" />
-          {{ getEditorTranslation('wishlist-size-large') }}
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="wishlistSizeModel"
+        :legend="getEditorTranslation('wishlist-size-label')"
+        test-id-prefix="wishlist-size"
+        :options="wishlistSizeOptions"
+      />
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-settings-label')"
     data-testid="price-card-layout"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
-    </template>
-
     <div class="flex items-center justify-between py-4">
       <UiFormLabel>{{ getEditorTranslation('drop-shadow-label') }}</UiFormLabel>
       <SfSwitch v-model="priceCardBlock.dropShadow" data-testid="price-card-drop-shadow" />
@@ -174,7 +136,7 @@
         </span>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -182,7 +144,6 @@ import draggable from 'vuedraggable';
 import {
   SfSwitch,
   SfInput,
-  SfIconCheck,
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfIconArrowForward,
@@ -229,7 +190,12 @@ const fieldLabels = {
 };
 
 const cardOpen = ref(true);
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
+
+const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
+  () => priceCardBlock.value,
+  getEditorTranslation,
+);
 </script>
 
 <i18n lang="json">

@@ -1,0 +1,50 @@
+{
+  "data": {
+    "blocks": [
+      {
+        "name": "TextCard",
+        "type": "content",
+        "meta": { "uuid": "api-text-1" },
+        "content": {
+          "text": { "htmlDescription": "<p>API Text Block</p>", "textAlignment": "left" },
+          "button": {},
+          "layout": {}
+        }
+      }
+    ],
+    "HeaderContainer": {
+      "name": "HeaderContainer",
+      "type": "structure",
+      "meta": { "uuid": "api-header-uuid", "isGlobalTemplate": true },
+      "configuration": { "visible": true, "layout": { "sticky": false } },
+      "content": [
+        {
+          "name": "UtilityBar",
+          "type": "content",
+          "meta": { "uuid": "api-utility-uuid", "isGlobalTemplate": true },
+          "content": {
+            "layout": { "paddingTop": 20, "paddingBottom": 20, "paddingLeft": 40, "paddingRight": 40 },
+            "sectionOrder": { "sections": ["logo", "search", "actions"] },
+            "sectionVisibility": { "logo": true, "search": true, "actions": true },
+            "color": { "iconColor": "#ffffff", "backgroundColor": "#062633" },
+            "search": { "displayMode": "full" },
+            "actions": {
+              "order": ["language", "wishlist", "cart", "account"],
+              "visibility": { "language": true, "wishlist": true, "cart": true, "account": true }
+            }
+          }
+        },
+        {
+          "name": "Navigation",
+          "type": "content",
+          "meta": { "uuid": "api-nav-uuid", "isGlobalTemplate": true },
+          "content": {
+            "layout": { "paddingTop": 20, "paddingBottom": 20, "paddingLeft": 20, "paddingRight": 20 },
+            "text": { "textAlignment": "left" },
+            "color": { "backgroundColor": "#ffffff", "textColor": "#161A16", "hoverBackgroundColor": "#f5f5f5" }
+          }
+        }
+      ]
+    }
+  }
+}

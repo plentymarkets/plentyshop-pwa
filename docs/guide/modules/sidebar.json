@@ -1,15 +1,53 @@
 [
   {
-    "text": "Shop Core",
+    "text": "Introduction",
+    "link": "/guide/modules/index.md"
+  },
+  {
+    "text": "Guides",
     "collapsed": true,
     "items": [
       {
-        "text": "Get Started",
-        "link": "/guide/modules/shop-core/index.md"
+        "text": "Components",
+        "link": "/guide/modules/components.md"
       },
       {
-        "text": "Usage Guide",
-        "link": "/guide/modules/shop-core/usage-guide.md"
+        "text": "Inject components into shop areas",
+        "link": "/guide/modules/inject-components.md"
+      },
+      {
+        "text": "Layouts",
+        "link": "/guide/modules/layouts.md"
+      },
+      {
+        "text": "Pages",
+        "link": "/guide/modules/pages.md"
+      },
+      {
+        "text": "Middlewares",
+        "link": "/guide/modules/middlewares.md"
+      },
+      {
+        "text": "i18n",
+        "link": "/guide/modules/i18n.md"
+      },
+      {
+        "text": "Tailwind",
+        "link": "/guide/modules/tailwind.md"
+      },
+      {
+        "text": "Custom JS & CSS",
+        "link": "/guide/modules/custom-js-css.md"
+      }
+    ]
+  },
+  {
+    "text": "Core Utilities",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Introduction",
+        "link": "/guide/modules/shop-core/index.md"
       },
       {
         "text": "Cookie Consent System",
@@ -26,11 +64,25 @@
     ]
   },
   {
-    "text": "Google Analytics",
-    "link": "/guide/modules/google-analytics"
-  },
-  {
-    "text": "Mollie",
-    "link": "/guide/modules/mollie"
+    "text": "PlentyONE Modules",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Google Analytics",
+        "link": "/guide/modules/plentyone/google-analytics"
+      },
+      {
+        "text": "Mollie",
+        "link": "/guide/modules/plentyone/mollie"
+      },
+      {
+        "text": "PayPal",
+        "link": "https://github.com/plentymarkets/plentyshop-pwa/tree/main/apps/web/modules/paypal"
+      },
+      {
+        "text": "Sitemap",
+        "link": "https://github.com/plentymarkets/plentyshop-pwa/tree/main/apps/web/modules/sitemap"
+      }
+    ]
   }
 ]
