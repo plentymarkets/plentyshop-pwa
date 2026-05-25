@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky z-[2] h-full flex flex-col" data-testid="localization-management-drawer">
+  <div class="pages-view sticky z-[25] h-full flex flex-col" data-testid="localization-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
