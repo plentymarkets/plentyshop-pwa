@@ -69,6 +69,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
 
     const { data: productReviews } = useProductReviews(productId);
     const { data: reviewAverage } = useProductReviewAverage(productId);
+    const totalReviews = productGetters.getTotalReviews(product);
 
     let reviews = null;
     if (reviewAverage.value) {
@@ -87,6 +88,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         });
       });
     }
+
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
@@ -98,11 +100,15 @@ export const useStructuredData: useStructuredDataReturn = () => {
       description: product.texts.description,
       disambiguatingDescription: '',
       review: reviews,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: productGetters.getAverageRating(product),
-        reviewCount: productGetters.getTotalReviews(product),
-      },
+      ...(totalReviews > 0
+        ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: productGetters.getAverageRating(product),
+              reviewCount: totalReviews,
+            },
+          }
+        : {}),
       offers: {
         '@type': 'Offer',
         priceCurrency: productGetters.getSpecialPriceCurrency(product),
@@ -121,6 +127,14 @@ export const useStructuredData: useStructuredDataReturn = () => {
         ],
         availability: productSeoSettingsGetters.getMappedAvailability(product),
         itemCondition: productSeoSettingsGetters.getConditionOfItem(product),
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 30,
+          refundType: 'https://schema.org/FullRefund',
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn',
+        },
       },
       depth: {
         '@type': 'QuantitativeValue',
