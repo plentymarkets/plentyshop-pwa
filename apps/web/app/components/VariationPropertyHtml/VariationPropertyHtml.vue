@@ -17,12 +17,10 @@ import type { VariationPropertyHtmlProps } from './types';
 
 const props = defineProps<VariationPropertyHtmlProps>();
 
-const parsedHtml = computed(() =>
-    decodeHtmlEntities(productPropertyGetters.getPropertyValue(props.variationProperty))
-);
+const parsedHtml = computed(() => decodeHtmlEntities(productPropertyGetters.getPropertyValue(props.variationProperty)));
 
 const isLongText = computed(() => {
-  const value = productPropertyGetters.getPropertyValue(props.variationProperty);
+  const value = parsedHtml.value;
   return value?.length && value.length > 100;
 });
 </script>
