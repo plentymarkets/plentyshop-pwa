@@ -371,7 +371,6 @@ const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
 const { open: openMegaMenu } = useMegaMenu();
-const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
   content,
