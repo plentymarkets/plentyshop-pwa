@@ -10,9 +10,6 @@ export default defineNuxtPlugin({
     } else {
       promisses.push(setInitialDataSSR());
     }
-
-    await callOnce(async () => {
-      await Promise.all(promisses);
-    });
+    await Promise.all(promisses);
   },
 });
