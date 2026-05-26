@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative mt-5 p-4 sm:p-10 text-center"
+    class="relative mt-5 p-4 @sm:p-10 text-center"
     :style="{ backgroundColor: props.content.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
@@ -9,10 +9,10 @@
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div
         v-if="props.content.input?.displayNameInput"
-        class="grid grid-cols-1 sm:grid-cols-2"
+        class="grid grid-cols-1 @sm:grid-cols-2"
         data-testid="newsletter-display-name"
       >
-        <div class="sm:mr-[1rem]">
+        <div class="@sm:mr-[1rem]">
           <label for="newsletter-first-name">
             <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
             <SfInput
@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <div class="sm:ml-[1rem]">
+        <div class="@sm:ml-[1rem]">
           <label for="newsletter-last-name">
             <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
             <SfInput
@@ -84,13 +84,13 @@
           <label for="terms-checkbox" class="text-left leading-5 select-none">
             <i18n-t keypath="newsletter.policy" scope="global">
               <template #privacyPolicy>
-                <SfLink
+                <UiLink
                   :href="localePath(paths.privacyPolicy)"
                   target="_blank"
                   class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
                   {{ t('legal.privacyPolicy') }}
-                </SfLink>
+                </UiLink>
               </template>
             </i18n-t>
             **
@@ -126,7 +126,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
@@ -145,7 +145,6 @@ const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 const textContentProps = computed(() =>
   mapToTextContentProps({
-    title: props.content.text?.title,
     htmlDescription: props.content.text?.htmlDescription,
     textAlignment: props.content.text?.textAlignment ?? 'center',
   }),

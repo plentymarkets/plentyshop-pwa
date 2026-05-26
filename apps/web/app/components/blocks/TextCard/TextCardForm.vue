@@ -1,81 +1,64 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="textSettings"
+    :title="getEditorTranslation('text-group-label')"
     data-testid="open-text-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('text-group-label') }}</h2>
-    </template>
-
     <EditorRichTextEditorForm
       v-model="contentModel"
       :text-align="textCardBlock.text.textAlignment"
       :placeholder="getEditorTranslation('placeholder')"
     />
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="buttonSettings"
-    data-testid="button-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('button-group-label') }}</h2>
-    </template>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+  <div data-testid="button-settings">
+    <EditorFormPanel v-model="buttonSettings" :title="getEditorTranslation('button-group-label')">
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
+            <template #suffix>
+              <label for="text-button-label" class="rounded-lg cursor-pointer">
+                <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
-          <template #suffix>
-            <label for="text-button-label" class="rounded-lg cursor-pointer">
-              <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
+            <template #suffix>
+              <label for="text-button-link" class="rounded-lg cursor-pointer">
+                <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </label>
       </div>
-      <label>
-        <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
-          <template #suffix>
-            <label for="text-button-link" class="rounded-lg cursor-pointer">
-              <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <EditorOptionsTabs
-        v-model="buttonVariantModel"
-        :legend="getEditorTranslation('outline-label')"
-        test-id-prefix="button-variant"
-        :options="buttonVariantOptions"
-      />
-    </div>
-  </UiAccordionItem>
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="buttonVariantModel"
+          :legend="getEditorTranslation('outline-label')"
+          test-id-prefix="button-variant"
+          :options="buttonVariantOptions"
+        />
+      </div>
+    </EditorFormPanel>
+  </div>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutSettings"
+    :title="getEditorTranslation('layout-group-label')"
     data-testid="layout-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
-    </template>
-
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">
         {{ getEditorTranslation('keep-transparent-label') }}
@@ -160,7 +143,7 @@
         </span>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -222,9 +205,9 @@ const { buttonVariantModel, buttonVariantOptions } = useEditorOptionsTabs(
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
-const textSettings = ref(false);
-const buttonSettings = ref(false);
-const layoutSettings = ref(false);
+const textSettings = ref(true);
+const buttonSettings = ref(true);
+const layoutSettings = ref(true);
 
 const backgroundColorInit = textCardBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');

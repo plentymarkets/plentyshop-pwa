@@ -1,13 +1,13 @@
 <template>
   <NuxtLayout name="default">
-    <div class="md:max-w-[677px] mx-auto px-4 pt-4 pb-20 md:px-0 md:mt-4">
-      <h1 class="font-bold mb-10 typography-headline-3 md:typography-headline-2">
+    <div class="@md:max-w-[677px] mx-auto px-4 pt-4 pb-20 @md:px-0 @md:mt-4">
+      <h1 class="font-bold mb-10 typography-headline-3 @md:typography-headline-2">
         {{ t('contact.contact') }}
       </h1>
       <p class="mb-10">{{ t('contact.contactShopMessage') }}</p>
       <div
         v-if="turnstileSiteKey.length === 0 || contactShopEmail.length === 0"
-        class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+        class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
       >
         <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
         <div class="py-2">{{ t('contact.misConfigured') }}</div>
@@ -103,13 +103,13 @@
             >
               <i18n-t keypath="contact.privacyPolicy" scope="global">
                 <template #privacyPolicy>
-                  <SfLink
+                  <UiLink
                     :href="localePath(paths.privacyPolicy)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ t('legal.privacyPolicy') }}
-                  </SfLink>
+                  </UiLink>
                 </template>
               </i18n-t>
               {{ t('form.required') }}
@@ -120,7 +120,7 @@
 
         <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('contact.form.asterixHint') }}</p>
 
-        <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
+        <div class="@md:col-span-3 flex flex-col-reverse @md:flex-row justify-end gap-4">
           <UiButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">
             {{ t('contact.clearAll') }}
           </UiButton>
@@ -151,7 +151,7 @@
 
 <script setup lang="ts">
 import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
-import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';

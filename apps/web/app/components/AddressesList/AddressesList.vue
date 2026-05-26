@@ -31,14 +31,14 @@
       v-model="isOpen"
       tag="section"
       role="dialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
       aria-labelledby="address-modal-title"
     >
       <header>
         <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
           <SfIconClose />
         </UiButton>
-        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
+        <h3 id="address-modal-title" class="text-neutral-900 text-lg @md:text-2xl font-bold mb-4">
           <span v-if="userAddressGetters.getId(selectedAddress)">
             {{ editAddressText }}
           </span>

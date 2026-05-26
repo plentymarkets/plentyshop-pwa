@@ -13,7 +13,9 @@ describe('composables index exports', () => {
   const editorComposablesBlacklist = [
     'useTableOfContents',
     'useBlockManager',
+    'useBlocksMutations',
     'useBlocksList',
+    'useAddBlockPopover',
     'useCategoryManagement',
     'useCategoriesSearch',
     'useCategorySettings',
@@ -42,6 +44,10 @@ describe('composables index exports', () => {
     'useSliderImagePreload',
     'useNearViewport',
     'useEditorOptionsTabs',
+    'useNestedBlockForm',
+    'useBlockEditStack',
+    'useBlocksHighlight',
+    'useMultiGridQuickAdd',
   ];
 
   const allFileModules = fs

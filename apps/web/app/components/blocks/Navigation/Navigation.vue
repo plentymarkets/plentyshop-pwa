@@ -1,135 +1,115 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" class="hidden lg:block">
-      <ul
-        :class="navigationContainerClasses"
-        :style="navigationContainerStyle"
-        @blur="
-          (event: FocusEvent) => {
-            if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
-              close();
-            }
-          }
-        "
-      >
-        <ClientOnly>
-          <MegaMenuSkeleton v-if="categoryTree.length === 0" />
-          <template v-else>
-            <li v-for="(menuNode, index) in categoryTree" :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-              <NuxtLink
-                v-if="menuNode.childCount > 0"
-                ref="triggerReference"
-                :to="localePath(generateCategoryLink(menuNode))"
-                data-testid="category-button"
-                :class="categoryButtonClasses"
-                :style="categoryButtonStyle"
-                tabindex="0"
-                aria-haspopup="true"
-                :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
-                @touchstart="onTouchStart"
-                @mousedown="onMouseDown"
-                @click.capture="onCategoryClickCapture($event, menuNode)"
-                @keydown.enter="onEnterKey"
-                @keydown.space.prevent="openMenuAndFocusFirst(menuNode)"
-                @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
-                @keydown.left="focusPreviousCategory(index)"
-                @keydown.right="focusNextCategory(index)"
-              >
-                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-                <SfIconChevronRight
-                  aria-hidden="true"
-                  class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
-                  :style="categoryButtonStyle"
-                />
-              </NuxtLink>
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" @mouseleave="onMouseLeave">
+      <ul :class="navigationContainerClasses" :style="navigationContainerStyle" @focusout="onNavBlur">
+        <li v-if="categoryTree.length === 0" class="h-10" />
 
-              <NuxtLink
-                v-else
-                ref="triggerReference"
-                :to="localePath(generateCategoryLink(menuNode))"
-                data-testid="category-button"
-                :class="categoryButtonClasses"
-                :style="categoryButtonStyle"
-                tabindex="0"
-                @keydown.left="focusPreviousCategory(index)"
-                @keydown.right="focusNextCategory(index)"
-              >
-                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              </NuxtLink>
+        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
+          <NuxtLink
+            v-if="menuNode.childCount > 0"
+            ref="triggerReference"
+            :to="localePath(generateCategoryLink(menuNode))"
+            data-testid="category-button"
+            :class="categoryButtonClasses"
+            :style="categoryButtonStyle"
+            tabindex="0"
+            aria-haspopup="true"
+            :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
+            @touchstart="onTouchStart"
+            @mousedown="onMouseDown"
+            @click.capture="onCategoryClickCapture($event, menuNode)"
+            @keydown.enter="onEnterKey"
+            @keydown.space.prevent="openMenuAndFocusFirst(menuNode)"
+            @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
+            @keydown.left="focusPreviousCategory(index)"
+            @keydown.right="focusNextCategory(index)"
+          >
+            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+            <SfIconChevronRight
+              aria-hidden="true"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+              :style="categoryButtonStyle"
+            />
+          </NuxtLink>
 
-              <div
-                v-if="
-                  isOpen &&
-                  activeMenu &&
-                  activeNode.length === 1 &&
-                  activeNode[0] === menuNode.id &&
-                  menuNode.childCount > 0
-                "
-                :key="activeMenu.id"
-                ref="megaMenuReference"
-                :style="{ ...style, backgroundColor: resolvedContent.color.backgroundColor || 'white' }"
-                :class="[
-                  'hidden md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
-                  submenuGridAlignmentClass,
-                ]"
-                @mouseleave="onMouseLeave"
-                @keydown.esc="focusTrigger(index)"
-                @keydown.up="navigateDropdownItems($event, 'up')"
-                @keydown.down="navigateDropdownItems($event, 'down')"
-                @keydown.tab="handleTabInDropdown($event)"
-              >
-                <template v-for="node in activeMenu.children" :key="node.id">
-                  <template v-if="node.childCount === 0">
-                    <ul>
-                      <li>
-                        <SfListItem
-                          :tag="NuxtLink"
-                          size="sm"
-                          :href="localePath(generateCategoryLink(node))"
-                          :class="[
-                            'mb-2 nav-hover-bg rounded font-medium typography-text-base',
-                            submenuTextAlignmentClass,
-                          ]"
-                        >
-                          {{ categoryTreeGetters.getName(node) }}
-                        </SfListItem>
-                      </li>
-                    </ul>
-                  </template>
-                  <div v-else>
+          <NuxtLink
+            v-else
+            ref="triggerReference"
+            :to="localePath(generateCategoryLink(menuNode))"
+            data-testid="category-button"
+            :class="categoryButtonClasses"
+            :style="categoryButtonStyle"
+            tabindex="0"
+            @keydown.left="focusPreviousCategory(index)"
+            @keydown.right="focusNextCategory(index)"
+          >
+            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+          </NuxtLink>
+
+          <div
+            v-if="
+              isOpen &&
+              activeMenu &&
+              activeNode.length === 1 &&
+              activeNode[0] === menuNode.id &&
+              menuNode.childCount > 0
+            "
+            :key="activeMenu.id"
+            ref="megaMenuReference"
+            :style="{ ...style, backgroundColor: resolvedContent.color.backgroundColor || 'white' }"
+            :class="[
+              'hidden @md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
+              submenuGridAlignmentClass,
+            ]"
+            @keydown.esc="focusTrigger(index)"
+            @keydown.up="navigateDropdownItems($event, 'up')"
+            @keydown.down="navigateDropdownItems($event, 'down')"
+            @keydown.tab="handleTabInDropdown($event)"
+          >
+            <template v-for="node in activeMenu.children" :key="node.id">
+              <template v-if="node.childCount === 0">
+                <ul>
+                  <li>
                     <SfListItem
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      :class="[
-                        'typography-text-base font-medium text-neutral-900 px-4 py-1.5 nav-hover-bg rounded whitespace-normal break-words',
-                        submenuTextAlignmentClass,
-                      ]"
+                      :class="['mb-2 nav-hover-bg rounded font-medium typography-text-base', submenuTextAlignmentClass]"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
-                    <ul class="mt-2 mb-3">
-                      <li v-for="child in node.children" :key="child.id">
-                        <SfListItem
-                          v-if="categoryTreeGetters.getName(child)"
-                          :tag="NuxtLink"
-                          size="sm"
-                          :href="localePath(generateCategoryLink(child))"
-                          :class="['typography-text-sm py-1.5 nav-hover-bg rounded', submenuTextAlignmentClass]"
-                        >
-                          {{ categoryTreeGetters.getName(child) }}
-                        </SfListItem>
-                      </li>
-                    </ul>
-                  </div>
-                </template>
+                  </li>
+                </ul>
+              </template>
+              <div v-else>
+                <SfListItem
+                  :tag="NuxtLink"
+                  size="sm"
+                  :href="localePath(generateCategoryLink(node))"
+                  :class="[
+                    'typography-text-base font-medium text-neutral-900 px-4 py-1.5 nav-hover-bg rounded whitespace-normal break-words',
+                    submenuTextAlignmentClass,
+                  ]"
+                >
+                  {{ categoryTreeGetters.getName(node) }}
+                </SfListItem>
+                <ul class="mt-2 mb-3">
+                  <li v-for="child in node.children" :key="child.id">
+                    <SfListItem
+                      v-if="categoryTreeGetters.getName(child)"
+                      :tag="NuxtLink"
+                      size="sm"
+                      :href="localePath(generateCategoryLink(child))"
+                      :class="['typography-text-sm py-1.5 nav-hover-bg rounded', submenuTextAlignmentClass]"
+                    >
+                      {{ categoryTreeGetters.getName(child) }}
+                    </SfListItem>
+                  </li>
+                </ul>
               </div>
-            </li>
-          </template>
-          <template #fallback>
-            <li class="h-10" aria-hidden="true" />
-          </template>
-        </ClientOnly>
+            </template>
+          </div>
+        </li>
       </ul>
     </nav>
 
@@ -228,10 +208,7 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
-import type { MegaMenuProps } from '~/components/MegaMenu/types';
-import type { NavigationProps } from './types';
-
-type NavigationBlockProps = Partial<MegaMenuProps> & Partial<NavigationProps>;
+import type { NavigationBlockProps } from './types';
 
 const props = withDefaults(defineProps<NavigationBlockProps>(), {
   categories: () => [],
@@ -259,8 +236,7 @@ const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
-const { data: fetchedCategoryTree } = useCategoryTree();
-const route = useRoute();
+const { data: fetchedCategoryTree, getCategoryTree } = useCategoryTree();
 
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
@@ -275,7 +251,7 @@ const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
-const tappedCategories = ref<Map<number, boolean>>(new Map());
+const tappedCategoryId = ref<number | null>(null);
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
   'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 nav-hover-bg active:!bg-neutral-300';
@@ -406,7 +382,7 @@ const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
 
 const onEnterKey = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') => {
@@ -415,16 +391,11 @@ const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') =
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
-  const nextIndex =
-    direction === 'down'
-      ? currentIndex < focusableItems.length - 1
-        ? currentIndex + 1
-        : 0
-      : currentIndex > 0
-        ? currentIndex - 1
-        : focusableItems.length - 1;
+  const downIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const upIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextIndex = direction === 'down' ? downIndex : upIndex;
 
   focusableItems[nextIndex]?.focus();
 };
@@ -434,24 +405,27 @@ const handleTabInDropdown = (event: KeyboardEvent) => {
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
   event.preventDefault();
 
-  const nextIndex = event.shiftKey
-    ? currentIndex > 0
-      ? currentIndex - 1
-      : focusableItems.length - 1
-    : currentIndex < focusableItems.length - 1
-      ? currentIndex + 1
-      : 0;
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextFwdIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const nextIndex = event.shiftKey ? prevIndex : nextFwdIndex;
 
   focusableItems[nextIndex]?.focus();
 };
 
+const onNavBlur = (event: FocusEvent) => {
+  if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
+    close();
+    tappedCategoryId.value = null;
+  }
+};
+
 const onMouseLeave = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
@@ -480,13 +454,12 @@ const onMouseDown = () => {
 };
 
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
-  tappedCategories.value.clear();
-  tappedCategories.value.set(menuNode.id, true);
+  tappedCategoryId.value = menuNode.id;
   onCategoryMouseEnter(menuNode);
 };
 
 const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) => {
-  if (isUsingTouch.value && menuNode.childCount > 0 && !tappedCategories.value.get(menuNode.id)) {
+  if (isUsingTouch.value && menuNode.childCount > 0 && tappedCategoryId.value !== menuNode.id) {
     event.stopPropagation();
     event.preventDefault();
     handleFirstTouch(menuNode);
@@ -494,17 +467,21 @@ const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) =
   }
 
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 onMounted(() => {
-  removeHook = router.afterEach(() => close());
+  removeHook = router.afterEach(() => {
+    close();
+    tappedCategoryId.value = null;
+  });
 });
 
 onBeforeUnmount(() => removeHook?.());
 
 onNuxtReady(async () => {
   if (props.categories.length > 0) return;
+  if (fetchedCategoryTree.value.length === 0) await getCategoryTree();
 });
 
 const resolvedCategories = computed(() => (props.categories.length > 0 ? props.categories : fetchedCategoryTree.value));

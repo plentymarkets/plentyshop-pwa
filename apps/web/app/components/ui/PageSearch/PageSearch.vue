@@ -34,10 +34,10 @@
       </Multiselect>
     </div>
     <div class="px-1 mt-5">
-      <SfButton class="w-full" @click="openPages">
+      <UiButton class="w-full" @click="openPages">
         <SfIconMenu />
         Manage pages
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>
@@ -47,7 +47,7 @@ import { flattenPages } from '~/utils/pages';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-import { SfIconHome, SfIconMenu, SfButton } from '@storefront-ui/vue';
+import { SfIconHome, SfIconMenu } from '@storefront-ui/vue';
 
 const { openDrawerWithView } = useSiteConfiguration();
 const emit = defineEmits(['pageSelected', 'close']);

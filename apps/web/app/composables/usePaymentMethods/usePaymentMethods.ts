@@ -1,4 +1,4 @@
-import type { ApiError, PaymentProviders } from '@plentymarkets/shop-api';
+import type { ApiError, PaymentProviders, PaymentMethod } from '@plentymarkets/shop-api';
 import type { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, SavePaymentMethod } from './types';
 
 /**
@@ -14,6 +14,20 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
     data: {} as PaymentProviders,
     loading: false,
   }));
+
+  /**
+   * @description Function for updating the payment methods
+   * @param list { PaymentMethod[] }
+   * @param selectedId { number }
+   */
+  const setPaymentMethods = (list: PaymentMethod[], selectedId: number) => {
+    state.value.data.list = list;
+    state.value.data.selected = selectedId;
+    const { data: cart } = useCart();
+    if (cart.value) {
+      cart.value.methodOfPaymentId = selectedId;
+    }
+  };
 
   /**
    * @description Function for fetching payment methods.
@@ -65,6 +79,7 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
   };
 
   return {
+    setPaymentMethods,
     fetchPaymentMethods,
     savePaymentMethod,
     ...toRefs(state.value),

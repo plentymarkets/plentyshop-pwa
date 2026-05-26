@@ -2,7 +2,6 @@ import { useEditor } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
-import Link from '@tiptap/extension-link';
 import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
@@ -15,8 +14,13 @@ import { setupRichTextEditorAlignment } from './helpers/alignment';
 import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
+import { CustomLink } from './helpers/customLinkExtension';
 import { FontSize } from './helpers/fontSizeExtension';
+import { IconNode } from './helpers/iconExtension';
+import { AtomSelectionDecoration } from './helpers/atomSelectionDecoration';
 import Placeholder from '@tiptap/extension-placeholder';
+import Emoji, { emojis } from '@tiptap/extension-emoji';
+import { getMarkRange } from '@tiptap/core';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -31,7 +35,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         underline: false,
       }),
       Underline,
-      Link.configure({
+      CustomLink.configure({
         openOnClick: false,
         autolink: true,
         linkOnPaste: true,
@@ -46,10 +50,41 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       Placeholder.configure({
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
+      IconNode,
+      AtomSelectionDecoration,
+      Emoji.extend({ marks: '_' }).configure({
+        emojis,
+        enableEmoticons: true,
+      }),
     ],
     editorProps: {
-      transformPastedHTML: (html) => {
-        return stripInlineFontSizesFromHtml(html);
+      transformPastedHTML: (html) => stripInlineFontSizesFromHtml(html),
+      handleDOMEvents: {
+        mousedown: (view, event) => {
+          const target = event.target as HTMLElement | null;
+          const anchor = target?.closest('a');
+
+          if (!anchor) return false;
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          const linkMark = view.state.schema.marks.link;
+          if (!linkMark) return true;
+
+          const pos = view.posAtDOM(anchor.firstChild ?? anchor, 0);
+          const safePos = Math.max(1, Math.min(pos, view.state.doc.content.size));
+          const $pos = view.state.doc.resolve(safePos);
+          const range = getMarkRange($pos, linkMark);
+
+          if (range) {
+            editor.value?.chain().focus().setTextSelection(range).run();
+          }
+
+          args.onOpenLinkModal?.();
+
+          return true;
+        },
       },
     },
     onCreate: () => {
@@ -116,9 +151,20 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     args.textAlign,
   );
   const { canUndo, canRedo, undo, redo } = setupRichTextEditorHistory(editor as Ref<Editor | null> | null, focusChain);
-  const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(editor as Ref<Editor | null> | null);
+  const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(
+    editor as Ref<Editor | null> | null,
+    args.onOpenLinkModal,
+  );
 
   const focus = () => editor.value?.commands.focus();
+
+  const insertIcon = (name: string) => {
+    editor.value?.chain().focus().insertIcon(name).run();
+  };
+
+  const insertEmoji = (name: string) => {
+    editor.value?.chain().focus().setEmoji(name).run();
+  };
 
   return {
     editor,
@@ -143,5 +189,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     toggleLink,
     clearFormatting,
     focus,
+    insertIcon,
+    insertEmoji,
   };
 }

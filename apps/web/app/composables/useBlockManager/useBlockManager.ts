@@ -1,8 +1,10 @@
+/* eslint-disable max-lines -- pending refactor */
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
+import { isFooterContainerBlock } from '~/utils/blockTemplates/footer/factory';
 
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
@@ -27,12 +29,14 @@ const LAZY_LOAD_BLOCKS: Record<string, LazyLoadConfig> = {
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
 
-  const { data, cleanData, pageBlocks, allBlocks, headerContainer, footer, updateBlocks } = useBlocks();
+  const { data, cleanData, pageBlocks, allBlocks, headerContainer, footer, updateBlocks, cancelCleanDataSync } =
+    useBlocks();
 
   const { isEditingEnabled } = useEditor();
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeBlocksConfigurationDrawer } = useSiteConfiguration();
   const { send } = useNotification();
+  const { setPendingEditChain } = useBlockEditStack();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -42,11 +46,6 @@ export const useBlockManager = () => {
   const lazyLoadRefs = ref<Record<string, HTMLElement | null>>({});
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
-  const multigridColumnUuid = useState<string | null>('multigridColumnUuid', () => null);
-
-  const updateMultigridColumnUuid = (uuid: string) => {
-    multigridColumnUuid.value = uuid;
-  };
 
   const insertBlock = ({
     targetBlock,
@@ -90,12 +89,37 @@ export const useBlockManager = () => {
     headerContainer.value.content = headerCopy.content;
   };
 
+  const addBlockToFooter = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
+    if (!footer.value || !Array.isArray(footer.value.content)) return;
+
+    const footerCopy = deepClone(footer.value) as Block;
+    const parentInfo = findBlockParent(footerCopy.content as Block[], targetUuid);
+    if (!parentInfo) return;
+
+    const { parent, index } = parentInfo;
+    const targetBlock = parent[index];
+    if (!targetBlock) return;
+
+    newBlock.parent_slot = targetBlock.parent_slot;
+
+    insertBlock({ targetBlock, newBlock, parent, index, position });
+
+    if (Array.isArray(newBlock.content) && newBlock.content.length) {
+      setUuid(newBlock.content as Block[]);
+    }
+
+    footer.value.content = footerCopy.content;
+  };
+
   const addBlockToPage = (newBlock: Block, targetUuid: string, position: BlockPosition): boolean => {
     if (!pageBlocks.value) return false;
 
     if (pageBlocks.value.length === 0) {
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
       updateBlocks([newBlock]);
-      openDrawerWithView('blocksSettings', newBlock);
+      openSettingsForNewBlock([newBlock], newBlock);
       return false;
     }
 
@@ -123,14 +147,23 @@ export const useBlockManager = () => {
     updateBlocks(copiedData);
 
     if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
-      openDrawerWithView('blocksSettings', newBlock);
+      openSettingsForNewBlock(copiedData, newBlock);
     }
 
     return true;
   };
 
+  const openSettingsForNewBlock = (rootBlocks: Block[], newBlock: Block) => {
+    const chain = getAncestorChain(rootBlocks, newBlock.meta.uuid) ?? [newBlock];
+    const rootBlock = chain[0] ?? newBlock;
+
+    setPendingEditChain(chain.slice(1));
+    openDrawerWithView('blocksSettings', rootBlock);
+  };
+
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
     if (!pageBlocks.value) return;
+    cancelCleanDataSync();
 
     const newBlock = await getBlockTemplateByLanguage(category, variationIndex, $i18n.locale.value);
     newBlock.meta.uuid = uuid();
@@ -139,8 +172,48 @@ export const useBlockManager = () => {
       !!headerContainer.value &&
       !!findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
 
+    const isTargetInFooter =
+      !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
+
+    isEditingEnabled.value = true;
+
     if (isTargetInHeader) {
       addBlockToHeader(newBlock, targetUuid, position);
+    } else if (isTargetInFooter) {
+      addBlockToFooter(newBlock, targetUuid, position);
+    } else if (!addBlockToPage(newBlock, targetUuid, position)) {
+      return;
+    }
+
+    visiblePlaceholder.value = { uuid: '', position: 'top' };
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+
+    scrollIntoBlockView(newBlock, false, 'bottom', 'auto');
+
+    const selectedUuid = useState<string>('toc-selected-uuid');
+    selectedUuid.value = newBlock.meta.uuid;
+    openDrawerWithView('TableOfContents');
+  };
+
+  const insertCustomBlock = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
+    if (!pageBlocks.value) return;
+    cancelCleanDataSync();
+
+    newBlock.meta.uuid = uuid();
+
+    const isTargetInHeader =
+      !!headerContainer.value &&
+      !!findBlockParent(Array.isArray(headerContainer.value.content) ? [headerContainer.value] : [], targetUuid);
+
+    const isTargetInFooter =
+      !!footer.value && Array.isArray(footer.value.content) && !!findBlockParent(footer.value.content, targetUuid);
+
+    isEditingEnabled.value = true;
+
+    if (isTargetInHeader) {
+      addBlockToHeader(newBlock, targetUuid, position);
+    } else if (isTargetInFooter) {
+      addBlockToFooter(newBlock, targetUuid, position);
     } else if (!addBlockToPage(newBlock, targetUuid, position)) {
       return;
     }
@@ -273,6 +346,21 @@ export const useBlockManager = () => {
     return blocks.find((rootBlock) => blockContainsUuid(rootBlock, targetUuid)) ?? null;
   };
 
+  const getAncestorChain = (blocks: Block[], targetUuid: string): Block[] | null => {
+    for (const block of blocks) {
+      if (block.meta?.uuid === targetUuid) {
+        return [block];
+      }
+      if (Array.isArray(block.content) && block.content.length) {
+        const sub = getAncestorChain(block.content as Block[], targetUuid);
+        if (sub) {
+          return [block, ...sub];
+        }
+      }
+    }
+    return null;
+  };
+
   const setUuid = (blocks: Block[]) => {
     for (const block of blocks) {
       block.meta.uuid = uuid();
@@ -311,6 +399,11 @@ export const useBlockManager = () => {
     }
   };
 
+  const deleteFromFooterContainer = (uuid: string) => {
+    if (!isFooterContainerBlock(footer.value) || !Array.isArray(footer.value.content)) return;
+    findOrDeleteBlockByUuid(footer.value.content as Block[], uuid, true);
+  };
+
   const deleteBlock = async (uuid: string) => {
     if (!pageBlocks.value) return;
 
@@ -318,6 +411,7 @@ export const useBlockManager = () => {
       await deleteBlockFromColumn(uuid);
     } else if (!findOrDeleteBlockByUuid(pageBlocks.value, uuid, true)) {
       deleteFromHeaderContainer(uuid);
+      deleteFromFooterContainer(uuid);
     }
 
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
@@ -456,8 +550,6 @@ export const useBlockManager = () => {
     lazyLoadStates,
     lazyLoadRefs,
     isTablet,
-    multigridColumnUuid,
-    updateMultigridColumnUuid,
     isDragging: computed(() => dragState.isDragging),
     handleDragStart,
     handleDragEnd,
@@ -468,6 +560,7 @@ export const useBlockManager = () => {
     isLastNonFooterBlock,
     isFirstContentBlock,
     addNewBlock,
+    insertCustomBlock,
     scrollIntoBlockView,
     handleEdit,
     visiblePlaceholder,

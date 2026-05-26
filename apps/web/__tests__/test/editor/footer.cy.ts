@@ -3,7 +3,6 @@ import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 
 describe('Footer Block', () => {
   const cookieBar = new CookieBarObject();
-  const isFlagOn = Cypress.env('ENABLE_CONTRACT_WITHDRAWAL_BUTTON') === '1';
 
   const getFooter = () => cy.getByTestId('footer');
 
@@ -23,26 +22,19 @@ describe('Footer Block', () => {
     getFooter().should('be.visible');
   });
 
-  it('should render the correct cancellation action depending on feature flag', () => {
+  it('should render the correct cancellation action', () => {
     getFooter().within(() => {
-      if (isFlagOn) {
-        cy.getByTestId('footer-cancellation-button')
-          .should('exist')
-          .and('contain.text', 'Withdraw from contract here')
-          .and('have.attr', 'href')
-          .and('include', paths.cancellationForm);
+      cy.getByTestId('text-button')
+        .should('exist')
+        .and('contain.text', 'Withdraw from contract here')
+        .and('have.attr', 'href')
+        .and('include', paths.cancellationForm);
 
-        cy.contains('Cancellation Form').should('not.exist');
-      } else {
-        cy.getByTestId('footer-cancellation-button').should('not.exist');
-        cy.get(`a[href*="${paths.cancellationForm}"]`).should('exist');
-      }
+      cy.contains('Cancellation Form').should('not.exist');
     });
   });
 
-  it('should render cancellation rights before the withdrawal button when feature flag is ON', () => {
-    if (!isFlagOn) return;
-
+  it('should render cancellation rights before the withdrawal button', () => {
     getFooter().then(($footer) => {
       const text = $footer.text();
 
@@ -56,9 +48,11 @@ describe('Footer Block', () => {
       .and('have.css', 'color', 'rgb(28, 28, 28)');
   });
 
-  it('should navigate to cancellation form when clicking the withdrawal button if feature flag is ON', () => {
-    if (!isFlagOn) return;
-
-    cy.getByTestId('footer-cancellation-button').should('have.attr', 'href').and('include', paths.cancellationForm);
+  it('should navigate to cancellation form when clicking the withdrawal button', () => {
+    getFooter().within(() => {
+      cy.getByTestId('text-button').should('have.attr', 'href').and('include', paths.cancellationForm);
+      cy.getByTestId('text-button').click();
+    });
+    cy.url().should('include', paths.cancellationForm);
   });
 });

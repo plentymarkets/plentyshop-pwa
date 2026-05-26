@@ -1,8 +1,8 @@
 <template>
   <ClientOnly>
-    <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+    <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
     <h2
-      class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+      class="hidden @md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
       data-testid="account-orders-heading"
     >
       {{ t('account.ordersAndReturns.myOrders') }}
@@ -83,11 +83,11 @@
                 </ul>
               </UiDropdown>
             </li>
-            <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+            <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
           </ul>
         </template>
 
-        <table v-else class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
+        <table v-else class="@md:block @md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
           <caption class="hidden">
             {{
               t('account.ordersAndReturns.listOfOrders')
@@ -95,21 +95,21 @@
           </caption>
           <thead class="border-b-2 border-neutral-200">
             <tr>
-              <th class="lg:py-4 py-2 lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.orderId') }}</th>
-              <th class="lg:p-4 p-2 font-medium lg:whitespace-nowrap">
+              <th class="@lg:py-4 py-2 @lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.orderId') }}</th>
+              <th class="@lg:p-4 p-2 font-medium @lg:whitespace-nowrap">
                 {{ t('account.ordersAndReturns.orderDate') }}
               </th>
-              <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.amount') }}</th>
-              <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</th>
-              <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.status') }}</th>
-              <th class="lg:py-4 py-2 lg:pl-4 pl-2 font-medium">{{ t('account.ordersAndReturns.actions') }}</th>
+              <th class="@lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.amount') }}</th>
+              <th class="@lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</th>
+              <th class="@lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.status') }}</th>
+              <th class="@lg:py-4 py-2 @lg:pl-4 pl-2 font-medium">{{ t('account.ordersAndReturns.actions') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="border-b border-neutral-200">
-              <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
-              <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
-              <td v-if="orderGetters.getTotals(order).isNet" class="lg:p-4 p-2">
+              <td class="@lg:py-4 py-2 @lg:pr-4 pr-2 @lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
+              <td class="@lg:p-4 p-2 @lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
+              <td v-if="orderGetters.getTotals(order).isNet" class="@lg:p-4 p-2">
                 {{
                   formatWithSymbol(
                     orderGetters.getTotalNet(orderGetters.getTotals(order)),
@@ -117,7 +117,7 @@
                   )
                 }}
               </td>
-              <td v-else class="lg:p-4 p-2">
+              <td v-else class="@lg:p-4 p-2">
                 {{
                   formatWithSymbol(
                     orderGetters.getTotal(orderGetters.getTotals(order)),
@@ -125,9 +125,9 @@
                   )
                 }}
               </td>
-              <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
-              <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <td class="lg:p-4 p-2 text-right">
+              <td class="@lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
+              <td class="@lg:p-4 p-2 @lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
+              <td class="@lg:p-4 p-2 text-right">
                 <div class="flex items-center justify-end">
                   <UiButton
                     :tag="NuxtLink"

@@ -414,6 +414,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
@@ -446,6 +447,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "left",
@@ -522,6 +524,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
+                    "subtitle": "Untertitel",
                     "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left",
@@ -571,6 +574,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
@@ -602,6 +606,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "right"
@@ -676,6 +681,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
+                    "subtitle": "Untertitel",
                     "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "left"
@@ -724,6 +730,7 @@
                     "bgopacity": 0.9,
                     "pretitle": "Pretitle",
                     "title": "h1 heading",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
@@ -755,6 +762,7 @@
                     "bgopacity": 1,
                     "pretitle": "Pretitle",
                     "title": "h1 title",
+                    "subtitle": "Subtitle",
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "justify": "top",
                     "align": "center"
@@ -829,6 +837,7 @@
                     "bgopacity": 1,
                     "pretitle": "Vortitel",
                     "title": "h1 Titel",
+                    "subtitle": "Untertitel",
                     "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>",
                     "justify": "top",
                     "align": "center"
@@ -931,7 +940,7 @@
             "meta": { "uuid": "34343434-3434-4343-8434-343434343434" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -999,7 +1008,7 @@
             "meta": { "uuid": "67676767-6767-4676-8767-676767676767" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1065,7 +1074,7 @@
             "meta": { "uuid": "9a9a9a9a-9a9a-49a9-89a9-9a9a9a9a9a9a" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1078,7 +1087,7 @@
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "title": "h2 heading",
                     "subtitle": "Subtitle",
-                    "textAlignment": "right",
+                    "textAlignment": "left",
                     "color": "#000"
                   },
                   "button": {
@@ -1105,8 +1114,8 @@
                     "aspectRatio": "16 / 9"
                   },
                   "text": {
-                    "textOverlay": "Overlay Text",
-                    "textOverlayColor": "#00ff00",
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
                     "textOverlayAlignY": "center",
                     "textOverlayAlignX": "center"
                   },
@@ -1125,7 +1134,7 @@
             "meta": { "uuid": "dcdcdcdc-dcdc-4cdc-8cdc-dcdcdcdcdcdc" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1165,8 +1174,8 @@
                     "aspectRatio": "16 / 9"
                   },
                   "text": {
-                    "textOverlay": "Overlay-Text",
-                    "textOverlayColor": "#00ff00",
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
                     "textOverlayAlignY": "center",
                     "textOverlayAlignX": "center"
                   },
@@ -1200,14 +1209,11 @@
             "content": {
               "text": {
                 "htmlDescription": "<p style=\"text-align: center;\">Text that supports HTML formatting</p>",
-                "pretitle": "Pretitle",
-                "title": "h2 heading",
-                "subtitle": "Subtitle",
                 "textAlignment": "center",
                 "color": "#000"
               },
               "button": {
-                "buttonText": "Button",
+                "label": "Button",
                 "link": "/",
                 "variant": "primary"
               },
@@ -1223,14 +1229,11 @@
             "content": {
               "text": {
                 "htmlDescription": "<p style=\"text-align: center;\">Text mit HTML-Formatierung</p>",
-                "pretitle": "Vortitel",
-                "title": "h2 Titel",
-                "subtitle": "Untertitel",
                 "textAlignment": "center",
                 "color": "#000"
               },
               "button": {
-                "buttonText": "Buttom",
+                "label": "Button",
                 "link": "/",
                 "variant": "primary"
               },
@@ -1259,9 +1262,6 @@
             "meta": { "uuid": "2b3c4d5e-6f70-4a1b-8c2d-234567890abc" },
             "content": {
               "text": {
-                "pretitle": "Pretitle",
-                "title": "h2 heading",
-                "subtitle": "Subtitle.",
                 "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>"
               },
               "layout": {
@@ -1280,9 +1280,6 @@
             "meta": { "uuid": "3c4d5e6f-7081-4b2c-8d3e-34567890abcd" },
             "content": {
               "text": {
-                "pretitle": "Vortitel",
-                "title": "h2 Titel",
-                "subtitle": "Untertitel",
                 "htmlDescription": "<p style=\"text-align: left;\">Text mit HTML-Formatierung</p>"
               },
               "layout": {
@@ -1327,11 +1324,10 @@
                 "title": true,
                 "rating": true,
                 "previewText": true,
-                "shippingBadge": true,
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "price", "addToCart"],
               "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,
@@ -1363,11 +1359,10 @@
                 "title": true,
                 "rating": true,
                 "previewText": true,
-                "shippingBadge": true,
                 "price": true,
                 "addToCart": true
               },
-              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
+              "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "price", "addToCart"],
               "fieldsDisabled": ["title"],
               "contentAlignment": "left",
               "cardBorders": true,

@@ -56,11 +56,14 @@ jobs:
       - name: Run typecheck
         run: npm run typecheck
 
+      - name: Validate Vite dependency pre-bundling
+        run: npm run check:optimize-deps
+
       - name: Run shellcheck
         uses: ludeeus/action-shellcheck@master
         with:
           scandir: './scripts'
-          additional_files: '.github/skills/code-generation/generate.sh'
+          additional_files: '.github/skills/code-generation/generate.sh .github/skills/documentation/scripts/fetch-templates.sh'
           severity: warning
           ignore_paths: 'node_modules'
         env:

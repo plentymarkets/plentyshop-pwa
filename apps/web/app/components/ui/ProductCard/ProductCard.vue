@@ -13,7 +13,7 @@
       />
 
       <div ref="imageContainerRef" :class="[{ 'size-48': isFromSlider }, 'relative']">
-        <SfLink
+        <UiLink
           :tag="NuxtLink"
           :to="productPath"
           :aria-label="ariaLabelContent"
@@ -68,7 +68,7 @@
               @error="onHoverImageError"
             />
           </div>
-        </SfLink>
+        </UiLink>
       </div>
 
       <template v-if="configuration?.showWishlistButton">
@@ -92,7 +92,7 @@
     >
       <template v-for="key in configuration?.fieldsOrder" :key="key">
         <template v-if="key === 'title' && configuration?.fields?.title">
-          <SfLink
+          <UiLink
             :tag="NuxtLink"
             :to="productPath"
             class="no-underline"
@@ -100,7 +100,7 @@
             data-testid="productcard-name"
           >
             {{ name }}
-          </SfLink>
+          </UiLink>
         </template>
         <template v-if="key === 'manufacturer' && configuration?.fields?.manufacturer">
           <div
@@ -130,7 +130,7 @@
           <div v-if="showBasePrice" class="mb-2">
             <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
           </div>
-          <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
+          <div class="flex flex-col-reverse items-start @md:flex-row @md:items-center mt-auto">
             <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
               <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
@@ -138,7 +138,7 @@
             </span>
             <span
               v-if="crossedPrice && differentPrices(price, crossedPrice)"
-              class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
+              class="typography-text-sm text-neutral-500 line-through @md:ml-3 @md:pb-2"
             >
               {{ format(crossedPrice) }}
             </span>
@@ -179,7 +179,7 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
+import { SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
@@ -270,7 +270,19 @@ const unitName = computed(() => productGetters.getUnitName(product.value));
 const showBasePrice = computed(() => productGetters.showPricePerUnit(product.value));
 
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const { isGlobalProductCategoryTemplate } = useProducts();
+
+const isGlobalProductCategoryTemplate = computed(() => {
+  const route = useRoute();
+  const slugParam = route.params.slug;
+
+  if (slugParam === undefined) {
+    return false;
+  }
+
+  const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
+  return `/${slug}` === paths.globalItemCategory;
+});
+
 const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
     return paths.globalItemDetails;

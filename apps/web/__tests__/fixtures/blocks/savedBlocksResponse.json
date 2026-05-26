@@ -71,7 +71,7 @@
         "footnote": "© API Store 2026",
         "footnoteAlign": "right",
         "colors": {
-          "background": "#1a2b3c",
+          "background": "#abcdef",
           "text": "#ffffff",
           "footnoteBackground": "#0a1b2c",
           "footnoteText": "#cccccc"
