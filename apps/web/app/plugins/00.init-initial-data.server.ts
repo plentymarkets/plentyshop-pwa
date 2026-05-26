@@ -3,13 +3,13 @@ export default defineNuxtPlugin({
   async setup() {
     const route = useRoute();
     const { setInitialDataSSR, fetchSettings, fetchCacheableInitData } = useInitialSetup();
-    const promisses: Promise<unknown>[] = [fetchSettings()];
+    const promises: Promise<unknown>[] = [fetchSettings()];
 
     if (route.meta.cacheControl) {
-      promisses.push(fetchCacheableInitData());
+      promises.push(fetchCacheableInitData());
     } else {
-      promisses.push(setInitialDataSSR());
+      promises.push(setInitialDataSSR());
     }
-    await Promise.all(promisses);
+    await Promise.all(promises);
   },
 });
