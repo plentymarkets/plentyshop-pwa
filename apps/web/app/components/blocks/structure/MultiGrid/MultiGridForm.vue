@@ -73,57 +73,7 @@
         </div>
       </EditorFormPanel>
 
-      <EditorFormPanel
-        v-model="layoutOpen"
-        :title="getEditorTranslation('layout')"
-        content-class="px-3.5 py-3 flex flex-col gap-3"
-      >
-        <div v-if="multiGridStructure.configuration.layout">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
-          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowUpward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginTop"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-top"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-              <span><SfIconArrowDownward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginBottom"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-bottom"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div v-if="multiGridStructure.configuration.columnWidths?.length">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
-          <div class="grid grid-cols-3 gap-2">
-            <button
-              v-for="i in numColumns"
-              :key="`sticky-col-${i}`"
-              type="button"
-              class="px-3 py-2 rounded-md border text-sm"
-              :class="
-                isSticky(i - 1)
-                  ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
-                  : 'border-neutral-300 hover:border-neutral-400'
-              "
-              @click="toggleSticky(i - 1)"
-            >
-              {{ getEditorTranslation('column') }} {{ i }}
-            </button>
-          </div>
-        </div>
-
-        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-      </EditorFormPanel>
+      <MultiGridLayoutPanel :uuid="resolvedUuid" />
 
       <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
         <div v-if="multiGridStructure.configuration.layout">
@@ -158,9 +108,10 @@
 <script setup lang="ts">
 import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
+import MultiGridLayoutPanel from './MultiGridLayoutPanel.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
 
@@ -185,6 +136,8 @@ const multiGridStructure = computed(() => {
       marginBottom: defaultMarginBottom.value,
       backgroundColor: '#ffffff',
       gap: 'M',
+      reverseOnMobile: false,
+      alignHeights: true,
     };
   } else {
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
@@ -192,11 +145,11 @@ const multiGridStructure = computed(() => {
     if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
       block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
+    if (block.configuration.layout.reverseOnMobile === undefined) block.configuration.layout.reverseOnMobile = false;
+    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = true;
   }
   return block;
 });
-
-const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
 const visibleGrid = computed(() =>
   computeVisibleGrid(
@@ -214,23 +167,6 @@ const getGapPx = (gap: string | undefined): number => {
 };
 
 if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
-
-const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
-
-const isSticky = (columnIndex: number) => {
-  return (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
-};
-
-const toggleSticky = (columnIndex: number) => {
-  const configuration = multiGridStructure.value.configuration;
-  if (!Array.isArray(configuration?.sticky)) configuration.sticky = [];
-  const position = configuration.sticky.indexOf(columnIndex);
-  if (position === -1) {
-    configuration.sticky.push(columnIndex);
-  } else {
-    configuration.sticky.splice(position, 1);
-  }
-};
 
 const allEmpty = computed(() => {
   const blocks = multiGridStructure.value.content as Block[] | undefined;
@@ -373,7 +309,6 @@ const editElement = (block: Block) => {
 
 const elementsOpen = ref(true);
 const gridLayoutOpen = ref(true);
-const layoutOpen = ref(true);
 const backgroundOpen = ref(true);
 </script>
 
@@ -384,10 +319,6 @@ const backgroundOpen = ref(true);
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
     "spacing-between": "Spacing between blocks:",
-    "layout": "Layout",
-    "margin-label": "Margin (px)",
-    "sticky-columns": "Sticky columns",
-    "column": "Column",
     "layout-background": "Background",
     "background-color-label": "Background Color"
   },
@@ -396,10 +327,6 @@ const backgroundOpen = ref(true);
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
     "spacing-between": "Spacing between blocks:",
-    "layout": "Layout",
-    "margin-label": "Margin (px)",
-    "sticky-columns": "Sticky columns",
-    "column": "Column",
     "layout-background": "Background",
     "background-color-label": "Background Color"
   }
