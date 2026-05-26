@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, ApiError } from '@plentymarkets/shop-api';
 import type { WatchStopHandle } from 'vue';
 import { productGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
@@ -87,10 +87,8 @@ watch(
   { immediate: true },
 );
 
-/* TODO: This should only be temporary.
- *  It changes the url of the product page while on the page and switching the locale.
- *  Should be removed when the item search is refactored.
- */
+// Temporary: changes the url of the product page while on the page and switching the locale.
+// Should be removed when the item search is refactored.
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
@@ -128,7 +126,7 @@ watch(
 
 const observeRecommendedSection = () => {
   if (import.meta.client && recommendedSection.value) {
-    const observer = new window.IntersectionObserver(
+    const observer = new globalThis.IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (entry?.isIntersecting) {
@@ -145,6 +143,20 @@ const observeRecommendedSection = () => {
   }
 };
 
+async function handleVariationChange() {
+  if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
+    try {
+      productParams.variationId = variationId.value;
+      await fetchProduct(productParams);
+      setCurrentProduct(productForEditor.value || ({} as Product));
+      await fetchReviews();
+      setProductMetaData(product.value);
+    } catch (error) {
+      useHandleError(error as ApiError);
+    }
+  }
+}
+
 onBeforeRouteLeave(() => {
   resetNotification();
   if (variationWatchHandler) {
@@ -155,14 +167,8 @@ onBeforeRouteLeave(() => {
 onNuxtReady(() => {
   observeRecommendedSection();
 
-  if (import.meta.client && useCallisto().isEnabled) {
-    variationWatchHandler = watch(variationId, async () => {
-      if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
-        productParams.variationId = variationId.value;
-        await fetchProduct(productParams);
-        setCurrentProduct(productForEditor.value || ({} as Product));
-      }
-    });
+  if (useCallisto().isEnabled) {
+    variationWatchHandler = watch(variationId, handleVariationChange);
   }
 });
 </script>
