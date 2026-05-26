@@ -145,7 +145,7 @@ export class ProductDetailPageObject extends PageObject {
         expect(review).to.have.nested.property('author.name').and.be.a('string');
       });
 
-      // Aggregate rating-present when reviewCount > 0
+      // Aggregate rating, present when reviewCount > 0
       if (productData?.['aggregateRating']) {
         expect(productData).to.have.nested.property('aggregateRating.@type', 'AggregateRating');
         expect(productData)

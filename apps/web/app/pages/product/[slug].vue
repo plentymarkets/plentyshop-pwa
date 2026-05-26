@@ -87,8 +87,10 @@ watch(
   { immediate: true },
 );
 
-// Temporary: changes the url of the product page while on the page and switching the locale.
-// Should be removed when the item search is refactored.
+/* TODO: This should only be temporary.
+ *  It changes the url of the product page while on the page and switching the locale.
+ *  Should be removed when the item search is refactored.
+ */
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
