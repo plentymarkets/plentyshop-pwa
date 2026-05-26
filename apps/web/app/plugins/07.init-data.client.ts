@@ -1,5 +1,5 @@
 export default defineNuxtPlugin({
-  name: 'session-and-category-tree',
+  name: 'init-data-client',
   parallel: true,
   setup() {
     const route = useRoute();
