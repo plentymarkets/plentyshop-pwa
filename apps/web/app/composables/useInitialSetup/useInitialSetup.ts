@@ -96,7 +96,6 @@ const fetchCacheableInitData: SetInitialData = async () => {
   return true;
 };
 
-
 /** Function for fetching all settings
  * @example
  * ``` ts
