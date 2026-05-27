@@ -113,6 +113,19 @@ export const useTableOfContents = () => {
     openDrawerWithView('blocksSettings', block);
   };
 
+  const replaceEmptyBlock = (event: MouseEvent | KeyboardEvent, block: Block) => {
+    const anchorEl = event.currentTarget as HTMLElement;
+    if (useRuntimeConfig().public.enableAddBlockPopover) {
+      const { openAddBlockPopover } = useAddBlockPopover();
+      openAddBlockPopover({ anchorEl, targetUuid: block.meta.uuid, position: 'inside' });
+    } else {
+      const { openDrawerWithView } = useSiteConfiguration();
+      const { setInsertColumnUuid } = useBlocksMutations();
+      setInsertColumnUuid(block.meta.uuid);
+      openDrawerWithView('blocksList');
+    }
+  };
+
   const addBlockAtBottom = (event: MouseEvent) => {
     const { scrollIntoBlockView } = useBlockManager();
 
@@ -245,6 +258,7 @@ export const useTableOfContents = () => {
     getChildren,
     scrollToBlock,
     editBlock,
+    replaceEmptyBlock,
     addBlockAtBottom,
     addBlockAtContainerEnd,
     addBlockAtContainerStart,

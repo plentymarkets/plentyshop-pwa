@@ -165,19 +165,7 @@ const onToggleVisibility = (block: Block) => {
 
 const onDelete = (block: Block) => {
   if (!structure.value || minItemsReached.value) return;
-  const content = structure.value.content as Block[];
-  const idx = content.findIndex((b) => b.meta.uuid === block.meta.uuid);
-  if (idx !== -1) content.splice(idx, 1);
-  if (isGridMode.value) {
-    const slot = block.parent_slot ?? 0;
-    const cfg = structure.value.configuration;
-    cfg.columnWidths.splice(slot, 1);
-    if (cfg.columnWidthsTablet) cfg.columnWidthsTablet.splice(slot, 1);
-    if (cfg.columnWidthsMobile) cfg.columnWidthsMobile.splice(slot, 1);
-    content.forEach((b) => {
-      if ((b.parent_slot ?? 0) > slot) b.parent_slot = (b.parent_slot ?? 0) - 1;
-    });
-  }
+  removeBlockFromColumn(structure.value, block.meta.uuid);
   openMenuUuid.value = null;
 };
 

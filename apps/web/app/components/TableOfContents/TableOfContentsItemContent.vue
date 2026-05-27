@@ -94,7 +94,7 @@ import type { Block } from '@plentymarkets/shop-api';
 
 const props = defineProps<TableOfContentsItemContentProps>();
 
-const { deleteBlock } = useBlockManager();
+const { deleteBlockHard } = useBlockManager();
 const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
 const { hoveredUuid } = useTableOfContents();
 const { headerContainer } = useBlocks();
@@ -113,7 +113,7 @@ const handleToggleVisibility = () => {
 };
 
 const handleDelete = () => {
-  deleteBlock(props.uuid);
+  deleteBlockHard(props.uuid);
 };
 </script>
 

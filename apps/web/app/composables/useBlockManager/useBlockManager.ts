@@ -469,6 +469,22 @@ export const useBlockManager = () => {
       }
     }
   };
+
+  const deleteBlockHard = (blockUuid: string) => {
+    if (!pageBlocks.value) return;
+
+    if (getBlockDepth(blockUuid) > 0) {
+      const chain = getAncestorChain(pageBlocks.value, blockUuid);
+      const parentBlock = chain && chain.length >= 2 ? chain[chain.length - 2] : null;
+      if (!parentBlock || !removeBlockFromColumn(parentBlock, blockUuid)) return;
+    } else if (!findOrDeleteBlockByUuid(pageBlocks.value, blockUuid, true)) {
+      deleteFromHeaderContainer(blockUuid);
+      deleteFromFooterContainer(blockUuid);
+    }
+
+    isEditingEnabled.value = !deepEqual(cleanData.value, data.value);
+    closeBlocksConfigurationDrawer();
+  };
   const updateBlock = (index: number, updatedBlock: Block) => {
     if (pageBlocks.value && index !== null && index < pageBlocks.value.length) {
       pageBlocks.value[index] = updatedBlock;
@@ -569,6 +585,7 @@ export const useBlockManager = () => {
     handleDragEnd,
     tabletEdit,
     deleteBlock,
+    deleteBlockHard,
     updateBlock,
     changeBlockPosition,
     isLastNonFooterBlock,
