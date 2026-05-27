@@ -32,15 +32,12 @@ export const noNamedReexportInBarrel = {
       ExportNamedDeclaration(node) {
         if (!node.source || node.specifiers.length === 0) return;
 
-        const isTypeOnly =
-          node.exportKind === 'type' || node.specifiers.every((s) => s.exportKind === 'type');
+        const isTypeOnly = node.exportKind === 'type' || node.specifiers.every((s) => s.exportKind === 'type');
         const source = node.source.value;
-
         const hasAlias = node.specifiers.some((s) => s.local.name !== s.exported.name);
         const hasDefault = node.specifiers.some((s) => s.local.name === 'default');
         const hasMixedKinds =
-          node.specifiers.some((s) => s.exportKind === 'type') &&
-          node.specifiers.some((s) => s.exportKind !== 'type');
+          node.specifiers.some((s) => s.exportKind === 'type') && node.specifiers.some((s) => s.exportKind !== 'type');
         const isSafeToSuggest = !hasAlias && !hasDefault && !hasMixedKinds;
 
         const report = {
