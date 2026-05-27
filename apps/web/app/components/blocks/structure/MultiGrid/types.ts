@@ -25,6 +25,8 @@ interface MultiGridLayout {
   backgroundColor?: string;
   gap?: string;
   fullWidth?: boolean;
+  reverseOnMobile?: boolean;
+  alignHeights?: boolean;
 }
 
 export interface MultiGridColumnConfig {
@@ -74,6 +76,8 @@ export type ColumnBlock = Block & {
       marginBottom?: number;
       backgroundColor?: string;
       fullWidth?: boolean;
+      reverseOnMobile?: boolean;
+      alignHeights?: boolean;
     };
   };
 };

@@ -27,6 +27,7 @@
           :block-span="gridColumnsWidth[block.parent_slot ?? 0] ?? 0"
           :min-items-reached="minItemsReached"
           :is-active="currentActiveBlockIndex === index"
+          :parent-uuid="props.uuid"
           @insert-before="onInsertBefore"
           @edit-element="emit('edit-element', $event)"
           @replace-empty="onReplaceEmpty"
