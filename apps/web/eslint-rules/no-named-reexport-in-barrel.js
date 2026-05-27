@@ -36,11 +36,21 @@ export const noNamedReexportInBarrel = {
           node.exportKind === 'type' || node.specifiers.every((s) => s.exportKind === 'type');
         const source = node.source.value;
 
-        context.report({
+        const hasAlias = node.specifiers.some((s) => s.local.name !== s.exported.name);
+        const hasDefault = node.specifiers.some((s) => s.local.name === 'default');
+        const hasMixedKinds =
+          node.specifiers.some((s) => s.exportKind === 'type') &&
+          node.specifiers.some((s) => s.exportKind !== 'type');
+        const isSafeToSuggest = !hasAlias && !hasDefault && !hasMixedKinds;
+
+        const report = {
           node,
           messageId: isTypeOnly ? 'useExportTypeStar' : 'useExportStar',
           data: { source },
-          suggest: [
+        };
+
+        if (isSafeToSuggest) {
+          report.suggest = [
             {
               messageId: isTypeOnly ? 'suggestExportTypeStar' : 'suggestExportStar',
               data: { source },
@@ -49,9 +59,13 @@ export const noNamedReexportInBarrel = {
                 return fixer.replaceText(node, `${prefix} from '${source}';`);
               },
             },
-          ],
-        });
+          ];
+        }
+
+        context.report(report);
       },
     };
   },
 };
+
+export default noNamedReexportInBarrel;
