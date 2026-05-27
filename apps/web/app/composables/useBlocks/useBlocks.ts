@@ -114,6 +114,8 @@ export const useBlocks: UseBlocksReturn = () => {
       const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
       setBlocks(assembled);
 
+      clearNuxtData((key) => key.startsWith('blocks-'));
+
       return true;
     } catch (error) {
       useHandleError(error as ApiError);
