@@ -1,18 +1,17 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { FlatBlock } from '~/components/TableOfContents/types';
+import type { FlatBlock, TocSectionId, TocSection } from '~/components/TableOfContents/types';
 
 export const useTableOfContents = () => {
   const { setIndex } = useCarousel();
   const route = useRoute();
   const { isStructureBlock } = useBlockManager();
+  const { logToCCreateBlock } = useLogEvent();
   const selectedUuid = useState<string>('toc-selected-uuid', () => '');
   const expandedBlocks = useState<Set<string>>('toc-expanded-blocks', () => new Set<string>());
   const hoveredUuid = useState<string>('toc-hovered-uuid', () => '');
   const highlightedUuid = useState<string>('toc-highlighted-uuid', () => '');
   const highlightTimeoutToken = useState<number>('toc-highlight-token', () => 0);
-  const headerOpen = useState<boolean>('toc-header-open', () => true);
-  const contentOpen = useState<boolean>('toc-content-open', () => true);
-  const footerOpen = useState<boolean>('toc-footer-open', () => true);
+  const filters = useState<Set<TocSectionId>>('toc-filters', () => new Set<TocSectionId>());
 
   const { allBlocks: data } = useBlocks();
 
@@ -24,9 +23,7 @@ export const useTableOfContents = () => {
       hoveredUuid.value = '';
       highlightedUuid.value = '';
       highlightTimeoutToken.value++;
-      headerOpen.value = true;
-      contentOpen.value = true;
-      footerOpen.value = true;
+      filters.value = new Set();
     },
   );
 
@@ -145,6 +142,91 @@ export const useTableOfContents = () => {
     }
   };
 
+  const addBlockAtContainerEnd = (event: MouseEvent, container: Block | undefined | null) => {
+    if (!container) {
+      return;
+    }
+
+    const { scrollIntoBlockView } = useBlockManager();
+
+    const children = (container.content ?? []) as Block[];
+    const lastChild = children[children.length - 1];
+    const anchorEl = event.currentTarget as HTMLElement;
+    const targetUuid = lastChild?.meta?.uuid ?? container.meta.uuid;
+    const position = lastChild ? 'bottom' : 'top';
+
+    if (useRuntimeConfig().public.enableAddBlockPopover) {
+      const { openAddBlockPopover } = useAddBlockPopover();
+      openAddBlockPopover({ anchorEl, targetUuid, position });
+    } else {
+      const { openDrawerWithView } = useSiteConfiguration();
+      const { togglePlaceholder } = useBlockManager();
+      const { clearInsertColumnUuid } = useBlocksMutations();
+      togglePlaceholder(targetUuid, position);
+      openDrawerWithView('blocksList');
+      clearInsertColumnUuid();
+    }
+    scrollIntoBlockView(lastChild ?? container);
+  };
+
+  const addBlockAtContainerStart = (event: MouseEvent, anchor: Block | undefined | null) => {
+    if (!anchor) {
+      return;
+    }
+
+    const { scrollIntoBlockView } = useBlockManager();
+    const anchorEl = event.currentTarget as HTMLElement;
+
+    if (useRuntimeConfig().public.enableAddBlockPopover) {
+      const { openAddBlockPopover } = useAddBlockPopover();
+      openAddBlockPopover({ anchorEl, targetUuid: anchor.meta.uuid, position: 'top' });
+    } else {
+      const { openDrawerWithView } = useSiteConfiguration();
+      const { togglePlaceholder } = useBlockManager();
+      const { clearInsertColumnUuid } = useBlocksMutations();
+      togglePlaceholder(anchor.meta.uuid, 'top');
+      openDrawerWithView('blocksList');
+      clearInsertColumnUuid();
+    }
+    scrollIntoBlockView(anchor);
+  };
+
+  const addAtTopForSection = (event: MouseEvent, section: TocSection) => {
+    if (section.id === 'content') {
+      const first = section.elements[0];
+
+      first ? addBlockAtContainerStart(event, first) :  addBlockAtBottom(event);
+    } else if (section.container) {
+      addBlockAtContainerStart(event, section.elements[0] ?? section.container);
+    }
+    logToCCreateBlock();
+  };
+
+  const addAtBottomForSection = (event: MouseEvent, section: TocSection) => {
+    if (section.id === 'content') {
+      addBlockAtBottom(event);
+    } else if (section.container) {
+      addBlockAtContainerEnd(event, section.container);
+    }
+    logToCCreateBlock();
+  };
+
+  const handleSectionDragChange = (
+    section: TocSection,
+    evt: { moved?: { oldIndex: number; newIndex: number } },
+  ) => {
+    if (!evt.moved || evt.moved.oldIndex === evt.moved.newIndex) {
+      return;
+    }
+
+    const { scrollIntoBlockView } = useBlockManager();
+    const draggedBlock = section.elements[evt.moved.newIndex];
+
+    if (draggedBlock) {
+      scrollIntoBlockView(draggedBlock);
+    }
+  };
+
   const setHoveredBlock = (uuid: string) => {
     hoveredUuid.value = uuid;
   };
@@ -158,9 +240,7 @@ export const useTableOfContents = () => {
     hoveredUuid,
     highlightedUuid,
     expandedBlocks,
-    headerOpen,
-    contentOpen,
-    footerOpen,
+    filters,
     data,
     flatBlocks,
     isStructureBlock,
@@ -169,6 +249,11 @@ export const useTableOfContents = () => {
     scrollToBlock,
     editBlock,
     addBlockAtBottom,
+    addBlockAtContainerEnd,
+    addBlockAtContainerStart,
+    addAtTopForSection,
+    addAtBottomForSection,
+    handleSectionDragChange,
     blockToFlatBlock,
     setHoveredBlock,
     clearHoveredBlock,

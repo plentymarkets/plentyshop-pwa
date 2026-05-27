@@ -36,7 +36,7 @@ export class FooterBlockObject extends PageObject {
   }
 
   openSettingsDrawer() {
-    cy.get('[data-testid^="toc-item-"]').last().click({ force: true });
+    cy.getByTestId('toc-section-footer-settings').click({ force: true });
     this.footerSettingsDrawer.should('be.visible');
     return this;
   }

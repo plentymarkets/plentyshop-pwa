@@ -70,8 +70,18 @@ export const useBlockManager = () => {
   const addBlockToHeader = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
     if (!headerContainer.value || !Array.isArray(headerContainer.value.content)) return;
 
-    const headerCopy = deepClone(headerContainer.value) as Block;
-    const parentInfo = findBlockParent([headerCopy], targetUuid);
+    const headerContent = headerContainer.value.content as Block[];
+
+    if (headerContainer.value.meta?.uuid === targetUuid) {
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
+
+      position === 'top' ? headerContent.unshift(newBlock) : headerContent.push(newBlock);
+      return;
+    }
+
+    const parentInfo = findBlockParent(headerContent, targetUuid);
     if (!parentInfo) return;
 
     const { parent, index } = parentInfo;
@@ -85,15 +95,13 @@ export const useBlockManager = () => {
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }
-
-    headerContainer.value.content = headerCopy.content;
   };
 
   const addBlockToFooter = (newBlock: Block, targetUuid: string, position: BlockPosition) => {
     if (!footer.value || !Array.isArray(footer.value.content)) return;
 
-    const footerCopy = deepClone(footer.value) as Block;
-    const parentInfo = findBlockParent(footerCopy.content as Block[], targetUuid);
+    const footerContent = footer.value.content as Block[];
+    const parentInfo = findBlockParent(footerContent, targetUuid);
     if (!parentInfo) return;
 
     const { parent, index } = parentInfo;
@@ -107,8 +115,6 @@ export const useBlockManager = () => {
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }
-
-    footer.value.content = footerCopy.content;
   };
 
   const addBlockToPage = (newBlock: Block, targetUuid: string, position: BlockPosition): boolean => {
@@ -123,31 +129,34 @@ export const useBlockManager = () => {
       return false;
     }
 
-    const copiedData: Block[] = deepClone(pageBlocks.value);
+    const blocks = pageBlocks.value as Block[];
     const isTargetFooter = footer.value?.meta?.uuid === targetUuid;
 
     if (isTargetFooter) {
-      copiedData.push(newBlock);
-    } else {
-      const parentInfo = findBlockParent(copiedData, targetUuid);
-      const parent = parentInfo?.parent ?? copiedData;
-      const index = parentInfo?.index ?? 0;
-      const targetBlock = parent[index];
-      if (!targetBlock) return false;
-
-      newBlock.parent_slot = targetBlock.parent_slot;
-
-      insertBlock({ targetBlock, newBlock, parent, index, position });
+      if (Array.isArray(newBlock.content) && newBlock.content.length) {
+        setUuid(newBlock.content as Block[]);
+      }
+      blocks.push(newBlock);
+      openSettingsForNewBlock(blocks, newBlock);
+      return true;
     }
+
+    const parentInfo = findBlockParent(blocks, targetUuid);
+    const parent = parentInfo?.parent ?? blocks;
+    const index = parentInfo?.index ?? 0;
+    const targetBlock = parent[index];
+    if (!targetBlock) return false;
+
+    newBlock.parent_slot = targetBlock.parent_slot;
+
+    insertBlock({ targetBlock, newBlock, parent, index, position });
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
       setUuid(newBlock.content as Block[]);
     }
 
-    updateBlocks(copiedData);
-
-    if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
-      openSettingsForNewBlock(copiedData, newBlock);
+    if (!isHeaderContainerBlock(getRootParent(blocks, newBlock.meta.uuid))) {
+      openSettingsForNewBlock(blocks, newBlock);
     }
 
     return true;
@@ -394,8 +403,13 @@ export const useBlockManager = () => {
     if (!isHeaderContainerBlock(headerContainer.value) || !Array.isArray(headerContainer.value.content)) return;
 
     const content = headerContainer.value.content as Block[];
-    if (content.length > 1) {
-      headerContainer.value.content = content.filter((block) => block.meta.uuid !== uuid);
+    if (content.length <= 1) {
+      return;
+    }
+
+    const idx = content.findIndex((block) => block.meta.uuid === uuid);
+    if (idx >= 0) {
+      content.splice(idx, 1);
     }
   };
 
