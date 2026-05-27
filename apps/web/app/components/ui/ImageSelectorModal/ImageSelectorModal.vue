@@ -134,7 +134,15 @@ const selectedRowKey = ref<string | null>(null);
 const selectedKey = ref<string | null>(null);
 
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders, loadingMore } = useItemsTable();
+const {
+  data: items,
+  loading,
+  getStorageItems,
+  uploadStorageItem,
+  revokeAllBlobUrls,
+  folders,
+  loadingMore,
+} = useItemsTable();
 
 const canAdd = computed(() => {
   const image = selectedImage.value?.image;

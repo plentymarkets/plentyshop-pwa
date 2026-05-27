@@ -48,12 +48,8 @@ export const useItemsTable: UseItemTableReturn = () => {
     cachedImages.value.push(...items);
     folders.value.push(...extractFolders(items));
 
-    state.value.data = Array.from(
-      new Map(state.value.data.map((item) => [item.key, item])).values()
-    );
-    cachedImages.value = Array.from(
-      new Map(cachedImages.value.map((item) => [item.key, item])).values()
-    );
+    state.value.data = Array.from(new Map(state.value.data.map((item) => [item.key, item])).values());
+    cachedImages.value = Array.from(new Map(cachedImages.value.map((item) => [item.key, item])).values());
     folders.value = Array.from(new Set(folders.value));
 
     if (data.nextContinuationToken && data.isTruncated) {
