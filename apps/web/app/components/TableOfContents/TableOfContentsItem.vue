@@ -3,14 +3,13 @@
     type="button"
     class="flex items-center justify-between cursor-pointer transition-colors gap-1 group w-full text-left"
     :data-testid="`toc-item-${item.uuid}`"
+    :style="item.depth > 0 ? { paddingLeft: `${item.depth * 16}px` } : undefined"
     @click="editBlock(item.block)"
     @keydown.enter="editBlock(item.block)"
     @keydown.space.prevent="editBlock(item.block)"
     @mouseenter="hoveredUuid = item.uuid"
     @mouseleave="hoveredUuid = ''"
   >
-    <div v-if="item.depth > 0 && !isStructureBlock(item.block)" class="shrink-0 w-4" />
-
     <TableOfContentsItemContent
       :uuid="item.uuid"
       :block-name="item.block.name"

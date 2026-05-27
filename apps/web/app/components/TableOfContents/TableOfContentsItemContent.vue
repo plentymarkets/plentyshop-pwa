@@ -8,7 +8,7 @@
   >
     <div class="flex items-center gap-2 min-w-0 flex-1">
       <slot name="arrow">
-        <div class="shrink-0 w-4" />
+        <div class="shrink-0 w-6" />
       </slot>
 
       <div class="shrink-0 w-5 h-5 relative">

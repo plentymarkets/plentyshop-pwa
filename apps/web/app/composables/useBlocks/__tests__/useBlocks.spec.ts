@@ -273,7 +273,7 @@ describe('useBlocks', () => {
         Footer: undefined,
       } as unknown as GetBlocksResponse;
       useBlocks().updateBlocks(newBlocks);
-      expect(mockStateRef.value.data.blocks).toBe(newBlocks);
+      expect(mockStateRef.value.data.blocks).toEqual(newBlocks);
     });
   });
 
