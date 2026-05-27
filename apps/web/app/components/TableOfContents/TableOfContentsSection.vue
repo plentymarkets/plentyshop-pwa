@@ -11,13 +11,13 @@
       </div>
       <button
         type="button"
-        class="w-7 h-7 rounded-md flex items-center justify-center bg-transparent border border-dashed border-editor-border text-editor-text-default transition-colors hover:bg-editor-button hover:border-editor-button hover:text-white"
+        class="w-7 h-7 rounded-md flex items-center justify-center border border-editor-accent/40 text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
         :data-testid="`toc-add-${section.id}-inline`"
         :title="getEditorTranslation('add-to-section', { section: section.label })"
         :aria-label="getEditorTranslation('add-to-section', { section: section.label })"
         @click="addAtTopForSection($event, section)"
       >
-        <SfIconAdd class="!w-3.5 !h-3.5" />
+        <SfIconAdd size="xs" />
       </button>
     </header>
 
@@ -47,11 +47,11 @@
     <div class="pt-2 pb-1 px-0.5">
       <button
         type="button"
-        class="w-full h-10 flex items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-colors bg-transparent border border-dashed border-editor-border text-editor-text-default hover:border-editor-button hover:text-editor-button"
+        class="w-full py-1.5 rounded-md border border-editor-accent/40 flex items-center justify-center gap-1.5 text-xs text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
         :data-testid="section.addTestId"
         @click="addAtBottomForSection($event, section)"
       >
-        <SfIconAdd class="!w-4 !h-4" />
+        <SfIconAdd size="xs" />
         <span>{{ getEditorTranslation('add-to-section', { section: section.label }) }}</span>
       </button>
     </div>

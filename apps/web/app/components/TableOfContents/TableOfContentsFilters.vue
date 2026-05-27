@@ -55,11 +55,11 @@
         <button
           v-if="section.container"
           type="button"
-          class="my-1.5 mr-2 w-8 h-9 flex items-center justify-center flex-none rounded-md transition"
+          class="my-1.5 mr-2 w-8 h-9 flex items-center justify-center flex-none rounded-md"
           :class="
             filters.has(section.id)
               ? 'bg-white/20 text-white hover:bg-white hover:!text-editor-button'
-              : 'bg-black/5 text-editor-text-default hover:bg-editor-button hover:text-white hover:rotate-45'
+              : 'bg-black/5 text-editor-text-default hover:bg-editor-button hover:text-white'
           "
           :data-testid="`toc-section-${section.id}-settings`"
           :title="getEditorTranslation('container-settings-label')"
