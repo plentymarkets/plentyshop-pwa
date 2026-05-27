@@ -8,6 +8,15 @@ export default defineNuxtPlugin({
   parallel: true,
   setup() {
     const pwaCookie = useCookie('pwa');
+    const isPreviewCookie = useCookie('isPreview');
+
+    if (!!isPreviewCookie.value) {
+      return {
+        provide: {
+          isPreview: false,
+        },
+      };
+    }
 
     return {
       provide: {
