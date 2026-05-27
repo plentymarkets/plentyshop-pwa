@@ -41,7 +41,7 @@ export const useItemsTable: UseItemTableReturn = () => {
       includeFolders: 'true',
       continuationToken: continuationToken,
     });
-    
+
     if (!data) {
       return;
     }
@@ -83,15 +83,20 @@ export const useItemsTable: UseItemTableReturn = () => {
       return;
     }
 
-    const items: StorageObject[] = data.objects ?? [];
+    try {
+      const items: StorageObject[] = data.objects ?? [];
 
-    state.value.data = items;
-    cachedImages.value = items;
-    folders.value = extractFolders(items);
+      state.value.data = items;
+      cachedImages.value = items;
+      folders.value = extractFolders(items);
 
-    if (data.isTruncated && data.nextContinuationToken) {
-      state.value.loadingMore = true;
-      await loadMoreStorageItems(fileTypes, data.nextContinuationToken);
+      if (data.isTruncated && data.nextContinuationToken) {
+        state.value.loadingMore = true;
+        await loadMoreStorageItems(fileTypes, data.nextContinuationToken);
+        state.value.loadingMore = false;
+      }
+    } finally {
+      state.value.loading = false;
       state.value.loadingMore = false;
     }
   };
