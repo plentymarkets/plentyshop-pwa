@@ -99,7 +99,7 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
-    '@plentymarkets/unleash',
+    'nuxt-unleash',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
