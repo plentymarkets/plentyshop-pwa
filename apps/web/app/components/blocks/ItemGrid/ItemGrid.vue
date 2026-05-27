@@ -1,12 +1,16 @@
 <template>
-  <div class="flex-1 min-w-0 w-full">
+  <div class="flex-1" :class="{ 'min-w-0 w-full': isCategoryListingPage }">
     <template v-if="content?.showItemCount">
       <div
-        class="flex items-center mb-6 max-lg:justify-start"
+        class="flex items-center mb-6"
         :class="{
+          'max-lg:justify-start': isCategoryListingPage,
           'lg:justify-end': content?.itemCountPosition === 'right',
           'lg:justify-center': content?.itemCountPosition === 'center',
           'lg:justify-start': content?.itemCountPosition === 'left',
+          'justify-end': !isCategoryListingPage && content?.itemCountPosition === 'right',
+          'justify-center': !isCategoryListingPage && content?.itemCountPosition === 'center',
+          'justify-start': !isCategoryListingPage && content?.itemCountPosition === 'left',
         }"
         data-testid="item-count"
       >
@@ -32,7 +36,11 @@
         data-testid="pagination-top"
       />
     </template>
-    <section v-if="products?.length" :class="[...gridClasses, 'min-w-0']" data-testid="category-grid">
+    <section
+      v-if="products?.length"
+      :class="[...gridClasses, isCategoryListingPage ? 'min-w-0' : '']"
+      data-testid="category-grid"
+    >
       <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getVariationId(product)" when-visible>
         <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
@@ -82,6 +90,8 @@ const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
 
 const props = defineProps<ItemGridProps>();
+const route = useRoute();
+const isCategoryListingPage = computed(() => route.meta.type === 'category');
 const products = computed(() => productsCatalog.value.products || []);
 const totalProducts = computed(() => Number(productsCatalog.value.pagination?.totals) || 0);
 const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
@@ -89,16 +99,22 @@ const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2
 const currentPage = computed(() => getFacetsFromURL().page ?? 1);
 const categoryId = computed(() => getFacetsFromURL().categoryUrlPath ?? null);
 
-const gridClasses = computed(() =>
-  gridClassFor(
+const gridClasses = computed(() => {
+  const extras = ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'];
+
+  if (isCategoryListingPage.value) {
+    extras.push('max-lg:!grid-cols-1');
+  }
+
+  return gridClassFor(
     {
       mobile: props.content?.itemsPerRowMobile,
       tablet: props.content?.itemsPerRowTablet,
       desktop: props.content?.itemsPerRowDesktop,
     },
-    ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5', 'max-lg:!grid-cols-1'],
-  ),
-);
+    extras,
+  );
+});
 
 watch([currentPage, categoryId], ([newPage, newCategory], [oldPage, oldCategory]) => {
   if (newPage !== oldPage && newCategory === oldCategory) {

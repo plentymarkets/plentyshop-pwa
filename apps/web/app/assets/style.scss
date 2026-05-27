@@ -1,9 +1,3 @@
-html,
-body {
-  overflow-x: clip;
-  max-width: 100%;
-}
-
 body {
   min-width: 0 !important;
   position: static !important;
@@ -21,6 +15,12 @@ iframe.skiptranslate {
   &::-webkit-scrollbar {
     @apply hidden;
   }
+}
+
+/* Category pages only: prevent horizontal page scroll without breaking in-component sliders */
+.category-page-overflow-clip {
+  overflow-x: clip;
+  max-width: 100%;
 }
 .grid-areas-product-page {
   grid-template-areas: 'left-top right' 'left-bottom right';

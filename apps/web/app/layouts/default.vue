@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-clip">
+  <div :class="{ 'category-page-overflow-clip': route.meta.type === 'category' }">
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="pt-3 pb-2 md:pt-4">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -37,6 +37,15 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 const route = useRoute();
+
+useHead({
+  htmlAttrs: {
+    class: computed(() => (route.meta.type === 'category' ? 'category-page-overflow-clip' : undefined)),
+  },
+  bodyAttrs: {
+    class: computed(() => (route.meta.type === 'category' ? 'category-page-overflow-clip' : undefined)),
+  },
+});
 
 setLogoMeta();
 

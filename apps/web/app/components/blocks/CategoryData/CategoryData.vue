@@ -98,7 +98,9 @@ import FieldsOrder from './FieldsOrder.vue';
 const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<CategoryDataProps>();
+const route = useRoute();
 const viewport = useViewport();
+const isCategoryListingPage = computed(() => route.meta.type === 'category');
 const { hexToRgba, getTextAlignment, getContentPosition, isMobile } = useBlockContentHelper();
 const { data: productsCatalog } = useProducts();
 const { disableActions } = useEditor();
@@ -151,7 +153,7 @@ const imageUrl = computed(() => {
 
 const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
-  const useCompactHorizontalPadding = viewport.isLessThan('lg');
+  const useCompactHorizontalPadding = isCategoryListingPage.value && viewport.isLessThan('lg');
 
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,

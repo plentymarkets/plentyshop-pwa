@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-md hover:shadow-lg flex flex-col w-full min-w-0"
+    class="rounded-md hover:shadow-lg flex flex-col"
     data-testid="product-card"
     :class="{ 'border border-neutral-200': configuration?.cardBorders }"
   >
