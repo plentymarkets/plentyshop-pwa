@@ -195,7 +195,7 @@ export const useTableOfContents = () => {
     if (section.id === 'content') {
       const first = section.elements[0];
 
-      first ? addBlockAtContainerStart(event, first) :  addBlockAtBottom(event);
+      first ? addBlockAtContainerStart(event, first) : addBlockAtBottom(event);
     } else if (section.container) {
       addBlockAtContainerStart(event, section.elements[0] ?? section.container);
     }
@@ -211,10 +211,7 @@ export const useTableOfContents = () => {
     logToCCreateBlock();
   };
 
-  const handleSectionDragChange = (
-    section: TocSection,
-    evt: { moved?: { oldIndex: number; newIndex: number } },
-  ) => {
+  const handleSectionDragChange = (section: TocSection, evt: { moved?: { oldIndex: number; newIndex: number } }) => {
     if (!evt.moved || evt.moved.oldIndex === evt.moved.newIndex) {
       return;
     }
