@@ -314,6 +314,9 @@ const passwordMinLength = runtimeConfig.public.passwordMinLength;
 const passwordMaxLength = runtimeConfig.public.passwordMaxLength;
 definePageMeta({ layout: false, middleware: ['guest-guard'] });
 usePageMeta().setPageMeta(t('authentication.signup.submitLabel'), 'page');
+useHead({
+  meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+});
 const turnstileLoad = ref(false);
 const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Shipping);
 const {
