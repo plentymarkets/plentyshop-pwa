@@ -201,7 +201,12 @@ const onDragEnd = () => {
     });
     setGridColumnsWidth(newWidths);
   } else {
-    structure.value.content = [...localItems.value];
+    const content = structure.value.content as Block[] | undefined;
+    if (Array.isArray(content)) {
+      content.splice(0, content.length, ...localItems.value);
+    } else {
+      structure.value.content = [...localItems.value];
+    }
   }
 };
 
