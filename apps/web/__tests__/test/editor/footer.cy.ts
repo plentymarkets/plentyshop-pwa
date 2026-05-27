@@ -11,7 +11,7 @@ describe('Footer Block', () => {
     cy.clearConfig();
 
     cy.setConfig({
-      isPreview: false,
+      isEditor: false,
     });
 
     cy.visitAndHydrate(paths.home);

@@ -18,7 +18,7 @@ describe('SiteSettings', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ isPreview: true });
+    cy.setConfig({ isEditor: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
   });

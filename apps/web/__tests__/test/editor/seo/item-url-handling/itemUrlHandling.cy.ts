@@ -16,7 +16,7 @@ describe('ItemUrlHandling', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ isPreview: true });
+    cy.setConfig({ isEditor: true });
     cy.visit('/');
     cy.setConfig({ enableSingleProductUrlScheme: true });
     cookieBar.delay(500).acceptAll();

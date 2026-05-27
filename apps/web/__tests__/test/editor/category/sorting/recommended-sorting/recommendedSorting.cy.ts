@@ -11,7 +11,7 @@ describe('RecommendedSorting', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ isPreview: true });
+    cy.setConfig({ isEditor: true });
     //1. Go to Living room category page
     cy.visit(categoryPage);
     cookieBar.acceptAll();
