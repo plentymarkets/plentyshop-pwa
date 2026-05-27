@@ -80,7 +80,7 @@
           <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
           <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
             <template #trigger="{ color, toggle }">
-              <label>
+              <div>
                 <SfInput
                   v-model="multiGridStructure.configuration.layout.backgroundColor"
                   type="text"
@@ -96,7 +96,7 @@
                     />
                   </template>
                 </SfInput>
-              </label>
+              </div>
             </template>
           </EditorColorPicker>
         </div>
@@ -114,6 +114,7 @@ import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import MultiGridLayoutPanel from './MultiGridLayoutPanel.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
+import { useMultiGridDeviceWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -130,7 +131,15 @@ const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(allBlocks.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
-  if (!block.configuration.layout) {
+  if (block.configuration.layout) {
+    if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
+    if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
+    if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
+      block.configuration.layout.marginBottom = defaultMarginBottom.value;
+    }
+    if (block.configuration.layout.reverseOnMobile === undefined) block.configuration.layout.reverseOnMobile = false;
+    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = true;
+  } else {
     block.configuration.layout = {
       marginTop: 0,
       marginBottom: defaultMarginBottom.value,
@@ -139,23 +148,16 @@ const multiGridStructure = computed(() => {
       reverseOnMobile: false,
       alignHeights: true,
     };
-  } else {
-    if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
-    if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
-    if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
-      block.configuration.layout.marginBottom = defaultMarginBottom.value;
-    }
-    if (block.configuration.layout.reverseOnMobile === undefined) block.configuration.layout.reverseOnMobile = false;
-    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = true;
   }
   return block;
 });
 
+const { widths: gridColumnsWidth, setWidths: setGridColumnsWidth } = useMultiGridDeviceWidths(
+  computed(() => multiGridStructure.value.configuration),
+);
+
 const visibleGrid = computed(() =>
-  computeVisibleGrid(
-    (multiGridStructure.value.content as Block[]) ?? [],
-    multiGridStructure.value.configuration.columnWidths ?? [],
-  ),
+  computeVisibleGrid((multiGridStructure.value.content as Block[]) ?? [], gridColumnsWidth.value),
 );
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
@@ -177,24 +179,26 @@ const allEmpty = computed(() => {
 const applyPreset = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   block.configuration.columnWidths = [...spans];
+  delete block.configuration.columnWidthsTablet;
+  delete block.configuration.columnWidthsMobile;
   block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
 };
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
-  const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
+  const updated = [...gridColumnsWidth.value];
   visibleGrid.value.filteredToOriginal.forEach((originalIndex, filteredIndex) => {
     const width = filteredWidths[filteredIndex];
-    if (width !== undefined) {
-      fullWidths[originalIndex] = width;
-    }
+    if (width !== undefined) updated[originalIndex] = width;
   });
-  multiGridStructure.value.configuration.columnWidths = fullWidths;
+  setGridColumnsWidth(updated);
 };
 
 const addRowSpans = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(...spans);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(...spans);
   if (!block.content) block.content = [];
   block.content.push(
     ...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]),
@@ -209,6 +213,8 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
       childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.splice(insertIndex, 0, ...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
@@ -229,6 +235,8 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(newSlot, 1);
+      if (gridBlock.configuration.columnWidthsTablet) gridBlock.configuration.columnWidthsTablet.splice(newSlot, 1);
+      if (gridBlock.configuration.columnWidthsMobile) gridBlock.configuration.columnWidthsMobile.splice(newSlot, 1);
     }
   };
 
@@ -244,6 +252,8 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   });
 
   block.configuration.columnWidths.push(12);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(12);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(12);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
@@ -257,6 +267,10 @@ const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl
     if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + 1;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columnWidthsTablet)
+    block.configuration.columnWidthsTablet.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columnWidthsMobile)
+    block.configuration.columnWidthsMobile.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
@@ -272,6 +286,8 @@ const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(insertIndex, 1);
+      if (gridBlock.configuration.columnWidthsTablet) gridBlock.configuration.columnWidthsTablet.splice(insertIndex, 1);
+      if (gridBlock.configuration.columnWidthsMobile) gridBlock.configuration.columnWidthsMobile.splice(insertIndex, 1);
       (gridBlock.content as Block[]).forEach((childBlock) => {
         if ((childBlock.parent_slot ?? 0) > insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) - 1;
       });
