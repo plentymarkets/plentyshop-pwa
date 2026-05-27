@@ -36,12 +36,14 @@ export default defineNuxtModule<ModuleOptions>({
 
     addImportsDir(resolver.resolve('./runtime/composables'));
 
-    extendPages((pages) => {
-      pages.push({
-        name: 'unleash-playground',
-        path: '/_unleash',
-        file: resolver.resolve('./runtime/pages/unleash.vue'),
+    if (nuxt.options.dev) {
+      extendPages((pages) => {
+        pages.push({
+          name: 'unleash-playground',
+          path: '/unleash',
+          file: resolver.resolve('./runtime/pages/unleash.vue'),
+        });
       });
-    });
+    }
   },
 });
