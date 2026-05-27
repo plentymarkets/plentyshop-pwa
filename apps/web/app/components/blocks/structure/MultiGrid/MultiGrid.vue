@@ -73,10 +73,10 @@ const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-0',
-  S: 'gap-2',
-  M: 'gap-4',
-  L: 'gap-6',
-  XL: 'gap-8',
+  S: 'gap-1 md:gap-2',
+  M: 'gap-2 md:gap-4',
+  L: 'gap-3 md:gap-6',
+  XL: 'gap-4 md:gap-8',
 };
 const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
 
@@ -95,16 +95,25 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
+const viewport = useViewport();
 const shouldStretchBackground = computed(() => Boolean(configuration.layout?.fullWidthBackground));
+
+const isCategoryFilterLayout = computed(() => content.some((block) => block.name === 'SortFilter'));
 
 const outerBackgroundStyle = computed(() => {
   if (!shouldStretchBackground.value) return {};
+
+  const backgroundColor = configuration.layout?.backgroundColor ?? 'transparent';
+
+  if (isCategoryFilterLayout.value && viewport.isLessThan('lg')) {
+    return { width: '100%', backgroundColor };
+  }
 
   return {
     width: '100vw',
     marginLeft: 'calc(50% - 50vw)',
     marginRight: 'calc(50% - 50vw)',
-    backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+    backgroundColor,
   };
 });
 
@@ -119,50 +128,87 @@ const gridContainerClasses = computed(() => {
 });
 
 // FIX: Updated to include Padding styles
-const gridInlineStyle = computed(() => ({
-  backgroundColor: shouldStretchBackground.value ? 'transparent' : configuration.layout?.backgroundColor ?? 'transparent',
-  // Margins
-  marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
-  marginBottom:
-    configuration.layout?.marginBottom !== undefined
-      ? `${configuration.layout.marginBottom}px`
-      : `${defaultMarginBottom.value}px`,
-  marginLeft: shouldStretchBackground.value
-    ? 'auto'
-    : configuration.layout?.marginLeft !== undefined
-      ? `${configuration.layout.marginLeft}px`
-      : '0px',
-  marginRight: shouldStretchBackground.value
-    ? 'auto'
-    : configuration.layout?.marginRight !== undefined
-      ? `${configuration.layout.marginRight}px`
-      : '0px',
-  
-  // Padding - NEW LOGIC HERE
-  paddingTop: configuration.layout?.paddingTop !== undefined ? `${configuration.layout.paddingTop}px` : '0px',
-  paddingBottom: configuration.layout?.paddingBottom !== undefined ? `${configuration.layout.paddingBottom}px` : '0px',
-  paddingLeft: configuration.layout?.paddingLeft !== undefined ? `${configuration.layout.paddingLeft}px` : '0px',
-  paddingRight: configuration.layout?.paddingRight !== undefined ? `${configuration.layout.paddingRight}px` : '0px',
-}));
+const gridInlineStyle = computed(() => {
+  const useCompactHorizontalSpacing = isCategoryFilterLayout.value && viewport.isLessThan('lg');
+
+  return {
+    backgroundColor: shouldStretchBackground.value ? 'transparent' : configuration.layout?.backgroundColor ?? 'transparent',
+    marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
+    marginBottom:
+      configuration.layout?.marginBottom !== undefined
+        ? `${configuration.layout.marginBottom}px`
+        : `${defaultMarginBottom.value}px`,
+    marginLeft: useCompactHorizontalSpacing
+      ? '0px'
+      : shouldStretchBackground.value
+        ? 'auto'
+        : configuration.layout?.marginLeft !== undefined
+          ? `${configuration.layout.marginLeft}px`
+          : '0px',
+    marginRight: useCompactHorizontalSpacing
+      ? '0px'
+      : shouldStretchBackground.value
+        ? 'auto'
+        : configuration.layout?.marginRight !== undefined
+          ? `${configuration.layout.marginRight}px`
+          : '0px',
+    paddingTop: configuration.layout?.paddingTop !== undefined ? `${configuration.layout.paddingTop}px` : '0px',
+    paddingBottom: configuration.layout?.paddingBottom !== undefined ? `${configuration.layout.paddingBottom}px` : '0px',
+    paddingLeft: useCompactHorizontalSpacing
+      ? '0px'
+      : configuration.layout?.paddingLeft !== undefined
+        ? `${configuration.layout.paddingLeft}px`
+        : '0px',
+    paddingRight: useCompactHorizontalSpacing
+      ? '0px'
+      : configuration.layout?.paddingRight !== undefined
+        ? `${configuration.layout.paddingRight}px`
+        : '0px',
+  };
+});
 
 const getGridClasses = () => {
-  // Read the value from the editor (defaults to 1 if not set)
+  if (isCategoryFilterLayout.value) {
+    return [
+      'grid',
+      'grid-cols-1',
+      'lg:grid-cols-12',
+      gridGapClass.value || 'gap-4',
+      'items-start',
+      'min-w-0',
+      'max-lg:!mx-0',
+    ];
+  }
+
   const mobileColsSetting = configuration.layout?.mobileCols === 2 ? 2 : 1;
-  
-  // Explicitly write the literal strings so Tailwind doesn't purge them!
   const mobileGridClass = mobileColsSetting === 2 ? 'grid-cols-2' : 'grid-cols-1';
 
   return [
-    'grid', 
-    mobileGridClass, // Uses the editor's choice
-    'md:grid-cols-12', // Tablet
-    'lg:grid-cols-12', // Desktop
-    gridGapClass.value || 'gap-4', 
-    'items-start'
+    'grid',
+    mobileGridClass,
+    'md:grid-cols-12',
+    'lg:grid-cols-12',
+    gridGapClass.value || 'gap-4',
+    'items-start',
   ];
 };
 
-const colSpanMap: Record<number, string> = {
+const categoryColSpanMap: Record<number, string> = {
+  1: 'lg:col-span-1',
+  2: 'lg:col-span-2',
+  3: 'lg:col-span-3',
+  4: 'lg:col-span-4',
+  5: 'lg:col-span-5',
+  6: 'lg:col-span-6',
+  7: 'lg:col-span-7',
+  8: 'lg:col-span-8',
+  9: 'lg:col-span-9',
+  10: 'lg:col-span-10',
+  11: 'lg:col-span-11',
+  12: 'lg:col-span-12',
+};
+
+const defaultColSpanMap: Record<number, string> = {
   1: 'md:col-span-1',
   2: 'md:col-span-2',
   3: 'md:col-span-3',
@@ -179,10 +225,20 @@ const colSpanMap: Record<number, string> = {
 
 const getColumnClasses = (colIndex: number) => {
   const rawWidth = configuration.columnWidths?.[colIndex];
-  const columnWidth = rawWidth ? Number(rawWidth) : 12; // Safely force to Number
-  
-  const desktopSpan = colSpanMap[columnWidth] || 'md:col-span-12';
-  
+  const columnWidth = rawWidth ? Number(rawWidth) : 12;
+
+  if (isCategoryFilterLayout.value) {
+    const desktopSpan = categoryColSpanMap[columnWidth] || 'lg:col-span-12';
+    const classes = ['col-span-1', 'max-lg:col-span-1', 'max-lg:w-full', desktopSpan, 'min-w-0'];
+
+    if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
+      classes.push('lg:sticky', 'lg:top-40');
+    }
+
+    return classes;
+  }
+
+  const desktopSpan = defaultColSpanMap[columnWidth] || 'md:col-span-12';
   const classes = ['col-span-1', desktopSpan];
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {

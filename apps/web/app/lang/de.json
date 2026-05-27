@@ -389,6 +389,14 @@
       "refresh": "Aktualisieren"
     },
     "navigation": {
+      "bottomNav": {
+        "home": "Start",
+        "products": "Artikel",
+        "wishlist": "Liste",
+        "cart": "Korb",
+        "login": "Login",
+        "account": "Konto"
+      },
       "breadcrumbsDropdown": "Mehr Breadcrumbs anzeigen",
       "closeAddressForm": "Adressbearbeitung beenden",
       "closeAuthentication": "Authentifizierungsmodal schließen",

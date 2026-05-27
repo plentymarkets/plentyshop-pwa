@@ -32,6 +32,7 @@
     <div
       class="bg-white w-full relative"
       :class="{
+        'category-page-overflow-clip': route.meta.type === 'category',
         'w-[calc(50vw-80px)] lg:w-[calc(75vw-80px)] xl:w-[calc(80vw-80px)]': drawerOpen,
         'transition-all duration-300 ease-in-out': placement === 'left' && drawerOpen,
         'lg:w-[calc(100%-66px)]': clientPreview && !drawerOpen && disableActions,

@@ -10,7 +10,7 @@
       :key="productGetters.getId(product)"
       :product="product"
       is-from-slider
-      class="max-w-48"
+      class="max-w-48 shrink-0 flex-none"
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">

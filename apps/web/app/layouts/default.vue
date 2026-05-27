@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div :class="{ 'category-page-overflow-clip': route.meta.type === 'category' }">
     <UiHeader />
-    <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+    <NarrowContainer v-if="breadcrumbs?.length" class="pt-3 pb-2 md:pt-4">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
-    <main>
+    <main class="pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0">
       <slot />
     </main>
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
@@ -12,7 +12,11 @@
     <PreviewMode />
     
     <ClientOnly>
-      <FooterBlock v-if="!route.meta.isBlockified" :content="globalFooterData" />
+      <FooterBlock
+        v-if="!route.meta.isBlockified"
+        :content="globalFooterData"
+        class="max-lg:pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))]"
+      />
     </ClientOnly>
     
     <QuickCheckout v-if="isOpen" :product="product" />
@@ -33,6 +37,15 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 const route = useRoute();
+
+useHead({
+  htmlAttrs: {
+    class: computed(() => (route.meta.type === 'category' ? 'category-page-overflow-clip' : undefined)),
+  },
+  bodyAttrs: {
+    class: computed(() => (route.meta.type === 'category' ? 'category-page-overflow-clip' : undefined)),
+  },
+});
 
 setLogoMeta();
 

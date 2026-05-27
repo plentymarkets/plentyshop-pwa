@@ -197,21 +197,9 @@
       </div>
     </template>
 
-    <div v-if="viewport.isLessThan('lg')" class="flex items-center justify-end">
+    <div v-if="viewport.isLessThan('lg')" class="w-full min-w-0 overflow-hidden">
       <div
-        class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap"
-      >
-        <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"
-          ><span>•</span>Reparatur und Instandsetzung</NuxtLink
-        >
-        <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
-        <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Über uns</NuxtLink>
-        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Ankauf</a>
-        <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Team</NuxtLink>
-      </div>
-
-      <div
-        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-2 px-2 sm:px-3 py-2.5 z-[90]"
+        class="w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-2 px-2 sm:px-3 py-2.5"
       >
         <div class="flex flex-row items-center justify-between w-full gap-2">
           <div class="flex flex-row items-center gap-2 sm:gap-3 flex-shrink-0">

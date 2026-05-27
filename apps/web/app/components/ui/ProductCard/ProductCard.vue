@@ -73,7 +73,7 @@
           <SfLink
             :tag="NuxtLink"
             :to="productPath"
-            class="no-underline"
+            class="no-underline line-clamp-2"
             variant="secondary"
             data-testid="productcard-name"
           >

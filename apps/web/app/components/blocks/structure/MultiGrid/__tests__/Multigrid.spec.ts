@@ -90,7 +90,7 @@ describe('MultiGrid block', () => {
         },
       },
     });
-    expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-x-5');
+    expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-8');
   });
 
   it('should apply layout styles (margin, background color) to the grid container', () => {

@@ -104,7 +104,9 @@ const wrapperStyle = computed(() => {
   const userHeight = props.content?.image?.height;
 
   if (depth > 0) {
-    return { position: 'relative' as const, height: '24rem' };
+    const bp = viewport.breakpoint.value;
+    const isMobile = bp === 'xs' || bp === 'sm';
+    return { position: 'relative' as const, height: isMobile ? '14rem' : '24rem' };
   }
 
   if (userHeight === 'auto') {

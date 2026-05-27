@@ -1,6 +1,6 @@
 <template>
-  <nav data-testid="breadcrumbs" class="inline-flex items-center text-sm font-normal">
-    <ol class="flex w-auto leading-none group md:flex-wrap">
+  <nav data-testid="breadcrumbs" class="w-full min-w-0 max-w-full text-sm font-normal">
+    <ol class="flex flex-wrap w-full min-w-0 max-w-full items-center gap-y-1 leading-snug group">
       <li class="flex items-center sm:hidden text-neutral-500 z-9">
         <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
           <SfDropdown v-model="dropdownOpened" strategy="absolute" placement="bottom-start" @update:model-value="close">
@@ -39,18 +39,18 @@
       <li
         v-for="(item, index) in breadcrumbs"
         :key="item.name"
-        class="peer hidden sm:flex items-center peer-[:nth-of-type(even)]:before:content-['/'] peer-[:nth-of-type(even)]:before:px-2 peer-[:nth-of-type(even)]:before:leading-5 last-of-type:flex last-of-type:before:font-normal last-of-type:before:text-neutral-500 text-neutral-500 last-of-type:text-neutral-900 last-of-type:font-medium"
+        class="peer hidden sm:flex items-center min-w-0 max-w-full peer-[:nth-of-type(even)]:before:content-['/'] peer-[:nth-of-type(even)]:before:px-2 peer-[:nth-of-type(even)]:before:leading-5 last-of-type:flex last-of-type:min-w-0 last-of-type:flex-1 last-of-type:before:font-normal last-of-type:before:text-neutral-500 last-of-type:before:shrink-0 text-neutral-500 last-of-type:text-neutral-900 last-of-type:font-medium"
       >
         <SfLink
           v-if="index < breadcrumbs.length - 1"
           :tag="NuxtLink"
           :to="localePath(item.link)"
           variant="secondary"
-          class="leading-5 no-underline hover:underline active:underline whitespace-nowrap outline-secondary-600 text-inherit"
+          class="leading-snug no-underline hover:underline active:underline sm:whitespace-nowrap outline-secondary-600 text-inherit break-words min-w-0"
         >
           {{ item.name }}
         </SfLink>
-        <span v-else>
+        <span v-else class="break-words min-w-0 leading-snug">
           {{ item.name }}
         </span>
       </li>
