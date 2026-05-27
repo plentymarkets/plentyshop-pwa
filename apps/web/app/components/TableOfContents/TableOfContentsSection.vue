@@ -4,7 +4,7 @@
     :class="!isFirst && 'border-t border-editor-border pt-3.5'"
     :data-testid="`toc-section-${section.id}`"
   >
-    <header class="flex items-center justify-between px-1 pt-0.5 pb-2">
+    <header class="flex items-center justify-between px-1 pt-0.5">
       <div class="flex items-center gap-2.5 min-w-0">
         <component :is="sectionIcons[section.id]" class="w-6 h-6 flex-none text-editor-text-default" />
         <span class="text-sm font-bold tracking-tight">{{ section.label }}</span>

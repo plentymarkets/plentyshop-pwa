@@ -25,7 +25,7 @@
       <div
         v-for="section in sections"
         :key="section.id"
-        class="relative flex items-center justify-between h-12 rounded-lg cursor-pointer text-xs font-semibold transition-colors border"
+        class="relative flex items-center justify-between h-8 rounded-md cursor-pointer text-xs font-semibold transition-colors border"
         :class="
           filters.has(section.id)
             ? 'bg-editor-button text-white border-editor-button'
@@ -34,13 +34,13 @@
       >
         <button
           type="button"
-          class="flex-1 min-w-0 h-full flex items-center gap-2.5 px-3.5 bg-transparent border-0 text-left"
+          class="flex-1 min-w-0 h-full flex items-center gap-2 px-2.5 bg-transparent border-0 text-left"
           :data-testid="`toc-filter-${section.id}`"
           :aria-pressed="filters.has(section.id)"
           @click="toggleFilter(section.id)"
         >
           <span
-            class="w-[18px] h-[18px] flex-none flex items-center justify-center border rounded transition-colors"
+            class="w-3.5 h-3.5 flex-none flex items-center justify-center border rounded-sm transition-colors"
             :class="
               filters.has(section.id)
                 ? 'bg-white border-white text-editor-button'
@@ -48,14 +48,14 @@
             "
             aria-hidden="true"
           >
-            <SfIconCheck v-if="filters.has(section.id)" class="!w-3 !h-3" />
+            <SfIconCheck v-if="filters.has(section.id)" class="!w-2.5 !h-2.5" />
           </span>
           <span>{{ section.label }}</span>
         </button>
         <button
           v-if="section.container"
           type="button"
-          class="my-1.5 mr-2 w-8 h-9 flex items-center justify-center flex-none rounded-md"
+          class="my-1 mr-1 w-6 h-6 flex items-center justify-center flex-none rounded"
           :class="
             filters.has(section.id)
               ? 'bg-white/20 text-white hover:bg-white hover:!text-editor-button'
@@ -66,7 +66,7 @@
           :aria-label="getEditorTranslation('container-settings-label')"
           @click.stop="openContainerSettings(section.container)"
         >
-          <CogIcon class="!w-4 !h-4" />
+          <CogIcon class="!w-3.5 !h-3.5" />
         </button>
       </div>
     </div>
