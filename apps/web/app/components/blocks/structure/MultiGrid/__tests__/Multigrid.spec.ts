@@ -129,7 +129,6 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-12');
     expect(classes).toContain('lg:grid-cols-12');
   });
 
@@ -145,7 +144,6 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-12');
     expect(classes).toContain('lg:grid-cols-12');
   });
 

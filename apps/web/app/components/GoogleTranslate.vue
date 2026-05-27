@@ -98,14 +98,19 @@ watch(() => route.path, () => {
     color: #0284c7 !important;
 }
 
-/* 4. HIDE TOP BANNER */
-.goog-te-banner-frame {
+/* 4. HIDE TOP BANNER & LAYOUT-BREAKING IFRAMES */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+body > .skiptranslate {
     display: none !important;
 }
-body {
-    top: 0px !important; 
-}
-.goog-te-gadget img{
+
+.goog-te-gadget img {
     display: none !important;
+}
+
+.google-translate-wrapper {
+    max-width: 100%;
+    overflow: hidden;
 }
 </style>

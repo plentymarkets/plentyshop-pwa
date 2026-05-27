@@ -73,10 +73,10 @@ const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
   None: 'gap-0',
-  S: 'gap-2',
-  M: 'gap-4',
-  L: 'gap-6',
-  XL: 'gap-8',
+  S: 'gap-1 md:gap-2',
+  M: 'gap-2 md:gap-4',
+  L: 'gap-3 md:gap-6',
+  XL: 'gap-4 md:gap-8',
 };
 const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
 
@@ -95,16 +95,23 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
+const viewport = useViewport();
 const shouldStretchBackground = computed(() => Boolean(configuration.layout?.fullWidthBackground));
 
 const outerBackgroundStyle = computed(() => {
   if (!shouldStretchBackground.value) return {};
 
+  const backgroundColor = configuration.layout?.backgroundColor ?? 'transparent';
+
+  if (viewport.isLessThan('lg')) {
+    return { width: '100%', backgroundColor };
+  }
+
   return {
     width: '100vw',
     marginLeft: 'calc(50% - 50vw)',
     marginRight: 'calc(50% - 50vw)',
-    backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+    backgroundColor,
   };
 });
 
@@ -146,47 +153,42 @@ const gridInlineStyle = computed(() => ({
 }));
 
 const getGridClasses = () => {
-  // Read the value from the editor (defaults to 1 if not set)
-  const mobileColsSetting = configuration.layout?.mobileCols === 2 ? 2 : 1;
-  
-  // Explicitly write the literal strings so Tailwind doesn't purge them!
-  const mobileGridClass = mobileColsSetting === 2 ? 'grid-cols-2' : 'grid-cols-1';
-
   return [
-    'grid', 
-    mobileGridClass, // Uses the editor's choice
-    'md:grid-cols-12', // Tablet
-    'lg:grid-cols-12', // Desktop
-    gridGapClass.value || 'gap-4', 
-    'items-start'
+    'grid',
+    'grid-cols-1',
+    'lg:grid-cols-12',
+    gridGapClass.value || 'gap-4',
+    'items-start',
+    'min-w-0',
+    'max-lg:!mx-0',
   ];
 };
 
 const colSpanMap: Record<number, string> = {
-  1: 'md:col-span-1',
-  2: 'md:col-span-2',
-  3: 'md:col-span-3',
-  4: 'md:col-span-4',
-  5: 'md:col-span-5',
-  6: 'md:col-span-6',
-  7: 'md:col-span-7',
-  8: 'md:col-span-8',
-  9: 'md:col-span-9',
-  10: 'md:col-span-10',
-  11: 'md:col-span-11',
-  12: 'md:col-span-12',
+  1: 'lg:col-span-1',
+  2: 'lg:col-span-2',
+  3: 'lg:col-span-3',
+  4: 'lg:col-span-4',
+  5: 'lg:col-span-5',
+  6: 'lg:col-span-6',
+  7: 'lg:col-span-7',
+  8: 'lg:col-span-8',
+  9: 'lg:col-span-9',
+  10: 'lg:col-span-10',
+  11: 'lg:col-span-11',
+  12: 'lg:col-span-12',
 };
 
 const getColumnClasses = (colIndex: number) => {
   const rawWidth = configuration.columnWidths?.[colIndex];
   const columnWidth = rawWidth ? Number(rawWidth) : 12; // Safely force to Number
   
-  const desktopSpan = colSpanMap[columnWidth] || 'md:col-span-12';
+  const desktopSpan = colSpanMap[columnWidth] || 'lg:col-span-12';
   
-  const classes = ['col-span-1', desktopSpan];
+  const classes = ['col-span-1', 'max-lg:col-span-1', 'max-lg:w-full', desktopSpan, 'min-w-0'];
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
-    classes.push('md:sticky', 'md:top-40');
+    classes.push('lg:sticky', 'lg:top-40');
   }
 
   return classes;

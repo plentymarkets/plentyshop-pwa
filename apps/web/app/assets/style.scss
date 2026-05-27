@@ -1,3 +1,20 @@
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
+  min-width: 0 !important;
+  position: static !important;
+}
+
+/* Google Translate injects hidden iframes that can force horizontal scroll on mobile */
+body > .skiptranslate,
+iframe.skiptranslate {
+  display: none !important;
+}
+
 .scrollbar-hidden {
   -ms-overflow-style: none;
   scrollbar-width: none;

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-md hover:shadow-lg flex flex-col"
+    class="rounded-md hover:shadow-lg flex flex-col w-full min-w-0"
     data-testid="product-card"
     :class="{ 'border border-neutral-200': configuration?.cardBorders }"
   >
@@ -73,7 +73,7 @@
           <SfLink
             :tag="NuxtLink"
             :to="productPath"
-            class="no-underline"
+            class="no-underline line-clamp-2"
             variant="secondary"
             data-testid="productcard-name"
           >

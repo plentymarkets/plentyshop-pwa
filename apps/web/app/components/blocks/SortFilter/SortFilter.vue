@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showSortAndFilter" data-testid="category-sort-filter">
+  <div v-if="showSortAndFilter" class="min-w-0 w-full" data-testid="category-sort-filter">
     <CategorySidebar class="sidebar w-full" :is-open="isOpen" @close="close">
       <template v-for="key in props.content?.filtersOrder" :key="key">
         <template v-if="key === 'category' && props.content?.fields.category">
@@ -68,7 +68,7 @@
       </template>
     </CategorySidebar>
 
-    <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+    <UiButton variant="tertiary" class="lg:hidden w-full !justify-start whitespace-nowrap" @click="open">
       <template #prefix>
         <SfIconTune />
       </template>

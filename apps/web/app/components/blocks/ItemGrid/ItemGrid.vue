@@ -1,12 +1,12 @@
 <template>
-  <div class="flex-1">
+  <div class="flex-1 min-w-0 w-full">
     <template v-if="content?.showItemCount">
       <div
-        class="flex items-center mb-6"
+        class="flex items-center mb-6 max-lg:justify-start"
         :class="{
-          'justify-end': content?.itemCountPosition === 'right',
-          'justify-center': content?.itemCountPosition === 'center',
-          'justify-start': content?.itemCountPosition === 'left',
+          'lg:justify-end': content?.itemCountPosition === 'right',
+          'lg:justify-center': content?.itemCountPosition === 'center',
+          'lg:justify-start': content?.itemCountPosition === 'left',
         }"
         data-testid="item-count"
       >
@@ -32,7 +32,7 @@
         data-testid="pagination-top"
       />
     </template>
-    <section v-if="products?.length" :class="gridClasses" data-testid="category-grid">
+    <section v-if="products?.length" :class="[...gridClasses, 'min-w-0']" data-testid="category-grid">
       <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getVariationId(product)" when-visible>
         <UiProductCard :product="product" :configuration="content" :index="index" />
       </NuxtLazyHydrate>
@@ -96,7 +96,7 @@ const gridClasses = computed(() =>
       tablet: props.content?.itemsPerRowTablet,
       desktop: props.content?.itemsPerRowDesktop,
     },
-    ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'],
+    ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5', 'max-lg:!grid-cols-1'],
   ),
 );
 

@@ -1,12 +1,12 @@
 <template>
-  <div :style="inlineStyle" data-testid="category-data">
+  <div :style="inlineStyle" class="w-full min-w-0 max-w-full" data-testid="category-data">
     <template
       v-if="props.content.displayCategoryImage === 'off' || (!imageUrl && props.content.displayCategoryImage !== 'off')"
     >
       <div
         v-if="shouldShowTextBlock"
         data-testid="text-card"
-        :class="['w-full']"
+        :class="['w-full min-w-0 max-w-full']"
         :style="{
           color: props.content.text.color,
           backgroundColor: props.content.text.bgColor,
@@ -98,6 +98,7 @@ import FieldsOrder from './FieldsOrder.vue';
 const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<CategoryDataProps>();
+const viewport = useViewport();
 const { hexToRgba, getTextAlignment, getContentPosition, isMobile } = useBlockContentHelper();
 const { data: productsCatalog } = useProducts();
 const { disableActions } = useEditor();
@@ -150,17 +151,20 @@ const imageUrl = computed(() => {
 
 const inlineStyle = computed(() => {
   const layout = props.content.layout || {};
+  const useCompactHorizontalPadding = viewport.isLessThan('lg');
 
   return {
     paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
-    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
-    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+    paddingLeft: useCompactHorizontalPadding ? 0 : layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
+    paddingRight: useCompactHorizontalPadding ? 0 : layout.paddingRight ? `${layout.paddingRight}px` : 0,
   };
 });
 
 const categoryDataContentClass = computed(() => {
-  return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%] mx-5';
+  return isMobile.value
+    ? 'p-4 md:p-6 rounded-lg w-full min-w-0 max-w-full'
+    : 'p-4 md:p-6 rounded-lg md:max-w-[50%] max-lg:mx-0 lg:mx-5 min-w-0 max-w-full';
 });
 </script>
 <i18n lang="json">

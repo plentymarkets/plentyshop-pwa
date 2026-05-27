@@ -389,6 +389,14 @@
       "refresh": "Refresh"
     },
     "navigation": {
+      "bottomNav": {
+        "home": "Home",
+        "products": "Items",
+        "wishlist": "Wishlist",
+        "cart": "Cart",
+        "login": "Login",
+        "account": "Account"
+      },
       "breadcrumbsDropdown": "Show more breadcrumbs",
       "closeAddressForm": "End address editing",
       "closeAuthentication": "Close authentication",

@@ -1,23 +1,23 @@
 <template>
   <div
     class="sticky-contact fixed z-[90] flex w-max
-           bottom-[80px] left-1/2 -translate-x-1/2 flex-row justify-center gap-3 p-2 bg-white/95 backdrop-blur-md shadow-[0_5px_20px_rgba(0,0,0,0.12)] rounded-full
-           sm:gap-4
-           md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-0 md:flex-col md:gap-2 md:p-0 md:bg-transparent md:shadow-none md:backdrop-blur-none md:rounded-none md:translate-x-0
+           bottom-[80px] left-1/2 -translate-x-1/2 flex-row justify-center gap-2 p-2 bg-white/95 backdrop-blur-md shadow-[0_5px_20px_rgba(0,0,0,0.12)] rounded-full
+           sm:gap-3
+           md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-0 md:translate-x-0 md:flex-col md:gap-2 md:p-0 md:bg-transparent md:shadow-none md:backdrop-blur-none md:rounded-none
            lg:gap-2.5 xl:gap-3 min-[1367px]:gap-3.5"
   >
     <a
       href="tel:+4902862587950"
       class="sticky-btn flex items-center justify-center text-white bg-[#3B82F6] shadow-md transition-all duration-300
-             w-11 h-11 rounded-full hover:bg-[#2563EB]
-             sm:w-12 sm:h-12
+             w-10 h-10 rounded-full hover:bg-[#2563EB]
+             sm:w-11 sm:h-11
              md:w-auto md:h-auto md:justify-start md:gap-2 md:px-4 md:py-2.5 md:rounded-l-xl md:rounded-r-none
              lg:gap-2.5 lg:px-5 lg:py-3
              xl:px-6 xl:py-3.5
              min-[1367px]:px-7 min-[1367px]:py-4"
     >
       <svg
-        class="sticky-icon w-5 h-5 shrink-0 sm:w-6 sm:h-6 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 min-[1367px]:w-8 min-[1367px]:h-8"
+        class="sticky-icon w-4 h-4 shrink-0 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 min-[1367px]:w-8 min-[1367px]:h-8"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -37,15 +37,15 @@
     <a
       href="mailto:info@komplett-konzept.de"
       class="sticky-btn flex items-center justify-center text-white bg-[#F09F39] shadow-md transition-all duration-300
-             w-11 h-11 rounded-full hover:bg-[#D9822B]
-             sm:w-12 sm:h-12
+             w-10 h-10 rounded-full hover:bg-[#D9822B]
+             sm:w-11 sm:h-11
              md:w-auto md:h-auto md:justify-start md:gap-2 md:px-4 md:py-2.5 md:rounded-l-xl md:rounded-r-none
              lg:gap-2.5 lg:px-5 lg:py-3
              xl:px-6 xl:py-3.5
              min-[1367px]:px-7 min-[1367px]:py-4"
     >
       <svg
-        class="sticky-icon w-5 h-5 shrink-0 sm:w-6 sm:h-6 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 min-[1367px]:w-8 min-[1367px]:h-8"
+        class="sticky-icon w-4 h-4 shrink-0 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 min-[1367px]:w-8 min-[1367px]:h-8"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -67,15 +67,15 @@
       target="_blank"
       rel="noopener noreferrer"
       class="sticky-btn flex items-center justify-center text-white bg-[#62D071] shadow-md transition-all duration-300
-             w-11 h-11 rounded-full hover:bg-[#4EAA5A]
-             sm:w-12 sm:h-12
+             w-10 h-10 rounded-full hover:bg-[#4EAA5A]
+             sm:w-11 sm:h-11
              md:w-auto md:h-auto md:justify-start md:gap-2 md:px-4 md:py-2.5 md:rounded-l-xl md:rounded-r-none
              lg:gap-2.5 lg:px-5 lg:py-3
              xl:px-6 xl:py-3.5
              min-[1367px]:px-7 min-[1367px]:py-4"
     >
       <svg
-        class="sticky-icon w-5 h-5 shrink-0 sm:w-6 sm:h-6 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 min-[1367px]:w-8 min-[1367px]:h-8"
+        class="sticky-icon w-4 h-4 shrink-0 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 min-[1367px]:w-8 min-[1367px]:h-8"
         viewBox="0 0 24 24"
         fill="currentColor"
       >
