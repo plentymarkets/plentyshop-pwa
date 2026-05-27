@@ -41,6 +41,10 @@ export const useItemsTable: UseItemTableReturn = () => {
       includeFolders: 'true',
       continuationToken: continuationToken,
     });
+    
+    if (!data) {
+      return;
+    }
 
     const items: StorageObject[] = data.objects ?? [];
 
