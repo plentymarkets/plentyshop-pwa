@@ -152,8 +152,6 @@ const multiGridStructure = computed(() => {
   return block;
 });
 
-const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
-
 const { widths: gridColumnsWidth, setWidths: setGridColumnsWidth } = useMultiGridDeviceWidths(
   computed(() => multiGridStructure.value.configuration),
 );
