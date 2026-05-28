@@ -77,7 +77,7 @@ npm run lint:fix     # Auto-fix linting issues
 - **Unit tests**: Vitest with Vue Test Utils in `__tests__/` directories
   - **Component tests**: Use `@vue/test-utils` `mount()` for isolated Vue component testing
   - **Composable tests**: Use `@nuxt/test-utils/runtime` `mockNuxtImport()` to mock Nuxt-specific functions like `useRuntimeConfig`, `useSdk`, etc.
-- **E2E tests**: Cypress with specialized suites (`test:cypress-checkout`, `test:cypress-editor`)
+- **E2E tests**: Cypress with specialized suites (`test:cypress`, `test:cypress-smoke-shop`, `test:cypress-smoke-editor`)
 - **Type checking**: `vue-tsc` for compile-time TypeScript validation
 
 ## Critical Files to Understand
