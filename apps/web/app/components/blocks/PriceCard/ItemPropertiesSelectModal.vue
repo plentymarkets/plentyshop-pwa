@@ -5,7 +5,7 @@
     >
       <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
         <h2 class="typography-headline-4 font-medium">{{ getEditorTranslation('modal-title') }}</h2>
-        <SfButton
+        <UiButton
           :aria-label="getEditorTranslation('close-modal-aria')"
           size="sm"
           square
@@ -14,7 +14,7 @@
           @click="close"
         >
           <SfIconClose size="sm" />
-        </SfButton>
+        </UiButton>
       </div>
 
       <div class="px-5 py-3 border-b border-neutral-200">
@@ -114,12 +114,12 @@
           }}
         </span>
         <div class="flex gap-2">
-          <SfButton size="sm" type="button" variant="secondary" @click="close">
+          <UiButton size="sm" type="button" variant="secondary" @click="close">
             {{ getEditorTranslation('cancel') }}
-          </SfButton>
-          <SfButton :disabled="selectionCount === 0" size="sm" type="button" variant="primary" @click="insertSelected">
+          </UiButton>
+          <UiButton :disabled="selectionCount === 0" size="sm" type="button" variant="primary" @click="insertSelected">
             {{ getEditorTranslation('insert') }}
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </div>
@@ -127,7 +127,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfInput, SfCheckbox, SfIconClose, SfIconSearch, SfIconChevronRight } from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfIconClose, SfIconSearch, SfIconChevronRight } from '@storefront-ui/vue';
 import type { ApiGroup } from './types';
 import { useEditorItemProperties } from '~/composables/useEditorItemProperties';
 
