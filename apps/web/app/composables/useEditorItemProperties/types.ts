@@ -1,5 +1,10 @@
-import type { ApiGroup, ApiProperty, PropSelection } from '~/components/blocks/PriceCard/types';
+import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
 import type { ComputedRef, Ref } from 'vue';
+
+export interface PropSelection {
+  name: boolean;
+  value: boolean;
+}
 
 export type UseEditorItemPropertiesOptions = {
   externalGroups?: () => ApiGroup[] | undefined;
@@ -16,14 +21,10 @@ export interface UseEditorItemProperties {
   filteredGroups: ComputedRef<ApiGroup[]>;
   selectionCount: ComputedRef<number>;
   getGroupName: (group: ApiGroup) => string;
-  getPropName: (prop: ApiProperty) => string;
-  getPropPlaceholder: (prop: ApiProperty) => string;
+  getPropName: (prop: ItemPropertyTranslated) => string;
+  getPropPlaceholder: (prop: ItemPropertyTranslated) => string;
   toggleGroup: (id: number) => void;
   toggleSelection: (propId: number, field: 'name' | 'value', checked: boolean) => void;
   toggleGroupItemSelection: (groupId: number, field: 'name', checked: boolean) => void;
   insertSelected: () => void;
-}
-
-export interface EditorItemPropertiesEndpoints {
-  getEditorItemProperties: (params?: { locale?: string; fallbackLocale?: string }) => Promise<unknown>;
 }
