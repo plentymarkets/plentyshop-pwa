@@ -403,14 +403,15 @@ export const useBlockManager = () => {
     if (!isHeaderContainerBlock(headerContainer.value) || !Array.isArray(headerContainer.value.content)) return;
 
     const content = headerContainer.value.content as Block[];
-    if (content.length <= 1) {
+    const topLevelIdx = content.findIndex((block) => block.meta.uuid === uuid);
+
+    if (topLevelIdx >= 0) {
+      if (content.length <= 1) return;
+      content.splice(topLevelIdx, 1);
       return;
     }
 
-    const idx = content.findIndex((block) => block.meta.uuid === uuid);
-    if (idx >= 0) {
-      content.splice(idx, 1);
-    }
+    findOrDeleteBlockByUuid(content, uuid, true);
   };
 
   const deleteFromFooterContainer = (uuid: string) => {
