@@ -271,6 +271,7 @@ describe('useBlockManager', () => {
         content: [sibling, nested],
         meta: { uuid: 'grid-uuid' },
         configuration: {
+          visible: true,
           columnWidths: [50, 50],
           columnWidthsTablet: [50, 50],
           columnWidthsMobile: [100, 100],
@@ -286,7 +287,7 @@ describe('useBlockManager', () => {
       const content = grid.content as Block[];
       expect(content).toHaveLength(1);
       expect(content[0]?.meta.uuid).toBe('col-sibling-uuid');
-      const cfg = grid.configuration as { columnWidths: number[]; columnWidthsTablet: number[] };
+      const cfg = grid.configuration as unknown as { columnWidths: number[]; columnWidthsTablet: number[] };
       expect(cfg.columnWidths).toEqual([50]);
       expect(cfg.columnWidthsTablet).toEqual([50]);
       expect(closeBlocksConfigurationDrawer).toHaveBeenCalled();
