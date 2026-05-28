@@ -3,7 +3,6 @@ import type {
   AggregatedCountries,
   ApiError,
   GeoRegulatedCountry,
-  Country,
 } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
@@ -51,31 +50,8 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     state.value.loading = false;
   };
 
-  const setCountries = (defaultCountries: Country[], geoRegulatedCountries: GeoRegulatedCountry[]) => {
-    state.value.default = defaultCountries.map((country) => ({
-      id: country.id,
-      name: country.name,
-      currLangName: country.name,
-      isoCode2: country.isoCode2,
-      isoCode3: '',
-      lang: useNuxtApp().$i18n.locale.value,
-      states: (country.states || []).map((state) => ({
-        id: state.id,
-        name: state.name,
-        isoCode: '',
-        isoCode3166: '',
-        countryId: String(country.id),
-      })),
-      active: 1,
-      isGeoRegulated: false,
-      isCountryStateMandatory: null,
-      names: [],
-      shippingDestinationId: 0,
-      storehouseId: 0,
-      vatCodes: [],
-      zipCodeRegex: null,
-    })) as ActiveShippingCountry[];
-
+  const setCountries = (defaultCountries: ActiveShippingCountry[], geoRegulatedCountries: GeoRegulatedCountry[]) => {
+    state.value.default = defaultCountries;
     state.value.geoRegulated = geoRegulatedCountries;
   };
 
@@ -114,7 +90,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
       }
 
       return new RegExp(pattern, flags);
-    } catch (error: unknown) {
+    } catch (error) {
       useHandleError(error as ApiError);
       return null;
     }

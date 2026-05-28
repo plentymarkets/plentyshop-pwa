@@ -3,6 +3,7 @@ import type { UseBlocksState, UseBlocksReturn } from './types';
 import { assembleBlocks } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
+  // eslint-disable-next-line custom-rules/file-organization-types
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
@@ -112,6 +113,8 @@ export const useBlocks: UseBlocksReturn = () => {
 
       const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
       setBlocks(assembled);
+
+      clearNuxtData((key) => key.startsWith('blocks-'));
 
       return true;
     } catch (error) {

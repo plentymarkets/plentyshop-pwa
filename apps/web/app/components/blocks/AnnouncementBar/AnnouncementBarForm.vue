@@ -1,24 +1,9 @@
 <template>
-  <UiAccordionItem
-    :model-value="expandedTextSettings"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('text-label') }}</h2>
-    </template>
-
+  <EditorFormPanel v-model="expandedTextSettings" :title="getEditorTranslation('text-label')">
     <EditorRichTextEditorForm v-model="editingText" :text-align="'center'" />
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="expandedLayoutSettings"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
+  <EditorFormPanel v-model="expandedLayoutSettings" :title="getEditorTranslation('layout-label')">
     <div class="py-2 px-2">
       <UiFormLabel class="mb-1">{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
       <EditorColorPicker v-model="editingBackgroundColor" class="w-full">
@@ -37,7 +22,7 @@
         </template>
       </EditorColorPicker>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">

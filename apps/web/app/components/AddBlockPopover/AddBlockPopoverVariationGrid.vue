@@ -3,6 +3,7 @@
     <button
       v-for="item in variations"
       :key="`${item.category.category}-${item.idx}`"
+      :data-testid="`block-add-${item.category.category}-${item.idx}`"
       :disabled="isDisabled(item)"
       class="flex flex-col items-center gap-1 py-2 px-1 rounded-lg border border-editor-border bg-white transition-all duration-150"
       :class="
@@ -27,7 +28,7 @@
 
 <script setup lang="ts">
 import type { FlatVariation } from './types';
-import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './types';
+import { DEPTH_FORBIDDEN_CATEGORY_BLOCKS, SINGLETON_BLOCKS } from './constants';
 
 defineProps<{ variations: FlatVariation[] }>();
 

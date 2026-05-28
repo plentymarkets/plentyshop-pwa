@@ -12,8 +12,8 @@
     </div>
     <div class="flex flex-col pl-4 min-w-[180px] flex-1 typography-text-base">
       {{ product.name }}
-      <div class="my-2 sm:mb-0">
-        <ul class="font-normal leading-5 typography-text-xs sm:typography-text-sm text-neutral-700">
+      <div class="my-2 @sm:mb-0">
+        <ul class="font-normal leading-5 typography-text-xs @sm:typography-text-sm text-neutral-700">
           <li>
             <span class="mr-1">{{ product.attributes?.[0]?.name }}:</span>
             <span class="font-medium">{{ product.attributes?.[0]?.value }}</span>

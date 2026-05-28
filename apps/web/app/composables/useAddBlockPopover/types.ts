@@ -31,7 +31,7 @@ export interface UseAddBlockPopover {
   searchQuery: Ref<string>;
   activeFilters: Ref<FilterId[]>;
   toggleFilter: (id: FilterId) => void;
-  openAddBlockPopover: (params: OpenAddBlockPopoverParams) => void;
+  openAddBlockPopover: (params: OpenAddBlockPopoverParams) => Promise<void>;
   closeAddBlockPopover: () => void;
   clearPendingCancel: () => void;
   consumePresetPick: (spans: readonly number[]) => boolean;

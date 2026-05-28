@@ -4,7 +4,8 @@
     <div class="grid grid-cols-3 gap-1.5">
       <button
         v-for="preset in filteredPresets"
-        :key="preset.label"
+        :key="preset.id"
+        :data-testid="`block-add-layout-preset-${preset.id}`"
         class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
         @click="pickPreset(preset.columnWidths)"
       >
@@ -23,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { LAYOUT_PRESETS } from './types';
+import { LAYOUT_PRESETS } from './constants';
 
 const { activeFilters, searchQuery, popoverState, closeAddBlockPopover, clearPendingCancel, consumePresetPick } =
   useAddBlockPopover();

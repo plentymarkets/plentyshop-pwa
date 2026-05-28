@@ -71,12 +71,17 @@ const { useEditor } = vi.hoisted(() => ({
   }),
 }));
 
+const { clearNuxtData } = vi.hoisted(() => ({
+  clearNuxtData: vi.fn(),
+}));
+
 mockNuxtImport('useSdk', () => useSdk);
 mockNuxtImport('useAsyncData', () => useAsyncData);
 mockNuxtImport('useState', () => useState);
 mockNuxtImport('useNuxtApp', () => useNuxtApp);
 mockNuxtImport('useHandleError', () => useHandleError);
 mockNuxtImport('useEditor', () => useEditor);
+mockNuxtImport('clearNuxtData', () => clearNuxtData);
 
 const createMockState = () => ({
   value: {

@@ -4,6 +4,7 @@ import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './t
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
 import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
+import { isFooterContainerBlock } from '~/utils/blockTemplates/footer/factory';
 
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
@@ -35,6 +36,7 @@ export const useBlockManager = () => {
   const { getBlockTemplateByLanguage } = useBlocksList();
   const { openDrawerWithView, closeBlocksConfigurationDrawer } = useSiteConfiguration();
   const { send } = useNotification();
+  const { setPendingEditChain } = useBlockEditStack();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockUuid = ref<string | null>(null);
@@ -117,7 +119,7 @@ export const useBlockManager = () => {
         setUuid(newBlock.content as Block[]);
       }
       updateBlocks([newBlock]);
-      openDrawerWithView('blocksSettings', newBlock);
+      openSettingsForNewBlock([newBlock], newBlock);
       return false;
     }
 
@@ -145,10 +147,18 @@ export const useBlockManager = () => {
     updateBlocks(copiedData);
 
     if (!isHeaderContainerBlock(getRootParent(copiedData, newBlock.meta.uuid))) {
-      openDrawerWithView('blocksSettings', newBlock);
+      openSettingsForNewBlock(copiedData, newBlock);
     }
 
     return true;
+  };
+
+  const openSettingsForNewBlock = (rootBlocks: Block[], newBlock: Block) => {
+    const chain = getAncestorChain(rootBlocks, newBlock.meta.uuid) ?? [newBlock];
+    const rootBlock = chain[0] ?? newBlock;
+
+    setPendingEditChain(chain.slice(1));
+    openDrawerWithView('blocksSettings', rootBlock);
   };
 
   const addNewBlock = async (category: string, variationIndex: number, targetUuid: string, position: BlockPosition) => {
@@ -336,6 +346,21 @@ export const useBlockManager = () => {
     return blocks.find((rootBlock) => blockContainsUuid(rootBlock, targetUuid)) ?? null;
   };
 
+  const getAncestorChain = (blocks: Block[], targetUuid: string): Block[] | null => {
+    for (const block of blocks) {
+      if (block.meta?.uuid === targetUuid) {
+        return [block];
+      }
+      if (Array.isArray(block.content) && block.content.length) {
+        const sub = getAncestorChain(block.content as Block[], targetUuid);
+        if (sub) {
+          return [block, ...sub];
+        }
+      }
+    }
+    return null;
+  };
+
   const setUuid = (blocks: Block[]) => {
     for (const block of blocks) {
       block.meta.uuid = uuid();
@@ -374,6 +399,11 @@ export const useBlockManager = () => {
     }
   };
 
+  const deleteFromFooterContainer = (uuid: string) => {
+    if (!isFooterContainerBlock(footer.value) || !Array.isArray(footer.value.content)) return;
+    findOrDeleteBlockByUuid(footer.value.content as Block[], uuid, true);
+  };
+
   const deleteBlock = async (uuid: string) => {
     if (!pageBlocks.value) return;
 
@@ -381,6 +411,7 @@ export const useBlockManager = () => {
       await deleteBlockFromColumn(uuid);
     } else if (!findOrDeleteBlockByUuid(pageBlocks.value, uuid, true)) {
       deleteFromHeaderContainer(uuid);
+      deleteFromFooterContainer(uuid);
     }
 
     isEditingEnabled.value = !deepEqual(cleanData.value, data.value);

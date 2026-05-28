@@ -70,16 +70,11 @@
         <span class="italic">{{ getEditorTranslation('reload-hint') }}</span>
       </div>
 
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="contentPagesOpen"
+        :title="getEditorTranslation('content-pages-label')"
         data-testid="content-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
-        <template #summary>
-          <h2>{{ getEditorTranslation('content-pages-label') }}</h2>
-        </template>
-
         <div
           :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']"
           @scroll="(e: Event) => handleScroll(e, 'content')"
@@ -103,18 +98,13 @@
             </li>
           </ul>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="productPagesOpen"
+        :title="getEditorTranslation('product-categories-label')"
         data-testid="product-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
-        <template #summary>
-          <h2>{{ getEditorTranslation('product-categories-label') }}</h2>
-        </template>
-
         <div
           :class="['mb-6 mt-4 overflow-auto', limitAccordionHeight ? 'max-h-[400px]' : 'max-h-[500px]']"
           @scroll="(e: Event) => handleScroll(e, 'item')"
@@ -126,7 +116,7 @@
             </li>
           </ul>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
       <PagesViewGlobalPagesSection />
     </div>
