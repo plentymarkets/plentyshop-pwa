@@ -40,6 +40,15 @@ export const CustomLink = Link.extend({
           return { 'data-link-path': attributes['data-link-path'] };
         },
       },
+
+      rel: {
+        default: null,
+        parseHTML: (el) => el.getAttribute('rel'),
+        renderHTML: (attrs) => {
+          if (!attrs.rel) return {};
+          return { rel: attrs.rel };
+        },
+      },
     };
   },
 

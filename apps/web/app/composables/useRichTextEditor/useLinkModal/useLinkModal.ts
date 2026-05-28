@@ -18,6 +18,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     { value: 'category', label: 'Category' },
   ];
 
+  const relValues = ref<string[]>([]);
   const activeTab = ref<LinkTabValue>('url');
   const urlValue = ref('');
   const staticPageValue = ref('');
@@ -51,6 +52,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const extractLinkAttrs = (rawAttrs?: LinkModalLinkAttrs): LinkModalLinkAttrs => ({
     href: rawAttrs?.href,
     target: rawAttrs?.target,
+    rel: rawAttrs?.rel,
     'data-link-type': rawAttrs?.['data-link-type'],
     'data-link-value': rawAttrs?.['data-link-value'],
     'data-link-path': rawAttrs?.['data-link-path'],
@@ -60,7 +62,12 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     if (!attrs.href) return;
 
     openInNewWindow.value = attrs.target === '_blank';
-
+    const autoRel = new Set(['noopener', 'noreferrer']);
+    const existingRel = (attrs.rel ?? '')
+      .split(' ')
+      .map((s) => s.trim())
+      .filter((s) => s && s !== 'none' && !autoRel.has(s));
+    relValues.value = existingRel;
     const storedLinkType = attrs['data-link-type'];
     const storedLinkValue = attrs['data-link-value'];
     const storedLinkPath = attrs['data-link-path'];
@@ -106,6 +113,8 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       if (categoryValue.value) attrs['data-link-value'] = categoryValue.value;
       if (selectedCategoryPath.value) attrs['data-link-path'] = selectedCategoryPath.value;
     }
+    const rel = relValues.value.filter((v) => v !== 'none');
+    attrs.rel = rel.length ? rel.join(' ') : undefined;
     return attrs;
   };
 
@@ -114,6 +123,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     return {
       href: initialLinkAttrs.value.href,
       target: initialLinkAttrs.value.target,
+      rel: initialLinkAttrs.value.rel,
       'data-link-type': initialLinkAttrs.value['data-link-type'],
       'data-link-value': initialLinkAttrs.value['data-link-value'],
       'data-link-path': initialLinkAttrs.value['data-link-path'],
@@ -123,7 +133,14 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   const initFromEditor = () => {
     if (!editor.value) return;
     isInitializing.value = true;
-
+    relValues.value = [];
+    activeTab.value = 'url';
+    urlValue.value = '';
+    staticPageValue.value = '';
+    categoryValue.value = null;
+    selectedCategoryPath.value = null;
+    openInNewWindow.value = false;
+    linkText.value = '';
     const sel = editor.value.state.selection;
     const { from, to } = sel;
     initialSelection.value = { from, to };
@@ -177,6 +194,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       ? {
           href: attrs.href,
           target: attrs.target ?? '_self',
+          rel: attrs.rel,
           'data-link-type': attrs['data-link-type'],
           'data-link-value': attrs['data-link-value'],
           'data-link-path': attrs['data-link-path'],
@@ -234,7 +252,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
   };
 
   watch(
-    [linkText, urlValue, staticPageValue, categoryValue, selectedCategoryPath, openInNewWindow, activeTab],
+    [linkText, urlValue, staticPageValue, categoryValue, selectedCategoryPath, openInNewWindow, activeTab, relValues],
     applyLivePreview,
   );
   const computedHref = computed(() => {
@@ -316,5 +334,6 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     initFromEditor,
     handleSubmit,
     cancelAndRevert,
+    relValues,
   };
 };
