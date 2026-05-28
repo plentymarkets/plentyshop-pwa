@@ -157,6 +157,53 @@ export default {
       gridTemplateRows: {
         'category-sidebar': 'min-content auto min-content',
       },
+      // ─── Semantic z-index scale ──────────────────────────────────────────────
+      // Each token maps to a named layer role so ordering is visible and
+      // adjustable in one place.  Gaps between values leave room to insert new
+      // layers later without renumbering everything.
+      //
+      //   Layer                 Token                   Value
+      //   ──────────────────────────────────────────────────
+      //   Default / grounded    z-base                  0
+      //   Slightly above base   z-raised                1   (carousel arrows, grid cols)
+      //   Badges / breadcrumbs  z-overlap               2
+      //   Editor inline chrome  z-editor-inline         30  (BlockActions, drag handles)
+      //   Sticky headers        z-sticky                40  (NavbarTop, NavbarBottom, MegaMenu panel)
+      //   Dropdowns             z-dropdown              50  (account menu, language list, tooltips)
+      //   Notifications         z-notifications         60
+      //   Drawer backdrop       z-drawer-backdrop       70  (MegaMenu mobile overlay)
+      //   Drawers               z-drawer                80  (slide-in nav)
+      //   Cookie bar            z-cookiebar             90
+      //   Editor toolbar        z-editor-toolbar        100 (SettingsToolbar on lg)
+      //   Editor drawer         z-editor-drawer         110 (SiteConfigurationDrawer)
+      //   Modal backdrop        z-modal-backdrop        200
+      //   Modal panel           z-modal                 210
+      //   Popovers              z-popover               220 (AddBlockPopover, RichText menus)
+      //   Page loaders          z-loader                300
+      //   Pickers               z-picker                400 (ColorPicker, IconEmojiPicker — above modals)
+      //   Toasts in modals      z-toast                 500
+      //   Escape hatch          z-max                   9999 (lint-discouraged; use sparingly)
+      zIndex: {
+        base: '0',
+        raised: '1',
+        overlap: '2',
+        'editor-inline': '30',
+        sticky: '40',
+        dropdown: '50',
+        notifications: '60',
+        'drawer-backdrop': '70',
+        drawer: '80',
+        cookiebar: '90',
+        'editor-toolbar': '100',
+        'editor-drawer': '110',
+        'modal-backdrop': '200',
+        modal: '210',
+        popover: '220',
+        loader: '300',
+        picker: '400',
+        toast: '500',
+        max: '9999',
+      },
       screens: {
         '4xl': '1920px',
         '3xl': '1536px',

@@ -6,6 +6,7 @@ import { noMultipleTemplateCallbacks } from './eslint-rules/no-multiple-template
 import { fileOrganizationTypes } from './eslint-rules/file-organization-types.js';
 import { noBareTailwindResponsiveInContainer } from './eslint-rules/no-bare-responsive-in-container.js';
 import { noNamedReexportInBarrel } from './eslint-rules/no-named-reexport-in-barrel.js';
+import { enforceZIndexTokens } from './eslint-rules/enforce-z-index-tokens.js';
 
 export default withNuxt(
   {
@@ -34,6 +35,7 @@ export default withNuxt(
           'file-organization-types': fileOrganizationTypes,
           'no-bare-responsive-in-container': noBareTailwindResponsiveInContainer,
           'no-named-reexport-in-barrel': noNamedReexportInBarrel,
+          'enforce-z-index-tokens': enforceZIndexTokens,
         }
       }
     },
@@ -101,6 +103,16 @@ export default withNuxt(
       'custom-rules/no-multiple-template-callbacks': 'error',
       'custom-rules/file-organization-types': 'error',
     }
+  },
+  // Enforce semantic z-index tokens across all Vue files (app/ and modules/).
+  {
+    files: [
+      'app/**/*.vue',
+      'modules/**/*.vue',
+    ],
+    rules: {
+      'custom-rules/enforce-z-index-tokens': 'error',
+    },
   },
   // Everything inside app/pages/, app/layouts/, and most of app/components/ is rendered
   // inside the Tailwind @container defined in app.vue -> enforce @-prefixed container variants.
