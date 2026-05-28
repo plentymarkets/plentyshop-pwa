@@ -33,7 +33,9 @@
       </EditorFormPanel>
     </div>
   </div>
-  <EditorLocalizationDrawer v-if="keys.length > 0 && drawerOpen" />
+  <Teleport to="body">
+    <EditorLocalizationDrawer v-if="keys.length > 0 && drawerOpen" />
+  </Teleport>
 </template>
 
 <script setup lang="ts">
