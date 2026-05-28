@@ -1,14 +1,11 @@
 /** @description Minimum gap between the panel and each viewport edge. */
 export const VIEWPORT_EDGE_MARGIN = 8;
 
-/** @description Vertical gap between the anchor element and the panel. */
-export const ANCHOR_GAP = 12;
+/** @description Distance from the panel edge to the anchor edge. Chosen so the rotated arrow's tip touches the anchor edge (6√2 ≈ 8.485). */
+export const ANCHOR_GAP = 9;
 
-/** @description Minimum horizontal distance of the arrow from the panel's corners, matching the panel's border-radius. */
-export const ARROW_EDGE_PADDING = 12;
-
-/** @description Offset that positions the arrow so it visually straddles the panel edge (approximately half the arrow element size). */
-export const ARROW_INSET = 7;
+/** @description Half the arrow box (w-3 h-3 = 12px). Positions the arrow box centered on the panel edge so the rotated diamond protrudes symmetrically. */
+export const ARROW_INSET = 6;
 
 /** @description Clamps the panel horizontally so it stays within the viewport with VIEWPORT_EDGE_MARGIN clearance on both sides. */
 export const clampHorizontal = (anchorCenterX: number, panelWidth: number): number =>
@@ -29,10 +26,6 @@ export const fitsBelow = (top: number, panelHeight: number): boolean =>
 
 /** @description Returns true when the panel fits above the anchor without clipping the viewport. */
 export const fitsAbove = (top: number): boolean => top >= VIEWPORT_EDGE_MARGIN;
-
-/** @description Clamps the arrow horizontally so it stays within the panel bounds, clear of the rounded corners. */
-export const clampArrowHorizontal = (panelLeft: number, anchorCenterX: number, panelWidth: number): number =>
-  Math.max(panelLeft + ARROW_EDGE_PADDING, Math.min(anchorCenterX, panelLeft + panelWidth - ARROW_EDGE_PADDING));
 
 /** @description Returns the arrow's top position so it visually straddles the panel edge it points toward. */
 export const arrowVerticalPosition = (direction: 'up' | 'down', panelTop: number, panelHeight: number): number =>

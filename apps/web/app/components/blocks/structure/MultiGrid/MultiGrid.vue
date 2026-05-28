@@ -49,6 +49,7 @@ import type { AlignableBlock, GridRow, MultiGridProps } from '~/components/block
 import type { Block } from '@plentymarkets/shop-api';
 import { computeGridRows } from '~/components/blocks/structure/MultiGrid/multiGridRows';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
+import { useMultiGridDeviceWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 
 const props = defineProps<MultiGridProps>();
 const route = useRoute();
@@ -83,27 +84,34 @@ const gapClassMap: Record<string, string> = {
 };
 const gridGapClass = computed(() => gapClassMap[props.configuration.layout?.gap || 'M']);
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
+const reverseOnMobile = computed(() => props.configuration.layout?.reverseOnMobile === true);
+const alignHeights = computed(() => props.configuration.layout?.alignHeights !== false);
 
 const gridInlineStyle = computed(() => ({
   backgroundColor: props.configuration.layout?.backgroundColor ?? 'transparent',
-  marginTop: props.configuration.layout?.marginTop !== undefined ? `${props.configuration.layout.marginTop}px` : '0px',
+  marginTop: props.configuration.layout?.marginTop === undefined ? '0px' : `${props.configuration.layout.marginTop}px`,
   marginBottom:
-    props.configuration.layout?.marginBottom !== undefined
-      ? `${props.configuration.layout.marginBottom}px`
-      : `${defaultMarginBottom.value}px`,
+    props.configuration.layout?.marginBottom === undefined
+      ? `${defaultMarginBottom.value}px`
+      : `${props.configuration.layout.marginBottom}px`,
 }));
 const getGridClasses = () => {
-  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
+  const alignClass = alignHeights.value ? 'items-stretch' : 'items-start';
+  if (reverseOnMobile.value) {
+    return ['flex flex-col-reverse @md:grid @md:grid-cols-12 @lg:grid-cols-12', gridGapClass.value ?? '', alignClass];
+  }
+  return gridClassFor({ mobile: 12, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', alignClass]);
 };
 
-const visibleGrid = computed(() => computeVisibleGrid(props.content, props.configuration.columnWidths));
+const { widths: gridColumnsWidth } = useMultiGridDeviceWidths(computed(() => props.configuration));
+
+const visibleGrid = computed(() => computeVisibleGrid(props.content, gridColumnsWidth.value));
 
 const getColumnClasses = (filteredColIndex: number) => {
   const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];
   const originalIdx = visibleGrid.value.filteredToOriginal[filteredColIndex] ?? -1;
   if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(originalIdx)) {
-    classes.push('@md:sticky');
-    classes.push(route.meta?.type === 'product' ? '@md:top-40' : '@md:top-5');
+    classes.push('@md:sticky', route.meta?.type === 'product' ? '@md:top-40' : '@md:top-5');
   }
   return classes;
 };

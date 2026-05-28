@@ -249,15 +249,9 @@ export class EditorObject extends PageObject {
       this.topBlockButton
         .should('exist')
         .and('have.class', 'group-hover/block:opacity-100')
-        .and('have.class', 'group-focus-within/block:opacity-100');
-      this.bottomBlockButton
-        .should('exist')
-        .and('have.class', 'group-hover/block:opacity-100')
-        .and('have.class', 'group-focus-within/block:opacity-100');
-      this.editBlockActions
-        .should('exist')
-        .and('have.class', 'group-hover/block:opacity-100')
-        .and('have.class', 'group-focus-within/block:opacity-100');
+        .and('have.class', 'focus-visible:opacity-100');
+      this.bottomBlockButton.should('exist').and('have.class', 'group-hover/block:opacity-100');
+      this.editBlockActions.should('exist').and('have.class', 'group-hover/block:opacity-100');
     });
   }
 

@@ -70,6 +70,10 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const { data: productReviews } = useProductReviews(productId);
     const { data: reviewAverage } = useProductReviewAverage(productId);
 
+    const reviewCounts = reviewGetters.getReviewCounts(productReviews.value);
+    const totalReviews = reviewGetters.getTotalReviews(reviewCounts);
+    const averageRating = reviewGetters.getAverageRating(reviewCounts);
+
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
@@ -98,11 +102,13 @@ export const useStructuredData: useStructuredDataReturn = () => {
       description: product.texts.description,
       disambiguatingDescription: '',
       review: reviews,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: productGetters.getAverageRating(product),
-        reviewCount: productGetters.getTotalReviews(product),
-      },
+      ...(totalReviews > 0 && {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: averageRating,
+          reviewCount: totalReviews,
+        },
+      }),
       offers: {
         '@type': 'Offer',
         priceCurrency: productGetters.getSpecialPriceCurrency(product),

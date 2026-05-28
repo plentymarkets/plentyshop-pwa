@@ -119,6 +119,9 @@ const {
     can: canSpy,
     isActive: isActiveSpy,
     getHTML: getHTMLSpy,
+    state: {
+      selection: { empty: true, from: 0, to: 0 },
+    },
     commands: {
       focus: vi.fn(),
     },

@@ -17,14 +17,14 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
       index >= 0 ? state.value.activeFilters.filter((f) => f !== id) : [...state.value.activeFilters, id];
   };
 
-  const openAddBlockPopover = ({
+  const openAddBlockPopover = async ({
     anchorEl,
     targetUuid,
     position,
     onCancel,
     onPresetPick,
   }: OpenAddBlockPopoverParams) => {
-    const rect = anchorEl.getBoundingClientRect();
+    const initialRect = anchorEl.getBoundingClientRect();
 
     state.value.pendingCancelCallback = onCancel ?? null;
     state.value.pendingPresetCallback = onPresetPick ?? null;
@@ -34,6 +34,9 @@ export const useAddBlockPopover: UseAddBlockPopoverReturn = () => {
     } else {
       clearInsertColumnUuid();
     }
+
+    await nextTick();
+    const rect = anchorEl.isConnected ? anchorEl.getBoundingClientRect() : initialRect;
 
     state.value.searchQuery = '';
     state.value.activeFilters = [];

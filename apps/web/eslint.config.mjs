@@ -5,6 +5,7 @@ import { noI18nGlobals } from './eslint-rules/no-i18n-globals.js';
 import { noMultipleTemplateCallbacks } from './eslint-rules/no-multiple-template-callbacks.js';
 import { fileOrganizationTypes } from './eslint-rules/file-organization-types.js';
 import { noBareTailwindResponsiveInContainer } from './eslint-rules/no-bare-responsive-in-container.js';
+import { noNamedReexportInBarrel } from './eslint-rules/no-named-reexport-in-barrel.js';
 
 export default withNuxt(
   {
@@ -32,6 +33,7 @@ export default withNuxt(
           'no-multiple-template-callbacks': noMultipleTemplateCallbacks,
           'file-organization-types': fileOrganizationTypes,
           'no-bare-responsive-in-container': noBareTailwindResponsiveInContainer,
+          'no-named-reexport-in-barrel': noNamedReexportInBarrel,
         }
       }
     },
@@ -125,6 +127,12 @@ export default withNuxt(
     ],
     rules: {
       'custom-rules/no-bare-responsive-in-container': 'error',
+    },
+  },
+  {
+    files: ['app/composables/**/index.ts', 'app/utils/**/index.ts'],
+    rules: {
+      'custom-rules/no-named-reexport-in-barrel': 'error',
     },
   },
 );
