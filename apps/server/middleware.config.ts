@@ -31,10 +31,7 @@ const config = {
         {
           name: 'editor-item-properties',
           extendApiMethods: {
-            getEditorItemProperties: async (
-              context: any,
-              params?: { locale?: string; fallbackLocale?: string },
-            ) => {
+            getEditorItemProperties: async (context: any, params?: { locale?: string; fallbackLocale?: string }) => {
               const url = `${process.env.API_ENDPOINT}/rest/storefront/editor/item-properties`;
               const { data } = await context.client.get(url, {
                 params: {
