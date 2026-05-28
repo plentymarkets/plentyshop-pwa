@@ -1,21 +1,5 @@
-import type { ApiGroup, ApiProperty, PropSelection, LocalizedString } from '~/components/blocks/PriceCard/types';
-import type { UseEditorItemPropertiesOptions, UseEditorItemProperties, EditorItemPropertiesEndpoints } from './types';
-
-const isNonEmptyString = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0;
-
-const mapApiGroup = (group: ApiGroup): ApiGroup => ({
-  ...group,
-  properties: Array.isArray(group.properties) ? group.properties : [],
-});
-
-const extractGroups = (response: unknown): ApiGroup[] => {
-  if (Array.isArray(response)) return response as ApiGroup[];
-  if (!response || typeof response !== 'object') return [];
-  const payload = response as { data?: unknown; groups?: unknown };
-  if (Array.isArray(payload.data)) return payload.data as ApiGroup[];
-  if (Array.isArray(payload.groups)) return payload.groups as ApiGroup[];
-  return [];
-};
+import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
+import type { UseEditorItemPropertiesOptions, UseEditorItemProperties, PropSelection } from './types';
 
 const itemPropertyGroups = ref<ApiGroup[]>([]);
 
@@ -31,16 +15,9 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
   const selection = ref<Record<number, PropSelection>>({});
   const groupSelection = ref<Record<number, { name: boolean }>>({});
 
-  const getLocalizedValue = (names: LocalizedString, id: number): string => {
-    const localeValue = names[requestedLocale.value as keyof LocalizedString];
-    if (isNonEmptyString(localeValue)) return localeValue;
-    if (isNonEmptyString(names.en)) return names.en;
-    return `Missing translation for id: ${id}`;
-  };
-
-  const getGroupName = (group: ApiGroup): string => getLocalizedValue(group.names, group.id);
-  const getPropName = (prop: ApiProperty): string => getLocalizedValue(prop.names, prop.id);
-  const getPropPlaceholder = (_prop: ApiProperty): string => `{{value}}`;
+  const getGroupName = (group: ApiGroup): string => group.name;
+  const getPropName = (prop: ItemPropertyTranslated): string => prop.name;
+  const getPropPlaceholder = (_prop: ItemPropertyTranslated): string => '{{value}}';
 
   const sourceGroups = computed<ApiGroup[]>(() => {
     const externalGroupList = externalGroups?.();
@@ -106,6 +83,7 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
 
   const insertSelected = () => {
     const tokens: string[] = [];
+
     for (const group of sourceGroups.value) {
       if (groupSelection.value[group.id]?.name) tokens.push(getGroupName(group));
       for (const prop of group.properties) {
@@ -115,18 +93,19 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
         if (propSel.value) tokens.push(getPropPlaceholder(prop));
       }
     }
+
     if (tokens.length === 0) return;
+
     navigator.clipboard?.writeText(tokens.join(' '));
     onInsert?.(tokens);
     onClose?.();
   };
 
-  const fetchItemProperties = async (fetchLocale = 'en', fallbackLocale = 'en') => {
+  const fetchItemProperties = async (fetchLocale = 'en') => {
     loading.value = true;
     try {
-      const sdk = useSdk().plentysystems as unknown as EditorItemPropertiesEndpoints;
-      const response = await sdk.getEditorItemProperties({ locale: fetchLocale, fallbackLocale });
-      itemPropertyGroups.value = extractGroups(response).map(mapApiGroup);
+      const { data } = await useSdk().plentysystems.getItemProperties({ locale: fetchLocale });
+      itemPropertyGroups.value = data;
     } catch (error) {
       throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
