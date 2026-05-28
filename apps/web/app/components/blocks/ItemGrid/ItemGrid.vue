@@ -10,7 +10,7 @@
         }"
         data-testid="item-count"
       >
-        <span class="font-bold md:text-lg">
+        <span class="font-bold @md:text-lg">
           {{
             t('search.numberOfProducts', {
               count: products?.length ?? 0,
@@ -44,14 +44,14 @@
       <span v-else>{{ t('product.priceInclVAT') }}</span>
       <i18n-t keypath="shipping.excludedLabel" scope="global">
         <template #shipping>
-          <SfLink
+          <UiLink
             :href="localePath(paths.shipping)"
             target="_blank"
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             data-testid="shipping-link"
           >
             {{ t('common.labels.delivery') }}
-          </SfLink>
+          </UiLink>
         </template>
       </i18n-t>
     </div>
@@ -71,7 +71,6 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import { SfLink } from '@storefront-ui/vue';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 
 const { getFacetsFromURL } = useCategoryFilter();
@@ -96,7 +95,7 @@ const gridClasses = computed(() =>
       tablet: props.content?.itemsPerRowTablet,
       desktop: props.content?.itemsPerRowDesktop,
     },
-    ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'],
+    ['gap-4', '@md:gap-6', 'mb-10', '@md:mb-5'],
   ),
 );
 

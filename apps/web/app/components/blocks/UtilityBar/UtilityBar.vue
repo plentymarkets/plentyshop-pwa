@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full md:sticky md:shadow-md z-10">
+    <header class="relative w-full @md:sticky @md:shadow-md z-10">
       <div
         v-if="viewport.isLessThan('md')"
         class="flex items-center w-full"
@@ -290,7 +290,7 @@
       v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+      class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
     >
       <header>
         <UiButton
@@ -359,14 +359,9 @@ import {
 import { onClickOutside } from '@vueuse/core';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 
-import type { UtilityBarProps } from './types';
+import type { UtilityBarComponentProps } from './types';
 
-interface Props extends Partial<UtilityBarProps> {
-  enableActions?: boolean;
-  root?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<UtilityBarComponentProps>(), {
   enableActions: false,
   root: true,
 });

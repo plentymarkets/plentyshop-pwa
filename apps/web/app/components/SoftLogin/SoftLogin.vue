@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 md:px-0 mt-10 mb-10">
+  <div class="px-4 @md:px-0 mt-10 mb-10">
     <div v-if="errorType === TYPE_LOGIN">
       <div class="text-lg text-center mt-2 font-medium">
         {{ t('orderConfirmation.softLogin.titleLogin') }}

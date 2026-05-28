@@ -940,7 +940,7 @@
             "meta": { "uuid": "34343434-3434-4343-8434-343434343434" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1008,7 +1008,7 @@
             "meta": { "uuid": "67676767-6767-4676-8767-676767676767" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1074,7 +1074,7 @@
             "meta": { "uuid": "9a9a9a9a-9a9a-49a9-89a9-9a9a9a9a9a9a" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1087,7 +1087,7 @@
                     "htmlDescription": "<p style=\"text-align: left;\">Text that supports HTML formatting</p>",
                     "title": "h2 heading",
                     "subtitle": "Subtitle",
-                    "textAlignment": "right",
+                    "textAlignment": "left",
                     "color": "#000"
                   },
                   "button": {
@@ -1114,8 +1114,8 @@
                     "aspectRatio": "16 / 9"
                   },
                   "text": {
-                    "textOverlay": "Overlay Text",
-                    "textOverlayColor": "#00ff00",
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
                     "textOverlayAlignY": "center",
                     "textOverlayAlignX": "center"
                   },
@@ -1134,7 +1134,7 @@
             "meta": { "uuid": "dcdcdcdc-dcdc-4cdc-8cdc-dcdcdcdcdcdc" },
             "configuration": {
               "columnWidths": [6, 6],
-              "layout": { "fullWidth": true }
+              "layout": { "fullWidth": false }
             },
             "content": [
               {
@@ -1174,8 +1174,8 @@
                     "aspectRatio": "16 / 9"
                   },
                   "text": {
-                    "textOverlay": "Overlay-Text",
-                    "textOverlayColor": "#00ff00",
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
                     "textOverlayAlignY": "center",
                     "textOverlayAlignX": "center"
                   },

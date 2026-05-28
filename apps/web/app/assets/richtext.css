@@ -45,6 +45,12 @@
   line-height: 1.5;
   margin: 0.4rem 0;
 }
+.rte-prose--render p {
+  white-space: pre-wrap;
+}
+.rte-prose--render p:empty {
+  min-height: 1.5em;
+}
 .rte-prose blockquote {
   border-left: 3px solid #dee2e6;
   padding-left: 12px;
@@ -89,12 +95,6 @@
   font-weight: 400;
   line-height: 1.5;
 }
-.rte-prose a {
-  color: #5082d9;
-  text-decoration: underline;
-  text-decoration-color: currentColor;
-  cursor: pointer;
-}
 
 .rte-icon {
   display: inline-flex;
@@ -109,4 +109,21 @@
   outline: 2px solid rgb(100 116 139);
   outline-offset: 1px;
   border-radius: 2px;
+}
+
+.editor-parent:focus-within .rte-atom-selected {
+  outline: 2px solid rgb(100 116 139);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.editor-parent:focus-within {
+  border-color: #111827;
+  border-width: 2px;
+}
+
+.editor-parent .ProseMirror {
+  width: 100%;
+  min-height: 100%;
+  outline: none;
 }

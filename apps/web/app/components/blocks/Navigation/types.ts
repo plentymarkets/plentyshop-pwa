@@ -1,3 +1,5 @@
+import type { MegaMenuProps } from '~/components/MegaMenu/types';
+
 export type SpacingSettings = {
   paddingTop?: number;
   paddingBottom?: number;
@@ -35,3 +37,5 @@ export type NavigationProps = {
 export type NavigationFormProps = {
   uuid?: string;
 };
+
+export type NavigationBlockProps = Partial<MegaMenuProps> & Partial<NavigationProps>;

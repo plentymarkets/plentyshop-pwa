@@ -20,18 +20,19 @@
       </header>
 
       <div class="h-[80vh] overflow-y-auto">
-        <SfListItem
+        <button
           v-for="subCategory in subCategories"
           :key="subCategory"
-          class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+          type="button"
+          class="w-full flex items-center gap-1.5 px-3.5 py-2 bg-editor-surface border-b border-editor-border hover:bg-editor-toc-hover transition-colors cursor-pointer text-left select-none"
           :data-testid="`site-settings-category-${subCategory}`"
           @click="activeSubCategory = subCategory"
         >
-          <span class="break-words">
+          <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase break-words">
             {{ getEditorUITranslation(subCategory) }}
           </span>
-          <template #suffix><SfIconChevronRight /></template>
-        </SfListItem>
+          <SfIconChevronRight size="xs" class="text-editor-text-placeholder flex-shrink-0" />
+        </button>
       </div>
     </div>
     <div v-else key="groups" class="groups">
@@ -77,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
+import { SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
 
 const { closeSiteConfigurationDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();

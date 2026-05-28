@@ -3,6 +3,9 @@ import { architecture, ecma } from "@vue-storefront/eslint-config";
 import pluginVueA11y from "eslint-plugin-vuejs-accessibility";
 import { noI18nGlobals } from './eslint-rules/no-i18n-globals.js';
 import { noMultipleTemplateCallbacks } from './eslint-rules/no-multiple-template-callbacks.js';
+import { fileOrganizationTypes } from './eslint-rules/file-organization-types.js';
+import { noBareTailwindResponsiveInContainer } from './eslint-rules/no-bare-responsive-in-container.js';
+import { noNamedReexportInBarrel } from './eslint-rules/no-named-reexport-in-barrel.js';
 
 export default withNuxt(
   {
@@ -28,6 +31,9 @@ export default withNuxt(
         rules: {
           'no-i18n-globals': noI18nGlobals,
           'no-multiple-template-callbacks': noMultipleTemplateCallbacks,
+          'file-organization-types': fileOrganizationTypes,
+          'no-bare-responsive-in-container': noBareTailwindResponsiveInContainer,
+          'no-named-reexport-in-barrel': noNamedReexportInBarrel,
         }
       }
     },
@@ -64,6 +70,18 @@ export default withNuxt(
             message: 'Use Nuxt auto-imports instead of importing from vue directly.',
             allowTypeImports: true
           }
+        ],
+        paths: [
+          {
+            name: '@storefront-ui/vue',
+            importNames: ['SfButton'],
+            message: `SfButton doesn't conform to the app's design system. Use UiButton instead.`
+          },
+          {
+            name: '@storefront-ui/vue',
+            importNames: ['SfLink'],
+            message: `SfLink doesn't conform to the app's design system. Use UiLink instead.`
+          }
         ]
       }],
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
@@ -81,6 +99,40 @@ export default withNuxt(
       'vuejs-accessibility/no-static-element-interactions': 'off',
       'custom-rules/no-i18n-globals': 'error',
       'custom-rules/no-multiple-template-callbacks': 'error',
+      'custom-rules/file-organization-types': 'error',
     }
+  },
+  // Everything inside app/pages/, app/layouts/, and most of app/components/ is rendered
+  // inside the Tailwind @container defined in app.vue -> enforce @-prefixed container variants.
+  // Excluded: editor overlay components and settings/editor panels which live outside @container.
+  {
+    files: [
+      'app/pages/**/*.vue',
+      'app/layouts/**/*.vue',
+      'app/components/**/*.vue',
+    ],
+    ignores: [
+      'app/components/SafeModeBanner/**',
+      'app/components/SettingsToolbar/**',
+      'app/components/SiteConfigurationDrawer/**',
+      'app/components/AddBlockPopover/**',
+      'app/components/ui/Toolbar/**',
+      'app/components/ui/PageModal/**',
+      'app/components/ui/UnlinkCategoryModal/**',
+      'app/components/ui/ResetProductPageModal/**',
+      'app/components/ui/Notifications/**',
+      'app/components/settings/**',
+      'app/components/editor/**',
+      'app/components/blocks/**/*Form.vue',
+    ],
+    rules: {
+      'custom-rules/no-bare-responsive-in-container': 'error',
+    },
+  },
+  {
+    files: ['app/composables/**/index.ts', 'app/utils/**/index.ts'],
+    rules: {
+      'custom-rules/no-named-reexport-in-barrel': 'error',
+    },
   },
 );

@@ -1,26 +1,33 @@
 <template>
   <div class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-    <UiAccordionItem
-      v-model="textSettings"
-      data-testid="open-layout-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-settings') }}</h2>
-      </template>
+    <div v-if="editingBlock">
+      <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
+    </div>
+    <div v-else>
+      <EditorGridElementsPanel
+        v-model="elementsOpen"
+        :uuid="resolvedUuid"
+        :quick-add-options="multiGridQuickAddOptions"
+        @edit-element="editElement"
+        @insert-before="handleInsertBefore"
+      />
 
-      <div data-testid="image-text-form">
-        <div v-if="isTwoColumnMultigrid" class="py-4">
-          <UiFormLabel>{{ getEditorTranslation('column-size') }}</UiFormLabel>
+      <EditorFormPanel
+        v-model="layoutOpen"
+        data-testid="open-layout-settings"
+        :title="getEditorTranslation('layout-settings')"
+        content-class="px-3.5 py-3 flex flex-col gap-3"
+      >
+        <div v-if="isTwoColumnMultigrid">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('column-size') }}</div>
           <ColumnWidthInput
             :multi-grid-structure="multiGridStructure"
             @update:column-widths="multiGridStructure.configuration.columnWidths = $event"
           />
         </div>
 
-        <div v-if="multiGridStructure.configuration.layout" class="py-2">
-          <UiFormLabel>{{ getEditorTranslation('margin-label') }}</UiFormLabel>
+        <div v-if="multiGridStructure.configuration.layout">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
           <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
             <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
               <span><SfIconArrowUpward /></span>
@@ -31,7 +38,7 @@
                 data-testid="margin-top"
               />
             </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
               <span><SfIconArrowDownward /></span>
               <input
                 v-model.number="multiGridStructure.configuration.layout.marginBottom"
@@ -43,111 +50,111 @@
           </div>
         </div>
 
-        <div v-if="multiGridStructure.configuration.layout" class="py-2">
-          <UiFormLabel>{{ getEditorTranslation('gap-label') }}</UiFormLabel>
-          <div class="border-b py-1 flex gap-2">
+        <div v-if="multiGridStructure.configuration.layout">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('gap-label') }}</div>
+          <div class="flex gap-1">
             <button
               v-for="gapOption in gapOptions"
               :key="gapOption"
               type="button"
               data-testid="gap-btn"
-              :class="[
-                gapBtnClasses,
-                { 'bg-editor-button text-white': gapOption === multiGridStructure.configuration.layout.gap },
-              ]"
+              class="w-7 h-6 rounded-md text-3xs cursor-pointer transition-colors"
+              :class="
+                gapOption === multiGridStructure.configuration.layout.gap
+                  ? 'border border-editor-accent bg-editor-accent/[8%] text-editor-accent font-bold'
+                  : 'border border-editor-canvas-border bg-white text-editor-text-faint'
+              "
               @click="multiGridStructure.configuration.layout.gap = gapOption"
             >
-              {{ getEditorTranslation('gap-size-' + gapOption.toLowerCase()) }}
+              {{ gapOption }}
             </button>
           </div>
-          <div class="mt-2 text-xs text-neutral-700">
+          <div class="mt-1.5 text-2xs text-editor-text-placeholder">
             {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
           </div>
         </div>
-      </div>
-      <div v-if="multiGridStructure.configuration.columnWidths?.length" class="py-4">
-        <UiFormLabel>{{ getEditorTranslation('sticky-columns') }}</UiFormLabel>
 
-        <div class="grid grid-cols-3 gap-2 mt-2">
-          <button
-            v-for="i in numColumns"
-            :key="`sticky-col-${i}`"
-            type="button"
-            class="px-3 py-2 rounded-md border text-sm"
-            :class="
-              isSticky(i - 1)
-                ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
-                : 'border-neutral-300 hover:border-neutral-400'
-            "
-            @click="toggleSticky(i - 1)"
-          >
-            {{ getEditorTranslation('column') }} {{ i }}
-          </button>
+        <div v-if="multiGridStructure.configuration.columnWidths?.length">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
+          <div class="grid grid-cols-3 gap-2">
+            <button
+              v-for="i in numColumns"
+              :key="`sticky-col-${i}`"
+              type="button"
+              class="px-3 py-2 rounded-md border text-sm"
+              :class="
+                isSticky(i - 1)
+                  ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
+                  : 'border-neutral-300 hover:border-neutral-400'
+              "
+              @click="toggleSticky(i - 1)"
+            >
+              {{ getEditorTranslation('column') }} {{ i }}
+            </button>
+          </div>
         </div>
-      </div>
-      <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-    </UiAccordionItem>
 
-    <UiAccordionItem
-      v-model="layoutBackground"
-      data-testid="open-layout-background-settings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-background') }}</h2>
-      </template>
+        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
+      </EditorFormPanel>
 
-      <div v-if="multiGridStructure.configuration.layout" class="py-2">
-        <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('background-color-label') }}</UiFormLabel>
+      <EditorFormPanel
+        v-model="backgroundOpen"
+        data-testid="open-layout-background-settings"
+        :title="getEditorTranslation('layout-background')"
+      >
+        <div v-if="multiGridStructure.configuration.layout">
+          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
+          <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
+            <template #trigger="{ color, toggle }">
+              <label>
+                <SfInput
+                  v-model="multiGridStructure.configuration.layout.backgroundColor"
+                  type="text"
+                  data-testid="input-background-color"
+                >
+                  <template #suffix>
+                    <button
+                      type="button"
+                      class="border border-editor-input-border rounded-lg cursor-pointer w-10 h-8"
+                      :style="{ backgroundColor: color }"
+                      @mousedown.stop
+                      @click.stop="toggle"
+                    />
+                  </template>
+                </SfInput>
+              </label>
+            </template>
+          </EditorColorPicker>
         </div>
-        <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
-          <template #trigger="{ color, toggle }">
-            <label>
-              <SfInput
-                v-model="multiGridStructure.configuration.layout.backgroundColor"
-                type="text"
-                data-testid="input-background-color"
-              >
-                <template #suffix>
-                  <button
-                    type="button"
-                    class="border border-editor-input-border rounded-lg cursor-pointer w-10 h-8"
-                    :style="{ backgroundColor: color }"
-                    @mousedown.stop
-                    @click.stop="toggle"
-                  />
-                </template>
-              </SfInput>
-            </label>
-          </template>
-        </EditorColorPicker>
-      </div>
-    </UiAccordionItem>
+      </EditorFormPanel>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
+import type { Block } from '@plentymarkets/shop-api';
 import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const props = defineProps<{ uuid?: string }>();
 
+const enableAddBlockPopover = useRuntimeConfig().public.enableAddBlockPopover as boolean;
+const { openAddBlockPopover } = useAddBlockPopover();
+const { openDrawerWithView } = useSiteConfiguration();
+const { setInsertColumnUuid } = useBlocksMutations();
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
-const { allBlocks: data } = useBlocks();
+const { allBlocks } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
-const isTwoColumnMultigrid = computed(() => {
-  return multiGridStructure.value.configuration?.columnWidths?.length === 2;
-});
+
+const isTwoColumnMultigrid = computed(() => multiGridStructure.value.configuration?.columnWidths?.length === 2);
 
 const multiGridStructure = computed(() => {
-  const block = (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
+  const block = (findOrDeleteBlockByUuid(allBlocks.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
   if (!block.configuration.layout) {
     block.configuration.layout = {
       marginTop: 0,
@@ -167,24 +174,11 @@ const multiGridStructure = computed(() => {
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
 
-const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
-const gapBtnClasses =
-  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
-type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
-const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
-
-const getGapPx = (gap: string | undefined): number => {
-  const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
-  return gapPxMap[validGap as GapSize];
-};
-
 if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
 
 const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
 
-const isSticky = (columnIndex: number) => {
-  return (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
-};
+const isSticky = (columnIndex: number) => (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
 
 const toggleSticky = (columnIndex: number) => {
   const configuration = multiGridStructure.value.configuration;
@@ -197,8 +191,59 @@ const toggleSticky = (columnIndex: number) => {
   }
 };
 
-const textSettings = ref(false);
-const layoutBackground = ref(false);
+const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
+const gapPxMap: Record<GapSize, number> = { None: 0, S: 4, M: 8, L: 12, XL: 20 };
+
+const getGapPx = (gap: string | undefined): number => {
+  const validGap = gap === 'None' || gap === 'S' || gap === 'M' || gap === 'L' || gap === 'XL' ? gap : 'M';
+  return gapPxMap[validGap as GapSize];
+};
+
+const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
+const { pushEdit } = useBlockEditStack();
+
+const editElement = (block: Block) => {
+  pushEdit(block);
+};
+
+const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
+  const insertIndex = block.parent_slot ?? 0;
+  const structure = multiGridStructure.value as ColumnBlock;
+  const content = (structure.content as Block[] | undefined) ?? [];
+  const newBlock = createEmptyGridBlock(insertIndex);
+
+  content.forEach((childBlock) => {
+    if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + 1;
+  });
+  structure.configuration.columnWidths.splice(insertIndex, 0, 12);
+  if (!structure.content) structure.content = [];
+  (structure.content as Block[]).push(newBlock as unknown as Block);
+
+  const cleanup = () => {
+    const blocks = structure.content as Block[];
+    const index = blocks.findIndex(
+      (childBlock) => childBlock.meta.uuid === newBlock.meta.uuid && childBlock.name === 'EmptyGridBlock',
+    );
+    if (index !== -1) {
+      blocks.splice(index, 1);
+      structure.configuration.columnWidths.splice(insertIndex, 1);
+      (structure.content as Block[]).forEach((childBlock) => {
+        if ((childBlock.parent_slot ?? 0) > insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) - 1;
+      });
+    }
+  };
+
+  if (enableAddBlockPopover) {
+    openAddBlockPopover({ anchorEl, targetUuid: newBlock.meta.uuid, position: 'inside', onCancel: cleanup });
+  } else {
+    setInsertColumnUuid(newBlock.meta.uuid);
+    openDrawerWithView('blocksList');
+  }
+};
+
+const elementsOpen = ref(true);
+const layoutOpen = ref(true);
+const backgroundOpen = ref(true);
 </script>
 
 <i18n lang="json">
@@ -207,14 +252,9 @@ const layoutBackground = ref(false);
     "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
     "background-color-label": "Background Color",
-    "gap-label": "Gap",
-    "gap-size-none": "None",
-    "gap-size-s": "S",
-    "gap-size-m": "M",
-    "gap-size-l": "L",
-    "gap-size-xl": "XL",
-    "spacing-between": "Spacing between Blocks:",
-    "layout-background": "Layout Background",
+    "gap-label": "Column Gap",
+    "spacing-between": "Spacing between blocks:",
+    "layout-background": "Background",
     "sticky-columns": "Sticky columns",
     "column-size": "Column Size",
     "column": "Column"
@@ -223,14 +263,9 @@ const layoutBackground = ref(false);
     "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
     "background-color-label": "Background Color",
-    "gap-label": "Gap",
-    "gap-size-none": "None",
-    "gap-size-s": "S",
-    "gap-size-m": "M",
-    "gap-size-l": "L",
-    "gap-size-xl": "XL",
-    "spacing-between": "Spacing between Blocks:",
-    "layout-background": "Layout Background",
+    "gap-label": "Column Gap",
+    "spacing-between": "Spacing between blocks:",
+    "layout-background": "Background",
     "sticky-columns": "Sticky columns",
     "column-size": "Column Size",
     "column": "Column"

@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky z-[2] h-full flex flex-col" data-testid="localization-management-drawer">
+  <div class="pages-view sticky z-[25] h-full flex flex-col" data-testid="localization-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
@@ -17,28 +17,20 @@
     <div class="flex-1 min-h-0 overflow-y-auto">
       <p class="m-4">{{ getEditorTranslation('description') }}</p>
 
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="editLanguagesOpen"
+        :title="getEditorTranslation('shop-languages')"
         data-testid="content-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
-        <template #summary>
-          <h2>{{ getEditorTranslation('shop-languages') }}</h2>
-        </template>
         <EditorLocalizationShopLanguages />
-      </UiAccordionItem>
-      <UiAccordionItem
+      </EditorFormPanel>
+      <EditorFormPanel
         v-model="editTranslationsOpen"
+        :title="getEditorTranslation('edit-translations')"
         data-testid="content-pages-section"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
       >
-        <template #summary>
-          <h2>{{ getEditorTranslation('edit-translations') }}</h2>
-        </template>
         <EditorLocalizationLanguageSelect />
-      </UiAccordionItem>
+      </EditorFormPanel>
     </div>
   </div>
   <EditorLocalizationDrawer v-if="keys.length > 0 && drawerOpen" />

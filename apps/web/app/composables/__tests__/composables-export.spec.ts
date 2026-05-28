@@ -44,6 +44,12 @@ describe('composables index exports', () => {
     'useSliderImagePreload',
     'useNearViewport',
     'useEditorOptionsTabs',
+    'useNestedBlockForm',
+    'useBlockEditStack',
+    'useBlocksHighlight',
+    'useMultiGridQuickAdd',
+    'useColumnSticky',
+    'useEditorItemProperties',
   ];
 
   const allFileModules = fs

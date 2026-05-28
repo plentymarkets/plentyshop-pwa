@@ -10,7 +10,7 @@
       :key="locale"
       :data-testid="`language-option-${locale}`"
       type="button"
-      class="w-full text-left px-3 py-2 text-sm md:text-base hover:bg-gray-100"
+      class="w-full text-left px-3 py-2 text-sm @md:text-base hover:bg-gray-100"
       :class="i === activeIndex ? 'bg-gray-100' : ''"
       role="option"
       :aria-selected="locale === currentLocale"
@@ -24,11 +24,8 @@
 
 <script setup lang="ts">
 import type { Locale } from 'vue-i18n';
+import type { Props } from './types';
 
-interface Props {
-  isOpen?: boolean;
-  activeIndex?: number;
-}
 const { send } = useNotification();
 
 withDefaults(defineProps<Props>(), {

@@ -58,7 +58,7 @@
             ref="megaMenuReference"
             :style="{ ...style, backgroundColor: resolvedContent.color.backgroundColor || 'white' }"
             :class="[
-              'hidden md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
+              'hidden @md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
               submenuGridAlignmentClass,
             ]"
             @keydown.esc="focusTrigger(index)"
@@ -208,10 +208,7 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
-import type { MegaMenuProps } from '~/components/MegaMenu/types';
-import type { NavigationProps } from './types';
-
-type NavigationBlockProps = Partial<MegaMenuProps> & Partial<NavigationProps>;
+import type { NavigationBlockProps } from './types';
 
 const props = withDefaults(defineProps<NavigationBlockProps>(), {
   categories: () => [],

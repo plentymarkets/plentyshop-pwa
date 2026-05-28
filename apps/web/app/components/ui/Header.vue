@@ -1,8 +1,8 @@
 <template>
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      <UiSearch class="hidden md:block flex-1" />
-      <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
+      <UiSearch class="hidden @md:block flex-1" />
+      <nav class="hidden ml-4 @md:flex @md:flex-row @md:flex-nowrap">
         <UiButton
           v-if="!isLanguageSelectOpen"
           class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
@@ -127,7 +127,7 @@
     <div v-if="viewport.isLessThan('lg')">
       <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md @md:hidden"
         square
         data-testid="open-languageselect-button"
         :style="{ color: iconColor }"
@@ -139,7 +139,7 @@
       </UiButton>
       <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md @md:hidden"
         square
         :style="{ color: iconColor }"
         :aria-label="t('common.navigation.openSearchModal')"
@@ -154,7 +154,7 @@
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
     tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+    class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
   >
     <header>
       <UiButton

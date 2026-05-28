@@ -26,7 +26,7 @@
         <button
           v-if="notification?.action?.onClick"
           type="button"
-          class="py-1.5 px-3 md:py-2 md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset"
+          class="py-1.5 px-3 @md:py-2 @md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset"
           :class="[getButtonClasses(notification)]"
           @click="notification?.action?.onClick"
         >
@@ -34,13 +34,13 @@
         </button>
         <button
           type="button"
-          class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
+          class="p-1.5 @md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
           :class="[{ 'ml-auto': !notification?.action?.text }, getButtonClasses(notification)]"
           :aria-label="t('common.navigation.closeNeutralAlert')"
           @click="notification.dismiss"
         >
-          <SfIconClose class="hidden md:block" />
-          <SfIconClose size="sm" class="block md:hidden" />
+          <SfIconClose class="hidden @md:block" />
+          <SfIconClose size="sm" class="block @md:hidden" />
         </button>
       </UiAlert>
     </div>

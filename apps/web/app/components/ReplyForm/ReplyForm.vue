@@ -1,5 +1,5 @@
 <template>
-  <form data-testid="review-answer-form" class="mt-8 lg:mr-16" @submit.prevent="onSubmit">
+  <form data-testid="review-answer-form" class="mt-8 @lg:mr-16" @submit.prevent="onSubmit">
     <h3 class="font-bold typography-headline-4 mb-2">{{ t('review.createAnswerFormTitle') }}</h3>
 
     <UiFormLabel for="reply-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
@@ -30,10 +30,10 @@
     <p class="text-sm text-neutral-500 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
     <div class="flex justify-end gap-x-4">
-      <UiButton type="button" size="sm" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')"
+      <UiButton type="button" size="sm" variant="secondary" class="flex-1 @md:flex-initial" @click="$emit('on-close')">
         >{{ t('review.cancel') }}
       </UiButton>
-      <UiButton type="submit" size="sm" class="flex-1 md:flex-initial">
+      <UiButton type="submit" size="sm" class="flex-1 @md:flex-initial">
         {{ t('review.saveAnswer') }}
       </UiButton>
     </div>

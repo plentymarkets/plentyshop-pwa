@@ -20,7 +20,7 @@
       data-testid="notify-me-modal"
       tag="section"
       role="dialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
       style="z-index: 9999"
       aria-labelledby="notify-modal-title"
       aria-describedby="notify-modal-description"
@@ -36,7 +36,7 @@
         >
           <SfIconClose aria-hidden="true" />
         </UiButton>
-        <h3 id="notify-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
+        <h3 id="notify-modal-title" class="text-neutral-900 text-lg @md:text-2xl font-bold mb-4">
           {{ t('notifyMe.outOfStock') }}
         </h3>
         <p id="notify-modal-description" class="text-neutral-700 mb-6">
