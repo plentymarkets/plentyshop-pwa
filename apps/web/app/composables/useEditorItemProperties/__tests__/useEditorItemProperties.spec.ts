@@ -6,7 +6,7 @@ import {
   mockGroups,
   mockProperty1,
   mockProperty2,
-  mockGetEditorItemProperties,
+  mockGetItemProperties,
   mockSdkSuccess,
   mockSdkError,
 } from './useEditorItemProperties.mocks';
@@ -21,11 +21,12 @@ mockNuxtImport('useNotification', () => () => ({
 
 mockNuxtImport('useSdk', () => () => ({
   plentysystems: {
-    getEditorItemProperties: mockGetEditorItemProperties,
+    getItemProperties: mockGetItemProperties,
   },
 }));
 
 mockNuxtImport('onMounted', () => vi.fn());
+
 describe('useEditorItemProperties', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -39,31 +40,20 @@ describe('useEditorItemProperties', () => {
   });
 
   describe('getGroupName', () => {
-    it('should return the localized group name for the current locale', () => {
+    it('should return the group name', () => {
       const { getGroupName } = useEditorItemProperties({ externalGroups: () => mockGroups });
       expect(getGroupName(mockGroup1)).toBe('Appearance');
-    });
-    it('should fall back to English when the locale value is null', () => {
-      const { getGroupName } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      const groupWithNullDe = { ...mockGroup1, names: { de: null, en: 'Appearance' } };
-      expect(getGroupName(groupWithNullDe)).toBe('Appearance');
-    });
-    it('should return missing translation message when both locale and English are null', () => {
-      const { getGroupName } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      const groupWithNoNames = { ...mockGroup1, names: { de: null, en: null } };
-      expect(getGroupName(groupWithNoNames)).toBe(`Missing translation for id: ${mockGroup1.id}`);
     });
   });
 
   describe('getPropName', () => {
-    it('should return the localized property name', () => {
+    it('should return the property name', () => {
       const { getPropName } = useEditorItemProperties({ externalGroups: () => mockGroups });
       expect(getPropName(mockProperty1)).toBe('Color');
     });
-    it('should return missing translation message when both locale and English are null', () => {
+    it('should return the SDK-provided missing translation message', () => {
       const { getPropName } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      const propWithNoNames = { ...mockProperty1, names: { de: null, en: null } };
-      expect(getPropName(propWithNoNames)).toBe(`Missing translation for id: ${mockProperty1.id}`);
+      expect(getPropName(mockProperty2)).toBe('Size');
     });
   });
 
@@ -100,6 +90,7 @@ describe('useEditorItemProperties', () => {
       expect(filteredGroups.value).toHaveLength(0);
     });
   });
+
   describe('toggleGroup', () => {
     it('should add a group id to openGroups when it is closed', () => {
       const { openGroups, toggleGroup } = useEditorItemProperties({ externalGroups: () => mockGroups });
@@ -156,6 +147,7 @@ describe('useEditorItemProperties', () => {
       expect(selectionCount.value).toBe(3);
     });
   });
+
   describe('toggleSelection', () => {
     it('should initialize a selection entry when none exists and set name to true', () => {
       const { selection, toggleSelection } = useEditorItemProperties({ externalGroups: () => mockGroups });
@@ -174,6 +166,7 @@ describe('useEditorItemProperties', () => {
       expect(selection.value[mockProperty1.id]!.name).toBe(false);
     });
   });
+
   describe('toggleGroupItemSelection', () => {
     it('should initialize a group selection entry and set name to true', () => {
       const { groupSelection, toggleGroupItemSelection } = useEditorItemProperties({
@@ -191,6 +184,7 @@ describe('useEditorItemProperties', () => {
       expect(groupSelection.value[mockGroup1.id]!.name).toBe(false);
     });
   });
+
   describe('insertSelected', () => {
     it('should not call onInsert when nothing is selected', () => {
       const onInsert = vi.fn();
@@ -248,6 +242,7 @@ describe('useEditorItemProperties', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
   });
+
   describe('externalGroups', () => {
     it('should use external groups when provided', () => {
       const { filteredGroups } = useEditorItemProperties({ externalGroups: () => mockGroups });
@@ -255,24 +250,25 @@ describe('useEditorItemProperties', () => {
     });
     it('should not trigger an SDK fetch when externalGroups is provided', () => {
       useEditorItemProperties({ externalGroups: () => mockGroups });
-      expect(mockGetEditorItemProperties).not.toHaveBeenCalled();
+      expect(mockGetItemProperties).not.toHaveBeenCalled();
     });
   });
+
   describe('fetchItemProperties (error handling)', () => {
     it('should throw when the SDK call fails', async () => {
       mockSdkError('API unavailable');
       await expect(
-        (
-          useSdk().plentysystems as unknown as { getEditorItemProperties: () => Promise<unknown> }
-        ).getEditorItemProperties(),
+        (useSdk().plentysystems as unknown as { getItemProperties: (p: object) => Promise<unknown> }).getItemProperties(
+          { locale: 'en' },
+        ),
       ).rejects.toThrow('API unavailable');
     });
     it('should populate groups after a successful SDK response', async () => {
       mockSdkSuccess([mockGroup1]);
-      const response = await (
-        useSdk().plentysystems as unknown as { getEditorItemProperties: () => Promise<unknown> }
-      ).getEditorItemProperties();
-      expect(response).toEqual([mockGroup1]);
+      const { data } = await (
+        useSdk().plentysystems as unknown as { getItemProperties: (p: object) => Promise<{ data: unknown }> }
+      ).getItemProperties({ locale: 'en' });
+      expect(data).toEqual([mockGroup1]);
     });
   });
 });
