@@ -53,6 +53,44 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
+  const ensureHomeReviewsPlacement = (topLevelBlocks: Block[]) => {
+    // Only affect the homepage. Keep it deterministic and avoid duplicates.
+    if (identifier !== 'index') return;
+    if (!Array.isArray(topLevelBlocks) || topLevelBlocks.length === 0) return;
+    if (topLevelBlocks.some((b) => b?.name === 'HomeReviews')) return;
+
+    const logoSliderIndex = topLevelBlocks.findIndex((b) => b?.name === 'LogoSlider');
+    if (logoSliderIndex === -1) return;
+
+    const isThreeImagesBlock = (b: Block | undefined) => {
+      if (!b || b.name !== 'MultiGrid' || !Array.isArray(b.content)) return false;
+      const imageCount = b.content.filter((child) => child?.name === 'Image').length;
+      return imageCount >= 3;
+    };
+
+    let insertAt = logoSliderIndex;
+    for (let i = logoSliderIndex - 1; i >= 0; i -= 1) {
+      if (isThreeImagesBlock(topLevelBlocks[i])) {
+        insertAt = i;
+        break;
+      }
+    }
+
+    const reviewsBlock: Block = {
+      name: 'HomeReviews',
+      type: 'content',
+      meta: {
+        // Static UUID so we don't create needless diffs in editor state.
+        uuid: 'f8e1d2c3-b4a5-4f6e-9d8c-7b6a5c4d3e2f',
+        isGlobalTemplate: false,
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      content: {} as any,
+    };
+
+    topLevelBlocks.splice(insertAt, 0, reviewsBlock);
+  };
+
   const getBlocksServer: GetBlocks = async (identifier, type, blocks?) => {
     state.value.loading = true;
 
@@ -90,6 +128,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
 
     if (Array.isArray(blocks)) {
+      ensureHomeReviewsPlacement(blocks);
       migrateAllImageBlocks(blocks);
     }
 

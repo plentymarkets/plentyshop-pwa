@@ -188,6 +188,15 @@
     }
   },
   {
+    "name": "HomeReviews",
+    "type": "content",
+    "meta": {
+      "uuid": "a1f2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
+      "isGlobalTemplate": false
+    },
+    "content": {}
+  },
+  {
     "name": "NewsletterSubscribe",
     "type": "content",
     "meta": {

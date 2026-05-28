@@ -194,6 +194,15 @@
     }
   },
   {
+    "name": "HomeReviews",
+    "type": "content",
+    "meta": {
+      "uuid": "b5c4d3e2-f1a0-4b9c-8d7e-6f5a4b3c2d1e",
+      "isGlobalTemplate": false
+    },
+    "content": {}
+  },
+  {
     "name": "NewsletterSubscribe",
     "type": "content",
     "meta": {
