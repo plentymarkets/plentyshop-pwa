@@ -1,5 +1,11 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
-import type { UseEditorItemPropertiesOptions, UseEditorItemProperties, PropSelection, ItemPropertyLocaleMap, ItemPropertyGroupRaw } from './types';
+import type {
+  UseEditorItemPropertiesOptions,
+  UseEditorItemProperties,
+  PropSelection,
+  ItemPropertyLocaleMap,
+  ItemPropertyGroupRaw,
+} from './types';
 
 const FALLBACK_LOCALE = 'en';
 
@@ -128,7 +134,9 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
     loading.value = true;
     try {
       const { data } = await useSdk().plentysystems.getItemProperties();
-      itemPropertyGroups.value = (data as unknown as ItemPropertyGroupRaw[]).map((g) => translateGroup(g, requestedLocale.value));
+      itemPropertyGroups.value = (data as unknown as ItemPropertyGroupRaw[]).map((g) =>
+        translateGroup(g, requestedLocale.value),
+      );
     } catch (error) {
       throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {

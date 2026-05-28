@@ -48,14 +48,6 @@
     <hr class="my-4" />
 
     <div class="py-4">
-      <UiButton size="sm" type="button" variant="secondary" @click="isModalOpen = true">
-        {{ getEditorTranslation('open-modal') }}
-      </UiButton>
-    </div>
-
-    <hr class="my-4" />
-
-    <div class="py-4">
       <EditorOptionsTabs
         v-model="wishlistSizeModel"
         :legend="getEditorTranslation('wishlist-size-label')"
@@ -145,8 +137,6 @@
       </div>
     </div>
   </EditorFormPanel>
-
-  <ItemPropertiesSelectModal v-if="isModalOpen" :close="() => (isModalOpen = false)" @insert="(_tokens) => {}" />
 </template>
 
 <script lang="ts" setup>
@@ -164,7 +154,6 @@ import {
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
-import ItemPropertiesSelectModal from '~/components/blocks/PriceCard/ItemPropertiesSelectModal.vue';
 
 const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
@@ -202,7 +191,6 @@ const fieldLabels = {
 
 const cardOpen = ref(true);
 const layoutOpen = ref(true);
-const isModalOpen = ref(false);
 
 const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
   () => priceCardBlock.value,
@@ -262,8 +250,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "text-align-option-right-label": "Right",
 
     "drag-reorder-aria": "Drag to reorder",
-    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles",
-    "open-modal": "Open modal"
+    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles"
   },
   "de": {
     "card-section-label": "Card",
@@ -315,8 +302,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "text-align-option-right-label": "Right",
 
     "drag-reorder-aria": "Drag to reorder",
-    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles",
-    "open-modal": "Open modal"
+    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles"
   }
 }
 </i18n>
