@@ -1,14 +1,14 @@
 <template>
   <Teleport to="body">
     <template v-if="popoverState">
-      <div class="fixed inset-0 z-[200]" @click="closeAddBlockPopover" />
+      <div class="fixed inset-0 z-modal-backdrop" @click="closeAddBlockPopover" />
 
       <AddBlockPopoverArrow :position="popoverPosition" />
 
       <div
         ref="panelRef"
         data-testid="add-block-popover"
-        class="fixed z-[201] w-[296px] h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
+        class="fixed z-modal w-[296px] h-[350px] bg-white rounded-xl border border-editor-border flex flex-col overflow-hidden"
         :style="panelStyle"
         @click.stop
       >

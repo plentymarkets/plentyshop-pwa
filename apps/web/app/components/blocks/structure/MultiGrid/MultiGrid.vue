@@ -9,7 +9,7 @@
         <div
           v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
           :class="getColumnClasses(cell.colIndex)"
-          class="group/col relative @md:z-[1]"
+          class="group/col relative @md:z-raised"
           data-testid="multi-grid-column"
         >
           <div

@@ -12,7 +12,7 @@
       <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
-    <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-[9999]">
+    <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-max">
       <EditorColorPickerPanel
         :model-value="modelValue"
         :active-tab="activeTab"

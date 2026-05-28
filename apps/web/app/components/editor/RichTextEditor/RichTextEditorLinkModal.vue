@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div
-      class="fixed inset-0 z-[600] flex items-center justify-center bg-black/40"
+      class="fixed inset-0 z-toast flex items-center justify-center bg-black/40"
       @mousedown.self="cancelAndRevert(props.close)"
     >
       <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-visible">

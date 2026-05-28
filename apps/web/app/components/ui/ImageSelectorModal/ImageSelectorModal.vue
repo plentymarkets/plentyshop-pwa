@@ -3,7 +3,7 @@
     <div
       v-if="props.open"
       data-testid="image-selector-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-modal-backdrop"
     >
       <div class="bg-white w-[1500px] h-[90%] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col overflow-y-auto">
         <header class="flex items-center justify-between mb-4">
@@ -13,7 +13,7 @@
               label="If you want to delete images or create/delete folders, please do this in the Webspace (under Shop), as these functions are not yet available in the editor."
               placement="top"
               :show-arrow="true"
-              class="z-10"
+              class="z-picker"
             >
               <SfIconInfo size="sm" />
             </SfTooltip>
