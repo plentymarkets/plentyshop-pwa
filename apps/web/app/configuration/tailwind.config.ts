@@ -190,6 +190,7 @@ export default {
         m: '2.5rem',
         l: '3.125rem',
         xl: '3.75rem',
+        toolbar: '54px',
       },
     },
   },

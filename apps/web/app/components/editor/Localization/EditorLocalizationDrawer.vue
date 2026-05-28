@@ -1,7 +1,7 @@
 <template>
   <SfDrawer
     v-model="open"
-    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[calc(100vw-54px-100%)] flex flex-col overflow-hidden z-[20]"
+    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !fixed top-0 h-full flex flex-col overflow-hidden z-[60] [--toolbar-w:theme(spacing.toolbar)] [--panel-w:clamp(250px,25vw,300px)] left-[calc(var(--toolbar-w)+var(--panel-w))] w-[calc(100vw-var(--toolbar-w)-var(--panel-w))]"
     :placement="'left'"
     :disable-click-away="true"
   >
