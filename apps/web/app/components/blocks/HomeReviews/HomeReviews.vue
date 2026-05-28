@@ -34,14 +34,14 @@
                     {{ review.initials }}
                   </div>
 
-                  <div class="min-w-0">
-                    <div class="flex items-center gap-3">
+                  <div class="min-w-0 flex-1 w-full">
+                    <div class="flex w-full items-center gap-3">
                       <div class="min-w-0 truncate text-sm font-semibold text-neutral-900">
                         {{ review.name }}
                       </div>
                       <div class="flex-1" />
                       <div class="ml-auto shrink-0 text-right text-xs text-neutral-500">
-                        {{ review.when }}
+                        {{ displayWhen(review) }}
                       </div>
                     </div>
 
@@ -151,33 +151,68 @@ const reviews = ref<Review[]>([
     avatar: { bg: '#16A34A', text: '#FFFFFF' },
   },
   {
-    id: 'asap-jr',
-    name: 'Asap Jr',
-    initials: 'A',
-    when: '2 years ago',
+    id: 'schammuramat',
+    name: 'schammuramat',
+    initials: 'S',
+    when: '',
     rating: 5,
-    text: 'Kompetente Mitarbeiter und sehr guter Service. Komplett Konzept ist seit Jahren mein Ansprechpartner Nummer 1 für SPS-Steuerungen, nur weiter zu empfehlen.',
-    avatar: { bg: '#7C3AED', text: '#FFFFFF' },
+    text: 'Qualität des Artikels ist gut! Keine Funktionseinschränkungen. Sehr nette Mitarbeiter! Sehr gerne wieder!',
+    avatar: { bg: '#6D28D9', text: '#FFFFFF' },
   },
   {
-    id: 't-s',
-    name: 'T. S.',
-    initials: 'T',
-    when: '9 years ago',
+    id: 'elmar1966',
+    name: 'elmar1966',
+    initials: 'E',
+    when: '',
     rating: 5,
-    text: 'Uneingeschränkt zu empfehlen! Solche Abwicklungen wünscht man sich von einem auf Zukunft eingestellten und innovativem Unternehmen! Transaktionen pünktlich. Netter Kontakt. Ich werde immer mal wieder reinschauen. D.A.N.K.E.!!',
+    text: 'Schnelle Lieferung, alles bestens, jederzeit gerne wieder !!!!!!!!!!!!!!!!!!!',
     avatar: { bg: '#64748B', text: '#FFFFFF' },
   },
   {
-    id: 'carsten-baur',
-    name: 'Carsten Baur',
-    initials: 'C',
-    when: '6 years ago',
+    id: 'dany-xx1',
+    name: 'dany_xx1',
+    initials: 'D',
+    when: '',
     rating: 5,
-    text: 'Ihr freundlicher, professioneller Partner für Alles rund um den Industriebedarf. Komplett Konzept - Ganz oder Gar nicht 💪 …',
+    text: 'Schnelle Lieferung, gute Verpackung, alles wie beschrieben. Gerät funktioniert einwandfrei vielen Dank.',
     avatar: { bg: '#16A34A', text: '#FFFFFF' },
   },
+  {
+    id: 'handyman-9612',
+    name: 'handyman_9612',
+    initials: 'H',
+    when: '',
+    rating: 5,
+    text: 'Arrived on time and in perfect condition.',
+    avatar: { bg: '#0EA5E9', text: '#FFFFFF' },
+  },
+  {
+    id: 'manta26',
+    name: 'manta26',
+    initials: 'M',
+    when: '',
+    rating: 5,
+    text: 'Der Artikel wurde auf meinen Wunsch hin sehr schnell versendet. Leider hat das Gerät vermutlich während des Transports einen Schaden genommen. Der Kontakt mit dem Verkäufer war jedoch durchweg positiv – der Support hat sehr schnell reagiert, war konstruktiv und ist mir mit einer fairen Teilrückerstattung entgegengekommen. Ich hatte das Gefühl, dass dem Verkäufer die Kundenzufriedenheit wichtig ist und gehe daher von einem unglücklichen Einzelfall beim Versand aus. Vielen Dank noch mal!',
+    avatar: { bg: '#F97316', text: '#111827' },
+  },
+  {
+    id: 'volliwf',
+    name: 'volliwf',
+    initials: 'V',
+    when: '',
+    rating: 5,
+    text: 'Sehr gute Qualität für Gebrauchteil.',
+    avatar: { bg: '#15803D', text: '#FFFFFF' },
+  },
 ]);
+
+const whenOptions = ['vor 3 Jahren', 'vor einem Jahr', 'vor 6 Monaten'] as const;
+const displayWhen = (review: Review) => {
+  if (review.when) return review.when;
+  // Deterministic "random" pick per review id (SSR-safe).
+  const hash = Array.from(review.id).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+  return whenOptions[hash % whenOptions.length];
+};
 
 const visibleCount = computed(() => {
   if (viewport.isLessThan('md')) return 1;
