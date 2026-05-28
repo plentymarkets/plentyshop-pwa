@@ -145,10 +145,18 @@ export class ProductDetailPageObject extends PageObject {
         expect(review).to.have.nested.property('author.name').and.be.a('string');
       });
 
-      // Aggregate rating
-      expect(productData).to.have.nested.property('aggregateRating.@type', 'AggregateRating');
-      expect(productData).to.have.nested.property('aggregateRating.ratingValue').and.be.a('number');
-      expect(productData).to.have.nested.property('aggregateRating.reviewCount').and.be.a('number');
+      // Aggregate rating, present when reviewCount > 0
+      if (productData?.['aggregateRating']) {
+        expect(productData).to.have.nested.property('aggregateRating.@type', 'AggregateRating');
+        expect(productData)
+          .to.have.nested.property('aggregateRating.ratingValue')
+          .and.be.a('number')
+          .and.be.greaterThan(0);
+        expect(productData)
+          .to.have.nested.property('aggregateRating.reviewCount')
+          .and.be.a('number')
+          .and.be.greaterThan(0);
+      }
 
       // Offers
       expect(productData).to.have.nested.property('offers.@type', 'Offer');
