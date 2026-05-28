@@ -7,13 +7,24 @@ import {
   mockProperty1,
   mockProperty2,
   mockGetEditorItemProperties,
-  setupNuxtMocks,
-  setupSdkMock,
   mockSdkSuccess,
   mockSdkError,
 } from './useEditorItemProperties.mocks';
-setupNuxtMocks();
-setupSdkMock();
+
+mockNuxtImport('useI18n', () => () => ({
+  locale: ref('en'),
+}));
+
+mockNuxtImport('useNotification', () => () => ({
+  send: vi.fn(),
+}));
+
+mockNuxtImport('useSdk', () => () => ({
+  plentysystems: {
+    getEditorItemProperties: mockGetEditorItemProperties,
+  },
+}));
+
 mockNuxtImport('onMounted', () => vi.fn());
 describe('useEditorItemProperties', () => {
   beforeEach(() => {

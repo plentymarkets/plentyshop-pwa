@@ -1,4 +1,3 @@
-import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { ApiGroup } from '~/components/blocks/PriceCard/types';
 
 export const mockProperty1 = {
@@ -42,14 +41,6 @@ export const mockGroups: ApiGroup[] = [mockGroup1, mockGroup2];
 
 export const mockGetEditorItemProperties = vi.fn();
 
-export const setupSdkMock = () => {
-  mockNuxtImport('useSdk', () => () => ({
-    plentysystems: {
-      getEditorItemProperties: mockGetEditorItemProperties,
-    },
-  }));
-};
-
 export const mockSdkSuccess = (groups: ApiGroup[] = mockGroups) => {
   mockGetEditorItemProperties.mockResolvedValueOnce(groups);
 };
@@ -58,12 +49,3 @@ export const mockSdkError = (message = 'Network error') => {
   mockGetEditorItemProperties.mockRejectedValueOnce(new Error(message));
 };
 
-export const setupNuxtMocks = (locale = 'en') => {
-  mockNuxtImport('useI18n', () => () => ({
-    locale: ref(locale),
-  }));
-
-  mockNuxtImport('useNotification', () => () => ({
-    send: vi.fn(),
-  }));
-};
