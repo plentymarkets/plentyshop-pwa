@@ -5,19 +5,19 @@ export interface ItemPropertyLocaleMap {
   [locale: string]: string | null;
 }
 
-export interface ItemPropertyRaw {
+export interface ItemProperty {
   id: number;
   cast: string;
   names: ItemPropertyLocaleMap;
   descriptions: ItemPropertyLocaleMap;
 }
 
-export interface ItemPropertyGroupRaw {
+export interface ItemPropertyGroup {
   id: number;
   position: number;
   names: ItemPropertyLocaleMap;
   descriptions: ItemPropertyLocaleMap;
-  properties: ItemPropertyRaw[];
+  properties: ItemProperty[];
 }
 
 export interface PropSelection {
