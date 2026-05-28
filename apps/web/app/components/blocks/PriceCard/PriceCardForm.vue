@@ -6,30 +6,30 @@
       <draggable
         v-if="priceCardBlock.fieldsOrder.length"
         v-model="priceCardBlock.fieldsOrder"
-        item-key="field"
-        handle=".drag-slides-handle"
-        class="rounded space-y-3"
         :filter="'.no-drag'"
+        class="rounded space-y-3"
+        handle=".drag-slides-handle"
+        item-key="field"
       >
         <template #item="{ element: fieldKey, index }: { element: PriceCardFieldKey; index: number }">
           <div
             :key="fieldKey"
-            class="flex items-center justify-between drag-slides-handle cursor-move"
             :data-testid="`price-card-field-${fieldKey}`"
+            class="flex items-center justify-between drag-slides-handle cursor-move"
           >
             <div class="flex items-center gap-3">
               <button
-                class="drag-slides-handle cursor-grab p-2 hover:bg-gray-100 rounded-full"
                 :aria-label="getEditorTranslation('drag-reorder-aria')"
                 :data-testid="`actions-drag-field-handle-${index}`"
+                class="drag-slides-handle cursor-grab p-2 hover:bg-gray-100 rounded-full"
               >
-                <NuxtImg width="18" height="18" :src="dragIcon" />
+                <NuxtImg :src="dragIcon" height="18" width="18" />
               </button>
 
               <span>{{ fieldLabels[fieldKey] }}</span>
 
               <template v-if="fieldKey === 'itemBundle'">
-                <SfTooltip class="leading-none" :label="getEditorTranslation('item-bundle-tooltip')" placement="top">
+                <SfTooltip :label="getEditorTranslation('item-bundle-tooltip')" class="leading-none" placement="top">
                   <SfIconInfo size="sm" />
                 </SfTooltip>
               </template>
@@ -37,8 +37,8 @@
 
             <SfSwitch
               v-model="priceCardBlock.fields[fieldKey]"
-              :disabled="priceCardBlock.fieldsDisabled?.includes(fieldKey)"
               :data-testid="`price-card-visible-${fieldKey}`"
+              :disabled="priceCardBlock.fieldsDisabled?.includes(fieldKey)"
             />
           </div>
         </template>
@@ -48,11 +48,19 @@
     <hr class="my-4" />
 
     <div class="py-4">
+      <UiButton size="sm" type="button" variant="secondary" @click="isModalOpen = true">
+        {{ getEditorTranslation('open-modal') }}
+      </UiButton>
+    </div>
+
+    <hr class="my-4" />
+
+    <div class="py-4">
       <EditorOptionsTabs
         v-model="wishlistSizeModel"
         :legend="getEditorTranslation('wishlist-size-label')"
-        test-id-prefix="wishlist-size"
         :options="wishlistSizeOptions"
+        test-id-prefix="wishlist-size"
       />
     </div>
   </EditorFormPanel>
@@ -76,12 +84,12 @@
       <UiFormLabel class="mb-2 block">{{ getEditorTranslation('border-color-label') }}</UiFormLabel>
       <EditorColorPicker v-model="priceCardBlock.borderColor" class="w-full">
         <template #trigger="{ color, toggle }">
-          <SfInput v-model="priceCardBlock.borderColor" type="text" data-testid="price-card-border-color">
+          <SfInput v-model="priceCardBlock.borderColor" data-testid="price-card-border-color" type="text">
             <template #suffix>
               <button
-                type="button"
-                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
                 :style="{ backgroundColor: color }"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                type="button"
                 @mousedown.stop
                 @click.stop="toggle"
               />
@@ -97,36 +105,36 @@
           <span><SfIconArrowUpward /></span>
           <input
             v-model.number="priceCardBlock.layout.paddingTop"
-            type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-top"
+            type="number"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowDownward /></span>
           <input
             v-model.number="priceCardBlock.layout.paddingBottom"
-            type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-bottom"
+            type="number"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowBack /></span>
           <input
             v-model.number="priceCardBlock.layout.paddingLeft"
-            type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-left"
+            type="number"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
           <span><SfIconArrowForward /></span>
           <input
             v-model.number="priceCardBlock.layout.paddingRight"
-            type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-right"
+            type="number"
           />
         </div>
       </div>
@@ -137,9 +145,11 @@
       </div>
     </div>
   </EditorFormPanel>
+
+  <ItemPropertiesSelectModal v-if="isModalOpen" :close="() => (isModalOpen = false)" @insert="(_tokens) => {}" />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import draggable from 'vuedraggable';
 import {
   SfSwitch,
@@ -154,6 +164,7 @@ import {
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { PriceCardFieldKey, PriceCardContent } from '~/components/ui/PurchaseCard/types';
 import type { PriceCardFormProps } from '~/components/blocks/PriceCard/types';
+import ItemPropertiesSelectModal from '~/components/blocks/PriceCard/ItemPropertiesSelectModal.vue';
 
 const { allBlocks: data } = useBlocks();
 const { blockUuid } = useSiteConfiguration();
@@ -191,6 +202,7 @@ const fieldLabels = {
 
 const cardOpen = ref(true);
 const layoutOpen = ref(true);
+const isModalOpen = ref(false);
 
 const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
   () => priceCardBlock.value,
@@ -250,7 +262,8 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "text-align-option-right-label": "Right",
 
     "drag-reorder-aria": "Drag to reorder",
-    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles"
+    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles",
+    "open-modal": "Open modal"
   },
   "de": {
     "card-section-label": "Card",
@@ -302,7 +315,8 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "text-align-option-right-label": "Right",
 
     "drag-reorder-aria": "Drag to reorder",
-    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles"
+    "item-bundle-tooltip": "Bundle components are controlled globally. To show the bundle components, change the bundle setting under Item > Item Bundles",
+    "open-modal": "Open modal"
   }
 }
 </i18n>

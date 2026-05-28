@@ -1,9 +1,24 @@
-import type { ItemPropertyGroupTranslated, ItemPropertyTranslated } from '@plentymarkets/shop-api';
 import type { PriceCardContent } from '~/components/ui/PurchaseCard/types';
 
-export type { ItemPropertyGroupTranslated, ItemPropertyTranslated };
+export interface ItemPropertyTranslated {
+  id: number;
+  cast: string;
+  name: string;
+  description: string;
+}
 
-export type ApiGroup = ItemPropertyGroupTranslated;
+export interface ApiGroup {
+  id: number;
+  position: number;
+  name: string;
+  description: string;
+  properties: ItemPropertyTranslated[];
+}
+
+export interface PropSelection {
+  name: boolean;
+  value: boolean;
+}
 
 export type PriceCardProps = {
   name: string;

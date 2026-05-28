@@ -1,5 +1,28 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
-import type { UseEditorItemPropertiesOptions, UseEditorItemProperties, PropSelection } from './types';
+import type { UseEditorItemPropertiesOptions, UseEditorItemProperties, PropSelection, ItemPropertyLocaleMap, ItemPropertyGroupRaw } from './types';
+
+const FALLBACK_LOCALE = 'en';
+
+const resolveLocaleValue = (map: ItemPropertyLocaleMap, locale: string, fallback: string): string => {
+  if (map[locale] != null) return map[locale] as string;
+  if (map[FALLBACK_LOCALE] != null) return map[FALLBACK_LOCALE] as string;
+  return fallback;
+};
+
+const translateGroup = (group: ItemPropertyGroupRaw, locale: string): ApiGroup => ({
+  id: group.id,
+  position: group.position,
+  name: resolveLocaleValue(group.names, locale, `Missing translation for id: ${group.id}`),
+  description: resolveLocaleValue(group.descriptions, locale, ''),
+  properties: group.properties.map(
+    (p): ItemPropertyTranslated => ({
+      id: p.id,
+      cast: p.cast,
+      name: resolveLocaleValue(p.names, locale, `Missing translation for id: ${p.id}`),
+      description: resolveLocaleValue(p.descriptions, locale, ''),
+    }),
+  ),
+});
 
 const itemPropertyGroups = ref<ApiGroup[]>([]);
 
@@ -101,11 +124,11 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
     onClose?.();
   };
 
-  const fetchItemProperties = async (fetchLocale = 'en') => {
+  const fetchItemProperties = async () => {
     loading.value = true;
     try {
-      const { data } = await useSdk().plentysystems.getItemProperties({ locale: fetchLocale });
-      itemPropertyGroups.value = data;
+      const { data } = await useSdk().plentysystems.getItemProperties();
+      itemPropertyGroups.value = (data as unknown as ItemPropertyGroupRaw[]).map((g) => translateGroup(g, requestedLocale.value));
     } catch (error) {
       throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
@@ -116,7 +139,7 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
   onMounted(async () => {
     if (externalGroups?.()?.length) return;
     try {
-      await fetchItemProperties(requestedLocale.value);
+      await fetchItemProperties();
     } catch {
       useNotification().send({ message: 'Could not load item properties.', type: 'negative' });
     }

@@ -1,6 +1,25 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
 import type { ComputedRef, Ref } from 'vue';
 
+export interface ItemPropertyLocaleMap {
+  [locale: string]: string | null;
+}
+
+export interface ItemPropertyRaw {
+  id: number;
+  cast: string;
+  names: ItemPropertyLocaleMap;
+  descriptions: ItemPropertyLocaleMap;
+}
+
+export interface ItemPropertyGroupRaw {
+  id: number;
+  position: number;
+  names: ItemPropertyLocaleMap;
+  descriptions: ItemPropertyLocaleMap;
+  properties: ItemPropertyRaw[];
+}
+
 export interface PropSelection {
   name: boolean;
   value: boolean;
