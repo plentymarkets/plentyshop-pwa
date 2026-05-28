@@ -21,13 +21,13 @@
       </button>
     </header>
 
-    <TableOfContentsFilters :sections="sections" />
+    <TableOfContentsFilters :sections="sections.map((s) => ({ ...s, label: getEditorTranslation(s.label) }))" />
 
     <div class="flex-1 overflow-auto px-3 pt-3 pb-4 flex flex-col gap-3.5">
       <TableOfContentsSection
         v-for="(section, idx) in visibleSections"
         :key="section.id"
-        :section="section"
+        :section="{ ...section, label: getEditorTranslation(section.label) }"
         :is-first="idx === 0"
       />
     </div>
@@ -52,7 +52,7 @@ const sections = computed<TocSection[]>(() => {
   if (headerContainer.value) {
     result.push({
       id: 'header',
-      label: getEditorTranslation('header-section-label'),
+      label: 'header-section-label',
       elements: headerBlocks.value,
       container: headerContainer.value,
       addTestId: 'toc-add-header-block',
@@ -61,7 +61,7 @@ const sections = computed<TocSection[]>(() => {
   }
   result.push({
     id: 'content',
-    label: getEditorTranslation('content-section-label'),
+    label: 'content-section-label',
     elements: pageBlocks.value,
     addTestId: 'toc-add-block',
     setOrder: updateBlocks,
@@ -69,7 +69,7 @@ const sections = computed<TocSection[]>(() => {
   if (footer.value) {
     result.push({
       id: 'footer',
-      label: getEditorTranslation('footer-section-label'),
+      label: 'footer-section-label',
       elements: footerBlocks.value,
       container: footer.value,
       addTestId: 'toc-add-footer-block',
