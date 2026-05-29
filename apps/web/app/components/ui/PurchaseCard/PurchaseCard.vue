@@ -246,21 +246,9 @@
                 />
               </div>
               
-              <div
-                v-if="isWidgetReady"
-                :key="productGetters.getId(product)"
-                class="leasingo-calculator mt-4"
-                :data-object-price-netto="netPrice"
-                data-maturity="48"
-                data-finance-product="1"
-                data-object-condition="1"
-                :data-category="widgetMainCategory"
-                :data-subcategory="widgetSubCategory"
-              />
-
               <!-- Internationale Anfrage CTA -->
               <div class="mt-4 flex items-center justify-between flex-wrap gap-3">
-                <p class="text-sm m-0 flex-1 min-w-[200px] text-neutral-700">
+                <p class="text-sm m-0 flex-1 min-w-[200px] text-red-600 font-semibold">
                   Sie kommen aus dem Ausland und möchten trotzdem leasen oder finanzieren?
                 </p>
                 <NuxtLink
@@ -272,6 +260,18 @@
                   <span>→</span>
                 </NuxtLink>
               </div>
+
+              <div
+                v-if="isWidgetReady"
+                :key="productGetters.getId(product)"
+                class="leasingo-calculator mt-4"
+                :data-object-price-netto="netPrice"
+                data-maturity="48"
+                data-finance-product="1"
+                data-object-condition="1"
+                :data-category="widgetMainCategory"
+                :data-subcategory="widgetSubCategory"
+              />
             </template>
 
             <template v-if="key === 'itemText' && configuration?.fields.itemText">
