@@ -11,6 +11,8 @@ import { migrateImageContent } from '~/utils/migrate-image-content';
 import type { OldContent } from '~/utils/migrate-recommended-content';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
+import { getDefaultHomeReviewsContent } from '~/components/blocks/HomeReviews/defaults';
+import { getDefaultHomeIntroContent } from '~/components/blocks/HomeIntro/defaults';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
   identifier: string = 'unknown',
@@ -69,10 +71,43 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         isGlobalTemplate: false,
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      content: {} as any,
+      content: getDefaultHomeIntroContent() as any,
     };
 
     topLevelBlocks.splice(insertAt, 0, introBlock);
+  };
+
+  const ensureHomeIntroBlockContent = (topLevelBlocks: Block[]) => {
+    topLevelBlocks.forEach((block) => {
+      if (block?.name !== 'HomeIntro') return;
+      if (!block.content || typeof block.content !== 'object') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        block.content = getDefaultHomeIntroContent() as any;
+        return;
+      }
+
+      const content = block.content as Record<string, unknown>;
+      // If the intro exists but has empty content, populate defaults so the editor shows it as editable.
+      if (Object.keys(content).length === 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        block.content = getDefaultHomeIntroContent() as any;
+      }
+    });
+  };
+
+  const ensureHomeReviewsBlockContent = (topLevelBlocks: Block[]) => {
+    topLevelBlocks.forEach((block) => {
+      if (block?.name !== 'HomeReviews') return;
+      if (!block.content || typeof block.content !== 'object') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        block.content = { title: 'Kundenrezensionen' } as any;
+        return;
+      }
+      const content = block.content as { title?: string };
+      if (!content.title) {
+        content.title = 'Kundenrezensionen';
+      }
+    });
   };
 
   const ensureHomeReviewsPlacement = (topLevelBlocks: Block[]) => {
@@ -107,7 +142,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         isGlobalTemplate: false,
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      content: {} as any,
+      content: getDefaultHomeReviewsContent() as any,
     };
 
     topLevelBlocks.splice(insertAt, 0, reviewsBlock);
@@ -152,6 +187,8 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     if (Array.isArray(blocks)) {
       ensureHomeIntroPlacement(blocks);
       ensureHomeReviewsPlacement(blocks);
+      ensureHomeIntroBlockContent(blocks);
+      ensureHomeReviewsBlockContent(blocks);
       migrateAllImageBlocks(blocks);
     }
 

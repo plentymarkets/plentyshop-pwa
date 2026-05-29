@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-screen-3xl px-4 md:px-6 lg:px-10">
       <div class="flex items-center justify-center">
         <h2 class="text-center text-xl font-semibold tracking-wide text-neutral-900 md:text-2xl">
-          Kundenrezensionen
+          {{ sectionTitle }}
         </h2>
       </div>
 
@@ -107,107 +107,19 @@
 </template>
 
 <script setup lang="ts">
-type Review = {
-  id: string;
-  name: string;
-  initials: string;
-  when: string;
-  rating: 1 | 2 | 3 | 4 | 5;
-  text: string;
-  avatar: {
-    bg: string;
-    text: string;
-  };
-};
+import type { HomeReviewsProps } from './types';
+import { resolveReviews, type NormalizedReview } from './utils';
+
+const props = defineProps<HomeReviewsProps>();
 
 const viewport = useViewport();
 
-const reviews = ref<Review[]>([
-  {
-    id: 'w-henneboh',
-    name: 'Wolfgang Henneboh',
-    initials: 'W',
-    when: 'vor 2 Jahren',
-    rating: 5,
-    text: 'Ich habe dort eine Hantelbank gekauft (über Ebay), diese Qualität hatte ich vermutlich nirgends gefunden und wenn, dann für sehr viel Geld. Alle Mitarbeiter dort waren sehr freundlich und hilfsbereit. Fazit: Ja Verkäufer, das gilt für alle dort.',
-    avatar: { bg: '#6D28D9', text: '#FFFFFF' },
-  },
-  {
-    id: 't-dressler',
-    name: 'Tim Dressler',
-    initials: 'T',
-    when: 'vor einem Jahr',
-    rating: 5,
-    text: 'Ich bin absolut begeistert von meinem Kauf der Kühlkammer bei der Firma Komplett Konzept. Die Kontaktaufnahme war äußerst unkompliziert und professionell. Das Team hat sich Zeit genommen, um alle meine Fragen zu beantworten und mir bei der Auswahl des richtigen Produkts zu helfen. Die Abwicklung war tadellos – alles wurde schnell und zuverlässig organisiert. Auch die Lieferung verlief ohne Probleme und innerhalb des angekündigten Zeitrahmens. Ich kann die Firma nur wärmstens empfehlen und werde bei Bedarf gerne wieder auf sie zurückkommen. Vielen Dank für den hervorragenden Service!',
-    avatar: { bg: '#64748B', text: '#FFFFFF' },
-  },
-  {
-    id: 'a-schneider',
-    name: 'André Schneider',
-    initials: 'A',
-    when: 'vor einem Jahr',
-    rating: 5,
-    text: 'Das Team von Komplett Konzept hat uns an einem Sonntag unkompliziert und super schnell geholfen. Die Beratung war professionell und der Transport nach Rotterdam wurde auch am selben Tag schnellstens durchgeführt. Die Ware entsprach zu 100 Prozent der Beschreibung!',
-    avatar: { bg: '#16A34A', text: '#FFFFFF' },
-  },
-  {
-    id: 'schammuramat',
-    name: 'schammuramat',
-    initials: 'S',
-    when: '',
-    rating: 5,
-    text: 'Qualität des Artikels ist gut! Keine Funktionseinschränkungen. Sehr nette Mitarbeiter! Sehr gerne wieder!',
-    avatar: { bg: '#6D28D9', text: '#FFFFFF' },
-  },
-  {
-    id: 'elmar1966',
-    name: 'elmar1966',
-    initials: 'E',
-    when: '',
-    rating: 5,
-    text: 'Schnelle Lieferung, alles bestens, jederzeit gerne wieder !!!!!!!!!!!!!!!!!!!',
-    avatar: { bg: '#64748B', text: '#FFFFFF' },
-  },
-  {
-    id: 'dany-xx1',
-    name: 'dany_xx1',
-    initials: 'D',
-    when: '',
-    rating: 5,
-    text: 'Schnelle Lieferung, gute Verpackung, alles wie beschrieben. Gerät funktioniert einwandfrei vielen Dank.',
-    avatar: { bg: '#16A34A', text: '#FFFFFF' },
-  },
-  {
-    id: 'handyman-9612',
-    name: 'handyman_9612',
-    initials: 'H',
-    when: '',
-    rating: 5,
-    text: 'Arrived on time and in perfect condition.',
-    avatar: { bg: '#0EA5E9', text: '#FFFFFF' },
-  },
-  {
-    id: 'manta26',
-    name: 'manta26',
-    initials: 'M',
-    when: '',
-    rating: 5,
-    text: 'Der Artikel wurde auf meinen Wunsch hin sehr schnell versendet. Leider hat das Gerät vermutlich während des Transports einen Schaden genommen. Der Kontakt mit dem Verkäufer war jedoch durchweg positiv – der Support hat sehr schnell reagiert, war konstruktiv und ist mir mit einer fairen Teilrückerstattung entgegengekommen. Ich hatte das Gefühl, dass dem Verkäufer die Kundenzufriedenheit wichtig ist und gehe daher von einem unglücklichen Einzelfall beim Versand aus. Vielen Dank noch mal!',
-    avatar: { bg: '#F97316', text: '#111827' },
-  },
-  {
-    id: 'volliwf',
-    name: 'volliwf',
-    initials: 'V',
-    when: '',
-    rating: 5,
-    text: 'Sehr gute Qualität für Gebrauchteil.',
-    avatar: { bg: '#15803D', text: '#FFFFFF' },
-  },
-]);
+const sectionTitle = computed(() => props.content?.title?.trim() || 'Kundenrezensionen');
+
+const reviews = computed<NormalizedReview[]>(() => resolveReviews(props.content?.reviews));
 
 const whenOptions = ['vor 3 Jahren', 'vor einem Jahr', 'vor 6 Monaten'] as const;
-const displayWhen = (review: Review) => {
+const displayWhen = (review: NormalizedReview) => {
   if (review.when) return review.when;
   // Deterministic "random" pick per review id (SSR-safe).
   const hash = Array.from(review.id).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
@@ -227,7 +139,7 @@ const isAnimating = ref(false);
 const pendingDelta = ref(0);
 let animFallbackTimer: number | undefined;
 
-type TrackReview = Review & { _trackKey: string };
+type TrackReview = NormalizedReview & { _trackKey: string };
 const clonesCount = computed(() => Math.min(visibleCount.value, reviews.value.length));
 const trackReviews = computed<TrackReview[]>(() => {
   const items = reviews.value;
@@ -385,6 +297,15 @@ watch(visibleCount, async () => {
   setStartIndex();
   measureStep();
 });
+
+watch(
+  () => reviews.value.map((r) => `${r.id}:${r.text}`).join('|'),
+  async () => {
+    await nextTick();
+    setStartIndex();
+    measureStep();
+  },
+);
 </script>
 
 <style scoped>
