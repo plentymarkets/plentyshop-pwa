@@ -12,6 +12,7 @@ const { getEditorTranslationMock } = vi.hoisted(() => ({
 
 mockNuxtImport('useBlockManager', () => () => ({
   deleteBlock: vi.fn(),
+  deleteBlockHard: vi.fn(),
   isGlobalBlock: vi.fn().mockReturnValue(false),
 }));
 

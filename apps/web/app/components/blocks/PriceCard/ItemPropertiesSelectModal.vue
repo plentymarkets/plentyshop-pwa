@@ -1,20 +1,25 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/45" @click.self="close">
+  <div class="fixed inset-0 z-50 flex items-start justify-center bg-black/45 pt-12" @click.self="close">
     <div
       class="bg-white rounded-xl border border-neutral-200 w-full max-w-[420px] flex flex-col max-h-[90vh] shadow-md"
     >
       <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
         <h2 class="typography-headline-4 font-medium">{{ getEditorTranslation('modal-title') }}</h2>
-        <UiButton
-          :aria-label="getEditorTranslation('close-modal-aria')"
-          size="sm"
-          square
-          type="button"
-          variant="tertiary"
-          @click="close"
-        >
-          <SfIconClose size="sm" />
-        </UiButton>
+        <div class="flex items-center gap-1">
+          <SfTooltip :label="getEditorTranslation('info-tooltip')" class="max-w-[280px]" placement="bottom-end">
+            <SfIconHelp class="cursor-pointer" size="sm" />
+          </SfTooltip>
+          <UiButton
+            :aria-label="getEditorTranslation('close-modal-aria')"
+            size="sm"
+            square
+            type="button"
+            variant="tertiary"
+            @click="close"
+          >
+            <SfIconClose size="sm" />
+          </UiButton>
+        </div>
       </div>
 
       <div class="px-5 py-3 border-b border-neutral-200">
@@ -62,12 +67,13 @@
 
             <Transition name="slide">
               <div v-if="openGroups.includes(group.id)">
-                <div class="pl-10 pr-4 py-2 border-b border-neutral-100 flex flex-col gap-1">
-                  <label :class="{ 'is-checked': groupSelection[group.id]?.name }" class="checkbox-row">
+                <div class="px-4 py-2 border-b border-neutral-100 flex flex-col gap-1">
+                  <label :class="{ 'bg-purple-100 border-purple-300': groupSelection[group.id]?.name }" class="flex items-center gap-2 px-1.5 py-1 rounded-md border border-transparent cursor-pointer transition-colors hover:bg-purple-100 hover:border-purple-200">
                     <SfCheckbox
                       :model-value="groupSelection[group.id]?.name ?? false"
                       @update:model-value="(v) => toggleGroupItemSelection(group.id, 'name', !!v)"
                     />
+                    <span class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0">{{ getEditorTranslation('label-group') }}</span>
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
                       {{ getGroupName(group) }}
                     </span>
@@ -77,24 +83,27 @@
                 <div
                   v-for="prop in group.properties"
                   :key="prop.id"
-                  class="pl-10 pr-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
+                  class="px-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
                 >
-                  <label :class="{ 'is-checked': selection[prop.id]?.name }" class="checkbox-row">
+                  <label :class="{ 'bg-purple-100 border-purple-300': selection[prop.id]?.name }" class="flex items-center gap-2 px-1.5 py-1 rounded-md border border-transparent cursor-pointer transition-colors hover:bg-purple-100 hover:border-purple-200">
                     <SfCheckbox
                       :model-value="selection[prop.id]?.name ?? false"
                       @update:model-value="(v) => toggleSelection(prop.id, 'name', !!v)"
                     />
+                    <span class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0">{{ getEditorTranslation('label-name') }}</span>
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
                       {{ getPropName(prop) }}
+                      <span class="text-neutral-400 font-normal">(ID: {{ prop.id }})</span>
                     </span>
                   </label>
 
-                  <label :class="{ 'is-checked': selection[prop.id]?.value }" class="checkbox-row pl-5">
+                  <label :class="{ 'bg-purple-100 border-purple-300': selection[prop.id]?.value }" class="flex items-center gap-2 px-1.5 py-1 rounded-md border border-transparent cursor-pointer transition-colors hover:bg-purple-100 hover:border-purple-200">
                     <SfCheckbox
                       :model-value="selection[prop.id]?.value ?? false"
                       @update:model-value="(v) => toggleSelection(prop.id, 'value', !!v)"
                     />
-                    <span class="variable-pill-static">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0">{{ getEditorTranslation('label-value') }}</span>
+                    <span class="inline-flex items-center text-xs font-mono px-2 py-0.5 rounded-sm border border-purple-300 bg-purple-50 text-purple-900 whitespace-nowrap pointer-events-none">
                       {{ getPropPlaceholder(prop) }}
                     </span>
                   </label>
@@ -127,7 +136,15 @@
 </template>
 
 <script lang="ts" setup>
-import { SfInput, SfCheckbox, SfIconClose, SfIconSearch, SfIconChevronRight } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfCheckbox,
+  SfIconClose,
+  SfIconSearch,
+  SfIconChevronRight,
+  SfTooltip,
+  SfIconHelp,
+} from '@storefront-ui/vue';
 import type { ApiGroup } from './types';
 import { useEditorItemProperties } from '~/composables/useEditorItemProperties';
 
@@ -175,7 +192,11 @@ const {
     "no-items-selected": "No items selected",
     "items-selected": "{count} item(s) selected",
     "cancel": "Cancel",
-    "insert": "Insert"
+    "insert": "Insert",
+    "label-group": "Group",
+    "label-name": "Name",
+    "label-value": "Value",
+    "info-tooltip": "Use placeholders to dynamically insert variation property names and values. For the placeholder to output data, the property needs to be assigned to the currently opened item and configured to be visible on item pages."
   },
   "de": {
     "modal-title": "Properties",
@@ -188,58 +209,12 @@ const {
     "no-items-selected": "No items selected",
     "items-selected": "{count} item(s) selected",
     "cancel": "Cancel",
-    "insert": "Insert"
+    "insert": "Insert",
+    "label-group": "Group",
+    "label-name": "Name",
+    "label-value": "Value",
+    "info-tooltip": "Use placeholders to dynamically insert variation property names and values. For the placeholder to output data, the property needs to be assigned to the currently opened item and configured to be visible on item pages."
   }
 }
 </i18n>
 
-<style scoped>
-.checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 6px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition:
-    background 0.12s,
-    border-color 0.12s;
-}
-.checkbox-row:hover {
-  background: #f5f3ff;
-  border-color: #e9d5ff;
-}
-.checkbox-row.is-checked {
-  background: #f5f3ff;
-  border-color: #c4b5fd;
-}
-
-.variable-pill-static {
-  display: inline-flex;
-  align-items: center;
-  font-size: 11.5px;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid #c5b4f0;
-  background: #eeedfe;
-  color: #3c3489;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition:
-    max-height 0.25s ease,
-    opacity 0.2s ease;
-  max-height: 600px;
-  overflow: hidden;
-}
-.slide-enter-from,
-.slide-leave-to {
-  max-height: 0;
-  opacity: 0;
-}
-</style>

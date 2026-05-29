@@ -138,7 +138,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           install: false
-          command: npm run test:cypress
+          command: npm run test:cypress-smoke-shop
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
   smoke-editor:

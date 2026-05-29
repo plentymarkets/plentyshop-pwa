@@ -127,15 +127,34 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const updateBlocks = (blocks: Block[]) => {
-    state.value.data.blocks = blocks;
+    const current = state.value.data.blocks;
+    if (Array.isArray(current)) {
+      current.splice(0, current.length, ...blocks);
+    } else {
+      state.value.data.blocks = blocks;
+    }
   };
 
   const reorderHeaderBlocks = (blocks: Block[]) => {
     if (!state.value.data.HeaderContainer) return;
-    (state.value.data.HeaderContainer as { content: Block[] }).content = blocks.map((block, index) => ({
-      ...block,
-      parent_slot: index,
-    }));
+    const container = state.value.data.HeaderContainer as { content: Block[] };
+    const reordered = blocks.map((block, index) => ({ ...block, parent_slot: index }));
+    if (Array.isArray(container.content)) {
+      container.content.splice(0, container.content.length, ...reordered);
+    } else {
+      container.content = reordered;
+    }
+  };
+
+  const reorderFooterBlocks = (blocks: Block[]) => {
+    if (!state.value.data.Footer) return;
+    const container = state.value.data.Footer as { content: Block[] };
+    const reordered = blocks.map((block, index) => ({ ...block, parent_slot: index }));
+    if (Array.isArray(container.content)) {
+      container.content.splice(0, container.content.length, ...reordered);
+    } else {
+      container.content = reordered;
+    }
   };
 
   const discardChanges = () => {
@@ -161,6 +180,7 @@ export const useBlocks: UseBlocksReturn = () => {
     saveBlocks,
     updateBlocks,
     reorderHeaderBlocks,
+    reorderFooterBlocks,
     discardChanges,
     setDefaultTemplate,
     scheduleCleanDataSync,
