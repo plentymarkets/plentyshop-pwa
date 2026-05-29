@@ -4,7 +4,8 @@ import type {
   UseEditorItemProperties,
   PropSelection,
   ItemPropertyLocaleMap,
-  ItemPropertyGroupRaw,
+  ItemProperty,
+  ItemPropertyGroup,
 } from './types';
 
 const FALLBACK_LOCALE = 'en';
@@ -15,13 +16,13 @@ const resolveLocaleValue = (map: ItemPropertyLocaleMap, locale: string, fallback
   return fallback;
 };
 
-const translateGroup = (group: ItemPropertyGroupRaw, locale: string): ApiGroup => ({
+const translateGroup = (group: ItemPropertyGroup, locale: string): ApiGroup => ({
   id: group.id,
   position: group.position,
   name: resolveLocaleValue(group.names, locale, `Missing translation for id: ${group.id}`),
   description: resolveLocaleValue(group.descriptions, locale, ''),
   properties: group.properties.map(
-    (p): ItemPropertyTranslated => ({
+    (p: ItemProperty): ItemPropertyTranslated => ({
       id: p.id,
       cast: p.cast,
       name: resolveLocaleValue(p.names, locale, `Missing translation for id: ${p.id}`),
@@ -134,7 +135,7 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
     loading.value = true;
     try {
       const { data } = await useSdk().plentysystems.getItemProperties();
-      itemPropertyGroups.value = (data as unknown as ItemPropertyGroupRaw[]).map((g) =>
+      itemPropertyGroups.value = (data as unknown as ItemPropertyGroup[]).map((g) =>
         translateGroup(g, requestedLocale.value),
       );
     } catch (error) {

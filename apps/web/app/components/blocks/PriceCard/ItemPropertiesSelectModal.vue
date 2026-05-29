@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/45" @click.self="close">
+  <div class="fixed inset-0 z-50 flex items-start justify-center bg-black/45 pt-12" @click.self="close">
     <div
       class="bg-white rounded-xl border border-neutral-200 w-full max-w-[420px] flex flex-col max-h-[90vh] shadow-md"
     >
@@ -62,12 +62,13 @@
 
             <Transition name="slide">
               <div v-if="openGroups.includes(group.id)">
-                <div class="pl-10 pr-4 py-2 border-b border-neutral-100 flex flex-col gap-1">
+                <div class="px-4 py-2 border-b border-neutral-100 flex flex-col gap-1">
                   <label :class="{ 'is-checked': groupSelection[group.id]?.name }" class="checkbox-row">
                     <SfCheckbox
                       :model-value="groupSelection[group.id]?.name ?? false"
                       @update:model-value="(v) => toggleGroupItemSelection(group.id, 'name', !!v)"
                     />
+                    <span class="field-tag">{{ getEditorTranslation('label-group') }}</span>
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
                       {{ getGroupName(group) }}
                     </span>
@@ -77,23 +78,26 @@
                 <div
                   v-for="prop in group.properties"
                   :key="prop.id"
-                  class="pl-10 pr-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
+                  class="px-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
                 >
                   <label :class="{ 'is-checked': selection[prop.id]?.name }" class="checkbox-row">
                     <SfCheckbox
                       :model-value="selection[prop.id]?.name ?? false"
                       @update:model-value="(v) => toggleSelection(prop.id, 'name', !!v)"
                     />
+                    <span class="field-tag">{{ getEditorTranslation('label-name') }}</span>
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
                       {{ getPropName(prop) }}
+                      <span class="text-neutral-400 font-normal">(ID: {{ prop.id }})</span>
                     </span>
                   </label>
 
-                  <label :class="{ 'is-checked': selection[prop.id]?.value }" class="checkbox-row pl-5">
+                  <label :class="{ 'is-checked': selection[prop.id]?.value }" class="checkbox-row">
                     <SfCheckbox
                       :model-value="selection[prop.id]?.value ?? false"
                       @update:model-value="(v) => toggleSelection(prop.id, 'value', !!v)"
                     />
+                    <span class="field-tag">{{ getEditorTranslation('label-value') }}</span>
                     <span class="variable-pill-static">
                       {{ getPropPlaceholder(prop) }}
                     </span>
@@ -175,7 +179,10 @@ const {
     "no-items-selected": "No items selected",
     "items-selected": "{count} item(s) selected",
     "cancel": "Cancel",
-    "insert": "Insert"
+    "insert": "Insert",
+    "label-group": "Group",
+    "label-name": "Name",
+    "label-value": "Value"
   },
   "de": {
     "modal-title": "Properties",
@@ -188,12 +195,25 @@ const {
     "no-items-selected": "No items selected",
     "items-selected": "{count} item(s) selected",
     "cancel": "Cancel",
-    "insert": "Insert"
+    "insert": "Insert",
+    "label-group": "Group",
+    "label-name": "Name",
+    "label-value": "Value"
   }
 }
 </i18n>
 
 <style scoped>
+.field-tag {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a3a3a3;
+  min-width: 36px;
+  flex-shrink: 0;
+}
+
 .checkbox-row {
   display: flex;
   align-items: center;
