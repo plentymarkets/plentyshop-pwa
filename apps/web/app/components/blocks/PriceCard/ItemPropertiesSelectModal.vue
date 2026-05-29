@@ -5,16 +5,21 @@
     >
       <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
         <h2 class="typography-headline-4 font-medium">{{ getEditorTranslation('modal-title') }}</h2>
-        <UiButton
-          :aria-label="getEditorTranslation('close-modal-aria')"
-          size="sm"
-          square
-          type="button"
-          variant="tertiary"
-          @click="close"
-        >
-          <SfIconClose size="sm" />
-        </UiButton>
+        <div class="flex items-center gap-1">
+          <SfTooltip :label="getEditorTranslation('info-tooltip')" class="max-w-[280px]" placement="bottom-end">
+            <SfIconHelp class="cursor-pointer" size="sm" />
+          </SfTooltip>
+          <UiButton
+            :aria-label="getEditorTranslation('close-modal-aria')"
+            size="sm"
+            square
+            type="button"
+            variant="tertiary"
+            @click="close"
+          >
+            <SfIconClose size="sm" />
+          </UiButton>
+        </div>
       </div>
 
       <div class="px-5 py-3 border-b border-neutral-200">
@@ -131,7 +136,15 @@
 </template>
 
 <script lang="ts" setup>
-import { SfInput, SfCheckbox, SfIconClose, SfIconSearch, SfIconChevronRight } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfCheckbox,
+  SfIconClose,
+  SfIconSearch,
+  SfIconChevronRight,
+  SfTooltip,
+  SfIconHelp,
+} from '@storefront-ui/vue';
 import type { ApiGroup } from './types';
 import { useEditorItemProperties } from '~/composables/useEditorItemProperties';
 
@@ -182,7 +195,8 @@ const {
     "insert": "Insert",
     "label-group": "Group",
     "label-name": "Name",
-    "label-value": "Value"
+    "label-value": "Value",
+    "info-tooltip": "Use placeholders to dynamically insert variation property names and values. For the placeholder to output data, the property needs to be assigned to the currently opened item and configured to be visible on item pages."
   },
   "de": {
     "modal-title": "Properties",
@@ -198,7 +212,8 @@ const {
     "insert": "Insert",
     "label-group": "Group",
     "label-name": "Name",
-    "label-value": "Value"
+    "label-value": "Value",
+    "info-tooltip": "Use placeholders to dynamically insert variation property names and values. For the placeholder to output data, the property needs to be assigned to the currently opened item and configured to be visible on item pages."
   }
 }
 </i18n>
@@ -247,19 +262,5 @@ const {
   color: #3c3489;
   white-space: nowrap;
   pointer-events: none;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition:
-    max-height 0.25s ease,
-    opacity 0.2s ease;
-  max-height: 600px;
-  overflow: hidden;
-}
-.slide-enter-from,
-.slide-leave-to {
-  max-height: 0;
-  opacity: 0;
 }
 </style>
