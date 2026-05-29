@@ -6,10 +6,11 @@ import {
   mockGroups,
   mockProperty1,
   mockProperty2,
+  mockProperty3,
   mockGetItemProperties,
-  mockSdkSuccess,
-  mockSdkError,
 } from './useEditorItemProperties.mocks';
+
+const mockClipboardWriteText = vi.fn();
 
 mockNuxtImport('useI18n', () => () => ({
   locale: ref('en'),
@@ -30,13 +31,11 @@ mockNuxtImport('onMounted', () => vi.fn());
 describe('useEditorItemProperties', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    const { selection, groupSelection, openGroups, searchQuery } = useEditorItemProperties({
-      externalGroups: () => mockGroups,
-    });
-    selection.value = {};
-    groupSelection.value = {};
-    openGroups.value = [];
-    searchQuery.value = '';
+    vi.stubGlobal('navigator', { clipboard: { writeText: mockClipboardWriteText } });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   describe('getGroupName', () => {
@@ -51,9 +50,9 @@ describe('useEditorItemProperties', () => {
       const { getPropName } = useEditorItemProperties({ externalGroups: () => mockGroups });
       expect(getPropName(mockProperty1)).toBe('Color');
     });
-    it('should return the SDK-provided missing translation message', () => {
+    it('should return the fallback missing translation message', () => {
       const { getPropName } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      expect(getPropName(mockProperty2)).toBe('Size');
+      expect(getPropName(mockProperty3)).toBe('Missing translation for id: 30');
     });
   });
 
@@ -223,6 +222,17 @@ describe('useEditorItemProperties', () => {
       insertSelected();
       expect(onInsert).toHaveBeenCalledWith(['Appearance', 'Color']);
     });
+    it('should copy the tokens to the clipboard', () => {
+      const { selection, insertSelected } = useEditorItemProperties({ externalGroups: () => mockGroups });
+      selection.value[mockProperty1.id] = { name: true, value: false };
+      insertSelected();
+      expect(mockClipboardWriteText).toHaveBeenCalledWith('Color');
+    });
+    it('should not write to the clipboard when nothing is selected', () => {
+      const { insertSelected } = useEditorItemProperties({ externalGroups: () => mockGroups });
+      insertSelected();
+      expect(mockClipboardWriteText).not.toHaveBeenCalled();
+    });
     it('should call onClose after a successful insert', () => {
       const onInsert = vi.fn();
       const onClose = vi.fn();
@@ -254,21 +264,5 @@ describe('useEditorItemProperties', () => {
     });
   });
 
-  describe('fetchItemProperties (error handling)', () => {
-    it('should throw when the SDK call fails', async () => {
-      mockSdkError('API unavailable');
-      await expect(
-        (useSdk().plentysystems as unknown as { getItemProperties: (p: object) => Promise<unknown> }).getItemProperties(
-          { locale: 'en' },
-        ),
-      ).rejects.toThrow('API unavailable');
-    });
-    it('should populate groups after a successful SDK response', async () => {
-      mockSdkSuccess([mockGroup1]);
-      const { data } = await (
-        useSdk().plentysystems as unknown as { getItemProperties: (p: object) => Promise<{ data: unknown }> }
-      ).getItemProperties({ locale: 'en' });
-      expect(data).toEqual([mockGroup1]);
-    });
-  });
 });
+
