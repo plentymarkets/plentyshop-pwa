@@ -179,6 +179,6 @@ For the go-live option to become available, the shop has to run in preview mode.
 Once you have your shop running, you can begin customising it.
 Here are a few places to start:
 
-- **Theme customization**: Customize the look and feel [look and feel](/guide/themes/styling.md) of your shop.
+- **Theme customization**: Customize the [look and feel](/guide/themes/styling.md) of your shop.
 - **Advanced PlentyONE setup**: Complete the [setup journey](https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop.html#shop-preparation) in PlentyONE to enable additional payment and shipping providers, bot protection, and more.
 - **Project updates**: Learn about [different strategies](/guide/themes/project-update-strategies.md) for managing updates from the main project.

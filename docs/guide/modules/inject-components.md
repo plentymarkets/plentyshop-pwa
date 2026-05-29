@@ -75,7 +75,7 @@ All existing predefined areas are listed in the [`apps/web/shop-core.config.ts`]
 
 ### Adding a new custom area
 
-1. In your shop repository, open the file `apps/web/shop-core.config.ts` and add a new entry to the areas array. If you try to inject your component into a non-existing entry, your shop will throw an error.
+1. In your shop repository, open the file `apps/web/shop-core.config.ts` and add a new entry to the `renderingAreas` array. If you try to inject your component into a non-existing entry, your shop will throw an error.
 2. In the location of the template in which you want to display this new area, add the following:
 
 ```html
