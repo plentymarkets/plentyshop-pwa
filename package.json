@@ -18,6 +18,7 @@
     "dev": "npm run turbo:disable-telemetry && turbo run dev",
     "start": "npm run turbo:disable-telemetry && turbo run start",
     "check:optimize-deps": "npm --prefix apps/web run check:optimize-deps",
+    "report:zindex": "node scripts/zindex-codemod/report.mjs",
     "lint": "npm run turbo:disable-telemetry && turbo run lint",
     "lint:fix": "npm run turbo:disable-telemetry && turbo run lint:fix",
     "typecheck": "npm run turbo:disable-telemetry && turbo run typecheck",
