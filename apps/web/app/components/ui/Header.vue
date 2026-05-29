@@ -14,11 +14,17 @@
           <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Team</NuxtLink>
         </div>
 
-        <img
-          src="/_nuxt-plenty/images/image009-2.png"
-          alt="Banner"
-          class="self-stretch h-full -mt-2 lg:-mt-2 min-[1367px]:mt-0 max-w-[68px] lg:max-w-[80px] min-[1152px]:max-w-[100px] min-[1280px]:max-w-[120px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
-        />
+        <NuxtLink
+          to="/leasing-finanzierung"
+          aria-label="Finanzieren und Leasen"
+          class="self-stretch active:scale-95 transition-transform duration-200 flex-shrink-0"
+        >
+          <img
+            src="/_nuxt-plenty/images/image009-2.png"
+            alt="Jetzt günstig finanzieren und leasen"
+            class="self-stretch h-full -mt-2 lg:-mt-2 min-[1367px]:mt-0 max-w-[68px] lg:max-w-[80px] min-[1152px]:max-w-[100px] min-[1280px]:max-w-[120px] min-[1367px]:max-w-[160px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+          />
+        </NuxtLink>
       </div>
 
       <div
@@ -215,11 +221,17 @@
       >
         <div class="flex flex-row items-center justify-between w-full gap-2">
           <div class="flex flex-row items-center gap-2 sm:gap-3 flex-shrink-0">
-            <img
-              src="/_nuxt-plenty/images/image009-2.png"
-              alt="Banner"
-              class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
-            />
+            <NuxtLink
+              to="/leasing-finanzierung"
+              aria-label="Finanzieren und Leasen"
+              class="active:scale-95 transition-transform duration-200 flex-shrink-0"
+            >
+              <img
+                src="/_nuxt-plenty/images/image009-2.png"
+                alt="Jetzt günstig finanzieren und leasen"
+                class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
+              />
+            </NuxtLink>
             <NuxtLink
               to="https://www.waren-ankauf.de/ankauf/"
               target="_blank"
