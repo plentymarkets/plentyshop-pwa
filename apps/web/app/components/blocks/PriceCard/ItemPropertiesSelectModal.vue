@@ -68,12 +68,12 @@
             <Transition name="slide">
               <div v-if="openGroups.includes(group.id)">
                 <div class="px-4 py-2 border-b border-neutral-100 flex flex-col gap-1">
-                  <label :class="{ 'is-checked': groupSelection[group.id]?.name }" class="checkbox-row">
+                  <label :class="{ 'bg-purple-100 border-purple-300': groupSelection[group.id]?.name }" class="flex items-center gap-2 px-1.5 py-1 rounded-md border border-transparent cursor-pointer transition-colors hover:bg-purple-100 hover:border-purple-200">
                     <SfCheckbox
                       :model-value="groupSelection[group.id]?.name ?? false"
                       @update:model-value="(v) => toggleGroupItemSelection(group.id, 'name', !!v)"
                     />
-                    <span class="field-tag">{{ getEditorTranslation('label-group') }}</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0">{{ getEditorTranslation('label-group') }}</span>
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
                       {{ getGroupName(group) }}
                     </span>
@@ -85,25 +85,25 @@
                   :key="prop.id"
                   class="px-4 py-2 border-b border-neutral-100 last:border-b-0 flex flex-col gap-1"
                 >
-                  <label :class="{ 'is-checked': selection[prop.id]?.name }" class="checkbox-row">
+                  <label :class="{ 'bg-purple-100 border-purple-300': selection[prop.id]?.name }" class="flex items-center gap-2 px-1.5 py-1 rounded-md border border-transparent cursor-pointer transition-colors hover:bg-purple-100 hover:border-purple-200">
                     <SfCheckbox
                       :model-value="selection[prop.id]?.name ?? false"
                       @update:model-value="(v) => toggleSelection(prop.id, 'name', !!v)"
                     />
-                    <span class="field-tag">{{ getEditorTranslation('label-name') }}</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0">{{ getEditorTranslation('label-name') }}</span>
                     <span class="typography-text-xs font-medium text-neutral-700 select-none">
                       {{ getPropName(prop) }}
                       <span class="text-neutral-400 font-normal">(ID: {{ prop.id }})</span>
                     </span>
                   </label>
 
-                  <label :class="{ 'is-checked': selection[prop.id]?.value }" class="checkbox-row">
+                  <label :class="{ 'bg-purple-100 border-purple-300': selection[prop.id]?.value }" class="flex items-center gap-2 px-1.5 py-1 rounded-md border border-transparent cursor-pointer transition-colors hover:bg-purple-100 hover:border-purple-200">
                     <SfCheckbox
                       :model-value="selection[prop.id]?.value ?? false"
                       @update:model-value="(v) => toggleSelection(prop.id, 'value', !!v)"
                     />
-                    <span class="field-tag">{{ getEditorTranslation('label-value') }}</span>
-                    <span class="variable-pill-static">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0">{{ getEditorTranslation('label-value') }}</span>
+                    <span class="inline-flex items-center text-xs font-mono px-2 py-0.5 rounded-sm border border-purple-300 bg-purple-50 text-purple-900 whitespace-nowrap pointer-events-none">
                       {{ getPropPlaceholder(prop) }}
                     </span>
                   </label>
@@ -218,49 +218,3 @@ const {
 }
 </i18n>
 
-<style scoped>
-.field-tag {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #a3a3a3;
-  min-width: 36px;
-  flex-shrink: 0;
-}
-
-.checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 6px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition:
-    background 0.12s,
-    border-color 0.12s;
-}
-.checkbox-row:hover {
-  background: #f5f3ff;
-  border-color: #e9d5ff;
-}
-.checkbox-row.is-checked {
-  background: #f5f3ff;
-  border-color: #c4b5fd;
-}
-
-.variable-pill-static {
-  display: inline-flex;
-  align-items: center;
-  font-size: 11.5px;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid #c5b4f0;
-  background: #eeedfe;
-  color: #3c3489;
-  white-space: nowrap;
-  pointer-events: none;
-}
-</style>
