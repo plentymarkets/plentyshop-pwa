@@ -257,6 +257,21 @@
                 :data-category="widgetMainCategory"
                 :data-subcategory="widgetSubCategory"
               />
+
+              <!-- Internationale Anfrage CTA -->
+              <div class="mt-4 flex items-center justify-between flex-wrap gap-3">
+                <p class="text-sm m-0 flex-1 min-w-[200px] text-neutral-700">
+                  Sie kommen aus dem Ausland und möchten trotzdem leasen oder finanzieren?
+                </p>
+                <NuxtLink
+                  to="/leasing-finanzierung"
+                  class="inline-flex items-center gap-2 px-5 py-3 rounded font-bold text-sm whitespace-nowrap transition-colors hover:opacity-90 no-underline"
+                  style="background: #F5C00A; color: #152440;"
+                >
+                  Europaweit anfragen
+                  <span>→</span>
+                </NuxtLink>
+              </div>
             </template>
 
             <template v-if="key === 'itemText' && configuration?.fields.itemText">
