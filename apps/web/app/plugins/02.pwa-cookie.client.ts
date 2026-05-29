@@ -8,7 +8,9 @@ export default defineNuxtPlugin({
   parallel: true,
   async setup() {
     const pwaCookie = useCookie('pwa');
-    const { public: { isPreview: isPreviewConfig } } = useRuntimeConfig();
+    const {
+      public: { isPreview: isPreviewConfig },
+    } = useRuntimeConfig();
 
     const isPreview = await resolvePreviewState({
       cookieValue: pwaCookie.value,
