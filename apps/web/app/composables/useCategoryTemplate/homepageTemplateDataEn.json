@@ -85,6 +85,15 @@
     ]
   },
   {
+    "name": "HomeIntro",
+    "type": "content",
+    "meta": {
+      "uuid": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
+      "isGlobalTemplate": false
+    },
+    "content": {}
+  },
+  {
     "name": "TextCard",
     "type": "content",
     "meta": {

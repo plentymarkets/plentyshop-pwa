@@ -37,25 +37,17 @@
           v-html="banner.text.pretitle"
         />
 
-        <template v-if="!props.index">
-          <h1
-            v-if="banner.text.title"
-            :id="`carousel_item-${props.slideIndex}_heading`"
-            class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-            :data-testid="'banner-title-' + meta.uuid"
-            v-html="banner.text.title"
-          />
-        </template>
-
-        <template v-else>
-          <h2
-            v-if="banner.text.title"
-            :id="`carousel_item-${props.slideIndex}_heading`"
-            class="text-2xl font-semibold mb-4"
-            :data-testid="'banner-title-' + meta.uuid"
-            v-html="banner.text.title"
-          />
-        </template>
+        <h2
+          v-if="banner.text.title"
+          :id="`carousel_item-${props.slideIndex}_heading`"
+          :class="
+            !props.index
+              ? 'typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]'
+              : 'text-2xl font-semibold mb-4'
+          "
+          :data-testid="'banner-title-' + meta.uuid"
+          v-html="banner.text.title"
+        />
         <div
           v-if="banner.text.subtitle"
           class="typography-headline-6 font-bold tracking-widest mb-4"

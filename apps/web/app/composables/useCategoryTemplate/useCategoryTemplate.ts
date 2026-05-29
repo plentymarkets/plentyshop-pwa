@@ -53,6 +53,28 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     }
   };
 
+  const ensureHomeIntroPlacement = (topLevelBlocks: Block[]) => {
+    if (identifier !== 'index') return;
+    if (!Array.isArray(topLevelBlocks) || topLevelBlocks.length === 0) return;
+    if (topLevelBlocks.some((b) => b?.name === 'HomeIntro')) return;
+
+    const carouselIndex = topLevelBlocks.findIndex((b) => b?.name === 'Carousel');
+    const insertAt = carouselIndex === -1 ? 0 : carouselIndex + 1;
+
+    const introBlock: Block = {
+      name: 'HomeIntro',
+      type: 'content',
+      meta: {
+        uuid: 'c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f',
+        isGlobalTemplate: false,
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      content: {} as any,
+    };
+
+    topLevelBlocks.splice(insertAt, 0, introBlock);
+  };
+
   const ensureHomeReviewsPlacement = (topLevelBlocks: Block[]) => {
     // Only affect the homepage. Keep it deterministic and avoid duplicates.
     if (identifier !== 'index') return;
@@ -128,6 +150,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     const blocks = fetchedBlocks.length ? fetchedBlocks : state.value.defaultTemplateData;
 
     if (Array.isArray(blocks)) {
+      ensureHomeIntroPlacement(blocks);
       ensureHomeReviewsPlacement(blocks);
       migrateAllImageBlocks(blocks);
     }
