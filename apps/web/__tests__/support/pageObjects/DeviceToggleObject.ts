@@ -27,12 +27,12 @@ export class DeviceToggleObject extends PageObject {
   }
 
   selectTablet() {
-    this.tabletButton.click();
+    this.tabletButton.click({ force: true }); // force is needed because the tablet button is covered by the mobile button label
     return this;
   }
 
   selectDesktop() {
-    this.desktopButton.click();
+    this.desktopButton.click({ force: true }); // force is needed because the desktop button is covered by the mobile button label
     return this;
   }
 

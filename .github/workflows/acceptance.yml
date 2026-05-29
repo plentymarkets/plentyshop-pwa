@@ -43,30 +43,14 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: E2E Features
+      - name: E2E Full Suite
         uses: cypress-io/github-action@v7
         with:
           install: false
-          command: npm run test:cypress-feature
+          command: npm run test:cypress
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
           MOLLIE_TEST_MODE: true
-
-      - name: E2E Editor
-        uses: cypress-io/github-action@v7
-        with:
-          install: false
-          command: npm run test:cypress-editor
-        env:
-          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
-
-      - name: E2E External
-        uses: cypress-io/github-action@v7
-        with:
-          install: false
-          command: npm run test:cypress-external
-        env:
-          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
 
       - uses: actions/upload-artifact@v7
         if: failure()
