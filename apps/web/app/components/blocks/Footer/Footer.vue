@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="w-full py-10 transition-colors duration-300"
+    class="relative z-0 w-full py-10 max-lg:pb-[calc(2.5rem+3.5rem+env(safe-area-inset-bottom,0px))] transition-colors duration-300"
     :style="{ backgroundColor: footerData.backgroundColor || '#333333', color: footerData.textColor || '#ffffff' }"
     data-testid="footer"
   >
@@ -90,7 +90,7 @@
                     </span>
                   </summary>
                   
-                  <div class="absolute z-[100] left-4 min-w-[260px] bottom-full pb-2">
+                  <div class="absolute z-40 max-lg:max-h-[min(40vh,280px)] lg:z-[100] left-4 min-w-[260px] bottom-full pb-2">
                     <ul class="footer-submenu-scroll bg-neutral-800 shadow-xl p-3 flex flex-col gap-2 border border-white/10 rounded-md max-h-[300px] overflow-y-auto w-full">
                       <li v-for="child in node.children" :key="child.id">
                         <NuxtLink :to="localePath(generateCategoryLink(child))" class="hover:underline opacity-80 hover:opacity-100 text-sm block py-1">
