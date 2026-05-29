@@ -14,7 +14,11 @@ export default withMermaid({
   description:
     "Documentation for PlentyONE Shop, built with VueJS, Nuxt 3 and Alokai.",
   cleanUrls: true,
-  ignoreDeadLinks: true,
+  ignoreDeadLinks: [
+    /^https?:\/\/localhost/,
+    // ignore links to auto-generated API reference
+    /\/reference\//,
+  ],
   lastUpdated: true,
   srcExclude: [
     '**/README.md',
