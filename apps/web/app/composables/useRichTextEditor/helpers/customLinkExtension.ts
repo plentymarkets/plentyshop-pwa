@@ -11,6 +11,7 @@ import Link from '@tiptap/extension-link';
  *   (static page path or category ID)
  * - `data-link-path`  – raw category path (only set for `category` type),
  *   used to reconstruct the href without waiting for the async category select
+ * - `data-link-rel`   – exact rel options selected in the modal
  */
 export const CustomLink = Link.extend({
   addAttributes() {
@@ -38,6 +39,14 @@ export const CustomLink = Link.extend({
         renderHTML: (attributes) => {
           if (!attributes['data-link-path']) return {};
           return { 'data-link-path': attributes['data-link-path'] };
+        },
+      },
+      'data-link-rel': {
+        default: null,
+        parseHTML: (element) => element.getAttribute('data-link-rel'),
+        renderHTML: (attributes) => {
+          if (!attributes['data-link-rel']) return {};
+          return { 'data-link-rel': attributes['data-link-rel'] };
         },
       },
 

@@ -53,6 +53,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     href: rawAttrs?.href,
     target: rawAttrs?.target,
     rel: rawAttrs?.rel,
+    'data-link-rel': rawAttrs?.['data-link-rel'],
     'data-link-type': rawAttrs?.['data-link-type'],
     'data-link-value': rawAttrs?.['data-link-value'],
     'data-link-path': rawAttrs?.['data-link-path'],
@@ -62,12 +63,16 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     if (!attrs.href) return;
 
     openInNewWindow.value = attrs.target === '_blank';
-    const autoRel = new Set(['noopener', 'noreferrer']);
     const existingRel = (attrs.rel ?? '')
       .split(' ')
       .map((s) => s.trim())
-      .filter((s) => s && s !== 'none' && !autoRel.has(s));
-    relValues.value = existingRel;
+      .filter((s) => s && s !== 'none');
+    relValues.value = attrs['data-link-rel']
+      ? attrs['data-link-rel']
+          .split(' ')
+          .map((s) => s.trim())
+          .filter((s) => s && s !== 'none')
+      : existingRel;
     const storedLinkType = attrs['data-link-type'];
     const storedLinkValue = attrs['data-link-value'];
     const storedLinkPath = attrs['data-link-path'];
@@ -115,6 +120,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
     }
     const rel = relValues.value.filter((v) => v !== 'none');
     attrs.rel = rel.length ? rel.join(' ') : undefined;
+    attrs['data-link-rel'] = rel.length ? rel.join(' ') : undefined;
     return attrs;
   };
 
@@ -124,6 +130,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
       href: initialLinkAttrs.value.href,
       target: initialLinkAttrs.value.target,
       rel: initialLinkAttrs.value.rel,
+      'data-link-rel': initialLinkAttrs.value['data-link-rel'],
       'data-link-type': initialLinkAttrs.value['data-link-type'],
       'data-link-value': initialLinkAttrs.value['data-link-value'],
       'data-link-path': initialLinkAttrs.value['data-link-path'],
@@ -195,6 +202,7 @@ export const useLinkModal = (editor: Ref<Editor | null | undefined> | ComputedRe
           href: attrs.href,
           target: attrs.target ?? '_self',
           rel: attrs.rel,
+          'data-link-rel': attrs['data-link-rel'],
           'data-link-type': attrs['data-link-type'],
           'data-link-value': attrs['data-link-value'],
           'data-link-path': attrs['data-link-path'],

@@ -190,7 +190,7 @@ onMounted(initFromEditor);
   "en": {
     "add-link-button": "Add Link",
     "cancel-button": "Cancel",
-    "open-window-toggle": "Open in new window",
+    "open-window-toggle": "Open link in new tab",
     "category-label": "Category",
     "page-label": "Page",
     "url-label": "URL link",
@@ -202,7 +202,7 @@ onMounted(initFromEditor);
   "de": {
     "add-link-button": "Add Link",
     "cancel-button": "Cancel",
-    "open-window-toggle": "Open in new window",
+    "open-window-toggle": "Open link in new tab",
     "category-label": "Category",
     "page-label": "Page",
     "url-label": "URL link",
