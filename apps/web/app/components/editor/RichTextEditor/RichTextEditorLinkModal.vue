@@ -163,7 +163,7 @@ const props = defineProps<{
 }>();
 
 const editorRef = computed(() => props.editor);
-const REL_OPTIONS = ['none', 'noopener', 'noreferrer', 'nofollow', 'sponsored'];
+const REL_OPTIONS = ['noopener', 'noreferrer', 'nofollow', 'sponsored'];
 
 const {
   activeTab,
