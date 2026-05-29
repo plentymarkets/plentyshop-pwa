@@ -71,11 +71,11 @@ You can edit the code directly in the playground above to see how component inje
 
 #### Versions lower than shop version v.2.16.0 and shop-core v.1.20.0:
 
-All existing predefined areas are listed in the [`apps/web/app/composables/useModuleRendering/areas.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/composables/useModuleRendering/areas.ts) file within your shop repository.
+All existing predefined areas are listed in the [`apps/web/shop-core.config.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/shop-core.config.ts) file within your shop repository.
 
 ### Adding a new custom area
 
-1. In your shop repository, open the file `apps/web/app/composables/useModuleRendering/areas.ts` and add a new entry to the areas array. If you try to inject your component into a non-existing entry, your shop will throw an error.
+1. In your shop repository, open the file `apps/web/shop-core.config.ts` and add a new entry to the areas array. If you try to inject your component into a non-existing entry, your shop will throw an error.
 2. In the location of the template in which you want to display this new area, add the following:
 
 ```html

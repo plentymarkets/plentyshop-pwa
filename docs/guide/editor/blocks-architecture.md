@@ -61,11 +61,11 @@ When the two diverge, the editor shows an unsaved-changes indicator.
 When the merchant saves, `doSaveBlocksWithGlobalBlocks()` sends the serialised block tree back to the backend.
 The response is re-assembled and both `data` and `cleanData` are updated, resetting the dirty state.
 
-For details on how blocks are rendered, see [Blocks rendering](/guide/concept/blocks-rendering.md).
+For details on how blocks are rendered, see [Blocks rendering](/guide/editor/blocks-rendering.md).
 
-For details on how block data is persisted, see [Blocks saving](/guide/concept/blocks-saving.md).
+For details on how block data is persisted, see [Blocks saving](/guide/editor/blocks-saving.md).
 
-For the distinction between global and non-global blocks, see [Global blocks vs. non-global blocks](/guide/concept/blocks-global-vs-non-global.md).
+For the distinction between global and non-global blocks, see [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md).
 
 ## Blockified vs. non-blockified pages
 
@@ -92,7 +92,7 @@ Pages like checkout, my account, and legal pages do not use blocks.
 They are rendered with traditional Vue components and have no editor overlay.
 The blocks plugin detects that these pages are not blockified and skips the data fetch.
 
-For the distinction between structure and content blocks, see [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md).
+For the distinction between structure and content blocks, see [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md).
 
 ## Use cases
 
@@ -117,14 +117,14 @@ Because content categories are blockified, they can use the full blocks editor t
 
 How-to guides
 
-1. [Site settings](/guide/how-to/editor/site-settings.md) — How to add custom settings to the editor
-2. [Editor overview](/guide/how-to/editor/index.md) — Overview of all editor-related guides
+1. [Site settings](/guide/editor/site-settings.md) — How to add custom settings to the editor
+2. [Editor overview](/guide/editor/index.md) — Overview of all editor-related guides
 
 Linked concepts
 
-1. [Blocks rendering](/guide/concept/blocks-rendering.md) — How blocks are rendered on the frontend
-2. [Blocks saving](/guide/concept/blocks-saving.md) — How block data is persisted
-3. [Global blocks vs. non-global blocks](/guide/concept/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
-4. [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md) — The two block types and how they compose
-5. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow concept
-6. [Composable-centric data fetching](/guide/concept/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA
+1. [Blocks rendering](/guide/editor/blocks-rendering.md) — How blocks are rendered on the frontend
+2. [Blocks saving](/guide/editor/blocks-saving.md) — How block data is persisted
+3. [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
+4. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — The two block types and how they compose
+5. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow editor
+6. [Composable-centric data fetching](/guide/themes/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA
