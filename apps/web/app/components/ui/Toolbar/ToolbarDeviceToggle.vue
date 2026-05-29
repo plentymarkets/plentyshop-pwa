@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center rounded-md border border-gray-200 overflow-hidden">
-    <SfTooltip label="Mobile (375px)" placement="bottom" :show-arrow="true">
+    <SfTooltip label="Mobile (375px)" placement="right" :show-arrow="true">
       <button
         data-testid="device-toggle-mobile"
         type="button"
@@ -16,7 +16,7 @@
         </SfIconBase>
       </button>
     </SfTooltip>
-    <SfTooltip label="Tablet (768px)" placement="bottom" :show-arrow="true">
+    <SfTooltip label="Tablet (768px)" placement="right" :show-arrow="true">
       <button
         data-testid="device-toggle-tablet"
         type="button"
@@ -32,7 +32,7 @@
         </SfIconBase>
       </button>
     </SfTooltip>
-    <SfTooltip label="Desktop" placement="bottom" :show-arrow="true">
+    <SfTooltip label="Desktop" placement="right" :show-arrow="true">
       <button
         data-testid="device-toggle-desktop"
         type="button"
