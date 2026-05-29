@@ -1,3 +1,5 @@
+export type HomeReviewSource = 'google' | 'ebay';
+
 export type HomeReviewItem = {
   id: string;
   name: string;
@@ -5,6 +7,7 @@ export type HomeReviewItem = {
   when?: string;
   rating?: 1 | 2 | 3 | 4 | 5;
   text: string;
+  source?: HomeReviewSource;
   avatar?: {
     bg: string;
     text: string;

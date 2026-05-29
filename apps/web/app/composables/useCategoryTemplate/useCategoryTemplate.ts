@@ -12,6 +12,8 @@ import type { OldContent } from '~/utils/migrate-recommended-content';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import { getDefaultHomeReviewsContent } from '~/components/blocks/HomeReviews/defaults';
+import type { HomeReviewsContent } from '~/components/blocks/HomeReviews/types';
+import { applyHomeReviewsDisplayOrder } from '~/components/blocks/HomeReviews/utils';
 import { getDefaultHomeIntroContent } from '~/components/blocks/HomeIntro/defaults';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
@@ -103,9 +105,12 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         block.content = { title: 'Kundenrezensionen' } as any;
         return;
       }
-      const content = block.content as { title?: string };
+      const content = block.content as HomeReviewsContent;
       if (!content.title) {
         content.title = 'Kundenrezensionen';
+      }
+      if (Array.isArray(content.reviews) && content.reviews.length > 0) {
+        content.reviews = applyHomeReviewsDisplayOrder(content.reviews);
       }
     });
   };

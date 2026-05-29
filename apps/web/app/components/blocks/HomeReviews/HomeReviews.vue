@@ -23,28 +23,41 @@
               <article
                 v-for="review in trackReviews"
                 :key="review._trackKey"
-                class="home-reviews__card rounded border border-neutral-200 bg-white px-6 py-7 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+                class="home-reviews__card relative overflow-hidden rounded border border-neutral-200 bg-white px-6 py-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
               >
+                <div class="mb-5 flex items-center justify-between gap-3">
+                  <div class="flex min-w-0 items-center gap-3">
+                    <img
+                      :src="reviewSourceMeta[review.source].logo"
+                      :alt="reviewSourceMeta[review.source].label"
+                      :class="[
+                        'shrink-0 object-contain',
+                        review.source === 'ebay' ? 'h-8 w-auto max-w-[4.5rem] sm:h-9 sm:max-w-[5rem]' : 'h-8 w-8 sm:h-9 sm:w-9',
+                      ]"
+                      width="36"
+                      height="36"
+                      loading="lazy"
+                    />
+                    <span class="truncate text-sm font-medium text-neutral-800 sm:text-base">
+                      {{ reviewSourceMeta[review.source].label }}
+                    </span>
+                  </div>
+                  <time class="shrink-0 text-xs text-neutral-500 sm:text-sm">{{ displayWhen(review) }}</time>
+                </div>
+
                 <div class="flex items-start gap-4">
                   <div
-                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-semibold sm:h-[3.375rem] sm:w-[3.375rem] sm:text-base"
                     :style="{ backgroundColor: review.avatar.bg, color: review.avatar.text }"
                     aria-hidden="true"
                   >
                     {{ review.initials }}
                   </div>
 
-                  <div class="min-w-0 flex-1 w-full">
-                    <div class="flex w-full items-center gap-3">
-                      <div class="min-w-0 truncate text-sm font-semibold text-neutral-900">
-                        {{ review.name }}
-                      </div>
-                      <div class="flex-1" />
-                      <div class="ml-auto shrink-0 text-right text-xs text-neutral-500">
-                        {{ displayWhen(review) }}
-                      </div>
+                  <div class="min-w-0 flex-1">
+                    <div class="truncate text-sm font-semibold text-neutral-900">
+                      {{ review.name }}
                     </div>
-
                     <div class="mt-1 flex items-center gap-1" :aria-label="`${review.rating} out of 5`">
                       <span v-for="n in 5" :key="n" class="text-[13px] leading-none" aria-hidden="true">
                         <span
@@ -108,7 +121,7 @@
 
 <script setup lang="ts">
 import type { HomeReviewsProps } from './types';
-import { resolveReviews, type NormalizedReview } from './utils';
+import { resolveReviews, reviewSourceMeta, type NormalizedReview } from './utils';
 
 const props = defineProps<HomeReviewsProps>();
 

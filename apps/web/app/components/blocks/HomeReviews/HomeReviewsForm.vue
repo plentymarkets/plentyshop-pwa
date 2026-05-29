@@ -27,6 +27,17 @@
 
         <div class="p-4 flex flex-col gap-4 bg-gray-50">
           <div>
+            <UiFormLabel>Source</UiFormLabel>
+            <select
+              v-model="review.source"
+              class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white"
+            >
+              <option value="google">Google Bewertung</option>
+              <option value="ebay">eBay Bewertung</option>
+            </select>
+          </div>
+
+          <div>
             <UiFormLabel>Name</UiFormLabel>
             <SfInput v-model="review.name" type="text" placeholder="Customer name" />
           </div>
@@ -81,10 +92,12 @@
 
 <script setup lang="ts">
 import { SfButton, SfInput, SfTextarea } from '@storefront-ui/vue';
-import type { HomeReviewItem, HomeReviewsContent } from './types';
+import type { HomeReviewItem, HomeReviewSource, HomeReviewsContent } from './types';
 import { getDefaultHomeReviewsContent } from './defaults';
+import { applyHomeReviewsDisplayOrder, resolveReviewSource } from './utils';
 
 type FormReviewItem = HomeReviewItem & {
+  source: HomeReviewSource;
   avatar: { bg: string; text: string };
   rating: 1 | 2 | 3 | 4 | 5;
 };
@@ -103,11 +116,12 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const normalizeReview = (review: HomeReviewItem): FormReviewItem => ({
+const normalizeReview = (review: HomeReviewItem, index: number): FormReviewItem => ({
   id: review.id || `review-${Math.random().toString(36).slice(2, 9)}`,
   name: review.name ?? '',
   initials: review.initials ?? '',
   when: review.when ?? '',
+  source: resolveReviewSource(review, index),
   rating: (review.rating ?? 5) as 1 | 2 | 3 | 4 | 5,
   text: review.text ?? '',
   avatar: review.avatar ?? { bg: '#64748B', text: '#FFFFFF' },
@@ -115,12 +129,13 @@ const normalizeReview = (review: HomeReviewItem): FormReviewItem => ({
 
 const ensureContent = (raw: HomeReviewsContent): HomeReviewsFormContent => {
   const defaults = getDefaultHomeReviewsContent();
-  const source =
-    Array.isArray(raw.reviews) && raw.reviews.length > 0 ? raw.reviews : (defaults.reviews ?? []);
+  const source = applyHomeReviewsDisplayOrder(
+    Array.isArray(raw.reviews) && raw.reviews.length > 0 ? raw.reviews : (defaults.reviews ?? []),
+  );
 
   return {
     title: raw.title || defaults.title || 'Kundenrezensionen',
-    reviews: source.map(normalizeReview),
+    reviews: source.map((review, index) => normalizeReview(review, index)),
   };
 };
 
@@ -145,10 +160,12 @@ const generateId = () =>
 const addReview = () => {
   if (!content.value) return;
 
+  const nextIndex = content.value.reviews.length;
   content.value.reviews.push({
     id: generateId(),
     name: 'New customer',
     initials: 'N',
+    source: nextIndex < 3 ? 'google' : 'ebay',
     when: '',
     rating: 5,
     text: '',
