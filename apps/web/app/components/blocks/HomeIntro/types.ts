@@ -1,8 +1,6 @@
 export type HomeIntroContent = {
   title?: string;
-  subtitle?: string;
   lead?: string;
-  aboutHeading?: string;
   about?: string;
 };
 
@@ -15,4 +13,3 @@ export type HomeIntroProps = {
   };
   index?: number;
 };
-

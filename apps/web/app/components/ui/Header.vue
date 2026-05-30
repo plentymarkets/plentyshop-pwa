@@ -203,69 +203,51 @@
       </div>
     </template>
 
-    <div v-if="viewport.isLessThan('lg')" class="flex items-center justify-end">
-      <div
-        class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap"
-      >
-        <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"
-          ><span>•</span>Reparatur und Instandsetzung</NuxtLink
-        >
-        <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
-        <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Über uns</NuxtLink>
-        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Ankauf</a>
-        <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Team</NuxtLink>
+    <div v-if="viewport.isLessThan('lg')" class="flex w-full flex-col gap-2 px-2 sm:px-3 pt-2.5">
+      <div class="flex flex-row items-center justify-between w-full gap-2">
+        <div class="flex flex-row items-center gap-2 sm:gap-3 flex-shrink-0">
+          <NuxtLink
+            to="/leasing-finanzierung"
+            aria-label="Finanzieren und Leasen"
+            class="active:scale-95 transition-transform duration-200 flex-shrink-0"
+          >
+            <img
+              src="/_nuxt-plenty/images/image009-2.png"
+              alt="Jetzt günstig finanzieren und leasen"
+              class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
+            />
+          </NuxtLink>
+          <NuxtLink
+            to="https://www.waren-ankauf.de/ankauf/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="active:scale-95 transition-transform duration-200 flex-shrink-0"
+          >
+            <img
+              src="/_nuxt-plenty/images/image010.png"
+              alt="Ankaufsformular"
+              class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
+            />
+          </NuxtLink>
+        </div>
+
+        <div class="flex flex-col items-end gap-0.5 flex-shrink-0">
+          <div class="scale-[0.85] transform origin-right">
+            <GoogleTranslate />
+          </div>
+
+          <a
+            href="tel:+492862587950"
+            class="text-[12px] sm:text-[14px] font-black transition-colors whitespace-nowrap hover:text-blue-600 pr-1"
+            style="color: #062633"
+          >
+            +49 2862 58795 0
+          </a>
+        </div>
       </div>
 
-      <div
-        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-2 px-2 sm:px-3 py-2.5 z-[90]"
-      >
-        <div class="flex flex-row items-center justify-between w-full gap-2">
-          <div class="flex flex-row items-center gap-2 sm:gap-3 flex-shrink-0">
-            <NuxtLink
-              to="/leasing-finanzierung"
-              aria-label="Finanzieren und Leasen"
-              class="active:scale-95 transition-transform duration-200 flex-shrink-0"
-            >
-              <img
-                src="/_nuxt-plenty/images/image009-2.png"
-                alt="Jetzt günstig finanzieren und leasen"
-                class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
-              />
-            </NuxtLink>
-            <NuxtLink
-              to="https://www.waren-ankauf.de/ankauf/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="active:scale-95 transition-transform duration-200 flex-shrink-0"
-            >
-              <img
-                src="/_nuxt-plenty/images/image010.png"
-                alt="Ankaufsformular"
-                class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
-              />
-            </NuxtLink>
-          </div>
-
-          <div class="flex flex-col items-end gap-0.5 flex-shrink-0">
-            <div class="flex flex-row items-center gap-0">
-              <div class="scale-[0.85] transform origin-right">
-                <GoogleTranslate />
-              </div>
-            </div>
-
-            <a
-              href="tel:+492862587950"
-              class="text-[12px] sm:text-[14px] font-black transition-colors whitespace-nowrap hover:text-blue-600 pr-1 mt-0.5"
-              style="color: #062633"
-            >
-              +49 2862 58795 0
-            </a>
-          </div>
-        </div>
-
-        <div v-if="!isHomePage" class="w-full min-[992px]:max-w-[280px] min-[992px]:ml-auto">
-          <UiSearch />
-        </div>
+      <div v-if="!isHomePage" class="w-full">
+        <UiSearch />
       </div>
     </div>
   </MegaMenu>

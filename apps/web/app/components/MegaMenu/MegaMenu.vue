@@ -1,11 +1,11 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-[100]">
     <div
-      class="flex justify-between items-center max-w-screen-3xl mx-auto px-[10px] md:px-6 lg:px-10 py-2 md:py-4 w-full border-0 border-neutral-200"
+      class="flex max-w-screen-3xl mx-auto flex-col px-[10px] py-0 md:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-2 md:py-4"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
-      <div class="flex items-center">
+      <div class="flex items-center py-2 lg:py-0">
         <UiButton
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
@@ -27,7 +27,9 @@
         </NuxtLink>
       </div>
 
-      <slot />
+      <div class="w-full border-t border-neutral-100 pb-2.5 lg:border-t-0 lg:pb-0 lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
+        <slot />
+      </div>
     </div>
 
     <nav

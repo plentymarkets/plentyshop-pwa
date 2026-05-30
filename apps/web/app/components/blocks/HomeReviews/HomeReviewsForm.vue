@@ -52,7 +52,7 @@
             <SfInput v-model="review.when" type="text" placeholder="e.g. vor 2 Jahren — leave empty for auto" />
           </div>
 
-          <div>
+          <div v-if="review.source === 'google'">
             <UiFormLabel>Rating (1–5)</UiFormLabel>
             <select
               v-model.number="review.rating"
@@ -61,6 +61,7 @@
               <option v-for="n in 5" :key="n" :value="n">{{ n }} stars</option>
             </select>
           </div>
+          <p v-else class="text-xs text-neutral-500">eBay reviews show positive feedback (+) instead of stars.</p>
 
           <div>
             <UiFormLabel>Review text</UiFormLabel>

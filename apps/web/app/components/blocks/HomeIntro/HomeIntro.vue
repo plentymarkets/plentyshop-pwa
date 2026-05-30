@@ -1,22 +1,17 @@
 <template>
   <section class="w-full px-4 md:px-6 lg:px-8 2xl:px-0 pb-4" data-testid="home-intro">
     <div class="mx-auto max-w-screen-3xl space-y-4">
-      <div class="text-center space-y-2 sm:space-y-3">
+      <div class="text-center">
         <h1 :class="h1Class" data-testid="home-intro-title">
-          {{ title }}
+          <span class="block">{{ titleLines[0] }}</span>
+          <span v-if="titleLines[1]" class="block">{{ titleLines[1] }}</span>
         </h1>
-
-        <h2 :class="h2Class" data-testid="home-intro-subtitle">
-          {{ subtitle }}
-        </h2>
       </div>
 
       <div class="mx-auto w-full max-w-5xl space-y-4 sm:space-y-5">
         <p :class="paragraphClass" data-testid="home-intro-lead">
           {{ lead }}
         </p>
-
-        <h2 :class="[h2Class, 'text-center']" data-testid="home-intro-about-heading">{{ aboutHeading }}</h2>
 
         <p :class="paragraphClass" data-testid="home-intro-about">
           {{ about }}
@@ -28,18 +23,34 @@
 
 <script setup lang="ts">
 import type { HomeIntroProps } from './types';
-import { getDefaultHomeIntroContent } from './defaults';
+import { DEFAULT_HOME_INTRO_TITLE } from './defaults';
+import { normalizeHomeIntroContent } from './utils';
 
 const props = defineProps<HomeIntroProps>();
 
-const defaults = getDefaultHomeIntroContent();
-const title = computed(() => props.content?.title?.trim() || defaults.title);
-const subtitle = computed(() => props.content?.subtitle?.trim() || defaults.subtitle);
-const lead = computed(() => props.content?.lead?.trim() || defaults.lead);
-const aboutHeading = computed(() => props.content?.aboutHeading?.trim() || defaults.aboutHeading);
-const about = computed(() => props.content?.about?.trim() || defaults.about);
+const normalized = computed(() => normalizeHomeIntroContent(props.content ?? {}));
 
-const h1Class = 'text-2xl sm:text-2xl font-semibold';
-const h2Class = 'text-lg sm:text-xl font-semibold';
+const title = computed(() => normalized.value.title ?? DEFAULT_HOME_INTRO_TITLE);
+
+const titleLines = computed(() => {
+  const text = title.value.trim();
+  const breakAfter = 'Industriebedarf,';
+  const idx = text.indexOf(breakAfter);
+
+  if (idx !== -1) {
+    const splitAt = idx + breakAfter.length;
+    const line1 = text.slice(0, splitAt).trim();
+    const line2 = text.slice(splitAt).trim();
+    return line2 ? [line1, line2] : [line1];
+  }
+
+  return [text];
+});
+
+const lead = computed(() => normalized.value.lead);
+const about = computed(() => normalized.value.about);
+
+const h1Class =
+  'mx-auto max-w-[20rem] sm:max-w-[28rem] md:max-w-[36rem] lg:max-w-[42rem] text-center text-2xl sm:text-2xl font-semibold leading-snug sm:leading-tight';
 const paragraphClass = 'text-sm sm:text-base leading-relaxed';
 </script>

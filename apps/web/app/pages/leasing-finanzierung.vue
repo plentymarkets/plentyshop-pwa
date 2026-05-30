@@ -1147,8 +1147,12 @@ useHead({
 .partner-list li strong { color: var(--gold); font-weight: 700; }
 
 /* ==================== MOBILE-OPTIMIERUNG ==================== */
+@media (max-width: 1023px) {
+  .hero { padding-top: 2.5rem; }
+}
+
 @media (max-width: 640px) {
-  .hero { padding: 3rem 1.25rem 6rem; }
+  .hero { padding: 3rem 1.25rem 6rem; padding-top: 2.5rem; }
   .hero-stats { gap: 1.5rem 2rem; margin-top: 2.5rem; padding-top: 2rem; }
   .stat .v { font-size: 1.6rem; }
 

@@ -15,6 +15,7 @@ import { getDefaultHomeReviewsContent } from '~/components/blocks/HomeReviews/de
 import type { HomeReviewsContent } from '~/components/blocks/HomeReviews/types';
 import { applyHomeReviewsDisplayOrder } from '~/components/blocks/HomeReviews/utils';
 import { getDefaultHomeIntroContent } from '~/components/blocks/HomeIntro/defaults';
+import { normalizeHomeIntroContent } from '~/components/blocks/HomeIntro/utils';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = (
   identifier: string = 'unknown',
@@ -88,12 +89,14 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
         return;
       }
 
-      const content = block.content as Record<string, unknown>;
-      // If the intro exists but has empty content, populate defaults so the editor shows it as editable.
-      if (Object.keys(content).length === 0) {
+      if (Object.keys(block.content as Record<string, unknown>).length === 0) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         block.content = getDefaultHomeIntroContent() as any;
+        return;
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      block.content = normalizeHomeIntroContent(block.content as any) as any;
     });
   };
 

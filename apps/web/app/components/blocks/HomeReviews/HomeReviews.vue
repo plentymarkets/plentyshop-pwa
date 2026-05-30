@@ -58,7 +58,26 @@
                     <div class="truncate text-sm font-semibold text-neutral-900">
                       {{ review.name }}
                     </div>
-                    <div class="mt-1 flex items-center gap-1" :aria-label="`${review.rating} out of 5`">
+                    <div
+                      v-if="review.source === 'ebay'"
+                      class="mt-1 inline-flex h-[18px] w-[18px] items-center justify-center rounded-[3px] bg-[#86B817]"
+                      role="img"
+                      aria-label="Positive feedback"
+                    >
+                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path
+                          d="M6 2.25v7.5M2.25 6h7.5"
+                          stroke="#FFFFFF"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      v-else
+                      class="mt-1 flex items-center gap-1"
+                      :aria-label="`${review.rating} out of 5`"
+                    >
                       <span v-for="n in 5" :key="n" class="text-[13px] leading-none" aria-hidden="true">
                         <span
                           class="font-black"

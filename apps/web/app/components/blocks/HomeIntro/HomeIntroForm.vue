@@ -9,20 +9,8 @@
       </div>
 
       <div>
-        <UiFormLabel>Subtitle (H2)</UiFormLabel>
-        <SfInput v-model="content.subtitle" type="text" />
-      </div>
-
-      <div>
         <UiFormLabel>Lead paragraph</UiFormLabel>
         <SfTextarea v-model="content.lead" class="w-full min-h-[120px]" />
-      </div>
-
-      <hr class="my-2 border-gray-200" />
-
-      <div>
-        <UiFormLabel>About heading (H2)</UiFormLabel>
-        <SfInput v-model="content.aboutHeading" type="text" />
       </div>
 
       <div>
@@ -41,7 +29,7 @@
 <script setup lang="ts">
 import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import type { HomeIntroContent } from './types';
-import { getDefaultHomeIntroContent } from './defaults';
+import { normalizeHomeIntroContent } from './utils';
 
 const { blockUuid } = useSiteConfiguration();
 const route = useRoute();
@@ -52,17 +40,6 @@ const { data } = useCategoryTemplate(
 );
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const ensureContent = (raw: HomeIntroContent): HomeIntroContent => {
-  const defaults = getDefaultHomeIntroContent();
-  return {
-    title: raw.title || defaults.title,
-    subtitle: raw.subtitle || defaults.subtitle,
-    lead: raw.lead || defaults.lead,
-    aboutHeading: raw.aboutHeading || defaults.aboutHeading,
-    about: raw.about || defaults.about,
-  };
-};
-
 const content = computed<HomeIntroContent | null>(() => {
   if (!data.value || !blockUuid.value) return null;
 
@@ -70,7 +47,7 @@ const content = computed<HomeIntroContent | null>(() => {
   if (!found) return null;
 
   const block = found as { content?: HomeIntroContent };
-  const next = ensureContent(block.content ?? {});
+  const next = normalizeHomeIntroContent(block.content ?? {});
   block.content = next;
 
   return next;
