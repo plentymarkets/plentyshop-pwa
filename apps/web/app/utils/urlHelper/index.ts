@@ -31,8 +31,7 @@ export const handlePreviousRouteNavigation = (dependencies: NavigationDependenci
   return navTo(localePath(paths.home));
 };
 
-export const isInternalLink = (href: string): boolean => {
-  const router = useRouter();
+export const isInternalLink = (href: string, router: ReturnType<typeof useRouter>): boolean => {
   try {
     const resolved = router.resolve(href);
     return resolved.matched.length > 0;

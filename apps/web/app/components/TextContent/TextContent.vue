@@ -40,7 +40,7 @@ const renderedHtmlDescription = computed(() => {
   if (!html) return '';
 
   return html.replace(/href="([^"]+)"/g, (match, href) => {
-    if (isInternalLink(href)) {
+    if (isInternalLink(href, router)) {
       return `href="${localePath(href)}"`;
     }
     return match;
@@ -52,7 +52,7 @@ const handleRteClick = (event: MouseEvent) => {
   if (!anchor) return;
 
   const href = anchor.getAttribute('href');
-  if (!href || !isInternalLink(href)) return;
+  if (!href || href.startsWith('/')) return;
 
   event.preventDefault();
   router.push(href);
