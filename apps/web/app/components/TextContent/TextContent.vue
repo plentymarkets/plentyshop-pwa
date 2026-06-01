@@ -10,8 +10,8 @@
       class="rte-prose rte-prose--render"
       :data-testid="props.testId ? 'text-html-' + props.testId : 'text-html'"
       :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
-      v-html="renderedHtmlDescription"
       @click="handleRteClick"
+      v-html="renderedHtmlDescription"
     />
 
     <UiButton
