@@ -150,7 +150,10 @@ The shop will be served with hot reload at [localhost:3000](http://localhost:300
 ## Deployment
 
 ::: warning :warning: SSL Certificate
-To build and deploy a PlentyONE shop and to use the shop editor, you need a [valid SSL certificate](https://knowledge.plentyone.com/en-gb/manual/main/business-decisions/ssl-certificate.html).
+To build and deploy a PlentyONE shop and to use the shop editor, you need a valid SSL certificate.
+
+Domains hosted by or linked to PlentyONE receive a certificate automatically.
+For externally hosted domains, refer to [For external domains: DNS settings](https://knowledge.plentyone.com/en-gb/manual/main/business-decisions/dns-self-help.html#_for_external_domains_dns_settings) in the PlentyONE manual.
 :::
 
 ### Activate preview
