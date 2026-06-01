@@ -104,7 +104,6 @@ export default withNuxt(
       'custom-rules/file-organization-types': 'error',
     }
   },
-  // Enforce semantic z-index tokens across all Vue files (app/ and modules/).
   {
     files: [
       'app/**/*.vue',

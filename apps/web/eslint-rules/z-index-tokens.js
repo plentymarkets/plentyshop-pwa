@@ -1,6 +1,7 @@
 /**
  * Canonical list of allowed z-index tokens.
- * This is the single source of truth used by both the ESLint rule and the codemod.
+ * This is the single source of truth used by both
+ *  `apps/web/eslint-rules/enforce-z-index-tokens.js` and `scripts/zindex-codemod/migrate.mjs`.
  *
  * Scale defined in apps/web/app/configuration/tailwind.config.ts → theme.extend.zIndex
  */

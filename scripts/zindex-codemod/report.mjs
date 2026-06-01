@@ -192,7 +192,6 @@ function printByLayer() {
     const fileCount = usages.length;
     const hitCount = usages.reduce((n, f) => n + f.hits.length, 0);
 
-    // Layer header
     const badge = `  ${value.toString().padStart(4)}  `;
     const header = `${color}${C.bold}${pad(token, 22)}${C.reset}${C.dim}${badge}${C.reset}${role}`;
     const countStr = fileCount === 0
@@ -230,7 +229,6 @@ function printByLayer() {
 // ─── By-file view ─────────────────────────────────────────────────────────────
 
 function printByFile() {
-  // Sort files by directory then name
   const files = [...byFile.keys()].sort();
 
   console.log();
@@ -250,7 +248,6 @@ function printByFile() {
     console.log(`${C.bold}${C.cyan}${short}${C.reset}`);
     console.log(ruler('─', short.length + 2));
 
-    // Print tokens in scale order
     for (const { token, value, color } of SCALE) {
       if (TOKEN_FILTER && token !== TOKEN_FILTER) continue;
       const hits = tokenMap.get(token);

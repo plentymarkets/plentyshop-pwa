@@ -3,11 +3,7 @@
  * Flags z-index Tailwind classes that are not in the project's semantic token allowlist.
  *
  * Catches both arbitrary values (z-[200]) and plain Tailwind numerics (z-10, z-50) that
- * haven't been mapped to a named token.  The allowlist is defined in z-index-tokens.js so
- * the codemod can import the same list.
- *
- * Severity is intentionally set to "warn" during migration and promoted to "error" once all
- * usages have been replaced (Phase 4 of the centralisation plan).
+ * haven't been mapped to a named token.
  */
 
 import { Z_INDEX_TOKENS } from './z-index-tokens.js';
@@ -32,10 +28,7 @@ function collectViolations(classStr) {
   while ((match = Z_CLASS_RE.exec(classStr)) !== null) {
     const rawToken = match[1];
 
-    // Strip leading ! (important)
     const withoutBang = rawToken.startsWith('!') ? rawToken.slice(1) : rawToken;
-
-    // Strip all prefix segments (anything up to and including the last ':')
     const colonIdx = withoutBang.lastIndexOf(':');
     const bareToken = colonIdx === -1 ? withoutBang : withoutBang.slice(colonIdx + 1);
 
@@ -73,7 +66,6 @@ function collectClassStrings(expr) {
   return [];
 }
 
-/** Checks all class/`:class` attributes on one VElement and reports violations. */
 function checkElement(vElement, context) {
   for (const attr of vElement.startTag?.attributes ?? []) {
     const isStaticClass = !attr.directive && attr.key?.name === 'class';
@@ -100,7 +92,6 @@ function checkElement(vElement, context) {
   }
 }
 
-/** Walks all VElements in the template recursively. */
 function walkTemplate(node, context) {
   if (!node || node.type !== 'VElement') return;
   checkElement(node, context);
