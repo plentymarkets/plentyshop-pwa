@@ -2,7 +2,7 @@
   <EditorFormPanel v-model="isOpen" content-class="p-0">
     <template #title>
       <span class="inline-flex items-center gap-1.5">
-        {{ getEditorTranslation('elements') }}
+        {{ props.sectionLabel ?? getEditorTranslation('elements') }}
         <span
           v-if="totalCount > 0"
           class="text-3xs font-bold px-1.5 py-0.5 rounded-full"
@@ -53,7 +53,7 @@
           @click="props.customAdd ? emit('add-element') : onAddElement()"
         >
           <SfIconAdd size="xs" />
-          {{ getEditorTranslation('add-element') }}
+          {{ props.addButtonLabel ?? getEditorTranslation('add-element') }}
         </button>
       </div>
 

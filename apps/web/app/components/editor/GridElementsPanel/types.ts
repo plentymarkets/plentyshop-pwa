@@ -7,6 +7,8 @@ export interface GridElementsPanelProps {
   minItems?: number;
   customAdd?: boolean;
   quickAddOptions?: QuickAddOption[];
+  sectionLabel?: string;
+  addButtonLabel?: string;
 }
 
 export type GridElementsPanelEmits = {
