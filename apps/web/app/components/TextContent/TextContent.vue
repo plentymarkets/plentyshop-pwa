@@ -11,6 +11,7 @@
       :data-testid="props.testId ? 'text-html-' + props.testId : 'text-html'"
       :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
       v-html="renderedHtmlDescription"
+      @click="handleRteClick"
     />
 
     <UiButton
@@ -30,8 +31,32 @@
 import type { TextContentProps } from '~/components/TextContent/types';
 
 const props = defineProps<TextContentProps>();
+const localePath = useLocalePath();
+const router = useRouter();
+const NuxtLink = resolveComponent('NuxtLink');
 
-const renderedHtmlDescription = computed(() => decodeHtmlEntities(props.text?.htmlDescription));
+const renderedHtmlDescription = computed(() => {
+  const html = decodeHtmlEntities(props.text?.htmlDescription);
+  if (!html) return '';
+
+  return html.replace(/href="([^"]+)"/g, (match, href) => {
+    if (isInternalLink(href)) {
+      return `href="${localePath(href)}"`;
+    }
+    return match;
+  });
+});
+
+const handleRteClick = (event: MouseEvent) => {
+  const anchor = (event.target as HTMLElement).closest('a');
+  if (!anchor) return;
+
+  const href = anchor.getAttribute('href');
+  if (!href || !isInternalLink(href)) return;
+
+  event.preventDefault();
+  router.push(href);
+};
 
 const textAlignmentClass = computed(() => {
   switch (props.text?.textAlignment) {
@@ -43,7 +68,4 @@ const textAlignmentClass = computed(() => {
       return 'text-left items-start';
   }
 });
-
-const localePath = useLocalePath();
-const NuxtLink = resolveComponent('NuxtLink');
 </script>
