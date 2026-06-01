@@ -12,10 +12,19 @@ export default defineNuxtPlugin({
       public: { isPreview: isPreviewConfig },
     } = useRuntimeConfig();
 
+    const getPreviewValid = async () => {
+      const { data } = await useAsyncData(() => useSdk().plentysystems.getPreviewValid());
+      return (
+        data.value ?? {
+          data: false,
+        }
+      );
+    };
+
     const isPreview = await resolvePreviewState({
       cookieValue: pwaCookie.value,
       isPreviewConfig,
-      getPreviewValid: () => useSdk().plentysystems.getPreviewValid(),
+      getPreviewValid: () => getPreviewValid(),
     }).catch(() => {
       return false;
     });
