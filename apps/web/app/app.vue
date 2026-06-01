@@ -82,6 +82,7 @@
 import { useMediaQuery } from '@vueuse/core';
 import { isCssUrl, isJsUrl } from '~/utils/assets';
 import { categoryGetters } from '@plentymarkets/shop-api';
+import { useFeatureFlags } from './composables';
 
 const bodyClass = ref('');
 const route = useRoute();
@@ -107,6 +108,9 @@ const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 const { getSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
 
 const { data: productsCatalog } = useProducts();
+
+const { flags } = useFeatureFlags();
+console.log('Feature Flags:', flags.value);
 
 const category = computed(() => productsCatalog.value?.category);
 const isCategoryPage = computed(() => route.meta?.type === 'category' && !!category.value);

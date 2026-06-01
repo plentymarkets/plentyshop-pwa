@@ -108,3 +108,4 @@ export * from './useCallisto';
 export * from './useCancellationForm';
 export * from './useLogEvent';
 export * from './useEditorDevice';
+export * from './useFeatureFlags';
