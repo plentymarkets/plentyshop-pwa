@@ -55,7 +55,7 @@ const REPLACEMENTS = [
   [/\bz-\[200\]/g,    'z-modal-backdrop'], // backdrop overlays / PageBlock selected outline
   [/\bz-\[150\]/g,    'z-editor-toolbar'], // SettingsToolbar @lg (manual: @md also needs fixing)
   [/\bz-\[100\]/g,    'z-editor-toolbar'], // CategorySidebar mobile
-  [/\bz-\[60\]/g,     'z-editor-drawer'],  // EditorLocalizationDrawer
+  [/\bz-\[60\]/g,     'z-editor-toolbar'],  // EditorLocalizationDrawer
   [/\bz-\[51\]/g,     'z-notifications'],  // Notifications strip
   [/\bz-\[50\]/g,     'z-dropdown'],
   [/\bz-\[40\]/g,     'z-editor-inline'],  // BlockActions/PageBlock @lg chrome (NOT sticky)
@@ -167,8 +167,8 @@ MANUAL FIXES STILL NEEDED
    z-dropdown → z-sticky  (bottom nav bars should be sticky, not dropdown)
 
 7. apps/web/app/components/blocks/UtilityBar/UtilityBar.vue
-   z-dropdown → z-sticky  (sticky header bar)
-
+   z-sticky -> z-raised (non-sticky header; stickiness determined via block setting)
+   
 8. apps/web/app/components/ui/SimplifiedHeader.vue
    z-dropdown → z-sticky  (sticky header)
 

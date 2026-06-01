@@ -9,6 +9,7 @@ export const Z_INDEX_TOKENS = new Set([
   'z-base', // 0  — default, grounded
   'z-raised', // 1  — slightly above base (e.g. carousel arrows, MultiGrid col)
   'z-overlap', // 2  — badges, breadcrumb chevron, gallery arrows
+  'z-editor-drawer', // 10 — SiteConfigurationDrawer, LocalizationDrawer
   'z-editor-inline', // 30 — BlockActions, drag handles, add-block buttons in canvas
   'z-sticky', // 40 — headers, NavbarBottom, sticky MegaMenu panel
   'z-dropdown', // 50 — account dropdown, language list, MegaMenu panel, tooltips default
@@ -17,7 +18,6 @@ export const Z_INDEX_TOKENS = new Set([
   'z-drawer', // 80 — slide-in navigation drawer
   'z-cookiebar', // 90 — cookie consent bar
   'z-editor-toolbar', // 100 — SettingsToolbar on lg
-  'z-editor-drawer', // 110 — SiteConfigurationDrawer, LocalizationDrawer
   'z-modal-backdrop', // 200 — modal overlays / backdrops
   'z-modal', // 210 — modal panels
   'z-popover', // 220 — AddBlockPopover, RichText sub-menus
