@@ -12,11 +12,6 @@
         <UiFormLabel>Lead paragraph</UiFormLabel>
         <SfTextarea v-model="content.lead" class="w-full min-h-[120px]" />
       </div>
-
-      <div>
-        <UiFormLabel>About paragraph</UiFormLabel>
-        <SfTextarea v-model="content.about" class="w-full min-h-[160px]" />
-      </div>
     </div>
   </div>
 

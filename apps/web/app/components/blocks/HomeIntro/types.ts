@@ -1,7 +1,6 @@
 export type HomeIntroContent = {
   title?: string;
   lead?: string;
-  about?: string;
 };
 
 export type HomeIntroProps = {

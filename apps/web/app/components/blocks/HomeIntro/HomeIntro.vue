@@ -12,10 +12,6 @@
         <p :class="paragraphClass" data-testid="home-intro-lead">
           {{ lead }}
         </p>
-
-        <p :class="paragraphClass" data-testid="home-intro-about">
-          {{ about }}
-        </p>
       </div>
     </div>
   </section>
@@ -48,7 +44,6 @@ const titleLines = computed(() => {
 });
 
 const lead = computed(() => normalized.value.lead);
-const about = computed(() => normalized.value.about);
 
 const h1Class =
   'mx-auto max-w-[20rem] sm:max-w-[28rem] md:max-w-[36rem] lg:max-w-[42rem] text-center text-2xl sm:text-2xl font-semibold leading-snug sm:leading-tight';

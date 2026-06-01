@@ -17,6 +17,5 @@ export const normalizeHomeIntroContent = (raw: HomeIntroContent): HomeIntroConte
   return {
     title,
     lead: legacy.lead?.trim() || defaults.lead,
-    about: legacy.about?.trim() || defaults.about,
   };
 };
