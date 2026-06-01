@@ -4,3 +4,7 @@ CheckInternal: false
 IgnoreURLs:
   - http://localhost:3000/
   - https://help.plentyone.com/
+  - https://www.linkedin.com/company/plentyone-ecommerce/
+  - https://www.facebook.com/plentyonecommerce/
+  - https://www.instagram.com/plentyone_ecommerce/
+  - https://www.youtube.com/@PlentyONE_ecommerce
