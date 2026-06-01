@@ -197,6 +197,32 @@ describe('useLinkModal', () => {
 
       expect(openInNewWindow.value).toBe(true);
     });
+
+    it('should restore selected rel attributes from link metadata', async () => {
+      const linkMark = {
+        type: { name: 'link' },
+        attrs: {
+          href: 'https://example.com',
+          target: '_self',
+          rel: 'noopener noreferrer',
+          'data-link-rel': 'noopener noreferrer',
+          'data-link-type': 'url',
+          'data-link-value': 'https://example.com',
+        },
+      };
+      const { editor } = createEditor({
+        from: 0,
+        to: 4,
+        textBetween: 'link',
+        nodesInRange: [{ type: { name: 'text' }, marks: [linkMark], isAtom: false, isInline: false, attrs: {} }],
+      });
+      const { relValues, initFromEditor } = useLinkModal(makeEditorRef(editor));
+
+      initFromEditor();
+      await nextTick();
+
+      expect(relValues.value).toEqual(['noopener', 'noreferrer']);
+    });
   });
 
   describe('computedHref', () => {
