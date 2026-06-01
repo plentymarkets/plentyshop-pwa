@@ -25,6 +25,8 @@ export type LinkTabValue = 'url' | 'static' | 'category';
 export type LinkModalLinkAttrs = {
   href?: string;
   target?: string;
+  rel?: string;
+  'data-link-rel'?: string;
   'data-link-type'?: LinkTabValue;
   'data-link-value'?: string;
   'data-link-path'?: string;

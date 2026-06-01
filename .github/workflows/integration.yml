@@ -17,6 +17,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  fitness-docs:
+    if: github.repository == 'plentymarkets/plentyshop-pwa'
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: ./.github/actions/setup
+      - name: Build with VitePress
+        run: |
+          npm run docs:build
+          touch ${{ github.workspace }}/docs/.vitepress/dist/.nojekyll
+      - name: Install & Run htmltest
+        run: |
+          cd docs/.vitepress
+          curl https://htmltest.wjdp.uk | bash
+          bin/htmltest
   fitness-compliance:
     runs-on: ubuntu-slim
     timeout-minutes: 5
@@ -138,7 +156,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           install: false
-          command: npm run test:cypress
+          command: npm run test:cypress-smoke-shop
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
   smoke-editor:

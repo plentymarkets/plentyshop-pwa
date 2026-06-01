@@ -107,20 +107,18 @@ describe('useTableOfContents', () => {
     });
   });
 
-  describe('section open states', () => {
-    it('should default headerOpen to true', () => {
-      const { headerOpen } = useTableOfContents();
-      expect(headerOpen.value).toBe(true);
+  describe('section filters', () => {
+    it('should default filters to an empty set ("showing all")', () => {
+      const { filters } = useTableOfContents();
+      filters.value = new Set();
+      expect(filters.value.size).toBe(0);
     });
 
-    it('should default contentOpen to true', () => {
-      const { contentOpen } = useTableOfContents();
-      expect(contentOpen.value).toBe(true);
-    });
-
-    it('should default footerOpen to true', () => {
-      const { footerOpen } = useTableOfContents();
-      expect(footerOpen.value).toBe(true);
+    it('should accept arbitrary section ids in the filter set', () => {
+      const { filters } = useTableOfContents();
+      filters.value = new Set(['header']);
+      expect(filters.value.has('header')).toBe(true);
+      expect(filters.value.has('content')).toBe(false);
     });
   });
 

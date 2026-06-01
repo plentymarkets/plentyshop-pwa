@@ -47,6 +47,8 @@ export const getLinkAttrsFromRange = (doc: PmNode, from: number, to: number) => 
       result = {
         href: m.attrs.href as string,
         target: m.attrs.target as string,
+        rel: m.attrs.rel as string | undefined,
+        'data-link-rel': m.attrs['data-link-rel'] as string | undefined,
         'data-link-type': m.attrs['data-link-type'] as LinkModalLinkAttrs['data-link-type'],
         'data-link-value': m.attrs['data-link-value'] as string | undefined,
         'data-link-path': m.attrs['data-link-path'] as string | undefined,
