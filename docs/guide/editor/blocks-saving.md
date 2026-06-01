@@ -18,5 +18,5 @@ Global blocks saved on the homepage propagate to all pages, since every page rea
 
 Linked concepts
 
-1. [Blocks architecture](/guide/concept/blocks-architecture.md) — Overview of the blocks system and data flow
-2. [Global blocks vs. non-global blocks](/guide/concept/blocks-global-vs-non-global.md) — How global block propagation works
+1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system and data flow
+2. [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md) — How global block propagation works

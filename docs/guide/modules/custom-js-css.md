@@ -7,13 +7,13 @@ This guide will show you how to add custom CSS and JS in the head of the page.
 ::: warning
 Adding resources directly to the head could impact the performance of the page.
 We recommend adding JS and CSS code the native way. This means that the JS code is scoped to a `component` or `plugin` and the CSS is scoped to its `component`.
-Hooking into `tailwind` is also a valid way of extending the app's styles, as detailed in the [tailwind](/guide/how-to/module/tailwind.md) guide.
+Hooking into `tailwind` is also a valid way of extending the app's styles, as detailed in the [tailwind](/guide/modules/tailwind.md) guide.
 :::
 
 ## Prerequisites / Preparation
 
 This guide requires you to already have created a module.
-If you haven't created a module yet, you can follow the [How-to create a module](/guide/how-to/module/index.md) guide.
+If you haven't created a module yet, you can follow the [How-to create a module](/guide/modules/index.md) guide.
 
 ## Create and register a plugin to inject your resources
 
