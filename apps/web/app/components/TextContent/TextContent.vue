@@ -48,7 +48,8 @@ const renderedHtmlDescription = computed(() => {
 });
 
 const handleRteClick = (event: MouseEvent) => {
-  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+    return;
 
   const anchor = (event.target as HTMLElement).closest('a');
   if (!anchor) return;
