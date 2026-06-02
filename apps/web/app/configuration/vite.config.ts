@@ -27,8 +27,9 @@ export const FailOnForbiddenDataInPublicFolderPlugin = {
   name: 'fail-on-forbidden-data-in-public-folder',
   generateBundle() {
     if (!process.env.FAIL_BUILD_ON_FORBIDDEN_DATA_IN_PUBLIC_FOLDER) {
-      console.warn('Skipping Nuxt Plenty data check as FAIL_BUILD_ON_FORBIDDEN_DATA_IN_PUBLIC_FOLDER is not set.');
+      console.warn('Skipping public/ folder entries check as FAIL_BUILD_ON_FORBIDDEN_DATA_IN_PUBLIC_FOLDER is not set.');
       return;
+    }
     }
     const publicDir = resolve(__dirname, '../../public');
     if (!existsSync(publicDir)) return;
