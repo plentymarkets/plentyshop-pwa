@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0 h-0">
+  <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-notifications top-0 h-0">
     <div v-for="notification of notifications" :key="notification.id" class="my-2">
       <UiAlert :size="'base'" :variant="notification.type" class="pl-4">
         <component

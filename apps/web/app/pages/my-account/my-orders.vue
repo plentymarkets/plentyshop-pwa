@@ -25,7 +25,7 @@
 
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
+        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-loader" size="2xl" />
         <template v-if="viewport.isLessThan('md')">
           <ul v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="my-4 last-of-type:mb-0">
             <li>

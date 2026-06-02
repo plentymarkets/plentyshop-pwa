@@ -1,13 +1,13 @@
 <template>
   <nav data-testid="breadcrumbs" class="inline-flex items-center text-sm font-normal">
     <ol class="flex w-auto leading-none group @md:flex-wrap">
-      <li class="flex items-center @sm:hidden text-neutral-500 z-9">
+      <li class="flex items-center @sm:hidden text-neutral-500 z-overlap">
         <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
           <SfDropdown
             v-model="dropdownOpened"
             strategy="absolute"
             placement="bottom-start"
-            class="z-[2]"
+            class="z-overlap"
             @update:model-value="close"
           >
             <template #trigger>
