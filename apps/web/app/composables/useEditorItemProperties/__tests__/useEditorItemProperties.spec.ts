@@ -3,7 +3,7 @@ import { useEditorItemProperties } from '~/composables/useEditorItemProperties/u
 import {
   mockGroup1,
   mockGroup2,
-  mockGroups,
+  mockRawGroups,
   mockProperty1,
   mockProperty2,
   mockProperty3,
@@ -11,13 +11,14 @@ import {
 } from './useEditorItemProperties.mocks';
 
 const mockClipboardWriteText = vi.fn();
+const mockNotificationSend = vi.fn();
 
 mockNuxtImport('useI18n', () => () => ({
   locale: ref('en'),
 }));
 
 mockNuxtImport('useNotification', () => () => ({
-  send: vi.fn(),
+  send: mockNotificationSend,
 }));
 
 mockNuxtImport('useSdk', () => () => ({
@@ -26,11 +27,23 @@ mockNuxtImport('useSdk', () => () => ({
   },
 }));
 
-mockNuxtImport('onMounted', () => vi.fn());
+mockNuxtImport('onMounted', () => (callback: () => unknown) => callback());
+
+const flushPromises = async () => {
+  await Promise.resolve();
+  await Promise.resolve();
+};
+
+const initComposable = async () => {
+  const composable = useEditorItemProperties();
+  await flushPromises();
+  return composable;
+};
 
 describe('useEditorItemProperties', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockGetItemProperties.mockResolvedValue({ data: mockRawGroups });
     vi.stubGlobal('navigator', { clipboard: { writeText: mockClipboardWriteText } });
   });
 
@@ -39,108 +52,107 @@ describe('useEditorItemProperties', () => {
   });
 
   describe('getGroupName', () => {
-    it('should return the group name', () => {
-      const { getGroupName } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      expect(getGroupName(mockGroup1)).toBe('Appearance');
+    it('should return the group name', async () => {
+      const { getGroupName, filteredGroups } = await initComposable();
+      const firstGroup = filteredGroups.value[0];
+      expect(firstGroup).toBeDefined();
+      expect(getGroupName(firstGroup!)).toBe('Appearance');
     });
   });
 
   describe('getPropName', () => {
-    it('should return the property name', () => {
-      const { getPropName } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should return the property name', async () => {
+      const { getPropName } = await initComposable();
       expect(getPropName(mockProperty1)).toBe('Color');
     });
-    it('should return the fallback missing translation message', () => {
-      const { getPropName } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should return the fallback missing translation message', async () => {
+      const { getPropName } = await initComposable();
       expect(getPropName(mockProperty3)).toBe('Missing translation for id: 30');
     });
   });
 
   describe('getPropPlaceholder', () => {
-    it('should return {{value}} for any property', () => {
-      const { getPropPlaceholder } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should return {{value}} for any property', async () => {
+      const { getPropPlaceholder } = await initComposable();
       expect(getPropPlaceholder(mockProperty1)).toBe('{{value}}');
       expect(getPropPlaceholder(mockProperty2)).toBe('{{value}}');
     });
   });
 
   describe('filteredGroups', () => {
-    it('should return all groups when search query is empty', () => {
-      const { filteredGroups } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      expect(filteredGroups.value).toHaveLength(mockGroups.length);
+    it('should return all groups when search query is empty', async () => {
+      const { filteredGroups } = await initComposable();
+      expect(filteredGroups.value).toHaveLength(mockRawGroups.length);
     });
-    it('should filter properties by name within a group', () => {
-      const { filteredGroups, searchQuery } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should filter properties by name within a group', async () => {
+      const { filteredGroups, searchQuery } = await initComposable();
       searchQuery.value = 'color';
       expect(filteredGroups.value).toHaveLength(1);
       expect(filteredGroups.value[0]!.id).toBe(mockGroup1.id);
       expect(filteredGroups.value[0]!.properties).toHaveLength(1);
       expect(filteredGroups.value[0]!.properties[0]!.id).toBe(mockProperty1.id);
     });
-    it('should include a group when its name matches even if no properties match', () => {
-      const { filteredGroups, searchQuery } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should include a group when its name matches even if no properties match', async () => {
+      const { filteredGroups, searchQuery } = await initComposable();
       searchQuery.value = 'technical';
       expect(filteredGroups.value).toHaveLength(1);
       expect(filteredGroups.value[0]!.id).toBe(mockGroup2.id);
     });
-    it('should return an empty array when no groups match the query', () => {
-      const { filteredGroups, searchQuery } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should return an empty array when no groups match the query', async () => {
+      const { filteredGroups, searchQuery } = await initComposable();
       searchQuery.value = 'zzznomatch';
       expect(filteredGroups.value).toHaveLength(0);
     });
   });
 
   describe('toggleGroup', () => {
-    it('should add a group id to openGroups when it is closed', () => {
-      const { openGroups, toggleGroup } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should add a group id to openGroups when it is closed', async () => {
+      const { openGroups, toggleGroup } = await initComposable();
       openGroups.value = [];
       toggleGroup(mockGroup1.id);
       expect(openGroups.value).toContain(mockGroup1.id);
     });
-    it('should remove a group id from openGroups when it is open', () => {
-      const { openGroups, toggleGroup } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should remove a group id from openGroups when it is open', async () => {
+      const { openGroups, toggleGroup } = await initComposable();
       openGroups.value = [mockGroup1.id];
       toggleGroup(mockGroup1.id);
       expect(openGroups.value).not.toContain(mockGroup1.id);
     });
-    it('should expand all matching groups when search query is set', async () => {
-      const { openGroups, searchQuery } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      openGroups.value = [];
+    it('should keep open groups unchanged when search query is set', async () => {
+      const { openGroups, searchQuery } = await initComposable();
+      openGroups.value = [mockGroup1.id];
       searchQuery.value = 'color';
-      await nextTick();
-      expect(openGroups.value.length).toBeGreaterThan(0);
+      expect(openGroups.value).toEqual([mockGroup1.id]);
     });
   });
 
   describe('selectionCount', () => {
-    it('should return 0 when nothing is selected', () => {
-      const { selectionCount } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should return 0 when nothing is selected', async () => {
+      const { selectionCount } = await initComposable();
       expect(selectionCount.value).toBe(0);
     });
-    it('should count a selected property name as 1', () => {
-      const { selectionCount, selection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should count a selected property name as 1', async () => {
+      const { selectionCount, selection } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: false };
       expect(selectionCount.value).toBe(1);
     });
-    it('should count a selected property value as 1', () => {
-      const { selectionCount, selection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should count a selected property value as 1', async () => {
+      const { selectionCount, selection } = await initComposable();
       selection.value[mockProperty1.id] = { name: false, value: true };
       expect(selectionCount.value).toBe(1);
     });
-    it('should count name and value selections independently', () => {
-      const { selectionCount, selection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should count name and value selections independently', async () => {
+      const { selectionCount, selection } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: true };
       expect(selectionCount.value).toBe(2);
     });
-    it('should count a selected group name as 1', () => {
-      const { selectionCount, groupSelection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should count a selected group name as 1', async () => {
+      const { selectionCount, groupSelection } = await initComposable();
       groupSelection.value[mockGroup1.id] = { name: true };
       expect(selectionCount.value).toBe(1);
     });
-    it('should sum property and group selections', () => {
-      const { selectionCount, selection, groupSelection } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-      });
+    it('should sum property and group selections', async () => {
+      const { selectionCount, selection, groupSelection } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: true };
       groupSelection.value[mockGroup1.id] = { name: true };
       expect(selectionCount.value).toBe(3);
@@ -148,18 +160,18 @@ describe('useEditorItemProperties', () => {
   });
 
   describe('toggleSelection', () => {
-    it('should initialize a selection entry when none exists and set name to true', () => {
-      const { selection, toggleSelection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should initialize a selection entry when none exists and set name to true', async () => {
+      const { selection, toggleSelection } = await initComposable();
       toggleSelection(mockProperty1.id, 'name', true);
       expect(selection.value[mockProperty1.id]).toEqual({ name: true, value: false });
     });
-    it('should set the value field independently', () => {
-      const { selection, toggleSelection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should set the value field independently', async () => {
+      const { selection, toggleSelection } = await initComposable();
       toggleSelection(mockProperty1.id, 'value', true);
       expect(selection.value[mockProperty1.id]).toEqual({ name: false, value: true });
     });
-    it('should update an existing selection entry', () => {
-      const { selection, toggleSelection } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should update an existing selection entry', async () => {
+      const { selection, toggleSelection } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: false };
       toggleSelection(mockProperty1.id, 'name', false);
       expect(selection.value[mockProperty1.id]!.name).toBe(false);
@@ -167,17 +179,13 @@ describe('useEditorItemProperties', () => {
   });
 
   describe('toggleGroupItemSelection', () => {
-    it('should initialize a group selection entry and set name to true', () => {
-      const { groupSelection, toggleGroupItemSelection } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-      });
+    it('should initialize a group selection entry and set name to true', async () => {
+      const { groupSelection, toggleGroupItemSelection } = await initComposable();
       toggleGroupItemSelection(mockGroup1.id, 'name', true);
       expect(groupSelection.value[mockGroup1.id]).toEqual({ name: true });
     });
-    it('should uncheck an existing group selection', () => {
-      const { groupSelection, toggleGroupItemSelection } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-      });
+    it('should uncheck an existing group selection', async () => {
+      const { groupSelection, toggleGroupItemSelection } = await initComposable();
       groupSelection.value[mockGroup1.id] = { name: true };
       toggleGroupItemSelection(mockGroup1.id, 'name', false);
       expect(groupSelection.value[mockGroup1.id]!.name).toBe(false);
@@ -185,82 +193,49 @@ describe('useEditorItemProperties', () => {
   });
 
   describe('insertSelected', () => {
-    it('should not call onInsert when nothing is selected', () => {
-      const onInsert = vi.fn();
-      const { insertSelected } = useEditorItemProperties({ externalGroups: () => mockGroups, onInsert });
-      insertSelected();
-      expect(onInsert).not.toHaveBeenCalled();
-    });
-    it('should emit the selected property name as a token', () => {
-      const onInsert = vi.fn();
-      const { selection, insertSelected } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-        onInsert,
-      });
+    it('should return selected property name as a token', async () => {
+      const { selection, insertSelected } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: false };
-      insertSelected();
-      expect(onInsert).toHaveBeenCalledWith(['Color']);
+      expect(insertSelected()).toEqual(['Color']);
     });
-    it('should emit the {{value}} placeholder as a token', () => {
-      const onInsert = vi.fn();
-      const { selection, insertSelected } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-        onInsert,
-      });
+    it('should return the {{value}} placeholder as a token', async () => {
+      const { selection, insertSelected } = await initComposable();
       selection.value[mockProperty1.id] = { name: false, value: true };
-      insertSelected();
-      expect(onInsert).toHaveBeenCalledWith(['{{value}}']);
+      expect(insertSelected()).toEqual(['{{value}}']);
     });
-    it('should emit the group name before its property tokens', () => {
-      const onInsert = vi.fn();
-      const { selection, groupSelection, insertSelected } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-        onInsert,
-      });
+    it('should return the group name before its property tokens', async () => {
+      const { selection, groupSelection, insertSelected } = await initComposable();
       groupSelection.value[mockGroup1.id] = { name: true };
       selection.value[mockProperty1.id] = { name: true, value: false };
-      insertSelected();
-      expect(onInsert).toHaveBeenCalledWith(['Appearance', 'Color']);
+      expect(insertSelected()).toEqual(['Appearance', 'Color']);
     });
-    it('should copy the tokens to the clipboard', () => {
-      const { selection, insertSelected } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should copy the tokens to the clipboard', async () => {
+      const { selection, insertSelected } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: false };
       insertSelected();
       expect(mockClipboardWriteText).toHaveBeenCalledWith('Color');
     });
-    it('should not write to the clipboard when nothing is selected', () => {
-      const { insertSelected } = useEditorItemProperties({ externalGroups: () => mockGroups });
+    it('should not write to the clipboard when nothing is selected', async () => {
+      const { insertSelected } = await initComposable();
       insertSelected();
       expect(mockClipboardWriteText).not.toHaveBeenCalled();
     });
-    it('should call onClose after a successful insert', () => {
-      const onInsert = vi.fn();
-      const onClose = vi.fn();
-      const { selection, insertSelected } = useEditorItemProperties({
-        externalGroups: () => mockGroups,
-        onInsert,
-        onClose,
-      });
-      selection.value[mockProperty1.id] = { name: true, value: false };
-      insertSelected();
-      expect(onClose).toHaveBeenCalledOnce();
-    });
-    it('should not call onClose when nothing is selected', () => {
-      const onClose = vi.fn();
-      const { insertSelected } = useEditorItemProperties({ externalGroups: () => mockGroups, onClose });
-      insertSelected();
-      expect(onClose).not.toHaveBeenCalled();
-    });
   });
 
-  describe('externalGroups', () => {
-    it('should use external groups when provided', () => {
-      const { filteredGroups } = useEditorItemProperties({ externalGroups: () => mockGroups });
-      expect(filteredGroups.value).toHaveLength(mockGroups.length);
+  describe('fetching', () => {
+    it('should fetch item properties from the SDK on mounted', async () => {
+      await initComposable();
+      expect(mockGetItemProperties).toHaveBeenCalledOnce();
     });
-    it('should not trigger an SDK fetch when externalGroups is provided', () => {
-      useEditorItemProperties({ externalGroups: () => mockGroups });
-      expect(mockGetItemProperties).not.toHaveBeenCalled();
+
+    it('should send a notification when fetching fails', async () => {
+      mockGetItemProperties.mockRejectedValueOnce(new Error('Network error'));
+      await initComposable();
+
+      expect(mockNotificationSend).toHaveBeenCalledWith({
+        message: 'Could not load item properties.',
+        type: 'negative',
+      });
     });
   });
 
