@@ -40,7 +40,6 @@ export const mockGroup2: ApiGroup = {
 
 export const mockGroups: ApiGroup[] = [mockGroup1, mockGroup2];
 
-// Raw SDK response format (ItemPropertyGroup with locale maps)
 const mockRawProperty1: ItemProperty = {
   id: 10,
   cast: 'text',
