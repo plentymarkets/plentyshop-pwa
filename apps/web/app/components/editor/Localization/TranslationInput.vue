@@ -17,7 +17,7 @@
     <SfTooltip
       v-show="isDefaultValue"
       :label="getEditorTranslation('default-tooltip')"
-      class="top-1 right-0 h-8 z-10 !absolute hidden group-hover:block"
+      class="top-1 right-0 h-8 z-dropdown !absolute hidden group-hover:block"
       strategy="absolute"
       :show-arrow="true"
       placement="right"
@@ -29,7 +29,7 @@
     <SfTooltip
       v-show="hasCustomValue"
       :label="getEditorTranslation('revert-to-default')"
-      class="right-0 z-10 !absolute hidden group-hover:block"
+      class="right-0 z-dropdown !absolute hidden group-hover:block"
       strategy="absolute"
       :show-arrow="true"
       placement="right"

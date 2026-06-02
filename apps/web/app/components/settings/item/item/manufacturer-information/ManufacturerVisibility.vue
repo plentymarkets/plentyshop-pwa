@@ -2,7 +2,7 @@
   <div class="py-2 space-y-3">
     <div class="flex justify-between items-center mb-2 gap-2">
       <UiFormLabel>{{ getEditorTranslation('label') }}</UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'left'" class="z-[9999]">
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'left'" class="z-max">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>

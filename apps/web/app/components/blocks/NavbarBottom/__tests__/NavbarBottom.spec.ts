@@ -42,7 +42,7 @@ describe('blocks/NavbarBottom.vue', () => {
     expect(nav.classes()).toContain('fixed');
     expect(nav.classes()).toContain('bottom-0');
     expect(nav.classes()).toContain('left-0');
-    expect(nav.classes()).toContain('z-10');
+    expect(nav.classes()).toContain('z-sticky');
     expect(nav.classes()).toContain('w-full');
   });
 

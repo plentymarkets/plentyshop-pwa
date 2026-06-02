@@ -1,35 +1,10 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
-import type { ComputedRef, Ref } from 'vue';
-
-export interface ItemPropertyLocaleMap {
-  [locale: string]: string | null;
-}
-
-export interface ItemProperty {
-  id: number;
-  cast: string;
-  names: ItemPropertyLocaleMap;
-  descriptions: ItemPropertyLocaleMap;
-}
-
-export interface ItemPropertyGroup {
-  id: number;
-  position: number;
-  names: ItemPropertyLocaleMap;
-  descriptions: ItemPropertyLocaleMap;
-  properties: ItemProperty[];
-}
+export type { ItemPropertyGroup, ItemProperty, ItemPropertyLocaleMap } from '@plentymarkets/shop-api';
 
 export interface PropSelection {
   name: boolean;
   value: boolean;
 }
-
-export type UseEditorItemPropertiesOptions = {
-  externalGroups?: () => ApiGroup[] | undefined;
-  onInsert?: (tokens: string[]) => void;
-  onClose?: () => void;
-};
 
 export interface UseEditorItemProperties {
   loading: Ref<boolean>;
@@ -45,5 +20,5 @@ export interface UseEditorItemProperties {
   toggleGroup: (id: number) => void;
   toggleSelection: (propId: number, field: 'name' | 'value', checked: boolean) => void;
   toggleGroupItemSelection: (groupId: number, field: 'name', checked: boolean) => void;
-  insertSelected: () => void;
+  insertSelected: () => string[];
 }

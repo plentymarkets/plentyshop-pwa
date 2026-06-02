@@ -160,14 +160,14 @@ const thumbSlideClass = (index: number) =>
 
 const prevThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-raised rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
 
 const nextThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-raised rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
