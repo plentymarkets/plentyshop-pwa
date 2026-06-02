@@ -15,7 +15,7 @@
 
     <div
       v-if="isOpen"
-      class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-editor-border z-50"
+      class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-editor-border z-dropdown"
       @click.stop
     >
       <div class="px-3 py-2.5 border-b border-editor-border flex items-center justify-between gap-2">
