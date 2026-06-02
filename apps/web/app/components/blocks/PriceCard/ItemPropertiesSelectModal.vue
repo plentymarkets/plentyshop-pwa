@@ -3,11 +3,7 @@
     <SfModal
       :model-value="true"
       class="!w-[420px] !max-w-[90vw] !max-h-[90vh] !p-0 !rounded-xl !border !border-neutral-200 !shadow-md flex flex-col !bg-white !absolute !top-20 !left-1/2 !-translate-x-1/2 !m-0 !overflow-hidden"
-      @update:model-value="
-        (isOpen) => {
-          if (!isOpen) close();
-        }
-      "
+      @update:model-value="handleModalChange"
     >
       <div class="flex w-full items-center justify-between px-5 py-4 border-b border-neutral-200">
         <h2 class="typography-headline-4 font-medium">{{ getEditorTranslation('modal-title') }}</h2>
@@ -51,8 +47,8 @@
           {{ getEditorTranslation('no-results', { query: searchQuery }) }}
         </div>
 
-        <template v-for="(group, gi) in filteredGroups" :key="group.id">
-          <hr v-if="gi > 0" class="border-neutral-100" />
+        <template v-for="(group, groupIndex) in filteredGroups" :key="group.id">
+          <hr v-if="groupIndex > 0" class="border-neutral-100" />
 
           <div>
             <div
@@ -81,7 +77,7 @@
                   >
                     <SfCheckbox
                       :model-value="groupSelection[group.id]?.name ?? false"
-                      @update:model-value="(v) => toggleGroupItemSelection(group.id, 'name', !!v)"
+                      @update:model-value="(value) => toggleGroupItemSelection(group.id, 'name', !!value)"
                     />
                     <span
                       class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0"
@@ -104,7 +100,7 @@
                   >
                     <SfCheckbox
                       :model-value="selection[prop.id]?.name ?? false"
-                      @update:model-value="(v) => toggleSelection(prop.id, 'name', !!v)"
+                      @update:model-value="(value) => toggleSelection(prop.id, 'name', !!value)"
                     />
                     <span
                       class="text-xs font-semibold uppercase tracking-wider text-neutral-400 min-w-[36px] flex-shrink-0"
@@ -173,7 +169,6 @@ import {
   SfIconHelp,
   SfModal,
 } from '@storefront-ui/vue';
-import { useEditorItemProperties } from '~/composables/useEditorItemProperties';
 
 const emit = defineEmits<{
   insert: [tokens: string[]];
@@ -204,6 +199,9 @@ const handleInsert = () => {
     emit('close');
   }
 };
+const handleModalChange = (isOpen: boolean) => {
+  if (!isOpen) close();
+};
 
 const close = () => emit('close');
 watch(
@@ -227,8 +225,6 @@ watch(
     "close-modal-aria": "Close modal",
     "search-placeholder": "Search placeholders...",
     "loading-properties": "Loading properties...",
-    "load-properties-error": "Could not load item properties. Showing fallback data.",
-    "missing-translation": "Missing translation for id: {id}",
     "no-results": "No properties found for \"{query}\"",
     "no-items-selected": "No items selected",
     "items-selected": "{count} item(s) selected",
@@ -244,8 +240,6 @@ watch(
     "close-modal-aria": "Close modal",
     "search-placeholder": "Search placeholders...",
     "loading-properties": "Properties werden geladen...",
-    "load-properties-error": "Eigenschaften konnten nicht geladen werden. Fallback-Daten werden angezeigt.",
-    "missing-translation": "Missing translation for id: {id}",
     "no-results": "No properties found for \"{query}\"",
     "no-items-selected": "No items selected",
     "items-selected": "{count} item(s) selected",

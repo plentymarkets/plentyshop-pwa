@@ -1,24 +1,5 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
-import type { ComputedRef, Ref } from 'vue';
-
-export interface ItemPropertyLocaleMap {
-  [locale: string]: string | null;
-}
-
-export interface ItemProperty {
-  id: number;
-  cast: string;
-  names: ItemPropertyLocaleMap;
-  descriptions: ItemPropertyLocaleMap;
-}
-
-export interface ItemPropertyGroup {
-  id: number;
-  position: number;
-  names: ItemPropertyLocaleMap;
-  descriptions: ItemPropertyLocaleMap;
-  properties: ItemProperty[];
-}
+export type { ItemPropertyGroup, ItemProperty, ItemPropertyLocaleMap } from '@plentymarkets/shop-api';
 
 export interface PropSelection {
   name: boolean;
