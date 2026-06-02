@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center gap-1.5 flex-shrink-0">
-    <div class="relative inline-block z-[500]">
+    <div class="relative inline-block z-toast">
       <SfDropdown v-model="isBlockTypeOpen" placement="bottom-start" @update:model-value="onBlockTypeDropdownToggle">
         <template #trigger>
           <button
@@ -29,7 +29,7 @@
         </template>
 
         <ul
-          class="-mt-1 z-[300] w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
+          class="-mt-1 z-popover w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
           role="listbox"
           aria-label="Text style"
           data-testid="rte-heading-options"
@@ -56,7 +56,7 @@
       </SfDropdown>
     </div>
 
-    <div class="relative inline-block z-[500]">
+    <div class="relative inline-block z-toast">
       <SfDropdown v-model="isFontSizeOpen" placement="bottom-start" @update:model-value="onFontSizeDropdownToggle">
         <template #trigger>
           <button
@@ -85,7 +85,7 @@
         </template>
 
         <ul
-          class="-mt-1 z-[300] max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
+          class="-mt-1 z-popover max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
           role="listbox"
           aria-label="Font size"
           data-testid="rte-font-size-options"

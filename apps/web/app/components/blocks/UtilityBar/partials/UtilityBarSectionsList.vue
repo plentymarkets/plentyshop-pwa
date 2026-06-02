@@ -45,7 +45,7 @@
 
                 <div
                   v-if="openSectionMenuIndex === index"
-                  class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-50"
+                  class="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border z-dropdown"
                   @click.stop
                 >
                   <div class="px-4 py-3 border-b">

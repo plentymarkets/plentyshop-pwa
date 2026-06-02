@@ -5,7 +5,7 @@
     tag="section"
     role="dialog"
     class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto page-modal font-editor"
-    overlay-classes="z-[1000]"
+    overlay-classes="z-modal-backdrop"
   >
     <header class="flex items-center justify-between mb-2">
       <div class="flex items-center text-xl font-bold">Add page</div>

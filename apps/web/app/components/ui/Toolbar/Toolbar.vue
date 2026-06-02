@@ -98,7 +98,9 @@ const toggleEdit = () => {
   }
 };
 
-const drawerZIndexClass = computed(() => (isDrawerOpen.value ? 'lg:z-20 md:z-10' : 'md:z-20'));
+const drawerZIndexClass = computed(() =>
+  isDrawerOpen.value ? 'lg:z-editor-drawer md:z-editor-toolbar' : 'md:z-editor-drawer',
+);
 
 watch(
   () => data.value,

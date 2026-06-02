@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    class="@max-sm:flex @max-sm:flex-col @max-sm:justify-between z-50 w-full @xl:w-3/5 shadow-2xl p-3 bg-white rounded overflow-auto fixed @xl:right-2 bottom-0 @max-md:bottom-[3.9rem] end-0 @sm:top-auto"
+    class="@max-sm:flex @max-sm:flex-col @max-sm:justify-between z-cookiebar w-full @xl:w-3/5 shadow-2xl p-3 bg-white rounded overflow-auto fixed @xl:right-2 bottom-0 @max-md:bottom-[3.9rem] end-0 @sm:top-auto"
   >
     <div v-if="!furtherSettingsOn">
       <!-- cookie info -->
@@ -151,7 +151,10 @@
   </div>
 
   <!-- Button to Open Cookie Tab -->
-  <div v-if="!visible" class="z-10 h-auto w-12 fixed bottom-[4.3rem] @md:bottom-2 left-2 @xl:left-auto @xl:right-2">
+  <div
+    v-if="!visible"
+    class="z-cookiebar h-auto w-12 fixed bottom-[4.3rem] @md:bottom-2 left-2 @xl:left-auto @xl:right-2"
+  >
     <SfTooltip :label="t('CookieBar.Cookie Settings')" placement="left">
       <UiButton
         variant="secondary"
