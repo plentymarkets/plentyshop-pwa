@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="position.opacity > 0"
-    class="fixed z-[202] w-3 h-3 bg-white pointer-events-none"
+    class="fixed z-popover w-3 h-3 bg-white pointer-events-none"
     :class="
       position.arrowDirection === 'down'
         ? 'border-b border-r border-editor-border'

@@ -98,7 +98,11 @@
           class="relative @md:sticky mt-4 @md:top-20 h-fit"
           :class="{ 'pointer-events-none opacity-50': offerLoading }"
         >
-          <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+          <SfLoaderCircular
+            v-if="offerLoading"
+            class="absolute top-[130px] right-0 left-0 m-auto z-loader"
+            size="2xl"
+          />
           <div class="border rounded-md p-4 shadow-lg">
             <div class="flex justify-between mb-4">
               <p class="font-bold text-xl">{{ t('common.labels.orderSummary') }}</p>
