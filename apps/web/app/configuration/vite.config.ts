@@ -30,7 +30,6 @@ export const FailOnForbiddenDataInPublicFolderPlugin = {
       console.warn('Skipping public/ folder entries check as FAIL_BUILD_ON_FORBIDDEN_DATA_IN_PUBLIC_FOLDER is not set.');
       return;
     }
-    }
     const publicDir = resolve(__dirname, '../../public');
     if (!existsSync(publicDir)) return;
     const unexpected = readdirSync(publicDir).filter((e) => e !== '_nuxt-plenty');
