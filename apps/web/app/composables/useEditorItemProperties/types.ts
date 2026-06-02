@@ -25,12 +25,6 @@ export interface PropSelection {
   value: boolean;
 }
 
-export type UseEditorItemPropertiesOptions = {
-  externalGroups?: () => ApiGroup[] | undefined;
-  onInsert?: (tokens: string[]) => void;
-  onClose?: () => void;
-};
-
 export interface UseEditorItemProperties {
   loading: Ref<boolean>;
   searchQuery: Ref<string>;
@@ -45,5 +39,5 @@ export interface UseEditorItemProperties {
   toggleGroup: (id: number) => void;
   toggleSelection: (propId: number, field: 'name' | 'value', checked: boolean) => void;
   toggleGroupItemSelection: (groupId: number, field: 'name', checked: boolean) => void;
-  insertSelected: () => void;
+  insertSelected: () => string[];
 }

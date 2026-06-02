@@ -1,6 +1,5 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
 import type {
-  UseEditorItemPropertiesOptions,
   UseEditorItemProperties,
   PropSelection,
   ItemPropertyLocaleMap,
@@ -33,9 +32,7 @@ const translateGroup = (group: ItemPropertyGroup, locale: string): ApiGroup => (
 
 const itemPropertyGroups = ref<ApiGroup[]>([]);
 
-export function useEditorItemProperties(options: UseEditorItemPropertiesOptions = {}): UseEditorItemProperties {
-  const { externalGroups, onInsert, onClose } = options;
-
+export function useEditorItemProperties(): UseEditorItemProperties {
   const { locale } = useI18n();
   const requestedLocale = computed(() => locale.value || 'en');
 
@@ -49,10 +46,7 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
   const getPropName = (prop: ItemPropertyTranslated): string => prop.name;
   const getPropPlaceholder = (_prop: ItemPropertyTranslated): string => '{{value}}';
 
-  const sourceGroups = computed<ApiGroup[]>(() => {
-    const externalGroupList = externalGroups?.();
-    return externalGroupList?.length ? externalGroupList : itemPropertyGroups.value;
-  });
+  const sourceGroups = computed<ApiGroup[]>(() => itemPropertyGroups.value);
 
   const filteredGroups = computed<ApiGroup[]>(() => {
     const query = searchQuery.value.toLowerCase().trim();
@@ -80,18 +74,6 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
     return propCount + groupCount;
   });
 
-  watch(
-    () => sourceGroups.value[0]?.id,
-    (firstId) => {
-      if (firstId !== undefined && openGroups.value.length === 0) openGroups.value = [firstId];
-    },
-    { immediate: true },
-  );
-
-  watch(searchQuery, (query) => {
-    if (query) openGroups.value = filteredGroups.value.map((group) => group.id);
-  });
-
   const toggleGroup = (id: number) => {
     const groupIndex = openGroups.value.indexOf(id);
     if (groupIndex === -1) {
@@ -111,7 +93,7 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
     groupSelection.value[groupId][field] = checked;
   };
 
-  const insertSelected = () => {
+  const insertSelected = (): string[] => {
     const tokens: string[] = [];
 
     for (const group of sourceGroups.value) {
@@ -124,11 +106,11 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
       }
     }
 
-    if (tokens.length === 0) return;
+    if (tokens.length > 0) {
+      navigator.clipboard?.writeText(tokens.join(' '));
+    }
 
-    navigator.clipboard?.writeText(tokens.join(' '));
-    onInsert?.(tokens);
-    onClose?.();
+    return tokens;
   };
 
   const fetchItemProperties = async () => {
@@ -146,7 +128,6 @@ export function useEditorItemProperties(options: UseEditorItemPropertiesOptions 
   };
 
   onMounted(async () => {
-    if (externalGroups?.()?.length) return;
     try {
       await fetchItemProperties();
     } catch {

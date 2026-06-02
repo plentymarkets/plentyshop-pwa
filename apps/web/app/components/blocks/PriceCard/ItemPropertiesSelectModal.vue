@@ -1,14 +1,22 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-start justify-center bg-black/45 pt-12" @click.self="close">
-    <div
-      class="bg-white rounded-xl border border-neutral-200 w-full max-w-[420px] flex flex-col max-h-[90vh] shadow-md"
+  <UiOverlay :visible="true">
+    <SfModal
+      :model-value="true"
+      class="!w-[420px] !max-w-[90vw] !max-h-[90vh] !p-0 !rounded-xl !border !border-neutral-200 !shadow-md flex flex-col !bg-white !absolute !top-20 !left-1/2 !-translate-x-1/2 !m-0 !overflow-hidden"
+      @update:model-value="
+        (isOpen) => {
+          if (!isOpen) close();
+        }
+      "
     >
-      <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
+      <div class="flex w-full items-center justify-between px-5 py-4 border-b border-neutral-200">
         <h2 class="typography-headline-4 font-medium">{{ getEditorTranslation('modal-title') }}</h2>
+
         <div class="flex items-center gap-1">
           <SfTooltip :label="getEditorTranslation('info-tooltip')" class="max-w-[280px]" placement="bottom-end">
             <SfIconHelp class="cursor-pointer" size="sm" />
           </SfTooltip>
+
           <UiButton
             :aria-label="getEditorTranslation('close-modal-aria')"
             size="sm"
@@ -21,8 +29,7 @@
           </UiButton>
         </div>
       </div>
-
-      <div class="px-5 py-3 border-b border-neutral-200">
+      <div class="w-full px-5 py-3 border-b border-neutral-200">
         <SfInput v-model="searchQuery" :placeholder="getEditorTranslation('search-placeholder')" size="sm">
           <template #prefix>
             <SfIconSearch class="text-neutral-400" size="sm" />
@@ -35,7 +42,7 @@
         </SfInput>
       </div>
 
-      <div class="overflow-y-auto flex-1">
+      <div class="w-full overflow-y-auto flex-1">
         <div v-if="isLoading" class="px-5 py-8 text-center typography-text-sm text-neutral-400">
           {{ getEditorTranslation('loading-properties') }}
         </div>
@@ -134,7 +141,7 @@
         </template>
       </div>
 
-      <div class="px-5 py-3 border-t border-neutral-200 flex items-center justify-between gap-3">
+      <div class="w-full px-5 py-3 border-t border-neutral-200 flex items-center justify-between gap-3">
         <span class="typography-text-xs text-neutral-400">
           {{
             selectionCount === 0
@@ -146,13 +153,13 @@
           <UiButton size="sm" type="button" variant="secondary" @click="close">
             {{ getEditorTranslation('cancel') }}
           </UiButton>
-          <UiButton :disabled="selectionCount === 0" size="sm" type="button" variant="primary" @click="insertSelected">
+          <UiButton :disabled="selectionCount === 0" size="sm" type="button" variant="primary" @click="handleInsert">
             {{ getEditorTranslation('insert') }}
           </UiButton>
         </div>
       </div>
-    </div>
-  </div>
+    </SfModal>
+  </UiOverlay>
 </template>
 
 <script lang="ts" setup>
@@ -164,17 +171,13 @@ import {
   SfIconChevronRight,
   SfTooltip,
   SfIconHelp,
+  SfModal,
 } from '@storefront-ui/vue';
-import type { ApiGroup } from './types';
 import { useEditorItemProperties } from '~/composables/useEditorItemProperties';
-
-const props = defineProps<{
-  close: () => void;
-  groups?: ApiGroup[];
-}>();
 
 const emit = defineEmits<{
   insert: [tokens: string[]];
+  close: [];
 }>();
 
 const {
@@ -192,11 +195,29 @@ const {
   toggleSelection,
   toggleGroupItemSelection,
   insertSelected,
-} = useEditorItemProperties({
-  externalGroups: () => props.groups,
-  onInsert: (tokens) => emit('insert', tokens),
-  onClose: () => props.close(),
-});
+} = useEditorItemProperties();
+
+const handleInsert = () => {
+  const tokens = insertSelected();
+  if (tokens.length > 0) {
+    emit('insert', tokens);
+    emit('close');
+  }
+};
+
+const close = () => emit('close');
+watch(
+  () => filteredGroups.value.length,
+  (length) => {
+    if (length > 0 && openGroups.value.length === 0) {
+      const firstGroup = filteredGroups.value[0];
+      if (firstGroup) {
+        openGroups.value = [firstGroup.id];
+      }
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <i18n lang="json">
