@@ -238,6 +238,4 @@ describe('useEditorItemProperties', () => {
       });
     });
   });
-
 });
-
