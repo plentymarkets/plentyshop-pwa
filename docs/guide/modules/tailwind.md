@@ -14,7 +14,7 @@ You need to insert your module before the `@nuxtjs/tailwindcss` in the `modules`
 ## Prerequisites / Preparation
 
 This guide requires that you already have created a module.
-If you haven't created a module yet, you can follow the [How-to create a module](/guide/how-to/module/index.md) guide.
+If you haven't created a module yet, you can follow the [How-to create a module](/guide/modules/index.md) guide.
 
 Add the `@nuxtjs/tailwindcss` module to your module repository as a dev-dependency and to the `compilerOptions` types array in the `tsconfig.json`.
 
