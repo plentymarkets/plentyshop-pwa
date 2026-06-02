@@ -1,4 +1,4 @@
-import type { OrderSearchParams, Order, GetOrderError, ApiError} from '@plentymarkets/shop-api';
+import type { OrderSearchParams, Order, GetOrderError, ApiError } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-api';
 import type {
   ChangePaymentMethod,
