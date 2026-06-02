@@ -52,7 +52,7 @@ const handleRteClick = (event: MouseEvent) => {
   if (!anchor) return;
 
   const href = anchor.getAttribute('href');
-  if (!href || href.startsWith('/')) return;
+  if (!href || !href.startsWith('/')) return;
 
   event.preventDefault();
   router.push(href);

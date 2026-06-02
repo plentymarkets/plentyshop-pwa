@@ -31,11 +31,10 @@ export const handlePreviousRouteNavigation = (dependencies: NavigationDependenci
   return navTo(localePath(paths.home));
 };
 
+const INTERNAL_HREF_PATTERN = /^\/(?!\/)/;
+
 export const isInternalLink = (href: string, router: ReturnType<typeof useRouter>): boolean => {
-  try {
-    const resolved = router.resolve(href);
-    return resolved.matched.length > 0;
-  } catch {
-    return false;
-  }
+  if (!INTERNAL_HREF_PATTERN.test(href)) return false;
+  const resolved = router.resolve(href);
+  return resolved.matched.length > 0 && resolved.name !== 'error';
 };
