@@ -86,6 +86,22 @@
   </span>
 </div>
 
+                <div class="flex justify-between items-center py-1">
+  <span class="text-neutral-500 font-medium">Lagerbestand</span>
+  <span
+    v-if="(product as any)?.stock?.net !== undefined && (product as any)?.stock?.net !== null"
+    class="text-neutral-900 font-bold"
+  >
+    {{ (product as any).stock.net }}
+  </span>
+  <span
+    v-else
+    class="text-neutral-400 font-medium"
+  >
+    —
+  </span>
+</div>
+
               </div>
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
@@ -609,7 +625,7 @@ watch(
     // eslint-disable-next-line no-console
     // console.log('🔍 STOCK CHECK 🔍');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rawStock = (p as any)?.variation?.stock;
+    const rawStock = (p as any)?.stock;
     // eslint-disable-next-line no-console
     console.log('Raw Stock Object:', rawStock);
 
