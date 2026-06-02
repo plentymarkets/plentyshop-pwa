@@ -48,11 +48,14 @@ const renderedHtmlDescription = computed(() => {
 });
 
 const handleRteClick = (event: MouseEvent) => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
   const anchor = (event.target as HTMLElement).closest('a');
   if (!anchor) return;
 
   const href = anchor.getAttribute('href');
-  if (!href || !href.startsWith('/')) return;
+  if (!href || !isInternalLink(href, router)) return;
+  if (anchor.target === '_blank') return;
 
   event.preventDefault();
   router.push(href);
