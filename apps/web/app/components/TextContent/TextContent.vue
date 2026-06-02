@@ -39,9 +39,9 @@ const renderedHtmlDescription = computed(() => {
   const html = decodeHtmlEntities(props.text?.htmlDescription);
   if (!html) return '';
 
-  return html.replace(/href="([^"]+)"/g, (match, href) => {
+  return html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
     if (isInternalLink(href, router)) {
-      return `href="${localePath(href)}"`;
+      return `<a${before}href=${quote}${localePath(href)}${quote}`;
     }
     return match;
   });
@@ -56,7 +56,7 @@ const handleRteClick = (event: MouseEvent) => {
 
   const href = anchor.getAttribute('href');
   if (!href || !isInternalLink(href, router)) return;
-  if (anchor.target === '_blank') return;
+  if (anchor.target && anchor.target !== '_self') return;
 
   event.preventDefault();
   router.push(href);
