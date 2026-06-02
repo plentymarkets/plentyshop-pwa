@@ -177,4 +177,13 @@ MANUAL FIXES STILL NEEDED
 
 10. apps/web/app/components/ui/ImageSelectorModal/ImageSelectorModal.vue
     z-dropdown → z-modal-backdrop  (this is a modal backdrop)
+
+11. apps/web/app/components/Cookiebar/Cookiebar.vue
+    z-dropdown → z-cookiebar (floating element, not a dropdown)
+
+12. apps/web/app/components/editor/ColorPicker/ColorPicker.vue
+    z-max → z-picker (doesn't require escape hatch)
+
+13. apps/web/app/components/editor/RichTextEditor/IconEmojiPicker.vue
+    z-max → z-picker (doesn't require escape hatch)
 `);
