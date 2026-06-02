@@ -123,6 +123,15 @@ function walkTemplate(node, context) {
   for (const child of node.children ?? []) walkTemplate(child, context);
 }
 
+function isInWalkedTemplate(node) {
+  let current = node.parent;
+  while (current) {
+    if (current.type === 'VExpressionContainer') return true;
+    current = current.parent;
+  }
+  return false;
+}
+
 /** @type {import('eslint').Rule.RuleModule} */
 export const enforceZIndexTokens = {
   meta: {
@@ -145,6 +154,25 @@ export const enforceZIndexTokens = {
         if (!templateBody) return;
         for (const child of templateBody.children ?? []) {
           walkTemplate(child, context);
+        }
+      },
+
+      Literal(node) {
+        if (typeof node.value !== 'string') return;
+        if (isInWalkedTemplate(node)) return;
+        const violations = collectViolations(node.value);
+        for (const token of violations) {
+          context.report({ node, messageId: 'useZToken', data: { token } });
+        }
+      },
+
+      TemplateLiteral(node) {
+        if (isInWalkedTemplate(node)) return;
+        for (const quasi of node.quasis) {
+          const violations = collectViolations(quasi.value.raw);
+          for (const token of violations) {
+            context.report({ node: quasi, messageId: 'useZToken', data: { token } });
+          }
         }
       },
     };
