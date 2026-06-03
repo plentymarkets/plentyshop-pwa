@@ -52,8 +52,8 @@ const handleRteClick = (event: MouseEvent) => {
     return;
 
   const target = event.target;
-  if(!(target instanceof HTMLElement)) return;
-  
+  if (!(target instanceof HTMLElement)) return;
+
   const anchor = target.closest('a') as HTMLAnchorElement | null;
   if (!anchor) return;
 
