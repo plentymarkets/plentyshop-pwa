@@ -15,9 +15,6 @@ const config = {
         api: {
           url: process.env.API_ENDPOINT,
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
-          experimental: {
-            allowCacheControl: true,
-          },
         },
       },
       errorHandler: (error: any, req: any, res: any) => {
