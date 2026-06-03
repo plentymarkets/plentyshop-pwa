@@ -62,7 +62,7 @@
         {{ t('account.ordersAndReturns.changePaymentMethod.cancel') }}
       </UiButton>
       <UiButton
-        data-testid="quick-checkout-cart-button"
+        data-testid="change-payment-method-submit-button"
         size="lg"
         variant="primary"
         :disabled="!selectedPaymentMethodId || loading"
