@@ -68,6 +68,34 @@ const setInitialDataSSR: SetInitialData = async () => {
   return true;
 };
 
+const fetchCacheableInitData: SetInitialData = async () => {
+  const { setRobots } = useRobots();
+  const { setInitialData: setInitialAssetsData } = useCustomAssets();
+  const { setPattern } = usePriceFormatter();
+  const { setCategoryTree } = useCategoryTree();
+
+  try {
+    const { data } = await useAsyncData(() =>
+      useSdk().plentysystems.getInit({
+        exclude: { settings: true, session: true },
+      }),
+    );
+    if (data.value?.data) {
+      setInitialAssetsData(data.value.data.customAssets || []);
+      setCategoryTree(data.value.data.categories);
+
+      if (data.value.data.robots) {
+        setRobots(data.value.data.robots);
+      }
+      setPattern(data.value.data.currencyPattern);
+    }
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
+
+  return true;
+};
+
 /** Function for fetching all settings
  * @example
  * ``` ts
@@ -98,5 +126,6 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
     setInitialData,
     setInitialDataSSR,
     fetchSettings,
+    fetchCacheableInitData,
   };
 };

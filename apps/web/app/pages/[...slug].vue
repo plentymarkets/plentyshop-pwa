@@ -44,6 +44,7 @@ definePageMeta({
   type: 'category',
   isBlockified: true,
   identifier: 0,
+  cacheControl: getCacheControl(),
 });
 
 const breadcrumbs = computed(() => {
