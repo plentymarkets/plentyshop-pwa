@@ -5,7 +5,7 @@ const MAX_CACHE_SIZE = 50;
 
 export default defineNuxtPlugin({
   name: 'generate-color-palette',
-  dependsOn: ['init-initial-data'],
+  dependsOn: ['init-initial-data-server'],
   enforce: 'post',
   async setup() {
     const buildPalette = (colorType: string, baseColor?: string): Array<Shade & { type: string }> => {
