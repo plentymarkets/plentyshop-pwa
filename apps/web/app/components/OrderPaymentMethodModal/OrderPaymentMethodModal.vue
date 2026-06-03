@@ -10,7 +10,13 @@
         <span>{{ t('account.ordersAndReturns.changePaymentMethod.heading') }}</span>
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
-        <UiButton square variant="tertiary" :disabled="loading" @click="close()">
+        <UiButton
+          :aria-label="t('account.ordersAndReturns.changePaymentMethod.cancel')"
+          square
+          variant="tertiary"
+          :disabled="loading"
+          @click="close()"
+        >
           <SfIconClose />
         </UiButton>
       </div>
