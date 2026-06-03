@@ -51,7 +51,10 @@ const handleRteClick = (event: MouseEvent) => {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
     return;
 
-  const anchor = (event.target as HTMLElement).closest('a');
+  const target = event.target;
+  if(!(target instanceof HTMLElement)) return;
+  
+  const anchor = target.closest('a') as HTMLAnchorElement | null;
   if (!anchor) return;
 
   const href = anchor.getAttribute('href');
