@@ -27,12 +27,12 @@ const useOrderChangePaymentMethod = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Allow customers to change payment method afterwards",
-    "description": "Do you want to allow customers to change their payment method afterwards? This setting enables customers to modify their payment method after the checkout process."
+    "label": "Change Payment Method After Order",
+    "description": "Allow customers to change their payment method on the order confirmation page after placing an order."
   },
   "de": {
-    "label": "Allow customers to change payment method afterwards",
-    "description": "Do you want to allow customers to change their payment method afterwards? This setting enables customers to modify their payment method after the checkout process."
+    "label": "Change Payment Method After Order",
+    "description": "Allow customers to change their payment method on the order confirmation page after placing an order."
   }
 }
 </i18n>
