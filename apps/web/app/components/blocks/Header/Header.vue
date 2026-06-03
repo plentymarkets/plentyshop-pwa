@@ -102,7 +102,9 @@
                   enter-active-class="inline-block overflow-hidden transition-[max-width,opacity] duration-[250ms] ease-in"
                   enter-to-class="opacity-100 max-w-[10rem]"
                 >
-                  <span class="whitespace-nowrap inline-block overflow-hidden">{{ user?.firstName }}</span>
+                  <span v-if="user?.firstName" class="whitespace-nowrap inline-block overflow-hidden">{{
+                    user?.firstName
+                  }}</span>
                 </Transition>
               </UiButton>
             </template>

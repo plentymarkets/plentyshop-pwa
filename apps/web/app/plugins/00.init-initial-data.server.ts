@@ -1,5 +1,5 @@
 export default defineNuxtPlugin({
-  name: 'init-initial-data',
+  name: 'init-initial-data-server',
   async setup() {
     const route = useRoute();
     const { setInitialDataSSR, fetchSettings, fetchCacheableInitData } = useInitialSetup();

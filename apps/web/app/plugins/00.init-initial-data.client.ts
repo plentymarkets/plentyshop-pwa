@@ -1,5 +1,5 @@
 export default defineNuxtPlugin({
-  name: 'init-data-client',
+  name: 'init-initial-data-client',
   parallel: true,
   setup() {
     const route = useRoute();
