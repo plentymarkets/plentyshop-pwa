@@ -19,8 +19,8 @@ import { SfSwitch } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('enableOrderChangePaymentMethod');
 
 const useOrderChangePaymentMethod = computed({
-  get: () => !getSetting(),
-  set: (value) => updateSetting((!value).toString()),
+  get: () => !!getSetting(),
+  set: (value) => updateSetting((!!value).toString()),
 });
 </script>
 
