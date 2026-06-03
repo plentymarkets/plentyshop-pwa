@@ -125,7 +125,16 @@
       "orderNumber": "Order Number",
       "paymentSummary": {
         "heading": "Payment Summary",
-        "paymentStatus": "Payment status"
+        "paymentStatus": "Payment status",
+        "changePaymentMethod": "change"
+      },
+      "changePaymentMethod": {
+        "heading": "Change payment method",
+        "subHeading": "Here you can change the payment method for your order. The current payment method is {paymentMethod}.",
+        "success": "The payment method has been changed successfully.",
+        "change": "Change",
+        "cancel": "Cancel",
+        "notChangeableAfterHint": "After changing to this payment method, the payment method cannot be changed again."
       },
       "returnDate": "Return Date",
       "returnId": "Return-ID",
@@ -1271,7 +1280,11 @@
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
-      "softLoginFailed": "The provided data is invalid."
+      "softLoginFailed": "The provided data is invalid.",
+      "paymentMethodCantSwitch": "The payment method cannot be switched for this order.",
+      "paymentMethodNotExist": "The selected payment method does not exist.",
+      "paymentMethodSwitchFailed": "The payment method could not be switched. Please try again.",
+      "paymentMethodSwitchDisabled": "Switching the payment method is disabled."
     },
     "security": {
       "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page.",
