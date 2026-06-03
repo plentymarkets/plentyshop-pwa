@@ -3,7 +3,9 @@ export default defineNuxtPlugin({
   parallel: true,
   setup() {
     const route = useRoute();
-    if (route.meta.cacheControl) {
+    const isCloudfrontEnabled = useFeatureFlag('shopPwaEnableCloudfront', false);
+
+    if (route.meta.cacheControl && isCloudfrontEnabled.value) {
       useFetchSession().fetchSession();
     }
   },
