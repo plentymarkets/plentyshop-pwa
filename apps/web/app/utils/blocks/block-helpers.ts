@@ -40,6 +40,47 @@ const resolvePageBlocks = (
   return getDefaultPageBlocks(type, identifier);
 };
 
+export const removeBlockFromColumn = (parent: Block, targetUuid: string): boolean => {
+  if (!Array.isArray(parent.content)) {
+    return false;
+  }
+
+  const content = parent.content as Block[];
+  const idx = content.findIndex((block) => block.meta.uuid === targetUuid);
+  if (idx === -1) {
+    return false;
+  }
+
+  const removed = content[idx];
+  if (!removed) {
+    return false;
+  }
+
+  content.splice(idx, 1);
+
+  const cfg = parent.configuration as
+    | { columnWidths?: number[]; columnWidthsTablet?: number[]; columnWidthsMobile?: number[] }
+    | undefined;
+
+  if (cfg && Array.isArray(cfg.columnWidths)) {
+    const slot = removed.parent_slot ?? 0;
+    cfg.columnWidths.splice(slot, 1);
+
+    if (cfg.columnWidthsTablet) {
+      cfg.columnWidthsTablet.splice(slot, 1);
+    }
+
+    if (cfg.columnWidthsMobile) {
+      cfg.columnWidthsMobile.splice(slot, 1);
+    }
+
+    content.forEach((b) => {
+      if ((b.parent_slot ?? 0) > slot) b.parent_slot = (b.parent_slot ?? 0) - 1;
+    });
+  }
+  return true;
+};
+
 export const assembleBlocks = (
   raw: GetBlocksResponse,
   type: string,

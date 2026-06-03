@@ -73,64 +73,14 @@
         </div>
       </EditorFormPanel>
 
-      <EditorFormPanel
-        v-model="layoutOpen"
-        :title="getEditorTranslation('layout')"
-        content-class="px-3.5 py-3 flex flex-col gap-3"
-      >
-        <div v-if="multiGridStructure.configuration.layout">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('margin-label') }}</div>
-          <div class="grid grid-cols-2 gap-px rounded-md overflow-hidden border border-gray-300">
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
-              <span><SfIconArrowUpward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginTop"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-top"
-              />
-            </div>
-            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
-              <span><SfIconArrowDownward /></span>
-              <input
-                v-model.number="multiGridStructure.configuration.layout.marginBottom"
-                type="number"
-                class="w-12 text-center outline-none"
-                data-testid="margin-bottom"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div v-if="multiGridStructure.configuration.columnWidths?.length">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('sticky-columns') }}</div>
-          <div class="grid grid-cols-3 gap-2">
-            <button
-              v-for="i in numColumns"
-              :key="`sticky-col-${i}`"
-              type="button"
-              class="px-3 py-2 rounded-md border text-sm"
-              :class="
-                isSticky(i - 1)
-                  ? 'border-neutral-900 ring-2 ring-neutral-900 bg-neutral-50'
-                  : 'border-neutral-300 hover:border-neutral-400'
-              "
-              @click="toggleSticky(i - 1)"
-            >
-              {{ getEditorTranslation('column') }} {{ i }}
-            </button>
-          </div>
-        </div>
-
-        <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-      </EditorFormPanel>
+      <MultiGridLayoutPanel :uuid="resolvedUuid" />
 
       <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
         <div v-if="multiGridStructure.configuration.layout">
           <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
           <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
             <template #trigger="{ color, toggle }">
-              <label>
+              <div>
                 <SfInput
                   v-model="multiGridStructure.configuration.layout.backgroundColor"
                   type="text"
@@ -146,7 +96,7 @@
                     />
                   </template>
                 </SfInput>
-              </label>
+              </div>
             </template>
           </EditorColorPicker>
         </div>
@@ -158,11 +108,13 @@
 <script setup lang="ts">
 import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGrid/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { SfInput, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
 import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
+import MultiGridLayoutPanel from './MultiGridLayoutPanel.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
+import { useMultiGridDeviceWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 
 const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
@@ -179,30 +131,33 @@ const defaultMarginBottom = computed(() => getVerticalPixels(blockSize.value));
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(allBlocks.value, resolvedUuid.value) as ColumnBlock) || { content: [] };
-  if (!block.configuration.layout) {
-    block.configuration.layout = {
-      marginTop: 0,
-      marginBottom: defaultMarginBottom.value,
-      backgroundColor: '#ffffff',
-      gap: 'M',
-    };
-  } else {
+  if (block.configuration.layout) {
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
     if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
     if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
       block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
+    if (block.configuration.layout.reverseOnMobile === undefined) block.configuration.layout.reverseOnMobile = false;
+    if (block.configuration.layout.alignHeights === undefined) block.configuration.layout.alignHeights = true;
+  } else {
+    block.configuration.layout = {
+      marginTop: 0,
+      marginBottom: defaultMarginBottom.value,
+      backgroundColor: '#ffffff',
+      gap: 'M',
+      reverseOnMobile: false,
+      alignHeights: true,
+    };
   }
   return block;
 });
 
-const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStructure.value.configuration));
+const { widths: gridColumnsWidth, setWidths: setGridColumnsWidth } = useMultiGridDeviceWidths(
+  computed(() => multiGridStructure.value.configuration),
+);
 
 const visibleGrid = computed(() =>
-  computeVisibleGrid(
-    (multiGridStructure.value.content as Block[]) ?? [],
-    multiGridStructure.value.configuration.columnWidths ?? [],
-  ),
+  computeVisibleGrid((multiGridStructure.value.content as Block[]) ?? [], gridColumnsWidth.value),
 );
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
@@ -215,23 +170,6 @@ const getGapPx = (gap: string | undefined): number => {
 
 if (!multiGridStructure.value.configuration?.sticky) multiGridStructure.value.configuration.sticky = [];
 
-const numColumns = computed(() => Math.max(0, multiGridStructure.value.configuration.columnWidths?.length || 0));
-
-const isSticky = (columnIndex: number) => {
-  return (multiGridStructure.value.configuration?.sticky || []).includes(columnIndex);
-};
-
-const toggleSticky = (columnIndex: number) => {
-  const configuration = multiGridStructure.value.configuration;
-  if (!Array.isArray(configuration?.sticky)) configuration.sticky = [];
-  const position = configuration.sticky.indexOf(columnIndex);
-  if (position === -1) {
-    configuration.sticky.push(columnIndex);
-  } else {
-    configuration.sticky.splice(position, 1);
-  }
-};
-
 const allEmpty = computed(() => {
   const blocks = multiGridStructure.value.content as Block[] | undefined;
   if (!blocks || blocks.length === 0) return true;
@@ -241,24 +179,26 @@ const allEmpty = computed(() => {
 const applyPreset = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   block.configuration.columnWidths = [...spans];
+  delete block.configuration.columnWidthsTablet;
+  delete block.configuration.columnWidthsMobile;
   block.content = spans.map((_, columnIndex) => createEmptyGridBlock(columnIndex)) as unknown as Block[];
 };
 
 const handleColumnWidthsUpdate = (filteredWidths: number[]) => {
-  const fullWidths = [...(multiGridStructure.value.configuration.columnWidths ?? [])];
+  const updated = [...gridColumnsWidth.value];
   visibleGrid.value.filteredToOriginal.forEach((originalIndex, filteredIndex) => {
     const width = filteredWidths[filteredIndex];
-    if (width !== undefined) {
-      fullWidths[originalIndex] = width;
-    }
+    if (width !== undefined) updated[originalIndex] = width;
   });
-  multiGridStructure.value.configuration.columnWidths = fullWidths;
+  setGridColumnsWidth(updated);
 };
 
 const addRowSpans = (spans: readonly number[]) => {
   const block = multiGridStructure.value as ColumnBlock;
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(...spans);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(...spans);
   if (!block.content) block.content = [];
   block.content.push(
     ...(spans.map((_, columnIndex) => createEmptyGridBlock(currentLength + columnIndex)) as unknown as Block[]),
@@ -273,6 +213,8 @@ const addRowSpansAt = (spans: readonly number[], insertIndex: number) => {
       childBlock.parent_slot = (childBlock.parent_slot ?? 0) + spans.length;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.splice(insertIndex, 0, ...spans);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.splice(insertIndex, 0, ...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, spanIndex) => createEmptyGridBlock(insertIndex + spanIndex)) as unknown as Block[]),
@@ -293,6 +235,8 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(newSlot, 1);
+      if (gridBlock.configuration.columnWidthsTablet) gridBlock.configuration.columnWidthsTablet.splice(newSlot, 1);
+      if (gridBlock.configuration.columnWidthsMobile) gridBlock.configuration.columnWidthsMobile.splice(newSlot, 1);
     }
   };
 
@@ -308,6 +252,8 @@ const handleClickAddRow = (anchorEl: HTMLElement) => {
   });
 
   block.configuration.columnWidths.push(12);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(12);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(12);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 };
@@ -321,6 +267,10 @@ const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl
     if ((childBlock.parent_slot ?? 0) >= insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) + 1;
   });
   block.configuration.columnWidths.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columnWidthsTablet)
+    block.configuration.columnWidthsTablet.splice(insertIndex, 0, defaultSpan);
+  if (block.configuration.columnWidthsMobile)
+    block.configuration.columnWidthsMobile.splice(insertIndex, 0, defaultSpan);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(newBlock as unknown as Block);
 
@@ -336,6 +286,8 @@ const insertColumnAt = async (insertIndex: number, defaultSpan: number, anchorEl
     if (index !== -1) {
       blocks.splice(index, 1);
       gridBlock.configuration.columnWidths.splice(insertIndex, 1);
+      if (gridBlock.configuration.columnWidthsTablet) gridBlock.configuration.columnWidthsTablet.splice(insertIndex, 1);
+      if (gridBlock.configuration.columnWidthsMobile) gridBlock.configuration.columnWidthsMobile.splice(insertIndex, 1);
       (gridBlock.content as Block[]).forEach((childBlock) => {
         if ((childBlock.parent_slot ?? 0) > insertIndex) childBlock.parent_slot = (childBlock.parent_slot ?? 0) - 1;
       });
@@ -373,7 +325,6 @@ const editElement = (block: Block) => {
 
 const elementsOpen = ref(true);
 const gridLayoutOpen = ref(true);
-const layoutOpen = ref(true);
 const backgroundOpen = ref(true);
 </script>
 
@@ -384,10 +335,6 @@ const backgroundOpen = ref(true);
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
     "spacing-between": "Spacing between blocks:",
-    "layout": "Layout",
-    "margin-label": "Margin (px)",
-    "sticky-columns": "Sticky columns",
-    "column": "Column",
     "layout-background": "Background",
     "background-color-label": "Background Color"
   },
@@ -396,10 +343,6 @@ const backgroundOpen = ref(true);
     "layout-preset": "Layout Preset",
     "gap-label": "Column Gap",
     "spacing-between": "Spacing between blocks:",
-    "layout": "Layout",
-    "margin-label": "Margin (px)",
-    "sticky-columns": "Sticky columns",
-    "column": "Column",
     "layout-background": "Background",
     "background-color-label": "Background Color"
   }

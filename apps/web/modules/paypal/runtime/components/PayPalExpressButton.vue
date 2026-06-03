@@ -1,5 +1,5 @@
 <template>
-  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-base relative paypal-button" />
 </template>
 
 <script setup lang="ts">

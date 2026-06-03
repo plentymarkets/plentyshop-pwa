@@ -5,6 +5,8 @@ import { noI18nGlobals } from './eslint-rules/no-i18n-globals.js';
 import { noMultipleTemplateCallbacks } from './eslint-rules/no-multiple-template-callbacks.js';
 import { fileOrganizationTypes } from './eslint-rules/file-organization-types.js';
 import { noBareTailwindResponsiveInContainer } from './eslint-rules/no-bare-responsive-in-container.js';
+import { noNamedReexportInBarrel } from './eslint-rules/no-named-reexport-in-barrel.js';
+import { enforceZIndexTokens } from './eslint-rules/enforce-z-index-tokens.js';
 
 export default withNuxt(
   {
@@ -32,6 +34,8 @@ export default withNuxt(
           'no-multiple-template-callbacks': noMultipleTemplateCallbacks,
           'file-organization-types': fileOrganizationTypes,
           'no-bare-responsive-in-container': noBareTailwindResponsiveInContainer,
+          'no-named-reexport-in-barrel': noNamedReexportInBarrel,
+          'enforce-z-index-tokens': enforceZIndexTokens,
         }
       }
     },
@@ -100,6 +104,15 @@ export default withNuxt(
       'custom-rules/file-organization-types': 'error',
     }
   },
+  {
+    files: [
+      'app/**/*.vue',
+      'modules/**/*.vue',
+    ],
+    rules: {
+      'custom-rules/enforce-z-index-tokens': 'error',
+    },
+  },
   // Everything inside app/pages/, app/layouts/, and most of app/components/ is rendered
   // inside the Tailwind @container defined in app.vue -> enforce @-prefixed container variants.
   // Excluded: editor overlay components and settings/editor panels which live outside @container.
@@ -125,6 +138,12 @@ export default withNuxt(
     ],
     rules: {
       'custom-rules/no-bare-responsive-in-container': 'error',
+    },
+  },
+  {
+    files: ['app/composables/**/index.ts', 'app/utils/**/index.ts'],
+    rules: {
+      'custom-rules/no-named-reexport-in-barrel': 'error',
     },
   },
 );

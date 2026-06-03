@@ -48,6 +48,8 @@ describe('composables index exports', () => {
     'useBlockEditStack',
     'useBlocksHighlight',
     'useMultiGridQuickAdd',
+    'useColumnSticky',
+    'useEditorItemProperties',
   ];
 
   const allFileModules = fs

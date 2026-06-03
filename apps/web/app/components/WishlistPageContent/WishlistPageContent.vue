@@ -12,7 +12,7 @@
       :class="{ 'pointer-events-none opacity-50': loading }"
       data-testid="wishlist-page-content"
     >
-      <SfLoaderCircular v-if="loading" class="absolute left-0 right-0 top-1/3 mx-auto z-[99999]" size="2xl" />
+      <SfLoaderCircular v-if="loading" class="absolute left-0 right-0 top-1/3 mx-auto z-max" size="2xl" />
       <section
         class="grid grid-cols-1 @2xs:grid-cols-2 gap-4 @md:gap-6 @md:grid-cols-2 @lg:grid-cols-3 @3xl:grid-cols-4 mb-10 @md:mb-5"
         data-testid="wishlist-grid"
@@ -33,7 +33,7 @@
       :class="{ 'pointer-events-none opacity-50': loading }"
       data-testid="wishlist-page-content"
     >
-      <SfLoaderCircular v-if="loading" class="absolute z-[99999]" size="2xl" />
+      <SfLoaderCircular v-if="loading" class="absolute z-max" size="2xl" />
       <h2 data-testid="empty-wishlist-text" class="typography-headline-3 font-bold">
         {{ t('cart.emptyWishlist') }}
       </h2>

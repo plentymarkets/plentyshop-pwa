@@ -1,5 +1,5 @@
 <template>
-  <div class="pages-view sticky z-[25] h-full flex flex-col" data-testid="localization-management-drawer">
+  <div class="pages-view sticky z-editor-drawer h-full flex flex-col" data-testid="localization-management-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">
         {{ getEditorTranslation('label') }}
@@ -33,7 +33,9 @@
       </EditorFormPanel>
     </div>
   </div>
-  <EditorLocalizationDrawer v-if="keys.length > 0 && drawerOpen" />
+  <Teleport to="body">
+    <EditorLocalizationDrawer v-if="keys.length > 0 && drawerOpen" />
+  </Teleport>
 </template>
 
 <script setup lang="ts">

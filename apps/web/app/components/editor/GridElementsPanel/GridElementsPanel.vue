@@ -24,9 +24,10 @@
           :menu-open="openMenuUuid === block.meta.uuid"
           :custom-add="props.customAdd"
           :is-grid-mode="isGridMode"
-          :block-span="columnWidths[block.parent_slot ?? 0] ?? 0"
+          :block-span="gridColumnsWidth[block.parent_slot ?? 0] ?? 0"
           :min-items-reached="minItemsReached"
           :is-active="currentActiveBlockIndex === index"
+          :parent-uuid="props.uuid"
           @insert-before="onInsertBefore"
           @edit-element="emit('edit-element', $event)"
           @replace-empty="onReplaceEmpty"
@@ -71,6 +72,7 @@ import { SfIconAdd } from '@storefront-ui/vue';
 import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { ColumnBlock } from '~/components/blocks/structure/MultiGrid/types';
+import { useMultiGridDeviceWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
 import type { GridElementsPanelProps, GridElementsPanelEmits } from './types';
 
 const props = withDefaults(defineProps<GridElementsPanelProps>(), {
@@ -98,7 +100,9 @@ const { clearInsertColumnUuid, setInsertColumnUuid } = useBlocksMutations();
 
 const structure = computed(() => findOrDeleteBlockByUuid(data.value, props.uuid) as ColumnBlock | undefined);
 const isGridMode = computed(() => Array.isArray(structure.value?.configuration?.columnWidths));
-const columnWidths = computed(() => structure.value?.configuration?.columnWidths ?? []);
+const { widths: gridColumnsWidth, setWidths: setGridColumnsWidth } = useMultiGridDeviceWidths(
+  computed(() => structure.value?.configuration ?? { columnWidths: [] as number[] }),
+);
 
 const sortedItems = computed((): Block[] => {
   const content = (structure.value?.content as Block[] | undefined) ?? [];
@@ -161,16 +165,7 @@ const onToggleVisibility = (block: Block) => {
 
 const onDelete = (block: Block) => {
   if (!structure.value || minItemsReached.value) return;
-  const content = structure.value.content as Block[];
-  const idx = content.findIndex((b) => b.meta.uuid === block.meta.uuid);
-  if (idx !== -1) content.splice(idx, 1);
-  if (isGridMode.value) {
-    const slot = block.parent_slot ?? 0;
-    structure.value.configuration.columnWidths.splice(slot, 1);
-    content.forEach((b) => {
-      if ((b.parent_slot ?? 0) > slot) b.parent_slot = (b.parent_slot ?? 0) - 1;
-    });
-  }
+  removeBlockFromColumn(structure.value, block.meta.uuid);
   openMenuUuid.value = null;
 };
 
@@ -186,15 +181,20 @@ const onReplaceEmpty = (anchorEl: HTMLElement, block: Block) => {
 const onDragEnd = () => {
   if (!structure.value) return;
   if (isGridMode.value) {
-    const newWidths = localItems.value.map((b) => columnWidths.value[b.parent_slot ?? 0] ?? 12);
+    const newWidths = localItems.value.map((b) => gridColumnsWidth.value[b.parent_slot ?? 0] ?? 12);
     const content = structure.value.content as Block[];
     localItems.value.forEach((nb, i) => {
       const original = content.find((b) => b.meta.uuid === nb.meta.uuid);
       if (original) original.parent_slot = i;
     });
-    structure.value.configuration.columnWidths = newWidths;
+    setGridColumnsWidth(newWidths);
   } else {
-    structure.value.content = [...localItems.value];
+    const content = structure.value.content as Block[] | undefined;
+    if (Array.isArray(content)) {
+      content.splice(0, content.length, ...localItems.value);
+    } else {
+      structure.value.content = [...localItems.value];
+    }
   }
 };
 
@@ -203,6 +203,8 @@ const addRowSpans = (spans: readonly number[]) => {
   const block = structure.value;
   const currentLength = block.configuration.columnWidths.length;
   block.configuration.columnWidths.push(...spans);
+  if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(...spans);
+  if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(...spans);
   if (!block.content) block.content = [];
   (block.content as Block[]).push(
     ...(spans.map((_, i) => createEmptyGridBlock(currentLength + i)) as unknown as Block[]),
@@ -219,6 +221,8 @@ const onAddElement = () => {
     const newBlock = createEmptyGridBlock(newSlot);
 
     block.configuration.columnWidths.push(12);
+    if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.push(12);
+    if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.push(12);
     if (!block.content) block.content = [];
     (block.content as Block[]).push(newBlock as unknown as Block);
 
@@ -229,6 +233,8 @@ const onAddElement = () => {
         if (index !== -1) {
           content.splice(index, 1);
           block.configuration.columnWidths.splice(newSlot, 1);
+          if (block.configuration.columnWidthsTablet) block.configuration.columnWidthsTablet.splice(newSlot, 1);
+          if (block.configuration.columnWidthsMobile) block.configuration.columnWidthsMobile.splice(newSlot, 1);
         }
       };
       openAddBlockPopover({

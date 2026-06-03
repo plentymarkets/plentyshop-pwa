@@ -14,7 +14,7 @@
       @pointercancel="onPointerUp"
       @lostpointercapture="onPointerUp"
     >
-      <div class="absolute inset-0 flex pointer-events-none z-0">
+      <div class="absolute inset-0 flex pointer-events-none z-base">
         <div
           v-for="i in 12"
           :key="i"
@@ -23,7 +23,7 @@
         />
       </div>
 
-      <div class="relative z-[1]">
+      <div class="relative z-raised">
         <div
           v-for="(row, rowIndex) in rows"
           :key="rowIndex"
@@ -73,7 +73,7 @@
             </div>
 
             <div
-              class="absolute right-0 top-0 bottom-0 w-3 flex items-center justify-center cursor-col-resize z-[5]"
+              class="absolute right-0 top-0 bottom-0 w-3 flex items-center justify-center cursor-col-resize z-raised"
               @pointerdown.prevent.stop="startDrag($event, cell.colIndex, cell.span)"
               @click.stop
             >

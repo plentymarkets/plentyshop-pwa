@@ -2,7 +2,7 @@
   <div class="relative">
     <div
       v-if="!customAdd"
-      class="no-drag absolute inset-x-0 top-0 -translate-y-1/2 h-3 z-20 flex items-center justify-center cursor-pointer"
+      class="no-drag absolute inset-x-0 top-0 -translate-y-1/2 h-3 z-editor-inline flex items-center justify-center cursor-pointer"
       @mouseenter="insertHovered = true"
       @mouseleave="insertHovered = false"
       @click.stop="emit('insert-before', block, $event.currentTarget as HTMLElement)"
@@ -13,7 +13,7 @@
       />
       <div
         v-show="insertHovered"
-        class="relative w-4 h-4 rounded-full bg-editor-accent text-white flex items-center justify-center flex-shrink-0 z-10 shadow-sm"
+        class="relative w-4 h-4 rounded-full bg-editor-accent text-white flex items-center justify-center flex-shrink-0 z-dropdown shadow-sm"
       >
         <SfIconAdd size="xs" />
       </div>
@@ -103,6 +103,8 @@
         :is-open="menuOpen"
         :block-visible="isVisible"
         :min-items-reached="minItemsReached"
+        :parent-uuid="isGridMode ? parentUuid : undefined"
+        :column-index="isGridMode ? (block.parent_slot ?? 0) : undefined"
         @toggle="emit('toggle-menu', block.meta.uuid)"
         @toggle-visibility="emit('toggle-visibility', block)"
         @delete="emit('delete', block)"
@@ -125,6 +127,7 @@ const props = defineProps<{
   blockSpan: number;
   minItemsReached: boolean;
   isActive?: boolean;
+  parentUuid?: string;
 }>();
 
 const emit = defineEmits<{

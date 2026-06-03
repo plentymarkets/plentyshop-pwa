@@ -83,7 +83,7 @@
               />
             </template>
           </UiButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-dropdown">
             <template #trigger>
               <UiButton
                 variant="tertiary"
@@ -200,7 +200,7 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-50"
+        class="w-full h-full z-dropdown"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
