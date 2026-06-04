@@ -2,6 +2,7 @@ import type {
   useStructuredDataReturn,
   SetLogoMeta,
   SetProductMetaData,
+  SetItemListMetaData,
   SetProductRobotsMetaData,
   SetProductCanonicalMetaData,
   UseStructuredDataState,
@@ -196,6 +197,66 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = false;
   };
 
+  const setItemListMetaData: SetItemListMetaData = (products: Product[]) => {
+    state.value.loading = true;
+
+    const runtimeConfig = useRuntimeConfig();
+    const route = useRoute();
+    const localePath = useLocalePath();
+    const isSingleProductUrlSchemeEnabled = useCallisto().isEnabled;
+
+    const itemListElement = products.reduce<Array<Record<string, unknown>>>((result, product, index) => {
+      const itemId = productGetters.getItemId(product);
+      const urlPath = productGetters.getUrlPath(product);
+
+      if (!itemId || !urlPath) {
+        return result;
+      }
+
+      let productPath = '';
+
+      if (isSingleProductUrlSchemeEnabled) {
+        productPath = localePath(`/${urlPath}/a-${itemId}`);
+      } else {
+        const basePath = `/${urlPath}_${itemId}`;
+        const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product);
+        const variationId = productGetters.getVariationId(product);
+
+        productPath = localePath(shouldAppendVariation && variationId ? `${basePath}_${variationId}` : basePath);
+      }
+
+      result.push({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${runtimeConfig.public.domain}${productPath}`,
+        name: productGetters.getName(product),
+      });
+
+      return result;
+    }, []);
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      numberOfItems: itemListElement.length,
+      url: `${runtimeConfig.public.domain}${localePath(route.fullPath)}`,
+      itemListElement,
+    };
+
+    useHead({
+      script: [
+        {
+          key: 'item-list-structured-data',
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(structuredData),
+        },
+      ],
+    });
+
+    state.value.loading = false;
+  };
+
   const setProductRobotsMetaData: SetProductRobotsMetaData = (product: Product) => {
     state.value.loading = true;
 
@@ -250,6 +311,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
   return {
     setLogoMeta,
     setProductMetaData,
+    setItemListMetaData,
     setProductRobotsMetaData,
     setProductCanonicalMetaData,
     ...toRefs(state.value),

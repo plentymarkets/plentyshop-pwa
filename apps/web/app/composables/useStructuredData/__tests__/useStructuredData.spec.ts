@@ -1,10 +1,38 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { productGetters } from '@plentymarkets/shop-api';
 import type { Review } from '@plentymarkets/shop-api';
 import { useStructuredData } from '../useStructuredData';
-import { buildProduct, buildReviewWithCounts } from './fixtures';
+import {
+  buildProduct,
+  buildProductWithItemId,
+  buildProductWithVariationId,
+  buildProductWithUrlPath,
+  buildReviewWithCounts,
+} from './fixtures';
 
 const { mockUseHead } = vi.hoisted(() => ({ mockUseHead: vi.fn() }));
 mockNuxtImport('useHead', () => mockUseHead);
+
+const runtimeConfigRef = { public: { domain: 'https://shop.example.com' } };
+const { useRuntimeConfigMock } = vi.hoisted(() => ({
+  useRuntimeConfigMock: vi.fn(() => runtimeConfigRef),
+}));
+mockNuxtImport('useRuntimeConfig', () => useRuntimeConfigMock);
+
+const routeRef = { fullPath: '/search?term=test' };
+const { useRouteMock } = vi.hoisted(() => ({ useRouteMock: vi.fn(() => routeRef) }));
+mockNuxtImport('useRoute', () => useRouteMock);
+
+const { useLocalePathMock } = vi.hoisted(() => ({
+  useLocalePathMock: vi.fn(() => (path: string) => path),
+}));
+mockNuxtImport('useLocalePath', () => useLocalePathMock);
+
+const isSingleProductUrlSchemeEnabled = ref(false);
+const { useCallistoMock } = vi.hoisted(() => ({
+  useCallistoMock: vi.fn(() => ({ isEnabled: isSingleProductUrlSchemeEnabled.value })),
+}));
+mockNuxtImport('useCallisto', () => useCallistoMock);
 
 const mockProductPrice = { price: ref(10), crossedPrice: ref(0) };
 const { useProductPrice } = vi.hoisted(() => ({ useProductPrice: vi.fn(() => mockProductPrice) }));
@@ -35,10 +63,17 @@ const getCapturedJsonLd = (): Record<string, unknown> => {
 };
 
 describe('useStructuredData', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   beforeEach(() => {
     mockUseHead.mockClear();
     reviewStateRef.value = {} as Review; // NOSONAR
     reviewAverageStateRef.value = {};
+    routeRef.fullPath = '/search?term=test';
+    runtimeConfigRef.public.domain = 'https://shop.example.com';
+    isSingleProductUrlSchemeEnabled.value = false;
   });
 
   describe('setProductMetaData — aggregateRating', () => {
@@ -93,6 +128,86 @@ describe('useStructuredData', () => {
       const jsonLd = getCapturedJsonLd();
       const aggregateRating = jsonLd['aggregateRating'] as Record<string, unknown>;
       expect(aggregateRating['@type']).toBe('AggregateRating');
+    });
+  });
+
+  describe('setItemListMetaData', () => {
+    it('should generate ItemList JSON-LD with product list URLs', () => {
+      const productWithItemId = buildProductWithItemId(2);
+      const secondProduct = {
+        ...productWithItemId,
+        variation: {
+          ...productWithItemId.variation,
+          id: 202,
+        },
+      };
+
+      const { setItemListMetaData } = useStructuredData();
+      setItemListMetaData([buildProduct(), secondProduct]);
+
+      const jsonLd = getCapturedJsonLd();
+
+      expect(jsonLd['@type']).toBe('ItemList');
+      expect(jsonLd['numberOfItems']).toBe(2);
+      expect(jsonLd['url']).toBe('https://shop.example.com/search?term=test');
+
+      const itemListElement = jsonLd['itemListElement'] as Array<Record<string, unknown>>;
+      expect(itemListElement[0]?.url).toBe('https://shop.example.com/test-product_1');
+      expect(itemListElement[1]?.url).toBe('https://shop.example.com/test-product_2');
+    });
+
+    it('should generate single-product-url-scheme links when enabled', () => {
+      isSingleProductUrlSchemeEnabled.value = true;
+
+      const { setItemListMetaData } = useStructuredData();
+      setItemListMetaData([buildProduct()]);
+
+      const jsonLd = getCapturedJsonLd();
+      const itemListElement = jsonLd['itemListElement'] as Array<Record<string, unknown>>;
+
+      expect(itemListElement[0]?.url).toBe('https://shop.example.com/test-product/a-1');
+    });
+
+    it('should generate an empty ItemList when products are empty', () => {
+      const { setItemListMetaData } = useStructuredData();
+      setItemListMetaData([]);
+
+      const jsonLd = getCapturedJsonLd();
+
+      expect(jsonLd['@type']).toBe('ItemList');
+      expect(jsonLd['numberOfItems']).toBe(0);
+      expect(jsonLd['itemListElement']).toEqual([]);
+    });
+
+    it('should skip products missing itemId or urlPath', () => {
+      const missingItemIdProduct = buildProductWithItemId(1);
+      const missingPathProduct = buildProductWithUrlPath('');
+      vi.spyOn(productGetters, 'getItemId').mockReturnValueOnce('').mockReturnValueOnce('3');
+      vi.spyOn(productGetters, 'getUrlPath').mockReturnValueOnce('test-product').mockReturnValueOnce('');
+
+      const { setItemListMetaData } = useStructuredData();
+      setItemListMetaData([missingItemIdProduct, missingPathProduct]);
+
+      const jsonLd = getCapturedJsonLd();
+
+      expect(jsonLd['numberOfItems']).toBe(0);
+      expect(jsonLd['itemListElement']).toEqual([]);
+    });
+
+    it('should preserve original index positions for valid products after filtering invalid ones', () => {
+      vi.spyOn(productGetters, 'getItemId').mockReturnValueOnce('1').mockReturnValueOnce('').mockReturnValueOnce('2');
+
+      const { setItemListMetaData } = useStructuredData();
+      setItemListMetaData([buildProduct(), buildProductWithItemId(11), buildProductWithVariationId(2)]);
+
+      const jsonLd = getCapturedJsonLd();
+      const itemListElement = jsonLd['itemListElement'] as Array<Record<string, unknown>>;
+
+      expect(jsonLd['numberOfItems']).toBe(2);
+      expect(itemListElement[0]?.position).toBe(1);
+      expect(itemListElement[1]?.position).toBe(3);
+      expect(itemListElement[0]?.url).toBe('https://shop.example.com/test-product_1');
+      expect(itemListElement[1]?.url).toBe('https://shop.example.com/test-product_2');
     });
   });
 });
