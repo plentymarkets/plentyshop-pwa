@@ -1,7 +1,7 @@
 <template>
   <div
     ref="rootRef"
-    :class="['py-1 z-50 @container/search', props.close ? 'relative' : '']"
+    :class="['py-1 z-dropdown @container/search', props.close ? 'relative' : '']"
   >
     <form ref="referenceRef" role="search" class="px-px" @submit.prevent="handleSubmit">
       <SfInput
@@ -145,7 +145,7 @@ const previewContainer = inject('previewContainer', ref<HTMLElement | null>(null
 
 const dropdownClass = computed(() => {
   const base =
-    'z-50 bg-white border-y border-neutral-200 shadow-xl flex flex-col max-h-dropdown @container/dropdown';
+    'z-dropdown bg-white border-y border-neutral-200 shadow-xl flex flex-col max-h-dropdown @container/dropdown';
   return props.close
     ? `absolute top-full left-1/2 -translate-x-1/2 w-screen ${base}`
     : `fixed ${base}`;
