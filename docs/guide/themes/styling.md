@@ -14,11 +14,11 @@ The shop is responsive **based on container width, not viewport width**. The pag
 
 This means that **inside the storefront you must use the `@`-prefixed container-query variants**, never the bare viewport variants. Otherwise the mobile preview in the Editor would not reflect the real mobile view correctly.
 
-| Use this (container query) | Not this (viewport) |
-| -------------------------- | ------------------- |
+| Use this (container query)          | Not this (viewport)            |
+| ----------------------------------- | ------------------------------ |
 | `@sm:` `@md:` `@lg:` `@xl:` `@2xl:` | `sm:` `md:` `lg:` `xl:` `2xl:` |
-| `@max-md:` `@min-lg:` | `max-md:` `min-lg:` |
-| `@mobile:` `@tablet:` `@desktop:` | — |
+| `@max-md:` `@min-lg:`               | `max-md:` `min-lg:`            |
+| `@mobile:` `@tablet:` `@desktop:`   | —                              |
 
 The breakpoints are defined under `theme.extend.containers` in `tailwind.config.ts`:
 
