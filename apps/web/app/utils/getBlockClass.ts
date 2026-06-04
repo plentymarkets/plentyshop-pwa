@@ -1,4 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
+import { hasGoogleMapsEmbed } from '~/utils/parseGoogleMapsHtml';
 
 /**
  * Block names that should not have container constraints (max-width, centering)
@@ -131,6 +132,23 @@ const getFullWidthFromObject = (obj: unknown): boolean | undefined => {
  * @param block - The block to check
  * @returns True if fullWidth is enabled
  */
+const blockContainsGoogleMaps = (block: Block): boolean => {
+  if (block.name === 'TextCard') {
+    const text = (block.content as { text?: { htmlDescription?: string } })?.text?.htmlDescription;
+    return hasGoogleMapsEmbed(text);
+  }
+
+  if (block.name === 'MultiGrid' && Array.isArray(block.content)) {
+    return block.content.some((child) => {
+      if (child.name !== 'TextCard') return false;
+      const text = (child.content as { text?: { htmlDescription?: string } })?.text?.htmlDescription;
+      return hasGoogleMapsEmbed(text);
+    });
+  }
+
+  return false;
+};
+
 const hasFullWidth = (block: Block): boolean => {
   // Content blocks have layout in content, structure blocks have it in configuration
   const fullWidth =
@@ -162,11 +180,16 @@ export const getBlockClass = (block: Block): ComputedRef<Record<string, boolean>
     const fullWidth = hasFullWidth(block);
     const isContainerExcluded = isExcluded(block.name, CONTAINER_EXCLUDED_BLOCKS);
     const isPaddingExcluded = isExcluded(block.name, PADDING_EXCLUDED_BLOCKS);
+    const hasMapEmbed = blockContainsGoogleMaps(block);
 
     return {
-      'max-w-screen-3xl': !fullWidth && !isContainerExcluded,
-      'mx-auto': !isContainerExcluded,
-      'px-4 md:px-6': !isPaddingExcluded,
+      'max-w-screen-3xl': !fullWidth && !isContainerExcluded && !hasMapEmbed,
+      'mx-auto': !isContainerExcluded && !hasMapEmbed,
+      'px-4 md:px-6': !isPaddingExcluded && !hasMapEmbed,
+      'max-lg:w-full': hasMapEmbed,
+      'max-lg:max-w-none': hasMapEmbed,
+      'max-lg:!mx-0': hasMapEmbed,
+      'max-lg:!px-0': hasMapEmbed,
     };
   });
 };

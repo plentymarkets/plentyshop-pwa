@@ -1,8 +1,12 @@
 <template>
-  <div class="px-4 md:px-6 lg:px-8 2xl:px-0" :style="outerBackgroundStyle">
+  <div :class="gridOuterPaddingClass" :style="outerBackgroundStyle">
     <div
       data-testid="multi-grid-structure"
-      :class="[getGridClasses(), gridContainerClasses]"
+      :class="[
+        getGridClasses(),
+        gridContainerClasses,
+        gridHasGoogleMapsEmbed ? 'multi-grid--map-bleed max-lg:!mx-0 max-lg:!px-0' : '',
+      ]"
       :style="gridInlineStyle"
     >
       <div
@@ -100,6 +104,23 @@ const shouldStretchBackground = computed(() => Boolean(configuration.layout?.ful
 
 const isCategoryFilterLayout = computed(() => content.some((block) => block.name === 'SortFilter'));
 
+const blockHasGoogleMapsEmbed = (block: Block) => {
+  if (block.name !== 'TextCard') return false;
+  const html = (block.content as { text?: { htmlDescription?: string } })?.text?.htmlDescription;
+  return !!html && html.includes('google.com/maps');
+};
+
+const gridHasGoogleMapsEmbed = computed(() => content.some(blockHasGoogleMapsEmbed));
+
+const gridOuterPaddingClass = computed(() =>
+  gridHasGoogleMapsEmbed.value
+    ? 'max-lg:px-0 md:px-6 lg:px-8 2xl:px-0'
+    : 'px-4 md:px-6 lg:px-8 2xl:px-0',
+);
+
+const columnHasGoogleMapsEmbed = (colIndex: number) =>
+  (columns.value[colIndex] ?? []).some((block) => blockHasGoogleMapsEmbed(block));
+
 const outerBackgroundStyle = computed(() => {
   if (!shouldStretchBackground.value) return {};
 
@@ -127,44 +148,44 @@ const gridContainerClasses = computed(() => {
   return classes;
 });
 
-// FIX: Updated to include Padding styles
-const gridInlineStyle = computed(() => {
+const resolveHorizontalSpacing = (side: 'marginLeft' | 'marginRight' | 'paddingLeft' | 'paddingRight') => {
   const useCompactHorizontalSpacing = isCategoryFilterLayout.value && viewport.isLessThan('lg');
 
-  return {
+  if (useCompactHorizontalSpacing) return '0px';
+
+  if (shouldStretchBackground.value && side.startsWith('margin')) return 'auto';
+
+  const layoutValue = configuration.layout?.[side];
+  return layoutValue !== undefined ? `${layoutValue}px` : '0px';
+};
+
+// Horizontal spacing for map grids is applied via CSS (see .multi-grid--map-bleed) so mobile can override CMS inline margins.
+const gridInlineStyle = computed(() => {
+  const style: Record<string, string> = {
     backgroundColor: shouldStretchBackground.value ? 'transparent' : configuration.layout?.backgroundColor ?? 'transparent',
     marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
     marginBottom:
       configuration.layout?.marginBottom !== undefined
         ? `${configuration.layout.marginBottom}px`
         : `${defaultMarginBottom.value}px`,
-    marginLeft: useCompactHorizontalSpacing
-      ? '0px'
-      : shouldStretchBackground.value
-        ? 'auto'
-        : configuration.layout?.marginLeft !== undefined
-          ? `${configuration.layout.marginLeft}px`
-          : '0px',
-    marginRight: useCompactHorizontalSpacing
-      ? '0px'
-      : shouldStretchBackground.value
-        ? 'auto'
-        : configuration.layout?.marginRight !== undefined
-          ? `${configuration.layout.marginRight}px`
-          : '0px',
     paddingTop: configuration.layout?.paddingTop !== undefined ? `${configuration.layout.paddingTop}px` : '0px',
     paddingBottom: configuration.layout?.paddingBottom !== undefined ? `${configuration.layout.paddingBottom}px` : '0px',
-    paddingLeft: useCompactHorizontalSpacing
-      ? '0px'
-      : configuration.layout?.paddingLeft !== undefined
-        ? `${configuration.layout.paddingLeft}px`
-        : '0px',
-    paddingRight: useCompactHorizontalSpacing
-      ? '0px'
-      : configuration.layout?.paddingRight !== undefined
-        ? `${configuration.layout.paddingRight}px`
-        : '0px',
   };
+
+  if (gridHasGoogleMapsEmbed.value) {
+    style['--mg-ml'] = resolveHorizontalSpacing('marginLeft');
+    style['--mg-mr'] = resolveHorizontalSpacing('marginRight');
+    style['--mg-pl'] = resolveHorizontalSpacing('paddingLeft');
+    style['--mg-pr'] = resolveHorizontalSpacing('paddingRight');
+    return style;
+  }
+
+  style.marginLeft = resolveHorizontalSpacing('marginLeft');
+  style.marginRight = resolveHorizontalSpacing('marginRight');
+  style.paddingLeft = resolveHorizontalSpacing('paddingLeft');
+  style.paddingRight = resolveHorizontalSpacing('paddingRight');
+
+  return style;
 });
 
 const getGridClasses = () => {
@@ -181,7 +202,9 @@ const getGridClasses = () => {
   }
 
   const mobileColsSetting = configuration.layout?.mobileCols === 2 ? 2 : 1;
-  const mobileGridClass = mobileColsSetting === 2 ? 'grid-cols-2' : 'grid-cols-1';
+  // Stack columns on mobile when a Google Maps embed is present (2-col grids squeeze the map).
+  const effectiveMobileCols = mobileColsSetting === 2 && gridHasGoogleMapsEmbed.value ? 1 : mobileColsSetting;
+  const mobileGridClass = effectiveMobileCols === 2 ? 'grid-cols-2' : 'grid-cols-1';
 
   return [
     'grid',
@@ -239,7 +262,18 @@ const getColumnClasses = (colIndex: number) => {
   }
 
   const desktopSpan = defaultColSpanMap[columnWidth] || 'md:col-span-12';
-  const classes = ['col-span-1', desktopSpan];
+  const classes = ['col-span-1', 'min-w-0'];
+
+  // Give the map column full width on tablet so the consent overlay stays readable.
+  if (columnHasGoogleMapsEmbed(colIndex)) {
+    const largeDesktopSpan = desktopSpan.replace(/^md:/, 'lg:') || 'lg:col-span-12';
+    classes.push('md:col-span-12', largeDesktopSpan, 'max-lg:px-0');
+  } else {
+    classes.push(desktopSpan);
+    if (gridHasGoogleMapsEmbed.value) {
+      classes.push('max-lg:px-4', 'md:max-lg:px-6');
+    }
+  }
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
     classes.push('md:sticky', 'md:top-40');
@@ -309,3 +343,23 @@ const columns = computed<Block[][]>(() => {
   return blocks.value;
 });
 </script>
+
+<style scoped>
+@media (max-width: 1023px) {
+  [data-testid='multi-grid-structure'].multi-grid--map-bleed {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-testid='multi-grid-structure'].multi-grid--map-bleed {
+    margin-left: var(--mg-ml, 0);
+    margin-right: var(--mg-mr, 0);
+    padding-left: var(--mg-pl, 0);
+    padding-right: var(--mg-pr, 0);
+  }
+}
+</style>
