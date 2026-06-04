@@ -10,9 +10,9 @@ To style your shop without using Tailwind, you can either use the `<style>` tag 
 
 ## Responsive design: container queries instead of viewport breakpoints
 
-The shop is responsive **based on container width, not viewport width**. The pages in `app.vue` are wrapped in a Tailwind `@container`, which allows the editor's mobile preview to render the storefront at a constrained width (e.g. 375px) inside a desktop viewport. Components react to the preview frame, not the browser window.
+The shop is responsive **based on container width, not viewport width**. The pages in `app.vue` are wrapped in a Tailwind `@container`, which allows the editor's mobile preview to render the page at a constrained width (e.g. 375px) inside a desktop viewport. Components react to the preview frame, not the browser window.
 
-This means that **inside the storefront you must use the `@`-prefixed container-query variants**, never the bare viewport variants. Otherwise the mobile preview in the Editor would not reflect the real mobile view correctly.
+This means that **inside the page view you must use the `@`-prefixed container-query variants**, never the bare viewport variants. Otherwise the mobile preview in the Editor would not reflect the real mobile view correctly.
 
 | Use this (container query)          | Not this (viewport)            |
 | ----------------------------------- | ------------------------------ |
