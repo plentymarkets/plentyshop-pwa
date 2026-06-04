@@ -33,7 +33,7 @@ containers: {
 },
 ```
 
-Container-query support is provided by the [`@tailwindcss/container-queries`](https://github.com/tailwindlabs/tailwindcss-container-queries) plugin, which is already installed and registered in `apps/web/app/configuration/tailwind.config.ts`. In Tailwind v3 this plugin is required; from Tailwind v4 onwards container queries are built-in and the plugin is no longer needed.
+Container-query support is provided by the [`@tailwindcss/container-queries`](https://github.com/tailwindlabs/tailwindcss-container-queries) plugin, which is already installed and registered in `apps/web/app/configuration/tailwind.config.ts`. In Tailwind v3 this plugin is required. From Tailwind v4 onwards container queries are built-in and the plugin is no longer needed.
 
 ## Where this applies
 
@@ -65,7 +65,7 @@ Many blocks under `app/components/blocks/` have a companion editor component who
 
 ## Enforcement
 
-A custom ESLint rule flags bare viewport responsive variants for common breakpoint prefixes (e.g. `sm:`, `md:`, `max-md:`) used inside the affected directories. The rule is configured in `apps/web/eslint.config.mjs` and implemented in `apps/web/eslint-rules/no-bare-responsive-in-container.js`. Violations show up when running `npm run lint` or `npm run lint:fix`. Note that autofix is not yet available for this rule — `npm run lint:fix` will report the violations but cannot rewrite them automatically; the prefixes have to be replaced by hand.
+A custom ESLint rule flags bare viewport responsive variants for common breakpoint prefixes (e.g. `sm:`, `md:`, `max-md:`) used inside the affected directories. The rule is configured in `apps/web/eslint.config.mjs` and implemented in `apps/web/eslint-rules/no-bare-responsive-in-container.js`. Violations show up when running `npm run lint` or `npm run lint:fix`. Note that autofix is not yet available for this rule — `npm run lint:fix` will report the violations but cannot rewrite them automatically. The prefixes have to be replaced by hand.
 
 If you are writing a [module](/guide/modules/index.md) whose components are rendered into the page view, follow the same convention and author your components with `@`-prefixed variants so they respond correctly to the editor's mobile preview (note: the ESLint rule currently only targets `app/pages/**`, `app/layouts/**`, and `app/components/**`).
 
