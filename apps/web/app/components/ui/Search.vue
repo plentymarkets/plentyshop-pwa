@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="rootRef"
-    :class="['py-1 z-dropdown @container/search', props.close ? 'relative' : '']"
-  >
+  <div ref="rootRef" :class="['py-1 z-dropdown @container/search', props.close ? 'relative' : '']">
     <form ref="referenceRef" role="search" class="px-px" @submit.prevent="handleSubmit">
       <SfInput
         id="search-bar"
@@ -41,83 +38,77 @@
         aria-relevant="all"
         :aria-label="t('searchBar.searchSuggestions')"
       >
-      <div class="flex-1 overflow-y-auto">
-        <div class="max-w-screen-2xl mx-auto px-5 @md/dropdown:px-8 py-7">
-          <div
-            class="grid grid-cols-1 @lg/dropdown:grid-cols-search-dropdown gap-7 @lg/dropdown:gap-9"
-          >
-            <div class="@lg/dropdown:pr-9 @lg/dropdown:border-r @lg/dropdown:border-neutral-200">
-              <div v-if="results?.suggestions?.length" class="mb-6">
-                <h3
-                  class="text-2xs font-medium tracking-widest uppercase text-neutral-500 mb-2.5"
-                >
-                  {{ t('searchBar.searchSuggestions') }}
-                </h3>
-                <ul class="flex flex-col gap-0.5">
-                  <li v-for="(item, index) in results.suggestions" :key="index">
-                    <UiSearchSuggestionItem :item="item" />
-                  </li>
-                </ul>
+        <div class="flex-1 overflow-y-auto">
+          <div class="max-w-screen-2xl mx-auto px-5 @md/dropdown:px-8 py-7">
+            <div class="grid grid-cols-1 @lg/dropdown:grid-cols-search-dropdown gap-7 @lg/dropdown:gap-9">
+              <div class="@lg/dropdown:pr-9 @lg/dropdown:border-r @lg/dropdown:border-neutral-200">
+                <div v-if="results?.suggestions?.length" class="mb-6">
+                  <h3 class="text-2xs font-medium tracking-widest uppercase text-neutral-500 mb-2.5">
+                    {{ t('searchBar.searchSuggestions') }}
+                  </h3>
+                  <ul class="flex flex-col gap-0.5">
+                    <li v-for="(item, index) in results.suggestions" :key="index">
+                      <UiSearchSuggestionItem :item="item" />
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 class="text-2xs font-medium tracking-widest uppercase text-neutral-500 mb-2.5">
+                    {{ t('searchBar.matchingCategories') }}
+                  </h3>
+                  <ul v-if="results?.categories?.length" class="flex flex-wrap gap-1.5">
+                    <li v-for="(category, index) in results.categories" :key="index">
+                      <NuxtLink
+                        :to="category.url"
+                        class="inline-flex items-center h-7 px-3 text-xs text-neutral-900 bg-neutral-100 rounded-full border border-transparent hover:border-neutral-900 hover:bg-white transition-colors duration-150"
+                      >
+                        {{ category.label }}
+                      </NuxtLink>
+                    </li>
+                  </ul>
+                  <div v-else class="text-sm text-neutral-500">{{ t('searchBar.noResultsFound') }}</div>
+                </div>
               </div>
 
-              <div>
-                <h3
-                  class="text-2xs font-medium tracking-widest uppercase text-neutral-500 mb-2.5"
-                >
-                  {{ t('searchBar.matchingCategories') }}
+              <div class="min-w-0 @container/products">
+                <h3 class="text-2xs font-medium tracking-widest uppercase text-neutral-500 mb-2.5">
+                  {{ t('searchBar.productSuggestions') }}
                 </h3>
-                <ul v-if="results?.categories?.length" class="flex flex-wrap gap-1.5">
-                  <li v-for="(category, index) in results.categories" :key="index">
-                    <NuxtLink
-                      :to="category.url"
-                      class="inline-flex items-center h-7 px-3 text-xs text-neutral-900 bg-neutral-100 rounded-full border border-transparent hover:border-neutral-900 hover:bg-white transition-colors duration-150"
-                    >
-                      {{ category.label }}
-                    </NuxtLink>
+                <ul
+                  v-if="results?.items?.length"
+                  class="grid grid-cols-2 @md/products:grid-cols-4 gap-x-5 gap-y-6 items-start"
+                >
+                  <li v-for="(item, index) in results.items" :key="index">
+                    <UiSearchSuggestionProduct :item="item" />
                   </li>
                 </ul>
                 <div v-else class="text-sm text-neutral-500">{{ t('searchBar.noResultsFound') }}</div>
               </div>
             </div>
-
-            <div class="min-w-0 @container/products">
-              <h3
-                class="text-2xs font-medium tracking-widest uppercase text-neutral-500 mb-2.5"
-              >
-                {{ t('searchBar.productSuggestions') }}
-              </h3>
-              <ul
-                v-if="results?.items?.length"
-                class="grid grid-cols-2 @md/products:grid-cols-4 gap-x-5 gap-y-6 items-start"
-              >
-                <li v-for="(item, index) in results.items" :key="index">
-                  <UiSearchSuggestionProduct :item="item" />
-                </li>
-              </ul>
-              <div v-else class="text-sm text-neutral-500">{{ t('searchBar.noResultsFound') }}</div>
-            </div>
           </div>
         </div>
-      </div>
 
-      <NuxtLink
-        v-if="results?.total"
-        :to="getSearchPath(searchTerm)"
-        class="border-t border-neutral-200 hover:bg-neutral-50 transition-colors duration-150"
-      >
-        <div
-          class="max-w-screen-2xl mx-auto px-5 @md/dropdown:px-8 h-12 flex items-center gap-2 text-sm font-medium text-neutral-900 overflow-hidden"
+        <NuxtLink
+          v-if="results?.total"
+          :to="getSearchPath(searchTerm)"
+          class="border-t border-neutral-200 hover:bg-neutral-50 transition-colors duration-150"
         >
-          <span class="flex items-center gap-1 min-w-0">
-            <template v-for="(part, i) in searchLinkParts" :key="i">
-              <span v-if="part === '{{SEARCH_TERM}}'" class="truncate font-semibold">{{ searchTerm }}</span>
-              <span v-else-if="part === '{{HITS_COUNT}}'" class="shrink-0 text-neutral-500 font-normal">{{ results?.total }}</span>
-              <span v-else class="shrink-0 whitespace-pre">{{ part }}</span>
-            </template>
-          </span>
-          <SfIconChevronRight class="ml-auto shrink-0 text-neutral-500" size="sm" aria-hidden="true" />
-        </div>
-      </NuxtLink>
+          <div
+            class="max-w-screen-2xl mx-auto px-5 @md/dropdown:px-8 h-12 flex items-center gap-2 text-sm font-medium text-neutral-900 overflow-hidden"
+          >
+            <span class="flex items-center gap-1 min-w-0">
+              <template v-for="(part, i) in searchLinkParts" :key="i">
+                <span v-if="part === '{{SEARCH_TERM}}'" class="truncate font-semibold">{{ searchTerm }}</span>
+                <span v-else-if="part === '{{HITS_COUNT}}'" class="shrink-0 text-neutral-500 font-normal">{{
+                  results?.total
+                }}</span>
+                <span v-else class="shrink-0 whitespace-pre">{{ part }}</span>
+              </template>
+            </span>
+            <SfIconChevronRight class="ml-auto shrink-0 text-neutral-500" size="sm" aria-hidden="true" />
+          </div>
+        </NuxtLink>
       </section>
     </Teleport>
   </div>
@@ -146,9 +137,7 @@ const previewContainer = inject('previewContainer', ref<HTMLElement | null>(null
 const dropdownClass = computed(() => {
   const base =
     'z-dropdown bg-white border-y border-neutral-200 shadow-xl flex flex-col max-h-dropdown @container/dropdown';
-  return props.close
-    ? `absolute top-full left-1/2 -translate-x-1/2 w-screen ${base}`
-    : `fixed ${base}`;
+  return props.close ? `absolute top-full left-1/2 -translate-x-1/2 w-screen ${base}` : `fixed ${base}`;
 });
 
 const dropdownStyle = computed(() => {
