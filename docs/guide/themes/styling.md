@@ -67,7 +67,7 @@ A handful of components live **outside** the `@container` because they are part 
 - `app/components/editor/**`
 - `app/components/blocks/**/*Form.vue`
 
-Each block under `app/components/blocks/` comes as a pair: the block component itself, which is rendered into the page view, and a sibling component whose name ends in `Form` (e.g. `HeaderContainerForm.vue`), which is shown in the editor drawer outside the page view. Because the `*Form.vue` component is editor UI, it uses standard viewport variants. The block component must use container-query variants.
+Many blocks under `app/components/blocks/` have a companion editor component whose name ends in `Form` (e.g. `HeaderContainerForm.vue`). The `*Form.vue` component is rendered in the editor drawer outside the page view, so it uses standard viewport variants. The block component rendered into the page view must use container-query variants.
 
 ### Enforcement
 
