@@ -58,6 +58,10 @@
         "link": "/guide/themes/project-update-strategies.md"
       },
       {
+        "text": "Responsive Design",
+        "link": "/guide/themes/responsive-design.md"
+      },
+      {
         "text": "Nuxt Directory Structure",
         "link": "https://nuxt.com/docs/4.x/directory-structure"
       },
