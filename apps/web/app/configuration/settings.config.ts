@@ -121,5 +121,5 @@ export default {
   manufacturerContactUrl: process.env.NUXT_PUBLIC_MANUFACTURER_CONTACT_URL || '0',
   customAssetsSafeMode: process.env.NUXT_PUBLIC_CUSTOM_ASSETS_SAFE_MODE === 'true',
   enableSingleProductUrlScheme: process.env.NUXT_PUBLIC_ENABLE_SINGLE_PRODUCT_URL_SCHEME === 'true',
-  enableOrderChangePaymentMethod: process.env.NUXT_PUBLIC_ENABLE_ORDER_CHANGE_PAYMENT_METHOD === 'true',
+  enableOrderChangePaymentMethod: process.env.NUXT_PUBLIC_ENABLE_ORDER_CHANGE_PAYMENT_METHOD !== 'false',
 };
