@@ -23,6 +23,6 @@ const enableHeaderActionsOnlyForIndex = computed(() => {
 
 const headerBlocksClasses = computed(() => [
   'header-blocks',
-  { 'sticky top-0 z-50': (headerBlock.value as HeaderContainerBlock | undefined)?.configuration?.layout?.sticky },
+  { 'sticky top-0 z-dropdown': (headerBlock.value as HeaderContainerBlock | undefined)?.configuration?.layout?.sticky },
 ]);
 </script>

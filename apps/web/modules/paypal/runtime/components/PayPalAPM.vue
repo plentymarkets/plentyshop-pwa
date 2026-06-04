@@ -1,9 +1,9 @@
 <template>
-  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-base relative paypal-button" />
 
   <div
     v-if="processingOrder"
-    class="fixed top-0 left-0 bg-black bg-opacity-75 bottom-0 right-0 !z-50 flex items-center justify-center flex-col"
+    class="fixed top-0 left-0 bg-black bg-opacity-75 bottom-0 right-0 !z-dropdown flex items-center justify-center flex-col"
   >
     <div class="text-white mb-4">{{ t('checkout.googlePay.paymentInProgress') }}</div>
     <SfLoaderCircular class="flex justify-center items-center" size="lg" />

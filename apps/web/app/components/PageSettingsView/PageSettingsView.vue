@@ -13,7 +13,7 @@
               label="Unique ID of the page. Cannot be changed."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -42,7 +42,7 @@
               label="The page type defines the purpose and functionality of a page. A content page can be freely filled with content, while a category page is used to assign and display products."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-100"
+              class="ml-2 z-editor-toolbar"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -68,7 +68,7 @@
               label="The page name is used to identify the page in the page list and can be visible in the navigation, depending on the settings. It can be changed at any time."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -90,7 +90,7 @@
               label="Select a parent to create a subpage. The parent page can also be left empty."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -118,7 +118,7 @@
               label="The URL slug defines the page’s web address and affects SEO as well as URL readability. Changing it may break existing links."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -140,7 +140,7 @@
               label="The position determines the page order in the navigation and the editor. Lower positions come first."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -163,7 +163,7 @@
                 label="If you deactivate this page, customers and search engines won't be able to access it via the navigation or direct links. You can reactivate the page at any time."
                 :placement="'top'"
                 :show-arrow="true"
-                class="ml-2 z-10"
+                class="ml-2 z-dropdown"
               >
                 <SfIconInfo :size="'sm'" />
               </SfTooltip>

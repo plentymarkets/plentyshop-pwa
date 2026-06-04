@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full @md:sticky @md:shadow-md z-10">
+    <header class="relative w-full @md:sticky @md:shadow-md z-raised">
       <div
         v-if="viewport.isLessThan('md')"
         class="flex items-center w-full"
@@ -221,7 +221,7 @@
             v-if="isAuthorized && isActionVisible('account')"
             v-model="isAccountDropdownOpen"
             placement="bottom-end"
-            class="z-50"
+            class="z-dropdown"
             :style="{ order: getActionOrder('account') }"
           >
             <template #trigger>
@@ -316,7 +316,7 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-50"
+        class="w-full h-full z-modal"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
@@ -371,7 +371,6 @@ const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
 const { open: openMegaMenu } = useMegaMenu();
-const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
   content,
@@ -403,10 +402,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) {
-    await getCategoryTree();
-  }
-
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 

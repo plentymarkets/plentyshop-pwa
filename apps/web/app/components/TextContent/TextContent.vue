@@ -10,6 +10,7 @@
       class="rte-prose rte-prose--render"
       :data-testid="props.testId ? 'text-html-' + props.testId : 'text-html'"
       :class="`rte-prose--${props.text?.textAlignment ?? 'left'}`"
+      @click="handleRteClick"
       v-html="renderedHtmlDescription"
     />
 
@@ -30,8 +31,39 @@
 import type { TextContentProps } from '~/components/TextContent/types';
 
 const props = defineProps<TextContentProps>();
+const localePath = useLocalePath();
+const router = useRouter();
+const NuxtLink = resolveComponent('NuxtLink');
 
-const renderedHtmlDescription = computed(() => decodeHtmlEntities(props.text?.htmlDescription));
+const renderedHtmlDescription = computed(() => {
+  const html = decodeHtmlEntities(props.text?.htmlDescription);
+  if (!html) return '';
+
+  return html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
+    if (isInternalLink(href, router)) {
+      return `<a${before}href=${quote}${localePath(href)}${quote}`;
+    }
+    return match;
+  });
+});
+
+const handleRteClick = (event: MouseEvent) => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+    return;
+
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+
+  const anchor = target.closest('a') as HTMLAnchorElement | null;
+  if (!anchor) return;
+
+  const href = anchor.getAttribute('href');
+  if (!href || !isInternalLink(href, router)) return;
+  if (anchor.target && anchor.target !== '_self') return;
+
+  event.preventDefault();
+  router.push(href);
+};
 
 const textAlignmentClass = computed(() => {
   switch (props.text?.textAlignment) {
@@ -43,7 +75,4 @@ const textAlignmentClass = computed(() => {
       return 'text-left items-start';
   }
 });
-
-const localePath = useLocalePath();
-const NuxtLink = resolveComponent('NuxtLink');
 </script>
