@@ -23,6 +23,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
     loading: false,
   }));
 
+  const safeSerializeJsonLd = (value: unknown, space?: number) =>
+    JSON.stringify(value, null, space).replaceAll('<', String.raw`\u003C`);
+
   /**
    * @description Function for Setting Logo Metadata.
    * @returns SetLogoMeta
@@ -45,7 +48,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(structuredData),
+          innerHTML: safeSerializeJsonLd(structuredData),
         },
       ],
     });
@@ -190,7 +193,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(metaObject, null, 4),
+          innerHTML: safeSerializeJsonLd(metaObject, 4),
         },
       ],
     });
@@ -249,7 +252,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         {
           key: 'item-list-structured-data',
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(structuredData),
+          innerHTML: safeSerializeJsonLd(structuredData),
         },
       ],
     });

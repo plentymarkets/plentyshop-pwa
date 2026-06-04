@@ -62,6 +62,22 @@ const getCapturedJsonLd = (): Record<string, unknown> => {
   return {};
 };
 
+const getCapturedJsonLdRaw = (): string => {
+  const calls = mockUseHead.mock.calls;
+
+  for (let i = calls.length - 1; i >= 0; i--) {
+    const call = calls[i];
+    if (!call) continue;
+
+    const arg = call[0] as { script?: { type: string; innerHTML: string }[] };
+    const script = arg?.script?.find((s) => s.type === 'application/ld+json');
+
+    if (script) return script.innerHTML;
+  }
+
+  return '';
+};
+
 describe('useStructuredData', () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -208,6 +224,17 @@ describe('useStructuredData', () => {
       expect(itemListElement[1]?.position).toBe(3);
       expect(itemListElement[0]?.url).toBe('https://shop.example.com/test-product_1');
       expect(itemListElement[1]?.url).toBe('https://shop.example.com/test-product_2');
+    });
+
+    it('should escape unsafe characters in JSON-LD innerHTML', () => {
+      vi.spyOn(productGetters, 'getName').mockReturnValue('</script><img src=x onerror=alert(1)>');
+
+      const { setItemListMetaData } = useStructuredData();
+      setItemListMetaData([buildProduct()]);
+
+      const rawJsonLd = getCapturedJsonLdRaw();
+      expect(rawJsonLd).not.toContain('</script>');
+      expect(rawJsonLd).toContain(String.raw`\u003C/script>`);
     });
   });
 });
