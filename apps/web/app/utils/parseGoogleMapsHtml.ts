@@ -36,6 +36,8 @@ export const parseGoogleMapsHtml = (html: string): HtmlSegment[] => {
     }
 
     const embedUrl = match[2];
+    if (!embedUrl) continue;
+
     const { previewUrl, width, height } = parseIframeAttributes(match[1] ?? '', match[3] ?? '');
 
     segments.push({

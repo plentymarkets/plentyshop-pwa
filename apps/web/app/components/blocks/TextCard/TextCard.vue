@@ -8,7 +8,7 @@
       'items-stretch',
       'space-y-4',
       textAlignmentClass,
-      hasGoogleMapsEmbed ? 'text-card--map-bleed max-lg:!pl-0 max-lg:!pr-0' : '',
+      containsGoogleMapsEmbed ? 'text-card--map-bleed max-lg:!pl-0 max-lg:!pr-0' : '',
     ]"
     :style="inlineStyle"
   >
@@ -22,7 +22,7 @@ import { hasGoogleMapsEmbed as htmlHasGoogleMapsEmbed } from '~/utils/parseGoogl
 
 const props = defineProps<TextCardProps>();
 
-const hasGoogleMapsEmbed = computed(() => htmlHasGoogleMapsEmbed(props.content.text?.htmlDescription));
+const containsGoogleMapsEmbed = computed(() => htmlHasGoogleMapsEmbed(props.content.text?.htmlDescription));
 
 const textAlignmentClass = computed(() => {
   switch (props.content.text?.textAlignment) {
@@ -43,7 +43,7 @@ const inlineStyle = computed(() => {
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
   };
 
-  if (hasGoogleMapsEmbed.value) {
+  if (containsGoogleMapsEmbed.value) {
     style['--text-card-pl'] = layout.paddingLeft ? `${layout.paddingLeft}px` : '0px';
     style['--text-card-pr'] = layout.paddingRight ? `${layout.paddingRight}px` : '0px';
     return style;
