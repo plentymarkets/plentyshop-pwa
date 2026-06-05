@@ -35,8 +35,9 @@ const loadGoogleTranslate = async () => {
   window.googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
-        pageLanguage: 'de', 
-        includedLanguages: 'ar,zh-CN,zh-TW,hr,nl,en,fr,de,hi,it,pl,pt,ru,es,sv,tr', 
+        pageLanguage: 'de',
+        includedLanguages: 'de',
+        // ar, zh-CN, zh-TW, hr, nl, en, fr, hi, it, pl, pt, ru, es, sv, tr
         layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
         autoDisplay: false,
       },
