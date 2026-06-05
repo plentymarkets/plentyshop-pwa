@@ -61,7 +61,10 @@ const editElement = (block: Block) => {
 };
 
 const guardHeaderMove = (evt: BlockMoveEvent) =>
-  canMoveHeaderBlock(Array.isArray(headerContainerStructure.value.content) ? headerContainerStructure.value.content : [], evt);
+  canMoveHeaderBlock(
+    Array.isArray(headerContainerStructure.value.content) ? headerContainerStructure.value.content : [],
+    evt,
+  );
 </script>
 
 <i18n lang="json">
