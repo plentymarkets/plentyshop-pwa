@@ -41,7 +41,7 @@
 
       <iframe
         v-else
-        :src="embedUrl"
+        :src="resolvedEmbedUrl"
         :title="iframeTitle"
         class="absolute inset-0 size-full border-0"
         width="600"
@@ -56,7 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import { googleMapsConsentCopy, getGoogleMapsPreviewUrl } from '~/configuration/googleMapsConsent.config';
+import {
+  googleMapsConsentCopy,
+  getGoogleMapsPreviewUrl,
+  resolveGoogleMapsEmbedUrl,
+} from '~/configuration/googleMapsConsent.config';
 
 const props = withDefaults(
   defineProps<{
@@ -87,6 +91,8 @@ const aspectRatioStyle = computed(() => {
   const height = parseDimension(props.height, 450);
   return { aspectRatio: `${width} / ${height}` };
 });
+
+const resolvedEmbedUrl = computed(() => resolveGoogleMapsEmbedUrl(props.embedUrl));
 
 const previewImageSrc = computed(
   () => getGoogleMapsPreviewUrl(props.embedUrl, props.previewUrl) ?? '/_nuxt-plenty/images/google-map-kontakt.jpg',
