@@ -17,12 +17,19 @@ export const isValidHeaderOrder = (blocks: Block[]): boolean => {
 };
 
 export const canMoveHeaderBlock = (currentBlocks: Block[], evt: BlockMoveEvent): boolean => {
+  const from = evt.draggedContext.index;
+  const to = evt.draggedContext.futureIndex;
+
+  if (typeof from !== 'number' || typeof to !== 'number') {
+    return true;
+  }
+
   const proposed = [...currentBlocks];
-  const [moved] = proposed.splice(evt.draggedContext.index, 1);
+  const [moved] = proposed.splice(from, 1);
   if (!moved) {
     return true;
   }
-  proposed.splice(evt.draggedContext.futureIndex, 0, moved);
+  proposed.splice(to, 0, moved);
   return isValidHeaderOrder(proposed);
 };
 export const isGlobalBlock = (block: Block | null | undefined): boolean =>
