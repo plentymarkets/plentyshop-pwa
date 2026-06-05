@@ -121,9 +121,14 @@ defineEmits<{
 const isOpen = defineModel<boolean>('open', { default: true });
 
 const closeMenu = () => {
-  if (props.openSectionMenuIndex !== undefined) {
-    props.toggleSectionMenu(props.openSectionMenuIndex);
-  }
+  const indexToClose = props.openSectionMenuIndex;
+  if (indexToClose === undefined) return;
+
+  nextTick(() => {
+    if (props.openSectionMenuIndex === indexToClose) {
+      props.toggleSectionMenu(indexToClose);
+    }
+  });
 };
 
 onMounted(() => {
