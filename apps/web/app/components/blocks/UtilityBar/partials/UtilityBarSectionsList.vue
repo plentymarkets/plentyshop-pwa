@@ -1,9 +1,5 @@
 <template>
-  <EditorFormPanel
-    v-model="isOpen"
-    :title="getEditorTranslation('elements-group-label')"
-    content-class="p-0"
-  >
+  <EditorFormPanel v-model="isOpen" :title="getEditorTranslation('elements-group-label')" content-class="p-0">
     <draggable
       v-if="sections.length"
       :model-value="sections"
@@ -34,11 +30,7 @@
 
           <span
             class="flex-1 text-xs truncate min-w-0"
-            :class="
-              section.visible !== false
-                ? 'text-editor-text-default'
-                : 'text-editor-text-ghost line-through'
-            "
+            :class="section.visible !== false ? 'text-editor-text-default' : 'text-editor-text-ghost line-through'"
           >
             {{ getSectionLabel(section.id) }}
           </span>

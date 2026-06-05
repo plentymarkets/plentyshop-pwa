@@ -73,11 +73,7 @@
           <SfIconMenu aria-hidden="true" />
         </UiButton>
 
-        <div
-          v-if="isSectionVisible('logo')"
-          class="flex items-center justify-center"
-          :style="slotStyle('logo')"
-        >
+        <div v-if="isSectionVisible('logo')" class="flex items-center justify-center" :style="slotStyle('logo')">
           <NuxtLink
             id="blockified-logo"
             data-testid="logo-link"
@@ -422,8 +418,7 @@ const slotStyle = (sectionId: string) => {
     return { order, flex: '5', marginLeft: '16px', marginRight: '16px' };
   }
 
-  const isTabletSearchSide =
-    sectionId === 'search' && viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg');
+  const isTabletSearchSide = sectionId === 'search' && viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg');
   if (isTabletSearchSide) {
     return { order, flex: '1', minWidth: '220px' };
   }
