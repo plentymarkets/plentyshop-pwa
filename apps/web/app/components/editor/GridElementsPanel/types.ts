@@ -1,5 +1,6 @@
 import type { Block } from '@plentymarkets/shop-api';
 import type { QuickAddOption } from '~/components/editor/QuickAdd/types';
+import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 export interface GridElementsPanelProps {
   uuid: string;
@@ -7,6 +8,7 @@ export interface GridElementsPanelProps {
   minItems?: number;
   customAdd?: boolean;
   quickAddOptions?: QuickAddOption[];
+  canMove?: (evt: BlockMoveEvent) => boolean;
 }
 
 export type GridElementsPanelEmits = {

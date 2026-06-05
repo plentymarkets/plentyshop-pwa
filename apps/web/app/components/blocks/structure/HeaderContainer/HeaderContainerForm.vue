@@ -6,6 +6,7 @@
         :uuid="headerUuid"
         :min-items="1"
         :quick-add-options="headerQuickAddOptions"
+        :can-move="guardHeaderMove"
         @edit-element="editElement"
       />
 
@@ -27,6 +28,8 @@
 <script setup lang="ts">
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
+import { canMoveHeaderBlock } from '~/utils/blocks/block-helpers';
+import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 const { headerContainer } = useBlocks();
 const { logHeaderContainerEditBlock } = useLogEvent();
@@ -56,6 +59,8 @@ const editElement = (block: Block) => {
   pushEdit(block);
   logHeaderContainerEditBlock();
 };
+
+const guardHeaderMove = (evt: BlockMoveEvent) => canMoveHeaderBlock(headerContainerStructure.value.content, evt);
 </script>
 
 <i18n lang="json">

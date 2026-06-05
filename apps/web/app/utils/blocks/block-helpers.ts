@@ -1,9 +1,30 @@
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import { migrateLegacyFooterToContainer } from '~/utils/blockTemplates/footer';
-
-const HEADER_BLOCK_NAME = 'Header';
+import { HEADER_BLOCK_NAME, NAVIGATION_BLOCK_NAME, UTILITY_BAR_BLOCK_NAME } from '~/utils/blocks/block-names';
+import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 export const isHeaderBlock = (block: Block | null | undefined): boolean => block?.name === HEADER_BLOCK_NAME;
+
+export const isValidHeaderOrder = (blocks: Block[]): boolean => {
+  const utilityBarIdx = blocks.findIndex((block) => block.name === UTILITY_BAR_BLOCK_NAME);
+  const navigationIdx = blocks.findIndex(
+    (block) => block.name === NAVIGATION_BLOCK_NAME || block.name === HEADER_BLOCK_NAME,
+  );
+  if (utilityBarIdx === -1 || navigationIdx === -1) {
+    return true;
+  }
+  return navigationIdx > utilityBarIdx;
+};
+
+export const canMoveHeaderBlock = (currentBlocks: Block[], evt: BlockMoveEvent): boolean => {
+  const proposed = [...currentBlocks];
+  const [moved] = proposed.splice(evt.draggedContext.index, 1);
+  if (!moved) {
+    return true;
+  }
+  proposed.splice(evt.draggedContext.futureIndex, 0, moved);
+  return isValidHeaderOrder(proposed);
+};
 export const isGlobalBlock = (block: Block | null | undefined): boolean =>
   isFooterContainerBlock(block) || isHeaderContainerBlock(block);
 
