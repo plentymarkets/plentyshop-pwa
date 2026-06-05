@@ -39,7 +39,7 @@
         :aria-label="t('searchBar.searchSuggestions')"
       >
         <div class="flex-1 overflow-y-auto">
-          <div class="max-w-screen-2xl mx-auto px-5 @md/dropdown:px-8 py-7">
+          <div class="max-w-screen-2xl mx-auto px-5 @md/dropdown:px-8 py-5 @md/dropdown:py-7">
             <div class="grid grid-cols-1 @lg/dropdown:grid-cols-search-dropdown gap-7 @lg/dropdown:gap-9">
               <div class="@lg/dropdown:pr-9 @lg/dropdown:border-r @lg/dropdown:border-neutral-200">
                 <div v-if="results?.suggestions?.length" class="mb-6">
@@ -61,7 +61,7 @@
                     <li v-for="(category, index) in results.categories" :key="index">
                       <NuxtLink
                         :to="category.url"
-                        class="inline-flex items-center h-7 px-3 text-xs text-neutral-900 bg-neutral-100 rounded-full border border-transparent hover:border-neutral-900 hover:bg-white transition-colors duration-150"
+                        class="inline-flex items-center h-8 px-3 text-xs text-neutral-900 bg-neutral-100 rounded-full border border-transparent hover:border-neutral-900 hover:bg-white transition-colors duration-150"
                       >
                         {{ category.label }}
                       </NuxtLink>
@@ -77,7 +77,7 @@
                 </h3>
                 <ul
                   v-if="results?.items?.length"
-                  class="grid grid-cols-2 @md/products:grid-cols-4 gap-x-5 gap-y-6 items-start"
+                  class="grid grid-cols-1 @xs/products:grid-cols-2 @md/products:grid-cols-4 gap-x-5 gap-y-6 items-start"
                 >
                   <li v-for="(item, index) in results.items" :key="index">
                     <UiSearchSuggestionProduct :item="item" />
@@ -137,7 +137,7 @@ const previewContainer = inject('previewContainer', ref<HTMLElement | null>(null
 const dropdownClass = computed(() => {
   const base =
     'z-popover bg-white border-y border-neutral-200 shadow-xl flex flex-col max-h-dropdown @container/dropdown';
-  return props.close ? `absolute top-full left-1/2 -translate-x-1/2 w-screen ${base}` : `fixed ${base}`;
+  return props.close ? `absolute inset-x-0 top-full ${base}` : `fixed ${base}`;
 });
 
 const dropdownStyle = computed(() => {
