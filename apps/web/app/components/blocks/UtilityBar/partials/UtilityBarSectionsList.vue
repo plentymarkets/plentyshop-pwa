@@ -11,9 +11,13 @@
       <template #item="{ element: section, index }">
         <div
           :data-testid="`actions-section-item-${index}`"
+          role="button"
+          tabindex="0"
           class="flex items-center gap-1.5 px-2 py-1.5 border-b border-editor-border transition-colors hover:bg-editor-toc-hover cursor-pointer"
           :class="{ 'bg-editor-toc-hover': currentEditingSectionIndex === index || openSectionMenuIndex === index }"
           @click="editSection(index)"
+          @keydown.enter.prevent="editSection(index)"
+          @keydown.space.prevent="editSection(index)"
         >
           <button
             class="el-drag-handle cursor-grab text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0"
