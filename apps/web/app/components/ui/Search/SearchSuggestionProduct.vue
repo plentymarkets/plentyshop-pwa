@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="item.url"
-    class="group/card flex flex-col rounded-lg overflow-hidden transition-shadow duration-200 ease-out group-hover/card:shadow-card-hover hover:shadow-card-hover !no-underline"
+    class="group/card flex flex-col rounded-lg overflow-hidden ring-1 ring-neutral-200 transition-shadow duration-200 ease-out group-hover/card:shadow-card-hover hover:shadow-card-hover !no-underline"
     data-testid="search-suggestion-product"
   >
     <div class="aspect-[4/3] overflow-hidden">
