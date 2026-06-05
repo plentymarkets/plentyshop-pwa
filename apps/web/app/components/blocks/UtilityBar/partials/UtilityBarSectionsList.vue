@@ -20,6 +20,7 @@
           @keydown.space.prevent="editSection(index)"
         >
           <button
+            type="button"
             class="el-drag-handle cursor-grab text-editor-text-dim hover:text-editor-text-placeholder p-0.5 flex-shrink-0"
             :data-testid="`actions-drag-section-handle-${index}`"
             :aria-label="getEditorTranslation('drag-reorder-aria')"
