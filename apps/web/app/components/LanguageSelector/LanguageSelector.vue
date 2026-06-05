@@ -53,7 +53,7 @@ const configuredLanguages = (config.public.activeLanguages as string)
 
 // Header globe selector: German only. Other configured languages are disabled for now.
 // en, bg, fr, it, es, tr, nl, pl, pt, nn, ro, da, se, cz, ru, sk, cn, vn
-const activeLanguages = configuredLanguages.filter((locale) => locale === 'de');
+const activeLanguages: string[] = configuredLanguages.filter((locale) => locale === 'de');
 
 const filteredLocaleCodes = computed(() =>
   localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode)),
