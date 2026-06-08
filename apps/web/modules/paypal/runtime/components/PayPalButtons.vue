@@ -209,5 +209,6 @@ const refetchOrder = async () => {
     postcode: shippingAddress?.postalCode,
     name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
   });
+  processingOrder.value = false;
 };
 </script>
