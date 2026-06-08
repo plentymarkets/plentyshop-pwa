@@ -7,6 +7,7 @@ export interface GridElementsPanelProps {
   minItems?: number;
   customAdd?: boolean;
   quickAddOptions?: QuickAddOption[];
+  canMove?: (evt: BlockMoveEvent) => boolean;
 }
 
 export type GridElementsPanelEmits = {

@@ -9,6 +9,7 @@ export interface TocSection {
   container?: Block;
   addTestId: string;
   setOrder: (next: Block[]) => void;
+  canMove?: (evt: BlockMoveEvent) => boolean;
 }
 
 export interface FlatBlock {
