@@ -9,8 +9,8 @@ import { migrateTextCardContent } from '~/utils/migrate-text-editor';
 import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
 import type { OldContent } from '~/utils/migrate-recommended-content/types';
 import type { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
+import { HEADER_BLOCK_NAME } from '~/utils/blocks/block-names';
 
-const HEADER_BLOCK_NAME = 'Header';
 const TEXT_CONTENT_BLOCKS = ['TextCard', 'Banner', 'ProductRecommendedProducts'];
 
 const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NAME;
