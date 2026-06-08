@@ -2,7 +2,12 @@
   <div class="flex flex-col font-body">
     <div class="flex">
       <label class="pb-1 text-sm font-medium text-neutral-900">{{ getEditorTranslation('default-language') }}</label>
-      <SfTooltip :label="getEditorTranslation('tooltip')" placement="right" :show-arrow="true" class="flex ml-3 z-20">
+      <SfTooltip
+        :label="getEditorTranslation('tooltip')"
+        placement="right"
+        :show-arrow="true"
+        class="flex ml-3 z-editor-inline"
+      >
         <SfIconHelp size="sm" class="cursor-pointer" />
       </SfTooltip>
     </div>

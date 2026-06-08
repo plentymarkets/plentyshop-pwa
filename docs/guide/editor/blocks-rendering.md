@@ -40,5 +40,5 @@ This creates a seamless transition where the old content remains visible during 
 
 Linked concepts
 
-1. [Blocks architecture](/guide/concept/blocks-architecture.md) — Overview of the blocks system
-2. [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md) — How structure and content blocks compose
+1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system
+2. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — How structure and content blocks compose

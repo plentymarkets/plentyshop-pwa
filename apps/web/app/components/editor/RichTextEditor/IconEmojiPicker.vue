@@ -11,7 +11,7 @@
       v-if="open"
       ref="floatingEl"
       :style="floatingStyles"
-      class="z-[9999] w-[260px] rounded border border-gray-200 bg-white shadow-lg"
+      class="z-picker w-[260px] rounded border border-gray-200 bg-white shadow-lg"
     >
       <div class="flex border-b border-gray-200" role="tablist">
         <button

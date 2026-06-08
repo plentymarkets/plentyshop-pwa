@@ -26,7 +26,7 @@ We recommend working with a fork of the [shop repository](https://github.com/ple
 
 ::: warning :warning: Repository visibility
 GitHub forks are always publicly visible.
-If you want to maintain a private repository that's still connected to the main project, refer to our [guide on update strategies](../how-to/project-update-strategies.md).
+If you want to maintain a private repository that's still connected to the main project, refer to our [guide on update strategies](/guide/themes/project-update-strategies.md).
 :::
 
 ### GitHub PAT
@@ -150,7 +150,10 @@ The shop will be served with hot reload at [localhost:3000](http://localhost:300
 ## Deployment
 
 ::: warning :warning: SSL Certificate
-To build and deploy a PlentyONE shop and to use the shop editor, you need a [valid SSL certificate](https://knowledge.plentyone.com/en-gb/manual/main/business-decisions/ssl-certificate.html).
+To build and deploy a PlentyONE shop and to use the shop editor, you need a valid SSL certificate.
+
+Domains hosted by or linked to PlentyONE receive a certificate automatically.
+For externally hosted domains, refer to [For external domains: DNS settings](https://knowledge.plentyone.com/en-gb/manual/main/business-decisions/dns-self-help.html#_for_external_domains_dns_settings) in the PlentyONE manual.
 :::
 
 ### Activate preview
@@ -179,6 +182,6 @@ For the go-live option to become available, the shop has to run in preview mode.
 Once you have your shop running, you can begin customising it.
 Here are a few places to start:
 
-- **Theme customization**: Customize the look and feel [look and feel](/guide/how-to/theme.md) of your shop.
+- **Theme customization**: Customize the [look and feel](/guide/themes/styling.md) of your shop.
 - **Advanced PlentyONE setup**: Complete the [setup journey](https://knowledge.plentymarkets.com/en-gb/manual/main/online-store/shop.html#shop-preparation) in PlentyONE to enable additional payment and shipping providers, bot protection, and more.
-- **Project updates**: Learn about [different strategies](/guide/how-to/project-update-strategies.md) for managing updates from the main project.
+- **Project updates**: Learn about [different strategies](/guide/themes/project-update-strategies.md) for managing updates from the main project.

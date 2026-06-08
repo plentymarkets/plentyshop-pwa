@@ -52,37 +52,22 @@
     "test:watch": {
       "cache": false
     },
-    "test:cypress-checkout": {
+    "test:cypress-dev": {
       "cache": false
     },
-    "test:cypress-external": {
+    "test:cypress": {
       "cache": false
     },
-    "test:cypress-feature": {
+    "test:cypress-smoke-shop": {
       "cache": false
     },
-    "test:cypress-paypal": {
-      "cache": false
-    },
-    "test:cypress-dhl": {
-      "cache": false
-    },
-    "test:cypress-editor": {
+    "test:cypress-smoke-editor": {
       "cache": false
     },
     "test:cypress-quarantine": {
       "cache": false
     },
     "test:cypress-post-quarantine": {
-      "cache": false
-    },
-    "test:cypress": {
-      "cache": false
-    },
-    "test:cypress-smoke-editor": {
-      "cache": false
-    },
-    "test:cypress-dev": {
       "cache": false
     },
     "generate": {

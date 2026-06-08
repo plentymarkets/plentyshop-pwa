@@ -1,7 +1,7 @@
 <template>
   <SfDrawer
     v-model="open"
-    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !fixed top-0 h-full flex flex-col overflow-hidden z-[60] [--toolbar-w:theme(spacing.toolbar)] [--panel-w:clamp(250px,25vw,300px)] left-[calc(var(--toolbar-w)+var(--panel-w))] w-[calc(100vw-var(--toolbar-w)-var(--panel-w))]"
+    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !fixed top-16 h-[calc(100vh-4rem)] flex flex-col overflow-hidden z-editor-toolbar [--toolbar-w:theme(spacing.toolbar)] [--panel-w:clamp(250px,25vw,300px)] left-[calc(var(--toolbar-w)+var(--panel-w))] w-[calc(100vw-var(--toolbar-w)-var(--panel-w))]"
     :placement="'left'"
     :disable-click-away="true"
   >
@@ -44,7 +44,7 @@
       <div class="w-full flex-1 min-h-0 mt-4 overflow-hidden border rounded-lg">
         <div class="relative h-full flex flex-col">
           <div class="flex border-b flex-shrink-0 bg-neutral-100">
-            <div class="flex-shrink-0 flex z-20">
+            <div class="flex-shrink-0 flex z-editor-inline">
               <div class="w-48 px-4 py-3 font-semibold">{{ getEditorTranslation('category-key') }}</div>
               <div class="w-48 px-4 py-3 font-semibold border-r" />
             </div>
@@ -69,7 +69,7 @@
               {{ emptyStateMessage }}
             </div>
             <template v-else>
-              <div class="flex-shrink-0 z-10 border-r" style="width: 384px">
+              <div class="flex-shrink-0 z-dropdown border-r" style="width: 384px">
                 <div ref="leftScrollerRef" class="h-full overflow-y-auto scrollbar-thin" @scroll="syncScrollLeft">
                   <div :style="{ height: `${leftVirtualizer.getTotalSize()}px`, position: 'relative' }">
                     <div

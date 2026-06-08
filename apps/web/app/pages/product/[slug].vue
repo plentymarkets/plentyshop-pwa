@@ -42,6 +42,7 @@ definePageMeta({
   type: 'product',
   isBlockified: true,
   identifier: 0,
+  cacheControl: getCacheControl(),
 });
 
 const showRecommended = ref(false);

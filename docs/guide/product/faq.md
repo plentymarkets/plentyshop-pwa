@@ -17,12 +17,12 @@
 ## Does the shop support plentyShop LTS themes and widgets?
 
 No, the shop doesn't support any LTS plugins.
-Refer to our [module guides](/guide/how-to/module/index.md) to learn about the Nuxt extension ecosystem.
+Refer to our [module guides](/guide/modules/index.md) to learn about the Nuxt extension ecosystem.
 
 ## Does the shop support the plentyShop LTS ShopBuilder?
 
 No, the shop doesn't support ShopBuilder.
-Refer to our [editor guides](/guide/how-to/editor/index.md) to learn about our replacement technology.
+Refer to our [editor guides](/guide/editor/index.md) to learn about our replacement technology.
 
 ## How can I distribute extensions I develop to merchants?
 
@@ -31,4 +31,4 @@ This means you have to include any extensions you build directly in your own pro
 Widespread distribution isn't supported yet.
 
 Note that building extensions via Nuxt modules may still be the best option for you, depending on what you want to customise.
-For details, refer to the [update strategies guide](/guide/how-to/project-update-strategies.md).
+For details, refer to the [update strategies guide](/guide/themes/project-update-strategies.md).

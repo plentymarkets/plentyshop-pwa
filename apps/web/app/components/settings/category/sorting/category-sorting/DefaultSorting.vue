@@ -6,7 +6,7 @@
         :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
-        class="ml-2 z-10"
+        class="ml-2 z-dropdown"
         data-testid="default-sorting-tooltip"
       >
         <SfIconInfo :size="'sm'" />

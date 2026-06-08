@@ -8,7 +8,7 @@
         :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
-        class="ml-2 z-10"
+        class="ml-2 z-dropdown"
         data-testid="available-sorting-option-tooltip"
       >
         <SfIconInfo :size="'sm'" />

@@ -1,5 +1,5 @@
 <template>
-  <header ref="referenceRef" :class="headerClass" class="relative w-full @md:sticky @md:shadow-md z-10">
+  <header ref="referenceRef" :class="headerClass" class="relative w-full @md:sticky @md:shadow-md z-sticky">
     <div
       class="flex justify-between items-center flex-wrap @md:flex-nowrap px-4 @md:px-10 py-2 @md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
@@ -84,7 +84,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden @md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
+            class="hidden @md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-sticky max-h-[calc(100vh-300px)] overflow-y-auto"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
             @keydown.down="navigateDropdownItems($event, 'down')"
@@ -135,12 +135,12 @@
     </nav>
 
     <template v-else>
-      <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
+      <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
         v-model="isOpen"
         placement="left"
-        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        class="right-12 max-w-96 bg-white overflow-y-auto z-drawer"
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
@@ -272,7 +272,7 @@ const trapFocusOptions = {
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
-const headerClass = computed(() => ({ 'z-[10]': isOpen.value }));
+const headerClass = computed(() => ({ 'z-sticky': isOpen.value }));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
