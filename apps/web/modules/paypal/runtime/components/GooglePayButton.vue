@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { PayPalAddToCartCallback } from '../types';
+import type { PayPalAddToCartCallback, PayPalCreditPropsType } from '../types';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { usePayPal } from '../composables/usePayPal';
 
@@ -24,8 +24,10 @@ const {
   getIsReadyToPayRequest,
 } = useGooglePay();
 const { getCurrentScript } = usePayPal();
+const props = defineProps<PayPalCreditPropsType>();
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'on-payed'): void;
 }>();
 
 const payPalScript = computed(() => getCurrentScript());
@@ -33,17 +35,18 @@ const payPalScript = computed(() => getCurrentScript());
 async function onGooglePaymentButtonClicked() {
   await emits('button-clicked', async (successfully) => {
     if (successfully) {
-      const paymentDataRequest = await getGooglePaymentDataRequest();
+      const paymentDataRequest = await getGooglePaymentDataRequest(props.order?.order?.id);
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
-          processPayment(paymentData).catch((error: Error) => {
+          processPayment(paymentData, props.order).catch((error: Error) => {
             useNotification().send({
               message: error.message || t('error.paymentFailed'),
               type: 'negative',
             });
             paymentLoading.value = false;
           });
+          emits('on-payed');
           return true;
         })
         .catch((error: Error) => {

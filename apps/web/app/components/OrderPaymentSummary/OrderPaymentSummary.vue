@@ -21,13 +21,7 @@
   <p data-testid="order-payment-status">{{ t(orderGetters.getPaymentStatusKey(order)) }}</p>
 
   <div v-if="showPaymentButton" class="mt-4">
-    <PayPalExpressButton
-      v-if="paymentKey === 'PAYPAL'"
-      type="OrderAlreadyExisting"
-      :currency="currency"
-      :plenty-order-id="Number(orderGetters.getId(order))"
-      @on-payed="refetchOrder()"
-    />
+    <ReInitializeOrderPaymentButtons :order="order" />
   </div>
 
   <ClientOnly>
@@ -40,25 +34,13 @@ import { orderConfirmationGetters, orderGetters } from '@plentymarkets/shop-api'
 import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();
-const { fetchOrderClient, changePaymentMethodModalOpen } = useCustomerOrder('soft-login');
+const { changePaymentMethodModalOpen } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
 const { getSetting } = useSiteSettings('enableOrderChangePaymentMethod');
 const isUnpaid = computed(() => !orderConfirmationGetters.isOrderPaid(props.order));
 const validOrderPaymentStatus = computed(() => orderConfirmationGetters.orderStatusValidForPayment(props.order));
-const showPaymentButton = computed(() => isUnpaid.value && validOrderPaymentStatus.value);
-const currency = orderGetters.getCurrency(props.order);
-const paymentKey = computed(() => props.order.paymentMethodKey);
+const showPaymentButton = computed(() => isUnpaid.value && validOrderPaymentStatus.value && props.order.allowPaymentMethodSwitchFrom);
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
 const enableOrderChangePaymentMethod = computed(() => getSetting().toString() === 'true');
-
-const refetchOrder = async () => {
-  const shippingAddress = orderGetters.getShippingAddress(props.order);
-  await fetchOrderClient({
-    orderId: orderGetters.getId(props.order),
-    accessKey: orderGetters.getAccessKey(props.order),
-    postcode: shippingAddress?.postalCode,
-    name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
-  });
-};
 </script>
