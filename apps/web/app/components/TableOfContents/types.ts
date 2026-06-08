@@ -1,5 +1,4 @@
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 export type TocSectionId = 'header' | 'content' | 'footer';
 

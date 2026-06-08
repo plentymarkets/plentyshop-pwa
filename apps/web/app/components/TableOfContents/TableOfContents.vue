@@ -39,8 +39,6 @@ import { SfIconClose } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { TocSection } from './types';
-import { canMoveHeaderBlock } from '~/utils/blocks/block-helpers';
-import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { filters } = useTableOfContents();

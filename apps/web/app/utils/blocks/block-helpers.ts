@@ -1,7 +1,6 @@
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import { migrateLegacyFooterToContainer } from '~/utils/blockTemplates/footer';
 import { HEADER_BLOCK_NAME, NAVIGATION_BLOCK_NAME, UTILITY_BAR_BLOCK_NAME } from '~/utils/blocks/block-names';
-import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 export const isHeaderBlock = (block: Block | null | undefined): boolean => block?.name === HEADER_BLOCK_NAME;
 

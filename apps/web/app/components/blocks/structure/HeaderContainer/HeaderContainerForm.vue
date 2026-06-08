@@ -28,8 +28,6 @@
 <script setup lang="ts">
 import type { HeaderContainerBlock } from '~/components/blocks/structure/HeaderContainer/types';
 import type { Block } from '@plentymarkets/shop-api';
-import { canMoveHeaderBlock } from '~/utils/blocks/block-helpers';
-import type { BlockMoveEvent } from '~/utils/blocks/types';
 
 const { headerContainer } = useBlocks();
 const { logHeaderContainerEditBlock } = useLogEvent();
