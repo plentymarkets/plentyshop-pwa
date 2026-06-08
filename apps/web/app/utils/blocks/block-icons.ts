@@ -3,6 +3,11 @@ const blockIconLoaders = import.meta.glob('@/components/**/blocks/**/icon.svg', 
   import: 'default',
 }) as Record<string, () => Promise<string>>;
 
+const moduleBlockIconLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/icon.svg', {
+  query: '?raw',
+  import: 'default',
+}) as Record<string, () => Promise<string>>;
+
 const normalizeIconPath = (path: string): string => {
   const match = path.match(/blocks\/(?:structure\/)?([^/]+)\/[^/]*icon\.svg/);
   return match?.[1] ?? '';
@@ -10,7 +15,7 @@ const normalizeIconPath = (path: string): string => {
 
 const blockIcons: Record<string, string> = reactive({});
 
-Object.entries(blockIconLoaders).forEach(([path, loader]) => {
+Object.entries({ ...blockIconLoaders, ...moduleBlockIconLoaders }).forEach(([path, loader]) => {
   const blockName = normalizeIconPath(path);
   if (blockName) {
     loader()
