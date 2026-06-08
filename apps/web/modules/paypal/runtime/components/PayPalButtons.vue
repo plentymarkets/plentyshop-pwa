@@ -72,7 +72,7 @@
     <GooglePayButton
         v-else-if="paymentKey === PayPalGooglePayKey"
         :style="disableBuyButton ? 'pointer-events: none;' : ''"
-        :plenty-order-id="order.order.id"
+        :order="order"
         @button-clicked="handlePreparePaymentPayPal"
         @on-payed="refetchOrder()"
     />
