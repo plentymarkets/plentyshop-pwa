@@ -45,8 +45,9 @@ async function onGooglePaymentButtonClicked() {
               type: 'negative',
             });
             paymentLoading.value = false;
+          }).then(() => {
+            emits('on-payed');
           });
-          emits('on-payed');
           return true;
         })
         .catch((error: Error) => {
