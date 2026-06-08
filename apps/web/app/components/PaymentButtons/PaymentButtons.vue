@@ -21,15 +21,6 @@
     </template>
     <template v-else>{{ t('common.actions.buy') }}</template>
   </UiButton>
-
-  <div>
-    {{ createOrderLoading }}<br>
-    {{ disableShippingPayment }}<br>
-    {{ cartLoading }}<br>
-    {{ additionalInformationLoading }}<br>
-    {{ navigationInProgress }}<br>
-    {{ processingOrder }}
-  </div>
 </template>
 
 <script setup lang="ts">
