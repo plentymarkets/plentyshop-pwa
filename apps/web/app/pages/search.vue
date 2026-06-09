@@ -29,6 +29,7 @@ defineI18nRoute({
 });
 
 const { getRobots, setRobotForStaticPage } = useRobots();
+const { setItemListMetaData } = useStructuredData();
 
 definePageMeta({
   layout: false,
@@ -41,6 +42,7 @@ const { getFacetsFromURL } = useCategoryFilter();
 
 const handleQueryUpdate = async () => {
   await getSearch(getFacetsFromURL());
+  setItemListMetaData(productsCatalog.value?.products || []);
 };
 
 await handleQueryUpdate();
