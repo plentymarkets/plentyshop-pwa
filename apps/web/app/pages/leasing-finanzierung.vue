@@ -3,7 +3,12 @@
    KONFIGURATION — HIER ANPASSEN
 ============================================================ */
 const KK_CONFIG = {
-  mailto: 'info@komplett-konzept.de,s.schueler@dclease.de',
+  // Web3Forms: Access Key einmalig auf https://web3forms.com generieren
+  // (Email eingeben → Key kommt per Mail → unten eintragen). Danach läuft alles direkt.
+  web3formsAccessKey: '93879b65-7bdc-4a1e-a1c3-39a52f6dfebb',
+  // Beide Empfänger (im Web3Forms-Dashboard kannst du Forwarding zusätzlich aktivieren):
+  mailTo: 'info@komplett-konzept.de',
+  mailCc: 's.schueler@dclease.de',
   firma: 'Komplett Konzept Verwertungs GmbH',
   // Effektive Jahreszinsen (branchenüblich für Industriefinanzierung 2026)
   zinsen: { leasing: 5.5, finanzierung: 6.5, mietkauf: 6.0 }
@@ -186,55 +191,85 @@ const sumDetails = computed(() => {
 });
 
 /* ============================================================
-   FORM → MAILTO
+   FORM → Web3Forms (direkt versendet, ohne Bestätigungs-Klick)
 ============================================================ */
-function submitForm(e) {
+const submitStatus = ref('idle'); // 'idle' | 'loading' | 'success' | 'error'
+const submitError = ref('');
+
+async function submitForm(e) {
   e.preventDefault();
+  submitStatus.value = 'loading';
+  submitError.value = '';
+
   const mod = m.value;
   const r = calc.value;
   const modulLabel = state.modul.charAt(0).toUpperCase() + state.modul.slice(1);
 
-  const lines = [
-    'Anfrage über den Online-Rechner',
-    '—'.repeat(40),
-    '',
-    'FIRMENDATEN',
-    'Firma:           ' + form.firma,
-    'Adresszusatz:    ' + (form.zusatz || '—'),
-    'Straße:          ' + form.strasse,
-    'PLZ / Ort:       ' + form.plz + ' ' + form.ort,
-    'Telefon:         ' + form.telefon,
-    'E-Mail:          ' + form.email,
-    'Website:         ' + form.website,
-    'USt-IdNr.:       ' + (form.ustId || '—'),
-    'Steuernummer:    ' + (form.stNr || '—'),
-    '',
-    'ANSPRECHPARTNER',
-    'Anrede:          ' + form.anrede,
-    'Name:            ' + form.vorname + ' ' + form.nachname,
-    'E-Mail:          ' + form.apEmail,
-    'Mobil:           ' + form.mobil,
-    '',
-    'ZUR FINANZIERUNG',
-    'Artikel-ID:      ' + form.artikelId,
-    'Objekt:          ' + (form.objekt || '—'),
-    'Anmerkungen:     ' + (form.anmerkungen || '—'),
-    '',
-    '—'.repeat(40),
-    'KALKULATION',
-    '—'.repeat(40),
-    'Modell:          ' + modulLabel,
-    'Objektwert:      ' + fmt(state.wert) + ' €',
-    'Laufzeit:        ' + state.laufzeit + ' Monate',
-    mod.showAnzahlung ? 'Anzahlung:       ' + fmt(state.anzahlung) + ' €' : null,
-    '',
-    'Monatliche Rate: ' + fmt(r.rate) + ' €',
-    '',
-    '(Unverbindliche Beispielkalkulation)'
-  ].filter(Boolean).join('\r\n');
+  const payload = {
+    // Web3Forms-Steuerfelder
+    access_key: KK_CONFIG.web3formsAccessKey,
+    subject: `Anfrage ${modulLabel} – ${fmt(r.rate)} €/Monat`,
+    from_name: `${form.vorname} ${form.nachname} (${form.firma})`,
+    replyto: form.apEmail,
+    cc: KK_CONFIG.mailCc,
 
-  const subject = `Anfrage ${modulLabel} – ${fmt(r.rate)} €/Monat`;
-  window.location.href = `mailto:${KK_CONFIG.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines)}`;
+    // Firmendaten
+    'Firma': form.firma,
+    'Adresszusatz': form.zusatz || '-',
+    'Straße & Hausnummer': form.strasse,
+    'PLZ': form.plz,
+    'Ort': form.ort,
+    'Telefon': form.telefon,
+    'E-Mail (Firma)': form.email,
+    'Website': form.website,
+    'USt-IdNr.': form.ustId || '-',
+    'Steuernummer': form.stNr || '-',
+
+    // Ansprechpartner
+    'Anrede': form.anrede,
+    'Vorname': form.vorname,
+    'Nachname': form.nachname,
+    'E-Mail (Ansprechpartner)': form.apEmail,
+    'Mobil': form.mobil,
+
+    // Zur Finanzierung
+    'Artikel-ID': form.artikelId,
+    'Objekt': form.objekt || '-',
+    'Anmerkungen': form.anmerkungen || '-',
+
+    // Kalkulation
+    'Modell': modulLabel,
+    'Objektwert': `${fmt(state.wert)} €`,
+    'Laufzeit': `${state.laufzeit} Monate`,
+    'Anzahlung': mod.showAnzahlung ? `${fmt(state.anzahlung)} €` : '-',
+    'Monatliche Rate': `${fmt(r.rate)} €`
+  };
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+    if (!result.success) throw new Error(result.message || 'Senden fehlgeschlagen');
+
+    submitStatus.value = 'success';
+  } catch (err) {
+    submitStatus.value = 'error';
+    submitError.value = err.message || 'Senden fehlgeschlagen';
+  }
+}
+
+function newAnfrage() {
+  // Form zurücksetzen
+  Object.keys(form).forEach((k) => { form[k] = ''; });
+  submitStatus.value = 'idle';
+  currentStep.value = 1;
 }
 
 /* ============================================================
@@ -508,76 +543,99 @@ useHead({
       <!-- ===== Step 3: Ansprechpartner & Anfrage ===== -->
       <div v-if="currentStep === 3" class="wizard-step wizard-form-step">
         <div class="wizard-card">
-          <div class="section-eyebrow">Schritt 3 von 3</div>
-          <h2>Ansprechpartner &amp; Anfrage absenden</h2>
-          <p class="sub">Letzte Angaben, danach öffnet sich Ihr Mail-Programm mit der vorausgefüllten Anfrage.</p>
 
-          <div class="summary">
-            <div>
-              <div class="summary-meta">{{ m.sumLabel }}</div>
-              <div class="summary-details">{{ sumDetails }}</div>
-            </div>
-            <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
+          <!-- ===== SUCCESS-Screen ===== -->
+          <div v-if="submitStatus === 'success'" class="submit-success">
+            <div class="success-icon">✓</div>
+            <h2>Anfrage erfolgreich gesendet.</h2>
+            <p class="sub">Vielen Dank! Wir prüfen Ihre Anfrage mit unserem Finanzierungspartner und melden uns innerhalb von 48 Stunden.</p>
+            <button type="button" class="btn" @click="newAnfrage">
+              Neue Anfrage stellen
+              <span class="arrow">→</span>
+            </button>
           </div>
 
-          <form @submit="submitForm" autocomplete="on">
+          <!-- ===== Form (sichtbar wenn nicht success) ===== -->
+          <template v-else>
+            <div class="section-eyebrow">Schritt 3 von 3</div>
+            <h2>Ansprechpartner &amp; Anfrage absenden</h2>
+            <p class="sub">Letzte Angaben, danach senden wir Ihre Anfrage direkt an unseren Finanzierungspartner.</p>
 
-            <div class="form-section-label">Ansprechpartner</div>
-            <div class="form-grid">
-              <div class="input-group">
-                <label>Anrede <span class="req">*</span></label>
-                <select v-model="form.anrede" required>
-                  <option value="">Bitte wählen</option>
-                  <option value="Herr">Herr</option>
-                  <option value="Frau">Frau</option>
-                  <option value="Divers">Divers</option>
-                </select>
+            <div class="summary">
+              <div>
+                <div class="summary-meta">{{ m.sumLabel }}</div>
+                <div class="summary-details">{{ sumDetails }}</div>
               </div>
-              <div class="input-group">
-                <label>Mobil <span class="req">*</span></label>
-                <input type="tel" v-model="form.mobil" required>
-              </div>
-              <div class="input-group">
-                <label>Vorname <span class="req">*</span></label>
-                <input type="text" v-model="form.vorname" required>
-              </div>
-              <div class="input-group">
-                <label>Nachname <span class="req">*</span></label>
-                <input type="text" v-model="form.nachname" required>
-              </div>
-              <div class="input-group full">
-                <label>E-Mail (Ansprechpartner) <span class="req">*</span></label>
-                <input type="email" v-model="form.apEmail" required>
-              </div>
+              <div class="summary-rate">{{ fmt(calc.rate) }} €<small>/ Monat</small></div>
             </div>
 
-            <div class="form-section-label">Zur Finanzierung</div>
-            <div class="form-grid">
-              <div class="input-group">
-                <label>Artikel-ID <span class="req">*</span></label>
-                <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
-              </div>
-              <div class="input-group">
-                <label>Was möchten Sie finanzieren?</label>
-                <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
-              </div>
-              <div class="input-group full">
-                <label>Anmerkungen</label>
-                <textarea v-model="form.anmerkungen"></textarea>
-              </div>
-            </div>
+            <form @submit="submitForm" autocomplete="on">
 
-            <div class="wizard-actions">
-              <button type="button" class="btn-secondary" @click="goBack">
-                <span class="arrow-back">←</span> Zurück
-              </button>
-              <button type="submit" class="btn">
-                Anfrage senden
-                <span class="arrow">→</span>
-              </button>
-            </div>
-            <p class="privacy">Mit dem Senden öffnet sich Ihr E-Mail-Programm mit einer vorausgefüllten Anfrage. Wir antworten innerhalb von 48 Std.</p>
-          </form>
+              <div class="form-section-label">Ansprechpartner</div>
+              <div class="form-grid">
+                <div class="input-group">
+                  <label>Anrede <span class="req">*</span></label>
+                  <select v-model="form.anrede" required>
+                    <option value="">Bitte wählen</option>
+                    <option value="Herr">Herr</option>
+                    <option value="Frau">Frau</option>
+                    <option value="Divers">Divers</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label>Mobil <span class="req">*</span></label>
+                  <input type="tel" v-model="form.mobil" required>
+                </div>
+                <div class="input-group">
+                  <label>Vorname <span class="req">*</span></label>
+                  <input type="text" v-model="form.vorname" required>
+                </div>
+                <div class="input-group">
+                  <label>Nachname <span class="req">*</span></label>
+                  <input type="text" v-model="form.nachname" required>
+                </div>
+                <div class="input-group full">
+                  <label>E-Mail (Ansprechpartner) <span class="req">*</span></label>
+                  <input type="email" v-model="form.apEmail" required>
+                </div>
+              </div>
+
+              <div class="form-section-label">Zur Finanzierung</div>
+              <div class="form-grid">
+                <div class="input-group">
+                  <label>Artikel-ID <span class="req">*</span></label>
+                  <input type="text" v-model="form.artikelId" required placeholder="z. B. 14616">
+                </div>
+                <div class="input-group">
+                  <label>Was möchten Sie finanzieren?</label>
+                  <input type="text" v-model="form.objekt" placeholder="z. B. Palettenregalanlage, CNC-Fräse …">
+                </div>
+                <div class="input-group full">
+                  <label>Anmerkungen</label>
+                  <textarea v-model="form.anmerkungen"></textarea>
+                </div>
+              </div>
+
+              <!-- Fehlermeldung -->
+              <div v-if="submitStatus === 'error'" class="submit-error">
+                Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.
+              </div>
+
+              <div class="wizard-actions">
+                <button type="button" class="btn-secondary" @click="goBack" :disabled="submitStatus === 'loading'">
+                  <span class="arrow-back">←</span> Zurück
+                </button>
+                <button type="submit" class="btn" :disabled="submitStatus === 'loading'">
+                  <span v-if="submitStatus === 'loading'">Wird gesendet …</span>
+                  <template v-else>
+                    Anfrage senden
+                    <span class="arrow">→</span>
+                  </template>
+                </button>
+              </div>
+              <p class="privacy">Ihre Daten werden direkt an unseren Finanzierungspartner übermittelt. Wir antworten innerhalb von 48 Stunden.</p>
+            </form>
+          </template>
         </div>
       </div>
 
@@ -1065,6 +1123,33 @@ useHead({
 
 .privacy { font-size: 0.78rem; color: rgba(255, 255, 255, 0.55); max-width: 340px; }
 
+.submit-success {
+  text-align: center; padding: 1rem 0 0.5rem;
+}
+.success-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 4rem; height: 4rem; border-radius: 50%;
+  background: var(--gold); color: var(--navy);
+  font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;
+  box-shadow: 0 0 0 8px rgba(245, 192, 10, 0.15);
+}
+.submit-success h2 { color: #fff; }
+.submit-success .sub { margin: 0 auto 2rem; }
+.submit-success .btn { margin: 0 auto; }
+
+.submit-error {
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  border-radius: 4px;
+  color: #fca5a5; font-size: 0.88rem;
+}
+
+.btn:disabled, .btn-secondary:disabled {
+  opacity: 0.5; cursor: not-allowed; pointer-events: none;
+}
+
 .summary {
   background: rgba(0, 0, 0, 0.25);
   border: 1px dashed var(--gold);
@@ -1147,12 +1232,8 @@ useHead({
 .partner-list li strong { color: var(--gold); font-weight: 700; }
 
 /* ==================== MOBILE-OPTIMIERUNG ==================== */
-@media (max-width: 1023px) {
-  .hero { padding-top: 2.5rem; }
-}
-
 @media (max-width: 640px) {
-  .hero { padding: 3rem 1.25rem 6rem; padding-top: 2.5rem; }
+  .hero { padding: 3rem 1.25rem 6rem; }
   .hero-stats { gap: 1.5rem 2rem; margin-top: 2.5rem; padding-top: 2rem; }
   .stat .v { font-size: 1.6rem; }
 
