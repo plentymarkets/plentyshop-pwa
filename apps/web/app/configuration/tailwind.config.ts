@@ -144,6 +144,7 @@ export default {
         'add-block-btn-hover': '0 4px 14px rgba(29, 94, 199, 0.45)',
         'block-outline': '0 0 0 1px rgba(255, 255, 255, 0.95), inset 0 0 0 1px rgba(255, 255, 255, 0.95)',
         'block-outline-selected': '0 0 0 1.5px white, inset 0 0 0 1.5px white',
+        'card-hover': '0 0 16px rgba(0, 0, 0, 0.12)',
       },
       transitionTimingFunction: {
         'editor-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
@@ -153,6 +154,7 @@ export default {
       },
       gridTemplateColumns: {
         'product-page': 'minmax(56%, 500px) auto',
+        'search-dropdown': 'minmax(280px, 360px) 1fr',
       },
       gridTemplateRows: {
         'category-sidebar': 'min-content auto min-content',
@@ -212,6 +214,9 @@ export default {
         l: '3.125rem',
         xl: '3.75rem',
         toolbar: '54px',
+      },
+      maxHeight: {
+        dropdown: 'calc(var(--viewport-height, 100dvh) - 120px)',
       },
     },
   },
