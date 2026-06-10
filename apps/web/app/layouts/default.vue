@@ -86,7 +86,8 @@ const globalFooterData: any = {
         { text: 'Datenschutzerklärung', url: '/datenschutz' },
         { text: 'Datenverarbeitung', url: '/datenverarbeitung' },
         { text: 'AGB', url: '/agb' }
-      ]
+      ],
+      content: '<a href="/widerruf" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:7px 13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:4px;color:#fff;text-decoration:none;font-size:0.8rem;font-weight:600;opacity:0.75;transition:opacity 0.15s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.75">↩ Vertrag widerrufen</a>'
     },
     {
       id: 'col-3',
