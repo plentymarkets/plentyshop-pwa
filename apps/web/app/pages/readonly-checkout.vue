@@ -283,7 +283,7 @@ const buy = async () => {
       await captureOrder(paypalOrderId);
       await createPlentyPaymentFromPayPalOrder(paypalOrderId, order.order.id);
 
-      useProcessingOrder().processingOrder.value = true;
+      useDynamicPaymentButtons().createOrderLoading.value = true;
       emit('module:clearCart', null);
 
       if (order?.order?.id) {
