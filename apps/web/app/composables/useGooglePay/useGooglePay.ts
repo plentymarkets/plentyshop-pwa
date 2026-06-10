@@ -1,5 +1,5 @@
-import type {GooglePayConfig, GooglePayPayPal} from '~/composables/useGooglePay/types';
-import {type Order, paypalGetters} from '@plentymarkets/shop-api';
+import type { GooglePayConfig, GooglePayPayPal } from '~/composables/useGooglePay/types';
+import { type Order, paypalGetters } from '@plentymarkets/shop-api';
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
@@ -79,7 +79,7 @@ export const useGooglePay = () => {
     const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
       usePayPal();
     const { clearCartItems } = useCart();
-    const { processingOrder } = useProcessingOrder();
+    const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
     const { emit } = usePlentyEvent();
 
     state.value.paymentLoading = true;

@@ -83,7 +83,7 @@ const {
 } = usePayPal();
 const { emit: plentyEmit } = usePlentyEvent();
 const localePath = useLocalePath();
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const {
   loading,
   submitFirstTime,
@@ -174,7 +174,7 @@ const createPayPalPayUponInvoiceOrder = async () => {
     });
 
     if (transactionOrder) {
-      const plentyOrder = props.order ?? await createPlentyOrder();
+      const plentyOrder = props.order ?? (await createPlentyOrder());
       if (plentyOrder) {
         await createPlentyPaymentFromPayPalOrder(transactionOrder.id, plentyOrder.order.id);
 
@@ -186,7 +186,7 @@ const createPayPalPayUponInvoiceOrder = async () => {
           plentyEmit('module:clearCart', null);
           processingOrder.value = true;
           return navigateTo(
-              localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey),
+            localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey),
           );
         }
       }

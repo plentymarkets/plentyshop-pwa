@@ -63,7 +63,7 @@ import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CardFieldsOnApproveData } from '@paypal/paypal-js';
 import { usePayPal } from '../composables/usePayPal';
-import type { PayPalCreditPropsType } from "../types";
+import type { PayPalCreditPropsType } from '../types';
 
 const { data: cart, clearCartItems } = useCart();
 const { send } = useNotification();
@@ -72,7 +72,7 @@ const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPa
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel', 'on-payed']);
 const localePath = useLocalePath();
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const props = defineProps<PayPalCreditPropsType>();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
@@ -103,7 +103,7 @@ onMounted(() => {
         return data?.id ?? '';
       },
       async onApprove(data: CardFieldsOnApproveData) {
-        const order = props.order ?? await createPlentyOrder();
+        const order = props.order ?? (await createPlentyOrder());
         if (order?.order?.id) {
           await captureOrder(data.orderID);
           await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
@@ -114,7 +114,7 @@ onMounted(() => {
             clearCartItems();
             emitPlentyEvent('frontend:orderCreated', order);
             navigateTo(
-                localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+              localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
             );
           } else {
             emit('on-payed');

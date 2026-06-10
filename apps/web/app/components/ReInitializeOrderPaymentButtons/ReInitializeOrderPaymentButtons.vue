@@ -1,19 +1,18 @@
 <template>
-  {{ filteredComponents }}
   <component
-      :is="component.componentName"
-      v-for="(component, index) in filteredComponents"
-      :key="index"
-      :payment-key="order.paymentMethodKey"
-      :disabled="disableBuyButton"
-      :order="order"
-      @click="validateOnClickComponents($event, component)"
+    :is="component.componentName"
+    v-for="(component, index) in filteredComponents"
+    :key="index"
+    :payment-key="order.paymentMethodKey"
+    :disabled="disableBuyButton"
+    :order="order"
+    @click="validateOnClickComponents($event, component)"
   />
 </template>
 
 <script setup lang="ts">
 import type { Order } from '@plentymarkets/shop-api';
-import type {PaymentButtonComponent} from "@plentymarkets/shop-core";
+import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
 const props = defineProps<{
   order: Order;
@@ -34,12 +33,13 @@ const renderPaymentComponent = (component: PaymentButtonComponent) => {
   }
   return !(component.excludePaymentKeys && component.excludePaymentKeys.includes(props.order?.paymentMethodKey));
 };
-const filteredComponents = computed(() => reInitializeComponents.value.filter((component) => renderPaymentComponent(component)));
+const filteredComponents = computed(() =>
+  reInitializeComponents.value.filter((component) => renderPaymentComponent(component)),
+);
 const validateOnClickComponents = async (event: MouseEvent, component: PaymentButtonComponent) => {
   if (component.disableClickEvent) {
     return;
   }
-  if (event.target)
-    event.target.dispatchEvent(new CustomEvent('validated-click'));
+  if (event.target) event.target.dispatchEvent(new CustomEvent('validated-click'));
 };
 </script>

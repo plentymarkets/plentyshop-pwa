@@ -39,15 +39,17 @@ async function onGooglePaymentButtonClicked() {
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
-          processPayment(paymentData, props.order).catch((error: Error) => {
-            useNotification().send({
-              message: error.message || t('error.paymentFailed'),
-              type: 'negative',
+          processPayment(paymentData, props.order)
+            .catch((error: Error) => {
+              useNotification().send({
+                message: error.message || t('error.paymentFailed'),
+                type: 'negative',
+              });
+              paymentLoading.value = false;
+            })
+            .then(() => {
+              emits('on-payed');
             });
-            paymentLoading.value = false;
-          }).then(() => {
-            emits('on-payed');
-          });
           return true;
         })
         .catch((error: Error) => {

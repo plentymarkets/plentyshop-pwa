@@ -30,8 +30,8 @@ import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
 const { components } = useDynamicPaymentButtons();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();

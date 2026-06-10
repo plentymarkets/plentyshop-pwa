@@ -129,7 +129,7 @@ const {
   setAddressesFromPayPal,
   getScript,
 } = usePayPal();
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const { setInitialCartTotal, changedTotal, initialTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();

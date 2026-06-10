@@ -22,7 +22,7 @@ const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(useId());
 const paypalScript = ref<PayPalNamespace | null>(null);
 
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const {
   order: paypalOrder,
   getScript,
@@ -88,7 +88,7 @@ const createOrderFlow = async (data: OnApproveData) => {
       type: 'negative',
     });
   }
-}
+};
 
 const orderExistingFlow = async (data: OnApproveData) => {
   if (!paypalOrder.value?.isAutocaptured) {
@@ -96,7 +96,7 @@ const orderExistingFlow = async (data: OnApproveData) => {
   }
   await createPlentyPaymentFromPayPalOrder(data.orderID, props.order!.order.id);
   emits('on-payed');
-}
+};
 
 const onValidationCallback = async () => {
   return await new Promise<boolean>((resolve) => {

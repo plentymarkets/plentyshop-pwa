@@ -128,7 +128,7 @@ onNuxtReady(async () => {
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 
 watch(cartIsEmpty, async () => {
   if (!processingOrder.value) {

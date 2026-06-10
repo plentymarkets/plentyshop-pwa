@@ -30,17 +30,33 @@
 </template>
 
 <script setup lang="ts">
-import { orderConfirmationGetters, orderGetters } from '@plentymarkets/shop-api';
+import { orderConfirmationGetters, orderGetters, cartGetters } from '@plentymarkets/shop-api';
 import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();
-const { changePaymentMethodModalOpen } = useCustomerOrder('soft-login');
+const { changePaymentMethodModalOpen, refetchOrder } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
 const { getSetting } = useSiteSettings('enableOrderChangePaymentMethod');
 const isUnpaid = computed(() => !orderConfirmationGetters.isOrderPaid(props.order));
 const validOrderPaymentStatus = computed(() => orderConfirmationGetters.orderStatusValidForPayment(props.order));
-const showPaymentButton = computed(() => isUnpaid.value && validOrderPaymentStatus.value && props.order.allowPaymentMethodSwitchFrom);
+const showPaymentButton = computed(
+  () => isUnpaid.value && validOrderPaymentStatus.value && props.order.allowPaymentMethodSwitchFrom,
+);
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
 const enableOrderChangePaymentMethod = computed(() => getSetting().toString() === 'true');
+
+const { data: cart } = useCart();
+const { updateAvailableAPMs, getScript } = usePayPal();
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+
+onMounted(async () => {
+  if (isUnpaid.value) {
+    const payPalScript = await getScript(currency.value, true);
+    if (payPalScript) {
+      await updateAvailableAPMs(payPalScript, currency.value);
+      await refetchOrder();
+    }
+  }
+});
 </script>

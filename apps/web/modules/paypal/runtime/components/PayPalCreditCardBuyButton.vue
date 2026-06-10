@@ -7,7 +7,7 @@
     class="w-full mb-4 md:mb-0 cursor-pointer"
     @click="emits('click')"
   >
-    {{ t('common.actions.buy') }}
+    <slot>{{ t('common.actions.buy') }}</slot>
   </UiButton>
 </template>
 <script lang="ts" setup>
