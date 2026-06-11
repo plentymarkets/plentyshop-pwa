@@ -41,7 +41,7 @@
       @validation-callback="handlePreparePaymentPayPal"
     />
   </template>
-  <template v-else>
+  <template v-else-if="order">
     <div v-if="paymentKey === PayPalPaymentKey">
       <PayPalExpressButton
         :disabled="disableBuyButton"
