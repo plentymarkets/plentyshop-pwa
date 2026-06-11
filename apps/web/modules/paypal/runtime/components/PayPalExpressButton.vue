@@ -95,7 +95,7 @@ const onApprove = async (data: OnApproveData) => {
   }
 
   if (props.type === TypeCheckout) {
-    useProcessingOrder().processingOrder.value = true;
+    useDynamicPaymentButtons().createOrderLoading.value = true;
     const order = await createPlentyOrder();
 
     if (order) {

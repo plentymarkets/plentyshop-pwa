@@ -32,6 +32,7 @@
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <div
+        id="app-container"
         ref="previewContainerEl"
         :style="
           isMobilePreview

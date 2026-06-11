@@ -70,9 +70,8 @@ export const usePayPal = () => {
     return configPromise.value;
   };
 
-  const updateAvailableAPMs = async (script: PayPalNamespace, currency: string) => {
+  const updateAvailableAPMs = async (script: PayPalNamespace, currency: string): Promise<boolean> => {
     if (script && script.getFundingSources && state.value.activatedAPMs !== currency) {
-      state.value.activatedAPMs = currency;
       const availableFoundingSources = new Map();
       const fundingSources = script.getFundingSources();
       fundingSources.forEach((fundingSource: string) => {
@@ -87,7 +86,11 @@ export const usePayPal = () => {
       await useSdk().plentysystems.doHandlePayPalFundingSources({
         availableFundingSources: Object.fromEntries(availableFoundingSources),
       });
+
+      state.value.activatedAPMs = currency;
+      return true;
     }
+    return false;
   };
 
   const isAvailable = (key: PayPalVisibilityLocations) =>

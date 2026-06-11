@@ -129,7 +129,7 @@ const {
   setAddressesFromPayPal,
   getScript,
 } = usePayPal();
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const { setInitialCartTotal, changedTotal, initialTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { paymentLoading, shippingLoading } = useCheckoutPagePaymentAndShipping();
@@ -283,7 +283,7 @@ const buy = async () => {
       await captureOrder(paypalOrderId);
       await createPlentyPaymentFromPayPalOrder(paypalOrderId, order.order.id);
 
-      useProcessingOrder().processingOrder.value = true;
+      useDynamicPaymentButtons().createOrderLoading.value = true;
       emit('module:clearCart', null);
 
       if (order?.order?.id) {
