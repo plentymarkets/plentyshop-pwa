@@ -26,8 +26,8 @@ describe('resolvePreviewState', () => {
     expect(getPreviewValid).not.toHaveBeenCalled();
   });
 
-  it('should return true when cookie is present and SDK returns data=true', async () => {
-    getPreviewValid.mockResolvedValueOnce({ data: true });
+  it('should return true when cookie is present and the response is valid with write permission', async () => {
+    getPreviewValid.mockResolvedValueOnce({ data: { valid: true, permission: 'write' } });
 
     const result = await resolvePreviewState({
       cookieValue: 'some-token',
@@ -39,8 +39,32 @@ describe('resolvePreviewState', () => {
     expect(getPreviewValid).toHaveBeenCalledOnce();
   });
 
-  it('should return false when cookie is present but SDK returns data=false', async () => {
-    getPreviewValid.mockResolvedValueOnce({ data: false });
+  it('should return false when the response is valid but the permission is not write', async () => {
+    getPreviewValid.mockResolvedValueOnce({ data: { valid: true, permission: 'read' } });
+
+    const result = await resolvePreviewState({
+      cookieValue: 'some-token',
+      isPreviewConfig: false,
+      getPreviewValid,
+    });
+
+    expect(result).toBe(false);
+  });
+
+  it('should return false when the response is not valid', async () => {
+    getPreviewValid.mockResolvedValueOnce({ data: { valid: false, permission: 'write' } });
+
+    const result = await resolvePreviewState({
+      cookieValue: 'some-token',
+      isPreviewConfig: false,
+      getPreviewValid,
+    });
+
+    expect(result).toBe(false);
+  });
+
+  it('should return false when the response is empty', async () => {
+    getPreviewValid.mockResolvedValueOnce(null);
 
     const result = await resolvePreviewState({
       cookieValue: 'some-token',
