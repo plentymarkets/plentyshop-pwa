@@ -49,7 +49,7 @@ async function onGooglePaymentButtonClicked() {
                 type: 'negative',
               });
               paymentLoading.value = false;
-            })
+            });
           return true;
         })
         .catch((error: Error) => {
