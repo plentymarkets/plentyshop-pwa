@@ -353,6 +353,7 @@
       "back": "Back",
       "browseProducts": "Browse Products",
       "buy": "Buy",
+      "pay": "Pay",
       "cancelOrder": "Cancel order",
       "clear": "Clear",
       "clearAll": "Clear all",
@@ -951,7 +952,8 @@
     "unbrandedCvv": "CVV",
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
-    "unbrandedPay": "Pay"
+    "unbrandedPay": "Pay",
+    "methodNotSupported": "The selected payment method is currently not supported. Please choose another payment method."
   },
   "PreferredDelivery": {
     "general": {

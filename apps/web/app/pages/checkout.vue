@@ -48,7 +48,9 @@
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
-            <PaymentButtons />
+            <ClientOnly>
+              <PaymentButtons />
+            </ClientOnly>
             <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
@@ -128,7 +130,7 @@ onNuxtReady(async () => {
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 
 watch(cartIsEmpty, async () => {
   if (!processingOrder.value) {

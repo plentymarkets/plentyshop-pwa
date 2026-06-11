@@ -109,7 +109,7 @@ const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const localePath = useLocalePath();
 const bankDetails = computed(() => orderGetters.getOrderPaymentBankDetails(order));
-useProcessingOrder().processingOrder.value = false;
+useDynamicPaymentButtons().createOrderLoading.value = false;
 
 await getActiveShippingCountries();
 </script>

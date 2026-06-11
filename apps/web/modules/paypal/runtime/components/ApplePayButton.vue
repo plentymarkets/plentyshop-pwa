@@ -13,6 +13,7 @@ const { locale } = useI18n();
 
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'on-payed'): void;
 }>();
 
 const basketAmount = computed(() => cart.value?.basketAmount ?? 0);

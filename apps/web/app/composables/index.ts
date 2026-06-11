@@ -65,7 +65,6 @@ export * from './usePages';
 export * from './usePaymentMethods';
 export * from './usePreferredDelivery';
 export * from './usePriceFormatter';
-export * from './useProcessingOrder';
 export * from './useProduct';
 export * from './useProductPrice';
 export * from './useProductAttributes';
