@@ -34,6 +34,7 @@ const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
 );
 const localePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
@@ -91,7 +92,11 @@ const onApprove = async (data: OnApproveData) => {
 
   if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
     await fetchSession();
-    navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
+    navigateTo(
+      resolvePathTrailingSlash(
+        localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`),
+      ),
+    );
   }
 
   if (props.type === TypeCheckout) {
@@ -110,7 +115,9 @@ const onApprove = async (data: OnApproveData) => {
 
     if (order?.order?.id) {
       emit('frontend:orderCreated', order);
-      navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+      navigateTo(
+        resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
+      );
     }
   } else if (props.type === TypeOrderAlreadyExisting && props.plentyOrderId) {
     if (!paypalOrder.value?.isAutocaptured) {
@@ -162,7 +169,14 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
-        const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
+        let transactionType: 'order' | 'express' | 'basket' = 'express';
+
+        if (props.type === TypeOrderAlreadyExisting) {
+          transactionType = 'order';
+        } else if (isCommit) {
+          transactionType = 'basket';
+        }
+
         const order = await createTransaction({
           type: transactionType,
           withShippingCallback: props.type !== TypeOrderAlreadyExisting && !isCommit,

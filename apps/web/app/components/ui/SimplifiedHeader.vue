@@ -31,5 +31,7 @@ const headerBackgroundColor = computed(() => {
   return utilityBar?.content?.color?.backgroundColor ?? getPrimaryColor();
 });
 
-const localePath = useLocalePath();
+const rawLocalePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+const localePath = (path: string) => resolvePathTrailingSlash(rawLocalePath(path));
 </script>

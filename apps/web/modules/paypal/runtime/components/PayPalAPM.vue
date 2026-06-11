@@ -36,15 +36,16 @@ const { data: cart, clearCartItems } = useCart();
 const { data: paymentMethods } = usePaymentMethods();
 const { emit } = usePlentyEvent();
 
-const successPaymentStatuses = ['APPROVED', 'COMPLETED'];
+const successPaymentStatuses = new Set(['APPROVED', 'COMPLETED']);
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const selectedPayment = computed(() => {
   return paymentProviderGetters.getPaymentMethodById(
     paymentMethods.value.list,
-    parseInt(paymentProviderGetters.getMethodOfPaymentId(cart.value)),
+    Number.parseInt(paymentProviderGetters.getMethodOfPaymentId(cart.value)),
   );
 });
 const localePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
@@ -89,7 +90,7 @@ const onApprove = async (data: OnApproveData) => {
 
   const payPalOrder = await getOrder(data.orderID);
 
-  if (payPalOrder?.result?.status && successPaymentStatuses.includes(payPalOrder.result.status)) {
+  if (payPalOrder?.result?.status && successPaymentStatuses.has(payPalOrder.result.status)) {
     const order = await createPlentyOrder();
 
     if (order) {
@@ -104,7 +105,9 @@ const onApprove = async (data: OnApproveData) => {
 
     if (order?.order?.id) {
       emit('frontend:orderCreated', order);
-      await navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+      await navigateTo(
+        resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
+      );
     } else {
       processingOrder.value = false;
       useNotification().send({

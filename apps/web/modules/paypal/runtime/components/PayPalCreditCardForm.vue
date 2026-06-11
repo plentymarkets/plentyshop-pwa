@@ -71,6 +71,7 @@ const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPa
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const localePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const { processingOrder } = useProcessingOrder();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
@@ -107,7 +108,9 @@ onMounted(() => {
 
           emitPlentyEvent('frontend:orderCreated', order);
           navigateTo(
-            localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+            resolvePathTrailingSlash(
+              localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+            ),
           );
         }
         loading.value = false;

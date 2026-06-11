@@ -97,6 +97,7 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();
 const {
@@ -205,9 +206,11 @@ const order = async () => {
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
   if (paymentMethodsById[selectedPaymentId.value]?.key === 'plentyPayPal') {
-    selectedPaymentId.value === PayPalPayUponInvoiceId.value
-      ? (payPalPayUponInvoice.value = true)
-      : (paypalCardDialog.value = true);
+    if (selectedPaymentId.value === PayPalPayUponInvoiceId.value) {
+      payPalPayUponInvoice.value = true;
+    } else {
+      paypalCardDialog.value = true;
+    }
 
     return;
   }
@@ -244,7 +247,9 @@ const handleRegularOrder = async () => {
   if (data?.order?.id) {
     emit('frontend:orderCreated', data);
     clearCartItems();
-    return navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
+    return navigateTo(
+      resolvePathTrailingSlash(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey)),
+    );
   } else {
     await useCartStockReservation().unreserve();
     processingOrder.value = false;

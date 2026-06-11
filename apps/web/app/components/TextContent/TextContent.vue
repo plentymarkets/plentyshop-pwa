@@ -17,7 +17,7 @@
     <UiButton
       v-if="props.button?.label && props.button?.link"
       :tag="NuxtLink"
-      :to="localePath(props.button.link)"
+      :to="resolvePathTrailingSlash(localePath(props.button.link))"
       :variant="props.button.variant ?? 'primary'"
       :data-testid="props.testId ? 'text-button-' + props.testId : 'text-button'"
       class="mt-3 px-4 py-2 cursor-pointer"
@@ -34,6 +34,7 @@ const props = defineProps<TextContentProps>();
 const localePath = useLocalePath();
 const router = useRouter();
 const NuxtLink = resolveComponent('NuxtLink');
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
 const renderedHtmlDescription = computed(() => {
   const html = decodeHtmlEntities(props.text?.htmlDescription);
@@ -41,7 +42,7 @@ const renderedHtmlDescription = computed(() => {
 
   return html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
     if (isInternalLink(href, router)) {
-      return `<a${before}href=${quote}${localePath(href)}${quote}`;
+      return `<a${before}href=${quote}${resolvePathTrailingSlash(localePath(href))}${quote}`;
     }
     return match;
   });

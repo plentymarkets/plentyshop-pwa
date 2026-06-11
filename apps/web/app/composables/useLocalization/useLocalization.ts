@@ -5,6 +5,13 @@ import { createSharedComposable } from '@vueuse/core';
 
 export const useLocalization = createSharedComposable(() => {
   const isOpen = ref(false);
+  const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+
+  const buildLocalizedPath = (path: string) => {
+    const localePath = useLocalePath();
+
+    return resolvePathTrailingSlash(localePath(path));
+  };
 
   const toggle = () => (isOpen.value = !isOpen.value);
 
@@ -16,9 +23,7 @@ export const useLocalization = createSharedComposable(() => {
    * @example buildCategoryLanguagePath('')
    */
   const buildCategoryLanguagePath = (path: string) => {
-    const localePath = useLocalePath();
-
-    return localePath(path);
+    return buildLocalizedPath(path);
   };
 
   /**
@@ -29,9 +34,9 @@ export const useLocalization = createSharedComposable(() => {
    * @example buildProductLanguagePath('')
    */
   const buildProductLanguagePath = (path: string) => {
-    const localePath = useLocalePath();
+    const localizedPath = buildLocalizedPath(path);
 
-    return localePath(path);
+    return localizedPath;
   };
 
   /**
@@ -43,7 +48,8 @@ export const useLocalization = createSharedComposable(() => {
    * @example buildCategoryMenuLink(category, categoryTree)
    */
   const buildCategoryMenuLink = (category: CategoryTreeItem, categoryTree: CategoryTreeItem[]) => {
-    return categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
+    const path = categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
+    return resolvePathTrailingSlash(path);
   };
 
   /**
@@ -99,9 +105,9 @@ export const useLocalization = createSharedComposable(() => {
     const localePath = useLocalePath();
 
     if (localeSupported) {
-      return localeRoute(path, locale as Locale);
+      return resolvePathTrailingSlash(localeRoute(path, locale as Locale));
     }
-    return localePath(path);
+    return resolvePathTrailingSlash(localePath(path));
   };
 
   /**
@@ -113,11 +119,13 @@ export const useLocalization = createSharedComposable(() => {
     const { localeCodes, availableLocales } = useI18n();
     const config = useRuntimeConfig();
 
-    const activeLanguages = (config.public.activeLanguages as string)
-      .split(',')
-      .map((lang: string) => lang.trim())
-      .filter((lang) => (availableLocales as string[]).includes(lang));
-    return localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode));
+    const activeLanguages = new Set(
+      (config.public.activeLanguages as string)
+        .split(',')
+        .map((lang: string) => lang.trim())
+        .filter((lang) => (availableLocales as string[]).includes(lang)),
+    );
+    return localeCodes.value.filter((localeCode) => activeLanguages.has(localeCode));
   };
 
   /**

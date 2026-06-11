@@ -22,6 +22,7 @@ export * from './useApplePay';
 export * from './useBlockEditTitle';
 export * from './useBlocksVisibility';
 export * from './useUrlPageMeta';
+export * from './useUrlTrailingSlash';
 export * from './useCarousel';
 export * from './useCart';
 export * from './useCartShippingMethods';

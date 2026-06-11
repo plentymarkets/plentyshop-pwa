@@ -122,7 +122,7 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
     const editedPreviewUrl = categoryAfterEdit?.details[0]?.previewUrl;
     const editedNameUrl = categoryAfterEdit?.details[0]?.nameUrl;
     const newSlug = buildNewSlug(editedPreviewUrl, editedNameUrl);
-    const ensureTrailingSlash = (path: string) => (path.endsWith('/') ? path : path + '/');
+    const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
     const isSaved = await saveCategorySettings();
 
@@ -132,8 +132,8 @@ export const useCategorySettingsCollection: useCategorySettingsCollectionReturn 
         type: 'positive',
       });
 
-      if (categoryFromRoute && newSlug && ensureTrailingSlash(route.path) !== newSlug) {
-        await router.push(newSlug);
+      if (categoryFromRoute && newSlug && resolvePathTrailingSlash(route.path) !== newSlug) {
+        await router.push(resolvePathTrailingSlash(newSlug));
       }
     } else {
       send({
