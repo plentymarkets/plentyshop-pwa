@@ -49,7 +49,7 @@ definePageMeta({
 </script>
 ```
 
-this will add the following cache control to the document header:
+This will add the following `Cache-Control` header to the document response:
 `cache-control: public, max-age=30, stale-while-revalidate=900`
 
 This means that the page will be cached for 30 seconds and can be served stale for up to 15 minutes while it is being revalidated in the background.
