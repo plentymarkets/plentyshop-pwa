@@ -20,11 +20,10 @@
   <h2 class="font-medium text-base mt-4">{{ t('account.ordersAndReturns.paymentSummary.paymentStatus') }}</h2>
   <p data-testid="order-payment-status">{{ t(orderGetters.getPaymentStatusKey(order)) }}</p>
 
-  <div v-if="showPaymentButton" class="mt-4">
-    <ReInitializeOrderPaymentButtons :order="order" />
-  </div>
-
   <ClientOnly>
+    <div v-if="showPaymentButton" class="mt-4">
+      <ReInitializeOrderPaymentButtons :order="order" />
+    </div>
     <OrderPaymentMethodModal :order="order" />
   </ClientOnly>
 </template>
@@ -54,8 +53,7 @@ onMounted(async () => {
   if (isUnpaid.value) {
     const payPalScript = await getScript(currency.value, true);
     if (payPalScript) {
-      await updateAvailableAPMs(payPalScript, currency.value);
-      await refetchOrder();
+      if (await updateAvailableAPMs(payPalScript, currency.value)) await refetchOrder();
     }
   }
 });

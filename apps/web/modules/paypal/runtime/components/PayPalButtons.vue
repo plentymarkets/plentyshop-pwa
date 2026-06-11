@@ -1,5 +1,5 @@
 <template>
-  <template v-if="newOrderFlow">
+  <template v-if="!order">
     <div v-if="paymentKey === PayPalPaymentKey">
       <PayPalExpressButton
         :disabled="disableBuyButton"
@@ -95,33 +95,35 @@
     </div>
   </template>
 
-  <UiModal
-    v-if="paymentKey === PayPalPayUponInvoiceKey"
-    v-model="payPalPayUponInvoice"
-    class="h-full w-full @md:w-[600px] @md:h-fit"
-    tag="section"
-    disable-click-away
-  >
-    <PayPalPayUponInvoiceForm
-      :order="order"
-      @confirm-cancel="handlePayUponInvoiceModalClosing"
-      @on-payed="refetchOrderEvent()"
-    />
-  </UiModal>
-  <UiModal
-    v-if="paypalCardDialog"
-    v-model="paypalCardDialog"
-    class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
-    tag="section"
-    disable-click-away
-  >
-    <PayPalCreditCardForm :order="order" @confirm-cancel="paypalCardDialog = false" @on-payed="refetchOrderEvent()" />
-  </UiModal>
+  <Teleport to="#app-container">
+    <UiModal
+      v-if="paymentKey === PayPalPayUponInvoiceKey"
+      v-model="payPalPayUponInvoice"
+      class="h-full w-full @md:w-[600px] @md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalPayUponInvoiceForm
+        :order="order"
+        @confirm-cancel="handlePayUponInvoiceModalClosing"
+        @on-payed="refetchOrderEvent()"
+      />
+    </UiModal>
+    <UiModal
+      v-if="paypalCardDialog"
+      v-model="paypalCardDialog"
+      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalCreditCardForm :order="order" @confirm-cancel="paypalCardDialog = false" @on-payed="refetchOrderEvent()" />
+    </UiModal>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import type { PaymentButtonComponentProps, ReInitializePaymentButtonComponentProps } from '@plentymarkets/shop-core';
+import type { Order } from '@plentymarkets/shop-api';
 import {
   PayPalCreditCardPaymentKey,
   PayPalPaymentKey,
@@ -132,6 +134,8 @@ import {
   type PayPalAddToCartCallback,
 } from '#paypal/types';
 import { SfIconWarning } from '@storefront-ui/vue';
+
+defineOptions({ inheritAttrs: false });
 
 const { loading: createOrderLoading } = useMakeOrder();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
@@ -166,12 +170,14 @@ const disableBuyButton = computed(
     navigationInProgress.value ||
     processingOrder.value,
 );
-const props = defineProps<ReInitializePaymentButtonComponentProps | PaymentButtonComponentProps>();
+const props = defineProps<{
+  disabled: boolean;
+  paymentKey?: string;
+  order?: Order;
+}>();
 const PayPalIsAPM = computed(() => {
   return Object.keys(PayPalAlternativeFundingSourceMapper).includes(props.paymentKey ?? '');
 });
-const newOrderFlow = computed(() => !('order' in props));
-const order = computed(() => (props as ReInitializePaymentButtonComponentProps).order);
 const paypalCardDialog = ref(false);
 const payPalPayUponInvoice = ref(false);
 
@@ -182,7 +188,7 @@ const handlePayUponInvoiceModalClosing = () => {
 };
 
 const validateAndProceed = async (): Promise<boolean> => {
-  if (!newOrderFlow.value) return true;
+  if (!props.order) return true;
   if (!readyToBuy()) return false;
   return await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,

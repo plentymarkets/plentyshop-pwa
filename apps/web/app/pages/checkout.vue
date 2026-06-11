@@ -48,7 +48,9 @@
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
-            <PaymentButtons />
+            <ClientOnly>
+              <PaymentButtons />
+            </ClientOnly>
             <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
