@@ -12,6 +12,10 @@
         "link": "/guide/themes/bot-protection.md"
       },
       {
+        "text": "Caching",
+        "link": "/guide/themes/cloudfront-caching.md"
+      },
+      {
         "text": "Cookie consent",
         "link": "/guide/themes/cookie.md"
       },
