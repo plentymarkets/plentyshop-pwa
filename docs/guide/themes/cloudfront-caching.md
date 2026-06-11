@@ -10,7 +10,7 @@
 
 If you are using a custom theme (Git integration), make sure you implement [these changes](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes) to be compatible with the new CloudFront caching feature.
 
-Breaking changes are in:
+Required changes are in:
 
 - [apps/web/app/composables/useInitialSetup/useInitialSetup.ts](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes#diff-aaf5cd43bdc2bd5a97f53945f093a9bb631ac42c332cfe5568d3be2968691f4e)
 - [apps/web/app/composables/useInitialSetup/types.ts](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes#diff-da352a4601293ac8f596ec5e8e270f220000061b31c898dda86dabbf67d80167)
