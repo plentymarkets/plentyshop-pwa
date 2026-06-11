@@ -58,4 +58,4 @@ Note: these values are currently controlled by us and will be adjusted in the fu
 
 ## How do I know if a page is cached?
 
-Inside the browser dev tools, you can check the network tab and filter for the document request. If the page is cached, you will see this header `x-cache: Hit from cloudfront` and `cache-control: public, max-age=30, stale-while-revalidate=900`.
+Inside the browser DevTools, you can check the Network tab and filter for the document request. If the page is cached, you will see this header `x-cache: Hit from cloudfront` and `cache-control: public, max-age=30, stale-while-revalidate=900`.
