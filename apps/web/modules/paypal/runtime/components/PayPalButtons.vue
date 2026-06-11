@@ -17,7 +17,7 @@
     <PayPalCreditCardBuyButton
       v-else-if="paymentKey === PayPalCreditCardPaymentKey"
       :disabled="disableBuyButton || paypalCardDialog"
-      @click="openPayPalCardDialog"
+      @click="handleCreditCardClick"
     />
     <ApplePayButton
       v-else-if="paymentKey === PayPalApplePayKey"
@@ -62,7 +62,7 @@
     <PayPalCreditCardBuyButton
       v-else-if="paymentKey === PayPalPayUponInvoiceKey"
       :disabled="disableBuyButton || paypalCardDialog"
-      @click="payPalPayUponInvoice = true"
+      @validated-click="payPalPayUponInvoice = true"
     >
       {{ t('common.actions.pay') }}
     </PayPalCreditCardBuyButton>
@@ -135,9 +135,8 @@ import {
 } from '#paypal/types';
 import { SfIconWarning } from '@storefront-ui/vue';
 
-defineOptions({ inheritAttrs: false });
-
 const { loading: createOrderLoading } = useMakeOrder();
+const emit = defineEmits<{ click: [event: MouseEvent] }>();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const { send } = useNotification();
@@ -188,7 +187,6 @@ const handlePayUponInvoiceModalClosing = () => {
 };
 
 const validateAndProceed = async (): Promise<boolean> => {
-  if (!props.order) return true;
   if (!readyToBuy()) return false;
   return await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -217,8 +215,12 @@ const readyToBuy = () => {
   return validateTerms();
 };
 
-const openPayPalCardDialog = async () => {
-  if (!(await validateAndProceed())) return;
+const handleCreditCardClick = async () => {
+  const canProceed = await validateAndProceed();
+  if (canProceed) openPayPalCardDialog();
+};
+
+const openPayPalCardDialog = () => {
   paypalCardDialog.value = true;
 };
 
