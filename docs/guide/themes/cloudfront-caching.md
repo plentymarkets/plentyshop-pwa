@@ -20,7 +20,7 @@ Breaking changes are in:
 
 ## Introduction
 
-With our [latest release](https://github.com/plentymarkets/plentyshop-pwa/releases/tag/v2.32.0), we introduced support for CloudFront fullsite caching. This means that from now on, you can cache specific pages of your shop. By default the following pages are cached:
+With our [latest release](https://github.com/plentymarkets/plentyshop-pwa/releases/tag/v2.32.0), we introduced support for CloudFront full-site caching. This means that you can now cache specific pages of your shop. By default, the following pages are cached:
 
 - Home page
 - Category pages
