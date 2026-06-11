@@ -60,6 +60,9 @@ If you want to have more control over the cache control header, you can also pas
 
 <add-code-example>
 
-## How do I know if a page is cached?
+## Verify the results
 
-Inside the browser DevTools, you can check the Network tab and filter for the document request. If the page is cached, you will see this header `x-cache: Hit from cloudfront` and `cache-control: public, max-age=30, stale-while-revalidate=900`.
+Inside the browser DevTools, check the Network tab and filter for the document request.
+
+- If the page is cached, you will see the header `x-cache: Hit from cloudfront` and `cache-control: public, max-age=30, stale-while-revalidate=900`.
+- If the page is not cached, you will see the header `x-cache: Miss from cloudfront`
