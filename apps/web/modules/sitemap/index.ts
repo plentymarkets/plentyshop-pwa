@@ -32,10 +32,11 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook('pages:resolved', (pages) => {
       pages.forEach((page) => {
         if (routeHasParams(page.path)) return;
+        if (/(\/__tests__(\/|$)|\.(spec|test)(\.|$))/.test(page.path)) return;
         if (page.meta?.sitemap === false) return;
 
         const isExcluded = _options.exclude?.some((excludePath) => {
-          const regex = new RegExp('^' + excludePath.replace(/\*/g, '.*') + '$');
+          const regex = new RegExp('^' + excludePath.replaceAll('*', '.*') + '$');
           return regex.test(page.path);
         });
 
