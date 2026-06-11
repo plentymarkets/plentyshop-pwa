@@ -17,7 +17,7 @@ With the introduction of CloudFront caching, it is crucial to never load user-sp
 - @plentymarkets/shop-core version 1.27.1 or higher
 - @plentymarkets/shop-api version 0.173.0 or higher
 
-## Migration guide
+## Enable caching defaults
 
 If you are using a custom theme (Git integration), make sure you implement [these changes](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes) to be compatible with the new CloudFront caching feature.
 
