@@ -8,7 +8,7 @@
 
 ## Migration guide
 
-If you are using a custom theme (git integration) make sure that you implement [these changes](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes) to be compatible with the new CloudFront caching feature.
+If you are using a custom theme (Git integration), make sure you implement [these changes](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes) to be compatible with the new CloudFront caching feature.
 
 Breaking changes are in:
 
