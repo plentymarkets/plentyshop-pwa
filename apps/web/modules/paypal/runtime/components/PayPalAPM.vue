@@ -172,7 +172,9 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
 
         if (order?.id) {
           if (!props.order) {
-            await useCartStockReservation().reserve();
+            if (!await useCartStockReservation().reserve()) {
+              return '';
+            }
           }
 
           return order.id;
