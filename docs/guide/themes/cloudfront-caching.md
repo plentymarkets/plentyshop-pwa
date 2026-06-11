@@ -4,7 +4,6 @@
 
 - @plentymarkets/shop-core version 1.27.1 or higher
 - @plentymarkets/shop-api version 0.173.0 or higher
-- @plentymarkets/plentyshop version 2.32.0 or higher
 
 ## Migration guide
 
