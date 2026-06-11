@@ -144,7 +144,7 @@ describe('Image Text Block Form', () => {
 
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ isPreview: true });
+    cy.setConfig({ isEditor: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
   });

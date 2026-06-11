@@ -15,7 +15,7 @@ describe('Editor Smoke Tests', () => {
   it('global blocks editor interactions', () => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ isPreview: true });
+    cy.setConfig({ isEditor: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
 

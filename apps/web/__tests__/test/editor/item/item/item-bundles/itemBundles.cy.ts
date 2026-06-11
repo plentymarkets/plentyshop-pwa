@@ -11,7 +11,7 @@ describe('ItemBundles', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearConfig();
-    cy.setConfig({ isPreview: true });
+    cy.setConfig({ isEditor: true });
     //1. Go to item bundles page
     cy.visit(bundlePage);
     cookieBar.acceptAll();
