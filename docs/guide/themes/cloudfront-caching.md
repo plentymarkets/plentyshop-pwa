@@ -32,8 +32,8 @@ With the introduction of CloudFront caching, it is crucial to never load user-sp
 
 ## How to enable CloudFront caching
 
-To enable CloudFront caching for a specific page we need to set the cache control header to the document.
-We automated this process with a auto imported helper function `getCacheControl` that can be added to the page metadata.
+To enable CloudFront caching for a specific page, we need to set the Cache-Control response header for the document.
+We automated this process with an auto-imported helper function `getCacheControl` that can be added to the page metadata.
 
 ```vue
 // index.vue
