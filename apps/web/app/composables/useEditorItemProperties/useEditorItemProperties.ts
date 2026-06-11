@@ -125,6 +125,7 @@ export function useEditorItemProperties(): UseEditorItemProperties {
             label: `${getPropName(prop)} value`,
             kind: 'property-value',
             propertyId: prop.id,
+            cast: prop.cast,
           });
         }
       }

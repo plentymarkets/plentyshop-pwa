@@ -1,10 +1,12 @@
 import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import type { Product, VariationProperty } from '@plentymarkets/shop-api';
 import type { PropertyPlaceholderKind } from '../types';
+import { decodeHtmlEntities } from '~/utils/decodeHtmlEntities';
 
 const SINGLE_BRACE_WRAPPED_TOKEN_REGEX = /^\{([^{}]+)}$/;
 const VALUE_TOKEN_WITH_ID_REGEX = /^\{\{value:(\d+)}}$/i;
 const PROPERTY_PLACEHOLDER_TAG_REGEX = /(<span\b[^>]*data-property-token=(['"])(.*?)\2[^>]*>)([\s\S]*?)(<\/span>)/gi;
+const HTML_BLOCK_IN_PARAGRAPH_REGEX = /<p([^>]*)>\s*<div data-rte-html-value>([\s\S]*)<\/div>\s*<\/p>/gi;
 
 const matchesPropertyId = (property: VariationProperty, id: number): boolean => {
   return (
@@ -86,10 +88,11 @@ export const replacePropertyPlaceholdersInHtml = (html: string, product?: Produc
     return '';
   }
 
-  return html.replace(PROPERTY_PLACEHOLDER_TAG_REGEX, (...groups) => {
+  const withReplacedSpans = html.replace(PROPERTY_PLACEHOLDER_TAG_REGEX, (...groups) => {
     const [_match, openTag, _quote, token, _innerContent, closeTag] = groups;
     const label = getHtmlAttribute(openTag, 'data-property-label');
     const kind = getHtmlAttribute(openTag, 'data-property-kind') as PropertyPlaceholderKind | null;
+    const cast = getHtmlAttribute(openTag, 'data-property-cast');
     const propertyIdAttribute = getHtmlAttribute(openTag, 'data-property-id');
     const propertyIdFromAttribute = propertyIdAttribute ? Number(propertyIdAttribute) : Number.NaN;
     const propertyIdFromToken = Number(token?.match(VALUE_TOKEN_WITH_ID_REGEX)?.[1]);
@@ -98,11 +101,17 @@ export const replacePropertyPlaceholdersInHtml = (html: string, product?: Produc
 
     if (kind === 'property-value' && Number.isFinite(propertyId) && hasProductData(product)) {
       const property = getPropertyById(propertyId, product);
+      const rawValue = property ? productPropertyGetters.getPropertyValue(property) : fallbackLabel;
 
-      const propertyValue = property ? productPropertyGetters.getPropertyValue(property) : fallbackLabel;
-      return `${openTag}${escapeHtml(propertyValue)}${closeTag}`;
+      if (cast === 'html') {
+        return `<div data-rte-html-value>${decodeHtmlEntities(rawValue)}</div>`;
+      }
+
+      return `${openTag}${escapeHtml(rawValue)}${closeTag}`;
     }
 
     return `${openTag}${escapeHtml(fallbackLabel)}${closeTag}`;
   });
+
+  return withReplacedSpans.replace(HTML_BLOCK_IN_PARAGRAPH_REGEX, '<div$1>$2</div>');
 };

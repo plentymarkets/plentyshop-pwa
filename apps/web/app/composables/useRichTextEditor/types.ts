@@ -1,4 +1,3 @@
-
 export type RteAlign = 'left' | 'center' | 'right' | 'justify';
 export type RteBlockType = 'paragraph' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
@@ -40,6 +39,7 @@ export interface PropertyPlaceholderOptions {
 export interface PropertyPlaceholderAttrs {
   propertyId?: number;
   kind?: PropertyPlaceholderKind;
+  cast?: string;
 }
 export type PropertyPlaceholderKind = 'group-name' | 'property-name' | 'property-value';
 
@@ -48,4 +48,5 @@ export interface PropertyPlaceholderToken {
   label: string;
   kind: PropertyPlaceholderKind;
   propertyId?: number;
+  cast?: string;
 }

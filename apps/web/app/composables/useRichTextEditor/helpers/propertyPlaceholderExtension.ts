@@ -50,6 +50,11 @@ export const PropertyPlaceholderNode = Node.create<PropertyPlaceholderOptions>({
         parseHTML: (element: HTMLElement) => element.getAttribute('data-property-kind'),
         renderHTML: () => null,
       },
+      cast: {
+        default: null,
+        parseHTML: (element: HTMLElement) => element.getAttribute('data-property-cast'),
+        renderHTML: () => null,
+      },
     };
   },
 
@@ -67,6 +72,7 @@ export const PropertyPlaceholderNode = Node.create<PropertyPlaceholderOptions>({
         'data-property-label': displayLabel,
         'data-property-id': node.attrs.propertyId,
         'data-property-kind': node.attrs.kind,
+        'data-property-cast': node.attrs.cast,
         title: displayLabel,
         class: 'rte-property-placeholder',
         contenteditable: 'false',
@@ -90,7 +96,13 @@ export const PropertyPlaceholderNode = Node.create<PropertyPlaceholderOptions>({
             .focus()
             .insertContent({
               type: this.name,
-              attrs: { token, label, propertyId: attrs?.propertyId ?? null, kind: attrs?.kind ?? null },
+              attrs: {
+                token,
+                label,
+                propertyId: attrs?.propertyId ?? null,
+                kind: attrs?.kind ?? null,
+                cast: attrs?.cast ?? null,
+              },
             })
             .run();
         },

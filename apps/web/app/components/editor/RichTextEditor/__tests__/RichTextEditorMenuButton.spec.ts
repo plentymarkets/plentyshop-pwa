@@ -14,4 +14,3 @@ describe('RichTextEditorMenuButton', () => {
     expect(wrapper.emitted('click')).toHaveLength(1);
   });
 });
-

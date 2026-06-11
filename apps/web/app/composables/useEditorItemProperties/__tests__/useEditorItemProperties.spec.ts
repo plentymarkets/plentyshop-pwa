@@ -214,6 +214,7 @@ describe('useEditorItemProperties', () => {
           label: 'Color value',
           kind: 'property-value',
           propertyId: mockProperty1.id,
+          cast: mockProperty1.cast,
         },
       ]);
     });
