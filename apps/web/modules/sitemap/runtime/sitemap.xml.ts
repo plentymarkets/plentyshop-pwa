@@ -52,6 +52,11 @@ const getSiteTrailingSlashSetting = async (apiUrl: string): Promise<number> => {
 
   if (cached !== null) return parseTrailingSlashSetting(cached);
 
+  if (apiUrl.length === 0) {
+    await storage.setItem(cacheKey, URL_TRAILING_SLASH_NO_CHANGE, { ttl: SETTINGS_CACHE_TTL_SECONDS });
+    return URL_TRAILING_SLASH_NO_CHANGE;
+  }
+
   try {
     const response = await $fetch<{ data: { originalKey: string; value: string | null }[] }>(
       `${apiUrl}/plentysystems/getSettings`,
@@ -65,6 +70,7 @@ const getSiteTrailingSlashSetting = async (apiUrl: string): Promise<number> => {
     await storage.setItem(cacheKey, value, { ttl: SETTINGS_CACHE_TTL_SECONDS });
     return value;
   } catch {
+    await storage.setItem(cacheKey, URL_TRAILING_SLASH_NO_CHANGE, { ttl: SETTINGS_CACHE_TTL_SECONDS });
     return URL_TRAILING_SLASH_NO_CHANGE;
   }
 };
@@ -113,8 +119,12 @@ export default defineEventHandler(async (event) => {
   const baseUrl = host.startsWith('localhost') ? `http://${host}` : `https://${host}`;
   const config = useRuntimeConfig();
   const { locales, defaultLocale, trailingSlash } = config.public.plentySitemap;
-  const shopCore = (config.public as Record<string, unknown>).shopCore as Record<string, string>;
-  const siteTrailingSlashSetting = await getSiteTrailingSlashSetting(shopCore.apiUrl ?? '');
+  const publicConfig = config.public as Record<string, unknown>;
+  const shopCore = publicConfig.shopCore as Record<string, unknown> | undefined;
+  const apiUrlFromShopCore = typeof shopCore?.apiUrl === 'string' ? shopCore.apiUrl : '';
+  const domain = typeof publicConfig.domain === 'string' ? publicConfig.domain : '';
+  const apiUrl = apiUrlFromShopCore.length > 0 ? apiUrlFromShopCore : domain;
+  const siteTrailingSlashSetting = await getSiteTrailingSlashSetting(apiUrl);
   const effectiveTrailingSlash = resolveTrailingSlashSetting(siteTrailingSlashSetting, trailingSlash);
   const urls: SitemapURL[] = [];
   const lastmod = buildTime;
