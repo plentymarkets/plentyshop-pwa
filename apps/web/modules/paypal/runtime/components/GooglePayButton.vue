@@ -40,6 +40,9 @@ async function onGooglePaymentButtonClicked() {
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
           processPayment(paymentData, props.order)
+            .then(() => {
+              emits('on-payed');
+            })
             .catch((error: Error) => {
               useNotification().send({
                 message: error.message || t('error.paymentFailed'),
@@ -47,9 +50,6 @@ async function onGooglePaymentButtonClicked() {
               });
               paymentLoading.value = false;
             })
-            .then(() => {
-              emits('on-payed');
-            });
           return true;
         })
         .catch((error: Error) => {
