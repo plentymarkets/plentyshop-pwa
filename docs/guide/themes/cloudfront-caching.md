@@ -1,14 +1,17 @@
 # CloudFront Caching
 
 ## Requirements
+
 - @plentymarkets/shop-core version 1.27.1 or higher
 - @plentymarkets/shop-api version 0.173.0 or higher
 - @plentymarkets/plentyshop version 2.32.0 or higher
 
 ## Migration guide
+
 If you are using a custom theme (git integration) make sure that you implement [these changes](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes) to be compatible with the new CloudFront caching feature.
 
 Breaking changes are in:
+
 - [apps/web/app/composables/useInitialSetup/useInitialSetup.ts](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes#diff-aaf5cd43bdc2bd5a97f53945f093a9bb631ac42c332cfe5568d3be2968691f4e)
 - [apps/web/app/composables/useInitialSetup/types.ts](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes#diff-da352a4601293ac8f596ec5e8e270f220000061b31c898dda86dabbf67d80167)
 - [apps/web/app/plugins/00.init-initial-data.client.ts](https://github.com/plentymarkets/plentyshop-pwa/pull/2362/changes#diff-7096d397657599ed4d91b2dad701fca0bd10965a215d83bc7d8d4966f346f23d)
@@ -18,10 +21,10 @@ Breaking changes are in:
 ## Introduction
 
 With our [latest release](https://github.com/plentymarkets/plentyshop-pwa/releases/tag/v2.32.0), we introduced support for CloudFront fullsite caching. This means that from now on, you can cache specific pages of your shop. By default the following pages are cached:
+
 - Home page
 - Category pages
 - Product pages
-
 
 ::: warning
 With the introduction of CloudFront caching, it is crucial to never load user specific data (e.g., cart information, user account details) directly on the server side. Doing so can lead to caching of sensitive information, which may be exposed to other users. Always ensure that user-specific data is loaded on the client side after the page has been rendered to maintain security and privacy. Use hooks like `onNuxtReady`, `onMounted` of `import.meta.client` to load user specific data on the client side.
@@ -47,7 +50,7 @@ definePageMeta({
 ```
 
 this will add the following cache control to the document header:
-```cache-control: public, max-age=30, stale-while-revalidate=900```
+`cache-control: public, max-age=30, stale-while-revalidate=900`
 
 This means that the page will be cached for 30 seconds and can be served stale for up to 15 minutes while it is being revalidated in the background.
 
@@ -55,4 +58,4 @@ Note: these values are currently controlled by us and will be adjusted in the fu
 
 ## How do I know if a page is cached?
 
-Inside the browser dev tools, you can check the network tab and filter for the document request. If the page is cached, you will see this header ```x-cache: Hit from cloudfront``` and ```cache-control: public, max-age=30, stale-while-revalidate=900```.
+Inside the browser dev tools, you can check the network tab and filter for the document request. If the page is cached, you will see this header `x-cache: Hit from cloudfront` and `cache-control: public, max-age=30, stale-while-revalidate=900`.
