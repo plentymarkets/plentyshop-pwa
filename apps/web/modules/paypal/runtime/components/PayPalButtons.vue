@@ -136,7 +136,7 @@ import {
 import { SfIconWarning } from '@storefront-ui/vue';
 
 const { loading: createOrderLoading } = useMakeOrder();
-const emit = defineEmits<{ click: [event: MouseEvent] }>();
+defineEmits<{ click: [event: MouseEvent] }>();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const { send } = useNotification();
