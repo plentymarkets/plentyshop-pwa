@@ -111,12 +111,14 @@ describe('sitemap module', () => {
           plentySitemap?: {
             defaultLocale: string;
             locales: string[];
+            trailingSlash: 'always' | 'auto' | 'never';
           };
         }
       ).plentySitemap,
     ).toEqual({
       defaultLocale: 'en',
       locales: [],
+      trailingSlash: 'never',
     });
   });
 
