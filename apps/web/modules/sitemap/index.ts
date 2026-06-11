@@ -5,7 +5,6 @@ export interface ModuleOptions {
   locales?: string[];
   defaultLocale?: string;
   exclude?: string[];
-  trailingSlash?: 'always' | 'auto' | 'never';
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -22,7 +21,6 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.plentySitemap = {
       locales: _options.locales || [],
       defaultLocale: _options.defaultLocale ?? 'en',
-      trailingSlash: _options.trailingSlash ?? 'never',
     };
 
     const routeHasParams = (path: string) => {

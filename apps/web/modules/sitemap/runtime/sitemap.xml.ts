@@ -28,7 +28,7 @@ const parseTrailingSlashSetting = (value: unknown): number => {
 };
 
 const resolveTrailingSlashSetting = (siteSetting: number, defaultMode: string): number => {
-  // if (siteSetting !== URL_TRAILING_SLASH_NO_CHANGE) return siteSetting;
+  if (siteSetting !== URL_TRAILING_SLASH_NO_CHANGE) return siteSetting;
   if (defaultMode === 'never') return URL_TRAILING_SLASH_NEVER;
   if (defaultMode === 'always') return URL_TRAILING_SLASH_ALWAYS;
 
@@ -118,14 +118,14 @@ export default defineEventHandler(async (event) => {
   const host = getRequestHost(event);
   const baseUrl = host.startsWith('localhost') ? `http://${host}` : `https://${host}`;
   const config = useRuntimeConfig();
-  const { locales, defaultLocale, trailingSlash } = config.public.plentySitemap;
+  const { locales, defaultLocale } = config.public.plentySitemap;
   const publicConfig = config.public as Record<string, unknown>;
   const shopCore = publicConfig.shopCore as Record<string, unknown> | undefined;
   const apiUrlFromShopCore = typeof shopCore?.apiUrl === 'string' ? shopCore.apiUrl : '';
   const domain = typeof publicConfig.domain === 'string' ? publicConfig.domain : '';
   const apiUrl = apiUrlFromShopCore.length > 0 ? apiUrlFromShopCore : domain;
   const siteTrailingSlashSetting = await getSiteTrailingSlashSetting(apiUrl);
-  const effectiveTrailingSlash = resolveTrailingSlashSetting(siteTrailingSlashSetting, trailingSlash);
+  const effectiveTrailingSlash = resolveTrailingSlashSetting(siteTrailingSlashSetting, 'never');
   const urls: SitemapURL[] = [];
   const lastmod = buildTime;
   const buildPageUrl = (pagePath: string, locale?: string): string => {
