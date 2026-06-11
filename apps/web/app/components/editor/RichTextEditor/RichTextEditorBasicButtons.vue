@@ -131,7 +131,7 @@
     v-if="showPropertiesButton && onOpenPropertiesModal"
     :title="'Insert property'"
     data-testid="rte-properties-button"
-    icon-name="link"
+    icon-name="add"
     @click="handleOpenPropertiesModal"
   />
 

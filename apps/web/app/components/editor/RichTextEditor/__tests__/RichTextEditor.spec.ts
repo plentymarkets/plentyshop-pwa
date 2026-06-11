@@ -4,17 +4,20 @@ import RichTextEditor from '../RichTextEditor.vue';
 import EditorRichTextEditorMenuButton from '../RichTextEditorMenuButton.vue';
 import { createMockUseRichTextEditor } from './test-utils';
 
-const { useRichTextEditor } = vi.hoisted(() => {
+const { useRichTextEditor, useBlocksList } = vi.hoisted(() => {
   return {
     useRichTextEditor: vi.fn(),
+    useBlocksList: vi.fn(),
   };
 });
 
 mockNuxtImport('useRichTextEditor', () => useRichTextEditor);
+mockNuxtImport('useBlocksList', () => useBlocksList);
 
 describe('RichTextEditor', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useBlocksList.mockReturnValue({ blocksListContext: ref('') });
   });
 
   it('should initialize with correct default props', () => {
@@ -234,11 +237,9 @@ describe('RichTextEditor', () => {
 
   it('should open the properties modal when the properties button is clicked', async () => {
     useRichTextEditor.mockReturnValue(createMockUseRichTextEditor());
+    useBlocksList.mockReturnValue({ blocksListContext: ref('product') });
 
     const wrapper = mount(RichTextEditor, {
-      props: {
-        showPropertiesButton: true,
-      },
       global: {
         stubs: {
           EditorContent: true,

@@ -13,7 +13,7 @@
           :on-open-properties-modal="() => (propertiesModalOpen = true)"
           :on-text-size-change="setFontSize"
           :set-font-color="setFontColor"
-          :show-properties-button="true"
+          :show-properties-button="isProductPage"
           :text-color="textColor"
           :toggle-link="toggleLink"
         />
@@ -127,7 +127,6 @@ const props = withDefaults(
     expanded?: boolean;
     textAlign?: RteAlign;
     placeholder?: string;
-    showPropertiesButton?: boolean;
   }>(),
   {
     modelValue: '',
@@ -183,6 +182,8 @@ const {
   },
 });
 const propertiesModalOpen = ref(false);
+const { blocksListContext } = useBlocksList();
+const isProductPage = computed(() => blocksListContext.value === 'product');
 
 const editorStyle = computed(() => ({
   minHeight: `${props.minHeight}px`,
