@@ -54,7 +54,11 @@ This will add the following `Cache-Control` header to the document response:
 
 This means that the page will be cached for 30 seconds and can be served stale for up to 15 minutes while it is being revalidated in the background.
 
-Note: these values are currently controlled by us and will be adjusted in the future. If you want to have more control over the cache control header, you can also pass your own values to the `getCacheControl` function.
+## Configure timings (optional)
+
+If you want to have more control over the cache control header, you can also pass your own values to the `getCacheControl` function.
+
+<add-code-example>
 
 ## How do I know if a page is cached?
 
