@@ -34,7 +34,7 @@
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@types/js-beautify": "^1.14.3",
     "@vueuse/core": "^14.3.0",
-    "axios": "^1.16.0",
+    "axios": "^1.17.0",
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
