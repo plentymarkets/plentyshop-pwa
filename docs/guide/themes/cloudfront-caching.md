@@ -27,7 +27,7 @@ With our [latest release](https://github.com/plentymarkets/plentyshop-pwa/releas
 - Product pages
 
 ::: warning
-With the introduction of CloudFront caching, it is crucial to never load user specific data (e.g., cart information, user account details) directly on the server side. Doing so can lead to caching of sensitive information, which may be exposed to other users. Always ensure that user-specific data is loaded on the client side after the page has been rendered to maintain security and privacy. Use hooks like `onNuxtReady`, `onMounted` of `import.meta.client` to load user specific data on the client side.
+With the introduction of CloudFront caching, it is crucial to never load user-specific data (e.g., cart information, user account details) directly on the server side. Doing so can lead to caching of sensitive information, which may be exposed to other users. Always ensure that user-specific data is loaded on the client side after the page has been rendered to maintain security and privacy. Use hooks like `onNuxtReady` or `onMounted` (or guard execution with `if (import.meta.client)`) to load user-specific data on the client side.
 :::
 
 ## How to enable CloudFront caching
