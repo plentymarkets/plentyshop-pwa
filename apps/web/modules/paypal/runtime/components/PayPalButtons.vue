@@ -19,6 +19,11 @@
       :disabled="disableBuyButton || paypalCardDialog"
       @click="handleCreditCardClick"
     />
+    <PayPalCreditCardBuyButton
+        v-else-if="paymentKey === PayPalPayUponInvoiceKey"
+        :disabled="disableBuyButton || paypalCardDialog"
+        @click="handleUpOnInvoiceClick"
+    />
     <ApplePayButton
       v-else-if="paymentKey === PayPalApplePayKey"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
@@ -62,7 +67,7 @@
     <PayPalCreditCardBuyButton
       v-else-if="paymentKey === PayPalPayUponInvoiceKey"
       :disabled="disableBuyButton || paypalCardDialog"
-      @validated-click="payPalPayUponInvoice = true"
+      @click="(() => payPalPayUponInvoice = true)"
     >
       {{ t('common.actions.pay') }}
     </PayPalCreditCardBuyButton>
@@ -223,6 +228,11 @@ const handleCreditCardClick = async () => {
 const openPayPalCardDialog = () => {
   paypalCardDialog.value = true;
 };
+
+const handleUpOnInvoiceClick = async () => {
+  const canProceed = await validateAndProceed();
+  if (canProceed) payPalPayUponInvoice.value = true;
+}
 
 const refetchOrderEvent = async () => {
   await refetchOrder();
