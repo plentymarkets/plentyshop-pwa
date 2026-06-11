@@ -14,7 +14,7 @@ export default defineNuxtPlugin({
 
     const getPreviewValid = async () => {
       const { data } = await useAsyncData(() => useSdk().plentysystems.getPreviewValid());
-
+      console.log('Preview valid response:', data.value);
       return data.value;
     };
 

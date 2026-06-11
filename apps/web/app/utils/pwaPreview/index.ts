@@ -14,6 +14,7 @@ export const resolvePreviewState = async ({
   }
 
   const response = await getPreviewValid();
+  console.log('getPreviewValid response:', response);
 
   return Boolean(response?.data?.valid && response.data.permission === 'write');
 };
