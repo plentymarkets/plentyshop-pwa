@@ -57,7 +57,17 @@ This means that the page will be cached for 30 seconds and can be served stale f
 
 If you want to have more control over the cache control header, you can also pass your own values to the `getCacheControl` function.
 
-<add-code-example>
+```vue 
+<script setup lang="ts">
+definePageMeta({
+  cacheControl: getCacheControl({
+    type: 'public',
+    maxAge: 60, // cache for 60 seconds
+    staleWhileRevalidate: 300, // serve stale for up to 5 minutes
+  }),
+});
+</script>
+```
 
 ## Verify the results
 
