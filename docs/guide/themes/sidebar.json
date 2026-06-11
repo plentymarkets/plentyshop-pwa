@@ -8,6 +8,10 @@
     "collapsed": true,
     "items": [
       {
+        "text": "CloudFront Caching",
+        "link": "/guide/themes/cloudfront-caching.md"
+      },
+      {
         "text": "Bot protection",
         "link": "/guide/themes/bot-protection.md"
       },
