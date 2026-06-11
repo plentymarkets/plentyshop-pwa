@@ -7,6 +7,7 @@
         ? 'bg-slate-800 border border-gray-300 text-white hover:bg-slate-700'
         : 'bg-transparent border border-transparent text-gray-800 hover:bg-gray-100'
     "
+    @click="emit('click', $event)"
     @mousedown.prevent
   >
     <svg
@@ -36,6 +37,10 @@ const props = withDefaults(
     iconName: '',
   },
 );
+
+const emit = defineEmits<{
+  (e: 'click', event: MouseEvent): void;
+}>();
 
 const viewBox = computed(() => {
   const icon = icons[props.iconName];

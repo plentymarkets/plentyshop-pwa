@@ -169,9 +169,10 @@ import {
   SfIconHelp,
   SfModal,
 } from '@storefront-ui/vue';
+import type { PropertyPlaceholderToken } from '~/composables/useRichTextEditor/types';
 
 const emit = defineEmits<{
-  insert: [tokens: string[]];
+  insert: [tokens: PropertyPlaceholderToken[]];
   close: [];
 }>();
 

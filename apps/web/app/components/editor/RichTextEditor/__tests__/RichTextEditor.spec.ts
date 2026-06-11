@@ -231,4 +231,28 @@ describe('RichTextEditor', () => {
 
     expect(setFontSize).toHaveBeenCalledWith('1.5rem');
   });
+
+  it('should open the properties modal when the properties button is clicked', async () => {
+    useRichTextEditor.mockReturnValue(createMockUseRichTextEditor());
+
+    const wrapper = mount(RichTextEditor, {
+      props: {
+        showPropertiesButton: true,
+      },
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+          ItemPropertiesSelectModal: {
+            template: '<div data-testid="item-properties-modal" />',
+          },
+        },
+      },
+    });
+
+    await wrapper.get('[data-testid="rte-properties-button"]').trigger('click');
+    await nextTick();
+
+    expect(wrapper.find('[data-testid="item-properties-modal"]').exists()).toBe(true);
+  });
 });
