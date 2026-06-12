@@ -1,7 +1,4 @@
-import {
-  formatPropertyPlaceholderLabel,
-  getPropertyPlaceholderDisplayLabel,
-} from '~/utils/propertyPlaceholders';
+import { formatPropertyPlaceholderLabel, getPropertyPlaceholderDisplayLabel } from '~/utils/propertyPlaceholders';
 
 describe('propertyPlaceholderLabel', () => {
   describe('formatPropertyPlaceholderLabel', () => {
