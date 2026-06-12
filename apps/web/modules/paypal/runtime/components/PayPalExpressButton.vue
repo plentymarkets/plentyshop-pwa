@@ -170,9 +170,12 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         });
 
         if (order?.id && props.type !== TypeOrderAlreadyExisting) {
-          useLogEvent().logPayPalExpressFlow();
           const reserved = await useCartStockReservation().reserve();
           if (!reserved) return '';
+        }
+
+        if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
+          useLogEvent().logPayPalExpressFlow();
         }
 
         return order?.id ?? '';
