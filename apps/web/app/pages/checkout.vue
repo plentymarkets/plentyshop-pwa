@@ -97,6 +97,7 @@ const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePayme
   useCheckoutPagePaymentAndShipping();
 
 emit('frontend:beginCheckout', cart.value);
+useLogEvent().logOpeningCheckout();
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {

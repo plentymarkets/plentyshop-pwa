@@ -180,6 +180,7 @@ export const useCart = () => {
             cart: state.value.data,
             addItemParams: param,
           });
+          useLogEvent().logAddItemToBasket(item.variationId, item.quantity);
         }
       });
 

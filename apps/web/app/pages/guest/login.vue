@@ -107,6 +107,7 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 
 onBeforeMount(async () => await loadConfig());
+useLogEvent().logOpenGuestLoginPage();
 
 const email = ref('');
 const password = ref('');

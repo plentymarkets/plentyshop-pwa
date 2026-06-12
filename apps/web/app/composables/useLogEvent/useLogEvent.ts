@@ -3,6 +3,10 @@ enum AnalyticsEventName {
   tocCreateBlock = 'tocCreateBlock',
   contentCreateBlock = 'contentCreateBlock',
   headerContainerEditBlock = 'headerContainerEditBlock',
+  addItemToBasket = 'addItemToBasket',
+  openingCheckout = 'openingCheckout',
+  paypalExpressFlow = 'paypalExpressFlow',
+  guestLoginPage = 'guestLoginPage',
 }
 
 export const useLogEvent = () => {
@@ -42,10 +46,53 @@ export const useLogEvent = () => {
     });
   };
 
+  const logAddItemToBasket = (variationId: number, quantity: number) => {
+    usePlentyLogs({
+      name: AnalyticsEventName.addItemToBasket,
+      loggableId: '',
+      loggableType: '',
+      payload: {
+        variationId,
+        quantity,
+      },
+    });
+  };
+
+  const logOpeningCheckout = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.openingCheckout,
+      loggableType: '',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
+  const logPayPalExpressFlow = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.paypalExpressFlow,
+      loggableType: '',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
+  const logOpenGuestLoginPage = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.guestLoginPage,
+      loggableType: '',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
   return {
     logToCOpened,
     logToCCreateBlock,
     logContentCreateBlock,
     logHeaderContainerEditBlock,
+    logAddItemToBasket,
+    logOpeningCheckout,
+    logPayPalExpressFlow,
+    logOpenGuestLoginPage,
   };
 };
