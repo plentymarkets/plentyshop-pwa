@@ -151,6 +151,9 @@ const {
 vi.mock('@tiptap/vue-3', () => {
   return {
     useEditor: vi.fn(() => ref(editorMock)),
+    VueNodeViewRenderer: vi.fn(),
+    NodeViewWrapper: { template: '<div><slot /></div>' },
+    nodeViewProps: {},
   };
 });
 
