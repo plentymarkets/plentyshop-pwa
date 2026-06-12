@@ -76,7 +76,7 @@ export const useApplePay = () => {
   };
 
   const processPayment = async (emits: ButtonClickedEmits) => {
-    const { processingOrder } = useProcessingOrder();
+    const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
     const localePath = useLocalePath();
