@@ -27,7 +27,7 @@ describe('resolvePreviewState', () => {
   });
 
   it('should return true when cookie is present and the response is valid with write permission', async () => {
-    getPreviewValid.mockResolvedValueOnce({ data: { valid: true, permission: 'write' } });
+    getPreviewValid.mockResolvedValueOnce({ valid: true, permission: 'write' });
 
     const result = await resolvePreviewState({
       cookieValue: 'some-token',
@@ -40,7 +40,7 @@ describe('resolvePreviewState', () => {
   });
 
   it('should return false when the response is valid but the permission is not write', async () => {
-    getPreviewValid.mockResolvedValueOnce({ data: { valid: true, permission: 'read' } });
+    getPreviewValid.mockResolvedValueOnce({ valid: true, permission: 'read' });
 
     const result = await resolvePreviewState({
       cookieValue: 'some-token',
@@ -52,7 +52,7 @@ describe('resolvePreviewState', () => {
   });
 
   it('should return false when the response is not valid', async () => {
-    getPreviewValid.mockResolvedValueOnce({ data: { valid: false, permission: 'write' } });
+    getPreviewValid.mockResolvedValueOnce({ valid: false, permission: 'write' });
 
     const result = await resolvePreviewState({
       cookieValue: 'some-token',

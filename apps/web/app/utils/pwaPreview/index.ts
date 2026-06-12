@@ -13,8 +13,11 @@ export const resolvePreviewState = async ({
     return false;
   }
 
-  const response = await getPreviewValid();
-  console.log('getPreviewValid response:', response);
+  const data = await getPreviewValid();
 
-  return Boolean(response?.data?.valid && response.data.permission === 'write');
+  if (data?.valid && data.permission === 'write') {
+    return true;
+  }
+
+  return false;
 };
