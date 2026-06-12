@@ -1,7 +1,7 @@
 import {
   formatPropertyPlaceholderLabel,
   getPropertyPlaceholderDisplayLabel,
-} from '~/composables/useRichTextEditor/helpers/propertyPlaceholders';
+} from '~/utils/propertyPlaceholders';
 
 describe('propertyPlaceholderLabel', () => {
   describe('formatPropertyPlaceholderLabel', () => {

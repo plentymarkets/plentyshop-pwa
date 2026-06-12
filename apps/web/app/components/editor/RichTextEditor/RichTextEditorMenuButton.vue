@@ -39,7 +39,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  (e: 'click', event: MouseEvent): void;
+  (event: 'click', mouseEvent: MouseEvent): void;
 }>();
 
 const viewBox = computed(() => {

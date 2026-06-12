@@ -1,7 +1,7 @@
 <template>
   <node-view-wrapper
     :data-property-token="node.attrs.token"
-    :title="node.attrs.label"
+    :title="tokenLabel"
     as="span"
     class="rte-property-placeholder"
     contenteditable="false"
@@ -12,7 +12,6 @@
 
 <script lang="ts" setup>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3';
-import { getPropertyPlaceholderDisplayLabel } from '../../../composables/useRichTextEditor/helpers/propertyPlaceholders';
 
 const props = defineProps(nodeViewProps);
 const tokenLabel = computed(() => getPropertyPlaceholderDisplayLabel(props.node.attrs.token, props.node.attrs.label));

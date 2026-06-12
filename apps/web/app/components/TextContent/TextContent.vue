@@ -29,7 +29,6 @@
 
 <script lang="ts" setup>
 import type { TextContentProps } from '~/components/TextContent/types';
-import { replacePropertyPlaceholdersInHtml } from '../../composables/useRichTextEditor/helpers/propertyPlaceholders';
 
 const props = defineProps<TextContentProps>();
 const localePath = useLocalePath();

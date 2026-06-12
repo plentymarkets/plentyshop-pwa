@@ -1,7 +1,6 @@
 import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import type { Product, VariationProperty } from '@plentymarkets/shop-api';
-import type { PropertyPlaceholderKind } from '../types';
-import { decodeHtmlEntities } from '~/utils/decodeHtmlEntities';
+import type { PropertyPlaceholderKind } from '~/composables/useRichTextEditor/types';
 
 const SINGLE_BRACE_WRAPPED_TOKEN_REGEX = /^\{([^{}]+)}$/;
 const VALUE_TOKEN_WITH_ID_REGEX = /^\{\{value:(\d+)}}$/i;
@@ -19,18 +18,6 @@ const findPropertyInGroups = (
   id: number,
 ): VariationProperty | undefined => {
   return groups?.flatMap((group) => group.properties ?? []).find((property) => matchesPropertyId(property, id));
-};
-
-const escapeHtml = (text: string): string => {
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;',
-  };
-
-  return text.replace(/[&<>"']/g, (character) => map[character] ?? character);
 };
 
 const getHtmlAttribute = (tag: string, attribute: string): string | null => {

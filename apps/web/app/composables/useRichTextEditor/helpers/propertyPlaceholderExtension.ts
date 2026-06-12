@@ -1,11 +1,11 @@
 import { Node, mergeAttributes } from '@tiptap/core';
+import type { NodeViewRenderer } from '@tiptap/core';
 import { VueNodeViewRenderer } from '@tiptap/vue-3';
 import PropertyPlaceholderView from '~/components/editor/RichTextEditor/PropertyPlaceholderView.vue';
 import type { PropertyPlaceholderOptions, PropertyPlaceholderAttrs } from '../types';
-import { getPropertyPlaceholderDisplayLabel } from '~/composables/useRichTextEditor/helpers/propertyPlaceholders';
+import { getPropertyPlaceholderDisplayLabel } from '~/utils/propertyPlaceholders';
 
 declare module '@tiptap/core' {
-  // eslint-disable-next-line custom-rules/file-organization-types
   interface Commands<ReturnType> {
     propertyPlaceholder: {
       insertPropertyPlaceholder: (token: string, label: string, attrs?: PropertyPlaceholderAttrs) => ReturnType;
@@ -13,9 +13,7 @@ declare module '@tiptap/core' {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-export const PropertyPlaceholderNode = Node.create<PropertyPlaceholderOptions>({
+export const PropertyPlaceholderNode: Node<PropertyPlaceholderOptions> = Node.create<PropertyPlaceholderOptions>({
   name: 'propertyPlaceholder',
   group: 'inline',
   inline: true,
@@ -81,9 +79,7 @@ export const PropertyPlaceholderNode = Node.create<PropertyPlaceholderOptions>({
     ];
   },
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  addNodeView() {
+  addNodeView(): NodeViewRenderer {
     return VueNodeViewRenderer(PropertyPlaceholderView);
   },
 

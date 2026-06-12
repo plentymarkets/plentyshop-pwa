@@ -10,7 +10,7 @@
           :insert-icon="insertIcon"
           :is-active="isActive"
           :on-font-size-change="onFontSizeChange"
-          :on-open-properties-modal="() => (propertiesModalOpen = true)"
+          :on-open-properties-modal="openPropertiesModal"
           :on-text-size-change="setFontSize"
           :set-font-color="setFontColor"
           :show-properties-button="isProductPage"
@@ -102,13 +102,8 @@
   <EditorRichTextEditorLinkModal v-if="linkModalOpen" :close="closeLinkModal" :editor="editor" />
   <ItemPropertiesSelectModal
     v-if="propertiesModalOpen"
-    @close="propertiesModalOpen = false"
-    @insert="
-      (tokens) => {
-        insertPropertyPlaceholders(tokens);
-        propertiesModalOpen = false;
-      }
-    "
+    @close="closePropertiesModal"
+    @insert="handlePropertyInsertion"
   />
 </template>
 
@@ -205,6 +200,19 @@ const closeLinkModal = () => {
 const handleSwitchToHtml = () => {
   closeModal();
   emit('requestHtmlModal');
+};
+
+const openPropertiesModal = () => {
+  propertiesModalOpen.value = true;
+};
+
+const closePropertiesModal = () => {
+  propertiesModalOpen.value = false;
+};
+
+const handlePropertyInsertion = (tokens: PropertyPlaceholderToken[]) => {
+  insertPropertyPlaceholders(tokens);
+  propertiesModalOpen.value = false;
 };
 
 defineExpose({ editor, focus, clearFormatting, undo, redo, openModal });
