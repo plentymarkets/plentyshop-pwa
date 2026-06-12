@@ -1,5 +1,5 @@
 import type { GooglePayConfig, GooglePayPayPal } from '~/composables/useGooglePay/types';
-import { paypalGetters } from '@plentymarkets/shop-api';
+import { type Order, paypalGetters } from '@plentymarkets/shop-api';
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
@@ -14,10 +14,9 @@ const loadExternalScript = async () => {
 
 const getPaymentsClient = () => {
   const { config } = usePayPal();
-  const environment = config.value && paypalGetters.isProduction(config.value) ? 'PRODUCTION' : 'TEST';
 
   return new google.payments.api.PaymentsClient({
-    environment,
+    environment: config.value ? (paypalGetters.isProduction(config.value) ? 'PRODUCTION' : 'TEST') : 'TEST',
   });
 };
 
@@ -49,17 +48,19 @@ export const useGooglePay = () => {
     return true;
   };
 
-  const getGoogleTransactionInfo = async () => {
-    const { data: transaction } = await useSdk().plentysystems.getPayPalGooglePayTransactionInfo({});
+  const getGoogleTransactionInfo = async (orderId?: number) => {
+    const { data: transaction } = await useSdk().plentysystems.getPayPalGooglePayTransactionInfo({
+      orderId,
+    });
     return transaction as google.payments.api.TransactionInfo;
   };
 
-  const getGooglePaymentDataRequest = async () => {
+  const getGooglePaymentDataRequest = async (orderId?: number) => {
     return {
       apiVersion: 2,
       apiVersionMinor: 0,
       allowedPaymentMethods: deepClone(state.value.googleConfig.allowedPaymentMethods),
-      transactionInfo: await getGoogleTransactionInfo(),
+      transactionInfo: await getGoogleTransactionInfo(orderId),
       merchantInfo: deepClone(state.value.googleConfig.merchantInfo),
     } as google.payments.api.PaymentDataRequest;
   };
@@ -72,28 +73,31 @@ export const useGooglePay = () => {
     state.value.paymentLoading = false;
   };
 
-  const processPayment = async (paymentData: google.payments.api.PaymentData) => {
+  const processPayment = async (paymentData: google.payments.api.PaymentData, order?: Order) => {
     if (!state.value.script) return;
     const localePath = useLocalePath();
     const { resolvePathTrailingSlash } = useUrlTrailingSlash();
     const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
       usePayPal();
     const { clearCartItems } = useCart();
-    const { processingOrder } = useProcessingOrder();
+    const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
     const { emit } = usePlentyEvent();
 
     state.value.paymentLoading = true;
 
-    if (!(await useCartStockReservation().reserve())) {
-      state.value.paymentLoading = false;
-      return;
+    if (!order) {
+      if (!(await useCartStockReservation().reserve())) {
+        state.value.paymentLoading = false;
+        return;
+      }
     }
 
     const transaction = await createTransaction({
-      type: 'basket',
+      type: order ? 'order' : 'basket',
+      plentyOrderId: order?.order?.id,
     });
-    if (!transaction?.id) {
-      await useCartStockReservation().unreserve();
+    if (!transaction || !transaction.id) {
+      if (!order?.order?.id) await useCartStockReservation().unreserve();
       showErrorNotification(t('storefrontError.order.createFailed'));
       return;
     }
@@ -109,32 +113,37 @@ export const useGooglePay = () => {
       status = paypalOrder?.result?.status || 'ERROR';
     }
 
-    if (status !== 'APPROVED') {
-      await useCartStockReservation().unreserve();
+    if (status === 'APPROVED') {
+      let plentyOrder: Order | null = order || null;
+      if (!order?.order?.id) {
+        plentyOrder = await createPlentyOrder();
+      }
+
+      if (!plentyOrder || !plentyOrder.order || !plentyOrder.order.id) {
+        showErrorNotification(t('storefrontError.order.createFailed'));
+        return;
+      }
+
+      await captureOrder(transaction.id);
+      await createPlentyPaymentFromPayPalOrder(transaction.id, plentyOrder.order.id);
+
+      processingOrder.value = true;
+      if (!order) {
+        emit('frontend:orderCreated', plentyOrder);
+        emit('module:clearCart', null);
+        clearCartItems();
+        navigateTo(
+          resolvePathTrailingSlash(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey)),
+        );
+      }
+      state.value.paymentLoading = false;
+
+      return { transactionState: 'SUCCESS' };
+    } else {
+      if (!order) await useCartStockReservation().unreserve();
       showErrorNotification(t('error.paymentFailed'));
       return { transactionState: 'ERROR' };
     }
-
-    const order = await createPlentyOrder();
-
-    if (!order?.order?.id) {
-      showErrorNotification(t('storefrontError.order.createFailed'));
-      return;
-    }
-
-    await captureOrder(transaction.id);
-    await createPlentyPaymentFromPayPalOrder(transaction.id, order.order.id);
-
-    processingOrder.value = true;
-    emit('frontend:orderCreated', order);
-    emit('module:clearCart', null);
-    clearCartItems();
-    navigateTo(
-      resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
-    );
-    state.value.paymentLoading = false;
-
-    return { transactionState: 'SUCCESS' };
   };
 
   const getIsReadyToPayRequest = (): google.payments.api.IsReadyToPayRequest => {

@@ -121,8 +121,21 @@ export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
     return false;
   };
 
+  const refetchOrder = async () => {
+    if (!state.value.data) return false;
+    const shippingAddress = orderGetters.getShippingAddress(state.value.data);
+    await fetchOrderClient({
+      orderId: orderGetters.getId(state.value.data),
+      accessKey: orderGetters.getAccessKey(state.value.data),
+      postcode: shippingAddress?.postalCode,
+      name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
+    });
+    return true;
+  };
+
   return {
     fetchOrder,
+    refetchOrder,
     fetchOrderClient,
     changePaymentMethod,
     ...toRefs(state.value),

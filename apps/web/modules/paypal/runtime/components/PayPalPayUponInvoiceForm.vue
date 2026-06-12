@@ -67,8 +67,10 @@
 import type { ApiError } from '@plentymarkets/shop-api';
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { usePayPal } from '../composables/usePayPal';
+import type { PayPalCreditPropsType } from '../types';
 
-const emit = defineEmits(['confirmCancel']);
+const props = defineProps<PayPalCreditPropsType>();
+const emit = defineEmits(['confirmCancel', 'on-payed']);
 
 const {
   config,
@@ -81,7 +83,7 @@ const {
 } = usePayPal();
 const { emit: plentyEmit } = usePlentyEvent();
 const localePath = useLocalePath();
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const {
   loading,
   submitFirstTime,
@@ -154,38 +156,43 @@ const createPayPalPayUponInvoiceOrder = async () => {
   loading.value = true;
 
   try {
-    const orderData = {
-      type: 'basket' as const,
+    if (!props.order) {
+      if (!(await useCartStockReservation().reserve())) {
+        loading.value = false;
+        return;
+      }
+    }
+
+    const transactionOrder = await createTransaction({
+      type: props.order ? 'order' : 'basket',
+      plentyOrderId: props?.order?.order?.id,
       additionalInformation: {
         birthdate: birthDate.value,
         phoneNumber: phoneNumber.value,
         phoneCountryCode: phoneCountryCode.value,
       },
-    };
-
-    if (!(await useCartStockReservation().reserve())) {
-      loading.value = false;
-      return;
-    }
-
-    const transactionOrder = await createTransaction(orderData);
+    });
 
     if (transactionOrder) {
-      const plentyOrder = await createPlentyOrder();
+      const plentyOrder = props.order ?? (await createPlentyOrder());
       if (plentyOrder) {
         await createPlentyPaymentFromPayPalOrder(transactionOrder.id, plentyOrder.order.id);
-        emit('confirmCancel');
-        plentyEmit('frontend:orderCreated', plentyOrder);
-        plentyEmit('module:clearCart', null);
-        processingOrder.value = true;
-        return navigateTo(
-          localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey),
-        );
+
+        if (props.order) {
+          emit('on-payed');
+        } else {
+          emit('confirmCancel');
+          plentyEmit('frontend:orderCreated', plentyOrder);
+          plentyEmit('module:clearCart', null);
+          processingOrder.value = true;
+          return navigateTo(
+            localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey),
+          );
+        }
       }
     }
 
     await useCartStockReservation().unreserve();
-
     loading.value = false;
   } catch (error) {
     await useCartStockReservation().unreserve();

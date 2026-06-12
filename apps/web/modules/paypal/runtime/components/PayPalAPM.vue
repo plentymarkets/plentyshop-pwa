@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import type { PayPalAddToCartCallback, PaypalAPMPropsType } from '../types';
 import { PayPalAlternativeFundingSourceMapper } from '../types';
@@ -22,7 +22,7 @@ const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(useId());
 const paypalScript = ref<PayPalNamespace | null>(null);
 
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const {
   order: paypalOrder,
   getScript,
@@ -33,23 +33,16 @@ const {
   getOrder,
 } = usePayPal();
 const { data: cart, clearCartItems } = useCart();
-const { data: paymentMethods } = usePaymentMethods();
 const { emit } = usePlentyEvent();
 
-const successPaymentStatuses = new Set(['APPROVED', 'COMPLETED']);
+const successPaymentStatuses = ['APPROVED', 'COMPLETED'];
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-const selectedPayment = computed(() => {
-  return paymentProviderGetters.getPaymentMethodById(
-    paymentMethods.value.list,
-    Number.parseInt(paymentProviderGetters.getMethodOfPaymentId(cart.value)),
-  );
-});
 const localePath = useLocalePath();
 const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
-  (event: 'on-approved'): void;
+  (event: 'on-approved' | 'on-payed'): void;
 }>();
 
 const props = defineProps<PaypalAPMPropsType>();
@@ -73,6 +66,41 @@ const onInit = (actions: OnInitActions) => {
   });
 };
 
+const createOrderFlow = async (data: OnApproveData) => {
+  const order = await createPlentyOrder();
+
+  if (order) {
+    if (!paypalOrder.value?.isAutocaptured) {
+      await captureOrder(data.orderID);
+    }
+    await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
+  }
+
+  emit('module:clearCart', null);
+  clearCartItems();
+
+  if (order?.order?.id) {
+    emit('frontend:orderCreated', order);
+      await navigateTo(
+        resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
+      );
+  } else {
+    processingOrder.value = false;
+    useNotification().send({
+      message: t('error.paymentFailed'),
+      type: 'negative',
+    });
+  }
+};
+
+const orderExistingFlow = async (data: OnApproveData) => {
+  if (!paypalOrder.value?.isAutocaptured) {
+    await captureOrder(data.orderID);
+  }
+  await createPlentyPaymentFromPayPalOrder(data.orderID, props.order!.order.id);
+  emits('on-payed');
+};
+
 const onValidationCallback = async () => {
   return await new Promise<boolean>((resolve) => {
     if (!checkonValidationCallbackEvent()) {
@@ -90,30 +118,11 @@ const onApprove = async (data: OnApproveData) => {
 
   const payPalOrder = await getOrder(data.orderID);
 
-  if (payPalOrder?.result?.status && successPaymentStatuses.has(payPalOrder.result.status)) {
-    const order = await createPlentyOrder();
-
-    if (order) {
-      if (!paypalOrder.value?.isAutocaptured) {
-        await captureOrder(data.orderID);
-      }
-      await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
-    }
-
-    emit('module:clearCart', null);
-    clearCartItems();
-
-    if (order?.order?.id) {
-      emit('frontend:orderCreated', order);
-      await navigateTo(
-        resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
-      );
+  if (payPalOrder?.result?.status && successPaymentStatuses.includes(payPalOrder.result.status)) {
+    if (props.order) {
+      await orderExistingFlow(data);
     } else {
-      processingOrder.value = false;
-      useNotification().send({
-        message: t('error.paymentFailed'),
-        type: 'negative',
-      });
+      await createOrderFlow(data);
     }
   } else {
     processingOrder.value = false;
@@ -160,10 +169,17 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       async createOrder() {
         showError.value = true;
         const order = await createTransaction({
-          type: 'basket',
+          type: props.order ? 'order' : 'basket',
+          plentyOrderId: props.order?.order?.id,
         });
 
-        if (order?.id && (await useCartStockReservation().reserve())) {
+        if (order?.id) {
+          if (!props.order) {
+            if (!(await useCartStockReservation().reserve())) {
+              return '';
+            }
+          }
+
           return order.id;
         }
         return '';
@@ -183,8 +199,8 @@ const createButton = () => {
       paypalButton.value.innerHTML = '';
     }
 
-    if (selectedPayment.value) {
-      const paymentKey = selectedPayment.value.paymentKey as keyof typeof PayPalAlternativeFundingSourceMapper;
+    if (props.paymentKey) {
+      const paymentKey = props.paymentKey as keyof typeof PayPalAlternativeFundingSourceMapper;
       const fundingSourceValue = PayPalAlternativeFundingSourceMapper[paymentKey];
       if (!fundingSourceValue) {
         return;
@@ -203,11 +219,5 @@ onNuxtReady(async () => {
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, true);
   createButton();
-});
-
-watch(selectedPayment, () => {
-  if (paypalScript.value) {
-    createButton();
-  }
 });
 </script>
