@@ -23,7 +23,6 @@ import Emoji, { emojis } from '@tiptap/extension-emoji';
 import { getMarkRange } from '@tiptap/core';
 import { PropertyPlaceholderNode } from './helpers/propertyPlaceholderExtension';
 import type { PropertyPlaceholderToken } from './types';
-import { formatPropertyPlaceholderLabel } from '~/utils/propertyPlaceholders';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
