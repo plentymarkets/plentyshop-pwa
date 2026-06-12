@@ -174,6 +174,10 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
           if (!reserved) return '';
         }
 
+        if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
+          useLogEvent().logPayPalExpressFlow();
+        }
+
         return order?.id ?? '';
       },
       async onApprove(data) {
