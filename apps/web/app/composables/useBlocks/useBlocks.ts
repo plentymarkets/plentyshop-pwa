@@ -3,7 +3,6 @@ import type { UseBlocksState, UseBlocksReturn } from './types';
 import { assembleBlocks, isValidHeaderOrder } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
-  // eslint-disable-next-line custom-rules/file-organization-types
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
