@@ -1,5 +1,5 @@
 <template>
-  <UiOverlay :visible="true">
+  <UiOverlay :visible="true" class="fixed inset-0 z-modal-backdrop bg-black/40">
     <SfModal
       :model-value="true"
       class="!w-[420px] !max-w-[90vw] !max-h-[90vh] !p-0 !rounded-xl !border !border-neutral-200 !shadow-md flex flex-col !bg-white !absolute !top-20 !left-1/2 !-translate-x-1/2 !m-0 !overflow-hidden"
