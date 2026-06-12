@@ -46,15 +46,12 @@ export const useLogEvent = () => {
     });
   };
 
-  const logAddItemToBasket = (variationId: number, quantity: number) => {
+  const logAddItemToBasket = () => {
     usePlentyLogs({
       name: AnalyticsEventName.addItemToBasket,
       loggableId: '',
       loggableType: '',
-      payload: {
-        variationId,
-        quantity,
-      },
+      payload: {},
     });
   };
 
