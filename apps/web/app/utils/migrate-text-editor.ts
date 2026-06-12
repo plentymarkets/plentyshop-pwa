@@ -1,5 +1,5 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
-import type { TextContentProps } from '../components/TextContent/types';
+import type { TextContentProps } from '~/components/TextContent/types';
 
 const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
   if (!content.text) return false;
@@ -12,17 +12,6 @@ const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
 const hasHtmlTags = (text: string): boolean => {
   if (!text) return false;
   return /<\/?[a-z][\s\S]*>/i.test(text);
-};
-
-const escapeHtml = (text: string): string => {
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;',
-  };
-  return text.replace(/[&<>"']/g, (m) => map[m] || m);
 };
 
 export const migrateTextCardContent = (

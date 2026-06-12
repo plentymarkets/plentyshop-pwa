@@ -21,6 +21,8 @@ import { AtomSelectionDecoration } from './helpers/atomSelectionDecoration';
 import Placeholder from '@tiptap/extension-placeholder';
 import Emoji, { emojis } from '@tiptap/extension-emoji';
 import { getMarkRange } from '@tiptap/core';
+import { PropertyPlaceholderNode } from './helpers/propertyPlaceholderExtension';
+import type { PropertyPlaceholderToken } from './types';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -40,6 +42,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         autolink: true,
         linkOnPaste: true,
       }),
+      PropertyPlaceholderNode,
       TextStyle,
       FontSize,
       Color,
@@ -165,7 +168,19 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const insertEmoji = (name: string) => {
     editor.value?.chain().focus().setEmoji(name).run();
   };
+  const insertPropertyPlaceholders = (tokens: PropertyPlaceholderToken[]) => {
+    if (!tokens.length || !editor.value) return;
 
+    const chain = editor.value.chain().focus();
+    tokens.forEach(({ token, label, propertyId, kind, cast }) => {
+      chain.insertPropertyPlaceholder(token, label || formatPropertyPlaceholderLabel(token), {
+        propertyId,
+        kind,
+        cast,
+      });
+    });
+    chain.run();
+  };
   return {
     editor,
     expandedLocal,
@@ -191,5 +206,6 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     focus,
     insertIcon,
     insertEmoji,
+    insertPropertyPlaceholders,
   };
 }
