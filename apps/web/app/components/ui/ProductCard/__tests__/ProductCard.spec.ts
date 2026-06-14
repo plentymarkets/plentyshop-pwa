@@ -37,6 +37,16 @@ describe('<ProductCard />', () => {
     expect(wrapper.find('[data-testid="product-card"]').exists()).toBe(true);
   });
 
+  it('should use the secondary color for the product price', () => {
+    const wrapper = mount(UiProductCard, {
+      props: {
+        product: ProductMock,
+      },
+    });
+
+    expect(wrapper.find('[data-testid="product-card-vertical-price"]').classes()).toContain('text-secondary-600');
+  });
+
   it('should not render image initially for non-priority items', () => {
     useLazyProductImageMock.mockReturnValue({
       imageContainerRef: ref(null),

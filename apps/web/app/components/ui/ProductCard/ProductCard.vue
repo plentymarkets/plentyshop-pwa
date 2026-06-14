@@ -131,7 +131,10 @@
             <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
           </div>
           <div class="flex flex-col-reverse items-start @md:flex-row @md:items-center mt-auto">
-            <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
+            <span
+              class="block pb-2 font-bold typography-text-sm text-secondary-600"
+              data-testid="product-card-vertical-price"
+            >
               <span v-if="showFromText" class="mr-1">{{ t('account.ordersAndReturns.orderDetails.priceFrom') }}</span>
               <span>{{ format(price) }}</span>
               <span>{{ t('common.labels.asterisk') }}</span>

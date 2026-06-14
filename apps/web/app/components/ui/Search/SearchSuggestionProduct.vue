@@ -21,7 +21,7 @@
         <span v-if="crossedPrice && hasDifferentPrices" class="text-xs text-neutral-400 line-through">
           {{ format(crossedPrice) }}
         </span>
-        <span class="text-sm font-semibold text-neutral-900">
+        <span class="text-sm font-semibold text-secondary-600" data-testid="search-suggestion-product-price">
           {{ format(itemSearchAutocompleteGetters.getPrice(item)) }}
         </span>
       </div>
