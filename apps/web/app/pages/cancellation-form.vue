@@ -103,9 +103,10 @@
         <i18n-t keypath="cancellationForm.privacyPolicy" scope="global">
           <template #privacyPolicy>
             <UiLink
-                :href="localePath(paths.privacyPolicy)"
-                target="_blank"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              :href="localePath(paths.privacyPolicy)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
               {{ t('legal.privacyPolicy') }}
             </UiLink>
@@ -139,7 +140,7 @@
 import type { Locale } from '#i18n';
 import { SfInput, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
-import { paths } from "~/utils/paths";
+import { paths } from '~/utils/paths';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
