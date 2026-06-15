@@ -1,6 +1,10 @@
 <template>
   <div class="site-settings-view sticky h-full max-h-screen flex flex-col pb-4" data-testid="site-settings-drawer">
-    <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories flex flex-col h-full">
+    <div
+      v-if="subCategories.length > 1 && !activeSubCategory"
+      key="sub-list"
+      class="sub-categories flex flex-col h-full"
+    >
       <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-5">
           <div class="flex items-center w-full">
