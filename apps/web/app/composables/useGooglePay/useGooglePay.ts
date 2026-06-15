@@ -75,7 +75,7 @@ export const useGooglePay = () => {
 
   const processPayment = async (paymentData: google.payments.api.PaymentData, order?: Order) => {
     if (!state.value.script) return;
-    const localePath = useLocalePath();
+    const localePath = useLocalizedPath();
     const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
       usePayPal();
     const { clearCartItems } = useCart();

@@ -191,10 +191,11 @@ export const useAddPageModal = () => {
   };
 
   const redirectToNewPage = async (newCategory: CategoryEntry) => {
+    const { resolvePathTrailingSlash } = useUrlTrailingSlash();
     const previewUrl = newCategory.details[0]?.previewUrl;
     const firstSlashIndex = previewUrl?.indexOf('/', 8) ?? -1;
-    const path = firstSlashIndex !== -1 ? previewUrl?.slice(firstSlashIndex) : '/';
-    await router.push({ path });
+    const path = firstSlashIndex !== -1 && previewUrl ? previewUrl.slice(firstSlashIndex) : '/';
+    await router.push({ path: resolvePathTrailingSlash(path) });
     setCategoryId({
       id: newCategory.id,
       parentId: newCategory.parentCategoryId ?? 0,

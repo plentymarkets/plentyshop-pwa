@@ -29,7 +29,7 @@ import { paths } from '~/utils/paths';
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 defineProps<{
   filled?: boolean;
