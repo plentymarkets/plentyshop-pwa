@@ -1,4 +1,5 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
+import type { PropertyPlaceholderToken } from '~/composables/useRichTextEditor/types';
 import type {
   UseEditorItemProperties,
   PropSelection,
@@ -44,7 +45,7 @@ export function useEditorItemProperties(): UseEditorItemProperties {
 
   const getGroupName = (group: ApiGroup): string => group.name;
   const getPropName = (prop: ItemPropertyTranslated): string => prop.name;
-  const getPropPlaceholder = (_prop: ItemPropertyTranslated): string => '{{value}}';
+  const getPropPlaceholder = (prop: ItemPropertyTranslated): string => `{{value:${prop.id}}}`;
 
   const sourceGroups = computed<ApiGroup[]>(() => itemPropertyGroups.value);
 
@@ -93,21 +94,45 @@ export function useEditorItemProperties(): UseEditorItemProperties {
     groupSelection.value[groupId][field] = checked;
   };
 
-  const insertSelected = (): string[] => {
-    const tokens: string[] = [];
+  const insertSelected = (): PropertyPlaceholderToken[] => {
+    const tokens: PropertyPlaceholderToken[] = [];
 
     for (const group of sourceGroups.value) {
-      if (groupSelection.value[group.id]?.name) tokens.push(getGroupName(group));
+      if (groupSelection.value[group.id]?.name) {
+        tokens.push({
+          token: getGroupName(group),
+          label: getGroupName(group),
+          kind: 'group-name',
+        });
+      }
+
       for (const prop of group.properties) {
         const propSel = selection.value[prop.id];
         if (!propSel) continue;
-        if (propSel.name) tokens.push(getPropName(prop));
-        if (propSel.value) tokens.push(getPropPlaceholder(prop));
+
+        if (propSel.name) {
+          tokens.push({
+            token: getPropName(prop),
+            label: getPropName(prop),
+            kind: 'property-name',
+            propertyId: prop.id,
+          });
+        }
+
+        if (propSel.value) {
+          tokens.push({
+            token: `{{value:${prop.id}}}`,
+            label: `${getPropName(prop)} value`,
+            kind: 'property-value',
+            propertyId: prop.id,
+            cast: prop.cast,
+          });
+        }
       }
     }
 
     if (tokens.length > 0) {
-      navigator.clipboard?.writeText(tokens.join(' '));
+      navigator.clipboard?.writeText(tokens.map(({ label }) => label).join(' '));
     }
 
     return tokens;

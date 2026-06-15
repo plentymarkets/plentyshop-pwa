@@ -25,6 +25,7 @@ export type BlocksList = {
 
 export interface UseBlocksList {
   blocksLists: Ref<BlocksList>;
+  blocksListContext: Ref<BlocksListContext>;
   setBlocksListContext: (context: BlocksListContext) => void;
   getBlocksLists: () => Promise<void>;
   getBlockTemplateByLanguage: (category: string, variationIndex: number, lang: string) => Promise<Block>;

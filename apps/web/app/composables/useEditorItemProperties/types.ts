@@ -1,4 +1,5 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
+import type { PropertyPlaceholderToken } from '~/composables/useRichTextEditor/types';
 export type { ItemPropertyGroup, ItemProperty, ItemPropertyLocaleMap } from '@plentymarkets/shop-api';
 
 export interface PropSelection {
@@ -20,5 +21,5 @@ export interface UseEditorItemProperties {
   toggleGroup: (id: number) => void;
   toggleSelection: (propId: number, field: 'name' | 'value', checked: boolean) => void;
   toggleGroupItemSelection: (groupId: number, field: 'name', checked: boolean) => void;
-  insertSelected: () => string[];
+  insertSelected: () => PropertyPlaceholderToken[];
 }
