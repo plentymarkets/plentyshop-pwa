@@ -134,6 +134,7 @@ const localePath = useLocalePath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const { locale } = useI18n();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 const isTablet = computed(() => viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg'));
@@ -147,7 +148,6 @@ const handleQueryUpdate = async () => {
 };
 
 const generateOrderDetailsLink = (order: Order) => {
-  const { resolvePathTrailingSlash } = useUrlTrailingSlash();
   return resolvePathTrailingSlash(
     `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`,
   );
