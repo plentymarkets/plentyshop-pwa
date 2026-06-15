@@ -99,6 +99,20 @@
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
 
+      <div>
+        <i18n-t keypath="cancellationForm.privacyPolicy" scope="global">
+          <template #privacyPolicy>
+            <UiLink
+                :href="localePath(paths.privacyPolicy)"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            >
+              {{ t('legal.privacyPolicy') }}
+            </UiLink>
+          </template>
+        </i18n-t>
+      </div>
+
       <div class="flex flex-col-reverse @md:flex-row @md:items-start @md:justify-between gap-4">
         <div>
           <NuxtTurnstile
@@ -125,6 +139,7 @@
 import type { Locale } from '#i18n';
 import { SfInput, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
+import { paths } from "~/utils/paths";
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
@@ -143,6 +158,7 @@ const turnstileLoad = ref(false);
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
+const localePath = useLocalePath();
 
 setPageMeta(t('legal.cancellationForm'), 'page');
 
