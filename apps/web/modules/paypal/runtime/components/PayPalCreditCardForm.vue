@@ -71,7 +71,7 @@ const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPa
   usePayPal();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel', 'on-payed']);
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const props = defineProps<PayPalCreditPropsType>();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));

@@ -22,6 +22,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const state = useState<UseStructuredDataState>(`useMeta`, () => ({
     loading: false,
   }));
+  const { applyToUrl: applyTrailingSlashToUrl } = useUrlTrailingSlash();
 
   const safeSerializeJsonLd = (value: unknown, space?: number) =>
     JSON.stringify(value, null, space).replaceAll('<', String.raw`\u003C`);
@@ -286,7 +287,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const canonical = productSeoSettingsGetters.getCanonical(product);
 
     if (canonical) {
-      const canonicalUrl = productSeoSettingsGetters.getCanonicalHref(canonical);
+      const canonicalUrl = applyTrailingSlashToUrl(productSeoSettingsGetters.getCanonicalHref(canonical));
       useHead({
         link: [{ rel: 'canonical', href: canonicalUrl }],
       });
@@ -296,7 +297,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         return {
           rel: 'alternate',
           hreflang: productSeoSettingsGetters.getCanonicalAlternateHreflang(item),
-          href: productSeoSettingsGetters.getCanonicalAlternateHref(item),
+          href: applyTrailingSlashToUrl(productSeoSettingsGetters.getCanonicalAlternateHref(item)),
         };
       });
 

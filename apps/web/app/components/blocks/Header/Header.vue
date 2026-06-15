@@ -263,7 +263,7 @@ const resolvedBackgroundColor = computed(() => props.content.backgroundColor || 
 
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
