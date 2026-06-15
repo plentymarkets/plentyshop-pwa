@@ -12,40 +12,42 @@ import type { Locale } from '#i18n';
  */
 
 const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria, canonicalLink: string) => {
-  if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
-    if (facetsFromUrl.page === 2) {
-      useHead({
-        link: [
-          {
-            rel: 'prev',
-            href: canonicalLink,
-          },
-        ],
-      });
-    }
-    if (facetsFromUrl.page > 2) {
-      useHead({
-        link: [
-          {
-            rel: 'prev',
-            href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
-          },
-        ],
-      });
-    }
-    if (
-      productsCatalog.pagination?.totals &&
-      facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage
-    ) {
-      useHead({
-        link: [
-          {
-            rel: 'next',
-            href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
-          },
-        ],
-      });
-    }
+  if (!facetsFromUrl?.itemsPerPage || !facetsFromUrl?.page) {
+    return;
+  }
+
+  if (facetsFromUrl.page === 2) {
+    useHead({
+      link: [
+        {
+          rel: 'prev',
+          href: canonicalLink,
+        },
+      ],
+    });
+  }
+  if (facetsFromUrl.page > 2) {
+    useHead({
+      link: [
+        {
+          rel: 'prev',
+          href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
+        },
+      ],
+    });
+  }
+  if (
+    productsCatalog.pagination?.totals &&
+    facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage
+  ) {
+    useHead({
+      link: [
+        {
+          rel: 'next',
+          href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
+        },
+      ],
+    });
   }
 };
 
@@ -53,6 +55,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
   const state = useState<UseUrlPageMetaState>(`useUrlPageMeta`, () => ({
     loading: false,
   }));
+  const { applyToUrl: applyTrailingSlashToUrl } = useUrlTrailingSlash();
 
   /**
    * @description Function for setting static page metas.
@@ -71,13 +74,13 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const { defaultLocale } = useI18n();
     const { getAvailableLocales } = useLocalization();
 
-    const canonicalUrl = `${runtimeConfig.public.domain}${localePath(route.fullPath)}`;
+    const canonicalUrl = applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath)}`);
 
     const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
         rel: 'alternate',
         hreflang: locale,
-        href: `${runtimeConfig.public.domain}${localePath(route.fullPath, locale)}`,
+        href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath, locale)}`),
       };
     });
 
@@ -87,7 +90,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
         {
           rel: 'alternate',
           hreflang: 'x-default',
-          href: `${runtimeConfig.public.domain}${localePath(route.fullPath, defaultLocale)}`,
+          href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath, defaultLocale)}`),
         },
         ...alternateLocales,
       ],
@@ -124,8 +127,10 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
 
     const canonicalLink =
       canonicalOverride && canonicalOverride.trim() !== ''
-        ? canonicalOverride
-        : `${runtimeConfig.public.domain}${localePath(route.path, $i18n.locale.value)}${querySuffix}`;
+        ? applyTrailingSlashToUrl(canonicalOverride)
+        : applyTrailingSlashToUrl(
+            `${runtimeConfig.public.domain}${localePath(route.path, $i18n.locale.value)}${querySuffix}`,
+          );
 
     useHead({
       link: [
@@ -152,7 +157,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
             {
               rel: 'alternate',
               hreflang: key,
-              href: `${runtimeConfig.public.domain}${localizedPath}${querySuffix}`,
+              href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localizedPath}${querySuffix}`),
             },
           ],
         });

@@ -46,11 +46,11 @@
             <li v-for="({ label, link }, subIndex) in getSubsections(subsections)" :key="`subsection-${subIndex}`">
               <SfListItem
                 :tag="NuxtLink"
-                :to="localePath(link)"
+                :to="link"
                 :class="[
                   'first-of-type:py-4 @md:first-of-type:px-4 @md:first-of-type:py-2 rounded-md active:bg-primary-100 !text-neutral-900',
                   {
-                    'font-medium bg-primary-100': router.currentRoute.value.path === localePath(link),
+                    'font-medium bg-primary-100': router.currentRoute.value.path === link,
                   },
                 ]"
               >
@@ -99,7 +99,7 @@ import {
 import type { MyAccountSubsection } from '~/layouts/types';
 import { paths } from '~/utils/paths';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const viewport = useViewport();
 const router = useRouter();
 const { logout } = useCustomer();
