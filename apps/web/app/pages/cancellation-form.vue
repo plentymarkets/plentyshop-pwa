@@ -7,7 +7,7 @@
     </h2>
 
     <div
-      v-if=" cancellationEmail.length === 0"
+      v-if="turnstileSiteKey.length === 0 || cancellationEmail.length === 0"
       class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
     >
       <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
