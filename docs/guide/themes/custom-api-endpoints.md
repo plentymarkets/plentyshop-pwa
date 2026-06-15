@@ -86,4 +86,4 @@ The method name in `extendApiMethods` must match the method name used in the SDK
 
 ## References
 
-- [Alokai: Middleware Extensions](https://docs.alokai.com/middleware/legacy/guides/extensions#adding-an-endpoint)
+- [Alokai: Middleware Extensions](https://docs.alokai.com/middleware/guides/extensions)

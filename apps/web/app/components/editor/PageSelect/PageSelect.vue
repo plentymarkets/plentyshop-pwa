@@ -9,7 +9,7 @@
     label="label"
     track-by="value"
     select-label=""
-    class="w-full cursor-pointer [&_.multiselect__content-wrapper]:!z-[700]"
+    class="w-full cursor-pointer [&_.multiselect__content-wrapper]:!z-popover"
     @update:model-value="onSelected"
   />
 </template>

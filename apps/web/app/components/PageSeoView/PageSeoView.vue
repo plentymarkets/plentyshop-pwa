@@ -5,7 +5,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Title</UiFormLabel>
-            <SfTooltip :label="titleTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="titleTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -24,7 +24,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Meta description</UiFormLabel>
-            <SfTooltip :label="descTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="descTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -47,7 +47,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Meta keywords</UiFormLabel>
-            <SfTooltip :label="keywordsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="keywordsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -67,7 +67,7 @@
         <div class="py-2">
           <div class="flex justify-between">
             <UiFormLabel class="mb-1">Robots </UiFormLabel>
-            <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -91,7 +91,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Canonical URL</UiFormLabel>
-            <SfTooltip :label="canonicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="canonicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>

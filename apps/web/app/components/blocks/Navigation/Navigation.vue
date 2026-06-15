@@ -58,7 +58,7 @@
             ref="megaMenuReference"
             :style="{ ...style, backgroundColor: resolvedContent.color.backgroundColor || 'white' }"
             :class="[
-              'hidden @md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
+              'hidden @md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-sticky max-h-[calc(100vh-300px)] overflow-y-auto',
               submenuGridAlignmentClass,
             ]"
             @keydown.esc="focusTrigger(index)"
@@ -114,12 +114,12 @@
     </nav>
 
     <template v-else>
-      <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
+      <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
         v-model="isOpen"
         placement="left"
-        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        class="right-12 max-w-96 bg-white overflow-y-auto z-drawer"
       >
         <nav>
           <div class="flex items-center justify-between p-4">

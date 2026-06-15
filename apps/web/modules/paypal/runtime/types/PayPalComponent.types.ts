@@ -11,6 +11,12 @@ export type PaypalButtonPropsType = {
 
 export type PaypalAPMPropsType = {
   disabled?: boolean;
+  paymentKey: string;
+  order?: Order;
+};
+
+export type PayPalCreditPropsType = {
+  order?: Order;
 };
 
 export type PayPalAddToCartCallback = (successfully: boolean) => void;

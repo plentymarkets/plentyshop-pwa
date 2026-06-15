@@ -108,8 +108,8 @@ const { isOpen: isAuthenticationOpen, toggle: closeAuthentication } = useDisclos
 const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const localePath = useLocalePath();
-const bankDetails = orderGetters.getOrderPaymentBankDetails(order);
-useProcessingOrder().processingOrder.value = false;
+const bankDetails = computed(() => orderGetters.getOrderPaymentBankDetails(order));
+useDynamicPaymentButtons().createOrderLoading.value = false;
 
 await getActiveShippingCountries();
 </script>

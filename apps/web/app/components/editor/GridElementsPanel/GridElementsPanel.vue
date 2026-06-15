@@ -16,7 +16,14 @@
       </span>
     </template>
 
-    <draggable v-model="localItems" item-key="meta.uuid" handle=".el-drag-handle" :filter="'.no-drag'" @end="onDragEnd">
+    <draggable
+      v-model="localItems"
+      item-key="meta.uuid"
+      handle=".el-drag-handle"
+      :filter="'.no-drag'"
+      :move="props.canMove"
+      @end="onDragEnd"
+    >
       <template #item="{ element: block, index }">
         <EditorGridElementsPanelGridElementsItem
           :block="block"

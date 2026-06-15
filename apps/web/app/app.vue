@@ -32,6 +32,8 @@
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
       <div
+        id="app-container"
+        ref="previewContainerEl"
         :style="
           isMobilePreview
             ? {
@@ -95,6 +97,8 @@ const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 const clientPreview = computed(() => isInEditorClient.value && isLargeScreen.value);
 const contentRef = ref<HTMLElement | null>(null);
+const previewContainerEl = ref<HTMLElement | null>(null);
+provide('previewContainer', previewContainerEl);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');

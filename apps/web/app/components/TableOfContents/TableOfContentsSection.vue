@@ -28,6 +28,7 @@
       handle=".toc-drag-handle"
       ghost-class="toc-drag-ghost"
       tag="div"
+      :move="section.canMove"
       @start="handleDragStart"
       @end="handleDragEnd"
       @change="handleChange"

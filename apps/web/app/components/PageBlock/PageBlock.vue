@@ -20,7 +20,7 @@
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-[-6px] z-[200] block-selected-outline"
+        class="pointer-events-none absolute inset-[-6px] z-modal-backdrop block-selected-outline"
       />
       <ClientOnly>
         <button
@@ -32,7 +32,7 @@
             {
               '!opacity-100 !scale-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
-              '!z-[201]': isPopoverTarget && popoverState?.position === 'top',
+              '!z-modal': isPopoverTarget && popoverState?.position === 'top',
             },
           ]"
           data-testid="top-add-block"
@@ -94,7 +94,7 @@
             {
               '!opacity-100 !scale-100':
                 (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
-              '!z-[201]': isPopoverTarget && popoverState?.position === 'bottom',
+              '!z-modal': isPopoverTarget && popoverState?.position === 'bottom',
             },
           ]"
           data-testid="bottom-add-block"
@@ -137,7 +137,7 @@ const buttonLabel = 'Insert a new block at this position.';
 
 const addBlockButtonBase = [
   'add-block-button no-drag',
-  'absolute left-1/2 -translate-x-1/2 z-[0] @md:z-[1] @lg:z-[40]',
+  'absolute left-1/2 -translate-x-1/2 z-base @md:z-raised @lg:z-editor-inline',
   'flex items-center justify-center w-7 h-7 rounded-full p-0 border-0',
   'bg-editor-block-selected text-white shadow-add-block-btn',
   'opacity-0 scale-90',
