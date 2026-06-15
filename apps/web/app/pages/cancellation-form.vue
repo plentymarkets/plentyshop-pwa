@@ -99,6 +99,21 @@
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
 
+      <div>
+        <i18n-t keypath="cancellationForm.privacyPolicy" scope="global">
+          <template #privacyPolicy>
+            <UiLink
+              :href="localePath(paths.privacyPolicy)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            >
+              {{ t('legal.privacyPolicy') }}
+            </UiLink>
+          </template>
+        </i18n-t>
+      </div>
+
       <div class="flex flex-col-reverse @md:flex-row @md:items-start @md:justify-between gap-4">
         <div>
           <NuxtTurnstile
@@ -143,6 +158,7 @@ const turnstileLoad = ref(false);
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
+const localePath = useLocalePath();
 
 setPageMeta(t('legal.cancellationForm'), 'page');
 
