@@ -1,7 +1,6 @@
 const URL_TRAILING_SLASH_NO_CHANGE = 0;
 const URL_TRAILING_SLASH_NEVER = 1;
 const URL_TRAILING_SLASH_ALWAYS = 2;
-const URL_TRAILING_SLASH_OVERRIDE: 0 | 1 | 2 | null = 2;
 
 const normalizeSetting = (value: unknown): number => {
   const setting = Number(value);
@@ -54,7 +53,7 @@ export const useUrlTrailingSlash = () => {
   const trailingSlash = useState<number>('urlTrailingSlash', () => normalizeSetting(getSetting()));
 
   const syncTrailingSlashSetting = () => {
-    trailingSlash.value = URL_TRAILING_SLASH_OVERRIDE ?? normalizeSetting(getSetting());
+    trailingSlash.value = normalizeSetting(getSetting());
     return trailingSlash.value;
   };
 
