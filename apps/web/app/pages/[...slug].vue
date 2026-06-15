@@ -6,7 +6,7 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-max" size="2xl" />
-
+{{ productsCatalog.category }}
     <EditableBlocks
       :identifier="identifier"
       :type="'category'"
@@ -35,6 +35,7 @@ const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
 const { buildCategoryLanguagePath } = useLocalization();
 const isItemCategoryPage = computed(() => productsCatalog.value.category?.type === 'item');
+const { getSetting: getSeoCategoryRobotsNoIndex } = useSiteSettings('seoCategoryRobotsNoIndex');
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
@@ -108,9 +109,20 @@ const keywordsContent = computed((): string =>
     : (process.env.METAKEYWORDS ?? ''),
 );
 
-const robotsContent = computed((): string =>
-  productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
-);
+const robotsContent = computed((): string => {
+  if (!productsCatalog.value?.category) return '';
+
+  // Get page number directly from route query
+  const currentPage = Number(route.query.page as string) || 1;
+  const maxIndexedPages = Number(getSeoCategoryRobotsNoIndex()) || 0;
+
+  // If we're on a paginated page beyond the configured limit, return NOINDEX
+  if (currentPage > maxIndexedPages + 1) {
+    return 'NOINDEX, NOFOLLOW';
+  }
+
+  return categoryGetters.getCategoryRobots(productsCatalog.value.category);
+});
 
 watch(
   () => route.query,
