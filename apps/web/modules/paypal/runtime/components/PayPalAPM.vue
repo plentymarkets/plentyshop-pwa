@@ -81,9 +81,9 @@ const createOrderFlow = async (data: OnApproveData) => {
 
   if (order?.order?.id) {
     emit('frontend:orderCreated', order);
-      await navigateTo(
-        resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
-      );
+    await navigateTo(
+      resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
+    );
   } else {
     processingOrder.value = false;
     useNotification().send({

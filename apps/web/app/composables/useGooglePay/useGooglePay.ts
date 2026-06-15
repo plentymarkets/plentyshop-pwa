@@ -133,7 +133,9 @@ export const useGooglePay = () => {
         emit('module:clearCart', null);
         clearCartItems();
         navigateTo(
-          resolvePathTrailingSlash(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey)),
+          resolvePathTrailingSlash(
+            localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey),
+          ),
         );
       }
       state.value.paymentLoading = false;
