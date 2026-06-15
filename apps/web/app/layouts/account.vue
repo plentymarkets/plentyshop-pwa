@@ -14,7 +14,7 @@
 
         <UiButton
           :tag="NuxtLink"
-          :to="localePath(paths.account)"
+          :to="resolvePathTrailingSlash(localePath(paths.account))"
           class="flex @md:hidden whitespace-nowrap justify-self-end ml-auto"
           size="sm"
           variant="tertiary"
@@ -46,11 +46,11 @@
             <li v-for="({ label, link }, subIndex) in getSubsections(subsections)" :key="`subsection-${subIndex}`">
               <SfListItem
                 :tag="NuxtLink"
-                :to="localePath(link)"
+                :to="link"
                 :class="[
                   'first-of-type:py-4 @md:first-of-type:px-4 @md:first-of-type:py-2 rounded-md active:bg-primary-100 !text-neutral-900',
                   {
-                    'font-medium bg-primary-100': router.currentRoute.value.path === localePath(link),
+                    'font-medium bg-primary-100': router.currentRoute.value.path === link,
                   },
                 ]"
               >
@@ -100,6 +100,7 @@ import type { MyAccountSubsection } from '~/layouts/types';
 import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const viewport = useViewport();
 const router = useRouter();
 const { logout } = useCustomer();
@@ -111,15 +112,15 @@ const sections = computed(() => [
     subsections: [
       {
         label: t('account.accountSettings.section.personalData'),
-        link: localePath(paths.accountPersonalData),
+        link: resolvePathTrailingSlash(localePath(paths.accountPersonalData)),
       },
       {
         label: t('account.accountSettings.section.billingDetails'),
-        link: localePath(paths.accountBillingDetails),
+        link: resolvePathTrailingSlash(localePath(paths.accountBillingDetails)),
       },
       {
         label: t('account.accountSettings.section.shippingDetails'),
-        link: localePath(paths.accountShippingDetails),
+        link: resolvePathTrailingSlash(localePath(paths.accountShippingDetails)),
       },
     ],
   },
@@ -129,15 +130,15 @@ const sections = computed(() => [
     subsections: [
       {
         label: t('account.ordersAndReturns.section.myOrders'),
-        link: localePath(paths.accountMyOrders),
+        link: resolvePathTrailingSlash(localePath(paths.accountMyOrders)),
       },
       {
         label: t('account.ordersAndReturns.section.returns'),
-        link: localePath(paths.accountReturns),
+        link: resolvePathTrailingSlash(localePath(paths.accountReturns)),
       },
       {
         label: t('returns.return'),
-        link: localePath(paths.accountNewReturn),
+        link: resolvePathTrailingSlash(localePath(paths.accountNewReturn)),
         hide: true,
       },
     ],
@@ -148,14 +149,14 @@ const sections = computed(() => [
     subsections: [
       {
         label: t('account.wishlist.section.myWishlist'),
-        link: localePath(paths.accountMyWishlist),
+        link: resolvePathTrailingSlash(localePath(paths.accountMyWishlist)),
       },
     ],
   },
 ]);
 
 const currentPath = computed(() => router.currentRoute.value.path);
-const isRoot = computed(() => currentPath.value === localePath(paths.account));
+const isRoot = computed(() => currentPath.value === resolvePathTrailingSlash(localePath(paths.account)));
 
 const findCurrentPage = computed(() =>
   sections.value.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
@@ -168,8 +169,8 @@ const getSubsections = (sections: MyAccountSubsection[]) => {
 };
 
 const breadcrumbs = computed(() => [
-  { name: t('common.labels.home'), link: localePath(paths.home) },
-  { name: t('account.heading'), link: localePath(paths.account) },
+  { name: t('common.labels.home'), link: resolvePathTrailingSlash(localePath(paths.home)) },
+  { name: t('account.heading'), link: resolvePathTrailingSlash(localePath(paths.account)) },
   ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label || '', link: currentPath.value }]),
 ]);
 
@@ -177,6 +178,6 @@ const NuxtLink = resolveComponent('NuxtLink');
 
 const logOut = async () => {
   await logout();
-  navigateTo(localePath(paths.home));
+  navigateTo(resolvePathTrailingSlash(localePath(paths.home)));
 };
 </script>

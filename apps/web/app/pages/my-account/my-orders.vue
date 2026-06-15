@@ -209,12 +209,18 @@ definePageMeta({
 onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return resolvePathTrailingSlash(
+    `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`,
+  );
 };
 
 const generateNewReturnLink = (order: Order) => {
-  return `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return resolvePathTrailingSlash(
+    `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`,
+  );
 };
 
 watch(isDesktop, (value) => setMaxVisiblePages(value));

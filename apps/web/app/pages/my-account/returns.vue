@@ -147,7 +147,10 @@ const handleQueryUpdate = async () => {
 };
 
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+  return resolvePathTrailingSlash(
+    `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`,
+  );
 };
 
 await handleQueryUpdate();
