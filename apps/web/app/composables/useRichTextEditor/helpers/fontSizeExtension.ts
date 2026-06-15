@@ -1,7 +1,6 @@
 import { Extension } from '@tiptap/core';
 
 declare module '@tiptap/core' {
-  // eslint-disable-next-line custom-rules/file-organization-types
   interface Commands<ReturnType> {
     fontSize: {
       setFontSize: (fontSize: string | null) => ReturnType;

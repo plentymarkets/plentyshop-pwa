@@ -15,6 +15,7 @@ export interface UseCustomerOrder {
   loading: Readonly<Ref<boolean>>;
   changePaymentMethodModalOpen: Ref<boolean>;
   fetchOrder: FetchOrder;
+  refetchOrder: () => Promise<boolean>;
   fetchOrderClient: FetchOrder;
   changePaymentMethod: ChangePaymentMethod;
   error: Readonly<Ref<UseCustomerOrderState['error']>>;

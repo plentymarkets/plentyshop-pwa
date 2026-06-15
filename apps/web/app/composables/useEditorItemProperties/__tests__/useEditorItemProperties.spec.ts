@@ -72,10 +72,10 @@ describe('useEditorItemProperties', () => {
   });
 
   describe('getPropPlaceholder', () => {
-    it('should return {{value}} for any property', async () => {
+    it('should return {{value:id}} with the property id', async () => {
       const { getPropPlaceholder } = await initComposable();
-      expect(getPropPlaceholder(mockProperty1)).toBe('{{value}}');
-      expect(getPropPlaceholder(mockProperty2)).toBe('{{value}}');
+      expect(getPropPlaceholder(mockProperty1)).toBe(`{{value:${mockProperty1.id}}}`);
+      expect(getPropPlaceholder(mockProperty2)).toBe(`{{value:${mockProperty2.id}}}`);
     });
   });
 
@@ -196,24 +196,57 @@ describe('useEditorItemProperties', () => {
     it('should return selected property name as a token', async () => {
       const { selection, insertSelected } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: false };
-      expect(insertSelected()).toEqual(['Color']);
+      expect(insertSelected()).toEqual([
+        {
+          token: 'Color',
+          label: 'Color',
+          kind: 'property-name',
+          propertyId: mockProperty1.id,
+        },
+      ]);
     });
-    it('should return the {{value}} placeholder as a token', async () => {
+    it('should return a value placeholder token with the property id metadata', async () => {
       const { selection, insertSelected } = await initComposable();
       selection.value[mockProperty1.id] = { name: false, value: true };
-      expect(insertSelected()).toEqual(['{{value}}']);
+      expect(insertSelected()).toEqual([
+        {
+          token: `{{value:${mockProperty1.id}}}`,
+          label: 'Color value',
+          kind: 'property-value',
+          propertyId: mockProperty1.id,
+          cast: mockProperty1.cast,
+        },
+      ]);
     });
     it('should return the group name before its property tokens', async () => {
       const { selection, groupSelection, insertSelected } = await initComposable();
       groupSelection.value[mockGroup1.id] = { name: true };
       selection.value[mockProperty1.id] = { name: true, value: false };
-      expect(insertSelected()).toEqual(['Appearance', 'Color']);
+      expect(insertSelected()).toEqual([
+        {
+          token: 'Appearance',
+          label: 'Appearance',
+          kind: 'group-name',
+        },
+        {
+          token: 'Color',
+          label: 'Color',
+          kind: 'property-name',
+          propertyId: mockProperty1.id,
+        },
+      ]);
     });
     it('should copy the tokens to the clipboard', async () => {
       const { selection, insertSelected } = await initComposable();
       selection.value[mockProperty1.id] = { name: true, value: false };
       insertSelected();
       expect(mockClipboardWriteText).toHaveBeenCalledWith('Color');
+    });
+    it('should copy the value placeholder label to the clipboard', async () => {
+      const { selection, insertSelected } = await initComposable();
+      selection.value[mockProperty1.id] = { name: false, value: true };
+      insertSelected();
+      expect(mockClipboardWriteText).toHaveBeenCalledWith('Color value');
     });
     it('should not write to the clipboard when nothing is selected', async () => {
       const { insertSelected } = await initComposable();

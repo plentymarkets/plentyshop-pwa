@@ -95,7 +95,7 @@ const onApprove = async (data: OnApproveData) => {
   }
 
   if (props.type === TypeCheckout) {
-    useProcessingOrder().processingOrder.value = true;
+    useDynamicPaymentButtons().createOrderLoading.value = true;
     const order = await createPlentyOrder();
 
     if (order) {
@@ -172,6 +172,10 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         if (order?.id && props.type !== TypeOrderAlreadyExisting) {
           const reserved = await useCartStockReservation().reserve();
           if (!reserved) return '';
+        }
+
+        if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
+          useLogEvent().logPayPalExpressFlow();
         }
 
         return order?.id ?? '';

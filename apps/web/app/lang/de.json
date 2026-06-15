@@ -353,6 +353,7 @@
       "back": "Zurück",
       "browseProducts": "Produkte durchstöbern",
       "buy": "Kaufen",
+      "pay": "Bezahlen",
       "cancelOrder": "Kauf abbrechen",
       "clear": "Zurücksetzen",
       "clearAll": "Alles zurücksetzen",
@@ -951,7 +952,8 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
-    "unbrandedPay": "Bezahlen"
+    "unbrandedPay": "Bezahlen",
+    "methodNotSupported": "Die ausgewählte Zahlungsmethode wird aktuell nicht unterstützt. Bitte wählen Sie eine andere Zahlungsmethode aus."
   },
   "PreferredDelivery": {
     "general": {
