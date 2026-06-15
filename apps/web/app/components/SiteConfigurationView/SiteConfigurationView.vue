@@ -1,7 +1,7 @@
 <template>
-  <div class="site-settings-view sticky" data-testid="site-settings-drawer">
-    <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
-      <header class="border-b">
+  <div class="site-settings-view sticky h-full max-h-screen flex flex-col pb-4" data-testid="site-settings-drawer">
+    <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories flex flex-col h-full">
+      <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-5">
           <div class="flex items-center w-full">
             <div class="flex items-center">
@@ -19,7 +19,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="h-[80vh] overflow-y-auto">
+      <div class="flex-1 overflow-y-auto">
         <button
           v-for="subCategory in subCategories"
           :key="subCategory"
@@ -35,8 +35,8 @@
         </button>
       </div>
     </div>
-    <div v-else key="groups" class="groups">
-      <header class="border-b">
+    <div v-else key="groups" class="groups flex flex-col h-full">
+      <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-4">
           <div class="flex items-start flex-col">
             <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
@@ -64,7 +64,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="h-[80vh] overflow-y-auto">
+      <div class="flex-1 overflow-y-auto">
         <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.slug}-section`">
           <template #settings-group-title>{{ group.title }}</template>
 
