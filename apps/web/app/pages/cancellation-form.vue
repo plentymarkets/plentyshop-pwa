@@ -7,7 +7,7 @@
     </h2>
 
     <div
-      v-if="turnstileSiteKey.length === 0 || cancellationEmail.length === 0"
+      v-if=" cancellationEmail.length === 0"
       class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
     >
       <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
@@ -140,7 +140,6 @@
 import type { Locale } from '#i18n';
 import { SfInput, SfTextarea, SfLoaderCircular, SfIconWarning } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
-import { paths } from '~/utils/paths';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
