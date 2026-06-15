@@ -3,7 +3,7 @@
     <div
       v-if="subCategories.length > 1 && !activeSubCategory"
       key="sub-list"
-      class="sub-categories flex flex-col h-full"
+      class="sub-categories flex flex-col flex-1 min-h-0"
     >
       <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-5">
@@ -23,7 +23,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 min-h-0 overflow-y-auto">
         <button
           v-for="subCategory in subCategories"
           :key="subCategory"
@@ -39,7 +39,7 @@
         </button>
       </div>
     </div>
-    <div v-else key="groups" class="groups flex flex-col h-full">
+    <div v-else key="groups" class="groups flex flex-col flex-1 min-h-0">
       <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-4">
           <div class="flex items-start flex-col">
@@ -68,7 +68,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 min-h-0 overflow-y-auto">
         <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.slug}-section`">
           <template #settings-group-title>{{ group.title }}</template>
 
