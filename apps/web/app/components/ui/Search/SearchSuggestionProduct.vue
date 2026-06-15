@@ -1,23 +1,30 @@
 <template>
   <NuxtLink
     :to="item.url"
-    class="border border-neutral-200 rounded-md h-full flex flex-col justify-between hover:shadow-lg"
+    class="group/card flex flex-col rounded-lg overflow-hidden ring-1 ring-neutral-200 transition-shadow duration-200 ease-out group-hover/card:shadow-card-hover hover:shadow-card-hover !no-underline"
     data-testid="search-suggestion-product"
   >
-    <div>
-      <div class="flex items-center justify-center aspect-[3/2]">
-        <NuxtImg :src="item.image" :alt="item.imageAlt" class="object-contain rounded-md w-full h-full" />
-      </div>
-      <hr class="h-px bg-neutral-200 border-0" />
-      <div class="px-2 pt-2">
-        <div class="text-sm font-medium text-neutral-900 line-clamp-2">{{ item.label }}</div>
-      </div>
+    <div class="aspect-[4/3] overflow-hidden">
+      <NuxtImg
+        :src="item.image"
+        :alt="item.imageAlt"
+        class="object-contain w-full h-full transition-transform duration-300 ease-out group-hover/card:scale-105"
+      />
     </div>
-    <div class="text-sm px-2 pb-2 flex flex-wrap gap-x-2 items-center">
-      <span class="text-gray-900 font-semibold">{{ format(itemSearchAutocompleteGetters.getPrice(item)) }}</span>
-      <span v-if="crossedPrice && hasDifferentPrices" class="text-neutral-500 text-xs line-through">
-        {{ format(crossedPrice) }}
-      </span>
+    <div class="p-3 flex flex-col gap-1.5">
+      <div
+        class="text-sm font-medium leading-snug text-neutral-900 line-clamp-2 group-hover/card:underline underline-offset-2 decoration-1"
+      >
+        {{ item.label }}
+      </div>
+      <div class="flex items-baseline gap-2 tabular-nums">
+        <span v-if="crossedPrice && hasDifferentPrices" class="text-xs text-neutral-400 line-through">
+          {{ format(crossedPrice) }}
+        </span>
+        <span class="text-sm font-semibold text-neutral-900">
+          {{ format(itemSearchAutocompleteGetters.getPrice(item)) }}
+        </span>
+      </div>
     </div>
   </NuxtLink>
 </template>

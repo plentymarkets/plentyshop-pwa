@@ -6,6 +6,7 @@
         :uuid="headerUuid"
         :min-items="1"
         :quick-add-options="headerQuickAddOptions"
+        :can-move="guardHeaderMove"
         @edit-element="editElement"
       />
 
@@ -56,6 +57,12 @@ const editElement = (block: Block) => {
   pushEdit(block);
   logHeaderContainerEditBlock();
 };
+
+const guardHeaderMove = (evt: BlockMoveEvent) =>
+  canMoveHeaderBlock(
+    Array.isArray(headerContainerStructure.value.content) ? headerContainerStructure.value.content : [],
+    evt,
+  );
 </script>
 
 <i18n lang="json">

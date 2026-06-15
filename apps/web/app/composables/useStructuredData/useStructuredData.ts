@@ -2,6 +2,7 @@ import type {
   useStructuredDataReturn,
   SetLogoMeta,
   SetProductMetaData,
+  SetItemListMetaData,
   SetProductRobotsMetaData,
   SetProductCanonicalMetaData,
   UseStructuredDataState,
@@ -21,6 +22,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const state = useState<UseStructuredDataState>(`useMeta`, () => ({
     loading: false,
   }));
+
+  const safeSerializeJsonLd = (value: unknown, space?: number) =>
+    JSON.stringify(value, null, space).replaceAll('<', String.raw`\u003C`);
 
   /**
    * @description Function for Setting Logo Metadata.
@@ -44,7 +48,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(structuredData),
+          innerHTML: safeSerializeJsonLd(structuredData),
         },
       ],
     });
@@ -189,10 +193,70 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(metaObject, null, 4),
+          innerHTML: safeSerializeJsonLd(metaObject, 4),
         },
       ],
     });
+    state.value.loading = false;
+  };
+
+  const setItemListMetaData: SetItemListMetaData = (products: Product[]) => {
+    state.value.loading = true;
+
+    const runtimeConfig = useRuntimeConfig();
+    const route = useRoute();
+    const localePath = useLocalePath();
+    const isSingleProductUrlSchemeEnabled = useCallisto().isEnabled;
+
+    const itemListElement = products.reduce<Array<Record<string, unknown>>>((result, product, index) => {
+      const itemId = productGetters.getItemId(product);
+      const urlPath = productGetters.getUrlPath(product);
+
+      if (!itemId || !urlPath) {
+        return result;
+      }
+
+      let productPath = '';
+
+      if (isSingleProductUrlSchemeEnabled) {
+        productPath = localePath(`/${urlPath}/a-${itemId}`);
+      } else {
+        const basePath = `/${urlPath}_${itemId}`;
+        const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product);
+        const variationId = productGetters.getVariationId(product);
+
+        productPath = localePath(shouldAppendVariation && variationId ? `${basePath}_${variationId}` : basePath);
+      }
+
+      result.push({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${runtimeConfig.public.domain}${productPath}`,
+        name: productGetters.getName(product),
+      });
+
+      return result;
+    }, []);
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      numberOfItems: itemListElement.length,
+      url: `${runtimeConfig.public.domain}${localePath(route.fullPath)}`,
+      itemListElement,
+    };
+
+    useHead({
+      script: [
+        {
+          key: 'item-list-structured-data',
+          type: 'application/ld+json',
+          innerHTML: safeSerializeJsonLd(structuredData),
+        },
+      ],
+    });
+
     state.value.loading = false;
   };
 
@@ -250,6 +314,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
   return {
     setLogoMeta,
     setProductMetaData,
+    setItemListMetaData,
     setProductRobotsMetaData,
     setProductCanonicalMetaData,
     ...toRefs(state.value),
