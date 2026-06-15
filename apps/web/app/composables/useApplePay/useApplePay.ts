@@ -178,6 +178,7 @@ export const useApplePay = () => {
         (await initialize()) &&
         typeof ApplePaySession !== 'undefined' &&
         !!state.value.script &&
+        ApplePaySession &&
         ApplePaySession.canMakePayments() &&
         state.value.config.isEligible
       );
