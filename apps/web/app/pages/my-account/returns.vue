@@ -119,11 +119,10 @@ const { isOpen, close } = useDisclosure();
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const { locale } = useI18n();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 const isTablet = computed(() => viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg'));
@@ -137,9 +136,7 @@ const handleQueryUpdate = async () => {
 };
 
 const generateOrderDetailsLink = (order: Order) => {
-  return resolvePathTrailingSlash(
-    localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
-  );
+  return localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 await handleQueryUpdate();

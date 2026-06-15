@@ -35,10 +35,9 @@ const {
 const { data: cart, clearCartItems } = useCart();
 const { emit } = usePlentyEvent();
 
-const successPaymentStatuses = ['APPROVED', 'COMPLETED'];
+const successPaymentStatuses = new Set(['APPROVED', 'COMPLETED']);
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-const localePath = useLocalePath();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+const localePath = useLocalizedPath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
@@ -81,9 +80,7 @@ const createOrderFlow = async (data: OnApproveData) => {
 
   if (order?.order?.id) {
     emit('frontend:orderCreated', order);
-    await navigateTo(
-      resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
-    );
+    await navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
   } else {
     processingOrder.value = false;
     useNotification().send({
@@ -118,7 +115,7 @@ const onApprove = async (data: OnApproveData) => {
 
   const payPalOrder = await getOrder(data.orderID);
 
-  if (payPalOrder?.result?.status && successPaymentStatuses.includes(payPalOrder.result.status)) {
+  if (payPalOrder?.result?.status && successPaymentStatuses.has(payPalOrder.result.status)) {
     if (props.order) {
       await orderExistingFlow(data);
     } else {

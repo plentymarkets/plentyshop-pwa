@@ -75,8 +75,7 @@ export const useGooglePay = () => {
 
   const processPayment = async (paymentData: google.payments.api.PaymentData, order?: Order) => {
     if (!state.value.script) return;
-    const localePath = useLocalePath();
-    const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+    const localePath = useLocalizedPath();
     const { createTransaction, getOrder, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
       usePayPal();
     const { clearCartItems } = useCart();
@@ -132,11 +131,7 @@ export const useGooglePay = () => {
         emit('frontend:orderCreated', plentyOrder);
         emit('module:clearCart', null);
         clearCartItems();
-        navigateTo(
-          resolvePathTrailingSlash(
-            localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey),
-          ),
-        );
+        navigateTo(localePath(paths.confirmation + '/' + plentyOrder.order.id + '/' + plentyOrder.order.accessKey));
       }
       state.value.paymentLoading = false;
 

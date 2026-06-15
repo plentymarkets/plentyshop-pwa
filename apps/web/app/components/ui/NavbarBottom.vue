@@ -40,9 +40,7 @@
 import { SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson, SfIconFavorite } from '@storefront-ui/vue';
 import { useCustomer } from '~/composables/useCustomer';
 
-const rawLocalePath = useLocalePath();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
-const localePath = (path: string) => resolvePathTrailingSlash(rawLocalePath(path));
+const localePath = useLocalizedPath();
 const route = useRoute();
 const { wishlistItemIds } = useWishlist();
 const { data: cart } = useCart();

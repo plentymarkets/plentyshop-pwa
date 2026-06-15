@@ -33,8 +33,7 @@ const { emit } = usePlentyEvent();
 const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
 );
-const localePath = useLocalePath();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+const localePath = useLocalizedPath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
@@ -92,11 +91,7 @@ const onApprove = async (data: OnApproveData) => {
 
   if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
     await fetchSession();
-    navigateTo(
-      resolvePathTrailingSlash(
-        localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`),
-      ),
-    );
+    navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
   }
 
   if (props.type === TypeCheckout) {
@@ -115,9 +110,7 @@ const onApprove = async (data: OnApproveData) => {
 
     if (order?.order?.id) {
       emit('frontend:orderCreated', order);
-      navigateTo(
-        resolvePathTrailingSlash(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey)),
-      );
+      navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
     }
   } else if (props.type === TypeOrderAlreadyExisting && props.plentyOrderId) {
     if (!paypalOrder.value?.isAutocaptured) {

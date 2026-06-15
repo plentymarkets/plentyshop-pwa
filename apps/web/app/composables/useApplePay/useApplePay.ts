@@ -79,8 +79,7 @@ export const useApplePay = () => {
     const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
-    const localePath = useLocalePath();
-    const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+    const localePath = useLocalizedPath();
     const { emit } = usePlentyEvent();
     const reservation = useCartStockReservation();
 
@@ -154,11 +153,7 @@ export const useApplePay = () => {
           clearCartItems();
 
           emit('frontend:orderCreated', order);
-          return navigateTo(
-            resolvePathTrailingSlash(
-              localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey),
-            ),
-          );
+          return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error) {
           await reservation.unreserve();
           showErrorNotification(error instanceof Error ? error.message : t('error.paymentFailed'));

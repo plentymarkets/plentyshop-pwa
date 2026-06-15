@@ -14,7 +14,7 @@
 
         <UiButton
           :tag="NuxtLink"
-          :to="resolvePathTrailingSlash(localePath(paths.account))"
+          :to="localePath(paths.account)"
           class="flex @md:hidden whitespace-nowrap justify-self-end ml-auto"
           size="sm"
           variant="tertiary"
@@ -99,8 +99,7 @@ import {
 import type { MyAccountSubsection } from '~/layouts/types';
 import { paths } from '~/utils/paths';
 
-const localePath = useLocalePath();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+const localePath = useLocalizedPath();
 const viewport = useViewport();
 const router = useRouter();
 const { logout } = useCustomer();
@@ -112,15 +111,15 @@ const sections = computed(() => [
     subsections: [
       {
         label: t('account.accountSettings.section.personalData'),
-        link: resolvePathTrailingSlash(localePath(paths.accountPersonalData)),
+        link: localePath(paths.accountPersonalData),
       },
       {
         label: t('account.accountSettings.section.billingDetails'),
-        link: resolvePathTrailingSlash(localePath(paths.accountBillingDetails)),
+        link: localePath(paths.accountBillingDetails),
       },
       {
         label: t('account.accountSettings.section.shippingDetails'),
-        link: resolvePathTrailingSlash(localePath(paths.accountShippingDetails)),
+        link: localePath(paths.accountShippingDetails),
       },
     ],
   },
@@ -130,15 +129,15 @@ const sections = computed(() => [
     subsections: [
       {
         label: t('account.ordersAndReturns.section.myOrders'),
-        link: resolvePathTrailingSlash(localePath(paths.accountMyOrders)),
+        link: localePath(paths.accountMyOrders),
       },
       {
         label: t('account.ordersAndReturns.section.returns'),
-        link: resolvePathTrailingSlash(localePath(paths.accountReturns)),
+        link: localePath(paths.accountReturns),
       },
       {
         label: t('returns.return'),
-        link: resolvePathTrailingSlash(localePath(paths.accountNewReturn)),
+        link: localePath(paths.accountNewReturn),
         hide: true,
       },
     ],
@@ -149,14 +148,14 @@ const sections = computed(() => [
     subsections: [
       {
         label: t('account.wishlist.section.myWishlist'),
-        link: resolvePathTrailingSlash(localePath(paths.accountMyWishlist)),
+        link: localePath(paths.accountMyWishlist),
       },
     ],
   },
 ]);
 
 const currentPath = computed(() => router.currentRoute.value.path);
-const isRoot = computed(() => currentPath.value === resolvePathTrailingSlash(localePath(paths.account)));
+const isRoot = computed(() => currentPath.value === localePath(paths.account));
 
 const findCurrentPage = computed(() =>
   sections.value.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
@@ -169,8 +168,8 @@ const getSubsections = (sections: MyAccountSubsection[]) => {
 };
 
 const breadcrumbs = computed(() => [
-  { name: t('common.labels.home'), link: resolvePathTrailingSlash(localePath(paths.home)) },
-  { name: t('account.heading'), link: resolvePathTrailingSlash(localePath(paths.account)) },
+  { name: t('common.labels.home'), link: localePath(paths.home) },
+  { name: t('account.heading'), link: localePath(paths.account) },
   ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label || '', link: currentPath.value }]),
 ]);
 
@@ -178,6 +177,6 @@ const NuxtLink = resolveComponent('NuxtLink');
 
 const logOut = async () => {
   await logout();
-  navigateTo(resolvePathTrailingSlash(localePath(paths.home)));
+  navigateTo(localePath(paths.home));
 };
 </script>

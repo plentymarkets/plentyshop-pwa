@@ -48,6 +48,7 @@ export * from './useImageZoom';
 export * from './useLegalInformation';
 export * from './useProductLegalDetailsDrawer';
 export * from './useLocalization';
+export * from './useLocalizedPath';
 export * from './useMakeOrder';
 export * from './useMegaMenu';
 export * from './useMigrateGuestOrder';

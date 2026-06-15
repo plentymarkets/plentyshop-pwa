@@ -71,9 +71,8 @@ const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPa
   usePayPal();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel', 'on-payed']);
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const props = defineProps<PayPalCreditPropsType>();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
@@ -115,9 +114,7 @@ onMounted(() => {
             clearCartItems();
             emitPlentyEvent('frontend:orderCreated', order);
             navigateTo(
-              resolvePathTrailingSlash(
-                localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
-              ),
+              localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
             );
           } else {
             emit('on-payed');

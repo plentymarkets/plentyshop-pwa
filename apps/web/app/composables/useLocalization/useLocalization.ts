@@ -6,11 +6,10 @@ import { createSharedComposable } from '@vueuse/core';
 export const useLocalization = createSharedComposable(() => {
   const isOpen = ref(false);
   const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+  const localePath = useLocalizedPath();
 
   const buildLocalizedPath = (path: string) => {
-    const localePath = useLocalePath();
-
-    return resolvePathTrailingSlash(localePath(path));
+    return localePath(path);
   };
 
   const toggle = () => (isOpen.value = !isOpen.value);
@@ -102,12 +101,11 @@ export const useLocalization = createSharedComposable(() => {
     const localeCodes = locales.value.map((_locale) => _locale.code.toString());
     const localeSupported = localeCodes.includes(locale);
     const localeRoute = useLocaleRoute();
-    const localePath = useLocalePath();
 
     if (localeSupported) {
       return resolvePathTrailingSlash(localeRoute(path, locale as Locale));
     }
-    return resolvePathTrailingSlash(localePath(path));
+    return localePath(path);
   };
 
   /**

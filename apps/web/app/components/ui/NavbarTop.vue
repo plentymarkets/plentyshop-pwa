@@ -29,9 +29,7 @@ import { paths } from '~/utils/paths';
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const rawLocalePath = useLocalePath();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
-const localePath = (path: string) => resolvePathTrailingSlash(rawLocalePath(path));
+const localePath = useLocalizedPath();
 
 defineProps<{
   filled?: boolean;

@@ -187,11 +187,10 @@ defineI18nRoute({
 const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { formatWithSymbol } = usePriceFormatter();
 const { locale } = useI18n();
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
-const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
@@ -206,15 +205,11 @@ definePageMeta({
 onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const generateOrderDetailsLink = (order: Order) => {
-  return resolvePathTrailingSlash(
-    localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
-  );
+  return localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 const generateNewReturnLink = (order: Order) => {
-  return resolvePathTrailingSlash(
-    localePath(`${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
-  );
+  return localePath(`${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 watch(isDesktop, (value) => setMaxVisiblePages(value));
