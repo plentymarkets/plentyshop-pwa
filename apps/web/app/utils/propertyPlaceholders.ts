@@ -88,7 +88,7 @@ export const replacePropertyPlaceholdersInHtml = (html: string, product?: Produc
 
     if (kind === 'property-value' && Number.isFinite(propertyId) && hasProductData(product)) {
       const property = getPropertyById(propertyId, product);
-      const rawValue = property ? productPropertyGetters.getPropertyValue(property) : fallbackLabel;
+      const rawValue = property ? (productPropertyGetters.getPropertyValue(property) ?? '') : fallbackLabel;
 
       if (cast === 'html') {
         return `<div data-rte-html-value>${decodeHtmlEntities(rawValue)}</div>`;
