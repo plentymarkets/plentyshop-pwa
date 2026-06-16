@@ -6,7 +6,6 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-max" size="2xl" />
-{{ productsCatalog.category }}
     <EditableBlocks
       :identifier="identifier"
       :type="'category'"
@@ -109,15 +108,13 @@ const keywordsContent = computed((): string =>
     : (process.env.METAKEYWORDS ?? ''),
 );
 
+const currentPage = computed(() => Number(route.query.page as string) || 1);
+const maxIndexedPage = computed(() => Number(getSeoCategoryRobotsNoIndex()) || 0);
+
 const robotsContent = computed((): string => {
   if (!productsCatalog.value?.category) return '';
 
-  // Get page number directly from route query
-  const currentPage = Number(route.query.page as string) || 1;
-  const maxIndexedPages = Number(getSeoCategoryRobotsNoIndex()) || 0;
-
-  // If we're on a paginated page beyond the configured limit, return NOINDEX
-  if (currentPage > maxIndexedPages + 1) {
+  if (currentPage.value > maxIndexedPage.value + 1) {
     return 'NOINDEX, NOFOLLOW';
   }
 
