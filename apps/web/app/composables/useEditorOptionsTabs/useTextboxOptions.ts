@@ -5,9 +5,9 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
   const textboxAlignXOptions = computed(
     () =>
       [
-      { value: 'top', label: t('textbox-align-main-top-label'), testId: 'slider-textbox-align-x-top' },
-      { value: 'center', label: t('textbox-align-main-center-label'), testId: 'slider-textbox-align-x-center' },
-      { value: 'bottom', label: t('textbox-align-main-bottom-label'), testId: 'slider-textbox-align-x-bottom' },
+        { value: 'top', label: t('textbox-align-main-top-label'), testId: 'slider-textbox-align-x-top' },
+        { value: 'center', label: t('textbox-align-main-center-label'), testId: 'slider-textbox-align-x-center' },
+        { value: 'bottom', label: t('textbox-align-main-bottom-label'), testId: 'slider-textbox-align-x-bottom' },
       ] satisfies AlignOption<TextboxJustify>[],
   );
 
@@ -22,9 +22,9 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
   const textboxAlignYOptions = computed(
     () =>
       [
-      { value: 'left', label: t('textbox-align-cross-left-label'), testId: 'slider-textbox-align-y-left' },
-      { value: 'center', label: t('textbox-align-cross-center-label'), testId: 'slider-textbox-align-y-center' },
-      { value: 'right', label: t('textbox-align-cross-right-label'), testId: 'slider-textbox-align-y-right' },
+        { value: 'left', label: t('textbox-align-cross-left-label'), testId: 'slider-textbox-align-y-left' },
+        { value: 'center', label: t('textbox-align-cross-center-label'), testId: 'slider-textbox-align-y-center' },
+        { value: 'right', label: t('textbox-align-cross-right-label'), testId: 'slider-textbox-align-y-right' },
       ] satisfies AlignOption<TextboxAlign>[],
   );
 
