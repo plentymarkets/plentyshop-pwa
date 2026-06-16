@@ -1,5 +1,7 @@
 <template>
   <div v-if="!modalOpen">
+    <EditorAiPromptBar @generated="applyAiContent" />
+
     <div class="flex items-stretch gap-1.5 p-2 bg-gray-50 border-b border-gray-200 relative" data-testid="rte-toolbar">
       <div class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
         <EditorRichTextEditorBasicButtons
@@ -213,6 +215,10 @@ const closePropertiesModal = () => {
 const handlePropertyInsertion = (tokens: PropertyPlaceholderToken[]) => {
   insertPropertyPlaceholders(tokens);
   propertiesModalOpen.value = false;
+};
+
+const applyAiContent = (content: string) => {
+  editor.value?.commands.setContent(content);
 };
 
 defineExpose({ editor, focus, clearFormatting, undo, redo, openModal });
