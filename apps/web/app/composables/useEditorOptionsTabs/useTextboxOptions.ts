@@ -2,12 +2,13 @@ import type { EditorTarget, TextboxJustify, TextboxAlign, AlignOption } from '~/
 import type { TranslateFn } from '~/composables/useItemDataTable/types';
 
 export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
-  const textboxAlignXOptions = computed(() =>
-    [
-      { value: 'top', label: t('textbox-align-x-top-label'), testId: 'slider-textbox-align-x-top' },
-      { value: 'center', label: t('textbox-align-x-center-label'), testId: 'slider-textbox-align-x-center' },
-      { value: 'bottom', label: t('textbox-align-x-bottom-label'), testId: 'slider-textbox-align-x-bottom' },
-    ] satisfies AlignOption<TextboxJustify>[],
+  const textboxAlignXOptions = computed(
+    () =>
+      [
+        { value: 'top', label: t('textbox-align-x-top-label'), testId: 'slider-textbox-align-x-top' },
+        { value: 'center', label: t('textbox-align-x-center-label'), testId: 'slider-textbox-align-x-center' },
+        { value: 'bottom', label: t('textbox-align-x-bottom-label'), testId: 'slider-textbox-align-x-bottom' },
+      ] satisfies AlignOption<TextboxJustify>[],
   );
 
   const textboxAlignXModel = computed<TextboxJustify>({
@@ -18,12 +19,13 @@ export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn)
     },
   });
 
-  const textboxAlignYOptions = computed(() =>
-    [
-      { value: 'left', label: t('textbox-align-y-left-label'), testId: 'slider-textbox-align-y-left' },
-      { value: 'center', label: t('textbox-align-y-center-label'), testId: 'slider-textbox-align-y-center' },
-      { value: 'right', label: t('textbox-align-y-right-label'), testId: 'slider-textbox-align-y-right' },
-    ] satisfies AlignOption<TextboxAlign>[],
+  const textboxAlignYOptions = computed(
+    () =>
+      [
+        { value: 'left', label: t('textbox-align-y-left-label'), testId: 'slider-textbox-align-y-left' },
+        { value: 'center', label: t('textbox-align-y-center-label'), testId: 'slider-textbox-align-y-center' },
+        { value: 'right', label: t('textbox-align-y-right-label'), testId: 'slider-textbox-align-y-right' },
+      ] satisfies AlignOption<TextboxAlign>[],
   );
 
   const textboxAlignYModel = computed<TextboxAlign>({
