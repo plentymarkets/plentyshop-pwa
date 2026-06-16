@@ -383,14 +383,14 @@ const {
     "textbox-opacity-label": "Textbox Opacity",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-left-label": "Left",
+    "textbox-align-x-top-label": "Top",
     "textbox-align-x-center-label": "Center",
-    "textbox-align-x-right-label": "Right",
+    "textbox-align-x-bottom-label": "Bottom",
 
     "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-top-label": "Top",
+    "textbox-align-y-left-label": "Left",
     "textbox-align-y-center-label": "Center",
-    "textbox-align-y-bottom-label": "Bottom",
+    "textbox-align-y-right-label": "Right",
 
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
@@ -446,14 +446,14 @@ const {
     "textbox-opacity-label": "Textbox Opacity",
 
     "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-left-label": "Left",
+    "textbox-align-x-top-label": "Top",
     "textbox-align-x-center-label": "Center",
-    "textbox-align-x-right-label": "Right",
+    "textbox-align-x-bottom-label": "Bottom",
 
     "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-top-label": "Top",
+    "textbox-align-y-left-label": "Left",
     "textbox-align-y-center-label": "Center",
-    "textbox-align-y-bottom-label": "Bottom",
+    "textbox-align-y-right-label": "Right",
 
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
