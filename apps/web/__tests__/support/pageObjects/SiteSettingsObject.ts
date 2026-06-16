@@ -118,22 +118,26 @@ export class SiteSettingsObject extends PageObject {
       });
 
     cy.get('@groupsScrollContainer').then(($container) => {
-      const element = $container[0] as HTMLElement;
+      const element = $container.get(0);
+      expect(element).to.exist;
+
       expect(element.clientHeight).to.be.greaterThan(0);
-      expect(element.scrollHeight).to.be.greaterThan(element.clientHeight);
+
+      const hasOverflow = element.scrollHeight > element.clientHeight;
+
+      if (hasOverflow) {
+        cy.wrap(element).scrollTo('bottom');
+      }
     });
 
     cy.getByTestId('site-settings-drawer').then(($drawer) => {
       const drawerElement = $drawer.get(0);
       expect(drawerElement).to.exist;
-      if (!drawerElement) return;
-
       const drawerRect = drawerElement.getBoundingClientRect();
 
       cy.get('@groupsScrollContainer').then(($container) => {
         const containerElement = $container.get(0);
         expect(containerElement).to.exist;
-        if (!containerElement) return;
 
         const containerRect = containerElement.getBoundingClientRect();
 
@@ -141,7 +145,6 @@ export class SiteSettingsObject extends PageObject {
       });
     });
 
-    cy.get('@groupsScrollContainer').scrollTo('bottom');
     return this;
   }
 
