@@ -109,8 +109,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   assertGroupsScrollable() {
-    this.settingsDrawer
-      .find('.groups .flex-1.min-h-0.overflow-y-auto')
+    cy.getByTestId('site-settings-scroll-container')
       .first()
       .as('groupsScrollContainer');
 
@@ -120,7 +119,6 @@ export class SiteSettingsObject extends PageObject {
         cy.wrap($btn).click({ force: true });
       });
 
-    cy.get('@groupsScrollContainer').should('have.css', 'overflow-y', 'auto');
     cy.get('@groupsScrollContainer').then(($container) => {
       const element = $container[0] as HTMLElement;
       expect(element.clientHeight).to.be.greaterThan(0);

@@ -23,7 +23,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="flex-1 min-h-0 overflow-y-auto">
+      <div class="flex-1 min-h-0 overflow-y-auto" data-testid="site-settings-scroll-container">
         <button
           v-for="subCategory in subCategories"
           :key="subCategory"
@@ -68,7 +68,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="flex-1 min-h-0 overflow-y-auto">
+      <div class="flex-1 min-h-0 overflow-y-auto" data-testid="site-settings-scroll-container">
         <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.slug}-section`">
           <template #settings-group-title>{{ group.title }}</template>
 
