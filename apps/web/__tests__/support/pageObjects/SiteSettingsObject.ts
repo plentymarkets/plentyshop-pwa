@@ -119,7 +119,7 @@ export class SiteSettingsObject extends PageObject {
 
     cy.get('@groupsScrollContainer').then(($container) => {
       const element = $container.get(0);
-      expect(element).to.exist;
+      expect(element).to.not.equal(undefined);
 
       expect(element.clientHeight).to.be.greaterThan(0);
 
@@ -132,12 +132,12 @@ export class SiteSettingsObject extends PageObject {
 
     cy.getByTestId('site-settings-drawer').then(($drawer) => {
       const drawerElement = $drawer.get(0);
-      expect(drawerElement).to.exist;
+      expect(drawerElement).to.not.equal(undefined);
       const drawerRect = drawerElement.getBoundingClientRect();
 
       cy.get('@groupsScrollContainer').then(($container) => {
         const containerElement = $container.get(0);
-        expect(containerElement).to.exist;
+        expect(containerElement).to.not.equal(undefined);
 
         const containerRect = containerElement.getBoundingClientRect();
 
