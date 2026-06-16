@@ -2,7 +2,7 @@ import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { paths } from '../../../app/utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
 import { SiteSettingsObject } from '../../support/pageObjects/SiteSettingsObject';
-import { SeoSettingsObject } from '../../support/pageObjects/SeoSettingsObject';  
+import { SeoSettingsObject } from '../../support/pageObjects/SeoSettingsObject';
 
 describe('SiteSettings', () => {
   const editor = new EditorObject();

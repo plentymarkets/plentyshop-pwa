@@ -109,9 +109,7 @@ export class SiteSettingsObject extends PageObject {
   }
 
   assertGroupsScrollable() {
-    cy.getByTestId('site-settings-scroll-container')
-      .first()
-      .as('groupsScrollContainer');
+    cy.getByTestId('site-settings-scroll-container').first().as('groupsScrollContainer');
 
     cy.get('@groupsScrollContainer')
       .find('[data-testid$="-section"] button')
