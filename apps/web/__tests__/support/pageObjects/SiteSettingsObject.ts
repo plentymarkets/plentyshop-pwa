@@ -108,6 +108,29 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('editor-bundleSettings-select');
   }
 
+  assertGroupsScrollable() {
+    this.settingsDrawer
+      .find('.groups .flex-1.min-h-0.overflow-y-auto')
+      .first()
+      .as('groupsScrollContainer');
+
+    cy.get('@groupsScrollContainer')
+      .find('[data-testid$="-section"] button')
+      .each(($btn) => {
+        cy.wrap($btn).click({ force: true });
+      });
+
+    cy.get('@groupsScrollContainer').should('have.css', 'overflow-y', 'auto');
+    cy.get('@groupsScrollContainer').then(($container) => {
+      const element = $container[0] as HTMLElement;
+      expect(element.clientHeight).to.be.greaterThan(0);
+      expect(element.scrollHeight).to.be.greaterThan(element.clientHeight);
+    });
+
+    cy.get('@groupsScrollContainer').scrollTo('bottom');
+    return this;
+  }
+
   back() {
     this.backButton.should('exist').click({ force: true });
     return this;
