@@ -128,7 +128,7 @@
           <div class="mb-6">
             <EditorOptionsTabs
               v-model="textboxAlignXModel"
-              :legend="getEditorTranslation('textbox-align-x-label')"
+              :legend="getEditorTranslation('textbox-align-main-label')"
               test-id-prefix="slider-textbox-align-x"
               :options="textboxAlignXOptions"
             />
@@ -137,7 +137,7 @@
           <div class="mb-6">
             <EditorOptionsTabs
               v-model="textboxAlignYModel"
-              :legend="getEditorTranslation('textbox-align-y-label')"
+              :legend="getEditorTranslation('textbox-align-cross-label')"
               test-id-prefix="slider-textbox-align-y"
               :options="textboxAlignYOptions"
             />
@@ -269,15 +269,15 @@ input[type='number'] {
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
-    "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-top-label": "Top",
-    "textbox-align-x-center-label": "Center",
-    "textbox-align-x-bottom-label": "Bottom",
+    "textbox-align-main-label": "Textbox Alignment (main axis)",
+    "textbox-align-main-top-label": "Top",
+    "textbox-align-main-center-label": "Center",
+    "textbox-align-main-bottom-label": "Bottom",
 
-    "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-left-label": "Left",
-    "textbox-align-y-center-label": "Center",
-    "textbox-align-y-right-label": "Right",
+    "textbox-align-cross-label": "Textbox Alignment (cross axis)",
+    "textbox-align-cross-left-label": "Left",
+    "textbox-align-cross-center-label": "Center",
+    "textbox-align-cross-right-label": "Right",
 
     "button-align-label": "Button Alignment (x)",
     "button-align-option-left-label": "Left",
@@ -301,15 +301,15 @@ input[type='number'] {
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
-    "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-top-label": "Top",
-    "textbox-align-x-center-label": "Center",
-    "textbox-align-x-bottom-label": "Bottom",
+    "textbox-align-main-label": "Textbox Alignment (main axis)",
+    "textbox-align-main-top-label": "Top",
+    "textbox-align-main-center-label": "Center",
+    "textbox-align-main-bottom-label": "Bottom",
 
-    "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-left-label": "Left",
-    "textbox-align-y-center-label": "Center",
-    "textbox-align-y-right-label": "Right",
+    "textbox-align-cross-label": "Textbox Alignment (cross axis)",
+    "textbox-align-cross-left-label": "Left",
+    "textbox-align-cross-center-label": "Center",
+    "textbox-align-cross-right-label": "Right",
 
     "button-align-label": "Button Alignment (x)",
     "button-align-option-left-label": "Left",
