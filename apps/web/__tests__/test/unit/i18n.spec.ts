@@ -10,6 +10,14 @@ describe('i18n', () => {
     haveEqualStructure(en, de);
   });
 
+  it('has no arrays in English', () => {
+    hasNoArrays(en);
+  });
+
+  it('has no arrays in German', () => {
+    hasNoArrays(de);
+  });
+
   it('has values for all English keys', () => {
     const valuesEn: Array<string | object> = Object.values(en);
 
@@ -60,6 +68,15 @@ const setValuesToEmptyString = (obj: Record<string, any>) => {
 
 const isObject = (item: unknown) => {
   return item && typeof item === 'object' && !Array.isArray(item);
+};
+
+const hasNoArrays = (obj: Record<string, never>) => {
+  Object.entries(obj).forEach(([key, value]) => {
+    expect(Array.isArray(value), `Key "${key}" should not be an array`).toBe(false);
+    if (isObject(value)) {
+      hasNoArrays(value);
+    }
+  });
 };
 
 const hasText = (value: string | object) => {

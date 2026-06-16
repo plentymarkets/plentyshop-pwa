@@ -33,7 +33,7 @@ const { emit } = usePlentyEvent();
 const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
 );
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
@@ -162,7 +162,14 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
-        const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
+        let transactionType: 'order' | 'express' | 'basket' = 'express';
+
+        if (props.type === TypeOrderAlreadyExisting) {
+          transactionType = 'order';
+        } else if (isCommit) {
+          transactionType = 'basket';
+        }
+
         const order = await createTransaction({
           type: transactionType,
           withShippingCallback: props.type !== TypeOrderAlreadyExisting && !isCommit,

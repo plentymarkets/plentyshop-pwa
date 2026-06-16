@@ -60,7 +60,7 @@ const props = withDefaults(
   },
 );
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const route = useRoute();
 const { wishlistItemIds } = useWishlist();
 const { data: cart } = useCart();

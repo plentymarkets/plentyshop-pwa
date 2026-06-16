@@ -11,5 +11,7 @@ const HTML_ESCAPE_MAP: Record<string, string> = {
  * @param text - The string to escape.
  * @returns The escaped string safe for use in HTML content.
  */
-export const escapeHtml = (text: string): string =>
-  text.replace(/[&<>"']/g, (character) => HTML_ESCAPE_MAP[character] ?? character);
+export const escapeHtml = (text: string | null | undefined): string => {
+  if (!text) return '';
+  return text.replace(/[&<>"']/g, (character) => HTML_ESCAPE_MAP[character] ?? character);
+};
