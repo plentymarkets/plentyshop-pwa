@@ -104,8 +104,10 @@ describe('SiteSettings', () => {
 
   it('should keep site settings scrollable across different viewport heights', () => {
     const viewportSizes: Array<[number, number]> = [
-      [1366, 768],
-      [1920, 1080],
+      [1512, 982],   // MacBook Pro 14"
+      [1728, 1117],  // MacBook Pro 16"
+      [2560, 1440],  // 32" QHD / scaled 4K
+      [3840, 2160],  // 32" 4K UHD
     ];
 
     viewportSizes.forEach(([width, height]) => {

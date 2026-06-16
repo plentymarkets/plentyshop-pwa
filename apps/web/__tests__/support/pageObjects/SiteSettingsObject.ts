@@ -123,6 +123,24 @@ export class SiteSettingsObject extends PageObject {
       expect(element.scrollHeight).to.be.greaterThan(element.clientHeight);
     });
 
+    cy.getByTestId('site-settings-drawer').then(($drawer) => {
+      const drawerElement = $drawer.get(0);
+      expect(drawerElement).to.exist;
+      if (!drawerElement) return;
+
+      const drawerRect = drawerElement.getBoundingClientRect();
+
+      cy.get('@groupsScrollContainer').then(($container) => {
+        const containerElement = $container.get(0);
+        expect(containerElement).to.exist;
+        if (!containerElement) return;
+
+        const containerRect = containerElement.getBoundingClientRect();
+
+        expect(containerRect.bottom).to.be.at.most(drawerRect.bottom);
+      });
+    });
+
     cy.get('@groupsScrollContainer').scrollTo('bottom');
     return this;
   }
