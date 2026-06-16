@@ -115,7 +115,7 @@ const robotsContent = computed((): string => {
   if (!productsCatalog.value?.category) return '';
 
   if (currentPage.value > maxIndexedPage.value + 1) {
-    return 'NOINDEX, NOFOLLOW';
+    return 'noindex, nofollow';
   }
 
   return categoryGetters.getCategoryRobots(productsCatalog.value.category);
