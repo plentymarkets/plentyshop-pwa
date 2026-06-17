@@ -9,7 +9,7 @@
         :filter="'.no-drag'"
         class="rounded space-y-3"
         handle=".drag-slides-handle"
-        item-key="field"
+        :item-key="(item: PriceCardOrderItem) => isTextBlock(item) ? item.uuid : item"
       >
         <template #item="{ element: fieldKey, index }: { element: PriceCardOrderItem; index: number }">
           <div :key="isTextBlock(fieldKey) ? fieldKey.uuid : fieldKey">

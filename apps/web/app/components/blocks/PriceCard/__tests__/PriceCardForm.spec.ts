@@ -66,7 +66,7 @@ const DraggableStub = defineComponent({
   name: 'draggable',
   props: {
     modelValue: { type: Array, required: true },
-    itemKey: String,
+    itemKey: { type: [String, Function] },
     filter: String,
     handle: String,
   },
