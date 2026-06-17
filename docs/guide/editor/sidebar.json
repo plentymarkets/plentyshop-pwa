@@ -22,6 +22,10 @@
       {
         "text": "Rich text editor extension",
         "link": "/guide/editor/rte-custom-extensions.md"
+      },
+      {
+        "text": "Enable editor modee locally",
+        "link": "/guide/editor/editor-mode.md"
       }
     ]
   },
