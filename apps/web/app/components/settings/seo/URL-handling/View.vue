@@ -9,10 +9,10 @@
 <i18n lang="json">
 {
   "en": {
-    "label": "Item URL Handling"
+    "label": "URL Handling"
   },
   "de": {
-    "label": "Item URL Handling"
+    "label": "URL Handling"
   }
 }
 </i18n>

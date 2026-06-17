@@ -1,5 +1,6 @@
 import { sitemapPages, buildTime } from '#sitemap-data';
 import { createHash } from 'node:crypto';
+import { NO_CHANGE, NEVER, ALWAYS } from '~/utils/urlTrailingSlashConstants';
 
 // eslint-disable-next-line custom-rules/file-organization-types
 type SitemapURL = {
@@ -7,10 +8,6 @@ type SitemapURL = {
   alternate?: { hreflang: string; href: string }[];
   lastmod?: string;
 };
-
-const URL_TRAILING_SLASH_NO_CHANGE = 0;
-const URL_TRAILING_SLASH_NEVER = 1;
-const URL_TRAILING_SLASH_ALWAYS = 2;
 
 const parseTrailingSlashSetting = (value: unknown): number => {
   let parsedSetting: number | null = null;
@@ -22,17 +19,15 @@ const parseTrailingSlashSetting = (value: unknown): number => {
     if (!Number.isNaN(parsed)) parsedSetting = parsed;
   }
 
-  return parsedSetting === URL_TRAILING_SLASH_NEVER || parsedSetting === URL_TRAILING_SLASH_ALWAYS
-    ? parsedSetting
-    : URL_TRAILING_SLASH_NO_CHANGE;
+  return parsedSetting === NEVER || parsedSetting === ALWAYS ? parsedSetting : NO_CHANGE;
 };
 
 const resolveTrailingSlashSetting = (siteSetting: number, defaultMode: string): number => {
-  if (siteSetting !== URL_TRAILING_SLASH_NO_CHANGE) return siteSetting;
-  if (defaultMode === 'never') return URL_TRAILING_SLASH_NEVER;
-  if (defaultMode === 'always') return URL_TRAILING_SLASH_ALWAYS;
+  if (siteSetting !== NO_CHANGE) return siteSetting;
+  if (defaultMode === 'never') return NEVER;
+  if (defaultMode === 'always') return ALWAYS;
 
-  return URL_TRAILING_SLASH_NO_CHANGE;
+  return NO_CHANGE;
 };
 
 const URL_TRAILING_SLASH_SETTING_KEY = 'urlTrailingSlash';
@@ -53,8 +48,8 @@ const getSiteTrailingSlashSetting = async (apiUrl: string): Promise<number> => {
   if (cached !== null) return parseTrailingSlashSetting(cached);
 
   if (apiUrl.length === 0) {
-    await storage.setItem(cacheKey, URL_TRAILING_SLASH_NO_CHANGE, { ttl: SETTINGS_CACHE_TTL_SECONDS });
-    return URL_TRAILING_SLASH_NO_CHANGE;
+    await storage.setItem(cacheKey, NO_CHANGE, { ttl: SETTINGS_CACHE_TTL_SECONDS });
+    return NO_CHANGE;
   }
 
   try {
@@ -70,8 +65,8 @@ const getSiteTrailingSlashSetting = async (apiUrl: string): Promise<number> => {
     await storage.setItem(cacheKey, value, { ttl: SETTINGS_CACHE_TTL_SECONDS });
     return value;
   } catch {
-    await storage.setItem(cacheKey, URL_TRAILING_SLASH_NO_CHANGE, { ttl: SETTINGS_CACHE_TTL_SECONDS });
-    return URL_TRAILING_SLASH_NO_CHANGE;
+    await storage.setItem(cacheKey, NO_CHANGE, { ttl: SETTINGS_CACHE_TTL_SECONDS });
+    return NO_CHANGE;
   }
 };
 
@@ -91,7 +86,7 @@ const applyTrailingSlash = (url: string, setting: number): string => {
     return url;
   }
 
-  if (setting === URL_TRAILING_SLASH_ALWAYS) {
+  if (setting === ALWAYS) {
     if (!pathname.endsWith('/')) {
       urlObj.pathname = `${pathname}/`;
       return urlObj.toString();
@@ -100,7 +95,7 @@ const applyTrailingSlash = (url: string, setting: number): string => {
     return url;
   }
 
-  if (setting === URL_TRAILING_SLASH_NEVER) {
+  if (setting === NEVER) {
     if (pathname.endsWith('/')) {
       urlObj.pathname = pathname.slice(0, -1) || '';
       return urlObj.toString();
