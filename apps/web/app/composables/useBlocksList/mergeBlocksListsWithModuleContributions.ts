@@ -1,6 +1,4 @@
-import type { BlocksList } from './types';
-
-type BlocksListContribution = Partial<BlocksList>;
+import type { BlocksList, BlocksListContribution } from './types';
 
 const moduleContributions = import.meta.glob<{ default?: BlocksListContribution }>(
   '~~/modules/*/runtime/components/blocks/**/blocks-list.json',

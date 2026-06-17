@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { resolve, join, basename, relative } from 'node:path';
 import type { NormalizedOutputOptions, OutputBundle } from 'rollup';
+import type { BlockFile, ModuleFile } from './vite.config.types';
 
 export const FailOnLargeChunksPlugin = {
   name: 'fail-on-large-chunks',
@@ -60,10 +61,6 @@ export const FailOnForbiddenDataInPublicFolderPlugin = {
 
 const BLOCKS_OVERRIDE_MARKER = '@overrides-core';
 
-type BlockSource = 'core' | 'module' | 'customer';
-type BlockFile = { path: string; name: string; source: BlockSource; origin: string };
-type ModuleFile = { path: string; module: string };
-
 const walkDir = (dir: string, matches: (path: string) => boolean): string[] => {
   if (!existsSync(dir)) return [];
   const out: string[] = [];
@@ -120,7 +117,11 @@ const collectBlockFiles = (webRoot: string): BlockFile[] => {
   for (const path of walkDir(join(webRoot, 'app/components'), (p) => isVue(p) && p.includes('/blocks/'))) {
     out.push({ path, name: basename(path, '.vue'), source: 'core', origin: 'core' });
   }
-  for (const { path, module } of collectFromPackageRoots(join(webRoot, 'modules'), 'runtime/components/blocks', isVue)) {
+  for (const { path, module } of collectFromPackageRoots(
+    join(webRoot, 'modules'),
+    'runtime/components/blocks',
+    isVue,
+  )) {
     out.push({ path, name: basename(path, '.vue'), source: 'module', origin: `modules/${module}` });
   }
   for (const { path, module } of collectFromPackageRoots(
@@ -215,9 +216,7 @@ export const ValidateBlockContributionsPlugin = {
   name: 'validate-block-contributions',
   buildStart() {
     if (!process.env.FAIL_BUILD_ON_INVALID_BLOCK_CONTRIBUTIONS) {
-      console.warn(
-        'Skipping block contributions validation as FAIL_BUILD_ON_INVALID_BLOCK_CONTRIBUTIONS is not set.',
-      );
+      console.warn('Skipping block contributions validation as FAIL_BUILD_ON_INVALID_BLOCK_CONTRIBUTIONS is not set.');
       return;
     }
 

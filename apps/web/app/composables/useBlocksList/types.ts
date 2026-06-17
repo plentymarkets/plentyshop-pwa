@@ -23,6 +23,8 @@ export type BlocksList = {
   [key: string]: BlockListCategory;
 };
 
+export type BlocksListContribution = Partial<BlocksList>;
+
 export interface UseBlocksList {
   blocksLists: Ref<BlocksList>;
   blocksListContext: Ref<BlocksListContext>;

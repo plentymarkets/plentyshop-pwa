@@ -23,7 +23,6 @@ const moduleBlockTypeNamesFiles = import.meta.glob<{ default?: Record<string, st
   { eager: true },
 );
 
-
 const moduleBlockTypeNames = Object.entries(moduleBlockTypeNamesFiles)
   .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
   .reduce<Record<string, string>>((acc, [, file]) => ({ ...file.default, ...acc }), {});
