@@ -6,7 +6,11 @@ import cookieConfig from './app/configuration/cookie.config';
 import { paths } from './app/utils/paths';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
-import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from './app/configuration/vite.config';
+import {
+  FailOnLargeChunksPlugin,
+  FailOnForbiddenDataInPublicFolderPlugin,
+  ValidateBlockContributionsPlugin,
+} from './app/configuration/vite.config';
 import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
 
 export default defineNuxtConfig({
@@ -34,7 +38,7 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
-    plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin],
+    plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, ValidateBlockContributionsPlugin],
     optimizeDeps: {
       include: [...thirdPartyDeps, ...localPackageDeps],
     },

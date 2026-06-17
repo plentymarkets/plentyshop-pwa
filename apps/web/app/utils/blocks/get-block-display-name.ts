@@ -18,31 +18,15 @@ const blockTypeNames: Record<string, string> = {
   FooterContainer: 'Footer Container',
 };
 
-type ModuleBlockTypeNamesExport = {
-  blockTypeNames?: Record<string, string>;
-  default?: Record<string, string>;
-};
-
-const moduleBlockTypeNamesFiles = import.meta.glob<ModuleBlockTypeNamesExport>(
+const moduleBlockTypeNamesFiles = import.meta.glob<{ default?: Record<string, string> }>(
   '~~/modules/*/runtime/utils/blocks/block-type-names.ts',
   { eager: true },
 );
 
+
 const moduleBlockTypeNames = Object.entries(moduleBlockTypeNamesFiles)
   .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
-  .reduce<Record<string, string>>((acc, [, file]) => {
-    const maps = [file.blockTypeNames, file.default].filter(Boolean) as Record<string, string>[];
-
-    for (const names of maps) {
-      for (const [key, value] of Object.entries(names)) {
-        if (!(key in acc)) {
-          acc[key] = value;
-        }
-      }
-    }
-
-    return acc;
-  }, {});
+  .reduce<Record<string, string>>((acc, [, file]) => ({ ...file.default, ...acc }), {});
 
 export const getBlockDisplayName = (blockName: string): string => {
   return moduleBlockTypeNames[blockName] ?? blockTypeNames[blockName] ?? blockName;
