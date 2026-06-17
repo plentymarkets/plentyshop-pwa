@@ -9,7 +9,15 @@
     <div class="relative">
       <div class="drift-zoom-image">
         <section class="@md:p-4">
-          <template v-for="key in configuration?.fieldsOrder" :key="key">
+          <template v-for="key in configuration?.fieldsOrder" :key="isTextBlock(key) ? key.uuid : key">
+            <template v-if="isTextBlock(key) && key.visible">
+              <div
+                :data-uuid="key.uuid"
+                class="mb-2 font-normal typography-text-sm break-words no-preflight rte-prose rte-prose--render transition-all duration-300"
+                :class="{ 'ring-2 ring-blue-500 ring-offset-1 rounded': highlightedUuid === key.uuid }"
+                v-html="replacePropertyPlaceholdersInHtml(key.content, props.product)"
+              />
+            </template>
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
                 {{ productGetters.getName(product) }}
@@ -219,9 +227,14 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
-import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PriceCardPadding, PriceCardTextBlockItem, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import { paths } from '~/utils/paths';
+
+const isTextBlock = (item: unknown): item is PriceCardTextBlockItem =>
+  typeof item === 'object' && item !== null && (item as PriceCardTextBlockItem).type === 'textBlock';
+
+const { highlightedUuid } = useTableOfContents();
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
