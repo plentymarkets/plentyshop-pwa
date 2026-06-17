@@ -7,9 +7,9 @@
         v-if="priceCardBlock.fieldsOrder.length"
         v-model="priceCardBlock.fieldsOrder"
         :filter="'.no-drag'"
+        :item-key="(item: PriceCardOrderItem) => (isTextBlock(item) ? item.uuid : item)"
         class="rounded space-y-3"
         handle=".drag-slides-handle"
-        :item-key="(item: PriceCardOrderItem) => isTextBlock(item) ? item.uuid : item"
       >
         <template #item="{ element: fieldKey, index }: { element: PriceCardOrderItem; index: number }">
           <div :key="isTextBlock(fieldKey) ? fieldKey.uuid : fieldKey">

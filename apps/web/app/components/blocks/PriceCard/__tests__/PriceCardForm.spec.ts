@@ -79,14 +79,16 @@ const SfSwitchStub = defineComponent({
   name: 'SfSwitch',
   props: { modelValue: { type: Boolean, default: false } },
   emits: ['update:model-value'],
-  template: '<button data-testid="switch-stub" @click="$emit(\'update:model-value\', !modelValue)">{{ modelValue }}</button>',
+  template:
+    '<button data-testid="switch-stub" @click="$emit(\'update:model-value\', !modelValue)">{{ modelValue }}</button>',
 });
 
 const RteFormStub = defineComponent({
   name: 'EditorRichTextEditorForm',
   props: { modelValue: String },
   emits: ['update:modelValue'],
-  template: '<div data-testid="rte-form-stub"><button data-testid="rte-emit-btn" @click="$emit(\'update:modelValue\', \'<p>Updated</p>\')">emit</button></div>',
+  template:
+    '<div data-testid="rte-form-stub"><button data-testid="rte-emit-btn" @click="$emit(\'update:modelValue\', \'<p>Updated</p>\')">emit</button></div>',
 });
 
 const globalStubs = {
@@ -216,7 +218,9 @@ describe('PriceCardForm', () => {
       await wrapper.getByTestId('price-card-delete-textblock-tb-uuid-1').trigger('click');
 
       expect(content.fieldsOrder).toHaveLength(2);
-      expect(content.fieldsOrder.every((f) => typeof f !== 'object' || (f as PriceCardTextBlockItem).uuid !== 'tb-uuid-1')).toBe(true);
+      expect(
+        content.fieldsOrder.every((f) => typeof f !== 'object' || (f as PriceCardTextBlockItem).uuid !== 'tb-uuid-1'),
+      ).toBe(true);
     });
 
     it('should close the RTE when the open text block is deleted', async () => {
@@ -268,4 +272,3 @@ describe('PriceCardForm', () => {
     });
   });
 });
-
