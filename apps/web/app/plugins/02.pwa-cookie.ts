@@ -1,18 +1,33 @@
+import { resolvePreviewState } from '~/utils/pwaPreview';
+
 /**
- * This plugin reads the preview cookie and sets the isPreview property in the context.
- * This property is used to determine if the app is in preview mode or not.
- * The plugin replaces the `onMounted` function to determine the mode on SSR.
+ * This plugin checks for the presence of a 'pwa' cookie to determine if the user is in preview mode.
  */
 export default defineNuxtPlugin({
   name: 'pwa-cookie',
   parallel: true,
-  setup() {
+  async setup() {
     const pwaCookie = useCookie('pwa');
+    const {
+      public: { isPreview: isPreviewConfig },
+    } = useRuntimeConfig();
+
+    const getPreviewValid = async () => {
+      const data = await useSdk().plentysystems.getPreviewValid();
+
+      return data?.data;
+    };
+
+    const isPreview = await resolvePreviewState({
+      cookieValue: pwaCookie.value,
+      isPreviewConfig,
+      getPreviewValid: () => getPreviewValid(),
+    }).catch(() => {
+      return false;
+    });
 
     return {
-      provide: {
-        isPreview: !!pwaCookie.value || useRuntimeConfig().public.isPreview,
-      },
+      provide: { isPreview },
     };
   },
 });
