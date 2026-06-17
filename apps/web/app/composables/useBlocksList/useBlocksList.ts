@@ -1,5 +1,5 @@
 import type { BlocksList, BlocksListContext, BlockListCategory, UseBlocksListReturn } from './types';
-import { mergeBlocksListsWithModuleContributions } from './mergeBlocksListsWithModuleContributions';  // NK added
+import { mergeBlocksListsWithModuleContributions } from './mergeBlocksListsWithModuleContributions';
 
 const blocksLists = ref<BlocksList>({});
 const blocksListContext = ref<BlocksListContext>('');
@@ -35,8 +35,8 @@ export const useBlocksList: UseBlocksListReturn = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const baseBlocksLists = (await response.json()) as BlocksList; // NK added
-      blocksLists.value = mergeBlocksListsWithModuleContributions(baseBlocksLists);  // NK added
+      const baseBlocksLists = (await response.json()) as BlocksList;
+      blocksLists.value = mergeBlocksListsWithModuleContributions(baseBlocksLists);
     } catch (error) {
       throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
