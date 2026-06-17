@@ -1,5 +1,5 @@
 <template>
-  <nav class="fixed bottom-0 left-0 z-10 w-full flex flex-row items-stretch @md:hidden" data-testid="navbar-bottom">
+  <nav class="fixed bottom-0 left-0 z-sticky w-full flex flex-row items-stretch @md:hidden" data-testid="navbar-bottom">
     <UiButton
       v-for="{ id, label, icon, link } in items"
       :key="id"
@@ -60,7 +60,7 @@ const props = withDefaults(
   },
 );
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const route = useRoute();
 const { wishlistItemIds } = useWishlist();
 const { data: cart } = useCart();

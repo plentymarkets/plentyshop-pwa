@@ -4,17 +4,20 @@ import RichTextEditor from '../RichTextEditor.vue';
 import EditorRichTextEditorMenuButton from '../RichTextEditorMenuButton.vue';
 import { createMockUseRichTextEditor } from './test-utils';
 
-const { useRichTextEditor } = vi.hoisted(() => {
+const { useRichTextEditor, useBlocksList } = vi.hoisted(() => {
   return {
     useRichTextEditor: vi.fn(),
+    useBlocksList: vi.fn(),
   };
 });
 
 mockNuxtImport('useRichTextEditor', () => useRichTextEditor);
+mockNuxtImport('useBlocksList', () => useBlocksList);
 
 describe('RichTextEditor', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useBlocksList.mockReturnValue({ blocksListContext: ref('') });
   });
 
   it('should initialize with correct default props', () => {
@@ -230,5 +233,27 @@ describe('RichTextEditor', () => {
     await option.trigger('click');
 
     expect(setFontSize).toHaveBeenCalledWith('1.5rem');
+  });
+
+  it('should open the properties modal when the properties button is clicked', async () => {
+    useRichTextEditor.mockReturnValue(createMockUseRichTextEditor());
+    useBlocksList.mockReturnValue({ blocksListContext: ref('product') });
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+          ItemPropertiesSelectModal: {
+            template: '<div data-testid="item-properties-modal" />',
+          },
+        },
+      },
+    });
+
+    await wrapper.get('[data-testid="rte-properties-button"]').trigger('click');
+    await nextTick();
+
+    expect(wrapper.find('[data-testid="item-properties-modal"]').exists()).toBe(true);
   });
 });

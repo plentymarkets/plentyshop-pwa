@@ -20,7 +20,7 @@
             <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
               <div class="flex items-center gap-3">
                 <button
-                  class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                  class="drag-slides-handle top-2 left-2 z-dropdown cursor-grab p-2 hover:bg-gray-100 rounded-full"
                   :aria-label="getEditorTranslation('drag-reorder-aria')"
                   :data-testid="`actions-drag-slide-handle-${index}`"
                 >
@@ -210,7 +210,7 @@
         <EditorOptionsTabs
           v-if="categoryDataBlock.displayCategoryImage !== 'off'"
           v-model="textboxAlignXModel"
-          :legend="getEditorTranslation('textbox-align-x-label')"
+          :legend="getEditorTranslation('textbox-align-main-label')"
           test-id-prefix="slider-textbox-align-x"
           :options="textboxAlignXOptions"
         />
@@ -220,7 +220,7 @@
         <EditorOptionsTabs
           v-if="categoryDataBlock.displayCategoryImage !== 'off'"
           v-model="textboxAlignYModel"
-          :legend="getEditorTranslation('textbox-align-y-label')"
+          :legend="getEditorTranslation('textbox-align-cross-label')"
           test-id-prefix="slider-textbox-align-y"
           :options="textboxAlignYOptions"
         />
@@ -382,15 +382,15 @@ const {
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
-    "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-left-label": "Left",
-    "textbox-align-x-center-label": "Center",
-    "textbox-align-x-right-label": "Right",
+    "textbox-align-main-label": "Textbox Alignment (main axis)",
+    "textbox-align-main-top-label": "Top",
+    "textbox-align-main-center-label": "Center",
+    "textbox-align-main-bottom-label": "Bottom",
 
-    "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-top-label": "Top",
-    "textbox-align-y-center-label": "Center",
-    "textbox-align-y-bottom-label": "Bottom",
+    "textbox-align-cross-label": "Textbox Alignment (cross axis)",
+    "textbox-align-cross-left-label": "Left",
+    "textbox-align-cross-center-label": "Center",
+    "textbox-align-cross-right-label": "Right",
 
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
@@ -445,15 +445,15 @@ const {
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
-    "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-left-label": "Left",
-    "textbox-align-x-center-label": "Center",
-    "textbox-align-x-right-label": "Right",
+    "textbox-align-main-label": "Textbox Alignment (main axis)",
+    "textbox-align-main-top-label": "Top",
+    "textbox-align-main-center-label": "Center",
+    "textbox-align-main-bottom-label": "Bottom",
 
-    "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-top-label": "Top",
-    "textbox-align-y-center-label": "Center",
-    "textbox-align-y-bottom-label": "Bottom",
+    "textbox-align-cross-label": "Textbox Alignment (cross axis)",
+    "textbox-align-cross-left-label": "Left",
+    "textbox-align-cross-center-label": "Center",
+    "textbox-align-cross-right-label": "Right",
 
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",

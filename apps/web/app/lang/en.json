@@ -125,7 +125,16 @@
       "orderNumber": "Order Number",
       "paymentSummary": {
         "heading": "Payment Summary",
-        "paymentStatus": "Payment status"
+        "paymentStatus": "Payment status",
+        "changePaymentMethod": "change"
+      },
+      "changePaymentMethod": {
+        "heading": "Change payment method",
+        "subHeading": "Here you can change the payment method for your order. The current payment method is {paymentMethod}.",
+        "success": "The payment method has been changed successfully.",
+        "change": "Change",
+        "cancel": "Cancel",
+        "notChangeableAfterHint": "After changing to this payment method, the payment method cannot be changed again."
       },
       "returnDate": "Return Date",
       "returnId": "Return-ID",
@@ -344,6 +353,7 @@
       "back": "Back",
       "browseProducts": "Browse Products",
       "buy": "Buy",
+      "pay": "Pay",
       "cancelOrder": "Cancel order",
       "clear": "Clear",
       "clearAll": "Clear all",
@@ -475,7 +485,8 @@
     "asterixHint": "marked fields are required",
     "orderIdInvalid": "Please enter a valid order number.",
     "misConfigured": "Our cancellation form is temporarily disabled due to a missing configuration. Please check back later or reach out to us via alternative contact methods.",
-    "success": "Your notice of withdrawal has been successfully submitted. We have sent a confirmation email containing the details of your request to {email}."
+    "success": "Your notice of withdrawal has been successfully submitted. We have sent a confirmation email containing the details of your request to {email}.",
+    "privacyPolicy": "Our {privacyPolicy} applies."
   },
   "CookieBar": {
     "about": {
@@ -942,7 +953,8 @@
     "unbrandedCvv": "CVV",
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
-    "unbrandedPay": "Pay"
+    "unbrandedPay": "Pay",
+    "methodNotSupported": "The selected payment method is currently not supported. Please choose another payment method."
   },
   "PreferredDelivery": {
     "general": {
@@ -1271,7 +1283,11 @@
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
-      "softLoginFailed": "The provided data is invalid."
+      "softLoginFailed": "The provided data is invalid.",
+      "paymentMethodCantSwitch": "The payment method cannot be switched for this order.",
+      "paymentMethodNotExist": "The selected payment method does not exist.",
+      "paymentMethodSwitchFailed": "The payment method could not be switched. Please try again.",
+      "paymentMethodSwitchDisabled": "Switching the payment method is disabled."
     },
     "security": {
       "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page.",

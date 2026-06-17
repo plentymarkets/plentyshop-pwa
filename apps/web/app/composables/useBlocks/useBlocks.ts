@@ -1,9 +1,8 @@
 import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { UseBlocksState, UseBlocksReturn } from './types';
-import { assembleBlocks } from '~/utils/blocks/block-helpers';
+import { assembleBlocks, isValidHeaderOrder } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
-  // eslint-disable-next-line custom-rules/file-organization-types
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
   }
@@ -136,7 +135,14 @@ export const useBlocks: UseBlocksReturn = () => {
   };
 
   const reorderHeaderBlocks = (blocks: Block[]) => {
-    if (!state.value.data.HeaderContainer) return;
+    if (!state.value.data.HeaderContainer) {
+      return;
+    }
+
+    if (!isValidHeaderOrder(blocks)) {
+      return;
+    }
+
     const container = state.value.data.HeaderContainer as { content: Block[] };
     const reordered = blocks.map((block, index) => ({ ...block, parent_slot: index }));
     if (Array.isArray(container.content)) {

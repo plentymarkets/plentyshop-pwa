@@ -3,7 +3,7 @@
 
   <div
     v-if="paymentLoading"
-    class="fixed top-0 left-0 bg-black bg-opacity-75 bottom-0 right-0 !z-50 flex items-center justify-center flex-col"
+    class="fixed top-0 left-0 bg-black bg-opacity-75 bottom-0 right-0 !z-dropdown flex items-center justify-center flex-col"
   >
     <div class="text-white mb-4">{{ t('checkout.googlePay.paymentInProgress') }}</div>
     <SfLoaderCircular class="flex justify-center items-center" size="lg" />
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { PayPalAddToCartCallback } from '../types';
+import type { PayPalAddToCartCallback, PayPalCreditPropsType } from '../types';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { usePayPal } from '../composables/usePayPal';
 
@@ -24,8 +24,10 @@ const {
   getIsReadyToPayRequest,
 } = useGooglePay();
 const { getCurrentScript } = usePayPal();
+const props = defineProps<PayPalCreditPropsType>();
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'on-payed'): void;
 }>();
 
 const payPalScript = computed(() => getCurrentScript());
@@ -33,17 +35,21 @@ const payPalScript = computed(() => getCurrentScript());
 async function onGooglePaymentButtonClicked() {
   await emits('button-clicked', async (successfully) => {
     if (successfully) {
-      const paymentDataRequest = await getGooglePaymentDataRequest();
+      const paymentDataRequest = await getGooglePaymentDataRequest(props.order?.order?.id);
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
-          processPayment(paymentData).catch((error: Error) => {
-            useNotification().send({
-              message: error.message || t('error.paymentFailed'),
-              type: 'negative',
+          processPayment(paymentData, props.order)
+            .then(() => {
+              emits('on-payed');
+            })
+            .catch((error: Error) => {
+              useNotification().send({
+                message: error.message || t('error.paymentFailed'),
+                type: 'negative',
+              });
+              paymentLoading.value = false;
             });
-            paymentLoading.value = false;
-          });
           return true;
         })
         .catch((error: Error) => {

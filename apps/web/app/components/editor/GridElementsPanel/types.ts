@@ -9,6 +9,7 @@ export interface GridElementsPanelProps {
   quickAddOptions?: QuickAddOption[];
   sectionLabel?: string;
   addButtonLabel?: string;
+  canMove?: (evt: BlockMoveEvent) => boolean;
 }
 
 export type GridElementsPanelEmits = {

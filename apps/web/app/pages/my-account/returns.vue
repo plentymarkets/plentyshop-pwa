@@ -28,7 +28,7 @@
       :class="{ 'pointer-events-none opacity-50': loading }"
       data-testid="account-returns-content"
     >
-      <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
+      <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-loader" size="2xl" />
 
       <template v-if="!isTablet">
         <ul v-for="order in data.entries" :key="order.order.id" class="my-4 last-of-type:mb-0">
@@ -49,13 +49,7 @@
             <span class="block typography-text-sm mb-2">{{ orderGetters.getPaymentMethodName(order) }}</span>
           </li>
           <li>
-            <UiButton
-              :to="localePath(generateOrderDetailsLink(order))"
-              :tag="NuxtLink"
-              size="sm"
-              variant="tertiary"
-              class="!px-0"
-            >
+            <UiButton :to="generateOrderDetailsLink(order)" :tag="NuxtLink" size="sm" variant="tertiary" class="!px-0">
               {{ t('account.ordersAndReturns.details') }}
             </UiButton>
           </li>
@@ -86,12 +80,7 @@
             <td class="@lg:p-4 p-2 @lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn, locale) }}</td>
             <td class="@lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
             <td>
-              <UiButton
-                :tag="NuxtLink"
-                size="sm"
-                variant="tertiary"
-                :to="localePath(generateOrderDetailsLink(orderReturn))"
-              >
+              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(orderReturn)">
                 {{ t('account.ordersAndReturns.details') }}
               </UiButton>
             </td>
@@ -130,7 +119,7 @@ const { isOpen, close } = useDisclosure();
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const { locale } = useI18n();
@@ -147,7 +136,7 @@ const handleQueryUpdate = async () => {
 };
 
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 await handleQueryUpdate();

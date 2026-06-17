@@ -76,11 +76,12 @@ export const useApplePay = () => {
   };
 
   const processPayment = async (emits: ButtonClickedEmits) => {
-    const { processingOrder } = useProcessingOrder();
+    const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
-    const localePath = useLocalePath();
+    const localePath = useLocalizedPath();
     const { emit } = usePlentyEvent();
+    const reservation = useCartStockReservation();
 
     try {
       const paymentRequest = createPaymentRequest();
@@ -106,7 +107,7 @@ export const useApplePay = () => {
 
       paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
         try {
-          if (!(await useCartStockReservation().reserve())) {
+          if (!(await reservation.reserve())) {
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             return;
           }
@@ -114,16 +115,17 @@ export const useApplePay = () => {
           const transaction = await createTransaction({
             type: 'basket',
           });
-          if (!transaction || !transaction.id) {
-            await useCartStockReservation().unreserve();
+
+          if (!transaction?.id) {
+            await reservation.unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
 
           const order = await createPlentyOrder();
-          if (!order || !order.order || !order.order.id) {
-            await useCartStockReservation().unreserve();
+          if (!order?.order?.id) {
+            await reservation.unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(t('storefrontError.order.createFailed'));
             return;
@@ -136,9 +138,9 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
-            await useCartStockReservation().unreserve();
+            await reservation.unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-            showErrorNotification(error?.toString() ?? t('error.paymentFailed'));
+            showErrorNotification(error instanceof Error ? error.message : t('error.paymentFailed'));
             return;
           }
 
@@ -152,9 +154,9 @@ export const useApplePay = () => {
 
           emit('frontend:orderCreated', order);
           return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
-        } catch (error: unknown) {
-          await useCartStockReservation().unreserve();
-          showErrorNotification(error?.toString() ?? t('error.paymentFailed'));
+        } catch (error) {
+          await reservation.unreserve();
+          showErrorNotification(error instanceof Error ? error.message : t('error.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
       };
@@ -175,7 +177,7 @@ export const useApplePay = () => {
       return (
         (await initialize()) &&
         typeof ApplePaySession !== 'undefined' &&
-        state.value.script &&
+        !!state.value.script &&
         ApplePaySession &&
         ApplePaySession.canMakePayments() &&
         state.value.config.isEligible

@@ -83,7 +83,7 @@
               />
             </template>
           </UiButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-dropdown">
             <template #trigger>
               <UiButton
                 variant="tertiary"
@@ -96,7 +96,16 @@
                 <template #prefix>
                   <SfIconPerson />
                 </template>
-                {{ user?.firstName }}
+                <Transition
+                  appear
+                  enter-from-class="opacity-0 max-w-0"
+                  enter-active-class="inline-block overflow-hidden transition-[max-width,opacity] duration-[250ms] ease-in"
+                  enter-to-class="opacity-100 max-w-[10rem]"
+                >
+                  <span v-if="user?.firstName" class="whitespace-nowrap inline-block overflow-hidden">{{
+                    user?.firstName
+                  }}</span>
+                </Transition>
               </UiButton>
             </template>
             <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -193,7 +202,7 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-50"
+        class="w-full h-full z-dropdown"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
@@ -254,12 +263,12 @@ const resolvedBackgroundColor = computed(() => props.content.backgroundColor || 
 
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
-const { data: categoryTree, getCategoryTree } = useCategoryTree();
+const { data: categoryTree } = useCategoryTree();
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -268,7 +277,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) await getCategoryTree();
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 

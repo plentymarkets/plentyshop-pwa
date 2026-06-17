@@ -25,7 +25,7 @@
 
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
+        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-loader" size="2xl" />
         <template v-if="viewport.isLessThan('md')">
           <ul v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="my-4 last-of-type:mb-0">
             <li>
@@ -56,7 +56,7 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
                 {{ t('account.ordersAndReturns.details') }}
               </UiButton>
               <UiDropdown class="relative">
@@ -74,7 +74,7 @@
                     </SfListItem>
                   </li>
                   <li v-if="orderGetters.isReturnable(order)">
-                    <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                    <NuxtLink :to="generateNewReturnLink(order)">
                       <SfListItem tag="button" class="text-left">
                         {{ t('returns.return') }}
                       </SfListItem>
@@ -129,12 +129,7 @@
               <td class="@lg:p-4 p-2 @lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="@lg:p-4 p-2 text-right">
                 <div class="flex items-center justify-end">
-                  <UiButton
-                    :tag="NuxtLink"
-                    size="sm"
-                    variant="tertiary"
-                    :to="localePath(generateOrderDetailsLink(order))"
-                  >
+                  <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
                     {{ t('account.ordersAndReturns.details') }}
                   </UiButton>
                   <UiDropdown class="relative">
@@ -152,7 +147,7 @@
                         </SfListItem>
                       </li>
                       <li v-if="orderGetters.isReturnable(order)">
-                        <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                        <NuxtLink :to="generateNewReturnLink(order)">
                           <SfListItem tag="button" class="text-left">
                             {{ t('returns.return') }}
                           </SfListItem>
@@ -192,9 +187,10 @@ defineI18nRoute({
 const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { formatWithSymbol } = usePriceFormatter();
 const { locale } = useI18n();
+const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
@@ -208,13 +204,12 @@ definePageMeta({
 
 onMounted(() => setMaxVisiblePages(isDesktop.value));
 
-const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 const generateNewReturnLink = (order: Order) => {
-  return `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return localePath(`${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 watch(isDesktop, (value) => setMaxVisiblePages(value));

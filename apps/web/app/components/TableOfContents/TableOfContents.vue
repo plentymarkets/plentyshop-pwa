@@ -47,6 +47,8 @@ const { headerContainer, pageBlocks, footer, updateBlocks, reorderHeaderBlocks, 
 const headerBlocks = computed(() => ((headerContainer.value as HeaderContainerBlock)?.content ?? []) as Block[]);
 const footerBlocks = computed(() => (footer.value?.content ?? []) as Block[]);
 
+const guardHeaderMove = (evt: BlockMoveEvent) => canMoveHeaderBlock(headerBlocks.value, evt);
+
 const sections = computed<TocSection[]>(() => {
   const result: TocSection[] = [];
   if (headerContainer.value) {
@@ -57,6 +59,7 @@ const sections = computed<TocSection[]>(() => {
       container: headerContainer.value,
       addTestId: 'toc-add-header-block',
       setOrder: reorderHeaderBlocks,
+      canMove: guardHeaderMove,
     });
   }
   result.push({

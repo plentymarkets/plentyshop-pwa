@@ -125,7 +125,16 @@
       "orderNumber": "Bestellnummer",
       "paymentSummary": {
         "heading": "Zahlungsübersicht",
-        "paymentStatus": "Zahlungsstatus"
+        "paymentStatus": "Zahlungsstatus",
+        "changePaymentMethod": "ändern"
+      },
+      "changePaymentMethod": {
+        "heading": "Zahlungsart ändern",
+        "subHeading": "Sie können hier die Zahlungsart ändern. Die aktuelle Zahlungsart ist: {paymentMethod}",
+        "success": "Die Zahlungsart wurde erfolgreich geändert.",
+        "change": "Ändern",
+        "cancel": "Abbrechen",
+        "notChangeableAfterHint": "Nach einem Wechsel auf diese Zahlungsart kann die Zahlungsart nicht mehr geändert werden."
       },
       "returnDate": "Retourendatum",
       "returnId": "Retouren-ID",
@@ -344,6 +353,7 @@
       "back": "Zurück",
       "browseProducts": "Produkte durchstöbern",
       "buy": "Kaufen",
+      "pay": "Bezahlen",
       "cancelOrder": "Kauf abbrechen",
       "clear": "Zurücksetzen",
       "clearAll": "Alles zurücksetzen",
@@ -475,7 +485,8 @@
     "asterixHint": "markierte Felder sind Pflichtfelder",
     "orderIdInvalid": "Bitte geben Sie eine gültige Auftragsnummer ein.",
     "misConfigured": "Unser Widerrufsformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten.",
-    "success": "Ihr Widerruf wurde erfolgreich übermittelt. Wir haben soeben eine Bestätigungs-E-Mail mit allen Details an {email} gesendet."
+    "success": "Ihr Widerruf wurde erfolgreich übermittelt. Wir haben soeben eine Bestätigungs-E-Mail mit allen Details an {email} gesendet.",
+    "privacyPolicy": "Es gilt unsere {privacyPolicy}."
   },
   "CookieBar": {
     "about": {
@@ -942,7 +953,8 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
-    "unbrandedPay": "Bezahlen"
+    "unbrandedPay": "Bezahlen",
+    "methodNotSupported": "Die ausgewählte Zahlungsmethode wird aktuell nicht unterstützt. Bitte wählen Sie eine andere Zahlungsmethode aus."
   },
   "PreferredDelivery": {
     "general": {
@@ -1271,7 +1283,11 @@
       "loadOrdersFailed": "Die Bestellungen konnten nicht geladen werden.",
       "migrateUnauthorized": "Die Bestellung konnte nicht zu Ihrem Account hinzugefügt werden.",
       "notFound": "Die Bestellung existiert nicht.",
-      "softLoginFailed": "Die angegebenen Daten sind ungültig."
+      "softLoginFailed": "Die angegebenen Daten sind ungültig.",
+      "paymentMethodCantSwitch": "Für diese Bestellung kann die Zahlungsart nicht geändert werden.",
+      "paymentMethodNotExist": "Die gewählte Zahlungsart existiert nicht mehr. Bitte wählen Sie eine andere Zahlungsart aus.",
+      "paymentMethodSwitchFailed": "Bei der Änderung der Zahlungsart ist ein Fehler aufgetreten.",
+      "paymentMethodSwitchDisabled": "Die Möglichkeit zur Änderung der Zahlungsart ist deaktiviert."
     },
     "security": {
       "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",

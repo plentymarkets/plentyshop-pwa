@@ -6,7 +6,7 @@
         :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
-        class="ml-2 z-10"
+        class="ml-2 z-dropdown"
         data-testid="session-lifetime-tooltip"
       >
         <SfIconInfo :size="'sm'" />

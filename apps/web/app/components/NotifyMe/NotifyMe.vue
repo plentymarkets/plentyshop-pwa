@@ -20,8 +20,7 @@
       data-testid="notify-me-modal"
       tag="section"
       role="dialog"
-      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
-      style="z-index: 9999"
+      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit z-max"
       aria-labelledby="notify-modal-title"
       aria-describedby="notify-modal-description"
     >

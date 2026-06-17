@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full @md:sticky @md:shadow-md z-10">
+    <header class="relative w-full @md:sticky @md:shadow-md z-raised">
       <div
         v-if="viewport.isLessThan('md')"
         class="flex items-center w-full"
@@ -73,7 +73,7 @@
           <SfIconMenu aria-hidden="true" />
         </UiButton>
 
-        <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
+        <div v-if="isSectionVisible('logo')" class="flex items-center justify-center" :style="slotStyle('logo')">
           <NuxtLink
             id="blockified-logo"
             data-testid="logo-link"
@@ -85,54 +85,54 @@
           </NuxtLink>
         </div>
 
-        <template v-if="isSectionVisible('search')">
-          <div
-            ref="iconSearchContainerRef"
-            :style="getSectionColumnStyle('search')"
-            :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? '' : 'flex-none w-10 shrink-0'"
-          >
-            <template v-if="isFullSearchMode">
-              <UiSearch />
-            </template>
+        <div
+          v-if="isSectionVisible('search')"
+          ref="iconSearchContainerRef"
+          class="flex items-center justify-center min-w-0"
+          :style="slotStyle('search')"
+        >
+          <template v-if="isFullSearchMode">
+            <UiSearch class="w-full" />
+          </template>
 
-            <template v-else>
-              <div class="relative">
-                <Transition
-                  mode="out-in"
-                  enter-active-class="transition-opacity duration-120 ease-out"
-                  enter-from-class="opacity-0"
-                  enter-to-class="opacity-100"
-                  leave-active-class="transition-opacity duration-120 ease-out absolute inset-0"
-                  leave-from-class="opacity-100"
-                  leave-to-class="opacity-0"
-                  @after-leave="handleSearchAfterLeave"
-                >
-                  <UiSearch
-                    v-if="isIconSearchExpanded"
-                    class="w-[100%]"
-                    :style="{ transformOrigin: searchExpandOrigin }"
-                    :close="collapseIconSearch"
-                  />
-                </Transition>
-                <UiButton
-                  v-if="showSearchIcon && !isIconSearchExpanded"
-                  variant="tertiary"
-                  square
-                  class="hover:!bg-header-400 rounded-md"
-                  :style="{ color: iconColor }"
-                  :aria-label="t('common.actions.search')"
-                  @click="expandIconSearch"
-                >
-                  <SfIconSearch />
-                </UiButton>
-              </div>
-            </template>
-          </div>
-        </template>
+          <template v-else>
+            <div class="relative">
+              <Transition
+                mode="out-in"
+                enter-active-class="transition-opacity duration-120 ease-out"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition-opacity duration-120 ease-out absolute inset-0"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+                @after-leave="handleSearchAfterLeave"
+              >
+                <UiSearch
+                  v-if="isIconSearchExpanded"
+                  class="w-full"
+                  style="transform-origin: center center"
+                  :close="collapseIconSearch"
+                />
+              </Transition>
+              <UiButton
+                v-if="showSearchIcon && !isIconSearchExpanded"
+                variant="tertiary"
+                square
+                class="hover:!bg-header-400 rounded-md"
+                :style="{ color: iconColor }"
+                :aria-label="t('common.actions.search')"
+                @click="expandIconSearch"
+              >
+                <SfIconSearch />
+              </UiButton>
+            </div>
+          </template>
+        </div>
+
         <nav
           v-if="isSectionVisible('actions')"
-          :style="getSectionColumnStyle('actions')"
-          class="flex flex-row flex-nowrap"
+          class="flex flex-row flex-nowrap items-center justify-center"
+          :style="slotStyle('actions')"
         >
           <template v-if="isActionVisible('language')">
             <UiButton
@@ -221,7 +221,7 @@
             v-if="isAuthorized && isActionVisible('account')"
             v-model="isAccountDropdownOpen"
             placement="bottom-end"
-            class="z-50"
+            class="z-dropdown"
             :style="{ order: getActionOrder('account') }"
           >
             <template #trigger>
@@ -316,7 +316,7 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-50"
+        class="w-full h-full z-modal"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
@@ -371,7 +371,6 @@ const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
 const { open: openMegaMenu } = useMegaMenu();
-const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
   content,
@@ -390,7 +389,7 @@ const headerPaletteStyle = useGenerateTailwindPalette('header', headerBackground
 
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
@@ -403,10 +402,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) {
-    await getCategoryTree();
-  }
-
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 
@@ -415,40 +410,21 @@ const showSearchIcon = ref(true);
 const isSearchClosing = ref(false);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
-const visibleSectionsCount = computed(() => sections.value.filter((section) => section.visible).length);
-
-const SECTION_GAP = '16px';
-
-const getSectionColumnStyle = (sectionId: string) => {
+const slotStyle = (sectionId: string) => {
   const order = getSectionFlexOrder(sectionId);
-  const total = visibleSectionsCount.value;
-  const isFirst = order === 0;
-  const isLast = total > 1 && order === total - 1;
-  const isMiddle = total > 2 && !isFirst && !isLast;
+  const isMiddleSlot = order === 1 && sections.value.filter((section) => section.visible).length === 3;
 
-  const isSearchActive =
-    sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
-
-  const middleMargin = isMiddle ? { marginLeft: SECTION_GAP, marginRight: SECTION_GAP } : {};
-
-  if (isFirst) {
-    return { order, flex: '1', display: 'flex', ...middleMargin };
-  }
-  if (isLast) {
-    return { order, flex: '1', display: 'flex', justifyContent: 'flex-end', ...middleMargin };
+  if (isMiddleSlot) {
+    return { order, flex: '5', marginLeft: '16px', marginRight: '16px' };
   }
 
-  if (isSearchActive) {
-    return { order, flex: '5', ...middleMargin };
+  const isTabletSearchSide = sectionId === 'search' && viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg');
+  if (isTabletSearchSide) {
+    return { order, flex: '1', minWidth: '220px' };
   }
-  return { order, ...middleMargin };
+
+  return { order, flex: '1' };
 };
-
-const searchExpandOrigin = computed(() => {
-  const searchOrder = getSectionFlexOrder('search');
-  if (searchOrder === 0) return 'left center';
-  return 'center center';
-});
 
 const expandIconSearch = () => {
   showSearchIcon.value = false;
@@ -519,7 +495,7 @@ const navigateToLogin = () => {
 </script>
 <style scoped>
 :deep(input[data-testid='search-bar-input']) {
-  min-width: 172px;
+  min-width: 0;
 }
 
 #blockified-logo :deep(img) {

@@ -24,7 +24,7 @@
           />
           <SfLoaderCircular
             v-if="disableShippingPayment"
-            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
+            class="absolute mt-5 right-0 left-0 m-auto z-loader"
             size="2xl"
           />
           <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0" />
@@ -44,11 +44,13 @@
           <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
         <div class="relative @md:sticky @md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
-          <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+          <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-loader" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
-            <PaymentButtons />
+            <ClientOnly>
+              <PaymentButtons />
+            </ClientOnly>
             <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
@@ -95,6 +97,7 @@ const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePayme
   useCheckoutPagePaymentAndShipping();
 
 emit('frontend:beginCheckout', cart.value);
+if (import.meta.client) useLogEvent().logOpeningCheckout();
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
@@ -128,7 +131,7 @@ onNuxtReady(async () => {
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 
 watch(cartIsEmpty, async () => {
   if (!processingOrder.value) {

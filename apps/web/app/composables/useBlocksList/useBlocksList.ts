@@ -78,6 +78,7 @@ export const useBlocksList: UseBlocksListReturn = () => {
 
   return {
     blocksLists,
+    blocksListContext,
     setBlocksListContext,
     getBlocksLists,
     getBlockTemplateByLanguage,

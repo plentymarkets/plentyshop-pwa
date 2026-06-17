@@ -1,7 +1,7 @@
 <template>
   <header
     :class="[
-      'h-14 @md:h-20 flex z-50 @md:sticky @md:-top-5 @md:pt-2.5 @md:shadow-md',
+      'h-14 @md:h-20 flex z-sticky @md:sticky @md:-top-5 @md:pt-2.5 @md:shadow-md',
       { 'text-white': filled },
       { 'bg-white text-[#02C652] border-b border-neutral-200': !filled },
     ]"
@@ -29,7 +29,7 @@ import { paths } from '~/utils/paths';
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 defineProps<{
   filled?: boolean;

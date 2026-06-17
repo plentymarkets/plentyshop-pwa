@@ -1,8 +1,8 @@
 <template>
-  <header class="relative w-full h-full z-10 @md:sticky @md:shadow-md">
+  <header class="relative w-full h-full z-sticky @md:sticky @md:shadow-md">
     <div
       :style="{ backgroundColor: headerBackgroundColor }"
-      class="flex justify-between items-center flex-wrap @md:flex-nowrap px-4 @md:px-10 py-3 @md:py-5 w-full h-full border-0 border-neutral-200 @md:h-20 @md:z-10"
+      class="flex justify-between items-center flex-wrap @md:flex-nowrap px-4 @md:px-10 py-3 @md:py-5 w-full h-full border-0 border-neutral-200 @md:h-20 @md:z-sticky"
       data-testid="navbar-top"
     >
       <div class="pl-4 @md:pl-0">
@@ -31,5 +31,5 @@ const headerBackgroundColor = computed(() => {
   return utilityBar?.content?.color?.backgroundColor ?? getPrimaryColor();
 });
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 </script>

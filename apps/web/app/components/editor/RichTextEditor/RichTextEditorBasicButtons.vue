@@ -1,53 +1,53 @@
 <template>
   <div class="flex items-center gap-1.5 flex-shrink-0">
-    <div class="relative inline-block z-[500]">
+    <div class="relative inline-block z-toast">
       <SfDropdown v-model="isBlockTypeOpen" placement="bottom-start" @update:model-value="onBlockTypeDropdownToggle">
         <template #trigger>
           <button
-            type="button"
-            data-testid="rte-heading-select"
             class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
-            @mousedown.prevent
+            data-testid="rte-heading-select"
+            type="button"
             @click="onBlockTypeTriggerClick"
+            @mousedown.prevent
           >
             <span>{{ selectedBlockTypeLabel }}</span>
 
             <svg
-              class="h-4 w-4 shrink-0 transition-transform"
               :class="{ 'rotate-180': isBlockTypeOpen }"
-              viewBox="0 0 20 20"
-              fill="currentColor"
               aria-hidden="true"
+              class="h-4 w-4 shrink-0 transition-transform"
+              fill="currentColor"
+              viewBox="0 0 20 20"
             >
               <path
-                fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+                fill-rule="evenodd"
               />
             </svg>
           </button>
         </template>
 
         <ul
-          class="-mt-1 z-[300] w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
-          role="listbox"
           aria-label="Text style"
+          class="-mt-1 z-popover w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
           data-testid="rte-heading-options"
+          role="listbox"
           @click.stop
         >
           <li
             v-for="option in blockTypeOptions"
             :key="option.value"
-            role="option"
             :aria-selected="option.value === currentBlockType"
+            role="option"
           >
             <button
-              :data-testid="`rte-heading-option-${option.value}`"
-              type="button"
-              class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
               :class="{ 'bg-gray-100 font-semibold': option.value === currentBlockType }"
-              @mousedown.prevent
+              :data-testid="`rte-heading-option-${option.value}`"
+              class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
+              type="button"
               @click="selectBlockType(option.value)"
+              @mousedown.prevent
             >
               {{ option.label }}
             </button>
@@ -56,54 +56,54 @@
       </SfDropdown>
     </div>
 
-    <div class="relative inline-block z-[500]">
+    <div class="relative inline-block z-toast">
       <SfDropdown v-model="isFontSizeOpen" placement="bottom-start" @update:model-value="onFontSizeDropdownToggle">
         <template #trigger>
           <button
-            type="button"
-            data-testid="rte-font-size-select"
             class="flex h-8 w-[84px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
-            @mousedown.prevent
+            data-testid="rte-font-size-select"
+            type="button"
             @click="onFontSizeTriggerClick"
+            @mousedown.prevent
           >
             <span>{{ selectedFontSizeLabel }}</span>
 
             <svg
-              class="h-4 w-4 shrink-0 transition-transform"
               :class="{ 'rotate-180': isFontSizeOpen }"
-              viewBox="0 0 20 20"
-              fill="currentColor"
               aria-hidden="true"
+              class="h-4 w-4 shrink-0 transition-transform"
+              fill="currentColor"
+              viewBox="0 0 20 20"
             >
               <path
-                fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+                fill-rule="evenodd"
               />
             </svg>
           </button>
         </template>
 
         <ul
-          class="-mt-1 z-[300] max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
-          role="listbox"
           aria-label="Font size"
+          class="-mt-1 z-popover max-h-56 w-[84px] overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
           data-testid="rte-font-size-options"
+          role="listbox"
           @click.stop
         >
           <li
             v-for="option in fontSizeOptions"
             :key="option.value"
-            role="option"
             :aria-selected="option.value === effectiveFontSize"
+            role="option"
           >
             <button
-              type="button"
+              :class="{ 'bg-gray-100 font-semibold': option.value === effectiveFontSize }"
               :data-testid="`rte-font-size-option-${option.value}`"
               class="block w-full px-2 py-1.5 text-left text-sm hover:bg-gray-100"
-              :class="{ 'bg-gray-100 font-semibold': option.value === effectiveFontSize }"
-              @mousedown.prevent
+              type="button"
               @click="selectFontSize(option.value)"
+              @mousedown.prevent
             >
               {{ option.label }}
             </button>
@@ -121,35 +121,43 @@
     @click="cmd('toggleUnderline')"
   />
   <EditorRichTextEditorMenuButton
-    data-testid="rte-link-button"
     :active="isActive('link')"
+    data-testid="rte-link-button"
     icon-name="link"
     @click="toggleLink"
+  />
+
+  <EditorRichTextEditorMenuButton
+    v-if="showPropertiesButton && onOpenPropertiesModal"
+    :title="'Insert property'"
+    data-testid="rte-properties-button"
+    icon-name="add"
+    @click="handleOpenPropertiesModal"
   />
 
   <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
 
   <EditorColorPicker
-    data-testid="rte-font-color"
     :model-value="textColor"
     align="right"
+    data-testid="rte-font-color"
     @update:model-value="setFontColor($event)"
   >
     <template #trigger="{ color, toggle }">
       <button
-        type="button"
         class="flex flex-col items-center gap-1 cursor-pointer p-1 hover:bg-gray-100 rounded"
+        type="button"
         @click="toggle"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#062633">
+        <svg fill="#062633" height="24px" viewBox="0 -960 960 960" width="24px" xmlns="http://www.w3.org/2000/svg">
           <path d="m246-160 176-464h116l176 464h-117l-38-112H401l-38 112H246Zm176-203h116l-56-166h-4l-56 166Z" />
         </svg>
-        <div class="w-6 h-1 rounded" :style="{ backgroundColor: color }" />
+        <div :style="{ backgroundColor: color }" class="w-6 h-1 rounded" />
       </button>
     </template>
   </EditorColorPicker>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { SfDropdown } from '@storefront-ui/vue';
 import type { RteCommand } from '~/composables/useRichTextEditor/types';
 
@@ -165,6 +173,8 @@ const props = defineProps<{
   toggleLink: () => void;
   insertIcon: (name: string) => void;
   insertEmoji: (name: string) => void;
+  showPropertiesButton?: boolean;
+  onOpenPropertiesModal?: () => void;
 }>();
 
 const isBlockTypeOpen = ref(false);
@@ -250,5 +260,11 @@ const selectBlockType = (value: string) => {
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
   isFontSizeOpen.value = false;
+};
+
+const handleOpenPropertiesModal = () => {
+  if (props.onOpenPropertiesModal) {
+    props.onOpenPropertiesModal();
+  }
 };
 </script>
