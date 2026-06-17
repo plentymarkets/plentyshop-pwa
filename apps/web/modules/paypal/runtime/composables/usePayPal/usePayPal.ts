@@ -51,7 +51,6 @@ export const usePayPal = () => {
     configPromise.value = (async () => {
       try {
         const { data } = await useSdk().plentysystems.getPayPalSettings();
-        state.value.loadedConfig = true;
         if (data) {
           state.value.config = data ?? null;
           state.value.fraudId = data.fraudId ?? null;
@@ -63,6 +62,7 @@ export const usePayPal = () => {
       } catch {
         return false;
       } finally {
+        state.value.loadedConfig = true;
         configPromise.value = null;
       }
     })();
