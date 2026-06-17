@@ -12,11 +12,8 @@ vi.mock('vue-router', () => ({
   onBeforeRouteLeave: vi.fn(),
 }));
 
-const highlightedUuid = ref('');
-
 mockNuxtImport('useTableOfContents', () => () => ({
   scrollToBlock: vi.fn(),
-  highlightedUuid,
   selectedUuid: ref(''),
   hoveredUuid: ref(''),
   expandedBlocks: ref(new Set()),
@@ -98,7 +95,7 @@ describe('<PurchaseCard />', () => {
 
   describe('text block rendering', () => {
     beforeEach(() => {
-      highlightedUuid.value = '';
+      useState<string>('toc-highlighted-uuid').value = '';
     });
 
     it('should render a visible text block with its HTML content', () => {
@@ -143,9 +140,10 @@ describe('<PurchaseCard />', () => {
       expect(wrapper.find('[data-uuid="tb-1"]').exists()).toBe(true);
       expect(wrapper.find('[data-uuid="tb-2"]').exists()).toBe(true);
     });
-
     it('should apply the blue highlight ring class when highlightedUuid matches the text block uuid', async () => {
       const textBlock = createTextBlock();
+      const tocHighlightedUuid = useState<string>('toc-highlighted-uuid');
+
       const wrapper = mount(UiPurchaseCard, {
         props: {
           product: ProductMock,
@@ -154,17 +152,19 @@ describe('<PurchaseCard />', () => {
         global: { stubs: globalStubs },
       });
 
-      highlightedUuid.value = textBlock.uuid;
+      tocHighlightedUuid.value = textBlock.uuid;
       await nextTick();
 
       const el = wrapper.find(`[data-uuid="${textBlock.uuid}"]`);
+
       expect(el.classes()).toContain('ring-2');
       expect(el.classes()).toContain('ring-blue-500');
     });
-
     it('should not apply the highlight ring when highlightedUuid does not match', () => {
       const textBlock = createTextBlock();
-      highlightedUuid.value = 'other-uuid';
+
+      const tocHighlightedUuid = useState<string>('toc-highlighted-uuid');
+      tocHighlightedUuid.value = 'other-uuid';
 
       const wrapper = mount(UiPurchaseCard, {
         props: {
