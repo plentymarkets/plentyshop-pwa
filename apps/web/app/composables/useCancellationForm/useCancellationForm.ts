@@ -17,7 +17,6 @@ export const useCancellationForm = () => {
       orderId: string()
         .trim()
         .required(t('error.requiredField'))
-        .matches(/^[1-9][0-9]*$/, t('cancellationForm.orderIdInvalid'))
         .default(''),
       name: string().trim().required(t('error.requiredField')).default(''),
       reason: string().trim().optional().default(''),
