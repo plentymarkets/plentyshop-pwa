@@ -1,8 +1,8 @@
 <template>
   <form
-    class="@md:rounded-md"
     :class="{ '@md:shadow-lg': configuration?.dropShadow, '@md:border @md:border-neutral-100': configuration?.borders }"
     :style="inlineStyle"
+    class="@md:rounded-md"
     data-testid="purchase-card"
     @submit.prevent="handleAddToCart()"
   >
@@ -12,9 +12,9 @@
           <template v-for="key in configuration?.fieldsOrder" :key="isTextBlock(key) ? key.uuid : key">
             <template v-if="isTextBlock(key) && key.visible">
               <div
+                :class="{ 'ring-2 ring-blue-500 ring-offset-1 rounded': highlightedUuid === key.uuid }"
                 :data-uuid="key.uuid"
                 class="mb-2 font-normal typography-text-sm break-words no-preflight rte-prose rte-prose--render transition-all duration-300"
-                :class="{ 'ring-2 ring-blue-500 ring-offset-1 rounded': highlightedUuid === key.uuid }"
                 v-html="replacePropertyPlaceholdersInHtml(key.content, props.product)"
               />
             </template>
@@ -25,7 +25,7 @@
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
-                <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+                <Price :crossed-price="crossedPrice" :price="priceWithProperties" />
                 <div
                   v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0 && showBundleComponents"
                   class="m-auto"
@@ -44,10 +44,10 @@
               />
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
-              <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
+              <UiBadges :product="product" :use-availability="false" :use-tags="true" class="mb-2" />
             </template>
             <template v-if="key === 'availability' && configuration?.fields.availability">
-              <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
+              <UiBadges :product="product" :use-availability="true" :use-tags="false" class="mb-2" />
             </template>
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
               <div class="mb-2 variation-properties">
@@ -57,16 +57,16 @@
             <template v-if="key === 'starRating' && configuration?.fields.starRating">
               <div class="inline-flex items-center mb-2">
                 <SfRating
-                  size="xs"
                   :half-increment="true"
-                  :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
                   :max="5"
+                  :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
+                  size="xs"
                 />
                 <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
                 <UiButton
-                  variant="tertiary"
                   class="ml-2 text-xs text-neutral-500 cursor-pointer"
                   data-testid="show-reviews"
+                  variant="tertiary"
                   @click="scrollToReviews"
                 >
                   {{ t('product.showAllReviews') }}
@@ -84,20 +84,20 @@
 
             <template v-if="key === 'addToWishlist' && configuration?.fields.addToWishlist">
               <div
-                class="flex items-center mt-2"
                 :class="{ 'justify-center': configuration?.wishlistSize === 'large' }"
+                class="flex items-center mt-2"
               >
                 <WishlistButton
-                  :variant="configuration?.wishlistSize === 'small' ? 'tertiary' : 'secondary'"
-                  :product="product"
-                  :quantity="quantitySelectorValue"
-                  :square="viewport.isLessThan('lg')"
-                  class="!m-0 !mb-2"
                   :class="{
                     'mr-2 mb-2 bg-white': viewport.isLessThan('lg'),
                     'w-full': configuration?.wishlistSize === 'large',
                     '!p-0 hover:bg-transparent active:bg-transparent': configuration?.wishlistSize === 'small',
                   }"
+                  :product="product"
+                  :quantity="quantitySelectorValue"
+                  :square="viewport.isLessThan('lg')"
+                  :variant="configuration?.wishlistSize === 'small' ? 'tertiary' : 'secondary'"
+                  class="!m-0 !mb-2"
                 >
                   <div>
                     {{
@@ -121,7 +121,7 @@
               <OrderProperties :product="product" />
             </template>
             <template v-if="key === 'graduatedPrices' && configuration?.fields.graduatedPrices">
-              <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
+              <GraduatedPriceList :count="quantitySelectorValue" :product="product" />
             </template>
 
             <template v-if="key === 'quantityAndAddToCart' && configuration?.fields.quantityAndAddToCart">
@@ -145,17 +145,17 @@
                   </div>
                   <SfTooltip
                     v-else
-                    show-arrow
-                    placement="top"
                     :label="isNotValidVariation || isSalableText"
                     class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+                    placement="top"
+                    show-arrow
                   >
                     <UiButton
-                      type="submit"
+                      :disabled="loading || !productGetters.isSalable(product)"
+                      class="w-full h-full"
                       data-testid="add-to-cart"
                       size="lg"
-                      class="w-full h-full"
-                      :disabled="loading || !productGetters.isSalable(product)"
+                      type="submit"
                     >
                       <template #prefix>
                         <div v-if="!loading" class="flex row items-center">
@@ -177,8 +177,8 @@
                     <template #shipping>
                       <UiLink
                         :href="localePath(paths.shipping)"
-                        target="_blank"
                         class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                        target="_blank"
                       >
                         {{ t('common.labels.delivery') }}
                       </UiLink>
@@ -187,15 +187,15 @@
                 </div>
                 <template v-if="showPayPalButtons">
                   <PayPalExpressButton
-                    type="SingleItem"
-                    location="itemPage"
                     class="mt-4"
+                    location="itemPage"
+                    type="SingleItem"
                     @validation-callback="paypalHandleAddToCart"
                   />
                   <PayPalPayLaterBanner
-                    placement="product"
-                    location="itemPage"
                     :amount="priceWithProperties * quantitySelectorValue"
+                    location="itemPage"
+                    placement="product"
                   />
                 </template>
               </div>
@@ -224,7 +224,7 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PriceCardPadding, PriceCardTextBlockItem, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
@@ -234,7 +234,7 @@ import { paths } from '~/utils/paths';
 const isTextBlock = (item: unknown): item is PriceCardTextBlockItem =>
   typeof item === 'object' && item !== null && (item as PriceCardTextBlockItem).type === 'textBlock';
 
-const { highlightedUuid } = useTableOfContents();
+const highlightedUuid = useState<string>('toc-highlighted-uuid', () => '');
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
