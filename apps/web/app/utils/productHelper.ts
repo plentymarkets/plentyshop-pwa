@@ -33,7 +33,9 @@ export const updateProductURLPathForVariation = (
   itemId: string | number,
   variationId: string | number,
 ) => {
-  const pathSegments = currentPath.split('/');
+  const trailingSlash = currentPath.endsWith('/');
+  const normalizedPath = trailingSlash ? currentPath.slice(0, -1) : currentPath;
+  const pathSegments = normalizedPath.split('/');
   let lastSegment = pathSegments.pop();
   if (!lastSegment) return currentPath;
 
@@ -52,7 +54,8 @@ export const updateProductURLPathForVariation = (
   lastSegment = lastSegmentParts.join('_');
   pathSegments.push(lastSegment);
 
-  return pathSegments.join('/');
+  const result = pathSegments.join('/');
+  return trailingSlash ? result + '/' : result;
 };
 
 export const generateBreadcrumbs = (product: Product, home: string): Breadcrumb[] => {
