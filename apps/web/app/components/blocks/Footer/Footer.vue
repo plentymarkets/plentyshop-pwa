@@ -64,6 +64,22 @@
                   {{ t('legal.legalDisclosure') }}
                 </NuxtLink>
               </li>
+              <li>
+                <a
+                  id="hbRevocationButton"
+                  href="https://connect.haendlerbund.de/widerrufsformular/www-b2b-hafenx-de/01KVA94FCJFEGSB99S8QGZ371Q"
+                  data-shop-id="01KVA94FCJFEGSB99S8QGZ371Q"
+                  data-key="gaZ4DUmNg2qulX2WFSo2q0dNHwesYTxk"
+                  data-preview="false"
+                  data-lang="de"
+                  rel="noopener"
+                  target="_blank"
+                  :aria-label="t('customFooter.revocationButtonAria')"
+                  class="text-sm text-white/70 hover:text-white transition-colors"
+                >
+                  <span>{{ t('customFooter.revocationButton') }}</span>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -141,6 +157,16 @@ const resolvedContent = computed(() => {
   if (!shouldRender.value) return null;
   const block = props.content ? createFooterBlock(props.content, props.meta) : getFooterBlock();
   return mapFooterData(block).content as FooterContent;
+});
+
+useHead({
+  script: [
+    {
+      src: 'https://connect.haendlerbund.de/widgets/revocation-button.js',
+      async: true,
+      tagPosition: 'bodyClose',
+    },
+  ],
 });
 
 interface FooterCategoryItem {

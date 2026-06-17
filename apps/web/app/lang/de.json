@@ -1717,6 +1717,8 @@
     "contactLink": "Kontakt",
     "loginLink": "Anmelden",
     "registerLink": "Registrieren",
-    "allRightsReserved": "Alle Rechte vorbehalten."
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "revocationButton": "Vertrag widerrufen",
+    "revocationButtonAria": "Widerrufsformular öffnen"
   }
 }
