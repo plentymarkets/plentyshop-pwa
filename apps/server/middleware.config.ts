@@ -15,9 +15,6 @@ const config = {
         api: {
           url: process.env.API_ENDPOINT,
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
-          coreSupervisor: {
-            runtimeArn: process.env.BEDROCK_AGENTCORE_RUNTIME_ARN,
-          },
         },
       },
       errorHandler: (error: any, req: any, res: any) => {

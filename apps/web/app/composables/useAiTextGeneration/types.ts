@@ -17,9 +17,7 @@ export interface GenerateParams {
   prompt: string;
   coreFunctionality?: CoreFunctionality;
   sessionId?: string;
-  plentyId?: number;
   user?: string;
-  authToken?: string;
   qualifier?: string;
 }
 

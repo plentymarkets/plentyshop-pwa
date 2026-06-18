@@ -37,8 +37,8 @@ const createSessionId = () => {
 
 /**
  * @description Composable that wraps `doInvokeCoreSupervisor` for generating
- * text via the Bedrock AgentCore supervisor agent. Returns the assistant reply
- * as a plain string so callers can hand it to any RTE/textarea.
+ * text via the Core Supervisor agent. Returns the assistant reply as a plain
+ * string so callers can hand it to any RTE/textarea.
  * @example
  * ``` ts
  * const { generate, loading, response, error } = useAiTextGeneration();
@@ -76,9 +76,7 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
       const { data } = await useSdk().plentysystems.doInvokeCoreSupervisor({
         prompt: params.prompt,
         sessionId: params.sessionId ?? sessionId.value,
-        plentyId: 72157,
         user: params.user ?? '72157',
-        authToken: params.authToken ?? 'a',
         coreFunctionality: params.coreFunctionality ?? DEFAULT_CORE_FUNCTIONALITY,
         ...(params.qualifier ? { qualifier: params.qualifier } : {}),
       });
