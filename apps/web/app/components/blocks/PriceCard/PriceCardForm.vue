@@ -7,12 +7,12 @@
         v-if="priceCardBlock.fieldsOrder.length"
         v-model="priceCardBlock.fieldsOrder"
         :filter="'.no-drag'"
-        :item-key="(item: PriceCardOrderItem) => (isTextBlock(item) ? item.uuid : item)"
+        :item-key="getItemKey"
         class="rounded space-y-3"
         handle=".drag-slides-handle"
       >
         <template #item="{ element: fieldKey, index }: { element: PriceCardOrderItem; index: number }">
-          <div :key="isTextBlock(fieldKey) ? fieldKey.uuid : fieldKey">
+          <div :key="getFieldKey(fieldKey)">
             <div
               :data-testid="`price-card-field-${isTextBlock(fieldKey) ? fieldKey.uuid : fieldKey}`"
               class="flex items-center justify-between drag-slides-handle cursor-move"
@@ -268,7 +268,13 @@ const addTextBlock = () => {
   };
   priceCardBlock.value.fieldsOrder.push(newBlock);
 };
+const getItemKey = (item: PriceCardOrderItem): string => {
+  return isTextBlock(item) ? item.uuid : item;
+};
 
+const getFieldKey = (fieldKey: PriceCardOrderItem): string => {
+  return isTextBlock(fieldKey) ? fieldKey.uuid : fieldKey;
+};
 const removeTextBlock = (item: PriceCardTextBlockItem) => {
   const idx = priceCardBlock.value.fieldsOrder.indexOf(item);
   if (idx !== -1) priceCardBlock.value.fieldsOrder.splice(idx, 1);
@@ -277,14 +283,14 @@ const removeTextBlock = (item: PriceCardTextBlockItem) => {
 
 const updateTextBlockContent = (item: PriceCardTextBlockItem, content: string) => {
   const textBlock = priceCardBlock.value.fieldsOrder.find(
-    (f): f is PriceCardTextBlockItem => isTextBlock(f) && f.uuid === item.uuid,
+    (field): field is PriceCardTextBlockItem => isTextBlock(field) && field.uuid === item.uuid,
   );
   if (textBlock) textBlock.content = content;
 };
 
 const updateTextBlockVisible = (item: PriceCardTextBlockItem, visible: boolean) => {
   const textBlock = priceCardBlock.value.fieldsOrder.find(
-    (f): f is PriceCardTextBlockItem => isTextBlock(f) && f.uuid === item.uuid,
+    (field): field is PriceCardTextBlockItem => isTextBlock(field) && field.uuid === item.uuid,
   );
   if (textBlock) textBlock.visible = visible;
 };

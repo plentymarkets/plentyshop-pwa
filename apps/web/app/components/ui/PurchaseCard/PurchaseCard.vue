@@ -96,7 +96,7 @@
                   :product="product"
                   :quantity="quantitySelectorValue"
                   :square="viewport.isLessThan('lg')"
-                  :variant="configuration?.wishlistSize === 'small' ? 'tertiary' : 'secondary'"
+                  :variant="wishlistButtonVariant"
                   class="!m-0 !mb-2"
                 >
                   <div>
@@ -342,6 +342,9 @@ onBeforeRouteLeave(() => {
   resetAttributeFields();
 });
 
+const wishlistButtonVariant = computed(() => {
+  return props.configuration?.wishlistSize === 'small' ? 'tertiary' : 'secondary';
+});
 const priceWithProperties = computed(
   () =>
     (productGetters.getSpecialOffer(props?.product) ||
