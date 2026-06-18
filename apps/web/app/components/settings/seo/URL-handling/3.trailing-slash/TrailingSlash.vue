@@ -12,7 +12,6 @@
       track-by="value"
       class="cursor-pointer"
       select-label=""
-      :deselect-label="getEditorTranslation('label')"
     />
   </div>
 </template>
