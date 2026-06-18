@@ -8,7 +8,8 @@
       v-model="selectedTrailingSlashOption"
       data-testid="editor-trailingSlash-select"
       :options="trailingSlashOptions"
-      :custom-label="(option) => optionLabels[option] || ''"
+      label="label"
+      track-by="value"
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('label')"
@@ -22,19 +23,24 @@ import Multiselect from 'vue-multiselect';
 import { NO_CHANGE, NEVER, ALWAYS } from '~/utils/urlTrailingSlashConstants';
 
 const { updateSetting, getSetting } = useSiteSettings('urlTrailingSlash');
-const { t } = useI18n();
 
-const trailingSlashOptions = [NO_CHANGE.toString(), NEVER.toString(), ALWAYS.toString()];
+const noChangeLabel = getEditorTranslation('no-change-label');
+const removeLabel = getEditorTranslation('remove-label');
+const alwaysAddLabel = getEditorTranslation('always-add-label');
 
-const optionLabels = computed(() => ({
-  [NO_CHANGE.toString()]: t('option-0-label'),
-  [NEVER.toString()]: t('option-1-label'),
-  [ALWAYS.toString()]: t('option-2-label'),
-}));
+const trailingSlashOptions = [
+  { value: NO_CHANGE.toString(), label: noChangeLabel },
+  { value: NEVER.toString(), label: removeLabel },
+  { value: ALWAYS.toString(), label: alwaysAddLabel },
+];
 
 const selectedTrailingSlashOption = computed({
-  get: () => getSetting().toString(),
-  set: (value) => updateSetting(value),
+  get: () => {
+    return trailingSlashOptions.find((o) => o.value === getSetting().toString());
+  },
+  set: (option) => {
+    updateSetting(option?.value ?? '');
+  },
 });
 </script>
 
@@ -43,16 +49,16 @@ const selectedTrailingSlashOption = computed({
   "en": {
     "label": "Trailing Slash",
     "description": "Controls how canonicals and generated links are presented.",
-    "option-0-label": "Don't modify trailing slashes",
-    "option-1-label": "Remove trailing slashes",
-    "option-2-label": "Always add trailing slashes"
+    "no-change-label": "Don't modify trailing slashes",
+    "remove-label": "Remove trailing slashes",
+    "always-add-label": "Always add trailing slashes"
   },
   "de": {
     "label": "Trailing Slash",
     "description": "Controls how canonicals and generated links are presented.",
-    "option-0-label": "Don't modify trailing slashes",
-    "option-1-label": "Remove trailing slashes",
-    "option-2-label": "Always add trailing slashes"
+    "no-change-label": "Don't modify trailing slashes",
+    "remove-label": "Remove trailing slashes",
+    "always-add-label": "Always add trailing slashes"
   }
 }
 </i18n>
