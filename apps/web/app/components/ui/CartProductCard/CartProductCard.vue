@@ -81,7 +81,7 @@
           <UiLink
             v-if="productBundleGetters.isItemBundleSalable(item)"
             :tag="NuxtLink"
-            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+            :to="buildProductPath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
           >
@@ -151,7 +151,7 @@ const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { format } = usePriceFormatter();
-const localePath = useLocalePath();
+const { buildProductPath } = useLocalization();
 
 const imageLoaded = ref(false);
 const img = ref();
@@ -247,7 +247,7 @@ const basePriceSingleValue = computed(
 );
 
 const path = computed(() => {
-  return localePath('/' + cartGetters.getProductPath(cartItem, useCallisto().isEnabled));
+  return buildProductPath('/' + cartGetters.getProductPath(cartItem, useCallisto().isEnabled));
 });
 
 const imageAlt = computed(() => {
