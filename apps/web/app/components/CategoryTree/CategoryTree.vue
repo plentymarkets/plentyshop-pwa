@@ -10,7 +10,7 @@
       <CategoryTreeItem
         data-testid="category-parent-link"
         :name="breadcrumbGetters.getName(parentCategory)"
-        :href="breadcrumbGetters.getUrl(parentCategory)"
+        :href="parentCategoryHref"
         :count="breadcrumbGetters.getItemCount(parentCategory)"
       >
         <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
@@ -36,6 +36,7 @@ import { SfIconArrowBack } from '@storefront-ui/vue';
 
 const props = defineProps<CategoryTreeProps>();
 const { t } = useI18n();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
 const categoryItems = computed(() => categoryGetters.getSubCategories(props.category));
 
@@ -46,9 +47,15 @@ const currentCategoryPath = computed(() => {
 
 const parentCategory = computed(() => breadcrumbGetters.getParent(props.breadcrumbs ?? []));
 
+const parentCategoryHref = computed(() => {
+  const url = parentCategory.value ? breadcrumbGetters.getUrl(parentCategory.value) : '';
+  return url ? resolvePathTrailingSlash(url) : '';
+});
+
 const buildSubcategoryHref = (subcategory: SubCategory): string => {
   const base = (currentCategoryPath.value ?? '').replace(/\/$/, '');
   const slug = categoryGetters.getSubCategoryNameUrl(subcategory);
-  return `${base}/${slug}`;
+  const path = `${base}/${slug}`;
+  return resolvePathTrailingSlash(path);
 };
 </script>
