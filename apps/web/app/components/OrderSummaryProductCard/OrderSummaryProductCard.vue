@@ -7,7 +7,7 @@
     <UiLink
       class="relative overflow-hidden rounded-md w-[100px] @sm:w-[176px] mr-4"
       :tag="NuxtLink"
-      :to="buildProductPath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
+      :to="localePath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
     >
       <div class="flex items-center justify-center">
         <NuxtImg
@@ -33,7 +33,7 @@
     <div class="flex flex-col min-w-[180px] flex-1">
       <UiLink
         :tag="NuxtLink"
-        :to="buildProductPath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
+        :to="localePath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
         variant="secondary"
         class="no-underline typography-text-sm @sm:typography-text-lg"
       >
@@ -78,7 +78,7 @@
           <UiLink
             v-if="productBundleGetters.isItemBundleSalableAndActive(item)"
             :tag="NuxtLink"
-            :to="buildProductPath(productBundleGetters.getBundleItemUrl(item))"
+            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
           >
@@ -128,7 +128,7 @@ import type { OrderSummaryProductCardProps } from './types';
 
 const { formatWithSymbol } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
-const { buildProductPath } = useLocalization();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 const img = ref();
 const imageLoaded = ref(false);

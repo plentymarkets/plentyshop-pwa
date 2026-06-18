@@ -282,20 +282,18 @@ const isGlobalProductCategoryTemplate = computed(() => {
   return `/${slug}` === paths.globalItemCategory;
 });
 
-const { buildProductPath } = useLocalization();
+const localePath = useLocalizedPath();
 
 const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
-    return buildProductPath(paths.globalItemDetails);
+    return localePath(paths.globalItemDetails);
   }
   if (useCallisto().isEnabled) {
-    return buildProductPath(
-      `/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`,
-    );
+    return localePath(`/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`);
   }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
   const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product.value);
-  return buildProductPath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
+  return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
 });
 
 const priority = computed(() => !props.isFromSlider && (props.index ?? 0) < 5);

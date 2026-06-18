@@ -32,7 +32,7 @@ const { setCategoriesPageMeta, getCategoryRobotsContent } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
-const { buildCategoryLanguagePath } = useLocalization();
+const localePath = useLocalizedPath();
 const isItemCategoryPage = computed(() => productsCatalog.value.category?.type === 'item');
 
 const identifier = computed(() =>
@@ -83,7 +83,7 @@ watch(
   () => locale.value,
   (changedLocale: string) => {
     router.push({
-      path: buildCategoryLanguagePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
+      path: localePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
     });
   },

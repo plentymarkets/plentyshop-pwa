@@ -73,27 +73,10 @@ describe('useLocalization', () => {
     expect(getCategoryUrlFromRoute('/en/category/subcategory')).toBe('/category/subcategory');
   });
 
-  it('should apply trailing slash resolver when building category language path', async () => {
-    const { useLocalization } = await import('../useLocalization');
+  it('should apply localization and trailing slash', async () => {
+    const localePath = useLocalizedPath();
 
-    const { buildCategoryLanguagePath } = useLocalization();
-
-    expect(buildCategoryLanguagePath('/category')).toBe('/category/');
-  });
-
-  it('should apply trailing slash resolver when building product language path', async () => {
-    const { useLocalization } = await import('../useLocalization');
-
-    const { buildProductLanguagePath } = useLocalization();
-
-    expect(buildProductLanguagePath('/product')).toBe('/product/');
-  });
-
-  it('should apply localization and trailing slash when building product path', async () => {
-    const { useLocalization } = await import('../useLocalization');
-
-    const { buildProductPath } = useLocalization();
-
-    expect(buildProductPath('/product-name_123')).toBe('/product-name_123/');
+    expect(localePath('/product')).toBe('/product/');
+    expect(localePath('/product-name_123')).toBe('/product-name_123/');
   });
 });

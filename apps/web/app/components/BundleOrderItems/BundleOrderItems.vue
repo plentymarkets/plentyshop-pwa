@@ -4,7 +4,7 @@
       <UiLink
         v-if="isLinkable(item)"
         :tag="NuxtLink"
-        :to="buildProductPath(productBundleGetters.getBundleItemUrl(item))"
+        :to="localePath(productBundleGetters.getBundleItemUrl(item))"
         class="flex-none"
       >
         <NuxtImg
@@ -31,7 +31,7 @@
           <UiLink
             v-if="isLinkable(item)"
             :tag="NuxtLink"
-            :to="buildProductPath(productBundleGetters.getBundleItemUrl(item))"
+            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
           >
             {{ productBundleGetters.getBundleItemName(item) }}
@@ -56,7 +56,7 @@ import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types'
 const { product } = defineProps<BundleOrderItemsProps>();
 const NuxtLink = resolveComponent('NuxtLink');
 const { addModernImageExtension } = useModernImage();
-const { buildProductPath } = useLocalization();
+const localePath = useLocalizedPath();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (

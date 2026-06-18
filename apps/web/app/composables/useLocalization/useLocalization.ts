@@ -8,46 +8,7 @@ export const useLocalization = createSharedComposable(() => {
   const { resolvePathTrailingSlash } = useUrlTrailingSlash();
   const localePath = useLocalizedPath();
 
-  const buildLocalizedPath = (path: string) => {
-    return localePath(path);
-  };
-
   const toggle = () => (isOpen.value = !isOpen.value);
-
-  /**
-   * @description Function for wrapping the category language path.
-   *
-   * @param path category path that is provided by the category response to redirect after a language switch
-   * @returns category path that is then navigated to
-   * @example buildCategoryLanguagePath('')
-   */
-  const buildCategoryLanguagePath = (path: string) => {
-    return buildLocalizedPath(path);
-  };
-
-  /**
-   * @description Function for wrapping the product language path.
-   *
-   * @param path product path that is provided by the product response to redirect after a language switch
-   * @returns product path that is then navigated to
-   * @example buildProductLanguagePath('')
-   */
-  const buildProductLanguagePath = (path: string) => {
-    const localizedPath = buildLocalizedPath(path);
-
-    return localizedPath;
-  };
-
-  /**
-   * @description Function for building a product path with localization and trailing slash handling.
-   *
-   * @param path product path
-   * @returns localized product path with trailing slash applied
-   * @example buildProductPath('/product-name_123')
-   */
-  const buildProductPath = (path: string) => {
-    return buildLocalizedPath(path);
-  };
 
   /**
    * @description Used to generate the category path inside the mega menu and other navigation trees.
@@ -162,9 +123,6 @@ export const useLocalization = createSharedComposable(() => {
   return {
     getCategoryUrlFromRoute,
     buildCategoryMenuLink,
-    buildCategoryLanguagePath,
-    buildProductLanguagePath,
-    buildProductPath,
     isOpen,
     toggle,
     switchLocale,
