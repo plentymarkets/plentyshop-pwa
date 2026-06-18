@@ -78,7 +78,7 @@
           <UiLink
             v-if="productBundleGetters.isItemBundleSalableAndActive(item)"
             :tag="NuxtLink"
-            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+            :to="buildProductPath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
           >
@@ -128,7 +128,6 @@ import type { OrderSummaryProductCardProps } from './types';
 
 const { formatWithSymbol } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
-const localePath = useLocalePath();
 const { buildProductPath } = useLocalization();
 const NuxtLink = resolveComponent('NuxtLink');
 const img = ref();
