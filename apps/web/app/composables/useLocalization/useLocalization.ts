@@ -46,8 +46,7 @@ export const useLocalization = createSharedComposable(() => {
    * @example buildProductPath('/product-name_123')
    */
   const buildProductPath = (path: string) => {
-    const localizedPath = buildLocalizedPath(path);
-    return resolvePathTrailingSlash(localizedPath);
+    return buildLocalizedPath(path);
   };
 
   /**

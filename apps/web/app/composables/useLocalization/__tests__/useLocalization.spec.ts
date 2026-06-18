@@ -88,4 +88,12 @@ describe('useLocalization', () => {
 
     expect(buildProductLanguagePath('/product')).toBe('/product/');
   });
+
+  it('should apply localization and trailing slash when building product path', async () => {
+    const { useLocalization } = await import('../useLocalization');
+
+    const { buildProductPath } = useLocalization();
+
+    expect(buildProductPath('/product-name_123')).toBe('/product-name_123/');
+  });
 });

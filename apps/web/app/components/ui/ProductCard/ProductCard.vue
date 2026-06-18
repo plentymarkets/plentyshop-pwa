@@ -219,7 +219,6 @@ const product = computed(() => props.product);
 const configuration = computed(() => props.configuration || ({} as ItemGridContent));
 
 const { addModernImageExtension } = useModernImage();
-const localePath = useLocalePath();
 const { format } = usePriceFormatter();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
@@ -287,7 +286,7 @@ const { buildProductPath } = useLocalization();
 
 const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
-    return paths.globalItemDetails;
+    return buildProductPath(paths.globalItemDetails);
   }
   if (useCallisto().isEnabled) {
     return buildProductPath(
