@@ -39,6 +39,18 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
+   * @description Function for building a product path with localization and trailing slash handling.
+   *
+   * @param path product path
+   * @returns localized product path with trailing slash applied
+   * @example buildProductPath('/product-name_123')
+   */
+  const buildProductPath = (path: string) => {
+    const localizedPath = buildLocalizedPath(path);
+    return resolvePathTrailingSlash(localizedPath);
+  };
+
+  /**
    * @description Used to generate the category path inside the mega menu and other navigation trees.
    *
    * @param category
@@ -153,6 +165,7 @@ export const useLocalization = createSharedComposable(() => {
     buildCategoryMenuLink,
     buildCategoryLanguagePath,
     buildProductLanguagePath,
+    buildProductPath,
     isOpen,
     toggle,
     switchLocale,
