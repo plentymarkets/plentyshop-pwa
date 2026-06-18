@@ -52,7 +52,7 @@ import type { BannerProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
