@@ -14,7 +14,7 @@
     </UiButton>
   </SfTooltip>
 
-  <Teleport v-if="isOpen" to="body">
+  <Teleport v-if="isOpen" to="#app-container">
     <UiModal
       v-model="isOpen"
       data-testid="notify-me-modal"
