@@ -70,7 +70,7 @@ import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const dropdownOpened = ref(false);
 const close = () => {
   dropdownOpened.value = false;

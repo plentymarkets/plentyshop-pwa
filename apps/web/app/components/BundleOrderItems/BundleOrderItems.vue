@@ -55,8 +55,8 @@ import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types'
 
 const { product } = defineProps<BundleOrderItemsProps>();
 const NuxtLink = resolveComponent('NuxtLink');
-const localePath = useLocalePath();
 const { addModernImageExtension } = useModernImage();
+const localePath = useLocalizedPath();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (

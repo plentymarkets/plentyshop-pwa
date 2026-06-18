@@ -103,7 +103,7 @@ const { login, loading } = useCustomer();
 const { send } = useNotification();
 const { data: cart } = useCart();
 const { loadConfig, loadedConfig, isAvailable } = usePayPal();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 
 onBeforeMount(async () => {

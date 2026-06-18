@@ -40,13 +40,13 @@ const props = defineProps<{
 
 const route = useRoute();
 const { productParams } = createProductParams(route.params);
-const { buildProductLanguagePath } = useLocalization();
+const localePath = useLocalizedPath();
 
 const selectedUnit = ref(productParams?.variationId?.toString() || '');
 
 function onChange(value: number) {
   navigateTo({
-    path: buildProductLanguagePath(
+    path: localePath(
       `/${productGetters.getUrlPath(props.product)}_${productGetters.getItemId(props.product)}_${value}`,
     ),
     query: route.query,
