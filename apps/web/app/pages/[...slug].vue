@@ -6,7 +6,6 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-max" size="2xl" />
-
     <EditableBlocks
       :identifier="identifier"
       :type="'category'"
@@ -29,7 +28,7 @@ const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const { setItemListMetaData } = useStructuredData();
-const { setCategoriesPageMeta } = useUrlPageMeta();
+const { setCategoriesPageMeta, getCategoryRobotsContent } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
@@ -108,9 +107,7 @@ const keywordsContent = computed((): string =>
     : (process.env.METAKEYWORDS ?? ''),
 );
 
-const robotsContent = computed((): string =>
-  productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
-);
+const robotsContent = computed(() => getCategoryRobotsContent(productsCatalog));
 
 watch(
   () => route.query,
@@ -133,7 +130,7 @@ useHead({
   meta: [
     { name: 'description', content: descriptionContent },
     { name: 'keywords', content: keywordsContent },
-    { name: 'robots', content: robotsContent },
+    { name: 'robots', content: robotsContent.value },
   ],
 });
 </script>

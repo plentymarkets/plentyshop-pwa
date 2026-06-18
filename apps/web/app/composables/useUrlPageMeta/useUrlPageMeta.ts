@@ -1,5 +1,11 @@
-import type { UseUrlPageMetaReturn, StaticPageMeta, CategoriesPageMeta, UseUrlPageMetaState } from './types';
-import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type {
+  UseUrlPageMetaReturn,
+  StaticPageMeta,
+  CategoriesPageMeta,
+  GetCategoryRobotsContent,
+  UseUrlPageMetaState,
+} from './types';
+import { categoryGetters, type Facet, type FacetSearchCriteria } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 
 /**
@@ -167,9 +173,38 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     state.value.loading = false;
   };
 
+  /**
+   * @description Computed robots meta content for category pages. Returns `noindex, nofollow`
+   * when the current page number exceeds the configured max indexed page; otherwise falls back
+   * to the category's own robots setting.
+   * @returns ComputedRef<string>
+   * @example
+   * ``` ts
+   * const robotsContent = getCategoryRobotsContent(productsCatalog);
+   * ```
+   */
+  const getCategoryRobotsContent: GetCategoryRobotsContent = (productsCatalog) => {
+    const route = useRoute();
+    const { getSetting: getSeoCategoryRobotsNoIndex } = useSiteSettings('seoCategoryRobotsNoIndex');
+    const currentPage = computed(() => Number(route.query.page as string) || 1);
+    const maxIndexedPage = computed(() => Number(getSeoCategoryRobotsNoIndex()) || 0);
+
+    return computed((): string => {
+      if (!productsCatalog.value?.category) {
+        return '';
+      }
+
+      if (currentPage.value >= maxIndexedPage.value + 1) {
+        return 'noindex, nofollow';
+      }
+      return categoryGetters.getCategoryRobots(productsCatalog.value.category);
+    });
+  };
+
   return {
     setStaticPageMeta,
     setCategoriesPageMeta,
+    getCategoryRobotsContent,
     ...toRefs(state.value),
   };
 };
