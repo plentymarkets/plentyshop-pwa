@@ -22,9 +22,7 @@ const externalContributions = import.meta.glob<{ default?: BlocksListContributio
   { eager: true },
 );
 
-const collectFromGlob = (
-  globResult: Record<string, { default?: BlocksListContribution }>,
-): BlocksListContribution[] =>
+const collectFromGlob = (globResult: Record<string, { default?: BlocksListContribution }>): BlocksListContribution[] =>
   Object.entries(globResult)
     .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
     .map(([, module]) => module.default)

@@ -10,10 +10,9 @@ import type { BlocksList, BlocksListContribution } from '~/composables/useBlocks
  * Defaults are the BASE on top of which module contributions are layered.
  * They are not contributions themselves.
  */
-const defaultModules = import.meta.glob<{ default: BlocksListContribution }>(
-  '~/utils/blocks/defaultblocks/*.ts',
-  { eager: true },
-);
+const defaultModules = import.meta.glob<{ default: BlocksListContribution }>('~/utils/blocks/defaultblocks/*.ts', {
+  eager: true,
+});
 
 export const blocksListDefaults: BlocksList = Object.entries(defaultModules)
   .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
