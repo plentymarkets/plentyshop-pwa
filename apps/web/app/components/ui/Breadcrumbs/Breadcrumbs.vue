@@ -31,7 +31,7 @@
               <li v-for="item in breadcrumbs" :key="item.name" class="py-2 last-of-type:hidden">
                 <UiLink
                   :tag="NuxtLink"
-                  :to="buildPath(item.link)"
+                  :to="buildProductPath(item.link)"
                   variant="secondary"
                   class="leading-5 no-underline text-inherit hover:underline active:underline whitespace-nowrap outline-secondary-600"
                 >
@@ -50,7 +50,7 @@
         <UiLink
           v-if="index < breadcrumbs.length - 1"
           :tag="NuxtLink"
-          :to="buildPath(item.link)"
+          :to="buildProductPath(item.link)"
           variant="secondary"
           class="leading-5 no-underline hover:underline active:underline whitespace-nowrap outline-secondary-600 text-inherit"
         >
@@ -70,7 +70,7 @@ import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();
 
-const { buildPath } = useLocalization();
+const { buildProductPath } = useLocalization();
 const dropdownOpened = ref(false);
 const close = () => {
   dropdownOpened.value = false;

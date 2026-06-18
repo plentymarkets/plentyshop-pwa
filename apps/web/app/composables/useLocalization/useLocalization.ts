@@ -165,7 +165,6 @@ export const useLocalization = createSharedComposable(() => {
     buildCategoryLanguagePath,
     buildProductLanguagePath,
     buildProductPath,
-    buildPath: buildProductPath,
     isOpen,
     toggle,
     switchLocale,

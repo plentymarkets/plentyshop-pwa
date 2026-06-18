@@ -7,7 +7,7 @@
     <UiLink
       class="relative overflow-hidden rounded-md w-[100px] @sm:w-[176px] mr-4"
       :tag="NuxtLink"
-      :to="buildPath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
+      :to="buildProductPath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
     >
       <div class="flex items-center justify-center">
         <NuxtImg
@@ -33,7 +33,7 @@
     <div class="flex flex-col min-w-[180px] flex-1">
       <UiLink
         :tag="NuxtLink"
-        :to="buildPath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
+        :to="buildProductPath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
         variant="secondary"
         class="no-underline typography-text-sm @sm:typography-text-lg"
       >
@@ -129,7 +129,7 @@ import type { OrderSummaryProductCardProps } from './types';
 const { formatWithSymbol } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
-const { buildPath } = useLocalization();
+const { buildProductPath } = useLocalization();
 const NuxtLink = resolveComponent('NuxtLink');
 const img = ref();
 const imageLoaded = ref(false);
