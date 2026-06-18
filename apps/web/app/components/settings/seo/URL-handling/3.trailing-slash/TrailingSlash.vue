@@ -10,6 +10,7 @@
       :options="trailingSlashOptions"
       label="label"
       track-by="value"
+      :allow-empty="false"
       class="cursor-pointer"
       select-label=""
     />
@@ -35,10 +36,10 @@ const trailingSlashOptions = [
 
 const selectedTrailingSlashOption = computed({
   get: () => {
-    return trailingSlashOptions.find((o) => o.value === getSetting().toString());
+    return trailingSlashOptions.find((o) => o.value === getSetting().toString()) || trailingSlashOptions[0];
   },
   set: (option) => {
-    updateSetting(option?.value ?? '');
+    updateSetting(option?.value ?? NO_CHANGE.toString());
   },
 });
 </script>
