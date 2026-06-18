@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Dependency review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           license-check: true
           deny-licenses: 'AGPL-1.0-or-later, GPL-1.0-or-later, LGPL-2.0-or-later, NGPL'

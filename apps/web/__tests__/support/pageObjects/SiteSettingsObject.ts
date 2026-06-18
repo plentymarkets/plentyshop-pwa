@@ -108,6 +108,46 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('editor-bundleSettings-select');
   }
 
+  assertGroupsScrollable() {
+    cy.getByTestId('site-settings-scroll-container').first().as('groupsScrollContainer');
+
+    cy.get('@groupsScrollContainer')
+      .find('[data-testid$="-section"] button')
+      .each(($btn) => {
+        cy.wrap($btn).click({ force: true });
+      });
+
+    cy.get('@groupsScrollContainer').then(($container) => {
+      const element = $container.get(0);
+      expect(element).to.not.equal(undefined);
+
+      expect(element.clientHeight).to.be.greaterThan(0);
+
+      const hasOverflow = element.scrollHeight > element.clientHeight;
+
+      if (hasOverflow) {
+        cy.wrap(element).scrollTo('bottom');
+      }
+    });
+
+    cy.getByTestId('site-settings-drawer').then(($drawer) => {
+      const drawerElement = $drawer.get(0);
+      expect(drawerElement).to.not.equal(undefined);
+      const drawerRect = drawerElement.getBoundingClientRect();
+
+      cy.get('@groupsScrollContainer').then(($container) => {
+        const containerElement = $container.get(0);
+        expect(containerElement).to.not.equal(undefined);
+
+        const containerRect = containerElement.getBoundingClientRect();
+
+        expect(containerRect.bottom).to.be.at.most(drawerRect.bottom);
+      });
+    });
+
+    return this;
+  }
+
   back() {
     this.backButton.should('exist').click({ force: true });
     return this;

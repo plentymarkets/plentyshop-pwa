@@ -1,27 +1,25 @@
-const URL_TRAILING_SLASH_NO_CHANGE = 0;
-const URL_TRAILING_SLASH_NEVER = 1;
-const URL_TRAILING_SLASH_ALWAYS = 2;
+import { NO_CHANGE, NEVER, ALWAYS } from '~/utils/urlTrailingSlashConstants';
 
 const normalizeSetting = (value: unknown): number => {
   const setting = Number(value);
 
-  if (setting === URL_TRAILING_SLASH_NEVER || setting === URL_TRAILING_SLASH_ALWAYS) {
+  if (setting === NEVER || setting === ALWAYS) {
     return setting;
   }
 
-  return URL_TRAILING_SLASH_NO_CHANGE;
+  return NO_CHANGE;
 };
 
 const applyTrailingSlashToRelativePath = (path: string, setting: number): string => {
-  if (!path || setting === URL_TRAILING_SLASH_NO_CHANGE) return path;
+  if (!path || setting === NO_CHANGE) return path;
 
   const url = new URL(path, 'http://localhost');
 
-  if (setting === URL_TRAILING_SLASH_ALWAYS && !url.pathname.endsWith('/')) {
+  if (setting === ALWAYS && !url.pathname.endsWith('/')) {
     url.pathname = `${url.pathname}/`;
   }
 
-  if (setting === URL_TRAILING_SLASH_NEVER && url.pathname !== '/' && url.pathname.endsWith('/')) {
+  if (setting === NEVER && url.pathname !== '/' && url.pathname.endsWith('/')) {
     url.pathname = url.pathname.slice(0, -1);
   }
 
@@ -29,16 +27,16 @@ const applyTrailingSlashToRelativePath = (path: string, setting: number): string
 };
 
 const applyTrailingSlashToAbsoluteUrl = (url: string, setting: number): string => {
-  if (!url || setting === URL_TRAILING_SLASH_NO_CHANGE) return url;
+  if (!url || setting === NO_CHANGE) return url;
 
   try {
     const parsed = new URL(url);
 
-    if (setting === URL_TRAILING_SLASH_ALWAYS && !parsed.pathname.endsWith('/')) {
+    if (setting === ALWAYS && !parsed.pathname.endsWith('/')) {
       parsed.pathname = `${parsed.pathname}/`;
     }
 
-    if (setting === URL_TRAILING_SLASH_NEVER && parsed.pathname !== '/' && parsed.pathname.endsWith('/')) {
+    if (setting === NEVER && parsed.pathname !== '/' && parsed.pathname.endsWith('/')) {
       parsed.pathname = parsed.pathname.slice(0, -1);
     }
 

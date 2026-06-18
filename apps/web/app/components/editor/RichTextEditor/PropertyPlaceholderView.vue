@@ -23,9 +23,9 @@ const tokenLabel = computed(() => getPropertyPlaceholderDisplayLabel(props.node.
   align-items: center;
   font-family: monospace;
   font-size: 0.8em;
-  background: #f3e8ff;
+  background: #1750aa;
   border: 1px solid #d8b4fe;
-  color: #7e22ce;
+  color: #ffffff;
   border-radius: 4px;
   padding: 1px 5px;
   cursor: default;
