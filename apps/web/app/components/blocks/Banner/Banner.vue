@@ -35,9 +35,7 @@
           v-if="banner.button && banner.button.label && banner.button.link"
           class="flex flex-col @md:flex-row gap-4 mt-6"
           :tag="NuxtLink"
-          :to="
-            isInternalLink(banner.button.link, useRouter()) ? localePath(banner.button.link ?? '') : banner.button.link
-          "
+          :to="buttonLink"
           :variant="banner.button.variant ?? 'primary'"
           size="lg"
           :data-testid="'banner-button-' + meta.uuid"
@@ -55,6 +53,7 @@ import type { BannerProps } from './types';
 const NuxtLink = resolveComponent('NuxtLink');
 
 const localePath = useLocalizedPath();
+const router = useRouter();
 
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
@@ -65,6 +64,12 @@ const banner = computed(() => props.content);
 const { hexToRgba, getImageHeight, getTextAlignment, getContentPosition } = useBlockContentHelper();
 
 const rteAlignment = computed(() => banner.value.button?.alignment);
+
+const buttonLink = computed(() => {
+  const link = banner.value.button?.link;
+  if (!link) return '';
+  return isInternalLink(link, router) ? localePath(link) : link;
+});
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
