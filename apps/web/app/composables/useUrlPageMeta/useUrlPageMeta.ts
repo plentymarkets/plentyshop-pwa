@@ -193,7 +193,8 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
       if (!productsCatalog.value?.category) {
         return '';
       }
-      if (currentPage.value > maxIndexedPage.value + 1) {
+
+      if (currentPage.value >= maxIndexedPage.value + 1) {
         return 'noindex, nofollow';
       }
       return categoryGetters.getCategoryRobots(productsCatalog.value.category);
