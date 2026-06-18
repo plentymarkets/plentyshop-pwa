@@ -16,6 +16,12 @@ import {
   setupNuxtMocks,
 } from './useBlocksList.mocks';
 
+// Isolate tests from real module contributions discovered via Vite glob.
+// Tests that need contributions can re-mock this module locally.
+vi.mock('~/utils/blocks/block-contributions', () => ({
+  blocksListContributions: [],
+}));
+
 setupFetchMock();
 setupNuxtMocks();
 mockNuxtImport('useBlockTemplates', () => () => ({

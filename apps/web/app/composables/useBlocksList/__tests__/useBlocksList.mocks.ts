@@ -1,6 +1,6 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlocksList, BlockListCategory } from '../types';
+import type { BlocksList, BlockListCategory, BlockTemplate } from '../types';
 
 export const mockCategoryTemplateBlocks: Block[] = [
   {
@@ -24,16 +24,16 @@ export const mockCategoryTemplateBlocks: Block[] = [
   },
 ];
 
-export const mockExpectedEnglishTemplate: Block = {
+export const mockExpectedEnglishTemplate: BlockTemplate = {
   name: 'HeroBanner',
-  type: 'banner',
+  type: 'content',
   meta: { uuid: 'banner-uuid-1' },
   content: { title: 'Welcome' },
 };
 
-export const mockExpectedGermanTemplate: Block = {
+export const mockExpectedGermanTemplate: BlockTemplate = {
   name: 'HeroBanner',
-  type: 'banner',
+  type: 'content',
   meta: { uuid: 'banner-uuid-1' },
   content: { title: 'Willkommen' },
 };

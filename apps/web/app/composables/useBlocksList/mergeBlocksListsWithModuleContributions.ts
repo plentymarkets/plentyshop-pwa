@@ -1,23 +1,17 @@
-import type { BlocksList, BlocksListContribution } from './types';
-
-const moduleContributions = import.meta.glob<{ default?: BlocksListContribution }>(
-  '~~/modules/*/runtime/components/blocks/**/blocks-list.json',
-  { eager: true },
-);
-
-const sortedContributions = Object.entries(moduleContributions)
-  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
-  .map(([, module]) => module.default)
-  .filter((contribution): contribution is BlocksListContribution => Boolean(contribution));
+import type { BlocksList } from './types';
+import { blocksListContributions } from '~/utils/blocks/block-contributions';
 
 /**
  * Merges module-contributed block list categories into the base list.
  * For existing categories, variations are appended; new categories are added as-is.
+ *
+ * Contributions are discovered centrally in
+ * `~/utils/blocks/block-contributions.ts` and cover both internal and external modules.
  */
 export const mergeBlocksListsWithModuleContributions = (baseBlocksLists: BlocksList): BlocksList => {
   const merged = deepClone(baseBlocksLists);
 
-  for (const contribution of sortedContributions) {
+  for (const contribution of blocksListContributions) {
     for (const [key, category] of Object.entries(contribution)) {
       if (!category) continue;
 
