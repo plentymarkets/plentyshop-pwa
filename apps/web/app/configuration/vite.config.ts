@@ -48,16 +48,17 @@ export const FailOnForbiddenDataInPublicFolderPlugin = {
 // ─────────────────────────────────────────────────────────────────────────────
 // ValidateBlockContributionsPlugin
 // ─────────────────────────────────────────────────────────────────────────────
-// Validates block contributions from modules at build time so structural
-// issues fail fast in CI instead of producing silent UX bugs at runtime.
+// Verifies the wiring between block-list contributions (TS) and block
+// components (.vue). Schema correctness is enforced by `satisfies
+// BlocksListContribution` at compile time, so this plugin only handles checks
+// that TypeScript cannot:
 //
-// Hard checks (all opt-in via FAIL_BUILD_ON_INVALID_BLOCK_CONTRIBUTIONS):
-//   1. Each module `blocks-list.json` matches the expected BlocksList shape.
-//   2. Every `blockName` / `template.{en,de}.name` referenced from a
-//      `blocks-list.json` resolves to a `.vue` file in core, modules, or
-//      customer (node_modules).
-//   3. No `<BlockName>.vue` collides across core/modules/customer unless the
+//   1. Every `blockName` referenced from a contribution (in-house defaults,
+//      internal modules, external modules) resolves to a `.vue` file.
+//   2. No `<BlockName>.vue` collides across core/modules/customer unless the
 //      overriding file declares `// @overrides-core`.
+//
+// Both checks are opt-in via FAIL_BUILD_ON_INVALID_BLOCK_CONTRIBUTIONS.
 
 const BLOCKS_OVERRIDE_MARKER = '@overrides-core';
 
@@ -135,73 +136,19 @@ const collectBlockFiles = (webRoot: string): BlockFile[] => {
   return out;
 };
 
-const isPlainObject = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
-
-const validateContributionSchema = (origin: string, json: unknown): string[] => {
-  if (!isPlainObject(json)) return [`${origin}: top-level must be an object`];
-
-  const errors: string[] = [];
-  for (const [key, category] of Object.entries(json)) {
-    const cp = `${origin} > "${key}"`;
-    if (!isPlainObject(category)) {
-      errors.push(`${cp}: must be an object`);
-      continue;
-    }
-    if (typeof category.title !== 'string') errors.push(`${cp}.title must be a string`);
-    if (typeof category.blockName !== 'string') errors.push(`${cp}.blockName must be a string`);
-    if (typeof category.category !== 'string') errors.push(`${cp}.category must be a string`);
-    if (!Array.isArray(category.variations)) {
-      errors.push(`${cp}.variations must be an array`);
-      continue;
-    }
-    category.variations.forEach((variation, i) => {
-      const vp = `${cp}.variations[${i}]`;
-      if (!isPlainObject(variation)) {
-        errors.push(`${vp}: must be an object`);
-        return;
-      }
-      if (typeof variation.image !== 'string') errors.push(`${vp}.image must be a string`);
-      if (typeof variation.title !== 'string') errors.push(`${vp}.title must be a string`);
-      if (!isPlainObject(variation.template)) {
-        errors.push(`${vp}.template must be an object`);
-        return;
-      }
-      for (const lang of ['en', 'de'] as const) {
-        const tpl = variation.template[lang];
-        if (!isPlainObject(tpl)) {
-          errors.push(`${vp}.template.${lang} must be an object`);
-          continue;
-        }
-        if (typeof tpl.name !== 'string') errors.push(`${vp}.template.${lang}.name must be a string`);
-      }
-    });
+/**
+ * Extracts referenced block component names (`blockName: "Foo"`) from a TS
+ * contribution source. Schema correctness is enforced by `satisfies
+ * BlocksListContribution` at compile time, so a regex sweep over the source
+ * text is sufficient and intentionally pragmatic.
+ */
+const extractBlockNamesFromSource = (source: string): string[] => {
+  const out: string[] = [];
+  const re = /\bblockName\s*:\s*["']([^"']+)["']/g;
+  for (const match of source.matchAll(re)) {
+    if (match[1]) out.push(match[1]);
   }
-  return errors;
-};
-
-const collectReferencedBlockNames = (
-  origin: string,
-  contribution: Record<string, unknown>,
-): Array<{ name: string; location: string }> => {
-  const refs: Array<{ name: string; location: string }> = [];
-  for (const [key, category] of Object.entries(contribution)) {
-    if (!isPlainObject(category)) continue;
-    if (typeof category.blockName === 'string') {
-      refs.push({ name: category.blockName, location: `${origin} > "${key}".blockName` });
-    }
-    if (!Array.isArray(category.variations)) continue;
-    category.variations.forEach((variation, i) => {
-      if (!isPlainObject(variation) || !isPlainObject(variation.template)) return;
-      for (const lang of ['en', 'de'] as const) {
-        const tpl = variation.template[lang];
-        if (isPlainObject(tpl) && typeof tpl.name === 'string') {
-          refs.push({ name: tpl.name, location: `${origin} > "${key}".variations[${i}].template.${lang}.name` });
-        }
-      }
-    });
-  }
-  return refs;
+  return out;
 };
 
 const fileContainsMarker = (path: string): boolean => {
@@ -225,34 +172,36 @@ export const ValidateBlockContributionsPlugin = {
     const blockFiles = collectBlockFiles(webRoot);
     const knownBlockNames = new Set(blockFiles.map((b) => b.name));
 
-    // Check 1 + 2: schema + reference validation for each module contribution.
-    const contributions = collectFromPackageRoots(join(webRoot, 'modules'), 'runtime/components/blocks', (p) =>
-      p.endsWith('blocks-list.json'),
-    );
-    for (const { path, module } of contributions) {
-      const origin = `modules/${module}/${relative(join(webRoot, 'modules', module), path)}`;
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(readFileSync(path, 'utf8'));
-      } catch (error) {
-        errors.push(`${origin}: invalid JSON (${error instanceof Error ? error.message : String(error)})`);
-        continue;
-      }
-
-      const schemaErrors = validateContributionSchema(origin, parsed);
-      if (schemaErrors.length > 0) {
-        errors.push(...schemaErrors);
-        continue; // reference check is meaningless on malformed contributions
-      }
-
-      for (const { name, location } of collectReferencedBlockNames(origin, parsed as Record<string, unknown>)) {
+    // Check 1: every referenced `blockName` resolves to a `.vue` component.
+    // Source files: in-house defaults + internal/external module contributions.
+    const sources: Array<{ path: string; origin: string }> = [];
+    for (const path of walkDir(join(webRoot, 'app/utils/blocks/defaultblocks'), (p) => p.endsWith('.ts'))) {
+      sources.push({ path, origin: `defaults/${basename(path)}` });
+    }
+    for (const { path, module } of collectFromPackageRoots(join(webRoot, 'modules'), 'runtime/components/blocks', (p) =>
+      p.endsWith('blocks-list.ts'),
+    )) {
+      sources.push({ path, origin: `modules/${module}/${relative(join(webRoot, 'modules', module), path)}` });
+    }
+    for (const { path, module } of collectFromPackageRoots(
+      join(webRoot, 'node_modules'),
+      'runtime/components/blocks',
+      (p) => p.endsWith('blocks-list.ts'),
+    )) {
+      sources.push({
+        path,
+        origin: `node_modules/${module}/${relative(join(webRoot, 'node_modules', module), path)}`,
+      });
+    }
+    for (const { path, origin } of sources) {
+      for (const name of extractBlockNamesFromSource(readFileSync(path, 'utf8'))) {
         if (!knownBlockNames.has(name)) {
-          errors.push(`${location} references "${name}.vue" but no matching block component exists`);
+          errors.push(`${origin}: blockName "${name}" has no matching ${name}.vue component`);
         }
       }
     }
 
-    // Check 3: duplicate .vue files must declare the override marker.
+    // Check 2: duplicate `<BlockName>.vue` files must declare the override marker.
     const byName = new Map<string, BlockFile[]>();
     for (const file of blockFiles) {
       const list = byName.get(file.name) ?? [];

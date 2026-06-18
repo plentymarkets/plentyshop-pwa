@@ -13,7 +13,7 @@
         @click.stop
       >
         <AddBlockPopoverHeader />
-        <AddBlockPopoverBody :is-loading="isLoading" />
+        <AddBlockPopoverBody />
       </div>
     </template>
   </Teleport>
@@ -24,10 +24,8 @@ import type { PopoverPosition } from './types';
 import { clampHorizontal, placeBelow, placeAbove, fitsBelow, fitsAbove, arrowVerticalPosition } from './positioning';
 
 const { popoverState, closeAddBlockPopover } = useAddBlockPopover();
-const { blocksLists, getBlocksLists } = useBlocksList();
 
 const panelRef = ref<HTMLElement | null>(null);
-const isLoading = ref(false);
 const popoverPosition = ref<PopoverPosition>({
   left: 0,
   top: 0,
@@ -97,17 +95,9 @@ const handleWheel = (event: WheelEvent) => {
   event.preventDefault();
 };
 
-onMounted(async () => {
+onMounted(() => {
   document.addEventListener('keydown', handleKeydown);
   document.addEventListener('wheel', handleWheel, { passive: false });
-  if (Object.keys(blocksLists.value).length === 0) {
-    isLoading.value = true;
-    try {
-      await getBlocksLists();
-    } finally {
-      isLoading.value = false;
-    }
-  }
 });
 
 onUnmounted(() => {

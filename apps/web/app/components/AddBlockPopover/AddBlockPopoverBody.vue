@@ -1,10 +1,6 @@
 <template>
   <div class="flex-1 overflow-y-scroll px-3 py-3 scroll-area min-h-0">
-    <div v-if="isLoading" class="text-xs text-editor-text-placeholder text-center py-4">
-      {{ getEditorTranslation('loading') }}
-    </div>
-
-    <AddBlockPopoverEmptyState v-else-if="hasNoResults" />
+    <AddBlockPopoverEmptyState v-if="hasNoResults" />
 
     <template v-else>
       <AddBlockPopoverLayoutPresets />
@@ -17,8 +13,6 @@
 <script setup lang="ts">
 import { LAYOUT_PRESETS } from './constants';
 import type { BlockListCategory } from '~/composables/useBlocksList/types';
-
-defineProps<{ isLoading: boolean }>();
 
 const { activeFilters, searchQuery } = useAddBlockPopover();
 const { blocksLists, pageHasAccessToCategory } = useBlocksList();

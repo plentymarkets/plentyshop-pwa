@@ -61,14 +61,14 @@ export const mockBlockCategories = {
     title: 'Content Blocks',
     blockName: 'ContentBlock',
     category: 'content',
-    accessControl: 'content' as const,
+    accessControl: ['content'],
     variations: [],
   } as BlockListCategory,
   productBlocks: {
     title: 'Product Blocks',
     blockName: 'ProductBlock',
     category: 'product',
-    accessControl: 'product' as const,
+    accessControl: ['product'],
     variations: [],
   } as BlockListCategory,
   universalBlocks: {
@@ -83,17 +83,8 @@ export const mockCategory: BlockListCategory = {
   title: 'Test Category',
   blockName: 'TestBlock',
   category: 'test',
-  accessControl: 'content' as const,
+  accessControl: ['content'],
   variations: [],
-};
-
-export const mockSimpleBlocksList: BlocksList = {
-  banners: {
-    title: 'Banners',
-    blockName: 'Banner',
-    category: 'banners',
-    variations: [],
-  },
 };
 
 export const setupNuxtMocks = () => {
@@ -104,26 +95,4 @@ export const setupNuxtMocks = () => {
       },
     },
   }));
-};
-
-export const setupFetchMock = () => {
-  globalThis.fetch = vi.fn();
-};
-
-export const mockFetchSuccess = <T>(data: T) => {
-  vi.mocked(globalThis.fetch).mockResolvedValueOnce({
-    ok: true,
-    json: async () => data,
-  } as Response);
-};
-
-export const mockFetchError = (status: number) => {
-  vi.mocked(globalThis.fetch).mockResolvedValueOnce({
-    ok: false,
-    status,
-  } as Response);
-};
-
-export const mockFetchNetworkError = (message: string) => {
-  vi.mocked(globalThis.fetch).mockRejectedValueOnce(new Error(message));
 };

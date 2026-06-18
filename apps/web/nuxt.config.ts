@@ -212,7 +212,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: null,
       globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
-      globIgnores: ['manifest**.webmanifest', '_nuxt-plenty/editor/blocksLists.json'],
+      globIgnores: ['manifest**.webmanifest'],
       additionalManifestEntries: [
         {
           url: '/offline',

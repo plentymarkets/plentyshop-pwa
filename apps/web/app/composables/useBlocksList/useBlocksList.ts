@@ -1,12 +1,19 @@
+import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksList, BlocksListContext, BlockListCategory, UseBlocksListReturn } from './types';
 import { mergeBlocksListsWithModuleContributions } from './mergeBlocksListsWithModuleContributions';
+import { blocksListDefaults } from '~/utils/blocks/block-defaults';
 
-const blocksLists = ref<BlocksList>({});
+/**
+ * Block lists are assembled eagerly at module load time from the in-house
+ * defaults (`public/_nuxt-plenty/editor/blocks/*.json`) plus all module
+ * contributions discovered via Vite globs. No runtime fetch.
+ */
+const blocksLists = ref<BlocksList>(mergeBlocksListsWithModuleContributions(blocksListDefaults));
 const blocksListContext = ref<BlocksListContext>('');
 
 /**
  * Composable for managing Editor content blocks lists and templates.
- * Fetches, validates, and provides access control for block templates that can be added to pages.
+ * Provides access control and template lookup for blocks that can be added to pages.
  *
  * @example
  * ```ts
@@ -26,41 +33,24 @@ export const useBlocksList: UseBlocksListReturn = () => {
   };
 
   /**
-   * Fetches the block lists from local assets.
-   * @throws Error if fetch fails
-   */
-  const getBlocksLists = async () => {
-    try {
-      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const baseBlocksLists = (await response.json()) as BlocksList;
-      blocksLists.value = mergeBlocksListsWithModuleContributions(baseBlocksLists);
-    } catch (error) {
-      throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  };
-
-  /**
    * Retrieves a block template variation by category, index, and language.
-   * Auto-fetches lists if needed. Returns a deep clone to prevent mutations.
+   * Returns a deep clone to prevent mutations on the shared template.
    * @param category - Block category name (e.g., 'banners', 'textCards')
    * @param variationIndex - Zero-based index of the variation
    * @param lang - Language code ('de' or 'en')
    * @throws Error if category or variation not found
    */
   const getBlockTemplateByLanguage = async (category: string, variationIndex: number, lang: string) => {
-    if (!blocksLists.value[category]) {
-      await getBlocksLists();
-    }
     const variationsInCategory = blocksLists.value[category];
     if (!variationsInCategory) throw new Error(`Category ${category} not found in blocksLists`);
     const variationToAdd = variationsInCategory.variations[variationIndex];
     if (!variationToAdd) throw new Error(`Variation ${variationIndex} not found in category ${category}`);
     const variationTemplate = variationToAdd.template;
 
-    return deepClone(lang === 'de' ? variationTemplate.de : variationTemplate.en);
+    // `BlockTemplate` is a stricter shape than the runtime `Block` (narrowed
+    // `type`, optional `visible`) — cast at the API boundary so consumers
+    // continue to receive the familiar `Block` type.
+    return deepClone(lang === 'de' ? variationTemplate.de : variationTemplate.en) as unknown as Block;
   };
 
   /**
@@ -80,7 +70,6 @@ export const useBlocksList: UseBlocksListReturn = () => {
     blocksLists,
     blocksListContext,
     setBlocksListContext,
-    getBlocksLists,
     getBlockTemplateByLanguage,
     pageHasAccessToCategory,
   };

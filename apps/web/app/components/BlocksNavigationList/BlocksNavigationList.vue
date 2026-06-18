@@ -53,9 +53,7 @@
 import { SfIconAdd, SfIconWarning, SfTooltip } from '@storefront-ui/vue';
 import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
 
-const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList();
-
-await getBlocksLists();
+const { blocksLists, pageHasAccessToCategory } = useBlocksList();
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();

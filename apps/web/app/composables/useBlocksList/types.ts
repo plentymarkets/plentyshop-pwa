@@ -3,6 +3,11 @@ import type { Block } from '@plentymarkets/shop-api';
 export type BlocksListContext = 'content' | 'productCategory' | 'product' | '';
 
 /**
+ * Non-empty page contexts that can be granted access to a block category.
+ */
+export type BlockListAccessContext = Exclude<BlocksListContext, ''>;
+
+/**
  * Free-form content payload of a content block. Each block component defines its
  * own concrete shape; module authors typed in their own `blocks-list.ts`.
  */
@@ -25,7 +30,7 @@ export interface BlockTemplate {
     isGlobalTemplate?: boolean;
   };
   configuration?: {
-    visible: boolean;
+    visible?: boolean;
     [key: string]: unknown;
   };
   parent_slot?: number;
@@ -47,7 +52,8 @@ export interface BlockTemplateVariation {
 
 export interface BlockListCategory {
   title: string;
-  accessControl?: BlocksListContext;
+  /** Page contexts in which this category is offered. Empty/missing => not shown. */
+  accessControl?: BlockListAccessContext[];
   blockName: string;
   category: string;
   variations: BlockTemplateVariation[];
@@ -63,7 +69,6 @@ export interface UseBlocksList {
   blocksLists: Ref<BlocksList>;
   blocksListContext: Ref<BlocksListContext>;
   setBlocksListContext: (context: BlocksListContext) => void;
-  getBlocksLists: () => Promise<void>;
   getBlockTemplateByLanguage: (category: string, variationIndex: number, lang: string) => Promise<Block>;
   pageHasAccessToCategory: (category: BlockListCategory) => boolean;
 }
