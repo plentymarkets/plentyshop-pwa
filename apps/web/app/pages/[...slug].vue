@@ -28,13 +28,12 @@ const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const { setItemListMetaData } = useStructuredData();
-const { setCategoriesPageMeta } = useUrlPageMeta();
+const { setCategoriesPageMeta, getCategoryRobotsContent } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
 const { buildCategoryLanguagePath } = useLocalization();
 const isItemCategoryPage = computed(() => productsCatalog.value.category?.type === 'item');
-const { getSetting: getSeoCategoryRobotsNoIndex } = useSiteSettings('seoCategoryRobotsNoIndex');
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
@@ -108,18 +107,7 @@ const keywordsContent = computed((): string =>
     : (process.env.METAKEYWORDS ?? ''),
 );
 
-const currentPage = computed(() => Number(route.query.page as string) || 1);
-const maxIndexedPage = computed(() => Number(getSeoCategoryRobotsNoIndex()) || 0);
-
-const robotsContent = computed((): string => {
-  if (!productsCatalog.value?.category) return '';
-
-  if (currentPage.value > maxIndexedPage.value + 1) {
-    return 'noindex, nofollow';
-  }
-
-  return categoryGetters.getCategoryRobots(productsCatalog.value.category);
-});
+const robotsContent = computed(() => getCategoryRobotsContent(productsCatalog));
 
 watch(
   () => route.query,
@@ -142,7 +130,7 @@ useHead({
   meta: [
     { name: 'description', content: descriptionContent },
     { name: 'keywords', content: keywordsContent },
-    { name: 'robots', content: robotsContent },
+    { name: 'robots', content: robotsContent.value },
   ],
 });
 </script>
