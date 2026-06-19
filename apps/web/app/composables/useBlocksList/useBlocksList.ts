@@ -63,7 +63,7 @@ export const useBlocksList: UseBlocksListReturn = () => {
    * @param category - Block category to check
    */
   const pageHasAccessToCategory = (category: BlockListCategory) => {
-    if (blocksListContext.value && category.accessControl) {
+    if (blocksListContext.value && category?.accessControl?.length) {
       return category.accessControl.includes(blocksListContext.value);
     }
 

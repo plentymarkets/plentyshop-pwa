@@ -13,7 +13,7 @@ export interface BlockTemplateVariation {
 
 export interface BlockListCategory {
   title: string;
-  accessControl?: BlocksListContext;
+  accessControl?: BlocksListContext[];
   blockName: string;
   category: string;
   variations: BlockTemplateVariation[];

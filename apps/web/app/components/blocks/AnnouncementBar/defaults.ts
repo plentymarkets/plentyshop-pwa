@@ -39,7 +39,7 @@ const createAnnouncementCarousel = (firstText: string, secondText: string): Bloc
 export const getBlocksList = (): BlocksList => ({
   header: {
     category: 'header',
-    accessControl: 'content',
+    accessControl: ['content'],
     title: 'Header',
     blockName: 'Header',
     variations: [
