@@ -56,27 +56,17 @@ export const buildBlocksListFromCore = (): BlocksList => {
   const result: BlocksList = {};
 
   const mergeBlocksList = (source: BlocksList) => {
-    Object.entries(source).forEach(([categoryKey, category]) => {
-      if (result[categoryKey]) {
-        result[categoryKey].variations = [...result[categoryKey].variations, ...category.variations];
+    Object.entries(source).forEach(([key, category]) => {
+      if (!result[key]) {
+        result[key] = category;
         return;
       }
 
-      result[categoryKey] = category;
+      result[key].variations = [...result[key].variations, ...category.variations];
     });
   };
 
-  modules.forEach((mod) => {
-    if (mod.getBlocksList) {
-      mergeBlocksList(mod.getBlocksList());
-    }
-    if (mod.createDefault) return [mod.createDefault()];
-  });
-
-  modules.forEach((mod) => {
-    if (mod.getBlocksList || !mod.createDefault) return;
-
-    const block = mod.createDefault() as Block;
+  const appendDefaultVariation = (block: Block) => {
     const key = block.name;
     const variation = {
       image: '',
@@ -87,17 +77,28 @@ export const buildBlocksListFromCore = (): BlocksList => {
       },
     };
 
-    if (result[key]) {
-      result[key].variations.push(variation);
+    if (!result[key]) {
+      result[key] = {
+        title: key,
+        blockName: key,
+        category: key,
+        variations: [variation],
+      };
       return;
     }
 
-    result[key] = {
-      title: key,
-      blockName: key,
-      category: key,
-      variations: [variation],
-    };
+    result[key].variations.push(variation);
+  };
+
+  modules.forEach((mod) => {
+    if (mod.getBlocksList) {
+      mergeBlocksList(mod.getBlocksList());
+      return;
+    }
+
+    if (mod.createDefault) {
+      appendDefaultVariation(mod.createDefault() as Block);
+    }
   });
 
   return result;
