@@ -27,7 +27,7 @@
       </div>
       <div class="w-full px-5 py-3 border-b border-neutral-200">
         <SfInput
-          ref="searchInputRef"
+          id="item-properties-search"
           v-model="searchQuery"
           :placeholder="getEditorTranslation('search-placeholder')"
           size="sm"
@@ -174,7 +174,6 @@ import {
   SfIconHelp,
   SfModal,
 } from '@storefront-ui/vue';
-import type { ComponentPublicInstance } from 'vue';
 import type { PropertyPlaceholderToken } from '~/composables/useRichTextEditor/types';
 
 const emit = defineEmits<{
@@ -182,11 +181,9 @@ const emit = defineEmits<{
   close: [];
 }>();
 
-const searchInputRef = ref<ComponentPublicInstance | null>(null);
-
 onMounted(() => {
   nextTick(() => {
-    searchInputRef.value?.$el?.querySelector('input')?.focus();
+    document.getElementById('item-properties-search')?.focus();
   });
 });
 
