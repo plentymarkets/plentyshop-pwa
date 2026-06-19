@@ -14,21 +14,14 @@ const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import:
   BlockLoader
 >;
 
-const coreBlockList = import.meta.glob('@/components/**/blocks/**/defaults.ts', { eager: true });
+const coreBlockListLoaders = import.meta.glob('@/components/**/blocks/**/defaults.ts');
 
-const customerBlockLists = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts', { eager: true });
+const customerBlockListLoaders = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts');
 
-const nuxtModuleBlockLists = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts', {
-  eager: true,
-});
+const nuxtModuleBlockListLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts');
 
-const blockListsSources: Array<Record<string, unknown>> = [
-  coreBlockList,
-  nuxtModuleBlockLists,
-  customerBlockLists,
-];
+const blockListLoadersSources = [...Object.values(coreBlockListLoaders), ...Object.values(nuxtModuleBlockListLoaders), ...Object.values(customerBlockListLoaders)];
 
-const blocksListsModules = blockListsSources.flatMap((source) => Object.values(source) as DefaultsModule[]);
 
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
@@ -63,7 +56,7 @@ export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
 };
 
-export const buildBlocksListFromCore = (): BlocksList => {
+export const buildBlocksListFromCore = async (): Promise<BlocksList> => {
   const result: BlocksList = {};
 
   const mergeBlocksList = (source: BlocksList) => {
@@ -77,7 +70,9 @@ export const buildBlocksListFromCore = (): BlocksList => {
     });
   };
 
-  blocksListsModules.forEach((mod) => {
+  const modules = await Promise.all(blockListLoadersSources.map((loader) => loader() as Promise<DefaultsModule>));
+
+  modules.forEach((mod) => {
     if (mod.getBlocksList) {
       mergeBlocksList(mod.getBlocksList());
       return;

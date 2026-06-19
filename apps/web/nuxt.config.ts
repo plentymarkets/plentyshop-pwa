@@ -8,6 +8,7 @@ import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from './app/configuration/vite.config';
 import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
+import { blockManualChunks } from './app/configuration/block-chunks.config';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -43,6 +44,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
+            ...blockManualChunks,
             tiptap: [
               '@tiptap/core',
               '@tiptap/extension-link',
