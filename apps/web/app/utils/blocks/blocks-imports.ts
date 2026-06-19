@@ -15,8 +15,21 @@ const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import:
   BlockLoader
 >;
 
-
 const coreBlockList = import.meta.glob('@/components/**/blocks/**/defaults.ts', { eager: true });
+
+const customerBlockLists = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts', { eager: true });
+
+const nuxtModuleBlockLists = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts', {
+  eager: true,
+});
+
+const blockListsSources: Array<Record<string, unknown>> = [
+  coreBlockList,
+  nuxtModuleBlockLists,
+  customerBlockLists,
+];
+
+const blocksListsModules = blockListsSources.flatMap((source) => Object.values(source) as DefaultsModule[]);
 
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
@@ -52,7 +65,6 @@ export const getBlockFormLoader = (name: string) => {
 };
 
 export const buildBlocksListFromCore = (): BlocksList => {
-  const modules = Object.values(coreBlockList) as DefaultsModule[];
   const result: BlocksList = {};
 
   const mergeBlocksList = (source: BlocksList) => {
@@ -90,7 +102,7 @@ export const buildBlocksListFromCore = (): BlocksList => {
     result[key].variations.push(variation);
   };
 
-  modules.forEach((mod) => {
+  blocksListsModules.forEach((mod) => {
     if (mod.getBlocksList) {
       mergeBlocksList(mod.getBlocksList());
       return;
