@@ -1,4 +1,5 @@
-// import type { BlocksListContribution } from '~/composables/useBlocksList/types';
+import { v4 as uuid } from 'uuid';
+import type { BlocksList } from '~/composables/useBlocksList/types';
 
 const baseContent = (overrides: { text: string; backgroundColor: string; textColor: string; speed: number }) => ({
   name: 'RetroMarquee',
@@ -7,7 +8,7 @@ const baseContent = (overrides: { text: string; backgroundColor: string; textCol
   content: overrides,
 });
 
-export default {
+export const getBlocksList = (): BlocksList => ({
   retroMarquee: {
     title: 'Retro Marquee',
     blockName: 'RetroMarquee',
@@ -64,4 +65,12 @@ export default {
       },
     ],
   },
-} ; //satisfies BlocksListContribution
+});
+
+export const createDefault = () =>
+  baseContent({
+    text: '*** Default Marquee ***',
+    backgroundColor: '#FFE066',
+    textColor: '#161A16',
+    speed: 20,
+  });
