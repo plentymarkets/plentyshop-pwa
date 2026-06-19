@@ -26,7 +26,7 @@ export const getBlocksList = (): BlocksList => ({
               textColor: '#161A16',
               speed: 20,
             }),
-            meta: { uuid: 'a1b2c3d4-1111-4aaa-8bbb-000000000001' },
+            meta: { uuid: uuid() },
           },
           de: {
             ...baseContent({
@@ -35,7 +35,7 @@ export const getBlocksList = (): BlocksList => ({
               textColor: '#161A16',
               speed: 20,
             }),
-            meta: { uuid: 'a1b2c3d4-1111-4aaa-8bbb-000000000002' },
+            meta: { uuid: uuid() },
           },
         },
       },
@@ -50,7 +50,7 @@ export const getBlocksList = (): BlocksList => ({
               textColor: '#FF00FF',
               speed: 12,
             }),
-            meta: { uuid: 'a1b2c3d4-2222-4aaa-8bbb-000000000001' },
+            meta: { uuid: uuid() },
           },
           de: {
             ...baseContent({
@@ -59,7 +59,7 @@ export const getBlocksList = (): BlocksList => ({
               textColor: '#FF00FF',
               speed: 12,
             }),
-            meta: { uuid: 'a1b2c3d4-2222-4aaa-8bbb-000000000002' },
+            meta: { uuid: uuid() },
           },
         },
       },

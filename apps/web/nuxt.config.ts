@@ -8,7 +8,7 @@ import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from './app/configuration/vite.config';
 import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
-import { blockManualChunks } from './app/configuration/block-chunks.config';
+import { blockManualChunks } from './app/configuration/block-chunks';
 
 export default defineNuxtConfig({
   srcDir: 'app/',

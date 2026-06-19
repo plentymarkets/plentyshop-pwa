@@ -20,8 +20,11 @@ const customerBlockListLoaders = import.meta.glob('/node_modules/*/runtime/compo
 
 const nuxtModuleBlockListLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts');
 
-const blockListLoadersSources = [...Object.values(coreBlockListLoaders), ...Object.values(nuxtModuleBlockListLoaders), ...Object.values(customerBlockListLoaders)];
-
+const blockListLoadersSources = [
+  ...Object.values(coreBlockListLoaders),
+  ...Object.values(nuxtModuleBlockListLoaders),
+  ...Object.values(customerBlockListLoaders),
+];
 
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
