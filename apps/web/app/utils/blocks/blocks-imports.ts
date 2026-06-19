@@ -1,5 +1,4 @@
 import type { BlockLoader, DefaultsModule } from './types';
-import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksList } from '~/composables/useBlocksList/types';
 
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
