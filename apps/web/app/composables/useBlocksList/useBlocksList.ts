@@ -30,9 +30,7 @@ export const useBlocksList: UseBlocksListReturn = () => {
    */
   const getBlocksLists = async () => {
     try {
-      // Gleiches Ergebnisformat wie zuvor bei await response.json()
       blocksLists.value = buildBlocksListFromCore();
-      console.log('Fetched blocksLists:', blocksLists.value);
     } catch (error) {
       throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
