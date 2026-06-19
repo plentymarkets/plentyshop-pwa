@@ -106,24 +106,10 @@ export const setupNuxtMocks = () => {
   }));
 };
 
-export const setupFetchMock = () => {
-  globalThis.fetch = vi.fn();
+export const mockBuildBlocksListSuccess = (mock: ReturnType<typeof vi.fn>, data: unknown) => {
+  mock.mockResolvedValueOnce(data);
 };
 
-export const mockFetchSuccess = <T>(data: T) => {
-  vi.mocked(globalThis.fetch).mockResolvedValueOnce({
-    ok: true,
-    json: async () => data,
-  } as Response);
-};
-
-export const mockFetchError = (status: number) => {
-  vi.mocked(globalThis.fetch).mockResolvedValueOnce({
-    ok: false,
-    status,
-  } as Response);
-};
-
-export const mockFetchNetworkError = (message: string) => {
-  vi.mocked(globalThis.fetch).mockRejectedValueOnce(new Error(message));
+export const mockBuildBlocksListError = (mock: ReturnType<typeof vi.fn>, message: string) => {
+  mock.mockRejectedValueOnce(new Error(message));
 };
