@@ -1,6 +1,6 @@
 import type { Component } from 'vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockListCategory } from '~/composables/useBlocksList/types';
+import type { BlocksList } from '~/composables/useBlocksList/types';
 
 export type BlockLayoutResolvedRule = {
   container: boolean;
@@ -16,6 +16,6 @@ export interface BlockMoveEvent {
 }
 
 export type DefaultsModule = {
-  BlocksList?: () => Block[];
+  getBlocksList?: () => BlocksList;
   createDefault?: () => Block;
 };

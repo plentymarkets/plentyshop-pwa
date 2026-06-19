@@ -1,4 +1,6 @@
 import type { BlockLoader, DefaultsModule } from './types';
+import type { Block } from '@plentymarkets/shop-api';
+import type { BlocksList } from '~/composables/useBlocksList/types';
 
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
@@ -51,31 +53,31 @@ export const getBlockFormLoader = (name: string) => {
 
 export const buildBlocksListFromCore = (): BlocksList => {
   const modules = Object.values(coreBlockList) as DefaultsModule[];
+  const result: BlocksList = {};
 
-  const explicitCategories = modules
-    .map((mod) => mod.blocksListCategory)
-    .filter((category): category is NonNullable<DefaultsModule['blocksListCategory']> => !!category);
+  const mergeBlocksList = (source: BlocksList) => {
+    Object.entries(source).forEach(([categoryKey, category]) => {
+      if (result[categoryKey]) {
+        result[categoryKey].variations = [...result[categoryKey].variations, ...category.variations];
+        return;
+      }
 
-  const listFromCategories = explicitCategories.reduce<BlocksList>((acc, category) => {
-    const existing = acc[category.category];
-    if (existing) {
-      existing.variations = [...existing.variations, ...category.variations];
-      return acc;
+      result[categoryKey] = category;
+    });
+  };
+
+  modules.forEach((mod) => {
+    if (mod.getBlocksList) {
+      mergeBlocksList(mod.getBlocksList());
     }
-
-    acc[category.category] = category;
-    return acc;
-  }, {});
-
-  const blocks = modules.flatMap((mod) => {
-    if (mod.BlocksList) return mod.BlocksList();
     if (mod.createDefault) return [mod.createDefault()];
-    return [];
   });
 
-  return blocks.reduce<BlocksList>((acc, block) => {
-    const key = block.name;
+  modules.forEach((mod) => {
+    if (mod.getBlocksList || !mod.createDefault) return;
 
+    const block = mod.createDefault() as Block;
+    const key = block.name;
     const variation = {
       image: '',
       title: key,
@@ -85,17 +87,18 @@ export const buildBlocksListFromCore = (): BlocksList => {
       },
     };
 
-    if (acc[key]) {
-      acc[key].variations.push(variation);
-    } else {
-      acc[key] = {
-        title: key,
-        blockName: key,
-        category: key,
-        variations: [variation],
-      };
+    if (result[key]) {
+      result[key].variations.push(variation);
+      return;
     }
 
-    return acc;
-  }, listFromCategories);
+    result[key] = {
+      title: key,
+      blockName: key,
+      category: key,
+      variations: [variation],
+    };
+  });
+
+  return result;
 };
