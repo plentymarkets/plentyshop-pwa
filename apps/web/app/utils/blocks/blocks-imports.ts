@@ -78,38 +78,10 @@ export const buildBlocksListFromCore = (): BlocksList => {
     });
   };
 
-  const appendDefaultVariation = (block: Block) => {
-    const key = block.name;
-    const variation = {
-      image: '',
-      title: key,
-      template: {
-        en: deepClone(block),
-        de: deepClone(block),
-      },
-    };
-
-    if (!result[key]) {
-      result[key] = {
-        title: key,
-        blockName: key,
-        category: key,
-        variations: [variation],
-      };
-      return;
-    }
-
-    result[key].variations.push(variation);
-  };
-
   blocksListsModules.forEach((mod) => {
     if (mod.getBlocksList) {
       mergeBlocksList(mod.getBlocksList());
       return;
-    }
-
-    if (mod.createDefault) {
-      appendDefaultVariation(mod.createDefault() as Block);
     }
   });
 
