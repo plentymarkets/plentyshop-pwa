@@ -30,11 +30,9 @@ export const useBlocksList: UseBlocksListReturn = () => {
    */
   const getBlocksLists = async () => {
     try {
-      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      blocksLists.value = await response.json();
+      // Gleiches Ergebnisformat wie zuvor bei await response.json()
+      blocksLists.value = buildBlocksListFromCore();
+      console.log('Fetched blocksLists:', blocksLists.value);
     } catch (error) {
       throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }

@@ -1,4 +1,4 @@
-import type { BlocksListContribution } from '~/composables/useBlocksList/types';
+// import type { BlocksListContribution } from '~/composables/useBlocksList/types';
 
 const baseContent = (overrides: { text: string; backgroundColor: string; textColor: string; speed: number }) => ({
   name: 'RetroMarquee',
@@ -64,4 +64,4 @@ export default {
       },
     ],
   },
-} satisfies BlocksListContribution;
+} ; //satisfies BlocksListContribution
