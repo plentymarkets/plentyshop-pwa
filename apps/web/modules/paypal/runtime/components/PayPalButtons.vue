@@ -200,6 +200,10 @@ const validateAndProceed = async (): Promise<boolean> => {
 };
 
 const handlePreparePaymentPayPal = async (callback?: PayPalAddToCartCallback) => {
+  if (props.order) {
+    if (typeof callback === 'function') callback(true);
+    return;
+  }
   const canProceed = await validateAndProceed();
   if (typeof callback === 'function') callback(canProceed);
 };
