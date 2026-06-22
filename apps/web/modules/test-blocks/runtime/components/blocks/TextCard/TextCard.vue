@@ -6,10 +6,8 @@
     :style="inlineStyle"
   >
     <!-- TEST Badge to show this is the overridden version -->
-    <div class="absolute -top-2 -left-2 bg-red-600 text-white px-2 py-1 text-xs font-bold rounded">
-      TEST OVERRIDE
-    </div>
-    
+    <div class="absolute -top-2 -left-2 bg-red-600 text-white px-2 py-1 text-xs font-bold rounded">TEST OVERRIDE</div>
+
     <TextContent :text="props.content.text" :button="props.content.button" :index="props.index" />
   </div>
 </template>

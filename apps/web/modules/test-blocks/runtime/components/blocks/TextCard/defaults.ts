@@ -59,7 +59,7 @@ const createTestTextCardBlock = (pretitle: string, title: string, subtitle: stri
       backgroundColor: '#f3f4f6',
       paddingTop: '24px',
       paddingBottom: '24px',
-      paddingLeft: '16px',      
+      paddingLeft: '16px',
       paddingRight: '16px',
     },
   },
@@ -76,8 +76,16 @@ export const getBlocksList = (): BlocksList => ({
         title: '[TEST] Text Card (Module Override)',
         image: TEXT_CARD_ICON,
         template: {
-          en: createTestTextCardBlock('[TEST] Pretitle', 'Test TextCard Override', 'This is a module override demonstrating multi-source block discovery'),
-          de: createTestTextCardBlock('[TEST] Untertitel', 'Test TextCard Überschreibung', 'Dies ist eine Modulüberschreibung, die die Erkennung von Multi-Source-Blöcken demonstriert'),
+          en: createTestTextCardBlock(
+            '[TEST] Pretitle',
+            'Test TextCard Override',
+            'This is a module override demonstrating multi-source block discovery',
+          ),
+          de: createTestTextCardBlock(
+            '[TEST] Untertitel',
+            'Test TextCard Überschreibung',
+            'Dies ist eine Modulüberschreibung, die die Erkennung von Multi-Source-Blöcken demonstriert',
+          ),
         },
       },
     ],

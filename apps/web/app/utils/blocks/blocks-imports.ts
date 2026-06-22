@@ -67,8 +67,6 @@ export const buildBlocksListFromCore = async (): Promise<BlocksList> => {
 
   const mergeBlocksList = (source: BlocksList) => {
     Object.entries(source).forEach(([key, category]) => {
-      console.log(`Merging blocks list for category "${key}" with override=${category.override} variations.`);
-
       const target = result[key] ?? (result[key] = { ...category, variations: [] });
 
       if (category.override) {
@@ -95,9 +93,5 @@ export const buildBlocksListFromCore = async (): Promise<BlocksList> => {
     }
   });
 
-  Object.entries(result).forEach(([key, cat]) => {
-    if (cat.variations.length === 0) delete result[key];
-  });
-
-  return result;
+  return Object.fromEntries(Object.entries(result).filter(([, cat]) => cat.variations.length > 0));
 };
