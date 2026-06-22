@@ -7,6 +7,7 @@ import { paths } from './app/utils/paths';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from './app/configuration/vite.config';
+import { FailOnUnmarkedBlockOverridesPlugin } from './app/configuration/vite.block-overrides';
 import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
 import { blockManualChunks } from './app/configuration/block-chunks';
 
@@ -35,7 +36,7 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
-    plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin],
+    plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
     optimizeDeps: {
       include: [...thirdPartyDeps, ...localPackageDeps],
     },
@@ -210,7 +211,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: null,
       globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
-      globIgnores: ['manifest**.webmanifest', '_nuxt-plenty/editor/blocksLists.json'],
+      globIgnores: ['manifest**.webmanifest'],
       additionalManifestEntries: [
         {
           url: '/offline',
