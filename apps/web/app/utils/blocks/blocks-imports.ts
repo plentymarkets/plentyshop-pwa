@@ -1,5 +1,5 @@
 import type { BlockLoader, DefaultsModule } from './types';
-import type { BlocksList } from '~/composables/useBlocksList/types';
+import type { BlocksList, BlockTemplateVariation } from '~/composables/useBlocksList/types';
 
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
@@ -61,15 +61,28 @@ export const getBlockFormLoader = (name: string) => {
 
 export const buildBlocksListFromCore = async (): Promise<BlocksList> => {
   const result: BlocksList = {};
+  const overriddenBlocks = new Set<string>();
+
+  const nameOf = (v: BlockTemplateVariation) => v.template?.en?.name ?? v.template?.de?.name ?? '';
 
   const mergeBlocksList = (source: BlocksList) => {
     Object.entries(source).forEach(([key, category]) => {
-      if (!result[key]) {
-        result[key] = category;
-        return;
-      }
+      console.log(`Merging blocks list for category "${key}" with override=${category.override} variations.`);
 
-      result[key].variations = [...result[key].variations, ...category.variations];
+      const target = result[key] ?? (result[key] = { ...category, variations: [] });
+
+      if (category.override) {
+        const names = category.variations.map(nameOf);
+        names.forEach((n) => overriddenBlocks.add(n));
+
+        Object.values(result).forEach((cat) => {
+          cat.variations = cat.variations.filter((v) => !names.includes(nameOf(v)));
+        });
+
+        target.variations.push(...category.variations);
+      } else {
+        target.variations.push(...category.variations.filter((v) => !overriddenBlocks.has(nameOf(v))));
+      }
     });
   };
 
@@ -80,6 +93,10 @@ export const buildBlocksListFromCore = async (): Promise<BlocksList> => {
       mergeBlocksList(mod.getBlocksList());
       return;
     }
+  });
+
+  Object.entries(result).forEach(([key, cat]) => {
+    if (cat.variations.length === 0) delete result[key];
   });
 
   return result;

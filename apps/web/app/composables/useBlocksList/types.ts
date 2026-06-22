@@ -17,6 +17,7 @@ export interface BlockListCategory {
   blockName: string;
   category: string;
   variations: BlockTemplateVariation[];
+  override?: boolean;
 }
 
 export type BlocksList = {
