@@ -132,6 +132,7 @@
               <div class="mt-4">
                 <div class="flex flex-col @md:flex-row flex-wrap gap-4">
                   <UiQuantitySelector
+                    v-show="productGetters.isActiveVariationSalable(product)"
                     :min-value="productGetters.getMinimumOrderQuantity(product)"
                     :value="quantitySelectorValue"
                     class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
