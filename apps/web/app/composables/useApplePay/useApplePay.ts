@@ -47,7 +47,7 @@ export const useApplePay = () => {
   };
 
   const getTransactionInfo = async () => {
-    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
+    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo({});
     state.value.transactionData = transaction;
   };
 
