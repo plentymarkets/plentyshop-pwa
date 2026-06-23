@@ -154,16 +154,15 @@ export const useApplePay = () => {
           await captureOrder(transaction.id);
           await createPlentyPaymentFromPayPalOrder(transaction.id, plentyOrder!.order.id);
 
-          processingOrder.value = true;
-          emit('module:clearCart', null);
-          clearCartItems();
-
           if (order) {
             emits('on-payed');
           } else {
+            processingOrder.value = true;
+            emit('module:clearCart', null);
+            clearCartItems();
             emit('frontend:orderCreated', plentyOrder!);
           }
-          
+
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
           if (!order) {
             return navigateTo(
