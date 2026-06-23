@@ -31,6 +31,7 @@ const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
 const { variationId } = useProductAttributes();
+const { addLastSeen } = useLastSeen();
 let variationWatchHandler: WatchStopHandle | undefined;
 
 definePageMeta({
@@ -55,12 +56,12 @@ await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
     product: product.value,
   });
-  useSdk().plentysystems.doAddLastSeen(productGetters.getVariationId(product.value));
 });
+
 
 if (Object.keys(product.value).length === 0) {
   if (import.meta.client) showError({ statusCode: 404, statusMessage: 'Product not found' });
-
+  
   throw createError({
     statusCode: 404,
     statusMessage: 'Product not found',
@@ -71,6 +72,7 @@ setCurrentProduct(productForEditor.value || ({} as Product));
 setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
+addLastSeen(product.value);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
