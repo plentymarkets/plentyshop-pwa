@@ -63,7 +63,8 @@ export const resolveBlocksList = async (): Promise<BlocksList> => {
   const result: BlocksList = {};
   const overriddenBlocks = new Set<string>();
 
-  const nameOf = (variation: BlockTemplateVariation) => variation.template?.en?.name ?? variation.template?.de?.name ?? '';
+  const nameOf = (variation: BlockTemplateVariation) =>
+    variation.template?.en?.name ?? variation.template?.de?.name ?? '';
 
   const mergeBlocksList = (source: BlocksList) => {
     Object.entries(source).forEach(([key, category]) => {
