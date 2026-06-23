@@ -135,7 +135,6 @@ export const useApplePay = () => {
               showErrorNotification(t('storefrontError.order.createFailed'));
               return;
             }
-            emit('frontend:orderCreated', newOrder);
             plentyOrder = newOrder;
           }
 
@@ -155,17 +154,22 @@ export const useApplePay = () => {
           await captureOrder(transaction.id);
           await createPlentyPaymentFromPayPalOrder(transaction.id, plentyOrder!.order.id);
 
-          if (order) {
-            emits('on-payed');
-          }
-
           processingOrder.value = true;
-          paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
           emit('module:clearCart', null);
           clearCartItems();
-          return navigateTo(
-            localePath(paths.confirmation + '/' + plentyOrder!.order.id + '/' + plentyOrder!.order.accessKey),
-          );
+
+          if (order) {
+            emits('on-payed');
+          } else {
+            emit('frontend:orderCreated', plentyOrder!);
+          }
+          
+          paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+          if (!order) {
+            return navigateTo(
+              localePath(paths.confirmation + '/' + plentyOrder!.order.id + '/' + plentyOrder!.order.accessKey),
+            );
+          }
         } catch (error) {
           if (!order) await reservation.unreserve();
           showErrorNotification(error instanceof Error ? error.message : t('error.paymentFailed'));
