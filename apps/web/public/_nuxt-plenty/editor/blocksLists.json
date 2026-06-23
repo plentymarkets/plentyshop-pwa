@@ -7,7 +7,7 @@
     "variations": [
       {
         "title": "Utility Bar Default",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility-bar-thumbnail.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility-bar-thumbnail.svg",
         "template": {
           "en": {
             "name": "UtilityBar",
@@ -90,7 +90,7 @@
       },
       {
         "title": "Navigation",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/navigation-thumbnail.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/navigation-thumbnail.svg",
         "template": {
           "en": {
             "name": "Navigation",
@@ -138,7 +138,7 @@
       },
       {
         "title": "Announcement Bar",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement-bar.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement-bar.svg",
         "template": {
           "en": {
             "name": "Carousel",
@@ -230,7 +230,7 @@
     "variations": [
       {
         "title": "MultiGrid 6-6",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -294,7 +294,7 @@
       },
       {
         "title": "MultiGrid 4-4-4",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/three-column-grid.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/three-column-grid.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -384,7 +384,7 @@
     "variations": [
       {
         "title": "Image Banner Left",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_left.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_left.png",
         "template": {
           "en": {
             "name": "Carousel",
@@ -401,10 +401,10 @@
                 "meta": { "uuid": "22222222-2222-4222-8222-222222222222" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.5
                   },
@@ -434,10 +434,10 @@
                 "meta": { "uuid": "33333333-3333-4333-8333-333333333333" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.75
                   },
@@ -478,10 +478,10 @@
                 "meta": { "uuid": "55555555-5555-4555-8555-555555555555" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.5
                   },
@@ -511,10 +511,10 @@
                 "meta": { "uuid": "66666666-6666-4666-8666-666666666666" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.75
                   },
@@ -544,7 +544,7 @@
       },
       {
         "title": "Image Banner Right",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_right.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_right.png",
         "template": {
           "en": {
             "name": "Carousel",
@@ -561,10 +561,10 @@
                 "meta": { "uuid": "88888888-8888-4888-8888-888888888888" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.5
                   },
@@ -593,10 +593,10 @@
                 "meta": { "uuid": "99999999-9999-4999-8999-999999999999" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.75
                   },
@@ -636,10 +636,10 @@
                 "meta": { "uuid": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.5
                   },
@@ -668,10 +668,10 @@
                 "meta": { "uuid": "cccccccc-cccc-4ccc-8ccc-cccccccccccc" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.75
                   },
@@ -700,7 +700,7 @@
       },
       {
         "title": "Image Banner Center",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_center.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_center.png",
         "template": {
           "en": {
             "name": "Carousel",
@@ -717,10 +717,10 @@
                 "meta": { "uuid": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.5
                   },
@@ -749,10 +749,10 @@
                 "meta": { "uuid": "ffffffff-ffff-4fff-8fff-ffffffffffff" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.75
                   },
@@ -792,10 +792,10 @@
                 "meta": { "uuid": "12121212-1212-4121-8121-121212121212" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.5
                   },
@@ -824,10 +824,10 @@
                 "meta": { "uuid": "23232323-2323-4232-8232-232323232323" },
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "",
                     "brightness": 0.75
                   },
@@ -864,7 +864,7 @@
     "variations": [
       {
         "title": "Image",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_preview.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_preview.png",
         "template": {
           "en": {
             "name": "Image",
@@ -872,10 +872,10 @@
             "meta": { "uuid": "45454545-4545-4455-8455-454545454545" },
             "content": {
               "image": {
-                "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "alt": "alt text",
                 "imageAlignment": "right",
                 "fillMode": "fill",
@@ -903,10 +903,10 @@
             "meta": { "uuid": "45454545-4545-4455-8455-454545454545" },
             "content": {
               "image": {
-                "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "alt": "alt text",
                 "imageAlignment": "right",
                 "fillMode": "fill",
@@ -932,7 +932,7 @@
       },
       {
         "title": "Image Right Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -950,10 +950,10 @@
                 "parent_slot": 0,
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "alt text",
                     "imageAlignment": "right",
                     "fillMode": "fill",
@@ -1018,10 +1018,10 @@
                 "parent_slot": 0,
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "Alt-Text",
                     "imageAlignment": "right",
                     "fillMode": "fill",
@@ -1066,7 +1066,7 @@
       },
       {
         "title": "Image Left Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png",
         "template": {
           "en": {
             "name": "MultiGrid",
@@ -1104,10 +1104,10 @@
                 "parent_slot": 1,
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "Headphones",
                     "imageAlignment": "left",
                     "fillMode": "fill",
@@ -1164,10 +1164,10 @@
                 "parent_slot": 1,
                 "content": {
                   "image": {
-                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "wideScreen": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "alt": "Headphones",
                     "imageAlignment": "left",
                     "fillMode": "fill",
@@ -1200,7 +1200,7 @@
     "variations": [
       {
         "title": "Rich Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/rich_text.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/rich_text.png",
         "template": {
           "en": {
             "name": "TextCard",
@@ -1254,7 +1254,7 @@
     "variations": [
       {
         "title": "Product Galleries",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/product_galleries.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/product_galleries.png",
         "template": {
           "en": {
             "name": "ProductRecommendedProducts",
@@ -1304,7 +1304,7 @@
     "variations": [
       {
         "title": "Item Category",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_grid.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_grid.png",
         "template": {
           "en": {
             "name": "ItemGrid",
@@ -1379,7 +1379,7 @@
       },
       {
         "title": "Category Data",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/category_data.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/category_data.png",
         "template": {
           "en": {
             "name": "CategoryData",
@@ -1469,7 +1469,7 @@
       },
       {
         "title": "Category Sort & Filter Vertical",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/sorting_vertical.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/sorting_vertical.png",
         "template": {
           "en": {
             "name": "SortFilter",
@@ -1548,7 +1548,7 @@
       },
       {
         "title": "Category Sort",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Sort_by_updated.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/Sort_by_updated.svg",
         "template": {
           "en": {
             "name": "Sort",
@@ -1600,7 +1600,7 @@
       },
       {
         "title": "Category Filter Per Page",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Per_page_updated.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/Per_page_updated.svg",
         "template": {
           "en": {
             "name": "PerPageFilter",
@@ -1660,7 +1660,7 @@
     "variations": [
       {
         "title": "Forms Preview",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/forms_preview.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/forms_preview.png",
         "template": {
           "en": {
             "name": "NewsletterSubscribe",
@@ -1724,7 +1724,7 @@
     "variations": [
       {
         "title": "Price Card",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_card.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_card.svg",
         "template": {
           "en": {
             "name": "PriceCard",
@@ -1838,7 +1838,7 @@
       },
       {
         "title": "Image Gallery",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png",
         "template": {
           "en": {
             "name": "ImageGallery",
@@ -1870,7 +1870,7 @@
       },
       {
         "title": "Item Text",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_text.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_text.svg",
         "template": {
           "en": {
             "name": "ItemText",
@@ -1916,7 +1916,7 @@
       },
       {
         "title": "Technical Data",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/technical_data.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/technical_data.svg",
         "template": {
           "en": {
             "name": "TechnicalData",
@@ -1962,7 +1962,7 @@
       },
       {
         "title": "Customer Reviews",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/customer_reviews.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/customer_reviews.svg",
         "template": {
           "en": {
             "name": "CustomerReview",
@@ -2009,7 +2009,7 @@
       },
       {
         "title": "Legal Information",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/legal_information.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/legal_information.svg",
         "template": {
           "en": {
             "name": "ProductLegalInformation",
@@ -2053,7 +2053,7 @@
       },
       {
         "title": "More details",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Item_data_updated.svg",
+        "image": "https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/Item_data_updated.svg",
         "template": {
           "en": {
             "name": "ItemData",
