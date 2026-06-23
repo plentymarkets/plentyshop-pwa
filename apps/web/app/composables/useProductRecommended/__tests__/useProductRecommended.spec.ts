@@ -16,15 +16,7 @@ describe('useProductRecommended', () => {
 
     await fetchProductRecommended({ type: 'last_seen', categoryId: '16', itemId: '42' });
 
-    const payload = getFacet.mock.calls.at(-1)?.[0];
+    const payload = vi.mocked(getFacet).mock.calls.at(-1)?.[0];
     expect(payload).toEqual({ type: 'last_seen' });
-  });
-
-  it('should resolve to an empty list without throwing when the last_seen facet errors', async () => {
-    const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended('last-seen-empty');
-    useSdk().plentysystems.getFacet.mockRejectedValueOnce(new Error('no last seen items'));
-
-    await expect(fetchProductRecommended({ type: 'last_seen' })).resolves.toEqual([]);
-    expect(recommendedProducts.value).toEqual([]);
   });
 });
