@@ -1,7 +1,23 @@
-const blockIconLoaders = import.meta.glob('@/components/**/blocks/**/icon.svg', {
+const coreBlockIconLoaders = import.meta.glob('@/components/**/blocks/**/icon.svg', {
   query: '?raw',
   import: 'default',
 }) as Record<string, () => Promise<string>>;
+
+const nuxtModuleBlockIconLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/icon.svg', {
+  query: '?raw',
+  import: 'default',
+}) as Record<string, () => Promise<string>>;
+
+const customerBlockIconLoaders = import.meta.glob('/node_modules/*/runtime/components/blocks/**/icon.svg', {
+  query: '?raw',
+  import: 'default',
+}) as Record<string, () => Promise<string>>;
+
+const blockIconLoaders: Record<string, () => Promise<string>> = {
+  ...coreBlockIconLoaders,
+  ...nuxtModuleBlockIconLoaders,
+  ...customerBlockIconLoaders,
+};
 
 const normalizeIconPath = (path: string): string => {
   const match = path.match(/blocks\/(?:structure\/)?([^/]+)\/[^/]*icon\.svg/);
