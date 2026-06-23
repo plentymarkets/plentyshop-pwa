@@ -6,7 +6,9 @@ export const useLastSeen = () => {
     if (import.meta.client) {
       try {
         useSdk().plentysystems.doAddLastSeen(productGetters.getVariationId(product));
-      } catch {}
+      } catch {
+        // Ignore errors
+      }
     }
   };
 
