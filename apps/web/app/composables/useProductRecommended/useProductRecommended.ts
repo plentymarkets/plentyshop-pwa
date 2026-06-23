@@ -37,12 +37,16 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       type: params.type,
     };
 
-    const payload = {
-      ...common,
-      itemId: params.itemId,
-      crossSellingRelation: params.crossSellingRelation,
-      categoryId: params.categoryId,
-    };
+    // The last_seen facet is resolved from the customer session and only accepts the type argument.
+    const payload =
+      params.type === 'last_seen'
+        ? { type: params.type }
+        : {
+            ...common,
+            itemId: params.itemId,
+            crossSellingRelation: params.crossSellingRelation,
+            categoryId: params.categoryId,
+          };
 
     const idForKey = params.type === 'cross_selling' ? params.itemId : params.categoryId;
 

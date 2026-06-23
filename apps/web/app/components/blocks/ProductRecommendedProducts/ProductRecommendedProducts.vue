@@ -41,9 +41,10 @@ const shouldShowSlider = computed(
 );
 const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
+const isLastSeen = computed(() => props.content.source?.type === 'last_seen');
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
 const shouldFetch = computed(() => {
-  return isNearViewport.value && shouldRender.value && (isCategory.value || isProduct.value);
+  return isNearViewport.value && shouldRender.value && (isCategory.value || isProduct.value || isLastSeen.value);
 });
 const contentSource = computed(() => ({
   ...props.content.source,
@@ -75,7 +76,8 @@ watch(
     if (
       shouldFetch.value &&
       ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
-        (props.content.source?.categoryId && props.content.source?.type === 'category'))
+        (props.content.source?.categoryId && props.content.source?.type === 'category') ||
+        props.content.source?.type === 'last_seen')
     ) {
       const products = await fetchProductRecommended(contentSource.value);
       registerBlockVisibility(props.meta.uuid, (products?.length ?? 0) > 0);

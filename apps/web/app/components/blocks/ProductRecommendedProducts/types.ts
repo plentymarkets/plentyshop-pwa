@@ -16,7 +16,7 @@ export type ProductRecommendedProductsContent = {
   index?: number;
   cacheKey?: string;
   source: {
-    type: 'category' | 'cross_selling';
+    type: 'category' | 'cross_selling' | 'last_seen';
     categoryId: string;
     itemId: string;
     crossSellingRelation: CrossSellingRelationType;
@@ -34,4 +34,4 @@ export type ProductRecommendedProductsContent = {
   };
 };
 export type TextAlign = 'left' | 'center' | 'right';
-export type SourceType = 'cross_selling' | 'category';
+export type SourceType = 'cross_selling' | 'category' | 'last_seen';

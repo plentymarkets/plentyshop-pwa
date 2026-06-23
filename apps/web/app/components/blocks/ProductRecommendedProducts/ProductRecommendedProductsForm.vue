@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div v-else class="py-4">
+      <div v-else-if="recommendedBlock.source.type === 'category'" class="py-4">
         <UiFormLabel>{{ getEditorTranslation('categories-label') }}</UiFormLabel>
 
         <EditorCategorySelect
@@ -64,6 +64,10 @@
           :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
           data-testid="recommended-form-categories"
         />
+      </div>
+
+      <div v-else class="py-4 text-sm text-neutral-600" data-testid="recommended-form-last-seen-hint">
+        {{ getEditorTranslation('last-seen-hint') }}
       </div>
     </EditorFormPanel>
 
@@ -175,9 +179,11 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "source-type-label": "Choose source",
     "source-type-product": "Product",
     "source-type-category": "Category",
+    "source-type-last-seen": "Last seen",
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
+    "last-seen-hint": "Displays the products the customer has recently viewed. No further configuration required.",
     "layout-label": "Layout",
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
@@ -192,9 +198,11 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "source-type-label": "Choose source",
     "source-type-product": "Product",
     "source-type-category": "Category",
+    "source-type-last-seen": "Last seen",
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
+    "last-seen-hint": "Displays the products the customer has recently viewed. No further configuration required.",
 
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",

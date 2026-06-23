@@ -55,6 +55,7 @@ await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
     product: product.value,
   });
+  useSdk().plentysystems.doAddLastSeen(productGetters.getVariationId(product.value));
 });
 
 if (Object.keys(product.value).length === 0) {
