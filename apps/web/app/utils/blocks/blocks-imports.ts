@@ -22,8 +22,8 @@ const nuxtModuleBlockListLoaders = import.meta.glob('~~/modules/*/runtime/compon
 
 const blockListLoadersSources = [
   ...Object.values(coreBlockListLoaders),
-  ...Object.values(customerBlockListLoaders),
   ...Object.values(nuxtModuleBlockListLoaders),
+  ...Object.values(customerBlockListLoaders),
 ];
 
 const normalize = (path: string) => {
