@@ -15,7 +15,7 @@ import {
 } from './useBlocksList.mocks';
 
 const buildBlocksListMock = vi.hoisted(() => vi.fn());
-mockNuxtImport('buildBlocksListFromCore', () => buildBlocksListMock);
+mockNuxtImport('resolveBlocksList', () => buildBlocksListMock);
 setupNuxtMocks();
 mockNuxtImport('useBlockTemplates', () => () => ({
   data: ref<Block[]>(mockCategoryTemplateBlocks),

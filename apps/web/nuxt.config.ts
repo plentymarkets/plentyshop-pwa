@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         output: {
           manualChunks(id) {
             if (id.includes('utils/blocks/blocks-imports')) return 'block-registry';
-            if (/[/\\]blocks[/\\][^/\\]+[/\\]defaults\.ts$/.test(id)) return 'block-registry';
+            if (/[/\\]blocks[/\\].+[/\\]defaults\.ts$/.test(id)) return 'block-registry';
 
             const vendorChunks: Record<string, string[]> = {
               tiptapExtensions: [

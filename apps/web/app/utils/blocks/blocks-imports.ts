@@ -59,7 +59,7 @@ export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
 };
 
-export const buildBlocksListFromCore = async (): Promise<BlocksList> => {
+export const resolveBlocksList = async (): Promise<BlocksList> => {
   const result: BlocksList = {};
   const overriddenBlocks = new Set<string>();
 
