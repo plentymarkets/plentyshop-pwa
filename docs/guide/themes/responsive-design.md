@@ -35,6 +35,55 @@ containers: {
 
 Container-query support is provided by the [`@tailwindcss/container-queries`](https://github.com/tailwindlabs/tailwindcss-container-queries) plugin, which is already installed and registered in `apps/web/app/configuration/tailwind.config.ts`. In Tailwind v3 this plugin is required. From Tailwind v4 onwards container queries are built-in and the plugin is no longer needed.
 
+## Custom CSS with container queries
+
+When adding custom CSS to blocks through the editor, always use **container queries**, not media queries. This ensures your custom styles respond to the simulated viewport in the editor's mobile preview.
+
+**Recommended pattern:**
+
+```css
+/* Styles for mobile & tablet (≤ 768px) */
+@container (max-width: 768px) {
+  .header {
+    background: blue;
+  }
+}
+
+/* Styles for desktop (> 768px) */
+@container (min-width: 769px) {
+  .header {
+    background: green;
+  }
+}
+```
+
+**Alternative: use specific container names**
+
+```css
+/* Mobile preview only */
+@container (max-width: 375px) {
+  .header {
+    font-size: 16px;
+  }
+}
+
+/* Tablet preview */
+@container (min-width: 376px) and (max-width: 768px) {
+  .header {
+    font-size: 18px;
+  }
+}
+
+/* Desktop */
+@container (min-width: 769px) {
+  .header {
+    font-size: 20px;
+  }
+}
+```
+
+For reference, the container sizes defined in Tailwind are documented under [Container sizes](#background).
+
 ## Where this applies
 
 The container-query rule applies everywhere inside the page view:
