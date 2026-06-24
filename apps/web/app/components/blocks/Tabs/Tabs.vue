@@ -32,9 +32,7 @@
           role="tabpanel"
         >
           <slot name="content" :content-block="activeTab" :index="activeTabIndex" />
-          <UiBlockPlaceholder
-            v-if="shouldDisplayPlaceholder(activeTab.meta.uuid, 'bottom', drawerOpen, drawerView)"
-          />
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(activeTab.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </div>
     </div>
@@ -72,9 +70,7 @@
           role="tabpanel"
         >
           <slot name="content" :content-block="activeTab" :index="activeTabIndex" />
-          <UiBlockPlaceholder
-            v-if="shouldDisplayPlaceholder(activeTab.meta.uuid, 'bottom', drawerOpen, drawerView)"
-          />
+          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(activeTab.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </div>
     </div>

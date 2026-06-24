@@ -74,20 +74,7 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { TabsAlignment, TabStyle } from './types';
-
-type TabsStructureBlock = {
-  content?: Block[];
-  configuration?: {
-    visible?: boolean;
-    layout?: {
-      fullWidth?: boolean;
-      tabStyle?: TabStyle;
-      showBorderUnderTabs?: boolean;
-      tabsAlignment?: TabsAlignment;
-    };
-  };
-};
+import type { TabsAlignment, TabStyle, TabsStructureProps } from './types';
 
 const props = defineProps<{ uuid?: string }>();
 
@@ -106,10 +93,10 @@ const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
 const { pushEdit } = useBlockEditStack();
 
 const tabsStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureBlock,
+  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureProps,
 );
 
-const tabsConfiguration = computed(() => (tabsStructure.value.configuration ??= { visible: true }));
+const tabsConfiguration = computed(() => tabsStructure.value.configuration ?? {});
 
 const { isFullWidth } = useFullWidthToggleForConfig(tabsConfiguration);
 

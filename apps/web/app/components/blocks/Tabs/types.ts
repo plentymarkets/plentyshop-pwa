@@ -5,6 +5,7 @@ export type TabsAlignment = 'left' | 'center' | 'right';
 export type TabStyle = 'underline' | 'pills' | 'vertical';
 
 export type TabsStructureConfiguration = {
+  visible?: boolean;
   layout?: {
     fullWidth?: boolean;
     tabStyle?: TabStyle;

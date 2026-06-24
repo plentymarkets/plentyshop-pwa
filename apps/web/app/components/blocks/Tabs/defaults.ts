@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import type { TabsProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksList } from '~/composables/useBlocksList/types';
 
