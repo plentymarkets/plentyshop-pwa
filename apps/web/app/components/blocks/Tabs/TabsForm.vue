@@ -33,6 +33,7 @@
             class="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm"
             data-testid="tabs-selected-tab"
           >
+            <option value="" disabled>{{ getEditorTranslation('select-placeholder') }}</option>
             <option v-for="option in tabsOptions" :key="option.uuid" :value="option.uuid">
               {{ option.label }}
             </option>
@@ -198,6 +199,7 @@ const editTab = (block: Block) => pushEdit(block);
     "add-tab-label": "Add Tab",
     "tab-settings-label": "Tab Names",
     "selected-tab-label": "Selected Tab",
+    "select-placeholder": "Please select a tab",
     "tab-label": "Tab",
     "tab-name-label": "Tab name",
     "show-border-under-tabs-label": "Show border line under tabs",
@@ -217,6 +219,7 @@ const editTab = (block: Block) => pushEdit(block);
     "add-tab-label": "Tab hinzufügen",
     "tab-settings-label": "Tab-Namen",
     "selected-tab-label": "Ausgewählter Tab",
+    "select-placeholder": "Bitte Tab auswählen",
     "tab-label": "Tab",
     "tab-name-label": "Tab-Name",
     "show-border-under-tabs-label": "Trennlinie unter Tabs anzeigen",
