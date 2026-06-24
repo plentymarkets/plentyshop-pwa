@@ -76,17 +76,17 @@ const layoutOpen = ref(true);
 const thumbnails: Thumbnails = [
   {
     type: 'left-vertical',
-    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
+    cdn: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
     label: getEditorTranslation('thumb-left-vertical'),
   },
   {
     type: 'right-vertical',
-    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
+    cdn: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
     label: getEditorTranslation('thumb-right-vertical'),
   },
   {
     type: 'bottom',
-    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
+    cdn: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
     label: getEditorTranslation('thumb-bottom'),
   },
 ];
