@@ -12,7 +12,7 @@ This means that **inside the page view you must use the `@`-prefixed container-q
 | `@max-md:` `@min-lg:`               | `max-md:` `min-lg:`            |
 | `@mobile:` `@tablet:` `@desktop:`   | —                              |
 
-## Background
+## Container sizes
 
 The breakpoints are defined under `theme.extend.containers` in `apps/web/app/configuration/tailwind.config.ts`:
 
@@ -57,7 +57,7 @@ When adding custom CSS to blocks through the editor, always use **container quer
 }
 ```
 
-**Alternative: use specific container names**
+**Alternative: use specific width ranges**
 
 ```css
 /* Mobile preview only */
@@ -82,7 +82,7 @@ When adding custom CSS to blocks through the editor, always use **container quer
 }
 ```
 
-For reference, the container sizes defined in Tailwind are documented under [Container sizes](#background).
+For reference, the container sizes defined in Tailwind are documented under [Container sizes](#container-sizes).
 
 ## Where this applies
 
