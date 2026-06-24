@@ -74,7 +74,6 @@
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
 import type { TabsAlignment, TabStyle } from './types';
-import { v4 as uuid } from 'uuid'
 
 type TabsStructureBlock = {
   content?: Block[];
@@ -96,79 +95,56 @@ const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
+
 const elementsOpen = ref(true);
 const designOpen = ref(true);
-const layoutOpen = ref(true);
 const tabSettingsOpen = ref(true);
+const layoutOpen = ref(true);
+
 const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
 const { pushEdit } = useBlockEditStack();
 
-const tabsStructure = computed(() => {
-  void data.value; // explizite Dependency auf den gesamten Block-Baum
-  return (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureBlock;
-});
+const tabsStructure = computed(
+  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureBlock,
+);
 
-const tabsConfiguration = computed(() => {
-  if (!tabsStructure.value.configuration) {
-    tabsStructure.value.configuration = { visible: true };
-  }
-  if (!tabsStructure.value.configuration.layout) {
-    tabsStructure.value.configuration.layout = {
-      fullWidth: false,
-      tabStyle: 'underline',
-      showBorderUnderTabs: true,
-      tabsAlignment: 'left',
-    };
-  }
-  return tabsStructure.value.configuration;
-});
+const tabsConfiguration = computed(() => (tabsStructure.value.configuration ??= { visible: true }));
 
-const { isFullWidth } = useFullWidthToggleForConfig(computed(() => tabsConfiguration.value));
+const { isFullWidth } = useFullWidthToggleForConfig(tabsConfiguration);
 
-const ensureLayout = () => {
-  if (!tabsConfiguration.value.layout) {
-    tabsConfiguration.value.layout = {};
-  }
-  return tabsConfiguration.value.layout;
-};
+const layout = computed(() => tabsConfiguration.value.layout);
+const ensureLayout = () => (tabsConfiguration.value.layout ??= {});
 
 const tabStyle = computed<TabStyle>({
-  get: () => tabsConfiguration.value.layout?.tabStyle ?? 'underline',
-  set: (value) => {
-    ensureLayout().tabStyle = value;
-  },
+  get: () => layout.value?.tabStyle ?? 'underline',
+  set: (value) => (ensureLayout().tabStyle = value),
+});
+
+const showBorderUnderTabs = computed({
+  get: () => layout.value?.showBorderUnderTabs !== false,
+  set: (value: boolean) => (ensureLayout().showBorderUnderTabs = value),
+});
+
+const tabsAlignment = computed<TabsAlignment>({
+  get: () => layout.value?.tabsAlignment ?? 'left',
+  set: (value) => (ensureLayout().tabsAlignment = value),
 });
 
 const supportsAlignment = computed(() => ['underline', 'pills'].includes(tabStyle.value));
 
-const showBorderUnderTabs = computed({
-  get: () => tabsConfiguration.value.layout?.showBorderUnderTabs !== false,
-  set: (value: boolean) => {
-    ensureLayout().showBorderUnderTabs = value;
-  },
-});
-onMounted(() => {
-  console.log('[tabs-form] MOUNTED, uuid =', resolvedUuid.value);
-});
-
-const tabsAlignment = computed<TabsAlignment>({
-  get: () => tabsConfiguration.value.layout?.tabsAlignment ?? 'left',
-  set: (value: TabsAlignment) => {
-    ensureLayout().tabsAlignment = value;
-  },
-});
+const tabsAlignmentOptions = computed(() =>
+  (['left', 'center', 'right'] as const).map((value) => ({
+    value,
+    label: getEditorTranslation(`position-${value}`),
+    testId: `tabs-align-${value}`,
+  })),
+);
 
 const tabs = computed(() => tabsStructure.value.content ?? []);
-const tabsAlignmentOptions = computed(() => [
-  { value: 'left' as TabsAlignment, label: getEditorTranslation('position-left'), testId: 'tabs-align-left' },
-  { value: 'center' as TabsAlignment, label: getEditorTranslation('position-center'), testId: 'tabs-align-center' },
-  { value: 'right' as TabsAlignment, label: getEditorTranslation('position-right'), testId: 'tabs-align-right' },
-]);
 
 const selectedTabUuid = ref<string>('');
 
 const tabsOptions = computed(() => {
-  console.log('[tabsOptions] RECOMPUTE, tabs.length =', tabs.value.length);
   return tabs.value.map((tab, index) => {
     const settings = (tab.configuration as Record<string, unknown> | undefined)?.tabSettings as
       | Record<string, unknown>
@@ -198,23 +174,15 @@ const ensureTabSettings = (block: Block) => {
 const selectedTabName = computed({
   get: () => {
     if (!selectedTab.value) return '';
-    const settings = ensureTabSettings(selectedTab.value);
-    return String(settings.label ?? '');
+    return String(ensureTabSettings(selectedTab.value).label ?? '');
   },
   set: (value: string) => {
     if (!selectedTab.value) return;
-    const settings = ensureTabSettings(selectedTab.value);
-    settings.label = value;
+    ensureTabSettings(selectedTab.value).label = value;
   },
 });
 
-const editTab = (block: Block) => {
-  pushEdit(block);
-};
-
-
-
-watch(editingBlock, (v) => console.log('[tabs-form] editingBlock:', v?.meta?.uuid ?? null));
+const editTab = (block: Block) => pushEdit(block);
 </script>
 
 <i18n lang="json">

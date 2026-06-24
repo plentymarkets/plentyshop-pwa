@@ -1,6 +1,5 @@
 <template>
   <div :class="containerClasses" class="tabs-structure" data-testid="tabs-structure">
-    <!-- Vertical: Sidebar links, Inhalt rechts -->
     <div v-if="tabStyle === 'vertical'" class="flex gap-5 items-start">
       <div
         v-if="visibleTabs.length > 0"
@@ -40,7 +39,6 @@
       </div>
     </div>
 
-    <!-- Horizontal: underline / pills -->
     <div v-else>
       <div v-if="visibleTabs.length > 0" :class="barWrapperClasses">
         <div
