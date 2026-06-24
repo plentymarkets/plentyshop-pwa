@@ -30,13 +30,9 @@ export const useBlocksList: UseBlocksListReturn = () => {
    */
   const getBlocksLists = async () => {
     try {
-      const response = await fetch('/_nuxt-plenty/editor/blocksLists.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      blocksLists.value = await response.json();
+      blocksLists.value = await resolveBlocksList();
     } catch (error) {
-      throw new Error(`Failed to fetch blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Failed to load blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -67,7 +63,7 @@ export const useBlocksList: UseBlocksListReturn = () => {
    * @param category - Block category to check
    */
   const pageHasAccessToCategory = (category: BlockListCategory) => {
-    if (blocksListContext.value && category.accessControl) {
+    if (blocksListContext.value && category?.accessControl?.length) {
       return category.accessControl.includes(blocksListContext.value);
     }
 
