@@ -31,7 +31,7 @@ export const FailOnUnmarkedBlockOverridesPlugin = {
 
     const coreNames = new Set(
       listVueFiles(resolve(rootDir, 'app/components'))
-        .filter((f) => f.split(sep).includes('blocks'))
+        .filter((file) => file.split(sep).includes('blocks'))
         .map(normalize),
     );
 
@@ -53,14 +53,14 @@ export const FailOnUnmarkedBlockOverridesPlugin = {
 
     if (dangling.length > 0) {
       console.warn(
-        `⚠️  ${dangling.length} file(s) declare "${OVERRIDE_MARKER}" but no core block with that name exists:\n` +
+        `${dangling.length} file(s) declare "${OVERRIDE_MARKER}" but no core block with that name exists:\n` +
           dangling.map((f) => `   - ${f}`).join('\n'),
       );
     }
 
     if (unmarked.length > 0) {
       throw new Error(
-        `❌ ${unmarked.length} block file(s) override a core block without the "${OVERRIDE_MARKER}" marker:\n` +
+        `${unmarked.length} block file(s) override a core block without the "${OVERRIDE_MARKER}" marker:\n` +
           unmarked.map((f) => `   - ${f}`).join('\n') +
           `\nAdd a "<!-- ${OVERRIDE_MARKER} -->" comment to confirm the override is intentional.`,
       );

@@ -63,7 +63,8 @@ export const resolveBlocksList = async (): Promise<BlocksList> => {
   const result: BlocksList = {};
   const overriddenBlocks = new Set<string>();
 
-  const nameOf = (v: BlockTemplateVariation) => v.template?.en?.name ?? v.template?.de?.name ?? '';
+  const nameOf = (variation: BlockTemplateVariation) =>
+    variation.template?.en?.name ?? variation.template?.de?.name ?? '';
 
   const mergeBlocksList = (source: BlocksList) => {
     Object.entries(source).forEach(([key, category]) => {
@@ -71,7 +72,7 @@ export const resolveBlocksList = async (): Promise<BlocksList> => {
 
       if (category.override) {
         const names = category.variations.map(nameOf);
-        names.forEach((n) => overriddenBlocks.add(n));
+        names.forEach((name) => overriddenBlocks.add(name));
 
         Object.values(result).forEach((cat) => {
           cat.variations = cat.variations.filter((v) => !names.includes(nameOf(v)));

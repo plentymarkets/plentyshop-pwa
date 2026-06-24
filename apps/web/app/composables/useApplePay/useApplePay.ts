@@ -1,4 +1,4 @@
-import type { PayPalApplePayTransactionInfo } from '@plentymarkets/shop-api';
+import type { Order, PayPalApplePayTransactionInfo } from '@plentymarkets/shop-api';
 import type { ApplepayType, ConfigResponse } from '#paypal/types';
 import type { ButtonClickedEmits } from './types';
 
@@ -46,8 +46,10 @@ export const useApplePay = () => {
     return true;
   };
 
-  const getTransactionInfo = async () => {
-    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo();
+  const getTransactionInfo = async (orderId: number | undefined) => {
+    const { data: transaction } = await useSdk().plentysystems.getPayPalApplePayTransactionInfo({
+      orderId,
+    });
     state.value.transactionData = transaction;
   };
 
@@ -75,7 +77,7 @@ export const useApplePay = () => {
     } as ApplePayJS.ApplePayPaymentRequest;
   };
 
-  const processPayment = async (emits: ButtonClickedEmits) => {
+  const processPayment = async (emits: ButtonClickedEmits, order?: Order) => {
     const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
     const { createTransaction, captureOrder, createPlentyOrder, createPlentyPaymentFromPayPalOrder } = usePayPal();
     const { clearCartItems } = useCart();
@@ -106,29 +108,34 @@ export const useApplePay = () => {
       };
 
       paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
+        let plentyOrder = order;
         try {
-          if (!(await reservation.reserve())) {
+          if (!plentyOrder && !(await reservation.reserve())) {
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             return;
           }
 
           const transaction = await createTransaction({
-            type: 'basket',
+            type: plentyOrder ? 'order' : 'basket',
+            plentyOrderId: plentyOrder?.order?.id,
           });
 
           if (!transaction?.id) {
-            await reservation.unreserve();
+            if (!plentyOrder) await reservation.unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
 
-          const order = await createPlentyOrder();
-          if (!order?.order?.id) {
-            await reservation.unreserve();
-            paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-            showErrorNotification(t('storefrontError.order.createFailed'));
-            return;
+          if (!plentyOrder) {
+            const newOrder = await createPlentyOrder();
+            if (!newOrder?.order?.id) {
+              await reservation.unreserve();
+              paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+              showErrorNotification(t('storefrontError.order.createFailed'));
+              return;
+            }
+            plentyOrder = newOrder;
           }
 
           try {
@@ -138,24 +145,32 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
-            await reservation.unreserve();
+            if (!order) await reservation.unreserve();
             paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             showErrorNotification(error instanceof Error ? error.message : t('error.paymentFailed'));
             return;
           }
 
           await captureOrder(transaction.id);
-          await createPlentyPaymentFromPayPalOrder(transaction.id, order.order.id);
+          await createPlentyPaymentFromPayPalOrder(transaction.id, plentyOrder!.order.id);
 
-          processingOrder.value = true;
+          if (order) {
+            emits('on-payed');
+          } else {
+            processingOrder.value = true;
+            emit('module:clearCart', null);
+            clearCartItems();
+            emit('frontend:orderCreated', plentyOrder!);
+          }
+
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-          emit('module:clearCart', null);
-          clearCartItems();
-
-          emit('frontend:orderCreated', order);
-          return navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+          if (!order) {
+            return navigateTo(
+              localePath(paths.confirmation + '/' + plentyOrder!.order.id + '/' + plentyOrder!.order.accessKey),
+            );
+          }
         } catch (error) {
-          await reservation.unreserve();
+          if (!order) await reservation.unreserve();
           showErrorNotification(error instanceof Error ? error.message : t('error.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }

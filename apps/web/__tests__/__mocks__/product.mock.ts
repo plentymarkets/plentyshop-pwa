@@ -23,15 +23,15 @@ export const ProductMock = {
   images: {
     all: [
       {
-        url: 'https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/full/gear-headphones-01.png',
+        url: 'https://cdn02.plentyone.com/mevofvd5omld/item/images/157/full/gear-headphones-01.png',
         width: 1430,
         names: [],
         urlSecondPreview:
-          'https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/secondPreview/gear-headphones-01.png',
-        urlPreview: 'https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/preview/gear-headphones-01.png',
+          'https://cdn02.plentyone.com/mevofvd5omld/item/images/157/secondPreview/gear-headphones-01.png',
+        urlPreview: 'https://cdn02.plentyone.com/mevofvd5omld/item/images/157/preview/gear-headphones-01.png',
         height: 1430,
         position: 0,
-        urlMiddle: 'https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/middle/gear-headphones-01.png',
+        urlMiddle: 'https://cdn02.plentyone.com/mevofvd5omld/item/images/157/middle/gear-headphones-01.png',
         path: 'S3:157:gear-headphones-01.png',
         cleanImageName: 'gear-headphones-01.png',
       },
