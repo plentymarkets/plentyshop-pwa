@@ -10,6 +10,21 @@
         @edit-element="editTab"
       />
 
+      <EditorFormPanel v-model="designOpen" :title="getEditorTranslation('design-label')">
+        <div class="py-2">
+          <UiFormLabel>{{ getEditorTranslation('tab-style-label') }}</UiFormLabel>
+          <select
+            v-model="tabStyle"
+            class="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm"
+            data-testid="tabs-style"
+          >
+            <option value="underline">{{ getEditorTranslation('style-underline') }}</option>
+            <option value="pills">{{ getEditorTranslation('style-pills') }}</option>
+            <option value="vertical">{{ getEditorTranslation('style-vertical') }}</option>
+          </select>
+        </div>
+      </EditorFormPanel>
+
       <EditorFormPanel v-model="tabSettingsOpen" :title="getEditorTranslation('tab-settings-label')">
         <div class="py-2">
           <UiFormLabel>{{ getEditorTranslation('selected-tab-label') }}</UiFormLabel>
@@ -33,23 +48,18 @@
       <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')">
         <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
 
-        <div class="py-2 flex items-center justify-between">
-          <UiFormLabel>{{ getEditorTranslation('show-tabs-as-buttons-label') }}</UiFormLabel>
-          <SfSwitch v-model="showTabsAsButtons" data-testid="tabs-show-as-buttons" />
-        </div>
-
-        <div class="py-2 flex items-center justify-between">
-          <UiFormLabel>{{ getEditorTranslation('show-border-under-tabs-label') }}</UiFormLabel>
-          <SfSwitch v-model="showBorderUnderTabs" data-testid="tabs-show-border-under-tabs" />
-        </div>
-
-        <div class="py-2">
+        <div v-if="supportsAlignment" class="py-2">
           <EditorOptionsTabs
             v-model="tabsAlignment"
             :legend="getEditorTranslation('tabs-alignment-label')"
             test-id-prefix="tabs-alignment"
             :options="tabsAlignmentOptions"
           />
+        </div>
+
+        <div v-if="tabStyle === 'underline'" class="py-2 flex items-center justify-between">
+          <UiFormLabel>{{ getEditorTranslation('show-border-under-tabs-label') }}</UiFormLabel>
+          <SfSwitch v-model="showBorderUnderTabs" data-testid="tabs-show-border-under-tabs" />
         </div>
       </EditorFormPanel>
     </div>
@@ -63,8 +73,8 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
-
-type TabsAlignment = 'left' | 'center' | 'right';
+import type { TabsAlignment, TabStyle } from './types';
+import { v4 as uuid } from 'uuid'
 
 type TabsStructureBlock = {
   content?: Block[];
@@ -72,8 +82,8 @@ type TabsStructureBlock = {
     visible?: boolean;
     layout?: {
       fullWidth?: boolean;
+      tabStyle?: TabStyle;
       showBorderUnderTabs?: boolean;
-      showTabsAsButtons?: boolean;
       tabsAlignment?: TabsAlignment;
     };
   };
@@ -87,103 +97,89 @@ const { findOrDeleteBlockByUuid } = useBlockManager();
 
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const elementsOpen = ref(true);
+const designOpen = ref(true);
 const layoutOpen = ref(true);
+const tabSettingsOpen = ref(true);
 const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
 const { pushEdit } = useBlockEditStack();
 
-const tabsStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureBlock,
-);
+const tabsStructure = computed(() => {
+  void data.value; // explizite Dependency auf den gesamten Block-Baum
+  return (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureBlock;
+});
 
 const tabsConfiguration = computed(() => {
   if (!tabsStructure.value.configuration) {
     tabsStructure.value.configuration = { visible: true };
   }
-
   if (!tabsStructure.value.configuration.layout) {
     tabsStructure.value.configuration.layout = {
       fullWidth: false,
+      tabStyle: 'underline',
       showBorderUnderTabs: true,
-      showTabsAsButtons: true,
       tabsAlignment: 'left',
     };
   }
-
   return tabsStructure.value.configuration;
 });
 
 const { isFullWidth } = useFullWidthToggleForConfig(computed(() => tabsConfiguration.value));
 
-const showBorderUnderTabs = computed({
-  get: () => tabsConfiguration.value.layout?.showBorderUnderTabs !== false,
-  set: (value: boolean) => {
-    if (!tabsConfiguration.value.layout) {
-      tabsConfiguration.value.layout = { fullWidth: false, showTabsAsButtons: true, tabsAlignment: 'left' };
-    }
-    tabsConfiguration.value.layout.showBorderUnderTabs = value;
+const ensureLayout = () => {
+  if (!tabsConfiguration.value.layout) {
+    tabsConfiguration.value.layout = {};
+  }
+  return tabsConfiguration.value.layout;
+};
+
+const tabStyle = computed<TabStyle>({
+  get: () => tabsConfiguration.value.layout?.tabStyle ?? 'underline',
+  set: (value) => {
+    ensureLayout().tabStyle = value;
   },
 });
 
-const showTabsAsButtons = computed({
-  get: () => tabsConfiguration.value.layout?.showTabsAsButtons !== false,
+const supportsAlignment = computed(() => ['underline', 'pills'].includes(tabStyle.value));
+
+const showBorderUnderTabs = computed({
+  get: () => tabsConfiguration.value.layout?.showBorderUnderTabs !== false,
   set: (value: boolean) => {
-    if (!tabsConfiguration.value.layout) {
-      tabsConfiguration.value.layout = { fullWidth: false, showBorderUnderTabs: true, tabsAlignment: 'left' };
-    }
-    tabsConfiguration.value.layout.showTabsAsButtons = value;
+    ensureLayout().showBorderUnderTabs = value;
   },
+});
+onMounted(() => {
+  console.log('[tabs-form] MOUNTED, uuid =', resolvedUuid.value);
 });
 
 const tabsAlignment = computed<TabsAlignment>({
   get: () => tabsConfiguration.value.layout?.tabsAlignment ?? 'left',
   set: (value: TabsAlignment) => {
-    if (!tabsConfiguration.value.layout) {
-      tabsConfiguration.value.layout = { fullWidth: false, showBorderUnderTabs: true, showTabsAsButtons: true };
-    }
-    tabsConfiguration.value.layout.tabsAlignment = value;
+    ensureLayout().tabsAlignment = value;
   },
 });
 
+const tabs = computed(() => tabsStructure.value.content ?? []);
 const tabsAlignmentOptions = computed(() => [
   { value: 'left' as TabsAlignment, label: getEditorTranslation('position-left'), testId: 'tabs-align-left' },
   { value: 'center' as TabsAlignment, label: getEditorTranslation('position-center'), testId: 'tabs-align-center' },
   { value: 'right' as TabsAlignment, label: getEditorTranslation('position-right'), testId: 'tabs-align-right' },
 ]);
 
-const tabSettingsOpen = ref(true);
 const selectedTabUuid = ref<string>('');
 
-const tabs = computed(() => tabsStructure.value.content ?? []);
-
 const tabsOptions = computed(() => {
+  console.log('[tabsOptions] RECOMPUTE, tabs.length =', tabs.value.length);
   return tabs.value.map((tab, index) => {
     const settings = (tab.configuration as Record<string, unknown> | undefined)?.tabSettings as
       | Record<string, unknown>
       | undefined;
-    const label = typeof settings?.label === 'string' && settings.label.trim().length > 0
-      ? settings.label
-      : `${getEditorTranslation('tab-label')} ${index + 1}`;
-    return {
-      uuid: tab.meta.uuid,
-      label,
-    };
+    const label =
+      typeof settings?.label === 'string' && settings.label.trim().length > 0
+        ? settings.label
+        : `${getEditorTranslation('tab-label')} ${index + 1}`;
+    return { uuid: tab.meta.uuid, label };
   });
 });
-
-watch(
-  tabsOptions,
-  (options) => {
-    if (!options.length) {
-      selectedTabUuid.value = '';
-      return;
-    }
-
-    if (!options.some((option) => option.uuid === selectedTabUuid.value)) {
-      selectedTabUuid.value = options[0]?.uuid ?? '';
-    }
-  },
-  { immediate: true },
-);
 
 const selectedTab = computed(() => {
   if (!selectedTabUuid.value) return null;
@@ -194,9 +190,7 @@ const ensureTabSettings = (block: Block) => {
   if (!block.configuration) block.configuration = { visible: true };
   const config = block.configuration as Record<string, unknown>;
   const tabSettings = (config.tabSettings as Record<string, unknown> | undefined) ?? {};
-
   if (typeof tabSettings.label !== 'string') tabSettings.label = '';
-
   config.tabSettings = tabSettings;
   return tabSettings;
 };
@@ -217,19 +211,27 @@ const selectedTabName = computed({
 const editTab = (block: Block) => {
   pushEdit(block);
 };
+
+
+
+watch(editingBlock, (v) => console.log('[tabs-form] editingBlock:', v?.meta?.uuid ?? null));
 </script>
 
 <i18n lang="json">
 {
   "en": {
     "layout-label": "Layout",
+    "design-label": "Design",
+    "tab-style-label": "Tab style",
+    "style-underline": "Underline",
+    "style-pills": "Segmented pills",
+    "style-vertical": "Vertical",
     "tabs-label": "Tabs",
     "add-tab-label": "Add Tab",
     "tab-settings-label": "Tab Names",
     "selected-tab-label": "Selected Tab",
     "tab-label": "Tab",
     "tab-name-label": "Tab name",
-    "show-tabs-as-buttons-label": "Show tabs as buttons",
     "show-border-under-tabs-label": "Show border line under tabs",
     "tabs-alignment-label": "Tabs alignment",
     "position-left": "Left",
@@ -238,18 +240,22 @@ const editTab = (block: Block) => {
   },
   "de": {
     "layout-label": "Layout",
+    "design-label": "Design",
+    "tab-style-label": "Tab-Stil",
+    "style-underline": "Unterstrich",
+    "style-pills": "Segment-Pills",
+    "style-vertical": "Vertikal",
     "tabs-label": "Tabs",
-    "add-tab-label": "Add Tab",
-    "tab-settings-label": "Tab Names",
-    "selected-tab-label": "Selected Tab",
+    "add-tab-label": "Tab hinzufügen",
+    "tab-settings-label": "Tab-Namen",
+    "selected-tab-label": "Ausgewählter Tab",
     "tab-label": "Tab",
-    "tab-name-label": "Tab name",
-    "show-tabs-as-buttons-label": "Show tabs as buttons",
-    "show-border-under-tabs-label": "Show border line under tabs",
-    "tabs-alignment-label": "Tabs alignment",
-    "position-left": "Left",
-    "position-center": "Center",
-    "position-right": "Right"
+    "tab-name-label": "Tab-Name",
+    "show-border-under-tabs-label": "Trennlinie unter Tabs anzeigen",
+    "tabs-alignment-label": "Tab-Ausrichtung",
+    "position-left": "Links",
+    "position-center": "Mitte",
+    "position-right": "Rechts"
   }
 }
 </i18n>
