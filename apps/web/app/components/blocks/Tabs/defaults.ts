@@ -4,13 +4,12 @@ import type { BlocksList } from '~/composables/useBlocksList/types';
 
 const TABS_IMAGE = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
-const createTabTextCard = (title: string, htmlDescription: string): Block => ({
+const createTabTextCard = (htmlDescription: string): Block => ({
   name: 'TextCard',
   type: 'content',
   meta: { uuid: uuid() },
   content: {
     text: {
-      title,
       htmlDescription,
       textAlignment: 'left',
       color: '#000',
@@ -26,7 +25,7 @@ const createTabTextCard = (title: string, htmlDescription: string): Block => ({
   },
 });
 
-const createTabs = (title: string, htmlDescription: string): Block => ({
+const createTabs = (htmlDescription: string): Block => ({
   name: 'Tabs',
   type: 'structure',
   meta: { uuid: uuid() },
@@ -38,7 +37,7 @@ const createTabs = (title: string, htmlDescription: string): Block => ({
       tabsAlignment: 'left',
     },
   },
-  content: [createTabTextCard(title, htmlDescription)],
+  content: [createTabTextCard(htmlDescription)],
 });
 
 export const getBlocksList = (): BlocksList => ({
@@ -52,8 +51,8 @@ export const getBlocksList = (): BlocksList => ({
         title: 'Tabs',
         image: TABS_IMAGE,
         template: {
-          en: createTabs('Tab 1', '<p style="text-align: left;">Add your tab content here.</p>'),
-          de: createTabs('Tab 1', '<p style="text-align: left;">Fügen Sie hier Ihren Tab-Inhalt hinzu.</p>'),
+          en: createTabs('<p style="text-align: left;">Add your tab content here.</p>'),
+          de: createTabs('<p style="text-align: left;">Fügen Sie hier Ihren Tab-Inhalt hinzu.</p>'),
         },
       },
     ],
@@ -61,6 +60,4 @@ export const getBlocksList = (): BlocksList => ({
 });
 
 export const createDefault = (): Block =>
-  createTabs('Tab 1', '<p style="text-align: left;">Add your tab content here.</p>');
-
-export const labelPath = 'content.text.title';
+  createTabs('<p style="text-align: left;">Add your tab content here.</p>');

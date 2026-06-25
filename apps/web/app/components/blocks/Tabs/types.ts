@@ -14,10 +14,6 @@ export type TabsStructureConfiguration = {
   };
 };
 
-export type TabSettings = {
-  label?: string;
-};
-
 export type TabsProps = {
   name: string;
   type: string;
@@ -30,9 +26,4 @@ export type TabsProps = {
 
 export type TabsFormProps = {
   uuid?: string;
-};
-
-export type TabsStructureProps = {
-  content?: Block[];
-  configuration?: TabsStructureConfiguration;
 };

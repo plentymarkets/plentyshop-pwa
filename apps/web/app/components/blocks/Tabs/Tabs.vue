@@ -5,7 +5,7 @@
         v-if="visibleTabs.length > 0"
         class="flex flex-col gap-0.5 min-w-[160px] shrink-0 border-r border-neutral-200 pr-3"
         role="tablist"
-        :aria-label="t('tabs.structure.ariaLabel')"
+        :aria-label="getEditorTranslation('tabs.structure.ariaLabel')"
         aria-orientation="vertical"
       >
         <button
@@ -20,7 +20,7 @@
           :data-testid="`tabs-trigger-${index}`"
           @click="activeTabIndex = index"
         >
-          {{ getTabLabel(tab, index) }}
+          {{ tabLabel(tab, index) }}
         </button>
       </div>
 
@@ -42,7 +42,7 @@
         <div
           :class="barClasses"
           role="tablist"
-          :aria-label="t('tabs.structure.ariaLabel')"
+          :aria-label="getEditorTranslation('tabs.structure.ariaLabel')"
           aria-orientation="horizontal"
         >
           <button
@@ -57,7 +57,7 @@
             :data-testid="`tabs-trigger-${index}`"
             @click="activeTabIndex = index"
           >
-            {{ getTabLabel(tab, index) }}
+            {{ tabLabel(tab, index) }}
           </button>
         </div>
       </div>
@@ -79,9 +79,10 @@
 
 <script setup lang="ts">
 import type { Block } from '@plentymarkets/shop-api';
-import type { TabsStructureProps, TabSettings, TabsAlignment, TabStyle } from './types';
+import type { TabsProps, TabsAlignment, TabStyle } from './types';
+import { getTabLabel } from './helpers';
 
-const props = defineProps<TabsStructureProps>();
+const props = defineProps<TabsProps>();
 
 const { shouldDisplayPlaceholder } = useBlockManager();
 const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
@@ -93,6 +94,18 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => props.configu
 const tabStyle = computed<TabStyle>(() => props.configuration?.layout?.tabStyle ?? 'underline');
 const tabsAlignment = computed<TabsAlignment>(() => props.configuration?.layout?.tabsAlignment ?? 'left');
 const showBorderUnderTabs = computed(() => props.configuration?.layout?.showBorderUnderTabs !== false);
+const tabLabelPrefix = getEditorTranslation('tabs.structure.fallbackLabel');
+
+const activeTabIndex = ref(0);
+const activeTab = computed(() => visibleTabs.value[activeTabIndex.value]);
+
+const isActiveTab = (index: number) => activeTabIndex.value === index;
+
+const tabLabel = (block: Block, index: number) =>
+  getTabLabel(block, index, tabLabelPrefix);
+
+const getTabId = (uuid: string) => `tabs-trigger-${uuid}`;
+const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;
 
 const visibleTabs = computed(() => {
   return (props.content ?? []).filter((block) => block.configuration?.visible !== false);
@@ -152,8 +165,6 @@ const triggerClasses = (index: number) => {
   }
 };
 
-const activeTabIndex = ref(0);
-
 watch(
   visibleTabs,
   (tabs) => {
@@ -167,34 +178,6 @@ watch(
   },
   { immediate: true },
 );
-
-const activeTab = computed(() => visibleTabs.value[activeTabIndex.value]);
-const isActiveTab = (index: number) => activeTabIndex.value === index;
-
-const getTabSettings = (block: Block): TabSettings => {
-  const config = block.configuration as Record<string, unknown> | undefined;
-  const tabSettings = config?.tabSettings as TabSettings | undefined;
-  return { label: tabSettings?.label };
-};
-
-const getTabLabel = (block: Block, index: number) => {
-  const tabSettings = getTabSettings(block);
-  if (typeof tabSettings.label === 'string' && tabSettings.label.trim().length > 0) {
-    return tabSettings.label;
-  }
-
-  const content = block.content as Record<string, unknown> | undefined;
-  const text = content?.text as Record<string, unknown> | undefined;
-  const title = text?.title;
-  if (typeof title === 'string' && title.trim().length > 0) {
-    return title;
-  }
-
-  return getEditorTranslation('tabs.structure.fallbackLabel', { index: index + 1 });
-};
-
-const getTabId = (uuid: string) => `tabs-trigger-${uuid}`;
-const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;
 </script>
 
 <i18n lang="json">
@@ -203,7 +186,7 @@ const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;
     "tabs": {
       "structure": {
         "ariaLabel": "Tabs",
-        "fallbackLabel": "Tab {index}"
+        "fallbackLabel": "Tab"
       }
     }
   },
@@ -211,7 +194,7 @@ const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;
     "tabs": {
       "structure": {
         "ariaLabel": "Tabs",
-        "fallbackLabel": "Tab {index}"
+        "fallbackLabel": "Tab"
       }
     }
   }

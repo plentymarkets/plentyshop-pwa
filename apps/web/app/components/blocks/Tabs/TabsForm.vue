@@ -7,7 +7,7 @@
         :min-items="1"
         :section-label="getEditorTranslation('tabs-label')"
         :add-button-label="getEditorTranslation('add-tab-label')"
-        :custom-label="getTabLabel"
+        :custom-label="tabLabelFor"
         @edit-element="editTab"
       />
 
@@ -75,9 +75,10 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { TabsAlignment, TabStyle, TabsStructureProps } from './types';
+import type { TabsAlignment, TabStyle, TabsProps, TabsFormProps } from './types';
+import { getTabLabel } from './helpers';
 
-const props = defineProps<{ uuid?: string }>();
+const props = defineProps<TabsFormProps>();
 
 const { blockUuid } = useSiteConfiguration();
 const { allBlocks: data } = useBlocks();
@@ -96,15 +97,15 @@ const tabLabelPrefix = getEditorTranslation('tab-label');
 const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
 
 const tabsStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureProps,
+  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsProps,
 );
 
 const tabs = computed(() => tabsStructure.value?.content?.map((tab) => tab) ?? []);
 
 const tabsOptions = computed(() =>
-  tabs.value.map((tab) => ({
+  tabs.value.map((tab, index) => ({
     uuid: tab.meta.uuid,
-    label: getTabLabel(tab),
+    label: getTabLabel(tab, index, tabLabelPrefix),
   })),
 );
 
@@ -164,11 +165,9 @@ const selectedTabName = computed({
   },
 });
 
-const getTabLabel = (block: Block) => {
-  const label = (block.configuration as { tabSettings?: { label?: string } } | undefined)?.tabSettings?.label?.trim();
-  if (label) return label;
-  const index = tabs.value.findIndex((t) => t.meta.uuid === block.meta.uuid);
-  return `${tabLabelPrefix} ${index + 1}`;
+const tabLabelFor = (block: Block) => {
+  const index = tabs.value.findIndex((tab) => tab.meta.uuid === block.meta.uuid);
+  return getTabLabel(block, index, tabLabelPrefix);
 };
 </script>
 
