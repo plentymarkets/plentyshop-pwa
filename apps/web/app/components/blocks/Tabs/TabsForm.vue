@@ -81,19 +81,38 @@ const props = defineProps<{ uuid?: string }>();
 const { blockUuid } = useSiteConfiguration();
 const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
+const { pushEdit } = useBlockEditStack();
 
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
-
 const elementsOpen = ref(true);
 const designOpen = ref(true);
 const tabSettingsOpen = ref(true);
 const layoutOpen = ref(true);
+const selectedTabUuid = ref<string>('');
+const editTab = (block: Block) => pushEdit(block);
 
 const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
-const { pushEdit } = useBlockEditStack();
 
 const tabsStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsStructureProps,
+);
+
+const tabs = computed(() => tabsStructure.value?.content?.map((tab) => tab) ?? []);
+const customTabsLabels = computed(() =>
+  tabs.value.map((tab) => {
+    const settings = (tab.configuration as { tabSettings?: { label?: string } } | undefined)?.tabSettings;
+    return settings?.label ?? '';
+  }),
+);
+
+const tabsOptions = computed(() =>
+  tabs.value.map((tab, index) => {
+    console.log('tab label', tab.configuration?.label);
+    return {
+      uuid: tab.meta.uuid,
+      label: getBlockDisplayName(tab.name) || `${getEditorTranslation('tab-label')} ${index + 1}`,
+    };
+  }),
 );
 
 const tabsConfiguration = computed(() => tabsStructure.value.configuration ?? {});
@@ -101,21 +120,20 @@ const tabsConfiguration = computed(() => tabsStructure.value.configuration ?? {}
 const { isFullWidth } = useFullWidthToggleForConfig(tabsConfiguration);
 
 const layout = computed(() => tabsConfiguration.value.layout);
-const ensureLayout = () => (tabsConfiguration.value.layout ??= {});
 
 const tabStyle = computed<TabStyle>({
   get: () => layout.value?.tabStyle ?? 'underline',
-  set: (value) => (ensureLayout().tabStyle = value),
+  set: (value) => (layout.value!.tabStyle = value),
 });
 
 const showBorderUnderTabs = computed({
   get: () => layout.value?.showBorderUnderTabs !== false,
-  set: (value: boolean) => (ensureLayout().showBorderUnderTabs = value),
+  set: (value: boolean) => (layout.value!.showBorderUnderTabs = value),
 });
 
 const tabsAlignment = computed<TabsAlignment>({
   get: () => layout.value?.tabsAlignment ?? 'left',
-  set: (value) => (ensureLayout().tabsAlignment = value),
+  set: (value) => (layout.value!.tabsAlignment = value),
 });
 
 const supportsAlignment = computed(() => ['underline', 'pills'].includes(tabStyle.value));
@@ -127,23 +145,6 @@ const tabsAlignmentOptions = computed(() =>
     testId: `tabs-align-${value}`,
   })),
 );
-
-const tabs = computed(() => tabsStructure.value.content ?? []);
-
-const selectedTabUuid = ref<string>('');
-
-const tabsOptions = computed(() => {
-  return tabs.value.map((tab, index) => {
-    const settings = (tab.configuration as Record<string, unknown> | undefined)?.tabSettings as
-      | Record<string, unknown>
-      | undefined;
-    const label =
-      typeof settings?.label === 'string' && settings.label.trim().length > 0
-        ? settings.label
-        : `${getEditorTranslation('tab-label')} ${index + 1}`;
-    return { uuid: tab.meta.uuid, label };
-  });
-});
 
 const selectedTab = computed(() => {
   if (!selectedTabUuid.value) return null;
@@ -169,8 +170,6 @@ const selectedTabName = computed({
     ensureTabSettings(selectedTab.value).label = value;
   },
 });
-
-const editTab = (block: Block) => pushEdit(block);
 </script>
 
 <i18n lang="json">
