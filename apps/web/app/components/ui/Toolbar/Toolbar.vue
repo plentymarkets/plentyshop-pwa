@@ -1,8 +1,7 @@
 <template>
   <div
     :key="`${$route.meta?.identifier ?? ''}:${$route.meta?.type ?? ''}`"
-    class="mb-3 font-editor"
-    :class="['sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111]', drawerZIndexClass]"
+    class="mb-3 font-editor sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111] md:z-editor-toolbar"
     data-testid="edit-mode-toolbar"
   >
     <div class="relative flex items-center pr-5">
@@ -76,7 +75,6 @@ const editLabel = 'Switch to Edit mode to modify your page content and layout.';
 
 const { hasChanges: localizationHasChanges } = useEditorLocalizationKeys();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
-const { isDrawerOpen } = useDrawerState();
 
 const { data, cleanData, loading, isSettling } = useBlocks();
 
@@ -97,10 +95,6 @@ const toggleEdit = () => {
     isEditing.value = false;
   }
 };
-
-const drawerZIndexClass = computed(() =>
-  isDrawerOpen.value ? 'lg:z-editor-drawer md:z-editor-toolbar' : 'md:z-editor-drawer',
-);
 
 watch(
   () => data.value,
