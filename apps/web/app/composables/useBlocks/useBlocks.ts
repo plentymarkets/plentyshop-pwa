@@ -1,6 +1,6 @@
 import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { UseBlocksState, UseBlocksReturn } from './types';
-import { assembleBlocks, isValidHeaderOrder } from '~/utils/blocks/block-helpers';
+import { assembleBlocks } from '~/utils/blocks/block-helpers';
 
 declare module '#app' {
   interface NuxtApp {
@@ -110,7 +110,14 @@ export const useBlocks: UseBlocksReturn = () => {
 
       state.value.hasSnapshot = true;
 
-      const assembled = assembleBlocks(response?.data ?? state.value.data, type, identifier, state.value.hasSnapshot);
+      const currentHeaderContainer = state.value.data?.HeaderContainer;
+      const responseData = response?.data ?? state.value.data;
+      const assembled = assembleBlocks(responseData, type, identifier, state.value.hasSnapshot);
+
+      if (currentHeaderContainer) {
+        (assembled as GetBlocksResponse).HeaderContainer = currentHeaderContainer;
+      }
+
       setBlocks(assembled);
 
       clearNuxtData((key) => key.startsWith('blocks-'));
@@ -136,10 +143,6 @@ export const useBlocks: UseBlocksReturn = () => {
 
   const reorderHeaderBlocks = (blocks: Block[]) => {
     if (!state.value.data.HeaderContainer) {
-      return;
-    }
-
-    if (!isValidHeaderOrder(blocks)) {
       return;
     }
 
