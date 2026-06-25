@@ -35,7 +35,7 @@ const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
 };
 
 const { getSetting } = useSiteSettings('itemCanonicalId');
-const itemCanonicalId = computed(() => Number(getSetting() ?? -1));
+const itemCanonicalId = computed(() => Number(getSetting() || -1));
 
 const variationPropertyGroups = computed(() => productGetters.getPropertyGroups(props.product ?? ({} as Product)));
 
