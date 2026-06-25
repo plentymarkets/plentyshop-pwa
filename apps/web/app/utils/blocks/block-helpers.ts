@@ -23,18 +23,11 @@ export const canMoveHeaderBlock = (currentBlocks: Block[], evt: BlockMoveEvent):
     return true;
   }
 
-  const moved = currentBlocks[from];
+  const proposed = [...currentBlocks];
+  const [moved] = proposed.splice(from, 1);
   if (!moved) {
     return true;
   }
-
-  const isNavigationBlock = moved.name === NAVIGATION_BLOCK_NAME || moved.name === HEADER_BLOCK_NAME;
-  if (!isNavigationBlock) {
-    return true;
-  }
-
-  const proposed = [...currentBlocks];
-  proposed.splice(from, 1);
   proposed.splice(to, 0, moved);
   return isValidHeaderOrder(proposed);
 };
