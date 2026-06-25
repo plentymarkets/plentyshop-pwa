@@ -1,7 +1,7 @@
 <template>
   <NuxtErrorBoundary>
     <Swiper
-      :id="`carousel-${index}`"
+      :id="`carousel-${meta.uuid}`"
       :key="visibleContent.length"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
@@ -38,16 +38,16 @@
       </SwiperSlide>
       <div
         v-if="enableModules"
-        :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
+        :class="`swiper-pagination swiper-pagination-${meta.uuid} swiper-pagination-bullets swiper-pagination-horizontal`"
       />
     </Swiper>
 
     <button
       v-if="enableModules && handleArrows()"
-      :key="`prev-${index}`"
+      :key="`prev-${meta.uuid}`"
       type="button"
-      :class="`swiper-button-prev swiper-button-prev-${index}`"
-      :aria-controls="`carousel-${index}`"
+      :class="`swiper-button-prev swiper-button-prev-${meta.uuid}`"
+      :aria-controls="`carousel-${meta.uuid}`"
       :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
       :style="{
         color: configuration.controls.color + ' !important',
@@ -57,10 +57,10 @@
     />
     <button
       v-if="enableModules && handleArrows()"
-      :key="`next-${index}`"
+      :key="`next-${meta.uuid}`"
       type="button"
-      :class="`swiper-button-next swiper-button-next-${index}`"
-      :aria-controls="`carousel-${index}`"
+      :class="`swiper-button-next swiper-button-next-${meta.uuid}`"
+      :aria-controls="`carousel-${meta.uuid}`"
       :aria-label="t('homepage.banner.ariaLabelNextSlide')"
       :style="{
         color: configuration.controls.color + ' !important',
@@ -131,7 +131,7 @@ let slider: SwiperType | null = null;
 const paginationConfig = computed(() => {
   return enableModules.value && configuration.controls.color && configuration.controls.displayIndicators !== false
     ? {
-        el: `.swiper-pagination-${index}`,
+        el: `.swiper-pagination-${meta.uuid}`,
         clickable: true,
         bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary-500',
         renderBullet(index: number, className: string) {
@@ -144,8 +144,8 @@ const paginationConfig = computed(() => {
 const navigationConfig = computed(() => {
   return enableModules.value
     ? {
-        nextEl: `.swiper-button-next-${index}`,
-        prevEl: `.swiper-button-prev-${index}`,
+        nextEl: `.swiper-button-next-${meta.uuid}`,
+        prevEl: `.swiper-button-prev-${meta.uuid}`,
       }
     : false;
 });
