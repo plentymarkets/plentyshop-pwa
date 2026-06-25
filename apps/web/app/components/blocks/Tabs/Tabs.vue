@@ -5,7 +5,7 @@
         v-if="visibleTabs.length > 0"
         class="flex flex-col gap-0.5 min-w-[160px] shrink-0 border-r border-neutral-200 pr-3"
         role="tablist"
-        :aria-label="getEditorTranslation('tabs.structure.ariaLabel')"
+        :aria-label="getEditorTranslation('tabs.ariaLabel')"
         aria-orientation="vertical"
       >
         <button
@@ -42,7 +42,7 @@
         <div
           :class="barClasses"
           role="tablist"
-          :aria-label="getEditorTranslation('tabs.structure.ariaLabel')"
+          :aria-label="getEditorTranslation('tabs.ariaLabel')"
           aria-orientation="horizontal"
         >
           <button
@@ -94,14 +94,13 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => props.configu
 const tabStyle = computed<TabStyle>(() => props.configuration?.layout?.tabStyle ?? 'underline');
 const tabsAlignment = computed<TabsAlignment>(() => props.configuration?.layout?.tabsAlignment ?? 'left');
 const showBorderUnderTabs = computed(() => props.configuration?.layout?.showBorderUnderTabs !== false);
-const tabLabelPrefix = getEditorTranslation('tabs.structure.fallbackLabel');
+
+const tabLabel = (block: Block, index: number) => getTabLabel(block, index, 'Tab');
 
 const activeTabIndex = ref(0);
 const activeTab = computed(() => visibleTabs.value[activeTabIndex.value]);
 
 const isActiveTab = (index: number) => activeTabIndex.value === index;
-
-const tabLabel = (block: Block, index: number) => getTabLabel(block, index, tabLabelPrefix);
 
 const getTabId = (uuid: string) => `tabs-trigger-${uuid}`;
 const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;
@@ -183,18 +182,12 @@ watch(
 {
   "en": {
     "tabs": {
-      "structure": {
-        "ariaLabel": "Tabs",
-        "fallbackLabel": "Tab"
-      }
+      "ariaLabel": "Tabs"
     }
   },
   "de": {
     "tabs": {
-      "structure": {
-        "ariaLabel": "Tabs",
-        "fallbackLabel": "Tab"
-      }
+      "ariaLabel": "Tabs"
     }
   }
 }
