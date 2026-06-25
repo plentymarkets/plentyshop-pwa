@@ -28,6 +28,7 @@ export default {
   robotsSearchResult: process.env.NUXT_PUBLIC_SEARCH_RESULT || 'all',
   robotsAccessibilityDeclaration: process.env.NUXT_PUBLIC_ROBOTS_ACCESSIBILITY_DECLARATION || 'all',
   robotsStopIndexing: process.env.NUXT_PUBLIC_ROBOTS_STOP_INDEXING || '0',
+  seoCategoryRobotsNoIndex: process.env.NUXT_PUBLIC_SEO_CATEGORY_ROBOTS_NO_INDEX || '1',
   robotsItemPage: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || 'ALL',
   robotsItemPageId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
   itemCanonicalId: process.env.NUXT_PUBLIC_ITEM_CANONICAL_ID || '',
