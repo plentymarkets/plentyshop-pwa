@@ -55,9 +55,11 @@
             : 'text-editor-text-ghost italic'
         "
       >
-        {{ block.name !== 'EmptyGridBlock'
-          ? (props.customLabel || getBlockDisplayName(block.name))
-          : getEditorTranslation('empty-block') }}
+        {{
+          block.name !== 'EmptyGridBlock'
+            ? props.customLabel || getBlockDisplayName(block.name)
+            : getEditorTranslation('empty-block')
+        }}
       </span>
 
       <SfIconVisibilityOff

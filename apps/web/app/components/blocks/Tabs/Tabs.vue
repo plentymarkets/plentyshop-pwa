@@ -102,8 +102,6 @@ const containerClasses = computed(() => {
   return isFullWidth.value ? [] : ['px-4', 'md:px-6', 'max-w-screen-3xl', 'mx-auto'];
 });
 
-const scrollbarHidden = '[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]';
-
 const barWrapperClasses = computed(() => {
   const alignmentClasses: Record<TabsAlignment, string> = {
     left: 'justify-start',
@@ -119,10 +117,7 @@ const barClasses = computed(() => {
       return ['inline-flex flex-wrap gap-1 bg-neutral-100 p-1 rounded-lg'];
     case 'underline':
     default:
-      return [
-        'flex flex-wrap gap-6',
-        showBorderUnderTabs.value ? 'border-b border-neutral-200 pb-px' : '',
-      ];
+      return ['flex flex-wrap gap-6', showBorderUnderTabs.value ? 'border-b border-neutral-200 pb-px' : ''];
   }
 });
 

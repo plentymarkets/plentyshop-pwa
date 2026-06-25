@@ -35,7 +35,7 @@
             data-testid="tabs-selected-tab"
           >
             <option value="" disabled>{{ getEditorTranslation('select-placeholder') }}</option>
-            <option v-for="(option) in tabsOptions" :key="option.uuid" :value="option.uuid">
+            <option v-for="option in tabsOptions" :key="option.uuid" :value="option.uuid">
               {{ option.label }}
             </option>
           </select>
