@@ -174,7 +174,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
   };
 
   /**
-   * @description Computed robots meta content for category pages. Returns `noindex, nofollow`
+   * @description Computed robots meta content for category pages. Returns `noindex, follow`
    * when the current page number exceeds the configured max indexed page; otherwise falls back
    * to the category's own robots setting.
    * @returns ComputedRef<string>
@@ -187,7 +187,9 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const route = useRoute();
     const { getSetting: getSeoCategoryRobotsNoIndex } = useSiteSettings('seoCategoryRobotsNoIndex');
     const currentPage = computed(() => Number(route.query.page as string) || 1);
-    const maxIndexedPage = computed(() => Number(getSeoCategoryRobotsNoIndex()) || 0);
+    const maxIndexedPage = computed(() =>
+      Number(getSeoCategoryRobotsNoIndex()) > 0 ? Number(getSeoCategoryRobotsNoIndex()) : 1,
+    );
 
     return computed((): string => {
       if (!productsCatalog.value?.category) {
@@ -195,7 +197,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
       }
 
       if (currentPage.value >= maxIndexedPage.value + 1) {
-        return 'noindex, nofollow';
+        return 'noindex, follow';
       }
       return categoryGetters.getCategoryRobots(productsCatalog.value.category);
     });
