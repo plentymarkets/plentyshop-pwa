@@ -34,8 +34,8 @@
             data-testid="tabs-selected-tab"
           >
             <option value="" disabled>{{ getEditorTranslation('select-placeholder') }}</option>
-            <option v-for="option in tabsOptions" :key="option.uuid" :value="option.uuid">
-              {{ option.label }}
+            <option v-for="(option, index) in tabsOptions" :key="option.uuid" :value="option.uuid">
+              {{ customTabsLabels[index]?.trim() ? customTabsLabels[index] : option.label }}
             </option>
           </select>
         </div>
@@ -106,13 +106,10 @@ const customTabsLabels = computed(() =>
 );
 
 const tabsOptions = computed(() =>
-  tabs.value.map((tab, index) => {
-    console.log('tab label', tab.configuration?.label);
-    return {
-      uuid: tab.meta.uuid,
-      label: getBlockDisplayName(tab.name) || `${getEditorTranslation('tab-label')} ${index + 1}`,
-    };
-  }),
+  tabs.value.map((tab, index) => ({
+    uuid: tab.meta.uuid,
+    label: getBlockDisplayName(tab.name) || `${getEditorTranslation('tab-label')} ${index + 1}`,
+  })),
 );
 
 const tabsConfiguration = computed(() => tabsStructure.value.configuration ?? {});
