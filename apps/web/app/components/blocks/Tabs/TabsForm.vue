@@ -7,6 +7,7 @@
         :min-items="1"
         :section-label="getEditorTranslation('tabs-label')"
         :add-button-label="getEditorTranslation('add-tab-label')"
+        :custom-label="getTabLabel"
         @edit-element="editTab"
       />
 
@@ -34,8 +35,8 @@
             data-testid="tabs-selected-tab"
           >
             <option value="" disabled>{{ getEditorTranslation('select-placeholder') }}</option>
-            <option v-for="(option, index) in tabsOptions" :key="option.uuid" :value="option.uuid">
-              {{ customTabsLabels[index]?.trim() ? customTabsLabels[index] : option.label }}
+            <option v-for="(option) in tabsOptions" :key="option.uuid" :value="option.uuid">
+              {{ option.label }}
             </option>
           </select>
         </div>
@@ -90,6 +91,7 @@ const tabSettingsOpen = ref(true);
 const layoutOpen = ref(true);
 const selectedTabUuid = ref<string>('');
 const editTab = (block: Block) => pushEdit(block);
+const tabLabelPrefix = getEditorTranslation('tab-label');
 
 const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
 
@@ -98,17 +100,11 @@ const tabsStructure = computed(
 );
 
 const tabs = computed(() => tabsStructure.value?.content?.map((tab) => tab) ?? []);
-const customTabsLabels = computed(() =>
-  tabs.value.map((tab) => {
-    const settings = (tab.configuration as { tabSettings?: { label?: string } } | undefined)?.tabSettings;
-    return settings?.label ?? '';
-  }),
-);
 
 const tabsOptions = computed(() =>
-  tabs.value.map((tab, index) => ({
+  tabs.value.map((tab) => ({
     uuid: tab.meta.uuid,
-    label: getBlockDisplayName(tab.name) || `${getEditorTranslation('tab-label')} ${index + 1}`,
+    label: getTabLabel(tab),
   })),
 );
 
@@ -167,6 +163,13 @@ const selectedTabName = computed({
     ensureTabSettings(selectedTab.value).label = value;
   },
 });
+
+const getTabLabel = (block: Block) => {
+  const label = (block.configuration as { tabSettings?: { label?: string } } | undefined)?.tabSettings?.label?.trim();
+  if (label) return label;
+  const index = tabs.value.findIndex((t) => t.meta.uuid === block.meta.uuid);
+  return `${tabLabelPrefix} ${index + 1}`;
+};
 </script>
 
 <i18n lang="json">

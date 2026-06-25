@@ -55,7 +55,9 @@
             : 'text-editor-text-ghost italic'
         "
       >
-        {{ block.name !== 'EmptyGridBlock' ? getBlockDisplayName(block.name) : getEditorTranslation('empty-block') }}
+        {{ block.name !== 'EmptyGridBlock'
+          ? (props.customLabel || getBlockDisplayName(block.name))
+          : getEditorTranslation('empty-block') }}
       </span>
 
       <SfIconVisibilityOff
@@ -128,6 +130,7 @@ const props = defineProps<{
   minItemsReached: boolean;
   isActive?: boolean;
   parentUuid?: string;
+  customLabel?: string;
 }>();
 
 const emit = defineEmits<{
