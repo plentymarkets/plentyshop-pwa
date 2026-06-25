@@ -2,7 +2,7 @@
   <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
     <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
       <div
-        v-if="propertyHasNameOrValue(variationProperty)"
+        v-if="propertyHasNameOrValue(variationProperty) && variationProperty.id !== itemCanonicalId"
         class="flex items-center variation-properties @container/variationProperties"
       >
         <ClientOnly>
@@ -33,6 +33,9 @@ const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
     productPropertyGetters.getPropertyValue(variationProperty)
   );
 };
+
+const { getSetting } = useSiteSettings('itemCanonicalId');
+const itemCanonicalId = computed(() => Number(getSetting() ?? -1));
 
 const variationPropertyGroups = computed(() => productGetters.getPropertyGroups(props.product ?? ({} as Product)));
 
