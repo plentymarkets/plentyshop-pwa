@@ -116,12 +116,11 @@ const barWrapperClasses = computed(() => {
 const barClasses = computed(() => {
   switch (tabStyle.value) {
     case 'pills':
-      return ['inline-flex gap-1 bg-neutral-100 p-1 rounded-lg overflow-x-auto', scrollbarHidden];
+      return ['inline-flex flex-wrap gap-1 bg-neutral-100 p-1 rounded-lg'];
     case 'underline':
     default:
       return [
-        'flex gap-6 overflow-x-auto',
-        scrollbarHidden,
+        'flex flex-wrap gap-6',
         showBorderUnderTabs.value ? 'border-b border-neutral-200 pb-px' : '',
       ];
   }
