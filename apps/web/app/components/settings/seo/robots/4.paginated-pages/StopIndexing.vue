@@ -25,12 +25,12 @@ const robots = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "After which page should robots stop indexing your category pages? Default = 0",
-    "tooltip": "Defines the number of paginated pages that search engines should index. A value of 0 means only the first page is indexed, while subsequent pages are not. Increase this number only if you want additional paginated pages to appear in search results, but be aware this may create duplicate content."
+    "label": "After which page should robots stop indexing your category pages? Default = 1",
+    "tooltip": "Defines the number of paginated pages that search engines should index. A value of 1 means only the first page is indexed (recommended), while pages after page 1 use 'noindex, follow' to prevent duplicate content while allowing search engines to follow product links. Increase this number only if you want additional paginated pages to appear in search results, but be aware this may create duplicate content."
   },
   "de": {
-    "label": "After which page should robots stop indexing your category pages? Default = 0",
-    "tooltip": "Defines the number of paginated pages that search engines should index. A value of 0 means only the first page is indexed, while subsequent pages are not. Increase this number only if you want additional paginated pages to appear in search results, but be aware this may create duplicate content."
+    "label": "After which page should robots stop indexing your category pages? Default = 1",
+    "tooltip": "Defines the number of paginated pages that search engines should index. A value of 1 means only the first page is indexed (recommended), while pages after page 1 use 'noindex, follow' to prevent duplicate content while allowing search engines to follow product links. Increase this number only if you want additional paginated pages to appear in search results, but be aware this may create duplicate content."
   }
 }
 </i18n>
