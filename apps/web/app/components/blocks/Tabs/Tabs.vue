@@ -101,8 +101,7 @@ const activeTab = computed(() => visibleTabs.value[activeTabIndex.value]);
 
 const isActiveTab = (index: number) => activeTabIndex.value === index;
 
-const tabLabel = (block: Block, index: number) =>
-  getTabLabel(block, index, tabLabelPrefix);
+const tabLabel = (block: Block, index: number) => getTabLabel(block, index, tabLabelPrefix);
 
 const getTabId = (uuid: string) => `tabs-trigger-${uuid}`;
 const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;

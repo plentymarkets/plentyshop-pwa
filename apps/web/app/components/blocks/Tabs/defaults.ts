@@ -59,5 +59,4 @@ export const getBlocksList = (): BlocksList => ({
   },
 });
 
-export const createDefault = (): Block =>
-  createTabs('<p style="text-align: left;">Add your tab content here.</p>');
+export const createDefault = (): Block => createTabs('<p style="text-align: left;">Add your tab content here.</p>');

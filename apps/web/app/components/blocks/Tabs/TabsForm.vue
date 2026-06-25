@@ -96,9 +96,7 @@ const tabLabelPrefix = getEditorTranslation('tab-label');
 
 const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
 
-const tabsStructure = computed(
-  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsProps,
-);
+const tabsStructure = computed(() => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as TabsProps);
 
 const tabs = computed(() => tabsStructure.value?.content?.map((tab) => tab) ?? []);
 
