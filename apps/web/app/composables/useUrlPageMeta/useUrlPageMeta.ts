@@ -187,7 +187,9 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const route = useRoute();
     const { getSetting: getSeoCategoryRobotsNoIndex } = useSiteSettings('seoCategoryRobotsNoIndex');
     const currentPage = computed(() => Number(route.query.page as string) || 1);
-    const maxIndexedPage = computed(() => Number(getSeoCategoryRobotsNoIndex()) || 1);
+    const maxIndexedPage = computed(() =>
+      Number(getSeoCategoryRobotsNoIndex()) > 0 ? Number(getSeoCategoryRobotsNoIndex()) : 1,
+    );
 
     return computed((): string => {
       if (!productsCatalog.value?.category) {
