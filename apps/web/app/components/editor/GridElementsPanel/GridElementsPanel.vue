@@ -197,10 +197,12 @@ const onDragEnd = () => {
     setGridColumnsWidth(newWidths);
   } else {
     const content = structure.value.content as Block[] | undefined;
+    const reordered = localItems.value.map((block, index) => ({ ...block, parent_slot: index }));
+
     if (Array.isArray(content)) {
-      content.splice(0, content.length, ...localItems.value);
+      content.splice(0, content.length, ...reordered);
     } else {
-      structure.value.content = [...localItems.value];
+      structure.value.content = [...reordered];
     }
   }
 };
