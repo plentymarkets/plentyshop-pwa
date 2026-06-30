@@ -6,6 +6,7 @@ export interface GridElementsPanelProps {
   modelValue?: boolean;
   minItems?: number;
   customAdd?: boolean;
+  customLabel?: (block: Block) => string;
   quickAddOptions?: QuickAddOption[];
   canMove?: (evt: BlockMoveEvent) => boolean;
 }
