@@ -31,6 +31,7 @@ export function migrateImageContent(content: OldImageContent | ImageContent): Im
       label: old.label,
       link: old.link,
       variant: old.variant,
+      alignment: 'center',
     },
     layout: {
       paddingTop: 0,
