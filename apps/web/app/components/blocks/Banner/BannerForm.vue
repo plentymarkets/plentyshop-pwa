@@ -161,7 +161,9 @@
       >
         <div class="images">
           <div class="mb-6 mt-4">
-            <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+            <UiFormLabel for="banner-button-label" class="mb-1">{{
+              getEditorTranslation('button-text-label')
+            }}</UiFormLabel>
             <SfInput
               id="banner-button-label"
               v-model="banner.content.button.label"

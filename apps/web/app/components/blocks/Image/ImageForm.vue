@@ -20,7 +20,7 @@
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
+        <UiFormLabel for="image-form-alt">{{ getEditorTranslation('alt-label') }}</UiFormLabel>
       </div>
       <SfInput id="image-form-alt" v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input" />
     </div>
@@ -40,6 +40,7 @@
             min="0"
             max="1"
             step="0.01"
+            class="w-full"
             aria-label="Brightness slider"
           />
         </div>
@@ -71,7 +72,7 @@
     </div>
     <div class="py-2">
       <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
+        <UiFormLabel for="image-form-linktarget">{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
       </div>
       <SfInput
         id="image-form-linktarget"
@@ -128,7 +129,9 @@
         />
       </div>
       <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+        <UiFormLabel for="image-form-button-link" class="mb-1">{{
+          getEditorTranslation('button-link-label')
+        }}</UiFormLabel>
         <SfInput
           id="image-form-button-link"
           v-model="uiImageTextBlock.button.link"

@@ -15,7 +15,7 @@
     <EditorFormPanel v-model="buttonSettings" :title="getEditorTranslation('button-group-label')">
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+          <UiFormLabel for="textcard-button-label">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
         </div>
         <SfInput
           id="textcard-button-label"
@@ -27,7 +27,7 @@
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+          <UiFormLabel for="textcard-button-link">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
         </div>
         <SfInput
           id="textcard-button-link"
