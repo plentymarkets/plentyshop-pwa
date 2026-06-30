@@ -402,6 +402,10 @@ const clampBrightness = (event: Event, type: string) => {
 
     "keep-transparent-label": "Keep background transparent",
 
+    "text-overlay-align-x-label": "Horizontal Alignment (x)",
+    "text-overlay-align-x-left": "Left",
+    "text-overlay-align-x-center": "Center",
+    "text-overlay-align-x-right": "Right",
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
