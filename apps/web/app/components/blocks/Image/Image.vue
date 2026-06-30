@@ -68,6 +68,7 @@ const textContentProps = computed(() =>
     buttonLabel: props.content?.button.label,
     buttonLink: props.content?.button.link,
     buttonVariant: props.content?.button.variant,
+    buttonAlignment: props.content?.button.alignment,
   }),
 );
 

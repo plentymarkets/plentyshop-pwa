@@ -33,6 +33,7 @@ export type ImageContent = {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
+    alignment?: 'left' | 'center' | 'right';
   };
   layout: {
     paddingTop: number;
