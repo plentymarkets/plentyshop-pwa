@@ -35,6 +35,7 @@
           :min-items-reached="minItemsReached"
           :is-active="currentActiveBlockIndex === index"
           :parent-uuid="props.uuid"
+          :custom-label="props.customLabel(block)"
           @insert-before="onInsertBefore"
           @edit-element="emit('edit-element', $event)"
           @replace-empty="onReplaceEmpty"
@@ -86,6 +87,7 @@ const props = withDefaults(defineProps<GridElementsPanelProps>(), {
   modelValue: true,
   minItems: 0,
   customAdd: false,
+  customLabel: () => '',
 });
 const emit = defineEmits<GridElementsPanelEmits>();
 
