@@ -1,5 +1,5 @@
 <template>
-  <div :class="containerClasses" class="tabs-structure" data-testid="tabs-structure">
+  <div class="tabs-structure" data-testid="tabs-structure">
     <div v-if="tabStyle === 'vertical'" class="flex gap-5 items-start">
       <div
         v-if="visibleTabs.length > 0"
@@ -89,7 +89,6 @@ const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConf
 
 const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
 const drawerView = computed(() => siteConfigurationDrawerView.value);
-const { isFullWidth } = useFullWidthToggleForConfig(computed(() => props.configuration ?? {}));
 
 const tabStyle = computed<TabStyle>(() => props.configuration?.layout?.tabStyle ?? 'underline');
 const tabsAlignment = computed<TabsAlignment>(() => props.configuration?.layout?.tabsAlignment ?? 'left');
@@ -107,10 +106,6 @@ const getPanelId = (uuid: string) => `tabs-panel-${uuid}`;
 
 const visibleTabs = computed(() => {
   return (props.content ?? []).filter((block) => block.configuration?.visible !== false);
-});
-
-const containerClasses = computed(() => {
-  return isFullWidth.value ? [] : ['px-4', 'md:px-6', 'max-w-screen-3xl', 'mx-auto'];
 });
 
 const barWrapperClasses = computed(() => {
@@ -136,43 +131,43 @@ const triggerClasses = (index: number) => {
   const active = isActiveTab(index);
   const base = 'cursor-pointer whitespace-nowrap transition-colors';
 
-  switch (tabStyle.value) {
-    case 'pills':
-      return [
-        base,
-        'px-4 py-1.5 rounded-md text-sm',
-        active ? 'bg-white text-neutral-900 font-medium shadow-sm' : 'text-neutral-500 hover:text-neutral-700',
-      ];
-    case 'vertical':
-      return [
-        base,
-        'px-3 py-2.5 text-sm text-left rounded-md',
-        active
-          ? 'bg-neutral-100 text-neutral-900 font-medium'
-          : 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50',
-      ];
-    case 'underline':
-    default:
-      return [
-        base,
-        'px-1 py-2 text-sm border-b-2',
-        active
-          ? 'border-primary-700 text-primary-700 font-medium'
-          : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300',
-      ];
+  const tabStylesMap = {
+    pills: {
+      layout: 'px-4 py-1.5 rounded-md text-sm',
+      active: 'bg-white text-neutral-900 font-medium shadow-sm',
+      inactive: 'text-neutral-500 hover:text-neutral-700',
+    },
+    vertical: {
+      layout: 'px-3 py-2.5 text-sm text-left rounded-md',
+      active: 'bg-neutral-100 text-neutral-900 font-medium',
+      inactive: 'text-neutral-500 hover:text-neutral-700 hover:bg-neutral-50',
+    },
+    underline: {
+      layout: 'px-1 py-2 text-sm border-b-2',
+      active: 'border-primary-700 text-primary-700 font-medium',
+      inactive: 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300',
+    },
+  };
+
+  const currentStyle = tabStylesMap[tabStyle.value] || tabStylesMap.underline;
+
+  return [base, currentStyle.layout, active ? currentStyle.active : currentStyle.inactive];
+};
+
+const keepIndexInBounds = (tabs: Block[]) => {
+  if (!tabs.length) {
+    activeTabIndex.value = 0;
+    return;
+  }
+  if (activeTabIndex.value >= tabs.length) {
+    activeTabIndex.value = 0;
   }
 };
 
 watch(
   visibleTabs,
   (tabs) => {
-    if (!tabs.length) {
-      activeTabIndex.value = 0;
-      return;
-    }
-    if (activeTabIndex.value >= tabs.length) {
-      activeTabIndex.value = 0;
-    }
+    keepIndexInBounds(tabs);
   },
   { immediate: true },
 );

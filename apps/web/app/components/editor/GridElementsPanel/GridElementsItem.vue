@@ -55,11 +55,7 @@
             : 'text-editor-text-ghost italic'
         "
       >
-        {{
-          block.name !== 'EmptyGridBlock'
-            ? props.customLabel || getBlockDisplayName(block.name)
-            : getEditorTranslation('empty-block')
-        }}
+        {{ blockLabel }}
       </span>
 
       <SfIconVisibilityOff
@@ -148,6 +144,13 @@ const emit = defineEmits<{
 const isHovered = ref(false);
 const insertHovered = ref(false);
 const isVisible = computed(() => (props.block.configuration as Record<string, unknown>)?.visible !== false);
+
+const blockLabel = computed(() => {
+  if (props.block.name === 'EmptyGridBlock') {
+    return getEditorTranslation('empty-block');
+  }
+  return props.customLabel || getBlockDisplayName(props.block.name);
+});
 </script>
 
 <i18n lang="json">
