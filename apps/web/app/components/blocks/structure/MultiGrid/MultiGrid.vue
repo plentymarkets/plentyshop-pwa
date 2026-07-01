@@ -108,6 +108,12 @@ const { widths: gridColumnsWidth } = useMultiGridDeviceWidths(computed(() => pro
 const visibleGrid = computed(() => computeVisibleGrid(props.content, gridColumnsWidth.value));
 
 const getColumnClasses = (filteredColIndex: number) => {
+  const viewport = useViewport();
+
+  if (viewport.isLessThan('md')) {
+    return ['col-span-12'];
+  }
+
   const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];
   const originalIdx = visibleGrid.value.filteredToOriginal[filteredColIndex] ?? -1;
   if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(originalIdx)) {
