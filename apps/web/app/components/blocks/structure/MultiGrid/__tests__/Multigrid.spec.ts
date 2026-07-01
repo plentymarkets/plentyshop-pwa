@@ -1,7 +1,17 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import MultiGrid from '../../../../../components/blocks/structure/MultiGrid/MultiGrid.vue';
 import { multiGridBlockUuid, mockMultiGridProps } from './multiGrid.mock';
+
+const { useViewportMock } = vi.hoisted(() => ({
+  useViewportMock: vi.fn((): { isLessThan: (breakpoint: string) => boolean; breakpoint: { value: string } } => ({
+    isLessThan: (_breakpoint: string) => false,
+    breakpoint: { value: 'lg' },
+  })),
+}));
+
+mockNuxtImport('useViewport', () => useViewportMock);
 
 describe('MultiGrid block', () => {
   it('should render the correct number of columns (2)', () => {
@@ -252,5 +262,31 @@ describe('MultiGrid block', () => {
 
     const secondColBlock = columns[1].find('.group\\/row');
     expect(secondColBlock.attributes('data-uuid')).toBe('c');
+  });
+
+  it('should apply col-span-12 to columns on mobile', () => {
+    useViewportMock.mockReturnValue({
+      isLessThan: (breakpoint: string) => breakpoint === 'md',
+      breakpoint: { value: 'sm' },
+    });
+
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          columnWidths: [6, 6],
+        },
+      },
+    });
+
+    const columns = wrapper.findAll('[data-testid="multi-grid-column"]');
+    columns.forEach((column) => {
+      expect(column.classes()).toContain('col-span-12');
+    });
+
+    useViewportMock.mockReturnValue({
+      isLessThan: (_breakpoint: string) => false,
+      breakpoint: { value: 'lg' },
+    });
   });
 });

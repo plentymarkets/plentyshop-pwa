@@ -25,6 +25,8 @@ export const useMultiGridDeviceWidths = (config: MaybeRef<MultiGridColumnConfig>
 
   const widths = computed(() => widthsForDevice(toValue(config), effectiveDevice.value));
 
+  const mobileFullWidthColumn = computed(() => viewport.isLessThan('md'));
+
   const setWidths = (newWidths: number[]) => {
     const cfg = toValue(config);
     if (effectiveDevice.value === 'mobile') cfg.columnWidthsMobile = newWidths;
@@ -32,5 +34,5 @@ export const useMultiGridDeviceWidths = (config: MaybeRef<MultiGridColumnConfig>
     else cfg.columnWidths = newWidths;
   };
 
-  return { widths, setWidths };
+  return { widths, setWidths, mobileFullWidthColumn };
 };
