@@ -103,14 +103,14 @@ const getGridClasses = () => {
   return gridClassFor({ mobile: 12, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', alignClass]);
 };
 
-const { widths: gridColumnsWidth } = useMultiGridDeviceWidths(computed(() => props.configuration));
+const { widths: gridColumnsWidth, mobileFullWidthColumn } = useMultiGridDeviceWidths(
+  computed(() => props.configuration),
+);
 
 const visibleGrid = computed(() => computeVisibleGrid(props.content, gridColumnsWidth.value));
 
 const getColumnClasses = (filteredColIndex: number) => {
-  const viewport = useViewport();
-
-  if (viewport.isLessThan('md')) {
+  if (mobileFullWidthColumn.value) {
     return ['col-span-12'];
   }
 
