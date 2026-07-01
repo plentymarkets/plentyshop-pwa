@@ -7,17 +7,17 @@
     </div>
 
     <Multiselect
-        v-model="customerClassOptions"
-        data-testid="b2b-customer-class-select"
-        :options="customerClassesData"
-        :placeholder="getEditorTranslation('placeholder')"
-        label="name"
-        track-by="id"
-        class="cursor-pointer"
-        select-label=""
-        :deselect-label="getEditorTranslation('deselect-label')"
-        :allow-empty="false"
-        :multiple="true"
+      v-model="customerClassOptions"
+      data-testid="b2b-customer-class-select"
+      :options="customerClassesData"
+      :placeholder="getEditorTranslation('placeholder')"
+      label="name"
+      track-by="id"
+      class="cursor-pointer"
+      select-label=""
+      :deselect-label="getEditorTranslation('deselect-label')"
+      :allow-empty="false"
+      :multiple="true"
     />
   </div>
 </template>
