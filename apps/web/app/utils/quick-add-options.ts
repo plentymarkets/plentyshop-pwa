@@ -1,13 +1,13 @@
 import type { QuickAddOption } from '~/components/editor/QuickAdd/types';
 
 export const headerQuickAddOptions: QuickAddOption[] = [
-  { blockName: 'UtilityBar', label: getBlockDisplayName('UtilityBar'), category: 'header', variationIndex: 0 },
+  { blockName: 'UtilityBar', label: getBlockDisplayName('UtilityBar'), category: 'header', variationIndex: 2 },
   { blockName: 'Navigation', label: getBlockDisplayName('Navigation'), category: 'header', variationIndex: 1 },
   {
     blockName: 'AnnouncementBar',
     label: getBlockDisplayName('AnnouncementBar'),
     category: 'header',
-    variationIndex: 2,
+    variationIndex: 0,
   },
 ];
 const sharedFooterAndMultiGridQuickAddOptions: QuickAddOption[] = [
