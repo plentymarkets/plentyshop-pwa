@@ -278,13 +278,15 @@
         </nav>
       </div>
     </header>
-    <BlocksNavbarBottom
-      v-if="viewport.isLessThan('md')"
-      :background-color="headerBackgroundColor"
-      :icon-color="iconColor"
-      :action-order="content.actions.order"
-      :action-visibility="content.actions.visibility"
-    />
+    <Teleport to="body">
+      <BlocksNavbarBottom
+        v-if="viewport.isLessThan('md')"
+        :background-color="headerBackgroundColor"
+        :icon-color="iconColor"
+        :action-order="content.actions.order"
+        :action-visibility="content.actions.visibility"
+      />
+    </Teleport>
     <LanguageSelector />
     <UiModal
       v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"

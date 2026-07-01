@@ -129,12 +129,13 @@
                 </ul>
               </div>
             </template>
-          </div>
+            </div>
         </li>
       </ul>
     </nav>
 
-    <template v-else>
+    <Teleport to="body">
+      <template v-if="viewport.isLessThan('lg')">
       <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
@@ -212,7 +213,8 @@
           </ul>
         </nav>
       </SfDrawer>
-    </template>
+      </template>
+    </Teleport>
   </header>
 </template>
 

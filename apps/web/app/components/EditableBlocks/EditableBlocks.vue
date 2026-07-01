@@ -29,7 +29,7 @@
               :change-block-position="changeBlockPosition"
               root
               :read-only="readOnly"
-              class="group"
+              class="group relative z-base"
               :class="getBlockClass(block).value"
               data-testid="block-wrapper"
               @click="tabletEdit(getIndex(block))"

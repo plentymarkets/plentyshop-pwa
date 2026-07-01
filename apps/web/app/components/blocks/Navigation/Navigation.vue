@@ -113,85 +113,87 @@
       </ul>
     </nav>
 
-    <template v-else>
-      <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
-      <SfDrawer
-        ref="drawerReference"
-        v-model="isOpen"
-        placement="left"
-        class="right-12 max-w-96 bg-white overflow-y-auto z-drawer"
-      >
-        <nav>
-          <div class="flex items-center justify-between p-4">
-            <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
-            <UiButton
-              variant="tertiary"
-              square
-              :aria-label="t('common.navigation.closeMenu')"
-              class="ml-2"
-              @click="close()"
-            >
-              <SfIconClose aria-hidden="true" class="text-neutral-500" />
-            </UiButton>
-          </div>
-          <ul v-if="activeMenu" class="mt-2 mb-6">
-            <li v-if="activeMenu.id !== 0">
-              <SfListItem
-                size="lg"
-                tag="button"
-                type="button"
-                class="nav-hover-bg"
-                :aria-label="t('common.actions.back') + ' - ' + categoryTreeGetters.getName(activeMenu)"
-                @click="goBack()"
+    <Teleport to="body">
+      <template v-if="!viewport.isGreaterOrEquals('lg')">
+        <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
+        <SfDrawer
+          ref="drawerReference"
+          v-model="isOpen"
+          placement="left"
+          class="right-12 max-w-96 bg-white overflow-y-auto z-drawer"
+        >
+          <nav>
+            <div class="flex items-center justify-between p-4">
+              <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
+              <UiButton
+                variant="tertiary"
+                square
+                :aria-label="t('common.navigation.closeMenu')"
+                class="ml-2"
+                @click="close()"
               >
-                <div class="flex items-center">
-                  <SfIconArrowBack aria-hidden="true" class="text-neutral-500" />
-                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
-                </div>
-              </SfListItem>
-            </li>
-            <template v-for="node in activeMenu.children" :key="node.id">
-              <li v-if="node.childCount === 0">
+                <SfIconClose aria-hidden="true" class="text-neutral-500" />
+              </UiButton>
+            </div>
+            <ul v-if="activeMenu" class="mt-2 mb-6">
+              <li v-if="activeMenu.id !== 0">
                 <SfListItem
                   size="lg"
-                  :tag="NuxtLink"
-                  :href="localePath(generateCategoryLink(node))"
+                  tag="button"
+                  type="button"
                   class="nav-hover-bg"
-                  @click="close()"
+                  :aria-label="t('common.actions.back') + ' - ' + categoryTreeGetters.getName(activeMenu)"
+                  @click="goBack()"
                 >
                   <div class="flex items-center">
-                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                    <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
+                    <SfIconArrowBack aria-hidden="true" class="text-neutral-500" />
+                    <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
                   </div>
                 </SfListItem>
               </li>
-              <li v-else>
-                <div class="flex items-center nav-hover-bg">
-                  <NuxtLink
-                    class="flex-1 m-0 px-4 py-3 text-left"
-                    :to="localePath(generateCategoryLink(node))"
+              <template v-for="node in activeMenu.children" :key="node.id">
+                <li v-if="node.childCount === 0">
+                  <SfListItem
+                    size="lg"
+                    :tag="NuxtLink"
+                    :href="localePath(generateCategoryLink(node))"
+                    class="nav-hover-bg"
                     @click="close()"
                   >
                     <div class="flex items-center">
-                      <p class="text-left typography-text-lg">{{ categoryTreeGetters.getName(node) }}</p>
+                      <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                       <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                     </div>
-                  </NuxtLink>
-                  <button
-                    type="button"
-                    class="flex justify-center items-center h-full w-16 px-4"
-                    :aria-label="t('common.navigation.showSubcategories') + ' - ' + categoryTreeGetters.getName(node)"
-                    @click="goNext(node.id)"
-                  >
-                    <SfIconChevronRight aria-hidden="true" class="text-neutral-500" />
-                  </button>
-                </div>
-              </li>
-            </template>
-          </ul>
-        </nav>
-      </SfDrawer>
-    </template>
+                  </SfListItem>
+                </li>
+                <li v-else>
+                  <div class="flex items-center nav-hover-bg">
+                    <NuxtLink
+                      class="flex-1 m-0 px-4 py-3 text-left"
+                      :to="localePath(generateCategoryLink(node))"
+                      @click="close()"
+                    >
+                      <div class="flex items-center">
+                        <p class="text-left typography-text-lg">{{ categoryTreeGetters.getName(node) }}</p>
+                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
+                      </div>
+                    </NuxtLink>
+                    <button
+                      type="button"
+                      class="flex justify-center items-center h-full w-16 px-4"
+                      :aria-label="t('common.navigation.showSubcategories') + ' - ' + categoryTreeGetters.getName(node)"
+                      @click="goNext(node.id)"
+                    >
+                      <SfIconChevronRight aria-hidden="true" class="text-neutral-500" />
+                    </button>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </nav>
+        </SfDrawer>
+      </template>
+    </Teleport>
   </div>
 </template>
 

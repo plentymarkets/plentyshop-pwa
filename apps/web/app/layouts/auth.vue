@@ -12,7 +12,9 @@
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="viewport.isLessThan('md')" />
+      <Teleport to="body">
+        <UiNavbarBottom v-if="viewport.isLessThan('md')" />
+      </Teleport>
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
