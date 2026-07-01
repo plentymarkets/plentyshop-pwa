@@ -44,16 +44,16 @@ const customerClassOptions = computed({
 <i18n lang="json">
 {
   "en": {
-    "description": "Which customer class should be assigned by default for B2B customers of the shop?",
+    "description": "Which customer classes should be assigned by default for B2B customers of the shop?",
     "note": "Note: These settings are only applied after saving the changes and reloading the page",
-    "label": "Default B2B customer class",
+    "label": "Default B2B customer classes",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   },
   "de": {
-    "description": "Which customer class should be assigned by default for B2B customers of the shop?",
+    "description": "Which customer classes should be assigned by default for B2B customers of the shop?",
     "note": "Note: These settings are only applied after saving the changes and reloading the page",
-    "label": "Default B2B customer class",
+    "label": "Default B2B customer classes",
     "placeholder": "Select default option",
     "deselect-label": "Selected"
   }

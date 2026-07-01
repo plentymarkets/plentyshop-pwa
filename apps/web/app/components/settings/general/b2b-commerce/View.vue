@@ -23,12 +23,12 @@ onMounted(async () => {
 <i18n lang="json">
 {
   "en": {
-    "groups-title": "Customer Management",
-    "description": "Assign default customer classes for B2C customers."
+    "groups-title": "B2B Commerce",
+    "description": "Assign default customer classes for B2B customers."
   },
   "de": {
-    "groups-title": "Customer Management",
-    "description": "Assign default customer classes for B2C customers."
+    "groups-title": "B2B Commerce",
+    "description": "Assign default customer classes for B2B customers."
   }
 }
 </i18n>
