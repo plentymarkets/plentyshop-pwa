@@ -7,16 +7,17 @@
     </div>
 
     <Multiselect
-      v-model="customerClassOption"
-      data-testid="b2b-customer-class-select"
-      :options="customerClassesData"
-      :placeholder="getEditorTranslation('placeholder')"
-      label="name"
-      track-by="id"
-      class="cursor-pointer"
-      select-label=""
-      :deselect-label="getEditorTranslation('deselect-label')"
-      :allow-empty="false"
+        v-model="customerClassOptions"
+        data-testid="b2b-customer-class-select"
+        :options="customerClassesData"
+        :placeholder="getEditorTranslation('placeholder')"
+        label="name"
+        track-by="id"
+        class="cursor-pointer"
+        select-label=""
+        :deselect-label="getEditorTranslation('deselect-label')"
+        :allow-empty="false"
+        :multiple="true"
     />
   </div>
 </template>
@@ -26,15 +27,16 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import type { CustomerClassOption } from '../customer-management/default-B2C-and-guest-customer-class/types';
 
-const { updateSetting, getSetting } = useSiteSettings('defaultCustomerB2BClassId');
+const { updateSetting, getSetting } = useSiteSettings('defaultB2BClassIds');
 const { data: customerClassesData } = useCustomerClass();
 
-const customerClassOption = computed({
+const customerClassOptions = computed({
   get: () => {
-    return customerClassesData.value.find((o: CustomerClassOption) => o.id === getSetting());
+    const selectedIds = (getSetting() ?? []) as string[];
+    return customerClassesData.value.filter((o: CustomerClassOption) => selectedIds.includes(o.id));
   },
-  set: (option) => {
-    updateSetting(option?.id ?? '');
+  set: (options) => {
+    updateSetting((options ?? []).map((option: CustomerClassOption) => option.id));
   },
 });
 </script>
