@@ -8,7 +8,7 @@ Overrides use the same mechanism. A Nuxt module places a file at the correspondi
 
 ## Background
 
-Historically, the block catalogue lived in a single generated file, `public/_nuxt-plenty/editor/blocksLists.json`, which the editor fetched at runtime. Every new block required both a Vue component and a hand edited entry in that JSON file. Contributions from Nuxt modules were not possible without patching core.
+Historically, the block catalogue lived in a single generated file, `public/_nuxt-plenty/editor/blocksLists.json`, which the editor fetched at runtime. Every new block required both a Vue component and a hand-edited entry in that JSON file. Contributions from Nuxt modules were not possible without patching core.
 
 The current system locates each block's catalogue entry alongside its Vue component in a `defaults.ts` file, and treats the core app and Nuxt modules as equal sources of blocks. The JSON file has been removed. Every block folder now provides all the information the shop needs to discover the block, which makes the blocks system fully modular.
 
@@ -16,11 +16,13 @@ The current system locates each block's catalogue entry alongside its Vue compon
 
 Block files are loaded from two source layers. A Nuxt module can either be an internal module that lives in `apps/web/modules/` or be installed as an npm package under `node_modules/`. Both are treated the same way.
 
-| Layer            | Glob                                                    | Where it lives                                            |
+| Layer            | Source root                                             | Where it lives                                            |
 | ---------------- | ------------------------------------------------------- | --------------------------------------------------------- |
 | **Core**         | `@/components/**/blocks/**`                             | `apps/web/app/components/blocks/`                         |
 | **Nuxt module**  | `~~/modules/*/runtime/components/blocks/**`             | `apps/web/modules/<module>/runtime/components/blocks/`    |
 | **Nuxt module**  | `/node_modules/*/runtime/components/blocks/**`          | `<installed package>/runtime/components/blocks/`          |
+
+Each layer is scanned by three [`import.meta.glob`](https://vite.dev/guide/features.html#glob-import) calls, one per file type: `**/*.vue` for components, `**/defaults.ts` for catalogue entries, and `**/icon.svg` for icons.
 
 The load order is fixed: **core → internal modules → installed modules**. When two sources register a file with the same basename, the later source wins.
 
@@ -152,7 +154,7 @@ Linked concepts
 
 1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system
 2. [Blocks rendering](/guide/editor/blocks-rendering.md) — How the block tree is rendered
-3. [Site settings architecture](/guide/editor/site-settings-architecture.md) — The same three-tier convention applied to settings
+3. [Site settings architecture](/guide/editor/site-settings-architecture.md) — The same convention applied to settings
 
 How-to guides
 

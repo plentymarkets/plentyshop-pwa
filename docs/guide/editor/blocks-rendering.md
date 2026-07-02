@@ -11,14 +11,14 @@ The loader uses `import.meta.glob()` to discover block files at build time from 
 
 | Layer          | Glob                                                          |
 | -------------- | ------------------------------------------------------------- |
-| Core           | `@/components/**/blocks/**`                                   |
-| Nuxt module    | `~~/modules/*/runtime/components/blocks/**`                   |
-| Nuxt module    | `/node_modules/*/runtime/components/blocks/**`                |
+| Core           | `@/components/**/blocks/**/*.vue`                             |
+| Nuxt module    | `~~/modules/*/runtime/components/blocks/**/*.vue`             |
+| Nuxt module    | `/node_modules/*/runtime/components/blocks/**/*.vue`          |
 
 Each block folder contains its `.vue` component (paired with its `Form.vue` companion), a `defaults.ts` that exports the catalogue entry (`getBlocksList`) and the `createDefault` factory, and an `icon.svg` for the "Add block" catalogue.
 
 Block components are resolved asynchronously via `defineAsyncComponent`, which enables code splitting per block.
-Individual blocks can additionally implement viewport based lazy loading (for example, `ProductRecommendedProducts` defers rendering until the block is near the viewport).
+Individual blocks can additionally implement viewport-based lazy loading (for example, `ProductRecommendedProducts` defers rendering until the block is near the viewport).
 
 When two sources register a file with the same basename, the later source wins. This is how Nuxt modules override core blocks. See [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for the full merge semantics and the build time validation that guards against accidental overrides.
 
