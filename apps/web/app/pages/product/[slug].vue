@@ -20,7 +20,7 @@ const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
-const { buildProductLanguagePath } = useLocalization();
+const localePath = useLocalizedPath();
 const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const product = productForEditor;
@@ -97,9 +97,7 @@ watch(
   (value, oldValue) => {
     if (value !== oldValue) {
       navigateTo({
-        path: buildProductLanguagePath(
-          `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`,
-        ),
+        path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
         query: route.query,
         replace: true,
       });

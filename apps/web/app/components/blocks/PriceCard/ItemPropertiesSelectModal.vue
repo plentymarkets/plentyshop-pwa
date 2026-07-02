@@ -26,7 +26,12 @@
         </div>
       </div>
       <div class="w-full px-5 py-3 border-b border-neutral-200">
-        <SfInput v-model="searchQuery" :placeholder="getEditorTranslation('search-placeholder')" size="sm">
+        <SfInput
+          id="item-properties-search"
+          v-model="searchQuery"
+          :placeholder="getEditorTranslation('search-placeholder')"
+          size="sm"
+        >
           <template #prefix>
             <SfIconSearch class="text-neutral-400" size="sm" />
           </template>
@@ -175,6 +180,12 @@ const emit = defineEmits<{
   insert: [tokens: PropertyPlaceholderToken[]];
   close: [];
 }>();
+
+onMounted(() => {
+  nextTick(() => {
+    document.getElementById('item-properties-search')?.focus();
+  });
+});
 
 const {
   loading: isLoading,

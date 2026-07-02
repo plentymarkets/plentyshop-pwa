@@ -128,7 +128,7 @@ import type { OrderSummaryProductCardProps } from './types';
 
 const { formatWithSymbol } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 const img = ref();
 const imageLoaded = ref(false);

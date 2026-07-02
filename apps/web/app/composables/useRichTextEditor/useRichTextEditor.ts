@@ -172,12 +172,15 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     if (!tokens.length || !editor.value) return;
 
     const chain = editor.value.chain().focus();
-    tokens.forEach(({ token, label, propertyId, kind, cast }) => {
+    tokens.forEach(({ token, label, propertyId, kind, cast }, index) => {
       chain.insertPropertyPlaceholder(token, label || formatPropertyPlaceholderLabel(token), {
         propertyId,
         kind,
         cast,
       });
+      if (index < tokens.length - 1) {
+        chain.setHardBreak();
+      }
     });
     chain.run();
   };

@@ -31,17 +31,20 @@ jobs:
           npm run docs:build
           touch ${{ github.workspace }}/docs/.vitepress/dist/.nojekyll
       - name: Install & Run htmltest
+        env:
+          HTMLTEST_VERSION: '0.17.0'
         run: |
           cd docs/.vitepress
-          curl https://htmltest.wjdp.uk | bash
-          bin/htmltest
+          curl -fsSL -o htmltest.tar.gz "https://github.com/wjdp/htmltest/releases/download/v${HTMLTEST_VERSION}/htmltest_${HTMLTEST_VERSION}_linux_amd64.tar.gz"
+          tar -xzf htmltest.tar.gz htmltest
+          ./htmltest
   fitness-compliance:
     runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
       - name: Dependency review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           license-check: true
           deny-licenses: 'AGPL-1.0-or-later, GPL-1.0-or-later, LGPL-2.0-or-later, NGPL'

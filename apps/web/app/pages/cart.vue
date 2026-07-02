@@ -61,7 +61,7 @@ definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');
 const viewport = useViewport();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { isAuthorized } = useCustomer();
 const { data: cart, cartIsEmpty, loading } = useCart();
 const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));
