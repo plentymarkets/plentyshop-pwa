@@ -50,8 +50,8 @@ If any part of the response is missing, smart defaults are used:
 
 `useBlocks` maintains two copies of the block tree in state:
 
-- **`data`** - the current, potentially edited block tree.
-- **`cleanData`** - the last saved snapshot, marked as raw to avoid reactivity overhead.
+- **`data`** — the current, potentially edited block tree.
+- **`cleanData`** — the last saved snapshot, marked as raw to avoid reactivity overhead.
 
 Change detection works by deep-comparing `data` against `cleanData`.
 When the two diverge, the editor shows an unsaved-changes indicator.
@@ -110,7 +110,7 @@ A developer creates a new folder under `components/blocks/` containing the block
 ### Content manager building a landing page
 
 A content manager creates a content category in the backend.
-Because content categories are blockified, they can use the full blocks editor to build a custom layout with text, images, grids, and product recommendations, without touching code.
+Because content categories are blockified, they can use the full blocks editor to build a custom layout with text, images, grids, and product recommendations — without touching code.
 
 ## Related resources
 
