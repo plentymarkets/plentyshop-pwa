@@ -1,5 +1,5 @@
 <template>
-  <div class="relative" data-testid="ai-prompt-bar">
+  <div v-if="aiEnabled" class="relative" data-testid="ai-prompt-bar">
     <div class="flex items-center justify-between gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2.5">
       <button
         ref="aiButtonRef"
@@ -79,6 +79,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'apply', content: string): void;
 }>();
+
+const aiEnabled = useRuntimeConfig().public.enableAiTextGeneration as boolean;
 
 const {
   state,

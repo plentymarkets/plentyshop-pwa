@@ -56,7 +56,6 @@ export const useAiDraftFlow = (options: UseAiDraftFlowOptions = {}) => {
     refineOpen: false,
     snapshot: '',
     draft: '',
-    hasKept: false,
   }));
 
   const { generate: invokeAi, loading } = useAiTextGeneration(`${storageKey}:gen`);
@@ -160,7 +159,6 @@ export const useAiDraftFlow = (options: UseAiDraftFlowOptions = {}) => {
   };
 
   const keep = () => {
-    state.value.hasKept = true;
     state.value.draft = '';
     state.value.phase = 'idle';
     state.value.refineOpen = false;

@@ -12,7 +12,6 @@ export interface AiDraftFlowState {
   refineOpen: boolean;
   snapshot: string;
   draft: string;
-  hasKept: boolean;
 }
 
 export interface AiChipSuggestion {
