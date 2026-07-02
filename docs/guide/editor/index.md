@@ -25,3 +25,5 @@ Site settings give developers a way to expose configurable values — colours, f
 
 Both blocks and settings are discovered automatically from a [predictable folder convention](/guide/editor/site-settings-architecture.md).
 This means both [Themes](/guide/themes/index.md) and [Modules](/guide/modules/index.md) can add new blocks and settings in the same way.
+
+For blocks, the mechanism also supports intentional overrides: a Nuxt module can replace a core block's Vue component, its catalogue entry, or both. See [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for details.
