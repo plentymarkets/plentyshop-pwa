@@ -47,5 +47,5 @@ This creates a seamless transition where the old content remains visible during 
 Linked concepts
 
 1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system
-2. [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) — How components, catalogue entries, and icons are collected from core, modules, and customer packages
+2. [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) — How components, catalogue entries, and icons are collected from core and Nuxt modules
 3. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — How structure and content blocks compose

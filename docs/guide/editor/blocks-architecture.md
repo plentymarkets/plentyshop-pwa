@@ -122,7 +122,7 @@ How-to guides
 
 Linked concepts
 
-1. [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) — How components, catalogue entries, and icons are collected from core, modules, and customer packages
+1. [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) — How components, catalogue entries, and icons are collected from core and Nuxt modules
 2. [Blocks rendering](/guide/editor/blocks-rendering.md) — How blocks are rendered on the frontend
 3. [Blocks saving](/guide/editor/blocks-saving.md) — How block data is persisted
 4. [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
