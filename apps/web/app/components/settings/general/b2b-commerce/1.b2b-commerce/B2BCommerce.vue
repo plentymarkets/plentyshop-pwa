@@ -27,16 +27,17 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import type { CustomerClassOption } from '../../customer-management/default-B2C-and-guest-customer-class/types';
 
-const { updateSetting, getSetting } = useSiteSettings('defaultB2BClassIds');
+const { updateSetting, getJsonSetting } = useSiteSettings('defaultB2BClassIds');
 const { data: customerClassesData } = useCustomerClass();
 
 const customerClassOptions = computed({
   get: () => {
-    const selectedIds = (getSetting() ?? []) as string[];
-    return customerClassesData.value.filter((o: CustomerClassOption) => selectedIds.includes(o.id));
+    const selectedIds: string[] = getJsonSetting() || [];
+    return customerClassesData.value?.filter((option) => selectedIds.includes(option.id)) || [];
   },
-  set: (options) => {
-    updateSetting((options ?? []).map((option: CustomerClassOption) => option.id));
+  set: (selectedOptions: CustomerClassOption[]) => {
+    const ids = selectedOptions.map((option) => option.id);
+    updateSetting(JSON.stringify(ids));
   },
 });
 </script>
