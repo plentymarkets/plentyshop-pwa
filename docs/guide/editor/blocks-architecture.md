@@ -4,7 +4,7 @@ This article explains the basics of the blocks architecture and how it works in 
 It covers the data flow, rendering pipeline, the plugin system, the distinction between global and non-global blocks, content and item categories, blockified and non-blockified pages, and the structure versus content form pattern.
 
 Blocks are the building units of the visual storefront.
-Certain pages in the shop — such as the homepage, product pages — and category pages — are composed of a tree of blocks that the editor fetches from the backend, renders on the frontend, and persists back on save.
+Certain pages in the shop — such as the homepage, product pages, and category pages — are composed of a tree of blocks that the editor fetches from the backend, renders on the frontend, and persists back on save.
 A block is either a **structure block** (a container that holds child blocks) or a **content block** (a leaf that renders actual content such as text, images, or a product grid).
 
 Blocks address the common pain points of rigid page layouts by giving merchants a drag-and-drop editing experience while keeping developers in control of the component catalogue.
