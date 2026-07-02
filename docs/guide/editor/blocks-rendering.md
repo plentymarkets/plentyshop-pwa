@@ -9,11 +9,11 @@ Each block is rendered by `PageBlock`, which resolves the correct Vue component 
 
 The loader uses `import.meta.glob()` to discover block files at build time from two source layers, loaded in a fixed order. A Nuxt module can be either internal (living in `apps/web/modules/`) or installed as an npm package under `node_modules/`.
 
-| Layer          | Glob                                                          |
-| -------------- | ------------------------------------------------------------- |
-| Core           | `@/components/**/blocks/**/*.vue`                             |
-| Nuxt module    | `~~/modules/*/runtime/components/blocks/**/*.vue`             |
-| Nuxt module    | `/node_modules/*/runtime/components/blocks/**/*.vue`          |
+| Layer       | Glob                                                 |
+| ----------- | ---------------------------------------------------- |
+| Core        | `@/components/**/blocks/**/*.vue`                    |
+| Nuxt module | `~~/modules/*/runtime/components/blocks/**/*.vue`    |
+| Nuxt module | `/node_modules/*/runtime/components/blocks/**/*.vue` |
 
 Each block folder contains its `.vue` component (paired with its `Form.vue` companion), a `defaults.ts` that exports the catalogue entry (`getBlocksList`) and the `createDefault` factory, and an `icon.svg` for the "Add block" catalogue.
 

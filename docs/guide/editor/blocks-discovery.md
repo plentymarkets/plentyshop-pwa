@@ -16,11 +16,11 @@ The current system locates each block's catalogue entry alongside its Vue compon
 
 Block files are loaded from two source layers. A Nuxt module can either be an internal module that lives in `apps/web/modules/` or be installed as an npm package under `node_modules/`. Both are treated the same way.
 
-| Layer            | Source root                                             | Where it lives                                            |
-| ---------------- | ------------------------------------------------------- | --------------------------------------------------------- |
-| **Core**         | `@/components/**/blocks/**`                             | `apps/web/app/components/blocks/`                         |
-| **Nuxt module**  | `~~/modules/*/runtime/components/blocks/**`             | `apps/web/modules/<module>/runtime/components/blocks/`    |
-| **Nuxt module**  | `/node_modules/*/runtime/components/blocks/**`          | `<installed package>/runtime/components/blocks/`          |
+| Layer           | Source root                                    | Where it lives                                         |
+| --------------- | ---------------------------------------------- | ------------------------------------------------------ |
+| **Core**        | `@/components/**/blocks/**`                    | `apps/web/app/components/blocks/`                      |
+| **Nuxt module** | `~~/modules/*/runtime/components/blocks/**`    | `apps/web/modules/<module>/runtime/components/blocks/` |
+| **Nuxt module** | `/node_modules/*/runtime/components/blocks/**` | `<installed package>/runtime/components/blocks/`       |
 
 Each layer is scanned by three [`import.meta.glob`](https://vite.dev/guide/features.html#glob-import) calls, one per file type: `**/*.vue` for components, `**/defaults.ts` for catalogue entries, and `**/icon.svg` for icons.
 
@@ -41,11 +41,11 @@ components/
       └─ types.ts
 ```
 
-| File                              | Purpose                                                                  | Loader                                                                                                                       |
-| --------------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `<Name>.vue` and `<Name>Form.vue` | The renderable block and its form component                              | [`blocks-imports.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/utils/blocks/blocks-imports.ts) |
+| File                              | Purpose                                                                   | Loader                                                                                                                       |
+| --------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `<Name>.vue` and `<Name>Form.vue` | The renderable block and its form component                               | [`blocks-imports.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/utils/blocks/blocks-imports.ts) |
 | `defaults.ts`                     | The block's catalogue entry (`getBlocksList`) and `createDefault` factory | [`blocks-imports.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/utils/blocks/blocks-imports.ts) |
-| `icon.svg`                        | The icon shown in the "Add block" catalogue                              | [`block-icons.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/utils/blocks/block-icons.ts)       |
+| `icon.svg`                        | The icon shown in the "Add block" catalogue                               | [`block-icons.ts`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/app/utils/blocks/block-icons.ts)       |
 
 Structure blocks live under a `structure/` subfolder (for example, `blocks/structure/Carousel/`). Both the component glob and the icon path parser recognise this convention.
 
@@ -57,9 +57,13 @@ A `defaults.ts` may export up to two named functions:
 import type { BlocksList } from '~/composables/useBlocksList/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-export const getBlocksList = (): BlocksList => ({ /* … */ });
+export const getBlocksList = (): BlocksList => ({
+  /* … */
+});
 
-export const createDefault = (): Block => ({ /* … */ });
+export const createDefault = (): Block => ({
+  /* … */
+});
 ```
 
 `getBlocksList` returns one or more categories that should appear in the "Add block" catalogue. `createDefault` returns a fresh block instance.
