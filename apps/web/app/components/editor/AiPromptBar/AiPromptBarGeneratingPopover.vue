@@ -112,6 +112,11 @@ const stopLabel = getEditorTranslation('ai-stop-label');
     "ai-generating-title": "Writing your content…",
     "ai-generating-hint": "Usually takes a few seconds",
     "ai-stop-label": "Stop"
+  },
+  "de": {
+    "ai-generating-title": "Writing your content…",
+    "ai-generating-hint": "Usually takes a few seconds",
+    "ai-stop-label": "Stop"
   }
 }
 </i18n>

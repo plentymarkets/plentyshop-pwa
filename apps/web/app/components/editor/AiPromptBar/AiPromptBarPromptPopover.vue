@@ -104,7 +104,6 @@
     </div>
 
     <div class="mt-3.5 flex items-center justify-between">
-      <span class="text-xs font-semibold text-gray-400">{{ shortcutLabel }}</span>
       <button
         type="button"
         :disabled="!canGenerate"
@@ -176,7 +175,6 @@ const tryLabel = getEditorTranslation('ai-try-label');
 const refineLabel = getEditorTranslation('ai-refine-label');
 const toneLabel = getEditorTranslation('ai-tone-label');
 const lengthLabel = getEditorTranslation('ai-length-label');
-const shortcutLabel = getEditorTranslation('ai-shortcut-hint');
 const generateLabel = getEditorTranslation('ai-generate-label');
 </script>
 
@@ -201,12 +199,21 @@ const generateLabel = getEditorTranslation('ai-generate-label');
   "en": {
     "ai-popover-title": "Write with AI",
     "ai-popover-subtitle": "Describe what you want to create",
-    "ai-prompt-placeholder": "e.g. A warm welcome message for new subscribers",
+    "ai-prompt-placeholder": "e.g. A warm welcome message for new customers",
     "ai-try-label": "TRY",
     "ai-refine-label": "Refine tone & length",
     "ai-tone-label": "Tone",
     "ai-length-label": "Length",
-    "ai-shortcut-hint": "⌘ ↵ to generate",
+    "ai-generate-label": "Generate"
+  },
+  "de": {
+    "ai-popover-title": "Write with AI",
+    "ai-popover-subtitle": "Describe what you want to create",
+    "ai-prompt-placeholder": "e.g. A warm welcome message for new customers",
+    "ai-try-label": "TRY",
+    "ai-refine-label": "Refine tone & length",
+    "ai-tone-label": "Tone",
+    "ai-length-label": "Length",
     "ai-generate-label": "Generate"
   }
 }

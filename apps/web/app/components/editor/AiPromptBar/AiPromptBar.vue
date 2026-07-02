@@ -167,6 +167,10 @@ const generatedBadgeLabel = getEditorTranslation('ai-generated-badge');
   "en": {
     "ai-label": "AI",
     "ai-generated-badge": "AI generated"
+  },
+  "de": {
+    "ai-label": "AI",
+    "ai-generated-badge": "AI generated"
   }
 }
 </i18n>

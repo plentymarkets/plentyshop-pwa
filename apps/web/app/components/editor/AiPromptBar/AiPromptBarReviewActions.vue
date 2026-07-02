@@ -69,6 +69,11 @@ const keepLabel = getEditorTranslation('ai-keep-label');
     "ai-modify-label": "Modify",
     "ai-discard-label": "Discard",
     "ai-keep-label": "Keep"
+  },
+  "de": {
+    "ai-modify-label": "Modify",
+    "ai-discard-label": "Discard",
+    "ai-keep-label": "Keep"
   }
 }
 </i18n>
