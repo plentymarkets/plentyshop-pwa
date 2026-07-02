@@ -62,7 +62,6 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
     state.value.response = '';
 
     try {
-
       const { data } = await useSdk().plentysystems.doGenerateAiTextBlock({ prompt: params.prompt });
 
       const result = parseAiTextBlockPayload(data?.text ?? '');

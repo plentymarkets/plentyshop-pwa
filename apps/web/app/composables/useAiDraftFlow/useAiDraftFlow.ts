@@ -1,10 +1,4 @@
-import type {
-  AiChipSuggestion,
-  AiDraftFlowState,
-  AiLength,
-  AiTone,
-  UseAiDraftFlowOptions,
-} from './types';
+import type { AiChipSuggestion, AiDraftFlowState, AiLength, AiTone, UseAiDraftFlowOptions } from './types';
 
 const CHIP_SUGGESTIONS: AiChipSuggestion[] = [
   {

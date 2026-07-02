@@ -58,7 +58,17 @@
       @mousedown.prevent
       @click="$emit('toggle-refine')"
     >
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500">
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-gray-500"
+      >
         <path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h7M15 18h5" />
         <circle cx="15" cy="6" r="2" />
         <circle cx="7" cy="12" r="2" />

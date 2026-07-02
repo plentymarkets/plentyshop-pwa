@@ -60,12 +60,7 @@
     </Teleport>
 
     <Teleport v-if="reviewTarget" :to="reviewTarget" :disabled="!reviewTarget">
-      <EditorAiPromptBarReviewActions
-        v-if="isReviewing"
-        @modify="modify"
-        @discard="discard"
-        @keep="keep"
-      />
+      <EditorAiPromptBarReviewActions v-if="isReviewing" @modify="modify" @discard="discard" @keep="keep" />
     </Teleport>
   </div>
 </template>
@@ -114,9 +109,7 @@ const {
   onApply: (content) => emit('apply', content),
 });
 
-const generatingSubLabel = computed(
-  () => `${state.value.tone} tone · ${state.value.length.toLowerCase()} length`,
-);
+const generatingSubLabel = computed(() => `${state.value.tone} tone · ${state.value.length.toLowerCase()} length`);
 
 const aiButtonRef = ref<HTMLButtonElement | null>(null);
 const anchorRect = ref<DOMRect | null>(null);
