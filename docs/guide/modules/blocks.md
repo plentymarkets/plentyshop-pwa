@@ -97,7 +97,7 @@ Overriding a core block usually means replacing both its Vue component and its c
    </script>
    ```
 
-   Without the marker, `nuxt build` fails when the `FAIL_BUILD_ON_UNMARKED_BLOCK_OVERRIDES` environment variable is set (CI sets it). Local `nuxt dev` still works, so add the marker before opening a pull request.
+   Without the marker, `nuxt build` fails when the `FAIL_BUILD_ON_UNMARKED_BLOCK_OVERRIDES` environment variable is set (CI sets it).
 
 Because the loader processes core first and then Nuxt modules, and each `.vue` file overwrites the previous entry keyed by basename, your file replaces the core component everywhere.
 
@@ -140,7 +140,7 @@ Because the loader processes core first and then Nuxt modules, and each `.vue` f
    });
    ```
 
-   The override match runs on `template.en.name` (with `template.de.name` as fallback). Any variation in any category that resolves to the same block name is removed from the catalogue and replaced by yours, including entries the merchant sees under a different heading.
+   The override match runs on `template.en.name` (with `template.de.name` as fallback). Any variation in any category that resolves to the same block name is removed from the catalogue and replaced by yours.
 
 3. To hide a core catalogue entry without offering a replacement, return the same category with `override: true` and an empty `variations` array. The Vue component stays available for pages that already use it, but merchants can no longer insert new instances from the catalogue.
 
