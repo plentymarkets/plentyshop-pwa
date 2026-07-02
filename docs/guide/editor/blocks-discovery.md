@@ -4,7 +4,7 @@ This article explains how block components, their catalogue entries, and their i
 
 Discovery is the mechanism by which the editor learns which blocks exist, what they look like in the "Add block" catalogue, and which Vue component renders each block. There is **no manual registration**. The shop uses [`import.meta.glob`](https://vite.dev/guide/features.html#glob-import) to collect block files from two sources on every build: the core app and Nuxt modules.
 
-Overrides use the same mechanism. A Nuxt module places a file at the corresponding path, and the last source in the load order wins. A separate build time check makes accidental overrides fail the build.
+Overrides use the same mechanism. A Nuxt module places a file at the corresponding path, and the last source in the load order wins. A separate build time check makes accidental overrides fail the build when the `FAIL_BUILD_ON_UNMARKED_BLOCK_OVERRIDES` environment variable is set (CI sets it).
 
 ## Background
 
@@ -104,6 +104,8 @@ Component overrides are quietly powerful. A typo in a filename can silently repl
   <!-- … -->
 </template>
 ```
+
+Enforcement is gated on the `FAIL_BUILD_ON_UNMARKED_BLOCK_OVERRIDES` environment variable. Starting the app locally always works, and local build works as long as the variable is not set. CI sets it, so pull requests with unmarked overrides fail the build check.
 
 ## Catalogue level overrides
 

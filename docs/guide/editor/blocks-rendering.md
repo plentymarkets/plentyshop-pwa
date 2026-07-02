@@ -15,7 +15,7 @@ The loader uses `import.meta.glob()` to discover block files at build time from 
 | Nuxt module | `~~/modules/*/runtime/components/blocks/**/*.vue`    |
 | Nuxt module | `/node_modules/*/runtime/components/blocks/**/*.vue` |
 
-Each block folder contains its `.vue` component (paired with its `Form.vue` companion), a `defaults.ts` that exports the catalogue entry (`getBlocksList`) and the `createDefault` factory, and an `icon.svg` for the "Add block" catalogue.
+Each block folder contains its `.vue` component (paired with its `Form.vue` companion), a `defaults.ts` that exports the catalogue entry (`getBlocksList`) and optionally a `createDefault` factory, and an `icon.svg` for the "Add block" catalogue.
 
 Block components are resolved asynchronously via `defineAsyncComponent`, which enables code splitting per block.
 Individual blocks can additionally implement viewport-based lazy loading (for example, `ProductRecommendedProducts` defers rendering until the block is near the viewport).
