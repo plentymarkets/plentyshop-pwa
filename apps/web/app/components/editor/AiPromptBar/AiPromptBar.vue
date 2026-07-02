@@ -1,112 +1,177 @@
 <template>
-  <div
-    class="flex flex-wrap items-center gap-2 p-2 bg-gray-50 border-b border-gray-200"
-    data-testid="ai-prompt-bar"
-  >
-    <button
-      type="button"
-      class="inline-flex items-center gap-1.5 px-2.5 h-8 rounded text-sm font-semibold border cursor-pointer"
-      :class="
-        isOpen
-          ? 'bg-slate-800 border-gray-300 text-white hover:bg-slate-700'
-          : 'bg-white border-gray-300 text-gray-800 hover:bg-gray-100'
-      "
-      data-testid="ai-prompt-bar-toggle"
-      :aria-expanded="isOpen"
-      @mousedown.prevent
-      @click="toggle"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" height="18px" width="18px" viewBox="0 -960 960 960" fill="currentColor">
-        <path
-          d="m480-80-80-160-160-80 160-80 80-160 80 160 160 80-160 80-80 160ZM200-560l-40-80-80-40 80-40 40-80 40 80 80 40-80 40-40 80Zm600 80-40-80-80-40 80-40 40-80 40 80 80 40-80 40-40 80Z"
-        />
-      </svg>
-      AI
-    </button>
-
-    <div v-if="isOpen" class="flex flex-1 min-w-0 items-center gap-2">
-      <input
-        ref="promptInputRef"
-        v-model="prompt"
-        type="text"
-        class="flex-1 min-w-0 h-8 px-2 text-sm border border-gray-300 rounded outline-none focus:border-slate-800"
-        :placeholder="placeholderLabel"
-        :disabled="loading"
-        data-testid="ai-prompt-bar-input"
-        @keydown.enter.prevent="run"
-        @keydown.escape="close"
-      />
+  <div class="relative" data-testid="ai-prompt-bar">
+    <div class="flex items-center justify-between gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2.5">
       <button
+        ref="aiButtonRef"
         type="button"
-        class="inline-flex items-center justify-center h-8 px-3 rounded text-sm font-semibold bg-slate-800 text-white border border-gray-300 cursor-pointer hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
-        :disabled="!prompt.trim() || loading"
-        data-testid="ai-prompt-bar-generate"
+        class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-extrabold cursor-pointer transition-shadow"
+        :class="
+          aiActive
+            ? 'border-slate-900 bg-slate-900 text-white shadow-md hover:bg-slate-800'
+            : 'border-gray-300 bg-white text-slate-900 shadow-sm hover:bg-gray-100'
+        "
+        :aria-expanded="aiActive"
+        :disabled="isGenerating"
+        data-testid="ai-toggle"
         @mousedown.prevent
-        @click="run"
+        @click="toggle"
       >
-        {{ loading ? loadingLabel : generateLabel }}
+        <SfIconStarFilled size="xs" />
+        {{ aiLabel }}
       </button>
+
+      <span
+        v-if="isReviewing"
+        class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-900"
+        data-testid="ai-generated-badge"
+      >
+        <SfIconStarFilled size="xs" />
+        {{ generatedBadgeLabel }}
+      </span>
     </div>
+
+    <Teleport to="body">
+      <EditorAiPromptBarPromptPopover
+        v-if="isPromptOpen && anchorRect"
+        :anchor-rect="anchorRect"
+        :prompt="state.prompt"
+        :tone="state.tone"
+        :length="state.length"
+        :refine-open="state.refineOpen"
+        :can-generate="canGenerate"
+        :chips="chips"
+        :tones="tones"
+        :lengths="lengths"
+        @update:prompt="promptModel = $event"
+        @use-chip="useChip"
+        @toggle-refine="toggleRefine"
+        @set-tone="setTone"
+        @set-length="setLength"
+        @generate="generate"
+        @close="close"
+      />
+
+      <EditorAiPromptBarGeneratingPopover
+        v-if="isGenerating && anchorRect"
+        :anchor-rect="anchorRect"
+        :sub-label="generatingSubLabel"
+        @stop="stop"
+      />
+    </Teleport>
+
+    <Teleport v-if="reviewTarget" :to="reviewTarget" :disabled="!reviewTarget">
+      <EditorAiPromptBarReviewActions
+        v-if="isReviewing"
+        @modify="modify"
+        @discard="discard"
+        @keep="keep"
+      />
+    </Teleport>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { CoreFunctionality } from '@plentymarkets/shop-api';
+import { SfIconStarFilled } from '@storefront-ui/vue';
+import type { AiCoreFunctionality } from '~/composables/useAiTextGeneration/types';
 
 const props = defineProps<{
   storageKey?: string;
-  coreFunctionality?: CoreFunctionality;
+  coreFunctionality?: AiCoreFunctionality;
+  reviewTarget?: HTMLElement | null;
+  getCurrentContent?: () => string;
 }>();
 
 const emit = defineEmits<{
-  (e: 'generated', content: string): void;
+  (e: 'apply', content: string): void;
 }>();
 
-const { generate, loading } = useAiTextGeneration(props.storageKey);
+const {
+  state,
+  promptModel,
+  isPromptOpen,
+  isGenerating,
+  isReviewing,
+  aiActive,
+  canGenerate,
+  chips,
+  tones,
+  lengths,
+  toggle,
+  close,
+  useChip,
+  setTone,
+  setLength,
+  toggleRefine,
+  generate,
+  modify,
+  stop,
+  discard,
+  keep,
+} = useAiDraftFlow({
+  storageKey: props.storageKey,
+  coreFunctionality: props.coreFunctionality,
+  getCurrentContent: () => props.getCurrentContent?.() ?? '',
+  onApply: (content) => emit('apply', content),
+});
 
-const isOpen = ref(false);
-const prompt = ref('');
-const promptInputRef = ref<HTMLInputElement | null>(null);
+const generatingSubLabel = computed(
+  () => `${state.value.tone} tone · ${state.value.length.toLowerCase()} length`,
+);
 
-const placeholderLabel = getEditorTranslation('ai-prompt-placeholder');
-const generateLabel = getEditorTranslation('ai-generate-label');
-const loadingLabel = getEditorTranslation('ai-generating-label');
+const aiButtonRef = ref<HTMLButtonElement | null>(null);
+const anchorRect = ref<DOMRect | null>(null);
 
-const toggle = async () => {
-  isOpen.value = !isOpen.value;
-  if (isOpen.value) {
+const updateAnchor = () => {
+  if (aiButtonRef.value) {
+    anchorRect.value = aiButtonRef.value.getBoundingClientRect();
+  }
+};
+
+watch([isPromptOpen, isGenerating], async ([promptOpen, generating]) => {
+  if (promptOpen || generating) {
     await nextTick();
-    promptInputRef.value?.focus();
+    updateAnchor();
   }
-};
+});
 
-const close = () => {
-  isOpen.value = false;
-};
-
-const run = async () => {
-  const trimmed = prompt.value.trim();
-  if (!trimmed || loading.value) {
+const onPointerDownOutside = (event: PointerEvent) => {
+  if (!isPromptOpen.value) {
     return;
   }
-  const result = await generate({ prompt: trimmed, coreFunctionality: props.coreFunctionality });
-  if (result.status === 'error') {
+  const target = event.target as HTMLElement | null;
+  if (!target) {
     return;
   }
-  if (result.content) {
-    emit('generated', result.content);
-    prompt.value = '';
-    close();
+  if (aiButtonRef.value?.contains(target)) {
+    return;
   }
+  if (target.closest('[data-testid="ai-prompt-popover"]')) {
+    return;
+  }
+  close();
 };
+
+onMounted(() => {
+  window.addEventListener('scroll', updateAnchor, true);
+  window.addEventListener('resize', updateAnchor);
+  document.addEventListener('pointerdown', onPointerDownOutside, true);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateAnchor, true);
+  window.removeEventListener('resize', updateAnchor);
+  document.removeEventListener('pointerdown', onPointerDownOutside, true);
+});
+
+const aiLabel = getEditorTranslation('ai-label');
+const generatedBadgeLabel = getEditorTranslation('ai-generated-badge');
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "ai-prompt-placeholder": "Describe what you want to write…",
-    "ai-generate-label": "Generate",
-    "ai-generating-label": "Generating…"
+    "ai-label": "AI",
+    "ai-generated-badge": "AI generated"
   }
 }
 </i18n>

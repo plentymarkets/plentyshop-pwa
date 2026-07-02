@@ -1,6 +1,10 @@
 <template>
   <div v-if="!modalOpen">
-    <EditorAiPromptBar @generated="applyAiContent" />
+    <EditorAiPromptBar
+      :review-target="editorWrapperRef"
+      :get-current-content="() => editor?.getHTML() ?? ''"
+      @apply="applyAiContent"
+    />
 
     <div class="flex items-stretch gap-1.5 p-2 bg-gray-50 border-b border-gray-200 relative" data-testid="rte-toolbar">
       <div class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
@@ -65,7 +69,8 @@
     </div>
 
     <div
-      class="p-2.5 editor-parent border border-gray-300 rounded-b-md bg-white"
+      ref="editorWrapperRef"
+      class="p-2.5 editor-parent border border-gray-300 rounded-b-md bg-white relative"
       data-testid="rte-editor"
       @mousedown="editor?.chain().focus().run()"
     >
@@ -115,6 +120,7 @@ import ItemPropertiesSelectModal from '~/components/blocks/PriceCard/ItemPropert
 
 const modalOpen = ref(false);
 const linkModalOpen = ref(false);
+const editorWrapperRef = ref<HTMLElement | null>(null);
 
 const props = withDefaults(
   defineProps<{

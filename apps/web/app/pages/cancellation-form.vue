@@ -185,7 +185,7 @@ const submitForm = async () => {
   const customerEmail = await submitCancellation({
     email: email.value || '',
     name: name.value || '',
-    orderId: Number(orderId.value),
+    orderId: orderId.value,
     reason: reason.value || '',
     'cf-turnstile-response': turnstile.value || '',
   });

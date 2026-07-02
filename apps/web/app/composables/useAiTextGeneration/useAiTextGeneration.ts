@@ -1,4 +1,4 @@
-import type { ApiError, CoreFunctionality } from '@plentymarkets/shop-api';
+import type { ApiError } from '@plentymarkets/shop-api';
 import type {
   AiGenerationResult,
   UseAiTextGeneration,
@@ -6,9 +6,7 @@ import type {
   UseAiTextGenerationState,
 } from './types';
 
-const DEFAULT_CORE_FUNCTIONALITY = 'core-cms-text-block' as CoreFunctionality;
-
-const parseSupervisorPayload = (raw: string): AiGenerationResult => {
+const parseAiTextBlockPayload = (raw: string): AiGenerationResult => {
   const trimmed = (raw ?? '').trim();
   if (!trimmed) {
     return { status: 'ok', content: '' };
@@ -28,16 +26,9 @@ const parseSupervisorPayload = (raw: string): AiGenerationResult => {
   return { status: 'ok', content: trimmed };
 };
 
-const createSessionId = () => {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return `cms-text-${crypto.randomUUID()}`;
-  }
-  return `cms-text-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
-};
-
 /**
- * @description Composable that wraps `doInvokeCoreSupervisor` for generating
- * text via the Core Supervisor agent. Returns the assistant reply as a plain
+ * @description Composable that wraps `doGenerateAiTextBlock` for generating
+ * text via the AI text-block endpoint. Returns the assistant reply as a plain
  * string so callers can hand it to any RTE/textarea.
  * @example
  * ``` ts
@@ -51,8 +42,6 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
     loading: false,
     error: '',
   }));
-
-  const sessionId = useState<string>(`${storageKey}:sessionId`, () => createSessionId());
 
   const reset = () => {
     state.value.response = '';
@@ -73,15 +62,10 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
     state.value.response = '';
 
     try {
-      const { data } = await useSdk().plentysystems.doInvokeCoreSupervisor({
-        prompt: params.prompt,
-        sessionId: params.sessionId ?? sessionId.value,
-        user: params.user ?? '72157',
-        coreFunctionality: params.coreFunctionality ?? DEFAULT_CORE_FUNCTIONALITY,
-        ...(params.qualifier ? { qualifier: params.qualifier } : {}),
-      });
 
-      const result = parseSupervisorPayload(data?.text ?? '');
+      const { data } = await useSdk().plentysystems.doGenerateAiTextBlock({ prompt: params.prompt });
+
+      const result = parseAiTextBlockPayload(data?.text ?? '');
 
       if (result.status === 'error') {
         notifyError(result.content || 'AI generation failed.');

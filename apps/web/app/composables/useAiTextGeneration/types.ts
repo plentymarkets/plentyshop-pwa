@@ -1,4 +1,11 @@
-import type { CoreFunctionality } from '@plentymarkets/shop-api';
+export type AiCoreFunctionality = 'core-support' | 'core-supervisor' | 'core-cms-text-block';
+
+export interface AiTextBlockRequest {
+  prompt: string;
+  sessionId?: string;
+  user?: string;
+  pid?: number;
+}
 
 export type AiGenerationStatus = 'ok' | 'error';
 
@@ -15,10 +22,10 @@ export interface UseAiTextGenerationState {
 
 export interface GenerateParams {
   prompt: string;
-  coreFunctionality?: CoreFunctionality;
   sessionId?: string;
   user?: string;
-  qualifier?: string;
+  pid?: number;
+  coreFunctionality?: AiCoreFunctionality;
 }
 
 export interface UseAiTextGeneration {
