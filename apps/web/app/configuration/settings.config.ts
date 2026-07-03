@@ -102,6 +102,7 @@ export default {
   itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
   defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
   defaultCustomerB2BClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_B2B_CLASS_ID || '0',
+  defaultB2BClassIds: process.env.NUXT_PUBLIC_DEFAULT_B2B_CLASS_IDS || '[]',
   fetchDynamicTranslations: false,
   sessionLifetime: process.env.NUXT_PUBLIC_SESSION_LIFETIME || '3600',
   shippingTextCategoryId: process.env.NUXT_PUBLIC_SHIPPING_TEXT_CATEGORY_ID || '',
