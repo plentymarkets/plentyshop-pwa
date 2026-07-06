@@ -20,7 +20,7 @@
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-[-6px] z-editor-inline block-selected-outline"
+        class="pointer-events-none absolute inset-[-6px] block-selected-outline"
       />
       <ClientOnly>
         <EditorAddBlockButton

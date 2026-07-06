@@ -11,7 +11,6 @@
         '!opacity-100 !scale-100':
           (props.isClicked && props.clickedBlockIndex === props.index) ||
           (isPopoverTarget && popoverState?.position === position),
-        '!z-modal': isPopoverTarget && popoverState?.position === position,
       },
     ]"
     :data-testid="`${position}-add-block`"
