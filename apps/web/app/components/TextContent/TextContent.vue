@@ -54,7 +54,10 @@ const renderedHtmlDescription = computed(() => {
     return match;
   });
 
-  return replacePropertyPlaceholdersInHtml(localizedHtml, product.value);
+  return replacePropertyPlaceholdersInHtml(
+    replaceI18nPlaceholdersInHtml(localizedHtml, (key) => t(key)),
+    product.value,
+  );
 });
 
 const handleRteClick = (event: MouseEvent) => {

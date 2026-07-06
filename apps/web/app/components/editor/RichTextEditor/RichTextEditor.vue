@@ -10,6 +10,7 @@
           :insert-icon="insertIcon"
           :is-active="isActive"
           :on-font-size-change="onFontSizeChange"
+          :on-open-i18n-modal="openI18nModal"
           :on-open-properties-modal="openPropertiesModal"
           :on-text-size-change="setFontSize"
           :set-font-color="setFontColor"
@@ -87,6 +88,7 @@
     :is-active="isActive"
     :is-active-align="isActiveAlign"
     :on-font-size-change="onFontSizeChange"
+    :on-open-i18n-modal="openI18nModal"
     :redo="redo"
     :set-align="setAlign"
     :set-font-color="setFontColor"
@@ -105,14 +107,17 @@
     @close="closePropertiesModal"
     @insert="handlePropertyInsertion"
   />
+  <I18nKeySelectModal v-if="i18nModalOpen" @close="closeI18nModal" @insert="handleI18nInsertion" />
 </template>
 
 <script lang="ts" setup>
 import { EditorContent } from '@tiptap/vue-3';
 import ItemPropertiesSelectModal from '~/components/blocks/PriceCard/ItemPropertiesSelectModal.vue';
+import I18nKeySelectModal from './I18nKeySelectModal.vue';
 
 const modalOpen = ref(false);
 const linkModalOpen = ref(false);
+const i18nModalOpen = ref(false);
 
 const props = withDefaults(
   defineProps<{
@@ -164,6 +169,7 @@ const {
   setFontSize,
   insertIcon,
   insertEmoji,
+  insertI18nPlaceholder,
   insertPropertyPlaceholders,
 } = useRichTextEditor({
   modelValue: toRef(props, 'modelValue'),
@@ -174,6 +180,9 @@ const {
   placeholder: toRef(props, 'placeholder'),
   onOpenLinkModal: () => {
     linkModalOpen.value = true;
+  },
+  onOpenI18nModal: () => {
+    i18nModalOpen.value = true;
   },
 });
 const propertiesModalOpen = ref(false);
@@ -197,6 +206,14 @@ const closeLinkModal = () => {
   linkModalOpen.value = false;
 };
 
+const openI18nModal = () => {
+  i18nModalOpen.value = true;
+};
+
+const closeI18nModal = () => {
+  i18nModalOpen.value = false;
+};
+
 const handleSwitchToHtml = () => {
   closeModal();
   emit('requestHtmlModal');
@@ -213,6 +230,11 @@ const closePropertiesModal = () => {
 const handlePropertyInsertion = (tokens: PropertyPlaceholderToken[]) => {
   insertPropertyPlaceholders(tokens);
   propertiesModalOpen.value = false;
+};
+
+const handleI18nInsertion = (token: I18nPlaceholderToken) => {
+  insertI18nPlaceholder(token);
+  i18nModalOpen.value = false;
 };
 
 defineExpose({ editor, focus, clearFormatting, undo, redo, openModal });
