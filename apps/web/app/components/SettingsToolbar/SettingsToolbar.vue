@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="h-[calc(100vh-50px)] bg-white z-editor-inline mb-3 w-toolbar min-w-toolbar border-r"
+    class="h-[calc(100vh-50px)] bg-white z-editor-toolbar mb-3 w-toolbar min-w-toolbar border-r"
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">

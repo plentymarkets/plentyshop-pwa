@@ -20,7 +20,7 @@
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-[-6px] z-modal-backdrop block-selected-outline"
+        class="pointer-events-none absolute inset-[-6px] z-editor-inline block-selected-outline"
       />
       <ClientOnly>
         <EditorAddBlockButton
@@ -100,7 +100,7 @@ const { isInEditorClient } = useEditorState();
 const attrs = useAttrs();
 const { isDragging, lazyLoadStates, lazyLoadRefs, shouldLazyLoad, getLazyLoadKey, getLazyLoadConfig, getLazyLoadRef } =
   useBlockManager();
-const {  popoverState } = useAddBlockPopover();
+const { popoverState } = useAddBlockPopover();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
@@ -178,7 +178,6 @@ const showOutline = computed(() => {
     isPopoverTarget.value
   );
 });
-
 
 const onBlockHover = () => {
   if (props.root) {
