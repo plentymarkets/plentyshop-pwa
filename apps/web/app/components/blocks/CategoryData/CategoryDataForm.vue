@@ -20,7 +20,7 @@
             <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
               <div class="flex items-center gap-3">
                 <button
-                  class="drag-slides-handle top-2 left-2 z-dropdown cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                  class="drag-slides-handle top-2 left-2 z-raised cursor-grab p-2 hover:bg-gray-100 rounded-full"
                   :aria-label="getEditorTranslation('drag-reorder-aria')"
                   :data-testid="`actions-drag-slide-handle-${index}`"
                 >

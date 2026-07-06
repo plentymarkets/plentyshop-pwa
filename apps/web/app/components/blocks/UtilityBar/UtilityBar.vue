@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full @md:sticky @md:shadow-md z-raised">
+    <header class="relative w-full @md:sticky @md:shadow-md">
       <div
         v-if="viewport.isLessThan('md')"
         class="flex items-center w-full"
