@@ -1,6 +1,7 @@
 <template>
   <button
     v-if="showButton"
+    v-z-layer="{ layer: 'editor-inline', isolate: false }"
     :key="position === 'bottom' ? (isDragging ? 'dragging' : 'not-dragging') : undefined"
     :class="[
       addBlockButtonBase,
@@ -51,7 +52,7 @@ const buttonLabel = 'Insert a new block at this position.';
 
 const addBlockButtonBase = [
   'add-block-button no-drag',
-  'absolute left-1/2 -translate-x-1/2 z-base @md:z-raised @lg:z-editor-inline',
+  'absolute left-1/2 -translate-x-1/2',
   'flex items-center justify-center w-7 h-7 rounded-full p-0 border-0',
   'bg-editor-block-selected text-white shadow-add-block-btn',
   'opacity-0 scale-90',

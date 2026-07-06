@@ -4,6 +4,10 @@
  *
  * Catches both arbitrary values (z-[200]) and plain Tailwind numerics (z-10, z-50) that
  * haven't been mapped to a named token.
+ *
+ * PREFERRED: Use the v-z-layer directive instead of z-* classes.
+ * The directive manages z-index, positioning, and stacking context isolation automatically.
+ * See apps/web/app/directives/z-layer.ts for available layers.
  */
 
 /**
@@ -142,7 +146,7 @@ export const enforceZIndexTokens = {
     },
     messages: {
       useZToken:
-        '"{{ token }}" is not a semantic z-index token. Use one of the named tokens from the project scale (z-base, z-raised, z-overlap, z-editor-inline, z-sticky, z-dropdown, z-notifications, z-drawer-backdrop, z-drawer, z-cookiebar, z-editor-toolbar, z-editor-drawer, z-modal-backdrop, z-modal, z-popover, z-loader, z-picker, z-toast, z-max). See apps/web/eslint-rules/z-index-tokens.js.',
+        '"{{ token }}" is not a semantic z-index token. Prefer using the v-z-layer directive (e.g. v-z-layer="\'sticky\'"). If a class is needed, use one of: z-base, z-raised, z-overlap, z-editor-inline, z-sticky, z-dropdown, z-notifications, z-drawer-backdrop, z-drawer, z-cookiebar, z-editor-toolbar, z-editor-drawer, z-modal-backdrop, z-modal, z-popover, z-loader, z-picker, z-toast, z-max.',
     },
     schema: [],
   },

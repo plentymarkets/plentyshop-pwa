@@ -1,5 +1,5 @@
 <template>
-  <div :class="headerBlocksClasses">
+  <div v-z-layer="'sticky'" :class="headerBlocksClasses">
     <EditableBlocks
       v-if="headerBlock"
       :has-enabled-actions="enableHeaderActionsOnlyForIndex"
@@ -23,6 +23,6 @@ const enableHeaderActionsOnlyForIndex = computed(() => {
 
 const headerBlocksClasses = computed(() => [
   'header-blocks',
-  { 'sticky top-0 z-dropdown': (headerBlock.value as HeaderContainerBlock | undefined)?.configuration?.layout?.sticky },
+  { 'sticky top-0': (headerBlock.value as HeaderContainerBlock | undefined)?.configuration?.layout?.sticky },
 ]);
 </script>

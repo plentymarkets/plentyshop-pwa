@@ -1,6 +1,7 @@
 <template>
   <aside
-    class="h-[calc(100vh-50px)] bg-white z-editor-inline mb-3 w-toolbar min-w-toolbar border-r"
+    v-z-layer="'editor-toolbar'"
+    class="h-[calc(100vh-50px)] bg-white mb-3 w-toolbar min-w-toolbar border-r"
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">

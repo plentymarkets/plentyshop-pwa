@@ -45,8 +45,9 @@
                 display: 'flex',
                 flexDirection: 'column',
                 '--viewport-height': '90dvh',
+                isolation: 'isolate',
               }
-            : undefined
+            : { isolation: 'isolate' }
         "
         :class="isMobilePreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
         data-testid="editor-preview-container"

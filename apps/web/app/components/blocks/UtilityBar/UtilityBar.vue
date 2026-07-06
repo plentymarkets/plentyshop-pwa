@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full @md:sticky @md:shadow-md z-raised">
+    <header v-z-layer="'sticky'" class="relative w-full @md:sticky @md:shadow-md">
       <div
         v-if="viewport.isLessThan('md')"
         class="flex items-center w-full"
@@ -220,8 +220,8 @@
           <SfDropdown
             v-if="isAuthorized && isActionVisible('account')"
             v-model="isAccountDropdownOpen"
+            v-z-layer="{ layer: 'dropdown', isolate: false }"
             placement="bottom-end"
-            class="z-dropdown"
             :style="{ order: getActionOrder('account') }"
           >
             <template #trigger>

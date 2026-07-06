@@ -20,7 +20,8 @@
     >
       <div
         v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-[-6px] z-modal-backdrop block-selected-outline"
+        v-z-layer="{ layer: 'editor-inline', isolate: false }"
+        class="pointer-events-none absolute inset-[-6px] block-selected-outline"
       />
       <ClientOnly>
         <EditorAddBlockButton

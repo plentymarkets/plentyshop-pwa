@@ -1,7 +1,8 @@
 <template>
   <div
     :key="`${$route.meta?.identifier ?? ''}:${$route.meta?.type ?? ''}`"
-    class="mb-3 font-editor sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111] z-max"
+    v-z-layer="'max'"
+    class="mb-3 font-editor sticky top-0 bg-white h-[52px] shadow-[0px_15px_20px_-15px_#111]"
     data-testid="edit-mode-toolbar"
   >
     <div class="relative flex items-center pr-5">

@@ -1,7 +1,8 @@
 <template>
   <div
+    v-z-layer="{ layer: 'editor-inline', isolate: false }"
     :class="[
-      'absolute inline-flex items-center gap-0.5 p-1 z-base @md:z-raised @lg:z-editor-inline',
+      'absolute inline-flex items-center gap-0.5 p-1',
       'rounded-full bg-white/95 border border-slate-900/10 backdrop-blur-md',
       'shadow-block-actions hover:shadow-block-actions-hover',
       '-translate-y-1 hover:translate-y-0 transition-all duration-[540ms] ease-editor-out',

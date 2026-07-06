@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef" :class="['py-1 z-popover @container/search', props.close ? 'relative' : '']">
+  <div ref="rootRef" v-z-layer="{ layer: 'popover', isolate: false }" :class="['py-1 @container/search', props.close ? 'relative' : '']">
     <form ref="referenceRef" role="search" class="px-px" @submit.prevent="handleSubmit">
       <SfInput
         id="search-bar"
@@ -136,7 +136,7 @@ const previewContainer = inject('previewContainer', ref<HTMLElement | null>(null
 
 const dropdownClass = computed(() => {
   const base =
-    'z-popover bg-white border-y border-neutral-200 shadow-xl flex flex-col max-h-dropdown @container/dropdown';
+    'bg-white border-y border-neutral-200 shadow-xl flex flex-col max-h-dropdown @container/dropdown';
   return props.close ? `absolute inset-x-0 top-full ${base}` : `fixed ${base}`;
 });
 

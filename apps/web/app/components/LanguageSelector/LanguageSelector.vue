@@ -1,8 +1,9 @@
 <template>
   <div
     v-if="viewport.isGreaterOrEquals('md') && isOpen"
+    v-z-layer="{ layer: 'dropdown', isolate: false }"
     data-testid="languageSelectList"
-    class="absolute w-full bg-white py-10 flex flex-row items-center justify-center z-dropdown drop-shadow-md"
+    class="absolute w-full bg-white py-10 flex flex-row items-center justify-center drop-shadow-md"
   >
     <UiModal v-model="isOpen" tag="section" class="w-full bg-white !max-h-fit relative !rounded-none">
       <div class="flex justify-center flex-wrap">

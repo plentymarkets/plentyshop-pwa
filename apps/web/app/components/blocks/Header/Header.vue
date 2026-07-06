@@ -83,7 +83,7 @@
               />
             </template>
           </UiButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-dropdown">
+          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" v-z-layer="{ layer: 'dropdown', isolate: false }" placement="bottom-end">
             <template #trigger>
               <UiButton
                 variant="tertiary"
@@ -202,7 +202,8 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-dropdown"
+        v-z-layer="{ layer: 'modal', isolate: false }"
+        class="w-full h-full"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
