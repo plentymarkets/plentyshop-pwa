@@ -87,7 +87,7 @@ describe('Z-Index Token Scale', () => {
  *   2. Update the `approvedUsages` map below
  *   3. Commit both changes together
  */
-describe('Z-Index Component Usage', () => {
+describe('Z-Index Component Usage for the Editor components', () => {
   const appRoot = resolve(__dirname, '../../../app');
 
   /**
@@ -100,11 +100,34 @@ describe('Z-Index Component Usage', () => {
     'components/SettingsToolbar/SettingsToolbar.vue': ['z-editor-toolbar'],
     'components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue': ['z-overlap'],
     'components/SiteConfigurationDrawer/BlocksConfigurationDrawer.vue': ['z-editor-drawer'],
-    'components/editor/Localization/EditorLocalizationDrawer.vue': ['z-editor-toolbar'],
+    'components/editor/Localization/EditorLocalizationDrawer.vue': ['z-editor-toolbar', 'z-dropdown'],
 
     // Block editor controls
     'components/ui/BlockActions/BlockActions.vue': ['z-editor-inline'],
     'components/editor/AddBlockButton/AddBlockButton.vue': ['z-editor-inline'],
+
+    // Editor modals & popovers
+    'components/AddBlockPopover/AddBlockPopover.vue': ['z-modal-backdrop', 'z-modal'],
+    'components/editor/HtmlEditor/HtmlEditor.vue': ['z-modal-backdrop'],
+    'components/editor/RichTextEditor/RichtextEditorModal.vue': ['z-modal-backdrop'],
+    'components/editor/RichTextEditor/RichTextEditorBasicButtons.vue': ['z-toast', 'z-popover'],
+    'components/editor/RichTextEditor/RichTextEditorLinkModal.vue': ['z-toast'],
+    'components/ui/PageModal/PageModal.vue': ['z-modal'],
+
+    // Editor pickers (above modals)
+    'components/editor/ColorPicker/ColorPicker.vue': ['z-picker'],
+    'components/editor/RichTextEditor/IconEmojiPicker.vue': ['z-picker'],
+
+    // Editor inline panels
+    'components/editor/GridElementsPanel/GridElementsItem.vue': ['z-editor-inline', 'z-dropdown'],
+    'components/editor/GridElementsPanel/GridElementsItemMenu.vue': ['z-dropdown'],
+    'components/editor/BlockItemsAccordion/BlockItemsAccordion.vue': ['z-dropdown'],
+    'components/editor/Localization/TranslationInput.vue': ['z-dropdown'],
+    'components/editor/PageSelect/PageSelect.vue': ['z-popover'],
+
+    // Editor misc
+    'components/SafeModeBanner/SafeModeBanner.vue': ['z-dropdown'],
+    'components/PreviewMode/PreviewMode.vue': ['z-dropdown'],
 
     // Shop navigation
     'components/blocks/NavbarBottom/NavbarBottom.vue': ['z-sticky'],
@@ -121,9 +144,19 @@ describe('Z-Index Component Usage', () => {
    * Catches known past mistakes (e.g., block outline using modal-level z-index).
    */
   const forbiddenUsages: Record<string, string[]> = {
+    // SettingsToolbar must be editor-toolbar, not lower
     'components/SettingsToolbar/SettingsToolbar.vue': ['z-editor-inline', 'z-editor-drawer'],
+    // PageBlock outline must not use modal-level z-index (was causing bleed-through)
     'components/PageBlock/PageBlock.vue': ['z-modal-backdrop', 'z-modal'],
+    // MultiGrid columns don't need z-index (isolation on #app-container handles it)
     'components/blocks/structure/MultiGrid/MultiGrid.vue': ['z-raised', 'z-editor-inline'],
+    // BlockActions must not escalate to dropdown or higher (trapped by isolation)
+    'components/ui/BlockActions/BlockActions.vue': ['z-dropdown', 'z-sticky', 'z-modal'],
+    // AddBlockButton must not escalate beyond editor-inline (except !z-modal for popover target state)
+    'components/editor/AddBlockButton/AddBlockButton.vue': ['z-dropdown', 'z-sticky'],
+    // Toolbar children should not set their own z-index (they inherit from parent z-max)
+    'components/ui/LanguageEditor/LanguageEditor.vue': ['z-max', 'z-modal', 'z-popover'],
+    'components/ui/PageSelector/PageSelector.vue': ['z-max', 'z-modal', 'z-popover'],
   };
 
   const readComponent = (relativePath: string): string => {
