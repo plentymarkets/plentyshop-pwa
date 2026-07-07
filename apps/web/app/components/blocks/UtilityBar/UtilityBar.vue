@@ -217,55 +217,62 @@
               />
             </template>
           </UiButton>
-          <SfDropdown
+          <div
             v-if="isAuthorized && isActionVisible('account')"
-            v-model="isAccountDropdownOpen"
-            placement="bottom-end"
-            class="z-dropdown"
+            ref="accountDropdownTriggerRef"
             :style="{ order: getActionOrder('account') }"
           >
-            <template #trigger>
-              <UiButton
-                variant="tertiary"
-                class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
-                :style="{ color: iconColor, order: getActionOrder('account') }"
-                :class="{ 'bg-primary-700': isAccountDropdownOpen }"
-                data-testid="account-dropdown-button"
-                @click="accountDropdownToggle()"
+            <UiButton
+              variant="tertiary"
+              class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
+              :style="{ color: iconColor, order: getActionOrder('account') }"
+              :class="{ 'bg-primary-700': isAccountDropdownOpen }"
+              data-testid="account-dropdown-button"
+              @click="accountDropdownToggle()"
+            >
+              <template #prefix>
+                <SfIconPerson />
+              </template>
+              {{ user?.firstName }}
+            </UiButton>
+          </div>
+          <Teleport to="body">
+            <div
+              v-if="isAccountDropdownOpen"
+              ref="accountDropdownRef"
+              class="z-dropdown"
+              :style="accountDropdownFloatingStyles"
+            >
+              <ul
+                class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2 [&_a]:no-underline [&_a]:text-neutral-900"
               >
-                <template #prefix>
-                  <SfIconPerson />
-                </template>
-                {{ user?.firstName }}
-              </UiButton>
-            </template>
-            <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
-              <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
-                <template v-if="label === t('account.logout')">
-                  <UiDivider class="my-2" />
+                <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
+                  <template v-if="label === t('account.logout')">
+                    <UiDivider class="my-2" />
+                    <SfListItem
+                      tag="button"
+                      class="text-left"
+                      data-testid="account-dropdown-logout-item"
+                      @click="logOut()"
+                    >
+                      {{ label }}
+                    </SfListItem>
+                  </template>
                   <SfListItem
-                    tag="button"
-                    class="text-left"
-                    data-testid="account-dropdown-logout-item"
-                    @click="logOut()"
+                    v-else
+                    :tag="NuxtLink"
+                    :to="link"
+                    :class="{ 'bg-neutral-200': route.path === link }"
+                    data-testid="account-dropdown-list-item"
                   >
                     {{ label }}
                   </SfListItem>
-                </template>
-                <SfListItem
-                  v-else
-                  :tag="NuxtLink"
-                  :to="link"
-                  :class="{ 'bg-neutral-200': route.path === link }"
-                  data-testid="account-dropdown-list-item"
-                >
-                  {{ label }}
-                </SfListItem>
-              </li>
-            </ul>
-          </SfDropdown>
+                </li>
+              </ul>
+            </div>
+          </Teleport>
           <UiButton
-            v-else-if="!isAuthorized && isActionVisible('account')"
+            v-if="!isAuthorized && isActionVisible('account')"
             :style="{ color: iconColor, order: getActionOrder('account') }"
             class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
@@ -344,7 +351,6 @@
 <script setup lang="ts">
 import {
   SfBadge,
-  SfDropdown,
   SfIconClose,
   SfIconLanguage,
   SfIconMenu,
@@ -356,6 +362,7 @@ import {
   SfIconFavorite,
   useDisclosure,
 } from '@storefront-ui/vue';
+import { useFloating, flip, offset, shift } from '@floating-ui/vue';
 import { onClickOutside } from '@vueuse/core';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 
@@ -390,7 +397,14 @@ const headerPaletteStyle = useGenerateTailwindPalette('header', headerBackground
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
 const localePath = useLocalizedPath();
-const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
+const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle, close: closeAccountDropdown } = useDisclosure();
+const accountDropdownTriggerRef = ref<HTMLElement | null>(null);
+const accountDropdownRef = ref<HTMLElement | null>(null);
+const { floatingStyles: accountDropdownFloatingStyles } = useFloating(accountDropdownTriggerRef, accountDropdownRef, {
+  placement: 'bottom-end',
+  middleware: [offset(4), flip(), shift()],
+});
+onClickOutside(accountDropdownRef, () => closeAccountDropdown(), { ignore: [accountDropdownTriggerRef] });
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
