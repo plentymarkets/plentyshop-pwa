@@ -18,10 +18,7 @@
         },
       ]"
     >
-      <div
-        v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-[-6px] block-selected-outline"
-      />
+      <div v-if="showOutline && !isDragging" class="pointer-events-none absolute inset-[-6px] block-selected-outline" />
       <ClientOnly>
         <EditorAddBlockButton
           :block="block"
