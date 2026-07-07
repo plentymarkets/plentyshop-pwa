@@ -27,8 +27,8 @@ describe('headerQuickAddOptions', () => {
     expect(headerQuickAddOptions.map((option) => option.category)).toEqual(['header', 'header', 'header']);
   });
 
-  it('should have sequential variationIndex values', () => {
-    expect(headerQuickAddOptions.map((option) => option.variationIndex)).toEqual([0, 1, 2]);
+  it('should have variationIndex values in descending order', () => {
+    expect(headerQuickAddOptions.map((option) => option.variationIndex)).toEqual([2, 1, 0]);
   });
 
   it('should use getBlockDisplayName for labels', () => {
