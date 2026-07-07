@@ -2,7 +2,6 @@ import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
-import { openGraph } from '~/configuration/app.config';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
 
@@ -96,7 +95,7 @@ export const useProduct: UseProductReturn = (slug) => {
   const setProductMeta = () => {
     const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
     const runtimeConfig = useRuntimeConfig().public;
-    const titleSuffix = getOgTitle() || runtimeConfig.ogTitle || openGraph.title;
+    const titleSuffix = getOgTitle() || runtimeConfig.ogTitle;
 
     const title =
       productGetters.getTitle(state.value.data) || `${productGetters.getName(state.value.data)} | ${titleSuffix}`;

@@ -63,18 +63,4 @@ describe('useProduct setProductMeta title suffix fallback', () => {
       }),
     );
   });
-
-  it('should fall back to openGraph.title when both site setting and runtimeConfig are empty', () => {
-    siteSettingsValue.value = '';
-    runtimeConfigRef.public.ogTitle = '';
-
-    const { setProductMeta } = useProduct(productId);
-    setProductMeta();
-
-    expect(mockUseHead).toHaveBeenCalledWith(
-      expect.objectContaining({
-        title: expect.stringContaining('PlentyONE Shop'),
-      }),
-    );
-  });
 });
