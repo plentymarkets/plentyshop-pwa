@@ -264,6 +264,7 @@
                     :to="link"
                     :class="{ 'bg-neutral-200': route.path === link }"
                     data-testid="account-dropdown-list-item"
+                    @click="closeAccountDropdown()"
                   >
                     {{ label }}
                   </SfListItem>

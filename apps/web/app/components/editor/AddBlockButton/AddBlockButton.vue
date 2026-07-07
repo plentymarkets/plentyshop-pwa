@@ -1,7 +1,6 @@
 <template>
   <button
     v-if="showButton"
-    :key="position === 'bottom' ? (isDragging ? 'dragging' : 'not-dragging') : undefined"
     :class="[
       addBlockButtonBase,
       position === 'top'
