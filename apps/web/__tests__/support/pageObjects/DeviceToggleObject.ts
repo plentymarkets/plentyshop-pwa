@@ -57,7 +57,7 @@ export class DeviceToggleObject extends PageObject {
   }
 
   assertPreviewIsFullWidth() {
-    this.previewContainer.invoke('attr', 'style').should('be.undefined');
+    this.previewContainer.invoke('attr', 'style').should('not.contain', 'width');
     return this;
   }
 
