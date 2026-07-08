@@ -14,7 +14,7 @@
       @pointercancel="onPointerUp"
       @lostpointercapture="onPointerUp"
     >
-      <div class="absolute inset-0 flex pointer-events-none z-base">
+      <div class="absolute inset-0 flex pointer-events-none">
         <div
           v-for="i in 12"
           :key="i"
@@ -23,7 +23,7 @@
         />
       </div>
 
-      <div class="relative z-raised">
+      <div class="relative">
         <div
           v-for="(row, rowIndex) in rows"
           :key="rowIndex"
