@@ -7,6 +7,7 @@ import {
   buildProductWithItemId,
   buildProductWithVariationId,
   buildProductWithUrlPath,
+  buildProductWithCanonicalHref,
   buildReviewWithCounts,
 } from './fixtures';
 
@@ -19,7 +20,7 @@ const { useRuntimeConfigMock } = vi.hoisted(() => ({
 }));
 mockNuxtImport('useRuntimeConfig', () => useRuntimeConfigMock);
 
-const routeRef = { fullPath: '/search?term=test' };
+const routeRef = { fullPath: '/search?term=test', path: '/search' };
 const { useRouteMock } = vi.hoisted(() => ({ useRouteMock: vi.fn(() => routeRef) }));
 mockNuxtImport('useRoute', () => useRouteMock);
 
@@ -78,6 +79,22 @@ const getCapturedJsonLdRaw = (): string => {
   return '';
 };
 
+const getCapturedCanonicalHref = (): string | undefined => {
+  const calls = mockUseHead.mock.calls;
+
+  for (let i = calls.length - 1; i >= 0; i--) {
+    const call = calls[i];
+    if (!call) continue;
+
+    const arg = call[0] as { link?: { rel: string; href: string }[] };
+    const canonicalLink = arg?.link?.find((link) => link.rel === 'canonical');
+
+    if (canonicalLink) return canonicalLink.href;
+  }
+
+  return undefined;
+};
+
 describe('useStructuredData', () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -88,6 +105,7 @@ describe('useStructuredData', () => {
     reviewStateRef.value = {} as Review; // NOSONAR
     reviewAverageStateRef.value = {};
     routeRef.fullPath = '/search?term=test';
+    routeRef.path = '/search';
     runtimeConfigRef.public.domain = 'https://shop.example.com';
     isSingleProductUrlSchemeEnabled.value = false;
   });
@@ -235,6 +253,19 @@ describe('useStructuredData', () => {
       const rawJsonLd = getCapturedJsonLdRaw();
       expect(rawJsonLd).not.toContain('</script>');
       expect(rawJsonLd).toContain(String.raw`\u003C/script>`);
+    });
+  });
+
+  describe('setProductCanonicalMetaData', () => {
+    it('should default the canonical href to the current URL, excluding query parameters, when canonical href is empty', () => {
+      routeRef.fullPath = '/search?term=test';
+      routeRef.path = '/search';
+
+      const { setProductCanonicalMetaData } = useStructuredData();
+      setProductCanonicalMetaData(buildProductWithCanonicalHref(''));
+
+      const canonicalHref = getCapturedCanonicalHref();
+      expect(canonicalHref).toBe('https://shop.example.com/search');
     });
   });
 });
