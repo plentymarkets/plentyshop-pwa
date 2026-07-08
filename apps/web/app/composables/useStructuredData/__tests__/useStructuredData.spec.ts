@@ -267,5 +267,16 @@ describe('useStructuredData', () => {
       const canonicalHref = getCapturedCanonicalHref();
       expect(canonicalHref).toBe('https://shop.example.com/search');
     });
+
+    it('should default the canonical href to the current URL, excluding query parameters, when canonical is missing', () => {
+      routeRef.fullPath = '/search?term=test';
+      routeRef.path = '/search';
+
+      const { setProductCanonicalMetaData } = useStructuredData();
+      setProductCanonicalMetaData(buildProduct());
+
+      const canonicalHref = getCapturedCanonicalHref();
+      expect(canonicalHref).toBe('https://shop.example.com/search');
+    });
   });
 });
