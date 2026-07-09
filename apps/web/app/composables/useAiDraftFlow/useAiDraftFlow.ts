@@ -119,6 +119,8 @@ export const useAiDraftFlow = (options: UseAiDraftFlowOptions = {}) => {
 
     state.value.phase = 'generating';
 
+    useLogEvent().logAiGenerateDraft();
+
     const result = await invokeAi({
       prompt: buildPrompt(state.value),
       coreFunctionality: options.coreFunctionality,
@@ -154,11 +156,16 @@ export const useAiDraftFlow = (options: UseAiDraftFlowOptions = {}) => {
 
   const discard = () => {
     options.onApply?.(state.value.snapshot);
+
+    useLogEvent().logAiDiscardDraft();
+
     state.value.draft = '';
     state.value.phase = 'prompt';
   };
 
   const keep = () => {
+    useLogEvent().logAiKeepDraft();
+
     state.value.draft = '';
     state.value.phase = 'idle';
     state.value.refineOpen = false;
