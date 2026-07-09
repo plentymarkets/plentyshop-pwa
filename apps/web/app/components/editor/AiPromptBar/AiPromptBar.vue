@@ -80,7 +80,7 @@ const emit = defineEmits<{
   (e: 'apply', content: string): void;
 }>();
 
-const aiEnabled = useRuntimeConfig().public.enableAiTextGeneration as boolean;
+const aiEnabled = useFeatureFlag('shopPwaEditorAI', false);
 
 const {
   state,
