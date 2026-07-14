@@ -1,10 +1,24 @@
 <template>
   <div v-if="!modalOpen">
-    <EditorAiPromptBar
-      :review-target="editorWrapperRef"
-      :get-current-content="() => editor?.getHTML() ?? ''"
-      @apply="applyAiContent"
-    />
+    <div class="flex items-center gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2.5">
+      <EditorAiPromptBar
+        class="flex-1 min-w-0"
+        :review-target="editorWrapperRef"
+        :get-current-content="() => editor?.getHTML() ?? ''"
+        @apply="applyAiContent"
+      />
+
+      <button
+        v-if="isProductPage"
+        type="button"
+        class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg border py-1.5 text-sm font-extrabold cursor-pointer transition-shadow border-gray-300 bg-white text-slate-900 shadow-sm hover:bg-gray-100"
+        data-testid="rte-properties-button"
+        @mousedown.prevent
+        @click="openPropertiesModal"
+      >
+        {{ propertiesButtonLabel }}
+      </button>
+    </div>
 
     <div class="flex items-stretch gap-1.5 p-2 bg-gray-50 border-b border-gray-200 relative" data-testid="rte-toolbar">
       <div class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
@@ -16,10 +30,8 @@
           :insert-icon="insertIcon"
           :is-active="isActive"
           :on-font-size-change="onFontSizeChange"
-          :on-open-properties-modal="openPropertiesModal"
           :on-text-size-change="setFontSize"
           :set-font-color="setFontColor"
-          :show-properties-button="isProductPage"
           :text-color="textColor"
           :toggle-link="toggleLink"
         />
@@ -187,6 +199,7 @@ const {
 const propertiesModalOpen = ref(false);
 const { blocksListContext } = useBlocksList();
 const isProductPage = computed(() => blocksListContext.value === 'product');
+const propertiesButtonLabel = getEditorTranslation('rte-properties-button-label');
 
 const editorStyle = computed(() => ({
   minHeight: `${props.minHeight}px`,
@@ -229,3 +242,14 @@ const applyAiContent = (content: string) => {
 
 defineExpose({ editor, focus, clearFormatting, undo, redo, openModal });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "rte-properties-button-label": "Properties..."
+  },
+  "de": {
+    "rte-properties-button-label": "Properties..."
+  }
+}
+</i18n>

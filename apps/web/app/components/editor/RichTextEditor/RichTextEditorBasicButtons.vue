@@ -127,14 +127,6 @@
     @click="toggleLink"
   />
 
-  <EditorRichTextEditorMenuButton
-    v-if="showPropertiesButton && onOpenPropertiesModal"
-    :title="'Insert property'"
-    data-testid="rte-properties-button"
-    icon-name="add"
-    @click="handleOpenPropertiesModal"
-  />
-
   <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
 
   <EditorColorPicker
@@ -173,8 +165,6 @@ const props = defineProps<{
   toggleLink: () => void;
   insertIcon: (name: string) => void;
   insertEmoji: (name: string) => void;
-  showPropertiesButton?: boolean;
-  onOpenPropertiesModal?: () => void;
 }>();
 
 const isBlockTypeOpen = ref(false);
@@ -260,11 +250,5 @@ const selectBlockType = (value: string) => {
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
   isFontSizeOpen.value = false;
-};
-
-const handleOpenPropertiesModal = () => {
-  if (props.onOpenPropertiesModal) {
-    props.onOpenPropertiesModal();
-  }
 };
 </script>
