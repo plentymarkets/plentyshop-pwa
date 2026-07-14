@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed z-max w-80 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl animate-ai-popin"
+    class="fixed z-max w-80 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl animate-ai-popin font-editor"
     :style="anchorStyle"
     data-testid="ai-prompt-popover"
   >
