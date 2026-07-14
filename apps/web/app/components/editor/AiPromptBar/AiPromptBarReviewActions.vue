@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute -bottom-3 left-1/2 z-overlap inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-2xl border border-gray-200 bg-white p-1.5 shadow-lg animate-ai-floaty"
+    class="absolute -bottom-3 left-1/2 z-overlap inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-2xl border border-gray-200 bg-white p-1.5 shadow-lg animate-ai-floaty font-editor"
     data-testid="ai-review-actions"
   >
     <button

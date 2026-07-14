@@ -1,10 +1,10 @@
 <template>
   <div v-if="aiEnabled" class="relative" data-testid="ai-prompt-bar">
-    <div class="flex items-center justify-between gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2.5">
+    <div class="flex items-center justify-between gap-2">
       <button
         ref="aiButtonRef"
         type="button"
-        class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-extrabold cursor-pointer transition-shadow"
+        class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg border py-1.5 text-sm font-extrabold cursor-pointer transition-shadow"
         :class="
           aiActive
             ? 'border-slate-900 bg-slate-900 text-white shadow-md hover:bg-slate-800'
@@ -16,7 +16,7 @@
         @mousedown.prevent
         @click="toggle"
       >
-        <SfIconStarFilled size="xs" />
+        <NuxtImg width="16" height="16" :src="magicWand" alt="" aria-hidden="true" />
         {{ aiLabel }}
       </button>
 
@@ -25,7 +25,7 @@
         class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-900"
         data-testid="ai-generated-badge"
       >
-        <SfIconStarFilled size="xs" />
+        <NuxtImg width="16" height="16" :src="magicWand" alt="" aria-hidden="true" />
         {{ generatedBadgeLabel }}
       </span>
     </div>
@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfIconStarFilled } from '@storefront-ui/vue';
+import magicWand from '~/assets/icons/paths/magic-wand.svg';
 import type { AiCoreFunctionality } from '~/composables/useAiTextGeneration/types';
 
 const props = defineProps<{
@@ -165,11 +165,11 @@ const generatedBadgeLabel = getEditorTranslation('ai-generated-badge');
 <i18n lang="json">
 {
   "en": {
-    "ai-label": "AI",
+    "ai-label": "Generate...",
     "ai-generated-badge": "AI generated"
   },
   "de": {
-    "ai-label": "AI",
+    "ai-label": "Generate...",
     "ai-generated-badge": "AI generated"
   }
 }
