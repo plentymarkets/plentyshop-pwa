@@ -21,7 +21,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ matrix.branch }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
@@ -48,7 +48,7 @@ jobs:
     needs: coverage-test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: "Download Coverage Artifacts"
         uses: actions/download-artifact@v8
         with:
