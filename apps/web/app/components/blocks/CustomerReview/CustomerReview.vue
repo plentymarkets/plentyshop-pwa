@@ -9,7 +9,7 @@
     <SfLoaderCircular
       v-if="loadingReviews"
       data-testid="loader"
-      class="absolute top-[130px] right-0 left-0 m-auto z-loader"
+      class="absolute top-[130px] right-0 left-0 m-auto z-raised"
       size="2xl"
     />
 

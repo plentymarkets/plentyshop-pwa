@@ -27,7 +27,7 @@ export default {
   robotsTermsAndConditions: process.env.NUXT_PUBLIC_ROBOTS_TERMS_AND_CONDITIONS || 'all',
   robotsSearchResult: process.env.NUXT_PUBLIC_SEARCH_RESULT || 'all',
   robotsAccessibilityDeclaration: process.env.NUXT_PUBLIC_ROBOTS_ACCESSIBILITY_DECLARATION || 'all',
-  robotsStopIndexing: process.env.NUXT_PUBLIC_ROBOTS_STOP_INDEXING || '0',
+  seoCategoryRobotsNoIndex: process.env.NUXT_PUBLIC_ROBOTS_STOP_INDEXING || '1',
   robotsItemPage: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || 'ALL',
   robotsItemPageId: process.env.NUXT_PUBLIC_ROBOTS_ITEM_PAGE || '1',
   itemCanonicalId: process.env.NUXT_PUBLIC_ITEM_CANONICAL_ID || '',
@@ -75,7 +75,7 @@ export default {
   headerLogo:
     process.env.NUXT_PUBLIC_HEADER_LOGO ||
     process.env.LOGO ||
-    'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.svg',
+    'https://cdn02.plentyone.com/mevofvd5omld/frontend/Logo/logo.svg',
   storename: process.env.NAME || 'PlentyONE GmbH',
   font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
   verticalBlockSize: process.env.NUXT_PUBLIC_VERTICAL_BLOCK_SIZE || 'm',
@@ -102,6 +102,7 @@ export default {
   itemSortByMonthlySales: process.env.NUXT_PUBLIC_ITEM_SORT_BY_MONTHLY_SALES || '0',
   defaultCustomerClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_CLASS_ID || '0',
   defaultCustomerB2BClassId: process.env.NUXT_PUBLIC_DEFAULT_CUSTOMER_B2B_CLASS_ID || '0',
+  defaultB2BClassIds: process.env.NUXT_PUBLIC_DEFAULT_B2B_CLASS_IDS || '[]',
   fetchDynamicTranslations: false,
   sessionLifetime: process.env.NUXT_PUBLIC_SESSION_LIFETIME || '3600',
   shippingTextCategoryId: process.env.NUXT_PUBLIC_SHIPPING_TEXT_CATEGORY_ID || '',

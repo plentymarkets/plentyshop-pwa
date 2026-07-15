@@ -62,20 +62,20 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
-   * @description Function for creating a path with a specific locale. (useLocaleRoute or useLocalePath)
+   * @description Function for creating a path with a specific locale. (useLocalePath)
    * @param path  e.g. '/login'
    * @param locale to be added to the path
    * @returns localized path with the locale prefix if necessary
    * @example createLocalePath('/login', 'de');
    */
-  const createLocalePath = (path: string, locale: string) => {
+  const createLocalePath = (path: string, locale: string): string => {
     const { locales } = useNuxtApp().$i18n;
     const localeCodes = locales.value.map((_locale) => _locale.code.toString());
     const localeSupported = localeCodes.includes(locale);
-    const localeRoute = useLocaleRoute();
+    const localizedPath = useLocalePath();
 
     if (localeSupported) {
-      return resolvePathTrailingSlash(localeRoute(path, locale as Locale));
+      return resolvePathTrailingSlash(localizedPath(path, locale as Locale));
     }
     return localePath(path);
   };

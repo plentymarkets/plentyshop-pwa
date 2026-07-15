@@ -45,8 +45,9 @@
                 display: 'flex',
                 flexDirection: 'column',
                 '--viewport-height': '90dvh',
+                isolation: 'isolate',
               }
-            : undefined
+            : { isolation: 'isolate' }
         "
         :class="isMobilePreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
         data-testid="editor-preview-container"
@@ -209,7 +210,13 @@ useSeoMeta({
   generator: 'plentymarkets',
 });
 
+const localeHead = useLocaleHead();
+
 useHead({
+  htmlAttrs: {
+    lang: () => localeHead.value.htmlAttrs.lang,
+    dir: () => localeHead.value.htmlAttrs.dir as 'ltr' | 'rtl' | 'auto' | undefined,
+  },
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },

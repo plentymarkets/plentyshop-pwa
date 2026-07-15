@@ -52,6 +52,10 @@
         {
           "text": "Structure vs. Content Form",
           "link": "/guide/editor/blocks-structure-vs-content"
+        },
+        {
+          "text": "Discovery and overrides",
+          "link": "/guide/editor/blocks-discovery"
         }
         ]
       },

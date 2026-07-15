@@ -181,8 +181,6 @@ const props = defineProps<{
   insertIcon: (name: string) => void;
   insertEmoji: (name: string) => void;
   onOpenI18nModal?: () => void;
-  showPropertiesButton?: boolean;
-  onOpenPropertiesModal?: () => void;
 }>();
 
 const isBlockTypeOpen = ref(false);
@@ -268,12 +266,6 @@ const selectBlockType = (value: string) => {
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
   isFontSizeOpen.value = false;
-};
-
-const handleOpenPropertiesModal = () => {
-  if (props.onOpenPropertiesModal) {
-    props.onOpenPropertiesModal();
-  }
 };
 
 const handleOpenI18nModal = () => {

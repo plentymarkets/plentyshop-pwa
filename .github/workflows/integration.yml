@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
       - name: Build with VitePress
@@ -31,15 +31,18 @@ jobs:
           npm run docs:build
           touch ${{ github.workspace }}/docs/.vitepress/dist/.nojekyll
       - name: Install & Run htmltest
+        env:
+          HTMLTEST_VERSION: '0.17.0'
         run: |
           cd docs/.vitepress
-          curl https://htmltest.wjdp.uk | bash
-          bin/htmltest
+          curl -fsSL -o htmltest.tar.gz "https://github.com/wjdp/htmltest/releases/download/v${HTMLTEST_VERSION}/htmltest_${HTMLTEST_VERSION}_linux_amd64.tar.gz"
+          tar -xzf htmltest.tar.gz htmltest
+          ./htmltest
   fitness-compliance:
     runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Dependency review
         uses: actions/dependency-review-action@v5
         with:
@@ -61,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -90,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -100,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -133,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -165,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 

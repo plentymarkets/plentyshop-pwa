@@ -93,7 +93,9 @@ export const useProduct: UseProductReturn = (slug) => {
    * @description Function for setting product title meta data
    */
   const setProductMeta = () => {
-    const { titleSuffix } = useAppConfig();
+    const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
+    const runtimeConfig = useRuntimeConfig().public;
+    const titleSuffix = getOgTitle() || runtimeConfig.ogTitle;
 
     const title =
       productGetters.getTitle(state.value.data) || `${productGetters.getName(state.value.data)} | ${titleSuffix}`;

@@ -18,31 +18,17 @@
         },
       ]"
     >
-      <div
-        v-if="showOutline && !isDragging"
-        class="pointer-events-none absolute inset-[-6px] z-modal-backdrop block-selected-outline"
-      />
+      <div v-if="showOutline && !isDragging" class="pointer-events-none absolute inset-[-6px] block-selected-outline" />
       <ClientOnly>
-        <button
-          v-if="showTopAddBlockButton"
-          :class="[
-            addBlockButtonBase,
-            'top-0 -translate-y-1/2',
-            'group-hover/block:opacity-100 group-hover/block:scale-100 focus-visible:opacity-100 focus-visible:scale-100',
-            {
-              '!opacity-100 !scale-100':
-                (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'top'),
-              '!z-modal': isPopoverTarget && popoverState?.position === 'top',
-            },
-          ]"
-          data-testid="top-add-block"
-          aria-label="top add block"
-          @click.stop="addNewBlock(block, 'top', $event)"
-        >
-          <SfTooltip class="flex" :label="buttonLabel" placement="top" :show-arrow="true">
-            <SfIconAdd class="cursor-pointer" size="xs" />
-          </SfTooltip>
-        </button>
+        <EditorAddBlockButton
+          :block="block"
+          :index="index"
+          :is-clicked="isClicked"
+          :clicked-block-index="clickedBlockIndex"
+          :root="root"
+          :enable-actions="enableActions"
+          position="top"
+        />
       </ClientOnly>
 
       <ClientOnly>
@@ -84,37 +70,22 @@
       </component>
 
       <ClientOnly>
-        <button
-          v-if="showBottomAddBlockButton"
-          :key="isDragging ? 'dragging' : 'not-dragging'"
-          :class="[
-            addBlockButtonBase,
-            'bottom-0 translate-y-1/2',
-            'group-hover/block:opacity-100 group-hover/block:scale-100',
-            {
-              '!opacity-100 !scale-100':
-                (isClicked && clickedBlockIndex === index) || (isPopoverTarget && popoverState?.position === 'bottom'),
-              '!z-modal': isPopoverTarget && popoverState?.position === 'bottom',
-            },
-          ]"
-          data-testid="bottom-add-block"
-          aria-label="bottom add block"
-          @click.stop="addNewBlock(block, 'bottom', $event)"
-        >
-          <SfTooltip class="flex" :label="buttonLabel" placement="bottom" :show-arrow="true">
-            <SfIconAdd class="cursor-pointer" size="xs" />
-          </SfTooltip>
-        </button>
+        <EditorAddBlockButton
+          :block="block"
+          :index="index"
+          :is-clicked="isClicked"
+          :clicked-block-index="clickedBlockIndex"
+          :root="root"
+          :enable-actions="enableActions"
+          position="bottom"
+        />
       </ClientOnly>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
-import type { BlockPosition } from '~/composables/useBlockManager/types';
 import type { PageBlockProps } from './types';
-import type { Block } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<PageBlockProps>(), {
   enableActions: false,
@@ -126,24 +97,12 @@ const { isInEditorClient } = useEditorState();
 const attrs = useAttrs();
 const { isDragging, lazyLoadStates, lazyLoadRefs, shouldLazyLoad, getLazyLoadKey, getLazyLoadConfig, getLazyLoadRef } =
   useBlockManager();
-const { openAddBlockPopover, popoverState } = useAddBlockPopover();
+const { popoverState } = useAddBlockPopover();
 const { shouldShowBlock } = useBlocksVisibility();
 const { blockUuid } = useSiteConfiguration();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
-const { logContentCreateBlock } = useLogEvent();
 
 const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
-const buttonLabel = 'Insert a new block at this position.';
-
-const addBlockButtonBase = [
-  'add-block-button no-drag',
-  'absolute left-1/2 -translate-x-1/2 z-base @md:z-raised @lg:z-editor-inline',
-  'flex items-center justify-center w-7 h-7 rounded-full p-0 border-0',
-  'bg-editor-block-selected text-white shadow-add-block-btn',
-  'opacity-0 scale-90',
-  'transition-[opacity,transform,box-shadow,background-color] duration-200 ease-editor-out',
-  'hover:bg-editor-block-selected-hover hover:scale-110 hover:shadow-add-block-btn-hover',
-].join(' ');
 
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
@@ -216,38 +175,6 @@ const showOutline = computed(() => {
     isPopoverTarget.value
   );
 });
-
-const addNewBlock = (block: Block, position: BlockPosition, event: MouseEvent) => {
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position });
-  } else {
-    const { openDrawerWithView } = useSiteConfiguration();
-    const { togglePlaceholder } = useBlockManager();
-    const { clearInsertColumnUuid } = useBlocksMutations();
-    togglePlaceholder(block.meta.uuid, position);
-    openDrawerWithView('blocksList');
-    clearInsertColumnUuid();
-  }
-  logContentCreateBlock();
-};
-
-const showTopAddBlockButton = computed(
-  () =>
-    props.enableActions &&
-    clientPreview.value &&
-    props.root &&
-    !isDragging.value &&
-    !isHeaderContainerBlock(props.block),
-);
-
-const showBottomAddBlockButton = computed(
-  () =>
-    props.enableActions &&
-    clientPreview.value &&
-    !isDragging.value &&
-    !isFooterContainerBlock(props.block) &&
-    props.root,
-);
 
 const onBlockHover = () => {
   if (props.root) {

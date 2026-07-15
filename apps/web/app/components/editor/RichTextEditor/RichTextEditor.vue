@@ -1,5 +1,25 @@
 <template>
-  <div v-if="!modalOpen">
+  <div v-if="!modalOpen" class="font-editor">
+    <div class="flex items-center gap-2 border-b border-gray-200 bg-gray-50 px-3 py-2.5">
+      <EditorAiPromptBar
+        class="flex-1 min-w-0"
+        :review-target="editorWrapperRef"
+        :get-current-content="() => editor?.getHTML() ?? ''"
+        @apply="applyAiContent"
+      />
+
+      <button
+        v-if="isProductPage"
+        type="button"
+        class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg border py-1.5 text-sm font-extrabold cursor-pointer transition-shadow border-gray-300 bg-white text-slate-900 shadow-sm hover:bg-gray-100"
+        data-testid="rte-properties-button"
+        @mousedown.prevent
+        @click="openPropertiesModal"
+      >
+        {{ propertiesButtonLabel }}
+      </button>
+    </div>
+
     <div class="flex items-stretch gap-1.5 p-2 bg-gray-50 border-b border-gray-200 relative" data-testid="rte-toolbar">
       <div class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
         <EditorRichTextEditorBasicButtons
@@ -14,7 +34,6 @@
           :on-open-properties-modal="openPropertiesModal"
           :on-text-size-change="setFontSize"
           :set-font-color="setFontColor"
-          :show-properties-button="isProductPage"
           :text-color="textColor"
           :toggle-link="toggleLink"
         />
@@ -64,7 +83,8 @@
     </div>
 
     <div
-      class="p-2.5 editor-parent border border-gray-300 rounded-b-md bg-white"
+      ref="editorWrapperRef"
+      class="p-2.5 editor-parent border border-gray-300 rounded-b-md bg-white relative"
       data-testid="rte-editor"
       @mousedown="editor?.chain().focus().run()"
     >
@@ -118,6 +138,7 @@ import I18nKeySelectModal from './I18nKeySelectModal.vue';
 const modalOpen = ref(false);
 const linkModalOpen = ref(false);
 const i18nModalOpen = ref(false);
+const editorWrapperRef = ref<HTMLElement | null>(null);
 
 const props = withDefaults(
   defineProps<{
@@ -188,6 +209,7 @@ const {
 const propertiesModalOpen = ref(false);
 const { blocksListContext } = useBlocksList();
 const isProductPage = computed(() => blocksListContext.value === 'product');
+const propertiesButtonLabel = getEditorTranslation('rte-properties-button-label');
 
 const editorStyle = computed(() => ({
   minHeight: `${props.minHeight}px`,
@@ -235,7 +257,22 @@ const handlePropertyInsertion = (tokens: PropertyPlaceholderToken[]) => {
 const handleI18nInsertion = (token: I18nPlaceholderToken) => {
   insertI18nPlaceholder(token);
   i18nModalOpen.value = false;
+}
+
+const applyAiContent = (content: string) => {
+  editor.value?.commands.setContent(content);
 };
 
 defineExpose({ editor, focus, clearFormatting, undo, redo, openModal });
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "rte-properties-button-label": "Properties..."
+  },
+  "de": {
+    "rte-properties-button-label": "Properties..."
+  }
+}
+</i18n>

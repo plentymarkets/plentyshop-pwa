@@ -35,6 +35,7 @@
           :min-items-reached="minItemsReached"
           :is-active="currentActiveBlockIndex === index"
           :parent-uuid="props.uuid"
+          :custom-label="props.customLabel(block)"
           @insert-before="onInsertBefore"
           @edit-element="emit('edit-element', $event)"
           @replace-empty="onReplaceEmpty"
@@ -86,6 +87,7 @@ const props = withDefaults(defineProps<GridElementsPanelProps>(), {
   modelValue: true,
   minItems: 0,
   customAdd: false,
+  customLabel: () => '',
 });
 const emit = defineEmits<GridElementsPanelEmits>();
 
@@ -197,10 +199,12 @@ const onDragEnd = () => {
     setGridColumnsWidth(newWidths);
   } else {
     const content = structure.value.content as Block[] | undefined;
+    const reordered = localItems.value.map((block, index) => ({ ...block, parent_slot: index }));
+
     if (Array.isArray(content)) {
-      content.splice(0, content.length, ...localItems.value);
+      content.splice(0, content.length, ...reordered);
     } else {
-      structure.value.content = [...localItems.value];
+      structure.value.content = [...reordered];
     }
   }
 };

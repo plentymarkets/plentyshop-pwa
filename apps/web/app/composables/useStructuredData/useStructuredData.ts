@@ -287,7 +287,15 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const canonical = productSeoSettingsGetters.getCanonical(product);
 
     if (canonical) {
-      const canonicalUrl = applyTrailingSlashToUrl(productSeoSettingsGetters.getCanonicalHref(canonical));
+      const runtimeConfig = useRuntimeConfig();
+      const route = useRoute();
+      const localePath = useLocalePath();
+
+      const canonicalHref =
+        productSeoSettingsGetters.getCanonicalHref(canonical) ||
+        `${runtimeConfig.public.domain}${localePath(route.path)}`;
+
+      const canonicalUrl = applyTrailingSlashToUrl(canonicalHref);
       useHead({
         link: [{ rel: 'canonical', href: canonicalUrl }],
       });

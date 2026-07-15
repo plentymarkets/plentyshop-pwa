@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="isOpen"
-    class="absolute top-full mt-2 z-dropdown min-w-[10rem] rounded-lg border bg-white shadow-lg"
+    class="absolute top-full mt-2 min-w-[10rem] rounded-lg border bg-white shadow-lg"
     role="listbox"
     tabindex="-1"
   >
