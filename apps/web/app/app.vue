@@ -210,7 +210,13 @@ useSeoMeta({
   generator: 'plentymarkets',
 });
 
+const localeHead = useLocaleHead();
+
 useHead({
+  htmlAttrs: {
+    lang: () => localeHead.value.htmlAttrs.lang,
+    dir: () => localeHead.value.htmlAttrs.dir as 'ltr' | 'rtl' | 'auto' | undefined,
+  },
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
