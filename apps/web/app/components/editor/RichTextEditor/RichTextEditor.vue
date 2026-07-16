@@ -257,7 +257,7 @@ const handlePropertyInsertion = (tokens: PropertyPlaceholderToken[]) => {
 const handleI18nInsertion = (token: I18nPlaceholderToken) => {
   insertI18nPlaceholder(token);
   i18nModalOpen.value = false;
-}
+};
 
 const applyAiContent = (content: string) => {
   editor.value?.commands.setContent(content);

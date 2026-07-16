@@ -134,14 +134,6 @@
     @click="handleOpenI18nModal"
   />
 
-  <EditorRichTextEditorMenuButton
-    v-if="showPropertiesButton && onOpenPropertiesModal"
-    :title="'Insert property'"
-    data-testid="rte-properties-button"
-    icon-name="add"
-    @click="handleOpenPropertiesModal"
-  />
-
   <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
 
   <EditorColorPicker
