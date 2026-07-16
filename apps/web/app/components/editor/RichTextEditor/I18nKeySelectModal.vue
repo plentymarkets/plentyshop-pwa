@@ -31,7 +31,12 @@
             <SfIconSearch class="text-neutral-400" size="sm" />
           </template>
           <template v-if="searchQuery" #suffix>
-            <button aria-label="Clear search" class="text-neutral-400 hover:text-neutral-600" type="button" @click="searchQuery = ''">
+            <button
+              aria-label="Clear search"
+              class="text-neutral-400 hover:text-neutral-600"
+              type="button"
+              @click="searchQuery = ''"
+            >
               <SfIconClose size="sm" />
             </button>
           </template>
