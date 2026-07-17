@@ -39,15 +39,6 @@ const ANALYSIS_SCHEMA = {
   },
 };
 
-const USAGE_SCHEMA = {
-  type: 'object',
-  properties: {
-    packageName: { type: 'string' },
-    usageFiles: { type: 'array', items: { type: 'string' } },
-    usageContext: { type: 'string' },
-    potentialBreakpoints: { type: 'array', items: { type: 'string' } },
-  },
-};
 
 const FINAL_REPORT_SCHEMA = {
   type: 'object',
@@ -131,25 +122,18 @@ Be thorough - check actual release notes and changelogs.`,
 log(`Analyzed ${detailedAnalysis.packages.length} packages`);
 
 phase('Check Local Usage');
-const localUsage = await Promise.all(
-  detailedAnalysis.packages.map((pkg) =>
-    agent(
-      `Find usage of "${pkg.name}" (${pkg.fromVersion} → ${pkg.toVersion}, type: ${pkg.type}) in the plentyshop-pwa repository:
+const localUsage = await agent(
+  `Find usage of each of these dependencies in the plentyshop-pwa repository:
 
-For npm packages: search for imports/requires
-For GitHub Actions: search .github/workflows/*.yml files
-For other: search relevant config files
+${JSON.stringify(detailedAnalysis.packages.map((p) => ({ name: p.name, from: p.fromVersion, to: p.toVersion, type: p.type })), null, 2)}
 
-List:
-1. All files that reference this dependency
-2. How it's used (specific functions, in what context)
-3. Potential breaking points for the version change`,
-      {
-        label: `usage-${pkg.name}`,
-        schema: USAGE_SCHEMA,
-      },
-    ),
-  ),
+For each package:
+- npm packages: search for imports/requires
+- GitHub Actions: search .github/workflows/*.yml files
+- other: search relevant config files
+
+For each, list: files that reference it, how it's used, and potential breaking points for the version change.`,
+  { label: 'check-local-usage' },
 );
 
 phase('Validate Constraints');
