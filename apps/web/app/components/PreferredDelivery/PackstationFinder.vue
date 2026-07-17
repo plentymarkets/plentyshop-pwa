@@ -16,7 +16,7 @@
               width="100"
               height="auto"
               loading="lazy"
-              class="block rounded-lg bg-[rgb(255,204,0)] p-3 mr-2 sm:mr-4"
+              class="block rounded-lg bg-[rgb(255,204,0)] p-3 mr-2 @sm:mr-4"
             />
           </header>
           <SfIconChevronLeft :class="['text-neutral-500', packstationAccordionOpen ? 'rotate-90' : '-rotate-90']" />
@@ -25,8 +25,8 @@
         <div class="px-4 pb-4">
           <div class="mt-3">{{ t('PreferredDelivery.packstation.containerTextInfo') }}</div>
           <form novalidate @submit.prevent="validateAndSubmitForm">
-            <div class="mt-4 sm:flex sm:gap-4">
-              <label class="sm:basis-[50%]">
+            <div class="mt-4 @sm:flex @sm:gap-4">
+              <label class="@sm:basis-[50%]">
                 <UiFormLabel>{{ t('PreferredDelivery.packstation.streetLabel') }}</UiFormLabel>
                 <SfInput
                   v-model="street"
@@ -38,8 +38,8 @@
                 />
               </label>
 
-              <label class="sm:basis-[25%]">
-                <UiFormLabel class="mt-4 sm:mt-0">{{ t('PreferredDelivery.packstation.zipcodeLabel') }}</UiFormLabel>
+              <label class="@sm:basis-[25%]">
+                <UiFormLabel class="mt-4 @sm:mt-0">{{ t('PreferredDelivery.packstation.zipcodeLabel') }}</UiFormLabel>
                 <SfInput
                   v-model="zipcode"
                   v-bind="zipcodeAttributes"
@@ -50,8 +50,8 @@
                 />
               </label>
 
-              <label class="sm:basis-[25%]">
-                <UiFormLabel class="mt-4 sm:mt-0">{{ t('PreferredDelivery.packstation.cityLabel') }}</UiFormLabel>
+              <label class="@sm:basis-[25%]">
+                <UiFormLabel class="mt-4 @sm:mt-0">{{ t('PreferredDelivery.packstation.cityLabel') }}</UiFormLabel>
                 <SfInput
                   v-model="city"
                   v-bind="cityAttributes"
@@ -70,10 +70,10 @@
               name="searchParams.street"
             />
 
-            <div class="flex flex-col sm:flex-row sm:items-center sm:gap-3 mt-4">
+            <div class="flex flex-col @sm:flex-row @sm:items-center @sm:gap-3 mt-4">
               <label
                 for="DHL-type-packstation"
-                class="order-1 sm:order-2 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit"
+                class="order-1 @sm:order-2 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit"
               >
                 <SfCheckbox id="DHL-type-packstation" v-model="data.searchParams.searchPackstation" />
                 {{ t('PreferredDelivery.packstation.dropDownValues.packstation') }}
@@ -81,7 +81,7 @@
 
               <label
                 for="DHL-type-postal-outlet"
-                class="order-2 sm:order-3 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit mt-2 sm:mt-0"
+                class="order-2 @sm:order-3 inline-flex items-center gap-2 select-none font-semibold cursor-pointer w-fit mt-2 @sm:mt-0"
               >
                 <SfCheckbox id="DHL-type-postal-outlet" v-model="data.searchParams.searchPostfilial" />
                 {{ t('PreferredDelivery.packstation.dropDownValues.postfilial') }}
@@ -91,7 +91,7 @@
                 type="submit"
                 :disabled="loading"
                 variant="secondary"
-                class="order-3 sm:order-1 min-w-[120px] w-fit mt-3 sm:mt-0"
+                class="order-3 @sm:order-1 min-w-[120px] w-fit mt-3 @sm:mt-0"
               >
                 <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
                 <template v-else>{{ t('PreferredDelivery.packstation.search') }}</template>
@@ -99,15 +99,15 @@
             </div>
           </form>
 
-          <div v-if="data.packstations.length" class="mt-4 flex flex-col sm:flex-row gap-1">
+          <div v-if="data.packstations.length" class="mt-4 flex flex-col @sm:flex-row gap-1">
             <div
               id="map"
               ref="mapElement"
-              class="border border-gray-300 bg-gray-300 rounded-md h-96 sm:h-auto min-h-80 flex-1 sm:basis-[65%] min-w-0 order-1 sm:order-2"
+              class="border border-gray-300 bg-gray-300 rounded-md h-96 @sm:h-auto min-h-80 flex-1 @sm:basis-[65%] min-w-0 order-1 @sm:order-2"
             />
 
             <ul
-              class="space-y-4 h-[520px] max-h-[520px] overflow-y-auto flex-1 sm:basis-[35%] w-full order-2 sm:order-1 mt-3 sm:mt-0"
+              class="space-y-4 h-[520px] max-h-[520px] overflow-y-auto flex-1 @sm:basis-[35%] w-full order-2 @sm:order-1 mt-3 @sm:mt-0"
             >
               <PreferredDeliveryPackstation
                 v-for="(station, index) in data.packstations"

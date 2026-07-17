@@ -11,7 +11,7 @@ export const openGraph = {
   image:
     process.env.NUXT_PUBLIC_OG_IMG ||
     process.env.OG_IMG ||
-    'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Logo/logo.png',
+    'https://cdn02.plentyone.com/mevofvd5omld/frontend/Logo/logo.png',
   type: process.env.NUXT_PUBLIC_OG_TYPE || process.env.OG_TYPE || 'website',
 };
 

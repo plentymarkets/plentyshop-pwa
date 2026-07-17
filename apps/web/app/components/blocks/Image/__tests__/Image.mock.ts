@@ -8,10 +8,10 @@ export const mockImageBlock: ImageProps = {
   meta: { uuid: imageBlockUuid },
   content: {
     image: {
-      wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      wideScreen: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      desktop: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      tablet: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      mobile: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
       alt: 'Test alt',
       imageAlignment: 'right',
       fillMode: 'fill',

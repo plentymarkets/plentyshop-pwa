@@ -23,7 +23,7 @@ declare global {
       ): Cypress.Chainable;
       capturePopup(): Cypress.Chainable;
       popup(): Cypress.Chainable;
-      paypalFlow(email: string, password: string): Cypress.Chainable;
+      paypalFlow(email: string, password: string, isReadonlyFlow: boolean): Cypress.Chainable;
       firstIFrame(): Cypress.Chainable;
       resetPopupStub(): Cypress.Chainable;
       setConfig(config: Record<string, unknown>): Chainable<void>;
@@ -117,19 +117,58 @@ Cypress.Commands.add('isScrolledTo', { prevSubject: true }, (element) => {
 // Used to keep the reference to the popup window
 const state = {
   popup: null as Window | null,
+  iframeObserver: null as MutationObserver | null,
 };
 
 /**
- * Intercepts calls to window.open() to keep a reference to the new window
+ * Patches window.open on a given window to capture popup references.
+ */
+function patchWindowOpen(targetWin: Window) {
+  try {
+    const originalOpen = targetWin.open.bind(targetWin);
+    targetWin.open = function (...args: Parameters<typeof window.open>) {
+      const popup = originalOpen(...args);
+      if (popup) {
+        state.popup = popup;
+      }
+      return popup;
+    };
+  } catch {
+    // cross-origin iframe – cannot patch
+  }
+}
+
+/**
+ * Patches window.open on all existing iframes' contentWindows.
+ */
+function patchAllIframes(doc: Document) {
+  const iframes = doc.querySelectorAll('iframe');
+  iframes.forEach((iframe) => {
+    try {
+      if (iframe.contentWindow) {
+        patchWindowOpen(iframe.contentWindow);
+      }
+    } catch {
+      // cross-origin iframe – skip
+    }
+  });
+}
+
+/**
+ * Intercepts calls to window.open() to keep a reference to the new window.
+ * Also patches iframes (including dynamically added ones) to capture popups
+ * opened from within them (e.g. PayPal SDK).
  */
 Cypress.Commands.add('capturePopup', () => {
   cy.window().then((win) => {
+    state.popup = null;
+
+    // Stub main window.open
     const maybeStub = win.open as Partial<sinon.SinonStub>;
-
     if (typeof maybeStub.restore !== 'function') {
-      const originalOpen = win.open;
+      const originalOpen = win.open.bind(win);
 
-      cy.stub(win, 'open').callsFake((...args) => {
+      cy.stub(win, 'open').callsFake((...args: Parameters<typeof window.open>) => {
         const popup = originalOpen(...args);
         if (popup) {
           state.popup = popup;
@@ -137,6 +176,52 @@ Cypress.Commands.add('capturePopup', () => {
         return popup;
       });
     }
+
+    patchAllIframes(win.document);
+
+    // Watch for new iframes being added to the DOM and patch them too
+    if (state.iframeObserver) {
+      state.iframeObserver.disconnect();
+    }
+    state.iframeObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node instanceof HTMLIFrameElement) {
+            node.addEventListener('load', () => {
+              try {
+                if (node.contentWindow) patchWindowOpen(node.contentWindow);
+              } catch {
+                /* cross-origin */
+              }
+            });
+            try {
+              if (node.contentWindow) patchWindowOpen(node.contentWindow);
+            } catch {
+              /* cross-origin */
+            }
+          }
+
+          if (node instanceof HTMLElement) {
+            node.querySelectorAll?.('iframe').forEach((iframe) => {
+              // eslint-disable-next-line max-nested-callbacks
+              iframe.addEventListener('load', () => {
+                try {
+                  if (iframe.contentWindow) patchWindowOpen(iframe.contentWindow);
+                } catch {
+                  /* cross-origin */
+                }
+              });
+              try {
+                if (iframe.contentWindow) patchWindowOpen(iframe.contentWindow);
+              } catch {
+                /* cross-origin */
+              }
+            });
+          }
+        }
+      }
+    });
+    state.iframeObserver.observe(win.document.body, { childList: true, subtree: true });
   });
 });
 
@@ -156,15 +241,36 @@ Cypress.Commands.add('firstIFrame', { prevSubject: 'element' }, ($iframe) => {
  * Returns a wrapped body of a captured popup
  */
 Cypress.Commands.add('popup', (): Cypress.Chainable => {
-  if (state.popup) {
-    const popup = Cypress.$(state.popup.document);
-    return cy.wrap(popup.contents().find('body'));
-  } else {
-    throw new Error('No popup window captured. Make sure to call `cy.capturePopup()` before using `cy.popup()`.');
-  }
+  return cy
+    .waitUntil(
+      () => {
+        if (state.popup && !state.popup.closed) {
+          try {
+            return cy.wrap(true);
+          } catch {
+            return cy.wrap(false);
+          }
+        }
+        return cy.wrap(false);
+      },
+      {
+        timeout: 15_000,
+        interval: 500,
+        errorMsg: 'No popup window captured. Make sure to call `cy.capturePopup()` before using `cy.popup()`.',
+      },
+    )
+    .then(() => {
+      const popup = Cypress.$(state.popup!.document);
+      return cy.wrap(popup.contents().find('body'));
+    });
 });
 
 Cypress.Commands.add('resetPopupStub', () => {
+  if (state.iframeObserver) {
+    state.iframeObserver.disconnect();
+    state.iframeObserver = null;
+  }
+  state.popup = null;
   cy.window().then((win) => {
     const openStub = win.open as Partial<sinon.SinonStub>;
     if (typeof openStub.restore === 'function') {
@@ -173,12 +279,24 @@ Cypress.Commands.add('resetPopupStub', () => {
   });
 });
 
-Cypress.Commands.add('paypalFlow', (email, password) => {
+Cypress.Commands.add('paypalFlow', (email, password, isReadonlyFlow) => {
   cy.intercept('/plentysystems/doCreatePayPalOrder').as('doCreatePayPalOrder');
   cy.intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
 
-  // Enable popup capture
+  const LOGIN_BTN = isReadonlyFlow ? 'button[data-atomic-wait-task="login_with_password"]' : 'button#btnLogin';
+  const PAY_BTN = isReadonlyFlow
+    ? 'button[data-atomic-wait-task="select_pay"]'
+    : 'button[data-id="payment-submit-btn"]';
+
   cy.capturePopup();
+  cy.waitUntil(
+    () =>
+      cy
+        .get('iframe')
+        .firstIFrame()
+        .then(($body) => !!$body.find('div[data-funding-source="paypal"]').length),
+    { timeout: 15_000, interval: 300, errorMsg: 'PayPal button did not appear in iframe' },
+  );
   // Click on the PayPal button inside PayPal's iframe
   cy.get('iframe').firstIFrame().find('div[data-funding-source="paypal"]').realClick();
   cy.wait('@doCreatePayPalOrder');
@@ -186,10 +304,10 @@ Cypress.Commands.add('paypalFlow', (email, password) => {
   cy.wait(4000);
   cy.popup().find('input#email').clear().type(email);
   cy.popup().find('button:visible').first().click().wait(1000);
-  cy.popup().find('input#password').clear().type(password);
-  cy.popup().find('button#btnLogin').click();
+  cy.popup().find('input#password').clear().type(password).wait(1000);
+  cy.popup().find(LOGIN_BTN).click();
   cy.wait(7000);
-  cy.popup().find('button[data-id="payment-submit-btn"]').should('exist').click({ force: true });
+  cy.popup().find(PAY_BTN).should('exist').click({ force: true });
 });
 
 Cypress.Commands.add('setConfig', (config: Record<string, unknown>) => {

@@ -10,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+// eslint-disable-next-line custom-rules/file-organization-types
 interface ErrorProp {
   statusCode: number;
   statusMessage: string;

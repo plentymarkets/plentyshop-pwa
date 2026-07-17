@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[200]"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-modal-backdrop"
       @click.self="emit('close')"
     >
       <div class="bg-white w-[90%] m-20 h-[90%] p-6 rounded-lg shadow-xl flex flex-col overflow-hidden">
@@ -29,6 +29,8 @@
               :toggle-link="toggleLink"
               :current-font-size="currentFontSize"
               :on-text-size-change="setFontSize"
+              :insert-icon="insertIcon"
+              :insert-emoji="insertEmoji"
             />
 
             <EditorRichTextEditorExtendedButtons
@@ -46,8 +48,12 @@
             />
           </div>
 
-          <div class="flex-1 overflow-y-auto p-4">
-            <EditorContent :editor="editor" class="rte__content rte-prose" :style="editorStyle" />
+          <div
+            class="flex-1 overflow-y-auto p-2.5 editor-parent bg-white cursor-text border border-gray-300 rounded-md"
+            data-testid="rte-modal-editor"
+            @mousedown="editor?.chain().focus().run()"
+          >
+            <EditorContent :editor="editor" class="rte__content rte-prose h-full" :style="editorStyle" />
           </div>
         </main>
       </div>
@@ -85,6 +91,8 @@ defineProps<{
   redo: () => void;
   toggleLink: () => void;
   clearFormatting: () => void;
+  insertIcon: (name: string) => void;
+  insertEmoji: (name: string) => void;
 }>();
 
 const emit = defineEmits<{

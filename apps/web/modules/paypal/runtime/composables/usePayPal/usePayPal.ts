@@ -51,7 +51,6 @@ export const usePayPal = () => {
     configPromise.value = (async () => {
       try {
         const { data } = await useSdk().plentysystems.getPayPalSettings();
-        state.value.loadedConfig = true;
         if (data) {
           state.value.config = data ?? null;
           state.value.fraudId = data.fraudId ?? null;
@@ -63,6 +62,7 @@ export const usePayPal = () => {
       } catch {
         return false;
       } finally {
+        state.value.loadedConfig = true;
         configPromise.value = null;
       }
     })();
@@ -70,9 +70,8 @@ export const usePayPal = () => {
     return configPromise.value;
   };
 
-  const updateAvailableAPMs = async (script: PayPalNamespace, currency: string) => {
+  const updateAvailableAPMs = async (script: PayPalNamespace, currency: string): Promise<boolean> => {
     if (script && script.getFundingSources && state.value.activatedAPMs !== currency) {
-      state.value.activatedAPMs = currency;
       const availableFoundingSources = new Map();
       const fundingSources = script.getFundingSources();
       fundingSources.forEach((fundingSource: string) => {
@@ -87,7 +86,11 @@ export const usePayPal = () => {
       await useSdk().plentysystems.doHandlePayPalFundingSources({
         availableFundingSources: Object.fromEntries(availableFoundingSources),
       });
+
+      state.value.activatedAPMs = currency;
+      return true;
     }
+    return false;
   };
 
   const isAvailable = (key: PayPalVisibilityLocations) =>
@@ -346,6 +349,10 @@ export const usePayPal = () => {
     }
   };
 
+  const resetAPMs = () => {
+    state.value.activatedAPMs = '';
+  };
+
   return {
     state,
     isAvailable,
@@ -360,6 +367,7 @@ export const usePayPal = () => {
     getFraudId,
     createPlentyPaymentFromPayPalOrder,
     setAddressesFromPayPal,
+    resetAPMs,
     payPalVisibility,
     payLaterVisibility,
     ...toRefs(state.value),

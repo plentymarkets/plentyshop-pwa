@@ -1,12 +1,30 @@
 import type { NewsletterSubscribeContent } from './types';
 
+const getNewsletterDescription = (title: string, htmlDescription: string) => {
+  const hasHeading = /<h[1-6]\b/i.test(htmlDescription);
+
+  if (hasHeading) {
+    return htmlDescription;
+  }
+
+  return `<h2 style="text-align: center;"><strong>${title}</strong></h2>${htmlDescription}`;
+};
+
 export function initializeNewsletterContent(content: Partial<NewsletterSubscribeContent>): NewsletterSubscribeContent {
+  const title = content.text?.title || 'Newsletter';
+  const htmlDescription = content.text?.htmlDescription ?? '';
+
   if (!content.text) {
-    content.text = { bgColor: '', title: '', htmlDescription: '' };
+    content.text = {
+      bgColor: '',
+      title: '',
+      htmlDescription: getNewsletterDescription(title, htmlDescription),
+    };
   } else {
     if (content.text.bgColor === undefined) content.text.bgColor = '';
     if (content.text.title === undefined) content.text.title = '';
-    if (content.text.htmlDescription === undefined) content.text.htmlDescription = '';
+
+    content.text.htmlDescription = getNewsletterDescription(title, htmlDescription);
   }
 
   if (!content.input) {

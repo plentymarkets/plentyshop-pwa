@@ -83,7 +83,7 @@ export class BannerSliderObject extends PageObject {
   }
 
   openImageGroup() {
-    cy.get('[data-testid="slider-image-group"]').should('exist').click();
+    cy.get('[data-testid="slider-image-group-title"]').should('exist');
   }
 
   openImageSelector(imageType: string) {
@@ -103,7 +103,7 @@ export class BannerSliderObject extends PageObject {
     cy.get('[data-testid^="banner-image-"]').first().should('be.visible');
     cy.get('[data-testid^="banner-image-"]')
       .first()
-      .should('have.attr', 'src', 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg');
+      .should('have.attr', 'src', 'https://cdn02.plentyone.com/mevofvd5omld/frontend/123-demo-picture.jpeg');
   }
 
   checkBannerAltText() {
@@ -116,11 +116,11 @@ export class BannerSliderObject extends PageObject {
   }
 
   closeImageGroup() {
-    cy.get('[data-testid="slider-image-group"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-image-group-title"]').scrollIntoView().should('be.visible');
   }
 
   openTextGroup() {
-    cy.get('[data-testid="banner-text-group"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-text-group-title"]').scrollIntoView().should('be.visible');
   }
 
   changeTexts() {
@@ -142,32 +142,32 @@ export class BannerSliderObject extends PageObject {
   }
 
   alignBoxCenterX() {
-    cy.get('[data-testid="slider-textbox-align-center"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-center"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'center');
   }
 
   alignBoxBottomX() {
-    cy.get('[data-testid="slider-textbox-align-bottom"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-bottom"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-end');
   }
 
   alignBoxTopX() {
-    cy.get('[data-testid="slider-textbox-align-top"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-x-top"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'justify-content', 'flex-start');
   }
 
   alignBoxCenterY() {
-    cy.get('[data-testid="slider-textbox-y-align-center"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-center"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'center');
   }
 
   alignBoxRightY() {
-    cy.get('[data-testid="slider-textbox-y-align-right"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-right"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-end');
   }
 
   alignBoxLeftY() {
-    cy.get('[data-testid="slider-textbox-y-align-left"]').should('exist').click();
+    cy.get('[data-testid="slider-textbox-align-y-left"]').should('exist').click();
     cy.get('[data-testid^="banner-overlay-"]').first().should('have.css', 'align-items', 'flex-start');
   }
 
@@ -199,11 +199,11 @@ export class BannerSliderObject extends PageObject {
   }
 
   closeTextGroup() {
-    cy.get('[data-testid="banner-text-group"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-text-group-title"]').scrollIntoView().should('be.visible');
   }
 
   openButtonGroup() {
-    cy.get('[data-testid="slider-button-group-title"]').scrollIntoView().should('be.visible').click();
+    cy.get('[data-testid="slider-button-group-title"]').scrollIntoView().should('be.visible');
   }
 
   changeButtonLabelAndLink() {
@@ -227,12 +227,12 @@ export class BannerSliderObject extends PageObject {
   }
 
   checkButtonSecondary() {
-    cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
     cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:text-primary-900');
   }
 
   checkButtonPrimary() {
-    cy.get('[data-testid="slider-button-primary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-primary"]').should('exist').click();
     cy.get('[data-testid^="banner-button-"]').first().should('have.class', 'active:bg-primary-700');
   }
 }

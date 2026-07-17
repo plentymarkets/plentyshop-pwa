@@ -15,6 +15,7 @@ import type { UseEditorStateReturn } from './types';
 export const useEditorState = (): UseEditorStateReturn => {
   const { $isPreview } = useNuxtApp();
   const { disableActions } = useEditor();
+  const { device, width: previewWidth } = useEditorDevice();
 
   /** @description Whether we are in the editor environment (true in both edit and preview modes) */
   const isInEditor = computed(() => !!$isPreview);
@@ -45,7 +46,7 @@ export const useEditorState = (): UseEditorStateReturn => {
   onNuxtReady(() => {
     isInEditorClient.value = !!$isPreview;
   });
-
+  const isMobilePreview = computed(() => isInEditorClient.value && device.value !== 'desktop');
   return {
     isInEditor,
     isEditMode,
@@ -58,5 +59,8 @@ export const useEditorState = (): UseEditorStateReturn => {
     shouldEnableEditorFeatures,
 
     isInEditorClient,
+    device,
+    isMobilePreview,
+    previewWidth,
   };
 };

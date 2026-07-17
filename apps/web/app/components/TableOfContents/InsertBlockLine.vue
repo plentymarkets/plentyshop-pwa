@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative group py-1"
+    class="toc-insert-line relative group py-1"
     @mouseenter="startHoverTimer"
     @mouseleave="handleMouseLeave"
     @focusin="handleFocusIn"
@@ -12,7 +12,6 @@
         :class="showLine ? 'border-editor-toc-selected opacity-100' : 'border-transparent opacity-0'"
       />
       <button
-        ref="addBlockButton"
         class="relative w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-editor-toc-selected text-white border-2 border-white transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-editor-toc-selected"
         :class="showLine ? 'opacity-100' : 'opacity-0 pointer-events-none'"
         :aria-label="getEditorTranslation('add-block-label')"
@@ -32,11 +31,10 @@ import type { InsertBlockLineProps } from './types';
 
 const props = defineProps<InsertBlockLineProps>();
 
-const { scrollIntoBlockView, togglePlaceholder, multigridColumnUuid } = useBlockManager();
-const { openDrawerWithView } = useSiteConfiguration();
+const { scrollIntoBlockView } = useBlockManager();
+const { openAddBlockPopover } = useAddBlockPopover();
 
 const showLine = ref(false);
-const addBlockButton = ref<HTMLButtonElement | null>(null);
 let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
 let isFocused = false;
 
@@ -70,11 +68,18 @@ const handleFocusOut = () => {
   showLine.value = false;
 };
 
-const handleAddBlock = () => {
+const handleAddBlock = (event: MouseEvent | KeyboardEvent) => {
   const position = props.isTop ? 'top' : 'bottom';
-  togglePlaceholder(props.block.meta.uuid, position);
-  openDrawerWithView('blocksList');
-  multigridColumnUuid.value = null;
+  if (useRuntimeConfig().public.enableAddBlockPopover) {
+    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: props.block.meta.uuid, position });
+  } else {
+    const { openDrawerWithView } = useSiteConfiguration();
+    const { togglePlaceholder } = useBlockManager();
+    const { clearInsertColumnUuid } = useBlocksMutations();
+    togglePlaceholder(props.block.meta.uuid, position);
+    openDrawerWithView('blocksList');
+    clearInsertColumnUuid();
+  }
   scrollIntoBlockView(props.block, true, position);
 };
 

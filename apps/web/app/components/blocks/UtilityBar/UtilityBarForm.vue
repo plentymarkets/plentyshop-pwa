@@ -11,6 +11,7 @@
       :edit-section="editSection"
       :toggle-section-menu="toggleSectionMenu"
       :toggle-section-visibility="toggleSectionVisibility"
+      @update:sections="sections = $event"
     />
 
     <BlocksUtilityBarPartialsUtilityBarSectionEditor
@@ -34,11 +35,6 @@ import type { UtilityBarFormProps } from './types';
 
 const props = defineProps<UtilityBarFormProps>();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
-
 const { sections } = useUtilityBarConfiguration(props.uuid);
 
 const { elementsOpen, layoutOpen, editingSectionIndex, openSectionMenuIndex, currentEditingSectionIndex, sectionForm } =
@@ -50,7 +46,6 @@ const { getSectionLabel, editSection, exitEditMode, toggleSectionMenu, toggleSec
     editingSectionIndex,
     openSectionMenuIndex,
     getEditorTranslation,
-    emit,
   },
 );
 
@@ -64,6 +59,7 @@ defineExpose({
   "en": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
+    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "layout-label": "Layout",
@@ -79,6 +75,7 @@ defineExpose({
   "de": {
     "elements-group-label": "Elements",
     "edit-section-aria": "Edit section",
+    "drag-reorder-aria": "Drag to reorder section",
     "visibility-label": "Visibility",
     "toggle-visibility-aria": "Toggle section visibility",
     "layout-label": "Layout",

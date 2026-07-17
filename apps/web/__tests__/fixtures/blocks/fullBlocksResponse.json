@@ -1,0 +1,82 @@
+{
+  "data": {
+    "blocks": [
+      {
+        "name": "TextCard",
+        "type": "content",
+        "meta": { "uuid": "api-text-1" },
+        "content": {
+          "text": { "htmlDescription": "<p>API Text Block</p>", "textAlignment": "left" },
+          "button": {},
+          "layout": {}
+        }
+      }
+    ],
+    "HeaderContainer": {
+      "name": "HeaderContainer",
+      "type": "structure",
+      "meta": { "uuid": "api-header-uuid", "isGlobalTemplate": true },
+      "configuration": { "visible": true, "layout": { "sticky": false } },
+      "content": [
+        {
+          "name": "UtilityBar",
+          "type": "content",
+          "meta": { "uuid": "api-utility-uuid", "isGlobalTemplate": true },
+          "content": {
+            "layout": { "paddingTop": 20, "paddingBottom": 20, "paddingLeft": 40, "paddingRight": 40 },
+            "sectionOrder": { "sections": ["logo", "search", "actions"] },
+            "sectionVisibility": { "logo": true, "search": true, "actions": true },
+            "color": { "iconColor": "#ffffff", "backgroundColor": "#062633" },
+            "search": { "displayMode": "full" },
+            "actions": {
+              "order": ["language", "wishlist", "cart", "account"],
+              "visibility": { "language": true, "wishlist": true, "cart": true, "account": true }
+            }
+          }
+        },
+        {
+          "name": "Navigation",
+          "type": "content",
+          "meta": { "uuid": "api-nav-uuid", "isGlobalTemplate": true },
+          "content": {
+            "layout": { "paddingTop": 20, "paddingBottom": 20, "paddingLeft": 20, "paddingRight": 20 },
+            "text": { "textAlignment": "left" },
+            "color": { "backgroundColor": "#ffffff", "textColor": "#161A16", "hoverBackgroundColor": "#f5f5f5" }
+          }
+        }
+      ]
+    },
+    "Footer": {
+      "name": "Footer",
+      "type": "content",
+      "meta": { "uuid": "api-footer-uuid", "isGlobalTemplate": true },
+      "content": {
+        "column1": {
+          "title": "API Legal Column",
+          "showTermsAndConditions": true,
+          "showCancellationRights": true,
+          "showCancellationForm": true,
+          "showLegalDisclosure": true,
+          "showPrivacyPolicy": true,
+          "showDeclarationOfAccessibility": true
+        },
+        "column2": {
+          "title": "API Services Column",
+          "description": "",
+          "showContactLink": true,
+          "showRegisterLink": true
+        },
+        "column3": { "title": "API Column 3", "description": "" },
+        "column4": { "title": "API Column 4", "description": "" },
+        "footnote": "© API Store 2026",
+        "footnoteAlign": "right",
+        "colors": {
+          "background": "#1a2b3c",
+          "text": "#ffffff",
+          "footnoteBackground": "#0a1b2c",
+          "footnoteText": "#cccccc"
+        }
+      }
+    }
+  }
+}
