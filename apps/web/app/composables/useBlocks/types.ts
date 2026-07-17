@@ -25,9 +25,11 @@ export interface UseBlocks {
   saveBlocks: (identifier: string | number, type: string, content: string) => Promise<boolean>;
   updateBlocks: (blocks: Block[]) => void;
   reorderHeaderBlocks: (blocks: Block[]) => void;
+  reorderFooterBlocks: (blocks: Block[]) => void;
   discardChanges: () => void;
   setDefaultTemplate: (blocks: Block[]) => void;
   scheduleCleanDataSync: () => void;
+  cancelCleanDataSync: () => void;
   isSettling: Ref<boolean>;
 }
 

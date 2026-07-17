@@ -5,8 +5,7 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
-    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-
+    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-max" size="2xl" />
     <EditableBlocks
       :identifier="identifier"
       :type="'category'"
@@ -28,12 +27,13 @@ defineI18nRoute({
 const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { setCategoriesPageMeta } = useUrlPageMeta();
+const { setItemListMetaData } = useStructuredData();
+const { setCategoriesPageMeta, getCategoryRobotsContent } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
-const routeDataReady = useState<Promise<void> | null>('routeDataReady');
-const { buildCategoryLanguagePath } = useLocalization();
+const localePath = useLocalizedPath();
+const isItemCategoryPage = computed(() => productsCatalog.value.category?.type === 'item');
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
@@ -45,6 +45,7 @@ definePageMeta({
   type: 'category',
   isBlockified: true,
   identifier: 0,
+  cacheControl: getCacheControl(),
 });
 
 const breadcrumbs = computed(() => {
@@ -57,10 +58,6 @@ const breadcrumbs = computed(() => {
 const canonicalDb = productsCatalog.value.category?.details?.[0]?.canonicalLink;
 
 const handleQueryUpdate = async () => {
-  if (routeDataReady.value) {
-    await routeDataReady.value;
-  }
-
   if (!productsCatalog.value.category) {
     throw createError({
       statusCode: 404,
@@ -71,7 +68,10 @@ const handleQueryUpdate = async () => {
 
 await handleQueryUpdate().then(() => {
   setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
-  setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
+  setBlocksListContext(isItemCategoryPage.value ? 'productCategory' : 'content');
+  if (isItemCategoryPage.value) {
+    setItemListMetaData(productsCatalog.value.products || []);
+  }
 });
 
 const { setPageMeta } = usePageMeta();
@@ -83,7 +83,7 @@ watch(
   () => locale.value,
   (changedLocale: string) => {
     router.push({
-      path: buildCategoryLanguagePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
+      path: localePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
     });
   },
@@ -107,14 +107,17 @@ const keywordsContent = computed((): string =>
     : (process.env.METAKEYWORDS ?? ''),
 );
 
-const robotsContent = computed((): string =>
-  productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
-);
+const robotsContent = computed(() => getCategoryRobotsContent(productsCatalog));
 
 watch(
   () => route.query,
   async () => {
-    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+    await handleQueryUpdate().then(() => {
+      setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
+      if (isItemCategoryPage.value) {
+        setItemListMetaData(productsCatalog.value.products || []);
+      }
+    });
   },
 );
 
@@ -127,7 +130,7 @@ useHead({
   meta: [
     { name: 'description', content: descriptionContent },
     { name: 'keywords', content: keywordsContent },
-    { name: 'robots', content: robotsContent },
+    { name: 'robots', content: robotsContent.value },
   ],
 });
 </script>

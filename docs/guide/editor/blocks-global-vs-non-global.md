@@ -40,6 +40,6 @@ By restricting editing to the homepage and propagating changes globally, the sys
 
 Linked concepts
 
-1. [Blocks architecture](/guide/concept/blocks-architecture.md) — Overview of the blocks system
-2. [Blocks saving](/guide/concept/blocks-saving.md) — How global and page blocks are saved together
-3. [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md) — Block type system used by global blocks
+1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system
+2. [Blocks saving](/guide/editor/blocks-saving.md) — How global and page blocks are saved together
+3. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — Block type system used by global blocks

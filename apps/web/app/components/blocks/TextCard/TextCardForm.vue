@@ -1,81 +1,67 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="textSettings"
+    :title="getEditorTranslation('text-group-label')"
     data-testid="open-text-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('text-group-label') }}</h2>
-    </template>
-
     <EditorRichTextEditorForm
       v-model="contentModel"
       :text-align="textCardBlock.text.textAlignment"
       :placeholder="getEditorTranslation('placeholder')"
     />
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="buttonSettings"
-    data-testid="button-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('button-group-label') }}</h2>
-    </template>
-
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+  <div data-testid="button-settings">
+    <EditorFormPanel v-model="buttonSettings" :title="getEditorTranslation('button-group-label')">
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel for="textcard-button-label">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
+        </div>
+        <SfInput
+          id="textcard-button-label"
+          v-model="textCardBlock.button.label"
+          type="text"
+          data-testid="input-button-label"
+        />
       </div>
-      <label>
-        <SfInput v-model="textCardBlock.button.label" type="text" data-testid="input-button-label">
-          <template #suffix>
-            <label for="text-button-label" class="rounded-lg cursor-pointer">
-              <input id="text-button-label" v-model="textCardBlock.button.label" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel for="textcard-button-link">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+        </div>
+        <SfInput
+          id="textcard-button-link"
+          v-model="textCardBlock.button.link"
+          type="text"
+          data-testid="input-button-link"
+        />
       </div>
-      <label>
-        <SfInput v-model="textCardBlock.button.link" type="text" data-testid="input-button-link">
-          <template #suffix>
-            <label for="text-button-link" class="rounded-lg cursor-pointer">
-              <input id="text-button-link" v-model="textCardBlock.button.link" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
-    </div>
 
-    <div class="py-2">
-      <EditorOptionsTabs
-        v-model="buttonVariantModel"
-        :legend="getEditorTranslation('outline-label')"
-        test-id-prefix="button-variant"
-        :options="buttonVariantOptions"
-      />
-    </div>
-  </UiAccordionItem>
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="buttonVariantModel"
+          :legend="getEditorTranslation('outline-label')"
+          test-id-prefix="button-variant"
+          :options="buttonVariantOptions"
+        />
+      </div>
 
-  <UiAccordionItem
+      <div class="py-2">
+        <EditorOptionsTabs
+          v-model="buttonAlignModel"
+          :legend="getEditorTranslation('button-align-label')"
+          test-id-prefix="button-align"
+          :options="buttonAlignOptions"
+        />
+      </div>
+    </EditorFormPanel>
+  </div>
+
+  <EditorFormPanel
     v-model="layoutSettings"
+    :title="getEditorTranslation('layout-group-label')"
     data-testid="layout-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-group-label') }}</h2>
-    </template>
-
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="keep-transparent" class="m-0">
         {{ getEditorTranslation('keep-transparent-label') }}
@@ -95,19 +81,18 @@
       </div>
       <EditorColorPicker v-model="backgroundColor" class="w-full">
         <template #trigger="{ color, toggle }">
-          <label>
-            <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </label>
+          <SfInput id="textcard-bgcolor" v-model="backgroundColor" type="text" data-testid="input-background-color">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                aria-label="Color picker button"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
         </template>
       </EditorColorPicker>
     </div>
@@ -120,37 +105,45 @@
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowUpward /></span>
           <input
+            id="textcard-padding-top"
             v-model.number="textCardBlock.layout.paddingTop"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-top"
+            aria-label="Top padding"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowDownward /></span>
           <input
+            id="textcard-padding-bottom"
             v-model.number="textCardBlock.layout.paddingBottom"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-bottom"
+            aria-label="Bottom padding"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowBack /></span>
           <input
+            id="textcard-padding-left"
             v-model.number="textCardBlock.layout.paddingLeft"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-left"
+            aria-label="Left padding"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
           <span><SfIconArrowForward /></span>
           <input
+            id="textcard-padding-right"
             v-model.number="textCardBlock.layout.paddingRight"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-right"
+            aria-label="Right padding"
           />
         </div>
       </div>
@@ -160,7 +153,7 @@
         </span>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -193,6 +186,7 @@ const textCardBlock = computed<TextCardContent>(() => {
   content.text.textAlignment = content.text.textAlignment ?? 'left';
 
   if (!content.button) content.button = {};
+  if (!content.button.alignment) content.button.alignment = 'center';
 
   if (!content.layout) {
     content.layout = {
@@ -215,16 +209,16 @@ const contentModel = computed<string>({
   },
 });
 
-const { buttonVariantModel, buttonVariantOptions } = useEditorOptionsTabs(
+const { buttonVariantModel, buttonVariantOptions, buttonAlignModel, buttonAlignOptions } = useEditorOptionsTabs(
   () => textCardBlock.value,
   getEditorTranslation,
 );
 
 const { isFullWidth } = useFullWidthToggleForContent(textCardBlock);
 
-const textSettings = ref(false);
-const buttonSettings = ref(false);
-const layoutSettings = ref(false);
+const textSettings = ref(true);
+const buttonSettings = ref(true);
+const layoutSettings = ref(true);
 
 const backgroundColorInit = textCardBlock.value.layout.backgroundColor;
 const isTransparent = ref(!backgroundColorInit || backgroundColorInit === 'transparent');
@@ -246,6 +240,10 @@ watch([isTransparent, backgroundColor], () => {
     "outline-label": "Outline",
     "button-variant-primary-label": "Primary",
     "button-variant-secondary-label": "Secondary",
+    "button-align-label": "Button Alignment (x)",
+    "button-align-option-left-label": "Left",
+    "button-align-option-center-label": "Center",
+    "button-align-option-right-label": "Right",
 
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",
@@ -263,6 +261,10 @@ watch([isTransparent, backgroundColor], () => {
     "outline-label": "Outline",
     "button-variant-primary-label": "Primary",
     "button-variant-secondary-label": "Secondary",
+    "button-align-label": "Button Alignment (x)",
+    "button-align-option-left-label": "Left",
+    "button-align-option-center-label": "Center",
+    "button-align-option-right-label": "Right",
 
     "layout-group-label": "Layout",
     "background-color-label": "Background Color",

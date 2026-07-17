@@ -1,6 +1,6 @@
 <template>
   <div
-    class="page-search z-1000 absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
+    class="page-search absolute p-2 top-full mt-2 bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden w-[400px] flex flex-col"
     data-testid="page-search"
   >
     <div>
@@ -34,10 +34,10 @@
       </Multiselect>
     </div>
     <div class="px-1 mt-5">
-      <SfButton class="w-full" @click="openPages">
+      <UiButton class="w-full" @click="openPages">
         <SfIconMenu />
         Manage pages
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>
@@ -47,7 +47,7 @@ import { flattenPages } from '~/utils/pages';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-import { SfIconHome, SfIconMenu, SfButton } from '@storefront-ui/vue';
+import { SfIconHome, SfIconMenu } from '@storefront-ui/vue';
 
 const { openDrawerWithView } = useSiteConfiguration();
 const emit = defineEmits(['pageSelected', 'close']);

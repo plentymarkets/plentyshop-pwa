@@ -1,32 +1,23 @@
 <template>
   <div class="sticky h-[80vh] overflow-y-auto">
-    <UiAccordionItem
+    <EditorFormPanel
       v-model="textsOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      :title="getEditorTranslation('texts-label')"
       data-testid="open-recommended-products-form-texts"
     >
-      <template #summary>
-        <h2>{{ getEditorTranslation('texts-label') }}</h2>
-      </template>
       <EditorRichTextEditorForm
         v-if="recommendedBlock.text"
         :model-value="recommendedBlock.text.htmlDescription ?? ''"
         :text-align="recommendedBlock.text.textAlignment ?? 'left'"
         @update:model-value="recommendedBlock.text.htmlDescription = $event"
       />
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
+    <EditorFormPanel
       v-model="sourceOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      :title="getEditorTranslation('source-label')"
       data-testid="open-recommended-products-form-source"
     >
-      <template #summary>
-        <h2>{{ getEditorTranslation('source-label') }}</h2>
-      </template>
-
       <div class="py-2">
         <EditorOptionsTabs
           v-model="sourceTypeModel"
@@ -74,19 +65,15 @@
           data-testid="recommended-form-categories"
         />
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
+    <EditorFormPanel
       v-model="layoutOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      :title="getEditorTranslation('layout-label')"
+      data-testid="slider-button-group-title"
     >
-      <template #summary>
-        <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
-
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 
@@ -136,8 +123,8 @@ const debouncedFn = useDebounceFn((event: Event) => {
   recommendedBlock.value.source.itemId = target.value.toString();
 }, 1000);
 
-const sourceOpen = ref(false);
-const textsOpen = ref(false);
+const sourceOpen = ref(true);
+const textsOpen = ref(true);
 const crossSellingOptions = [
   { value: 'Accessory', label: getEditorTranslation('cross-selling-relation-accessory') },
   { value: 'ReplacementPart', label: getEditorTranslation('cross-selling-relation-replacement') },

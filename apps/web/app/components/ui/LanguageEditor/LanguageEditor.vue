@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading" ref="root" class="relative flex items-center space-x-1 md:space-x-2">
+  <div v-if="!loading" ref="root" class="relative flex items-center space-x-1 @md:space-x-2">
     <SfTooltip :label="languageLabel" placement="left" :show-arrow="true">
       <button
         data-testid="editor-language-select"
@@ -9,11 +9,11 @@
         aria-haspopup="listbox"
         @click="toggle"
       >
-        <SfIconLanguage class="w-4 h-4 md:w-6 md:h-6" />
-        <span class="ml-1 text-sm md:text-base">
+        <SfIconLanguage class="w-4 h-4 @md:w-6 @md:h-6" />
+        <span class="ml-1 text-sm @md:text-base">
           {{ currentLabel }}
         </span>
-        <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
+        <SfIconExpandMore class="w-4 h-4 @md:w-6 @md:h-6" />
       </button>
     </SfTooltip>
 

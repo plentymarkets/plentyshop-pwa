@@ -3,6 +3,7 @@
  * This replaces scattered exclusion Sets with a single, declarative config.
  */
 
+// eslint-disable-next-line custom-rules/file-organization-types
 export type BlockLayoutRule = {
   /** Whether the block content should be constrained in a container (max-width + centering). Defaults to true. */
   container?: boolean;
@@ -18,6 +19,7 @@ export type BlockLayoutRule = {
  */
 export const BLOCK_LAYOUT_RULES: Record<string, BlockLayoutRule> = {
   Footer: { container: false, padding: false },
+  FooterContainer: { container: false, padding: false },
 
   MultiGrid: { defaultFullWidth: false, padding: false },
   NewsletterSubscribe: { defaultFullWidth: false, padding: true },

@@ -12,6 +12,10 @@
         "link": "/guide/themes/bot-protection.md"
       },
       {
+        "text": "Caching",
+        "link": "/guide/themes/cloudfront-caching.md"
+      },
+      {
         "text": "Cookie consent",
         "link": "/guide/themes/cookie.md"
       },
@@ -56,6 +60,10 @@
       {
         "text": "Project Update Strategies",
         "link": "/guide/themes/project-update-strategies.md"
+      },
+      {
+        "text": "Responsive Design",
+        "link": "/guide/themes/responsive-design.md"
       },
       {
         "text": "Nuxt Directory Structure",

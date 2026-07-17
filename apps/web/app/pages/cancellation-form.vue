@@ -1,17 +1,14 @@
 <template>
   <div class="w-full p-5 overflow-x-auto break-words no-preflight" v-html="getHTMLTexts()" />
 
-  <div
-    v-if="config.enableContractWithdrawalButton"
-    class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8"
-  >
+  <div class="mx-auto my-8 w-full max-w-4xl rounded-md border border-neutral-200 bg-white p-8">
     <h2 class="mb-6 text-2xl font-semibold text-neutral-900">
       {{ t('legal.cancellationForm') }}
     </h2>
 
     <div
       v-if="turnstileSiteKey.length === 0 || cancellationEmail.length === 0"
-      class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+      class="flex items-start bg-warning-100 shadow-md pr-4 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
     >
       <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
       <div class="py-2">{{ t('cancellationForm.misConfigured') }}</div>
@@ -102,7 +99,22 @@
 
       <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('cancellationForm.asterixHint') }}</p>
 
-      <div class="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+      <div>
+        <i18n-t keypath="cancellationForm.privacyPolicy" scope="global">
+          <template #privacyPolicy>
+            <UiLink
+              :href="localePath(paths.privacyPolicy)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+            >
+              {{ t('legal.privacyPolicy') }}
+            </UiLink>
+          </template>
+        </i18n-t>
+      </div>
+
+      <div class="flex flex-col-reverse @md:flex-row @md:items-start @md:justify-between gap-4">
         <div>
           <NuxtTurnstile
             v-if="turnstileSiteKey.length > 0 && turnstileLoad"
@@ -137,7 +149,6 @@ definePageMeta({
   pageType: 'static',
 });
 
-const config = useRuntimeConfig().public;
 const { data, getLegalTexts } = useLegalInformation();
 const { loading, submitCancellation, validationSchema, turnstileSiteKey } = useCancellationForm();
 const { getSetting: getCancellationEmail } = useSiteSettings('cancellationFormRecipient');
@@ -147,6 +158,7 @@ const turnstileLoad = ref(false);
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
+const localePath = useLocalePath();
 
 setPageMeta(t('legal.cancellationForm'), 'page');
 
@@ -173,7 +185,7 @@ const submitForm = async () => {
   const customerEmail = await submitCancellation({
     email: email.value || '',
     name: name.value || '',
-    orderId: Number(orderId.value),
+    orderId: orderId.value.trim(),
     reason: reason.value || '',
     'cf-turnstile-response': turnstile.value || '',
   });

@@ -19,7 +19,7 @@
         <SfIconClose />
       </UiButton>
     </header>
-    <div class="max-w-[450px] md:max-w-[768px]">
+    <div class="max-w-[450px] @md:max-w-[768px]">
       <form class="col-span-2" @submit.prevent="onSubmit">
         <div v-if="isCreateReviewModal || isUpdateReviewModal" data-testid="rating-section">
           <div class="flex items-center justify-between">
@@ -85,10 +85,10 @@
         <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
         <div class="flex justify-end gap-x-4 mt-6">
-          <UiButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="closeReviewModal">
+          <UiButton type="button" variant="secondary" class="flex-1 @md:flex-initial" @click="closeReviewModal">
             {{ t('review.cancel') }}
           </UiButton>
-          <UiButton type="submit" class="flex-1 md:flex-initial">
+          <UiButton type="submit" class="flex-1 @md:flex-initial">
             {{ t('review.submitReview') }}
           </UiButton>
         </div>

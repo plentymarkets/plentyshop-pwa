@@ -6,7 +6,9 @@ import cookieConfig from './app/configuration/cookie.config';
 import { paths } from './app/utils/paths';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
-import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
+import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from './app/configuration/vite.config';
+import { FailOnUnmarkedBlockOverridesPlugin } from './app/configuration/vite.block-overrides';
+import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -33,70 +35,34 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
-    plugins: [FailOnLargeChunksPlugin],
+    plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
     optimizeDeps: {
-      include: [
-        '@codemirror/lang-css',
-        '@codemirror/lang-javascript',
-        '@codemirror/state',
-        '@floating-ui/vue',
-        '@intlify/core-base',
-        '@intlify/shared',
-        '@paypal/paypal-js',
-        '@plentymarkets/shop-api',
-        '@plentymarkets/tailwind-colors',
-        '@storefront-ui/shared',
-        '@storefront-ui/vue',
-        '@tanstack/vue-virtual',
-        '@tiptap/core',
-        '@tiptap/extension-color',
-        '@tiptap/extension-highlight',
-        '@tiptap/extension-link',
-        '@tiptap/extension-placeholder',
-        '@tiptap/extension-text-align',
-        '@tiptap/extension-text-style',
-        '@tiptap/extension-underline',
-        '@tiptap/starter-kit',
-        '@tiptap/vue-3',
-        '@vee-validate/yup',
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
-        '@vueuse/core',
-        '@vueuse/shared',
-        'codemirror',
-        'cookie',
-        'country-flag-icons/string/3x2',
-        'dotenv',
-        'drift-zoom',
-        'js-beautify',
-        'js-sha256',
-        'swiper/modules',
-        'swiper/vue',
-        'uuid',
-        'vue-multiselect',
-        'vue3-lazy-hydration',
-        'vue-tel-input',
-        'vuedraggable/src/vuedraggable',
-        'yup',
-      ],
+      include: [...thirdPartyDeps, ...localPackageDeps],
     },
     build: {
       modulePreload: { polyfill: false },
       rollupOptions: {
         output: {
-          manualChunks: {
-            tiptap: ['@tiptap/core', '@tiptap/starter-kit', '@tiptap/vue-3'],
-            tiptapExtensions: [
-              '@tiptap/extension-color',
-              '@tiptap/extension-emoji',
-              '@tiptap/extension-highlight',
-              '@tiptap/extension-link',
-              '@tiptap/extension-placeholder',
-              '@tiptap/extension-text-align',
-              '@tiptap/extension-text-style',
-              '@tiptap/extension-underline',
-            ],
-            vuetify: ['vuetify', '@mdi/js'],
+          manualChunks(id) {
+            if (id.includes('utils/blocks/blocks-imports')) return 'block-registry';
+            if (/[/\\]blocks[/\\].+[/\\]defaults\.ts$/.test(id)) return 'block-registry';
+
+            const vendorChunks: Record<string, string[]> = {
+              tiptapExtensions: [
+                '@tiptap/extension-color',
+                '@tiptap/extension-emoji',
+                '@tiptap/extension-highlight',
+                '@tiptap/extension-placeholder',
+                '@tiptap/extension-text-align',
+                '@tiptap/extension-text-style',
+              ],
+              tiptap: ['@tiptap/'],
+              vuetify: ['vuetify/', '@mdi/js'],
+            };
+
+            for (const [chunk, packages] of Object.entries(vendorChunks)) {
+              if (packages.some((pkg) => id.includes(pkg))) return chunk;
+            }
           },
         },
       },
@@ -246,7 +212,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: null,
       globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
-      globIgnores: ['manifest**.webmanifest', '_nuxt-plenty/editor/blocksLists.json'],
+      globIgnores: ['manifest**.webmanifest'],
       additionalManifestEntries: [
         {
           url: '/offline',

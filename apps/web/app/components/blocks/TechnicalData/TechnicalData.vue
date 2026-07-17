@@ -4,11 +4,12 @@
       <UiAccordionItem
         v-if="text"
         v-model="initiallyCollapsed"
-        summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
+        summary-class="@md:rounded-md w-full hover:bg-neutral-100 py-2 flex justify-between items-center select-none"
         data-testid="technical-data"
+        content-padding-class=""
       >
         <template #summary>
-          <h2 class="font-bold text-lg leading-6 md:text-2xl">
+          <h2 class="font-bold text-lg leading-6 @md:text-2xl">
             {{ content.text.title }}
           </h2>
         </template>
@@ -17,7 +18,7 @@
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
     <div v-else>
-      <h2 class="font-bold text-lg leading-6 md:text-2xl">
+      <h2 class="font-bold text-lg leading-6 @md:text-2xl">
         {{ content.text.title }}
       </h2>
       <div v-if="text" class="no-preflight" v-html="text" />

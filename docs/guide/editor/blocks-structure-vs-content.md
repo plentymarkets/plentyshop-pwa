@@ -55,5 +55,5 @@ The `EditableBlocks` and `PageBlock` components traverse this tree recursively, 
 
 Linked concepts
 
-1. [Blocks architecture](/guide/concept/blocks-architecture.md) — Overview of the blocks system
-2. [Blocks rendering](/guide/concept/blocks-rendering.md) — How the recursive rendering works
+1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system
+2. [Blocks rendering](/guide/editor/blocks-rendering.md) — How the recursive rendering works

@@ -14,14 +14,57 @@
       class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
     />
 
-    <div class="flex-1 w-full bg-white relative" :class="clientPreview ? 'overflow-auto' : 'overflow-visible'">
-      <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
+    <div
+      ref="contentRef"
+      class="flex-1 w-full relative"
+      :class="
+        clientPreview
+          ? ['overflow-auto flex flex-col', isMobilePreview ? 'bg-editor-body-bg' : 'bg-white']
+          : 'overflow-visible bg-white'
+      "
+    >
+      <Body
+        class="font-body bg-editor-body-bg"
+        :class="[bodyClass, { 'overflow-hidden': clientPreview }]"
+        :style="currentFont"
+      />
       <UiNotifications />
       <VitePwaManifest />
       <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
+      <div
+        id="app-container"
+        ref="previewContainerEl"
+        :style="
+          isMobilePreview
+            ? {
+                width: previewWidth,
+                maxWidth: '100%',
+                transform: 'translateZ(0)',
+                height: '99%',
+                overflow: 'clip',
+                display: 'flex',
+                flexDirection: 'column',
+                '--viewport-height': '90dvh',
+                isolation: 'isolate',
+              }
+            : { isolation: 'isolate' }
+        "
+        :class="isMobilePreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
+        data-testid="editor-preview-container"
+      >
+        <template v-if="isMobilePreview">
+          <div style="flex: 1; min-height: 0; overflow-y: auto">
+            <NuxtLayout>
+              <NuxtPage />
+            </NuxtLayout>
+          </div>
+        </template>
+        <template v-else>
+          <NuxtLayout>
+            <NuxtPage />
+          </NuxtLayout>
+        </template>
+      </div>
     </div>
 
     <component
@@ -34,22 +77,29 @@
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
+    <component :is="AddBlockPopoverComponent" v-if="enablePopover && clientPreview" />
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core';
 import { isCssUrl, isJsUrl } from '~/utils/assets';
 import { categoryGetters } from '@plentymarkets/shop-api';
 
 const bodyClass = ref('');
 const route = useRoute();
-const viewport = useViewport();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
-const { isInEditorClient } = useEditorState();
+const { isInEditorClient, isMobilePreview, previewWidth } = useEditorState();
 
-const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
+const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
+
+const isLargeScreen = useMediaQuery('(min-width: 1024px)');
+const clientPreview = computed(() => isInEditorClient.value && isLargeScreen.value);
+const contentRef = ref<HTMLElement | null>(null);
+const previewContainerEl = ref<HTMLElement | null>(null);
+provide('previewContainer', previewContainerEl);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
@@ -102,18 +152,10 @@ const getCategoryOgTitle = () => {
   return getOgTitle() || getMetaTitle();
 };
 
-const getCategoryOgDescription = () => {
-  if (isCategoryPage.value) {
-    const categoryMetaDescription = categoryGetters.getMetaDescription(category.value);
-    if (categoryMetaDescription) return categoryMetaDescription;
-  }
-  return getMetaDescription();
-};
-
 const title = ref(getCategoryMetaTitle());
 const ogTitle = ref(getCategoryOgTitle());
 const ogImage = ref(getOgImage());
-const ogDescription = ref(getCategoryOgDescription());
+const ogDescription = ref(getCategoryMetaDescription());
 const description = ref(getCategoryMetaDescription());
 const keywords = ref(getCategoryMetaKeywords());
 const robots = ref(getRobots());
@@ -148,7 +190,7 @@ watchEffect(() => {
   title.value = getCategoryMetaTitle();
   ogTitle.value = getCategoryOgTitle();
   ogImage.value = getOgImage();
-  ogDescription.value = getCategoryOgDescription();
+  ogDescription.value = getCategoryMetaDescription();
   description.value = getCategoryMetaDescription();
   keywords.value = getCategoryMetaKeywords();
   robots.value = getRobots();
@@ -168,7 +210,13 @@ useSeoMeta({
   generator: 'plentymarkets',
 });
 
+const localeHead = useLocaleHead();
+
 useHead({
+  htmlAttrs: {
+    lang: () => localeHead.value.htmlAttrs.lang,
+    dir: () => localeHead.value.htmlAttrs.dir as 'ltr' | 'rtl' | 'auto' | undefined,
+  },
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },
@@ -215,6 +263,13 @@ if (import.meta.client) {
       })),
     ],
   });
+
+  watch(
+    () => route.path,
+    () => {
+      if (clientPreview.value) contentRef.value?.scrollTo({ top: 0 });
+    },
+  );
 }
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
@@ -240,6 +295,7 @@ const UnlinkCategoryModal = defineAsyncComponent(
 const ResetProductPageModal = defineAsyncComponent(
   () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
+const AddBlockPopoverComponent = defineAsyncComponent(() => import('~/components/AddBlockPopover/AddBlockPopover.vue'));
 </script>
 
 <style lang="scss">

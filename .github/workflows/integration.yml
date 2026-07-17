@@ -17,13 +17,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  fitness-docs:
+    if: github.repository == 'plentymarkets/plentyshop-pwa'
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: ./.github/actions/setup
+      - name: Build with VitePress
+        run: |
+          npm run docs:build
+          touch ${{ github.workspace }}/docs/.vitepress/dist/.nojekyll
+      - name: Install & Run htmltest
+        env:
+          HTMLTEST_VERSION: '0.17.0'
+        run: |
+          cd docs/.vitepress
+          curl -fsSL -o htmltest.tar.gz "https://github.com/wjdp/htmltest/releases/download/v${HTMLTEST_VERSION}/htmltest_${HTMLTEST_VERSION}_linux_amd64.tar.gz"
+          tar -xzf htmltest.tar.gz htmltest
+          ./htmltest
   fitness-compliance:
     runs-on: ubuntu-slim
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Dependency review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           license-check: true
           deny-licenses: 'AGPL-1.0-or-later, GPL-1.0-or-later, LGPL-2.0-or-later, NGPL'
@@ -43,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -56,11 +77,14 @@ jobs:
       - name: Run typecheck
         run: npm run typecheck
 
+      - name: Validate Vite dependency pre-bundling
+        run: npm run check:optimize-deps
+
       - name: Run shellcheck
         uses: ludeeus/action-shellcheck@master
         with:
           scandir: './scripts'
-          additional_files: '.github/skills/code-generation/generate.sh'
+          additional_files: '.github/skills/code-generation/generate.sh .github/skills/documentation/scripts/fetch-templates.sh'
           severity: warning
           ignore_paths: 'node_modules'
         env:
@@ -69,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -79,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -112,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 
@@ -135,7 +159,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           install: false
-          command: npm run test:cypress
+          command: npm run test:cypress-smoke-shop
         env:
           NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
   smoke-editor:
@@ -144,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node
         uses: ./.github/actions/setup
 

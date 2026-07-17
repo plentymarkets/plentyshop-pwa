@@ -12,7 +12,7 @@
       <div class="h-8 w-8 border border-[#dee2e6] cursor-pointer" :style="style" @mousedown.stop @click.stop="toggle" />
     </slot>
 
-    <div v-if="open" :class="['absolute top-full z-50 mt-2', dropdownPositionClass]" @mousedown.stop @click.stop>
+    <div v-if="open" ref="floatingEl" :style="floatingStyles" class="z-picker">
       <EditorColorPickerPanel
         :model-value="modelValue"
         :active-tab="activeTab"
@@ -27,14 +27,16 @@
 </template>
 
 <script setup lang="ts">
+import { useDropdown } from '@storefront-ui/vue';
+
 const props = withDefaults(
   defineProps<{
     modelValue: string | undefined;
-    dropdownAlign?: 'default' | 'rte' | 'top-editor';
+    align?: 'left' | 'center' | 'right';
     showShopColors?: boolean;
   }>(),
   {
-    dropdownAlign: 'default',
+    align: 'left',
     showShopColors: true,
   },
 );
@@ -45,20 +47,33 @@ const emit = defineEmits<{
 
 const open = ref(false);
 const root = ref<HTMLElement | null>(null);
+const floatingEl = ref<HTMLElement | null>(null);
 const activeTab = ref<'shop' | 'picker'>('picker');
+
+const placementMap = {
+  left: 'bottom-end',
+  center: 'bottom',
+  right: 'bottom-start',
+} as const;
 
 const instanceId = `color-picker-${Math.random().toString(36).slice(2)}`;
 const activeId = useState<string | null>('editorColorPickerActiveId', () => null);
 
-const dropdownPositionClass = computed(() => {
-  if (props.dropdownAlign === 'rte') {
-    return 'right-0 translate-x-1/2';
+const close = () => {
+  if (activeId.value === instanceId) {
+    activeId.value = null;
   }
-  if (props.dropdownAlign === 'top-editor') {
-    return 'right-0 translate-x-[30%]';
-  }
-  return '';
+};
+
+const { style: floatingStyles } = useDropdown({
+  referenceRef: root,
+  floatingRef: floatingEl,
+  isOpen: open,
+  placement: computed(() => placementMap[props.align]),
+  strategy: 'fixed',
+  onClose: close,
 });
+
 const style = computed(() => ({
   backgroundColor: props.modelValue || '#ffffff',
 }));
@@ -83,12 +98,6 @@ const openDropdown = () => {
   activeId.value = instanceId;
 };
 
-const close = () => {
-  if (activeId.value === instanceId) {
-    activeId.value = null;
-  }
-};
-
 const toggle = () => {
   if (open.value) {
     close();
@@ -96,18 +105,4 @@ const toggle = () => {
     openDropdown();
   }
 };
-
-const onDocClick = (e: MouseEvent) => {
-  if (!root.value?.contains(e.target as Node)) {
-    close();
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('mousedown', onDocClick);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', onDocClick);
-});
 </script>

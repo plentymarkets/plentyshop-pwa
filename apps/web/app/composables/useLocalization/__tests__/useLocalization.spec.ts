@@ -1,66 +1,82 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
+const { useNuxtApp, useUrlTrailingSlash, localePathMock } = vi.hoisted(() => ({
+  useNuxtApp: vi.fn(),
+  useUrlTrailingSlash: vi.fn(),
+  localePathMock: vi.fn(),
+}));
+
+mockNuxtImport('useNuxtApp', () => useNuxtApp);
+mockNuxtImport('useUrlTrailingSlash', () => useUrlTrailingSlash);
+mockNuxtImport('useLocalePath', () => () => localePathMock);
+
 describe('useLocalization', () => {
-  const { useNuxtApp } = vi.hoisted(() => {
-    return {
-      useNuxtApp: vi.fn().mockImplementation(() => {
-        return {
-          $i18n: {
-            locale: ref('de'),
-            defaultLocale: 'en',
-            strategy: 'prefix_and_default',
-          },
-        };
-      }),
-    };
+  beforeEach(() => {
+    vi.resetModules();
+
+    localePathMock.mockImplementation((path: string) => path);
+
+    useUrlTrailingSlash.mockImplementation(() => ({
+      resolvePathTrailingSlash: (path: string) => (path.endsWith('/') ? path : `${path}/`),
+      applyToUrl: (url: string) => url,
+    }));
+
+    useNuxtApp.mockImplementation(() => ({
+      $i18n: {
+        locale: ref('de'),
+        defaultLocale: 'en',
+        strategy: 'prefix_and_default',
+        locales: ref([{ code: 'de' }, { code: 'en' }]),
+      },
+    }));
   });
 
-  mockNuxtImport('useNuxtApp', () => {
-    return useNuxtApp;
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('should get url without language prefix default strategy', async () => {
-    const { getCategoryUrlFromRoute } = useLocalization();
-    const res = getCategoryUrlFromRoute('/de/category/subcategory');
-    expect(res).toBe('/category/subcategory');
-  });
-
-  it('should test strategy "prefix_except_default"', () => {
-    useNuxtApp.mockImplementation(() => {
-      return {
-        $i18n: {
-          locale: ref('de'),
-          defaultLocale: 'de',
-          strategy: 'prefix_except_default',
-        },
-      };
-    });
-    const path = '/category/subcategory';
+  it('should get url without language prefix for prefix_and_default strategy', async () => {
+    const { useLocalization } = await import('../useLocalization');
 
     const { getCategoryUrlFromRoute } = useLocalization();
-    const res = getCategoryUrlFromRoute(path);
-    expect(res).toBe('/category/subcategory');
+
+    expect(getCategoryUrlFromRoute('/de/category/subcategory')).toBe('/category/subcategory');
   });
 
-  it('should test strategy "prefix"', () => {
-    useNuxtApp.mockImplementation(() => {
-      return {
-        $i18n: {
-          locale: ref('en'),
-          defaultLocale: 'de',
-          strategy: 'prefix',
-        },
-      };
-    });
+  it('should test strategy "prefix_except_default"', async () => {
+    useNuxtApp.mockImplementation(() => ({
+      $i18n: {
+        locale: ref('de'),
+        defaultLocale: 'de',
+        strategy: 'prefix_except_default',
+        locales: ref([]),
+      },
+    }));
 
-    const path = '/en/category/subcategory';
+    const { useLocalization } = await import('../useLocalization');
 
     const { getCategoryUrlFromRoute } = useLocalization();
-    const res = getCategoryUrlFromRoute(path);
-    expect(res).toBe('/category/subcategory');
+
+    expect(getCategoryUrlFromRoute('/category/subcategory')).toBe('/category/subcategory');
+  });
+
+  it('should test strategy "prefix"', async () => {
+    useNuxtApp.mockImplementation(() => ({
+      $i18n: {
+        locale: ref('en'),
+        defaultLocale: 'de',
+        strategy: 'prefix',
+        locales: ref([]),
+      },
+    }));
+
+    const { useLocalization } = await import('../useLocalization');
+
+    const { getCategoryUrlFromRoute } = useLocalization();
+
+    expect(getCategoryUrlFromRoute('/en/category/subcategory')).toBe('/category/subcategory');
+  });
+
+  it('should apply localization and trailing slash', async () => {
+    const localePath = useLocalizedPath();
+
+    expect(localePath('/product')).toBe('/product/');
+    expect(localePath('/product-name_123')).toBe('/product-name_123/');
   });
 });

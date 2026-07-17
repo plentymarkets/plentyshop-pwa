@@ -7,96 +7,33 @@
     :disabled="disableBuyButton"
     @click="validateOnClickComponents($event, component)"
   />
-  <div v-if="filteredComponents.length === 0">
-    <div v-if="selectedPaymentId === paypalPaymentId">
-      <PayPalExpressButton
-        :disabled="disableBuyButton"
-        type="Checkout"
-        location="checkoutPage"
-        @validation-callback="handlePreparePaymentPayPal"
-      />
-      <PayPalPayLaterBanner
-        placement="payment"
-        location="checkoutPage"
-        :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
-        :commit="true"
-      />
-    </div>
-    <PayPalCreditCardBuyButton
-      v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
-      :disabled="disableBuyButton || paypalCardDialog"
-      @click="openPayPalCardDialog"
-    />
-    <ApplePayButton
-      v-else-if="selectedPaymentId === paypalApplePayPaymentId"
-      :style="disableBuyButton ? 'pointer-events: none;' : ''"
-      @button-clicked="handlePreparePaymentPayPal"
-    />
-    <GooglePayButton
-      v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
-      :style="disableBuyButton ? 'pointer-events: none;' : ''"
-      @button-clicked="handlePreparePaymentPayPal"
-    />
-    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="disableBuyButton" @validation-callback="handlePreparePaymentPayPal" />
-
-    <UiButton
-      v-else
-      type="submit"
-      :disabled="disableBuyButton"
-      size="lg"
-      data-testid="place-order-button"
-      class="w-full mb-4 md:mb-0 cursor-pointer"
-      @click="handlePreparePayment"
-    >
-      <template v-if="createOrderLoading || additionalInformationLoading">
-        <SfLoaderCircular class="flex justify-center items-center" size="sm" />
-      </template>
-      <template v-else>{{ t('common.actions.buy') }}</template>
-    </UiButton>
-  </div>
-
-  <Teleport to="body">
-    <UiModal
-      v-if="payPalPayUponInvoice"
-      v-model="payPalPayUponInvoice"
-      class="h-full w-full md:w-[600px] md:h-fit"
-      tag="section"
-      disable-click-away
-    >
-      <PayPalPayUponInvoiceForm @confirm-cancel="handlePayUponInvoiceModalClosing" />
-    </UiModal>
-    <UiModal
-      v-if="paypalCardDialog"
-      v-model="paypalCardDialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-      tag="section"
-      disable-click-away
-    >
-      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
-    </UiModal>
-  </Teleport>
+  <UiButton
+    v-if="filteredComponents.length === 0"
+    type="submit"
+    :disabled="disableBuyButton"
+    size="lg"
+    data-testid="place-order-button"
+    class="w-full mb-4 @md:mb-0 cursor-pointer"
+    @click="handlePreparePayment"
+  >
+    <template v-if="createOrderLoading || additionalInformationLoading">
+      <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+    </template>
+    <template v-else>{{ t('common.actions.buy') }}</template>
+  </UiButton>
 </template>
 
 <script setup lang="ts">
-import { cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import {
-  PayPalCreditCardPaymentKey,
-  PayPalPaymentKey,
-  PayPalGooglePayKey,
-  PayPalApplePayKey,
-  PayPalPayUponInvoiceKey,
-  PayPalAlternativeFundingSourceMapper,
-} from '#paypal/types';
-import type { PayPalAddToCartCallback } from '#paypal/types';
-import { keyBy } from '~/utils/keyBy';
 import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
 const { components } = useDynamicPaymentButtons();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { processingOrder } = useProcessingOrder();
 const localePath = useLocalePath();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 const { emit } = usePlentyEvent();
 const { send } = useNotification();
 const {
@@ -106,8 +43,6 @@ const {
   doAdditionalInformation,
   loading: additionalInformationLoading,
 } = useAdditionalInformation();
-const paypalCardDialog = ref(false);
-const payPalPayUponInvoice = ref(false);
 
 const {
   cart,
@@ -139,49 +74,6 @@ const paymentKey = computed(() => {
   return paymentMethod ? paymentProviderGetters.getPaymentKey(paymentMethod) : null;
 });
 
-const paypalPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
-});
-
-const paypalCreditCardPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
-});
-
-const paypalGooglePayPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
-});
-
-const paypalApplePayPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
-});
-
-const PayPalPayUponInvoiceId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPayUponInvoiceKey);
-});
-
-const PayPalIsAPM = computed(() => {
-  if (!paymentMethods.value.list) return false;
-  const selectedPayment = paymentProviderGetters.getPaymentMethodById(
-    paymentMethods.value.list,
-    selectedPaymentId.value,
-  );
-  return (
-    selectedPayment &&
-    Object.keys(PayPalAlternativeFundingSourceMapper).includes(paymentProviderGetters.getPaymentKey(selectedPayment))
-  );
-});
-
-const handlePayUponInvoiceModalClosing = () => {
-  payPalPayUponInvoice.value = false;
-  processingOrder.value = false;
-  usePayUponInvoice().resetState();
-};
-
 const validateAndProceed = async (): Promise<boolean> => {
   if (!readyToBuy()) return false;
   return await doAdditionalInformation({
@@ -191,27 +83,12 @@ const validateAndProceed = async (): Promise<boolean> => {
   });
 };
 
-const handlePreparePaymentPayPal = async (callback?: PayPalAddToCartCallback) => {
-  const canProceed = await validateAndProceed();
-  if (typeof callback === 'function') callback(canProceed);
-};
-
 const handlePreparePayment = async () => {
   const canProceed = await validateAndProceed();
   if (canProceed) await order();
 };
 
 const order = async () => {
-  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
-
-  if (paymentMethodsById[selectedPaymentId.value]?.key === 'plentyPayPal') {
-    selectedPaymentId.value === PayPalPayUponInvoiceId.value
-      ? (payPalPayUponInvoice.value = true)
-      : (paypalCardDialog.value = true);
-
-    return;
-  }
-
   processingOrder.value = true;
   await handleRegularOrder();
 };
@@ -231,11 +108,6 @@ const readyToBuy = () => {
   return validateTerms();
 };
 
-const openPayPalCardDialog = async () => {
-  if (!(await validateAndProceed())) return;
-  paypalCardDialog.value = true;
-};
-
 const handleRegularOrder = async () => {
   const data = await createOrder({
     paymentId: paymentMethods.value.selected,
@@ -244,7 +116,9 @@ const handleRegularOrder = async () => {
   if (data?.order?.id) {
     emit('frontend:orderCreated', data);
     clearCartItems();
-    return navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
+    return navigateTo(
+      resolvePathTrailingSlash(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey)),
+    );
   } else {
     await useCartStockReservation().unreserve();
     processingOrder.value = false;

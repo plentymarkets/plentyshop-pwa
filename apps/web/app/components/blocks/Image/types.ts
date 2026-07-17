@@ -33,6 +33,7 @@ export type ImageContent = {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
+    alignment?: 'left' | 'center' | 'right';
   };
   layout: {
     paddingTop: number;
@@ -54,6 +55,7 @@ export type BreakpointEntry = { aspectRatio: string; url: string | undefined; di
 export interface ImageFormProps {
   uuid?: string;
 }
+export type ImageTypeKey = 'wideScreen' | 'desktop' | 'tablet' | 'mobile';
 export type FillMode = 'fill' | 'fit';
 export type AlignX = 'left' | 'center' | 'right';
 export type AlignY = 'top' | 'center' | 'bottom';

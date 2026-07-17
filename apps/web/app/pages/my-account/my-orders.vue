@@ -1,8 +1,8 @@
 <template>
   <ClientOnly>
-    <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+    <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
     <h2
-      class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+      class="hidden @md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
       data-testid="account-orders-heading"
     >
       {{ t('account.ordersAndReturns.myOrders') }}
@@ -25,7 +25,7 @@
 
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
+        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-loader" size="2xl" />
         <template v-if="viewport.isLessThan('md')">
           <ul v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="my-4 last-of-type:mb-0">
             <li>
@@ -56,7 +56,7 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
                 {{ t('account.ordersAndReturns.details') }}
               </UiButton>
               <UiDropdown class="relative">
@@ -74,7 +74,7 @@
                     </SfListItem>
                   </li>
                   <li v-if="orderGetters.isReturnable(order)">
-                    <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                    <NuxtLink :to="generateNewReturnLink(order)">
                       <SfListItem tag="button" class="text-left">
                         {{ t('returns.return') }}
                       </SfListItem>
@@ -83,11 +83,11 @@
                 </ul>
               </UiDropdown>
             </li>
-            <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+            <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
           </ul>
         </template>
 
-        <table v-else class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
+        <table v-else class="@md:block @md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
           <caption class="hidden">
             {{
               t('account.ordersAndReturns.listOfOrders')
@@ -95,21 +95,21 @@
           </caption>
           <thead class="border-b-2 border-neutral-200">
             <tr>
-              <th class="lg:py-4 py-2 lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.orderId') }}</th>
-              <th class="lg:p-4 p-2 font-medium lg:whitespace-nowrap">
+              <th class="@lg:py-4 py-2 @lg:pr-4 pr-2 font-medium">{{ t('account.ordersAndReturns.orderId') }}</th>
+              <th class="@lg:p-4 p-2 font-medium @lg:whitespace-nowrap">
                 {{ t('account.ordersAndReturns.orderDate') }}
               </th>
-              <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.amount') }}</th>
-              <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</th>
-              <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.status') }}</th>
-              <th class="lg:py-4 py-2 lg:pl-4 pl-2 font-medium">{{ t('account.ordersAndReturns.actions') }}</th>
+              <th class="@lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.amount') }}</th>
+              <th class="@lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</th>
+              <th class="@lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.status') }}</th>
+              <th class="@lg:py-4 py-2 @lg:pl-4 pl-2 font-medium">{{ t('account.ordersAndReturns.actions') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="order in data.data.entries" :key="orderGetters.getId(order)" class="border-b border-neutral-200">
-              <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
-              <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
-              <td v-if="orderGetters.getTotals(order).isNet" class="lg:p-4 p-2">
+              <td class="@lg:py-4 py-2 @lg:pr-4 pr-2 @lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
+              <td class="@lg:p-4 p-2 @lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
+              <td v-if="orderGetters.getTotals(order).isNet" class="@lg:p-4 p-2">
                 {{
                   formatWithSymbol(
                     orderGetters.getTotalNet(orderGetters.getTotals(order)),
@@ -117,7 +117,7 @@
                   )
                 }}
               </td>
-              <td v-else class="lg:p-4 p-2">
+              <td v-else class="@lg:p-4 p-2">
                 {{
                   formatWithSymbol(
                     orderGetters.getTotal(orderGetters.getTotals(order)),
@@ -125,16 +125,11 @@
                   )
                 }}
               </td>
-              <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
-              <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <td class="lg:p-4 p-2 text-right">
+              <td class="@lg:p-4 p-2">{{ orderGetters.getShippingDate(order, locale) ?? '' }}</td>
+              <td class="@lg:p-4 p-2 @lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
+              <td class="@lg:p-4 p-2 text-right">
                 <div class="flex items-center justify-end">
-                  <UiButton
-                    :tag="NuxtLink"
-                    size="sm"
-                    variant="tertiary"
-                    :to="localePath(generateOrderDetailsLink(order))"
-                  >
+                  <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
                     {{ t('account.ordersAndReturns.details') }}
                   </UiButton>
                   <UiDropdown class="relative">
@@ -152,7 +147,7 @@
                         </SfListItem>
                       </li>
                       <li v-if="orderGetters.isReturnable(order)">
-                        <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                        <NuxtLink :to="generateNewReturnLink(order)">
                           <SfListItem tag="button" class="text-left">
                             {{ t('returns.return') }}
                           </SfListItem>
@@ -192,9 +187,10 @@ defineI18nRoute({
 const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { formatWithSymbol } = usePriceFormatter();
 const { locale } = useI18n();
+const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
@@ -208,13 +204,12 @@ definePageMeta({
 
 onMounted(() => setMaxVisiblePages(isDesktop.value));
 
-const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 const generateNewReturnLink = (order: Order) => {
-  return `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
+  return localePath(`${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`);
 };
 
 watch(isDesktop, (value) => setMaxVisiblePages(value));

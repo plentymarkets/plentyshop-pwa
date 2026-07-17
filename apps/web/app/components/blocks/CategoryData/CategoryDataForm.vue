@@ -1,15 +1,6 @@
 <template>
   <div>
-    <UiAccordionItem
-      v-model="textOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-card"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('item-card-label') }}</h2>
-      </template>
-
+    <EditorFormPanel v-model="textOpen" :title="getEditorTranslation('item-card-label')" data-testid="item-grid-card">
       <div class="py-2">
         <div class="flex items-center justify-between px-2 pb-2 text-sm font-medium text-gray-700">
           <span>{{ getEditorTranslation('item-card-text') }}</span>
@@ -29,7 +20,7 @@
             <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
               <div class="flex items-center gap-3">
                 <button
-                  class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                  class="drag-slides-handle top-2 left-2 z-raised cursor-grab p-2 hover:bg-gray-100 rounded-full"
                   :aria-label="getEditorTranslation('drag-reorder-aria')"
                   :data-testid="`actions-drag-slide-handle-${index}`"
                 >
@@ -64,18 +55,9 @@
           </span>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
-      v-model="imageOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="category-data-image"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('image-label') }}</h2>
-      </template>
-
+    <EditorFormPanel v-model="imageOpen" :title="getEditorTranslation('image-label')" data-testid="category-data-image">
       <div class="py-2">
         <EditorOptionsTabs
           v-model="displayCategoryImageModel"
@@ -228,7 +210,7 @@
         <EditorOptionsTabs
           v-if="categoryDataBlock.displayCategoryImage !== 'off'"
           v-model="textboxAlignXModel"
-          :legend="getEditorTranslation('textbox-align-x-label')"
+          :legend="getEditorTranslation('textbox-align-main-label')"
           test-id-prefix="slider-textbox-align-x"
           :options="textboxAlignXOptions"
         />
@@ -238,7 +220,7 @@
         <EditorOptionsTabs
           v-if="categoryDataBlock.displayCategoryImage !== 'off'"
           v-model="textboxAlignYModel"
-          :legend="getEditorTranslation('textbox-align-y-label')"
+          :legend="getEditorTranslation('textbox-align-cross-label')"
           test-id-prefix="slider-textbox-align-y"
           :options="textboxAlignYOptions"
         />
@@ -253,16 +235,8 @@
           :options="textAlignOptions"
         />
       </div>
-    </UiAccordionItem>
-    <UiAccordionItem
-      v-model="layoutOpen"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      data-testid="item-grid-card"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-label') }}</h2>
-      </template>
+    </EditorFormPanel>
+    <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')" data-testid="item-grid-card">
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
       <div
         class="py-2"
@@ -312,7 +286,7 @@
           </div>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 
@@ -408,15 +382,15 @@ const {
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
-    "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-left-label": "Left",
-    "textbox-align-x-center-label": "Center",
-    "textbox-align-x-right-label": "Right",
+    "textbox-align-main-label": "Textbox Alignment (main axis)",
+    "textbox-align-main-top-label": "Top",
+    "textbox-align-main-center-label": "Center",
+    "textbox-align-main-bottom-label": "Bottom",
 
-    "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-top-label": "Top",
-    "textbox-align-y-center-label": "Center",
-    "textbox-align-y-bottom-label": "Bottom",
+    "textbox-align-cross-label": "Textbox Alignment (cross axis)",
+    "textbox-align-cross-left-label": "Left",
+    "textbox-align-cross-center-label": "Center",
+    "textbox-align-cross-right-label": "Right",
 
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",
@@ -471,15 +445,15 @@ const {
     "textbox-color-label": "Textbox Colour",
     "textbox-opacity-label": "Textbox Opacity",
 
-    "textbox-align-x-label": "Textbox Alignment (x)",
-    "textbox-align-x-left-label": "Left",
-    "textbox-align-x-center-label": "Center",
-    "textbox-align-x-right-label": "Right",
+    "textbox-align-main-label": "Textbox Alignment (main axis)",
+    "textbox-align-main-top-label": "Top",
+    "textbox-align-main-center-label": "Center",
+    "textbox-align-main-bottom-label": "Bottom",
 
-    "textbox-align-y-label": "Textbox Alignment (y)",
-    "textbox-align-y-top-label": "Top",
-    "textbox-align-y-center-label": "Center",
-    "textbox-align-y-bottom-label": "Bottom",
+    "textbox-align-cross-label": "Textbox Alignment (cross axis)",
+    "textbox-align-cross-left-label": "Left",
+    "textbox-align-cross-center-label": "Center",
+    "textbox-align-cross-right-label": "Right",
 
     "text-align-label": "Text Alignment (x)",
     "text-align-option-left-label": "Left",

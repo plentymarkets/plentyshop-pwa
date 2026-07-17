@@ -4,19 +4,18 @@ import { useBlocksList } from '~/composables/useBlocksList/useBlocksList';
 import {
   getMockBlocksList,
   mockBlockCategories,
+  mockBuildBlocksListError,
+  mockBuildBlocksListSuccess,
   mockCategory,
   mockCategoryTemplateBlocks,
   mockExpectedEnglishTemplate,
   mockExpectedGermanTemplate,
-  mockFetchError,
-  mockFetchNetworkError,
-  mockFetchSuccess,
   mockSimpleBlocksList,
-  setupFetchMock,
   setupNuxtMocks,
 } from './useBlocksList.mocks';
 
-setupFetchMock();
+const buildBlocksListMock = vi.hoisted(() => vi.fn());
+mockNuxtImport('resolveBlocksList', () => buildBlocksListMock);
 setupNuxtMocks();
 mockNuxtImport('useBlockTemplates', () => () => ({
   data: ref<Block[]>(mockCategoryTemplateBlocks),
@@ -57,27 +56,18 @@ describe('useBlocksList', () => {
   });
 
   describe('getBlocksLists', () => {
-    it('should fetch blocks lists from JSON file', async () => {
-      mockFetchSuccess(mockSimpleBlocksList);
+    it('should load blocks lists from local defaults modules', async () => {
+      mockBuildBlocksListSuccess(buildBlocksListMock, mockSimpleBlocksList);
 
       const { getBlocksLists, blocksLists } = useBlocksList();
 
       await getBlocksLists();
 
-      expect(globalThis.fetch).toHaveBeenCalledWith('/_nuxt-plenty/editor/blocksLists.json');
       expect(blocksLists.value).toEqual(mockSimpleBlocksList);
     });
 
-    it('should throw error if fetch fails', async () => {
-      mockFetchError(404);
-
-      const { getBlocksLists } = useBlocksList();
-
-      await expect(getBlocksLists()).rejects.toThrow();
-    });
-
-    it('should handle fetch network errors', async () => {
-      mockFetchNetworkError('Network error');
+    it('should throw error if loading fails', async () => {
+      mockBuildBlocksListError(buildBlocksListMock, 'Module load error');
 
       const { getBlocksLists } = useBlocksList();
 
@@ -86,22 +76,22 @@ describe('useBlocksList', () => {
   });
 
   describe('getBlockTemplateByLanguage', () => {
-    it('should fetch blocks list if not already loaded', async () => {
-      const mockBlocksList = getMockBlocksList();
-      mockFetchSuccess(mockBlocksList);
+    beforeEach(() => {
+      const { blocksLists } = useBlocksList();
+      blocksLists.value = getMockBlocksList();
+    });
 
-      const { getBlockTemplateByLanguage } = useBlocksList();
+    it('should load blocks list if not already loaded', async () => {
+      const { blocksLists, getBlockTemplateByLanguage } = useBlocksList();
+      blocksLists.value = {};
+      mockBuildBlocksListSuccess(buildBlocksListMock, getMockBlocksList());
 
       const template = await getBlockTemplateByLanguage('banners', 0, 'en');
 
-      expect(globalThis.fetch).toHaveBeenCalledWith('/_nuxt-plenty/editor/blocksLists.json');
       expect(template).toEqual(mockExpectedEnglishTemplate);
     });
 
     it('should return English template when lang is "en"', async () => {
-      const mockBlocksList = getMockBlocksList();
-      mockFetchSuccess(mockBlocksList);
-
       const { getBlockTemplateByLanguage } = useBlocksList();
 
       const template = await getBlockTemplateByLanguage('banners', 0, 'en');
@@ -110,9 +100,6 @@ describe('useBlocksList', () => {
     });
 
     it('should return German template when lang is "de"', async () => {
-      const mockBlocksList = getMockBlocksList();
-      mockFetchSuccess(mockBlocksList);
-
       const { getBlockTemplateByLanguage } = useBlocksList();
 
       const template = await getBlockTemplateByLanguage('banners', 0, 'de');
@@ -121,9 +108,6 @@ describe('useBlocksList', () => {
     });
 
     it('should return a deep clone to prevent mutations', async () => {
-      const mockBlocksList = getMockBlocksList();
-      mockFetchSuccess(mockBlocksList);
-
       const { getBlockTemplateByLanguage } = useBlocksList();
 
       const template1 = await getBlockTemplateByLanguage('banners', 0, 'en');
@@ -134,18 +118,12 @@ describe('useBlocksList', () => {
     });
 
     it('should throw error if category not found', async () => {
-      const mockBlocksList = getMockBlocksList();
-      mockFetchSuccess(mockBlocksList);
-
       const { getBlockTemplateByLanguage } = useBlocksList();
 
       await expect(getBlockTemplateByLanguage('nonexistent', 0, 'en')).rejects.toThrow();
     });
 
     it('should throw error if variation not found', async () => {
-      const mockBlocksList = getMockBlocksList();
-      mockFetchSuccess(mockBlocksList);
-
       const { getBlockTemplateByLanguage } = useBlocksList();
 
       await expect(getBlockTemplateByLanguage('banners', 99, 'en')).rejects.toThrow();

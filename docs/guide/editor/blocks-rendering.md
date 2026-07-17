@@ -7,14 +7,20 @@ Each block is rendered by `PageBlock`, which resolves the correct Vue component 
 
 ## Component discovery
 
-The loader uses `import.meta.glob()` to discover block components at build time from three sources:
+The loader uses `import.meta.glob()` to discover block files at build time from two source layers, loaded in a fixed order. A Nuxt module can be either internal (living in `apps/web/modules/`) or installed as an npm package under `node_modules/`.
 
-1. Core app blocks (any `blocks` directory under `@/components/`, matched by `@/components/**/blocks/**/*.vue`)
-2. Nuxt module blocks
-3. Customer package blocks (`node_modules/*/runtime/components/blocks/`)
+| Layer       | Glob                                                 |
+| ----------- | ---------------------------------------------------- |
+| Core        | `@/components/**/blocks/**/*.vue`                    |
+| Nuxt module | `~~/modules/*/runtime/components/blocks/**/*.vue`    |
+| Nuxt module | `/node_modules/*/runtime/components/blocks/**/*.vue` |
 
-Block components are resolved asynchronously via `defineAsyncComponent`, which enables code-splitting per block.
+Each block folder contains its `.vue` component (paired with its `Form.vue` companion), a `defaults.ts` that exports the catalogue entry (`getBlocksList`) and optionally a `createDefault` factory, and an `icon.svg` for the "Add block" catalogue.
+
+Block components are resolved asynchronously via `defineAsyncComponent`, which enables code splitting per block.
 Individual blocks can additionally implement viewport-based lazy loading (for example, `ProductRecommendedProducts` defers rendering until the block is near the viewport).
+
+When two sources register a file with the same basename, the later source wins. This is how Nuxt modules override core blocks. See [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for the full merge semantics and the build time validation that guards against accidental overrides.
 
 ## Recursive rendering
 
@@ -40,5 +46,6 @@ This creates a seamless transition where the old content remains visible during 
 
 Linked concepts
 
-1. [Blocks architecture](/guide/concept/blocks-architecture.md) — Overview of the blocks system
-2. [Structure vs. content form](/guide/concept/blocks-structure-vs-content.md) — How structure and content blocks compose
+1. [Blocks architecture](/guide/editor/blocks-architecture.md) — Overview of the blocks system
+2. [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) — How components, catalogue entries, and icons are collected from core and Nuxt modules
+3. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — How structure and content blocks compose
