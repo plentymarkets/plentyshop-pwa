@@ -29,7 +29,7 @@ jobs:
       - name: Build with VitePress
         run: |
           npm run docs:build
-          touch ${{ github.workspace }}/docs/.vitepress/dist/.nojekyll
+
       - name: Install & Run htmltest
         env:
           HTMLTEST_VERSION: '0.17.0'
