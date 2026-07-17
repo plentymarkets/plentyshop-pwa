@@ -39,7 +39,6 @@ const ANALYSIS_SCHEMA = {
   },
 };
 
-
 const FINAL_REPORT_SCHEMA = {
   type: 'object',
   properties: {
@@ -64,13 +63,7 @@ const FINAL_REPORT_SCHEMA = {
 };
 
 const prUrl = String(args ?? '').trim();
-let parsedUrl;
-try {
-  parsedUrl = new URL(prUrl);
-} catch {
-  throw new Error('Invalid PR URL. Pass a valid GitHub PR URL as args, e.g.: https://github.com/owner/repo/pull/123');
-}
-if (parsedUrl.hostname !== 'github.com' || !/^\/[^/]+\/[^/]+\/pull\/\d+/.test(parsedUrl.pathname)) {
+if (!/^https:\/\/github\.com\/[^/]+\/[^/]+\/pull\/\d+/.test(prUrl)) {
   throw new Error('Invalid PR URL. Pass a valid GitHub PR URL as args, e.g.: https://github.com/owner/repo/pull/123');
 }
 
@@ -125,7 +118,11 @@ phase('Check Local Usage');
 const localUsage = await agent(
   `Find usage of each of these dependencies in the plentyshop-pwa repository:
 
-${JSON.stringify(detailedAnalysis.packages.map((p) => ({ name: p.name, from: p.fromVersion, to: p.toVersion, type: p.type })), null, 2)}
+${JSON.stringify(
+  detailedAnalysis.packages.map((p) => ({ name: p.name, from: p.fromVersion, to: p.toVersion, type: p.type })),
+  null,
+  2,
+)}
 
 For each package:
 - npm packages: search for imports/requires
