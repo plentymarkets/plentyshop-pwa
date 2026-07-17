@@ -77,7 +77,6 @@ jobs:
       - name: Build with VitePress
         run: |
           npm run docs:build
-          touch ${{ github.workspace }}/docs/.vitepress/dist/.nojekyll
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5.0.0
