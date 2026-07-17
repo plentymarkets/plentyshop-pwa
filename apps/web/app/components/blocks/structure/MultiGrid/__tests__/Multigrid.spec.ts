@@ -1,7 +1,17 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import MultiGrid from '../../../../../components/blocks/structure/MultiGrid/MultiGrid.vue';
 import { multiGridBlockUuid, mockMultiGridProps } from './multiGrid.mock';
+
+const { useViewportMock } = vi.hoisted(() => ({
+  useViewportMock: vi.fn((): { isLessThan: (breakpoint: string) => boolean; breakpoint: { value: string } } => ({
+    isLessThan: (_breakpoint: string) => false,
+    breakpoint: { value: 'lg' },
+  })),
+}));
+
+mockNuxtImport('useViewport', () => useViewportMock);
 
 describe('MultiGrid block', () => {
   it('should render the correct number of columns (2)', () => {
@@ -86,7 +96,7 @@ describe('MultiGrid block', () => {
         },
       },
     });
-    expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('md:gap-x-5');
+    expect(wrapper.find('[data-testid="multi-grid-structure"]').classes()).toContain('@md:gap-x-5');
   });
 
   it('should apply layout styles (margin, background color) to the grid container', () => {
@@ -124,8 +134,8 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-12');
-    expect(classes).toContain('lg:grid-cols-12');
+    expect(classes).toContain('@md:grid-cols-12');
+    expect(classes).toContain('@lg:grid-cols-12');
   });
 
   it('should apply responsive grid classes for a three-column grid', () => {
@@ -140,8 +150,73 @@ describe('MultiGrid block', () => {
 
     const grid = wrapper.find('[data-testid="multi-grid-structure"]');
     const classes = grid.classes();
-    expect(classes).toContain('md:grid-cols-12');
-    expect(classes).toContain('lg:grid-cols-12');
+    expect(classes).toContain('@md:grid-cols-12');
+    expect(classes).toContain('@lg:grid-cols-12');
+  });
+
+  it('should apply items-stretch when alignHeights is true', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, alignHeights: true },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).toContain('items-stretch');
+    expect(classes).not.toContain('items-start');
+  });
+
+  it('should apply items-start when alignHeights is false', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, alignHeights: false },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).toContain('items-start');
+    expect(classes).not.toContain('items-stretch');
+  });
+
+  it('should apply flex-col-reverse classes when reverseOnMobile is true', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, reverseOnMobile: true },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).toContain('flex');
+    expect(classes).toContain('flex-col-reverse');
+    expect(classes).toContain('@md:grid');
+    expect(classes).toContain('@md:grid-cols-12');
+  });
+
+  it('should not apply flex-col-reverse classes when reverseOnMobile is false or unset', () => {
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          ...mockMultiGridProps.configuration,
+          layout: { ...mockMultiGridProps.configuration.layout, reverseOnMobile: false },
+        },
+      },
+    });
+
+    const classes = wrapper.find('[data-testid="multi-grid-structure"]').classes();
+    expect(classes).not.toContain('flex-col-reverse');
   });
 
   it('should render a 2 columns multigrid with 2 blocks in the first column and 1 block in the second column', () => {
@@ -187,5 +262,31 @@ describe('MultiGrid block', () => {
 
     const secondColBlock = columns[1].find('.group\\/row');
     expect(secondColBlock.attributes('data-uuid')).toBe('c');
+  });
+
+  it('should apply col-span-12 to columns on mobile', () => {
+    useViewportMock.mockReturnValue({
+      isLessThan: (breakpoint: string) => breakpoint === 'md',
+      breakpoint: { value: 'sm' },
+    });
+
+    const wrapper = mount(MultiGrid, {
+      props: {
+        ...mockMultiGridProps,
+        configuration: {
+          columnWidths: [6, 6],
+        },
+      },
+    });
+
+    const columns = wrapper.findAll('[data-testid="multi-grid-column"]');
+    columns.forEach((column) => {
+      expect(column.classes()).toContain('col-span-12');
+    });
+
+    useViewportMock.mockReturnValue({
+      isLessThan: (_breakpoint: string) => false,
+      breakpoint: { value: 'lg' },
+    });
   });
 });

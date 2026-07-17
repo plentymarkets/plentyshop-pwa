@@ -1,5 +1,5 @@
 <template>
-  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-base relative paypal-button" />
 </template>
 
 <script setup lang="ts">
@@ -21,6 +21,7 @@ const {
   captureOrder,
   createPlentyOrder,
   createPlentyPaymentFromPayPalOrder,
+  resetAPMs,
   config,
   payPalVisibility,
   payLaterVisibility,
@@ -32,7 +33,7 @@ const { emit } = usePlentyEvent();
 const currency = computed(
   () => props.currency || cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string),
 );
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
@@ -86,6 +87,7 @@ const onValidationCallback = async () => {
 
 const onApprove = async (data: OnApproveData) => {
   emits('on-approved');
+  resetAPMs();
 
   if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
     await fetchSession();
@@ -93,7 +95,7 @@ const onApprove = async (data: OnApproveData) => {
   }
 
   if (props.type === TypeCheckout) {
-    useProcessingOrder().processingOrder.value = true;
+    useDynamicPaymentButtons().createOrderLoading.value = true;
     const order = await createPlentyOrder();
 
     if (order) {
@@ -155,11 +157,19 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
           message: t('error.paymentCancelled'),
           type: 'negative',
         });
+        resetAPMs();
         await fetchSession();
         await useCartStockReservation().unreserve();
       },
       async createOrder() {
-        const transactionType = props.type === TypeOrderAlreadyExisting ? 'order' : isCommit ? 'basket' : 'express';
+        let transactionType: 'order' | 'express' | 'basket' = 'express';
+
+        if (props.type === TypeOrderAlreadyExisting) {
+          transactionType = 'order';
+        } else if (isCommit) {
+          transactionType = 'basket';
+        }
+
         const order = await createTransaction({
           type: transactionType,
           withShippingCallback: props.type !== TypeOrderAlreadyExisting && !isCommit,
@@ -169,6 +179,10 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         if (order?.id && props.type !== TypeOrderAlreadyExisting) {
           const reserved = await useCartStockReservation().reserve();
           if (!reserved) return '';
+        }
+
+        if (props.type === TypeCartPreview || props.type === TypeSingleItem) {
+          useLogEvent().logPayPalExpressFlow();
         }
 
         return order?.id ?? '';

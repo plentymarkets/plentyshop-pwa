@@ -14,6 +14,7 @@ export const useItemsTable: UseItemTableReturn = () => {
   const state = useState<UseItemTableState>('useItemTable', () => ({
     data: [],
     loading: false,
+    loadingMore: false,
   }));
   const pendingBlobUrls = useState<string[]>('pending-blob-urls', () => []);
 
@@ -34,6 +35,32 @@ export const useItemsTable: UseItemTableReturn = () => {
   const cachedImages = useState<StorageObject[]>('image-table-cache', () => []);
   const folders = useState<string[]>('image-table-folders', () => []);
 
+  const loadMoreStorageItems = async (fileTypes: string, continuationToken: string) => {
+    const { data } = await useSdk().plentysystems.getTruncatedStorageItems({
+      fileTypes: fileTypes ?? getAllowedImageExtensions(),
+      includeFolders: 'true',
+      continuationToken: continuationToken,
+    });
+
+    if (!data) {
+      return;
+    }
+
+    const items: StorageObject[] = data.objects ?? [];
+
+    state.value.data.push(...items);
+    cachedImages.value.push(...items);
+    folders.value.push(...extractFolders(items));
+
+    state.value.data = Array.from(new Map(state.value.data.map((item) => [item.key, item])).values());
+    cachedImages.value = Array.from(new Map(cachedImages.value.map((item) => [item.key, item])).values());
+    folders.value = Array.from(new Set(folders.value));
+
+    if (data.nextContinuationToken && data.isTruncated) {
+      await loadMoreStorageItems(fileTypes, data.nextContinuationToken);
+    }
+  };
+
   const getStorageItems = async (fileTypes: string) => {
     state.value.loading = true;
 
@@ -44,23 +71,34 @@ export const useItemsTable: UseItemTableReturn = () => {
       return;
     }
 
-    const response = await useSdk().plentysystems.getStorageItems({
+    const { data } = await useSdk().plentysystems.getTruncatedStorageItems({
       fileTypes: fileTypes ?? getAllowedImageExtensions(),
       includeFolders: 'true',
     });
     state.value.loading = false;
 
-    if (!response || !response.data) {
+    if (!data) {
       const { send } = useNotification();
       send({ type: 'negative', message: 'Failed to fetch images.' });
       return;
     }
 
-    const items: StorageObject[] = response.data ?? [];
+    try {
+      const items: StorageObject[] = data.objects ?? [];
 
-    state.value.data = items;
-    cachedImages.value = items;
-    folders.value = extractFolders(items);
+      state.value.data = items;
+      cachedImages.value = items;
+      folders.value = extractFolders(items);
+
+      if (data.isTruncated && data.nextContinuationToken) {
+        state.value.loadingMore = true;
+        await loadMoreStorageItems(fileTypes, data.nextContinuationToken);
+        state.value.loadingMore = false;
+      }
+    } finally {
+      state.value.loading = false;
+      state.value.loadingMore = false;
+    }
   };
 
   const headers = ref([

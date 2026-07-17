@@ -1,34 +1,16 @@
 <template>
   <div data-testid="banner-carousel-form" class="block-slider-edit sticky h-[80vh] overflow-y-auto">
-    <EditorBlockItemsAccordion
-      v-if="editingSlideIndex === undefined"
-      v-model="elementsOpen"
-      :items="slides"
-      :item-labels="slideLabels"
-      :current-active-index="currentActiveSlideIndex"
-      :min-items="1"
-      @select-item="selectSlide"
-      @edit-item="editSlide"
-      @add-item="addSlide"
-      @delete-item="deleteSlide"
-      @toggle-item-visibility="toggleSlideVisibility"
-      @update:items="updateBlocks"
-    />
+    <div v-if="!editingBlock" class="space-y-0">
+      <EditorGridElementsPanel
+        v-model="elementsOpen"
+        :uuid="resolvedUuid"
+        :min-items="1"
+        :custom-add="true"
+        @edit-element="editSlide"
+        @add-element="addSlide"
+      />
 
-    <div v-else-if="slides[editingSlideIndex]" class="space-y-0">
-      <component :is="blockForm" :uuid="slides[editingSlideIndex]!.meta.uuid" />
-    </div>
-
-    <template v-if="editingSlideIndex === undefined">
-      <UiAccordionItem
-        v-model="controlsOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>{{ getEditorTranslation('controls-group-label') }}</h2>
-        </template>
-
+      <EditorFormPanel v-model="controlsOpen" :title="getEditorTranslation('controls-group-label')">
         <div class="controls">
           <div class="mb-6 mt-4">
             <UiFormLabel class="mb-1">{{ getEditorTranslation('controls-color-label') }}</UiFormLabel>
@@ -49,58 +31,41 @@
             </EditorColorPicker>
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
-      <!-- Layout Section (Carousel-wide) -->
-      <UiAccordionItem
+      <EditorFormPanel
         v-model="layoutOpen"
-        summary-active-class="bg-neutral-100"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        :title="getEditorTranslation('layout-label')"
+        data-testid="slider-button-group-title"
       >
-        <template #summary>
-          <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-        </template>
         <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
-      </UiAccordionItem>
-    </template>
+      </EditorFormPanel>
+    </div>
+
+    <div v-else class="space-y-0">
+      <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 import type { CarouselStructureProps, SlideBlock } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 
 const props = defineProps<{ uuid?: string }>();
 
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
-const { updateCarouselItems, setIndex, activeSlideIndex, createSlide, getSlideLabel } = useCarousel();
-const { toggleBlockVisibility } = useBlocksVisibility();
+const { updateCarouselItems, setIndex, createSlide } = useCarousel();
 const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const emit = defineEmits<{
-  'set-edit-title': [title: string];
-  'clear-edit-title': [];
-}>();
-
 const elementsOpen = ref(true);
-const editingSlideIndex = ref<number | undefined>(undefined);
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
-const slideLabels = ref<string[]>([]);
-
-setIndex(resolvedUuid.value, 0);
-
-const blockForm = computed(() => {
-  if (editingSlideIndex.value === undefined) return null;
-
-  const slide = slides.value[editingSlideIndex.value];
-  if (!slide) return null;
-
-  const loader = getBlockFormLoader(slide.name);
-  return loader ? defineAsyncComponent(loader) : null;
-});
+const { editingBlock, blockForm } = useNestedBlockForm(resolvedUuid);
+const { pushEdit } = useBlockEditStack();
 
 const carouselStructure = computed(
   () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as CarouselStructureProps,
@@ -113,12 +78,9 @@ const { isFullWidth } = useFullWidthToggleForConfig(
 
 const controls = computed(() => carouselStructure.value.configuration?.controls ?? { color: '', displayArrows: true });
 
-const currentActiveSlideIndex = computed(() => activeSlideIndex.value[resolvedUuid.value]);
-
 const slides = computed({
   get: () => {
     const content = (carouselStructure.value?.content || []) as SlideBlock[];
-
     return content.map((slide) => ({
       ...slide,
       configuration: {
@@ -130,76 +92,19 @@ const slides = computed({
   set: (value: SlideBlock[]) => updateCarouselItems(value, resolvedUuid.value),
 });
 
-const resolveSlideLabels = async () => {
-  slideLabels.value = await Promise.all(slides.value.map((slide, index) => getSlideLabel(slide, index)));
+const editSlide = (block: Block) => {
+  const idx = slides.value.findIndex((s) => s.meta.uuid === block.meta.uuid);
+  if (idx >= 0) setIndex(resolvedUuid.value, idx);
+  pushEdit(block);
 };
-
-const selectSlide = (index: number) => {
-  setIndex(resolvedUuid.value, index);
-};
-
-const editSlide = (index: number) => {
-  editingSlideIndex.value = index;
-  setIndex(resolvedUuid.value, index);
-  emit('set-edit-title', slideLabels.value[index]!);
-};
-
-const exitEditMode = (shouldEmit = true) => {
-  editingSlideIndex.value = undefined;
-  if (shouldEmit) {
-    emit('clear-edit-title');
-  }
-  resolveSlideLabels();
-};
-
-watch(
-  () => slides.value.map((slide) => slide.meta.uuid),
-  () => {
-    resolveSlideLabels();
-  },
-  { immediate: true },
-);
 
 const addSlide = async () => {
   const slideType = slides.value[0]?.name ?? 'Banner';
   const newSlide = await createSlide(slideType, slides.value.length);
-
   slides.value = [...slides.value, newSlide];
-
   await nextTick();
-
   setIndex(resolvedUuid.value, slides.value.length - 1);
 };
-
-const deleteSlide = async (index: number) => {
-  if (slides.value.length <= 1) return;
-  slides.value = slides.value.filter((_: SlideBlock, i: number) => i !== index);
-  setIndex(resolvedUuid.value, 0);
-  await nextTick();
-  if (editingSlideIndex.value === index) {
-    exitEditMode();
-  }
-};
-
-const toggleSlideVisibility = (index: number) => {
-  const slide = slides.value[index];
-  if (!slide) return;
-
-  const updatedSlides = [...slides.value];
-  const slideToUpdate = updatedSlides[index];
-  if (!slideToUpdate) return;
-
-  toggleBlockVisibility(slideToUpdate);
-  slides.value = updatedSlides;
-};
-
-const updateBlocks = (newBlocks: SlideBlock[]) => {
-  slides.value = newBlocks;
-};
-
-defineExpose({
-  exitEditMode,
-});
 </script>
 
 <style scoped>
@@ -217,20 +122,14 @@ input[type='number'] {
 <i18n lang="json">
 {
   "en": {
-    "slide-label": "Slide",
     "layout-label": "Layout",
     "controls-group-label": "Controls",
-    "controls-color-label": "Slider Controls Colour",
-    "full-width": "Enable full width",
-    "full-width-tooltip": "Full width is only available for top-level blocks. This option is disabled for nested blocks (e.g., inside MultiGrid)."
+    "controls-color-label": "Slider Controls Colour"
   },
   "de": {
-    "slide-label": "Slide",
     "layout-label": "Layout",
     "controls-group-label": "Controls",
-    "controls-color-label": "Slider Controls Colour",
-    "full-width": "Enable full width",
-    "full-width-tooltip": "Full width is only available for top-level blocks. This option is disabled for nested blocks (e.g., inside MultiGrid)."
+    "controls-color-label": "Slider Controls Colour"
   }
 }
 </i18n>

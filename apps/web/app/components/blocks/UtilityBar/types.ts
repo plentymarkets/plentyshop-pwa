@@ -72,3 +72,8 @@ export type UtilityBarProps = {
 export type UtilityBarFormProps = {
   uuid?: string;
 };
+
+export interface UtilityBarComponentProps extends Partial<UtilityBarProps> {
+  enableActions?: boolean;
+  root?: boolean;
+}

@@ -3,6 +3,12 @@ import { PageObject } from './PageObject';
 import { paths } from '../../../app/utils/paths';
 
 export class CheckoutPageObject extends PageObject {
+  visit() {
+    cy.visit(paths.checkout);
+    cy.get('body.hydrated');
+    return this;
+  }
+
   get goToCheckoutButton() {
     return cy.getByTestId('checkout-button');
   }

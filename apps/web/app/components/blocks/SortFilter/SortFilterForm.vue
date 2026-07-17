@@ -1,14 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="sortFilterOpen"
+    :title="getEditorTranslation('display-and-order-label')"
     data-testid="open-sorting-and-filters-settings"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('display-and-order-label') }}</h2>
-    </template>
-
     <div data-testid="text-card-form">
       <div class="py-4">
         <draggable
@@ -23,7 +18,7 @@
             <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
               <div class="flex items-center gap-3">
                 <button
-                  class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                  class="drag-slides-handle top-2 left-2 z-raised cursor-grab p-2 hover:bg-gray-100 rounded-full"
                   :aria-label="getEditorTranslation('drag-reorder-aria')"
                   :data-testid="`actions-drag-slide-handle-${index}`"
                 >
@@ -81,19 +76,15 @@
         </label>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
   >
-    <template #summary>
-      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
-
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">

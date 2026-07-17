@@ -4,8 +4,8 @@
     class="relative flex border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
     data-testid="cart-product-card"
   >
-    <SfLink
-      class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4"
+    <UiLink
+      class="relative overflow-hidden rounded-md w-[100px] @sm:w-[176px] mr-4"
       :tag="NuxtLink"
       :to="localePath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
     >
@@ -29,18 +29,18 @@
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </div>
-    </SfLink>
+    </UiLink>
     <div class="flex flex-col min-w-[180px] flex-1">
-      <SfLink
+      <UiLink
         :tag="NuxtLink"
         :to="localePath(orderGetters.getOrderVariationPath(props.order, props.orderItem) ?? '/#')"
         variant="secondary"
-        class="no-underline typography-text-sm sm:typography-text-lg"
+        class="no-underline typography-text-sm @sm:typography-text-lg"
       >
         {{ orderGetters.getItemName(props.orderItem) }}
-      </SfLink>
+      </UiLink>
       <div v-if="!orderGetters.isBundleComponents(props.orderItem)" class="my-2">
-        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+        <ul class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(props.orderItem)" :key="index">
             <span v-if="orderGetters.getOrderItemAttributeName(attribute)" class="mr-1">
               {{ orderGetters.getOrderItemAttributeName(attribute) }}:
@@ -50,7 +50,7 @@
             </span>
           </li>
         </ul>
-        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+        <ul class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700">
           <li v-for="(property, index) in orderGetters.getItemOrderProperties(props.orderItem)" :key="index">
             <span class="mr-1 font-bold">
               <span>{{ orderGetters.getItemOrderPropertyName(property) }}</span>
@@ -75,7 +75,7 @@
       </div>
       <div v-if="orderGetters.isBundleComponents(props.orderItem)" class="my-2 mb-6">
         <ul v-for="(item, index) in props.orderItem.bundleComponents" :key="index">
-          <SfLink
+          <UiLink
             v-if="productBundleGetters.isItemBundleSalableAndActive(item)"
             :tag="NuxtLink"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
@@ -86,14 +86,14 @@
               {{ productBundleGetters.getBundleItemQuantity(item) }}x
               <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
             </p>
-          </SfLink>
+          </UiLink>
           <p v-else class="text-sm">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
             <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>
         </ul>
       </div>
-      <div class="items-start sm:items-center sm:mt-auto text-sm">
+      <div class="items-start @sm:items-center @sm:mt-auto text-sm">
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.price') }}:</p>
           <p v-if="showNetPrices" class="text-right">
@@ -123,12 +123,12 @@
 
 <script setup lang="ts">
 import { orderGetters, productBundleGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
 const { formatWithSymbol } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 const img = ref();
 const imageLoaded = ref(false);

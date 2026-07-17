@@ -1,6 +1,6 @@
 import type { RouteParams } from 'vue-router';
-import type { Breadcrumb, CategoryTreeItem, Product, ProductParams } from '@plentymarkets/shop-api';
-import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Breadcrumb, Product, ProductParams } from '@plentymarkets/shop-api';
+import { productGetters, breadcrumbGetters } from '@plentymarkets/shop-api';
 
 export const validateProductParams = (params: RouteParams): boolean => {
   const itemId = params.itemId as string;
@@ -33,7 +33,9 @@ export const updateProductURLPathForVariation = (
   itemId: string | number,
   variationId: string | number,
 ) => {
-  const pathSegments = currentPath.split('/');
+  const trailingSlash = currentPath.endsWith('/');
+  const normalizedPath = trailingSlash ? currentPath.slice(0, -1) : currentPath;
+  const pathSegments = normalizedPath.split('/');
   let lastSegment = pathSegments.pop();
   if (!lastSegment) return currentPath;
 
@@ -52,12 +54,12 @@ export const updateProductURLPathForVariation = (
   lastSegment = lastSegmentParts.join('_');
   pathSegments.push(lastSegment);
 
-  return pathSegments.join('/');
+  const result = pathSegments.join('/');
+  return trailingSlash ? result + '/' : result;
 };
 
-export const generateBreadcrumbs = (categoryTree: CategoryTreeItem[], product: Product, home: string): Breadcrumb[] => {
-  const categoryId = productGetters.getCategoryIds(product)?.[0] ?? 0;
-  const breadcrumbs = categoryTreeGetters.generateBreadcrumbFromCategory(categoryTree, Number(categoryId));
+export const generateBreadcrumbs = (product: Product, home: string): Breadcrumb[] => {
+  const breadcrumbs = breadcrumbGetters.mapFromCategoryBreadcrumbs(product.breadcrumbs ?? []);
   const productName = productGetters.getName(product);
 
   breadcrumbs.unshift({ name: home, link: '/' });
