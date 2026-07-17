@@ -60,10 +60,10 @@
             v-for="(entry, index) in filteredAvailableKeys"
             :key="entry.key"
             :ref="(element) => setOptionRef(element, index)"
-            :class="{
-              'bg-cyan-50 ring-1 ring-inset ring-cyan-300': index === selectedIndex,
-            }"
-            class="w-full px-5 py-3 border-b border-neutral-100 last:border-b-0 text-left hover:bg-neutral-50 focus:bg-neutral-50 focus:outline-none"
+            :class="[
+              'w-full px-5 py-3 border-b border-neutral-100 last:border-b-0 text-left hover:bg-neutral-50 focus:bg-neutral-50 focus:outline-none',
+              index === selectedIndex ? 'bg-cyan-50 ring-1 ring-inset ring-cyan-300' : '',
+            ]"
             type="button"
             @focus="selectedIndex = index"
             @click="insertKey(entry.key)"
