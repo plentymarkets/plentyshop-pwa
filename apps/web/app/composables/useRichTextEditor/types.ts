@@ -9,6 +9,7 @@ export type UseRichTextEditorArgs = {
   textAlign?: Ref<RteAlign | undefined>;
   placeholder?: Ref<string | undefined>;
   onOpenLinkModal?: () => void;
+  onOpenI18nModal?: () => void;
 };
 export type RteCommand =
   | 'toggleBold'
@@ -49,4 +50,13 @@ export interface PropertyPlaceholderToken {
   kind: PropertyPlaceholderKind;
   propertyId?: number;
   cast?: string;
+}
+
+export interface I18nPlaceholderOptions {
+  HTMLAttributes: Record<string, string>;
+}
+
+export interface I18nPlaceholderToken {
+  key: string;
+  label?: string;
 }

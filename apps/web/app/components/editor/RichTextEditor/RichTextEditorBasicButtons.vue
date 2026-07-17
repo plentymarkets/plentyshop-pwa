@@ -127,6 +127,13 @@
     @click="toggleLink"
   />
 
+  <EditorRichTextEditorMenuButton
+    :title="'Insert i18n key'"
+    data-testid="rte-i18n-button"
+    icon-name="translate"
+    @click="handleOpenI18nModal"
+  />
+
   <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
 
   <EditorColorPicker
@@ -165,6 +172,7 @@ const props = defineProps<{
   toggleLink: () => void;
   insertIcon: (name: string) => void;
   insertEmoji: (name: string) => void;
+  onOpenI18nModal?: () => void;
 }>();
 
 const isBlockTypeOpen = ref(false);
@@ -250,5 +258,11 @@ const selectBlockType = (value: string) => {
 const selectFontSize = (value: string) => {
   props.onTextSizeChange(value);
   isFontSizeOpen.value = false;
+};
+
+const handleOpenI18nModal = () => {
+  if (props.onOpenI18nModal) {
+    props.onOpenI18nModal();
+  }
 };
 </script>
