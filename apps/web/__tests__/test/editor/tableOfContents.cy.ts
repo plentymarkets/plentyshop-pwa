@@ -68,10 +68,10 @@ describe('Table of Contents & Double Drawer', () => {
     cy.get('[data-testid^="toc-item-"]').then(($items) => {
       const initialBlockCount = $items.length;
       toc.clickAddElement();
-      toc.checkPlaceholderAppears();
+      toc.checkAddBlockPopoverVisible();
       toc.selectBlockToAdd();
       toc.checkBlockAdded(initialBlockCount);
     });
-    toc.checkBothDrawersStillVisible();
+    toc.checkBothDrawersVisible();
   });
 });

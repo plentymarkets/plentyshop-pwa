@@ -1,22 +1,27 @@
 <template>
   <SfDrawer
     v-model="open"
-    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !absolute ml-[100%] w-[calc(50vw+18px)] lg:w-[calc(75vw-66px)] xl:w-[calc(80vw-66px)]"
-    :placement="placement"
+    class="bg-white border-0 shadow-[inset_0px_0px_20px_-20px_#111] category-drawer !fixed top-16 h-[calc(100vh-4rem)] flex flex-col overflow-hidden z-editor-toolbar [--toolbar-w:theme(spacing.toolbar)] [--panel-w:clamp(250px,25vw,300px)] left-[calc(var(--toolbar-w)+var(--panel-w))] w-[calc(100vw-var(--toolbar-w)-var(--panel-w))]"
+    :placement="'left'"
     :disable-click-away="true"
   >
-    <div class="px-4 py-5 border-b flex justify-between items-center">
+    <div class="px-4 py-5 border-b flex justify-between items-center flex-shrink-0">
       <h3 class="font-bold typography-headline-3 truncate overflow-hidden whitespace-nowrap max-w-[75%]">
         {{ getEditorTranslation('edit-translations') }}
       </h3>
-      <SfIconChevronLeft class="cursor-pointer flex-shrink-0 ml-2" @click="drawerOpen = false" />
+      <SfIconChevronLeft
+        data-testid="localization-drawer-close"
+        class="cursor-pointer flex-shrink-0 ml-2"
+        @click="drawerOpen = false"
+      />
     </div>
 
-    <div class="p-4">
-      <div class="flex items-center gap-4">
+    <div class="p-4 flex flex-col flex-1 min-h-0">
+      <div class="flex items-center gap-4 flex-shrink-0">
         <div class="flex-1">
           <SfInput
             v-model="searchTerm"
+            data-testid="localization-search"
             :aria-label="t('common.actions.search')"
             :placeholder="t('common.actions.search')"
             @input="debouncedSearchTerm"
@@ -28,31 +33,28 @@
         </div>
 
         <div class="flex items-center gap-2 flex-shrink-0">
-          <SfSwitch v-model="showMissingOnly" />
-          <label
-            class="text-sm whitespace-nowrap cursor-pointer select-none"
-            @click="showMissingOnly = !showMissingOnly"
-          >
+          <SfSwitch id="show-missing-switch" v-model="showMissingOnly" data-testid="localization-show-missing" />
+          <label for="show-missing-switch" class="text-sm whitespace-nowrap cursor-pointer select-none">
             {{ getEditorTranslation('show-missing-only') }}
           </label>
         </div>
         <EditorLocalizationEditorTranslationsImportExport />
       </div>
 
-      <div class="w-full h-[calc(100vh-230px)] mt-4 overflow-hidden border rounded-lg">
+      <div class="w-full flex-1 min-h-0 mt-4 overflow-hidden border rounded-lg">
         <div class="relative h-full flex flex-col">
-          <div class="flex border-b flex-shrink-0">
-            <div class="flex-shrink-0 flex z-20">
+          <div class="flex border-b flex-shrink-0 bg-neutral-100">
+            <div class="flex-shrink-0 flex z-editor-inline">
               <div class="w-48 px-4 py-3 font-semibold">{{ getEditorTranslation('category-key') }}</div>
               <div class="w-48 px-4 py-3 font-semibold border-r" />
             </div>
 
-            <div ref="headerScroll" class="overflow-x-auto scrollbar-thin pl-4 w-full flex">
+            <div ref="headerScroll" class="overflow-x-auto scrollbar-thin px-2 w-full flex gap-2">
               <div
                 v-for="lang in languages"
                 :key="lang"
-                class="w-64 px-4 py-3 mr-3 font-semibold flex-shrink-0 last:mr-0"
-                :class="{ 'min-w-64 !w-[calc(50%-12px)]': selectedLocales.length === 2 }"
+                class="w-64 px-4 py-3 font-semibold flex-shrink-0"
+                :class="{ 'min-w-64 !w-[calc(50%-4px)]': selectedLocales.length === 2 }"
               >
                 {{ lang }}
               </div>
@@ -62,12 +64,12 @@
           <div class="flex-1 flex overflow-hidden">
             <div
               v-if="emptyStateMessage"
-              class="w-full h-full flex justify-center text-black-500 font-medium text-lg pt-24"
+              class="w-full h-full flex justify-center text-neutral-500 font-medium text-lg pt-24"
             >
               {{ emptyStateMessage }}
             </div>
             <template v-else>
-              <div class="flex-shrink-0 z-10" style="width: 384px">
+              <div class="flex-shrink-0 z-dropdown border-r" style="width: 384px">
                 <div ref="leftScrollerRef" class="h-full overflow-y-auto scrollbar-thin" @scroll="syncScrollLeft">
                   <div :style="{ height: `${leftVirtualizer.getTotalSize()}px`, position: 'relative' }">
                     <div
@@ -82,8 +84,8 @@
                         transform: `translateY(${virtualRow.start}px)`,
                       }"
                     >
-                      <div class="flex h-12 text-xs border-r">
-                        <div class="w-96 overflow-x-scroll no-scrollbar flex items-center">
+                      <div class="flex h-12 text-xs">
+                        <div class="w-96 overflow-x-auto no-scrollbar flex items-center">
                           <div class="p-2 m-2 bg-neutral-100 rounded-lg text-gray-700 flex-shrink-0">
                             {{ getCategoryFromKey(virtualRow.item.key) }}
                           </div>
@@ -114,14 +116,14 @@
                         transform: `translateY(${virtualRow.start}px)`,
                       }"
                     >
-                      <div class="flex h-12">
+                      <div class="flex h-12 gap-2 px-2">
                         <EditorLocalizationTranslationInput
                           v-for="locale in selectedLocales"
                           :key="`${virtualRow.item.key}-${locale}`"
                           :row-key="virtualRow.item.key"
                           :lang="locale"
                           :translation="virtualRow.item.translations[locale]"
-                          @update="handleTranslationInput"
+                          @update="updateTranslationInput"
                           @revert="revertToDefault"
                         />
                       </div>
@@ -143,7 +145,6 @@ import type { LocalizationMessage } from '@plentymarkets/shop-core';
 import { useDebounceFn } from '@vueuse/core';
 import { useVirtualizer } from '@tanstack/vue-virtual';
 
-const placement = ref<'left' | 'right'>('left');
 const open = ref(true);
 const { allLanguages, selectedLocales } = useEditorLocalizationLocales();
 const { keys, filteredKeys, filterKeys, getCategoryFromKey, getKeyFromFullKey, drawerOpen, updateTranslationInput } =
@@ -166,10 +167,6 @@ const revertToDefault = (key: string, lang: string, data: LocalizationMessage) =
   updateTranslationInput(key, lang, data.default ?? '');
 };
 
-const handleTranslationInput = (key: string, lang: string, value: string) => {
-  updateTranslationInput(key, lang, value);
-};
-
 const debouncedSearchTerm = useDebounceFn(() => {
   filterKeys(searchTerm.value, selectedLocales.value, showMissingOnly.value);
 }, 300);
@@ -186,6 +183,7 @@ const leftVirtualizerOptions = computed(() => ({
   getScrollElement: () => leftScrollerRef.value,
   estimateSize: () => 48,
   overscan: 30,
+  paddingStart: 4,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -194,6 +192,7 @@ const rightVirtualizerOptions = computed(() => ({
   getScrollElement: () => rightScrollerRef.value,
   estimateSize: () => 48,
   overscan: 30,
+  paddingStart: 4,
   getItemKey: (index: number) => displayedKeys.value[index]?.key ?? index,
 }));
 
@@ -285,16 +284,16 @@ onBeforeUnmount(() => {
 /* Firefox */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  scrollbar-color: rgba(100, 116, 139, 0.7) transparent;
 }
 
 /* WebKit browsers */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 5px;
+  background-color: rgba(100, 116, 139, 0.7);
+  border-radius: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;

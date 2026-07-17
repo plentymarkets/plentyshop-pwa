@@ -2,6 +2,23 @@
 import { PageObject } from './PageObject';
 
 export class ProductDetailPageObject extends PageObject {
+  navigateFromCategory(waitForPayPal: boolean = true) {
+    cy.intercept('/plentysystems/getProduct').as('getProduct');
+    if (waitForPayPal) {
+      cy.intercept('/plentysystems/getPayPalSettings').as('getPayPalSettings');
+      cy.intercept('/plentysystems/doHandlePayPalFundingSources').as('doHandlePayPalFundingSources');
+    }
+
+    cy.getByTestId('product-card').first().click();
+    cy.wait('@getProduct');
+    cy.wait('@getBlocks');
+    if (waitForPayPal) {
+      cy.wait('@getPayPalSettings');
+      cy.wait('@doHandlePayPalFundingSources');
+    }
+    return this;
+  }
+
   get addToCartButton() {
     return cy.getByTestId('add-to-cart');
   }
@@ -128,10 +145,18 @@ export class ProductDetailPageObject extends PageObject {
         expect(review).to.have.nested.property('author.name').and.be.a('string');
       });
 
-      // Aggregate rating
-      expect(productData).to.have.nested.property('aggregateRating.@type', 'AggregateRating');
-      expect(productData).to.have.nested.property('aggregateRating.ratingValue').and.be.a('number');
-      expect(productData).to.have.nested.property('aggregateRating.reviewCount').and.be.a('number');
+      // Aggregate rating, present when reviewCount > 0
+      if (productData?.['aggregateRating']) {
+        expect(productData).to.have.nested.property('aggregateRating.@type', 'AggregateRating');
+        expect(productData)
+          .to.have.nested.property('aggregateRating.ratingValue')
+          .and.be.a('number')
+          .and.be.greaterThan(0);
+        expect(productData)
+          .to.have.nested.property('aggregateRating.reviewCount')
+          .and.be.a('number')
+          .and.be.greaterThan(0);
+      }
 
       // Offers
       expect(productData).to.have.nested.property('offers.@type', 'Offer');

@@ -1,18 +1,45 @@
 import type { Block } from '@plentymarkets/shop-api';
 
+export interface GridCell {
+  colIndex: number;
+  span: number;
+  hasContent: boolean;
+  blockName?: string;
+}
+
+export interface GridRow {
+  cells: GridCell[];
+  free: number;
+}
+
+export interface DragState {
+  colIndex: number;
+  startX: number;
+  startSpan: number;
+  unitW: number;
+}
+
 interface MultiGridLayout {
   marginTop?: number;
   marginBottom?: number;
   backgroundColor?: string;
   gap?: string;
+  fullWidth?: boolean;
+  reverseOnMobile?: boolean;
+  alignHeights?: boolean;
+}
+
+export interface MultiGridColumnConfig {
+  columnWidths: number[];
+  columnWidthsTablet?: number[];
+  columnWidthsMobile?: number[];
 }
 
 export type MultiGridProps = {
   name: string;
   type: string;
   content: Block[];
-  configuration: {
-    columnWidths: number[];
+  configuration: MultiGridColumnConfig & {
     layout?: MultiGridLayout;
     sticky?: number[];
   };
@@ -41,8 +68,7 @@ export type AlignableBlock = Block & {
 
 export type ColumnBlock = Block & {
   content?: Block[];
-  configuration: {
-    columnWidths: number[];
+  configuration: MultiGridColumnConfig & {
     sticky?: number[];
     layout?: {
       gap: string;
@@ -50,6 +76,17 @@ export type ColumnBlock = Block & {
       marginBottom?: number;
       backgroundColor?: string;
       fullWidth?: boolean;
+      reverseOnMobile?: boolean;
+      alignHeights?: boolean;
     };
   };
 };
+
+export type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
+
+export interface VisibleGridState {
+  filteredToOriginal: number[];
+  originalToFiltered: Record<number, number>;
+  columnWidths: number[];
+  blocks: Block[];
+}

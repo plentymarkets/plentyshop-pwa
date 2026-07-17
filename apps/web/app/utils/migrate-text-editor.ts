@@ -1,5 +1,5 @@
 import type { TextCardContent } from '@/components/blocks/TextCard/types';
-import type { TextContentProps } from '../components/TextContent/types';
+import type { TextContentProps } from '~/components/TextContent/types';
 
 const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
   if (!content.text) return false;
@@ -12,17 +12,6 @@ const hasOldStructure = (content: Partial<TextCardContent>): boolean => {
 const hasHtmlTags = (text: string): boolean => {
   if (!text) return false;
   return /<\/?[a-z][\s\S]*>/i.test(text);
-};
-
-const escapeHtml = (text: string): string => {
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;',
-  };
-  return text.replace(/[&<>"']/g, (m) => map[m] || m);
 };
 
 export const migrateTextCardContent = (
@@ -78,6 +67,7 @@ export const mapToTextContentProps = (mapping: {
   buttonLabel?: string;
   buttonLink?: string;
   buttonVariant?: 'primary' | 'secondary';
+  buttonAlignment?: 'left' | 'center' | 'right';
   index?: number;
 }): TextContentProps => {
   const {
@@ -90,6 +80,7 @@ export const mapToTextContentProps = (mapping: {
     buttonLabel,
     buttonLink,
     buttonVariant,
+    buttonAlignment,
     index,
   } = mapping;
 
@@ -107,6 +98,7 @@ export const mapToTextContentProps = (mapping: {
       label: buttonLabel,
       link: buttonLink,
       variant: buttonVariant,
+      alignment: buttonAlignment,
     },
   };
 };

@@ -8,7 +8,7 @@
   >
     <div class="flex items-center gap-2 min-w-0 flex-1">
       <slot name="arrow">
-        <div class="shrink-0 w-4" />
+        <div class="shrink-0 w-6" />
       </slot>
 
       <div class="shrink-0 w-5 h-5 relative">
@@ -51,6 +51,7 @@
 
     <div v-if="!isGlobalBlock(block)" class="flex items-center gap-1 shrink-0">
       <button
+        v-if="!isLastRemainingHeaderBlock"
         class="p-1 opacity-0 group-hover:opacity-100 rounded hover:bg-editor-icon-hover group-hover:text-black"
         :class="{ 'text-white': isSelected }"
         :data-testid="`toc-delete-${uuid}`"
@@ -89,12 +90,20 @@ import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { TableOfContentsItemContentProps } from './types';
+import type { Block } from '@plentymarkets/shop-api';
 
 const props = defineProps<TableOfContentsItemContentProps>();
 
-const { deleteBlock } = useBlockManager();
+const { deleteBlockHard } = useBlockManager();
 const { isBlockVisible, toggleBlockVisibility } = useBlocksVisibility();
 const { hoveredUuid } = useTableOfContents();
+const { headerContainer } = useBlocks();
+
+const isLastRemainingHeaderBlock = computed(() => {
+  const content = headerContainer.value?.content as Block[] | undefined;
+  if (!Array.isArray(content) || content.length > 1) return false;
+  return content.some((b: Block) => b.meta.uuid === props.uuid);
+});
 
 const isVisible = computed(() => isBlockVisible(props.block));
 const isHovered = computed(() => hoveredUuid.value === props.uuid);
@@ -104,7 +113,7 @@ const handleToggleVisibility = () => {
 };
 
 const handleDelete = () => {
-  deleteBlock(props.uuid);
+  deleteBlockHard(props.uuid);
 };
 </script>
 

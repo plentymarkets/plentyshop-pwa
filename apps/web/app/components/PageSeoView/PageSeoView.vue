@@ -1,20 +1,11 @@
 <template>
   <div v-if="!loading" class="sticky h-[calc(100vh-50px)] overflow-y-auto" data-testid="pages-seo-settings-drawer">
     <form data-testid="basic-settings-form" class="w-full shadow-[inset_0px_0px_20px_-20px_#111] absolute bg-white">
-      <UiAccordionItem
-        v-model="metaData"
-        data-testid="open-basic-settings"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Meta Data</h2>
-        </template>
-
+      <EditorFormPanel v-model="metaData" title="Meta Data" data-testid="open-basic-settings">
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Title</UiFormLabel>
-            <SfTooltip :label="titleTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="titleTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -33,7 +24,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Meta description</UiFormLabel>
-            <SfTooltip :label="descTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="descTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -56,7 +47,7 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Meta keywords</UiFormLabel>
-            <SfTooltip :label="keywordsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="keywordsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -70,21 +61,13 @@
             </SfInput>
           </label>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
-      <UiAccordionItem
-        v-model="robotsDropdown"
-        data-testid="open-basic-settings"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Robot settings</h2>
-        </template>
+      <EditorFormPanel v-model="robotsDropdown" title="Robot settings" data-testid="open-basic-settings">
         <div class="py-2">
           <div class="flex justify-between">
             <UiFormLabel class="mb-1">Robots </UiFormLabel>
-            <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="robotsTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -102,21 +85,13 @@
             deselect-label="Selected"
           />
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
 
-      <UiAccordionItem
-        v-model="furtherSettings"
-        data-testid="open-basic-settings"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Further settings</h2>
-        </template>
+      <EditorFormPanel v-model="furtherSettings" title="Further settings" data-testid="open-basic-settings">
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Canonical URL</UiFormLabel>
-            <SfTooltip :label="canonicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+            <SfTooltip :label="canonicalTooltip" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
           </div>
@@ -140,7 +115,7 @@
             />
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
     </form>
   </div>
 

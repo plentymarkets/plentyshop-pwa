@@ -40,7 +40,7 @@
           <UiFormLabel class="m-0">
             {{ getEditorTranslation('placement') }}
           </UiFormLabel>
-          <SfTooltip class="z-50" :label="getEditorTranslation('tooltip-text')" placement="right">
+          <SfTooltip class="z-dropdown" :label="getEditorTranslation('tooltip-text')" placement="right">
             <span class="flex items-center">
               <SfIconInfo size="sm" />
             </span>

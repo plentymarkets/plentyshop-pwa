@@ -6,12 +6,12 @@
       data-testid="product-legal-details-drawer"
       :placement="placement"
       :class="[
-        'lg:w-128',
+        '@lg:w-128',
         'bg-neutral-50',
         'border',
         'border-gray-300',
-        'z-50',
-        { 'lg:min-w-[400px]': placement === 'left' || placement === 'right' },
+        'z-dropdown',
+        { '@lg:min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">

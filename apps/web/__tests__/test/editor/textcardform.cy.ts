@@ -3,8 +3,15 @@ import { paths } from '../../../app/utils/paths';
 
 describe('Text Card Block Form', () => {
   const openSettingsForTextCardBlock = () => {
-    cy.get('[data-testid="TextCard-open-editor-button"]').should('have.length.at.least', 2);
-    cy.get('[data-testid="TextCard-open-editor-button"]').first().should('exist').click({ force: true });
+    cy.get('[data-testid="multi-grid-structure"]')
+      .first()
+      .parents('[data-testid*="block-wrapper"]')
+      .first()
+      .find('[data-testid="MultiGrid-open-editor-button"]')
+      .first()
+      .should('exist')
+      .click({ force: true });
+    cy.get('[data-testid="actions-edit-item-1"]').should('exist').click({ force: true });
     cy.wait(1000);
   };
 
@@ -31,11 +38,11 @@ describe('Text Card Block Form', () => {
       .click()
       .type('{selectall}');
 
-    cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
+    cy.get('[data-testid="rte-font-color"]').find('button').first().scrollIntoView().click({ force: true });
 
     cy.get('#HEX').clear().type('#790C0C{enter}', { delay: 0 });
 
-    cy.get('[data-testid="rte-font-color"]').filter(':visible').first().click();
+    cy.get('[data-testid="rte-font-color"]').find('button').first().scrollIntoView().click({ force: true });
 
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
@@ -50,21 +57,21 @@ describe('Text Card Block Form', () => {
       .click()
       .type('{selectall}');
 
-    cy.get('[data-testid="rte-align-center"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-center"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
       .find('p')
       .first()
       .should('have.css', 'text-align', 'center');
 
-    cy.get('[data-testid="rte-align-right"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-right"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
       .find('p')
       .first()
       .should('have.css', 'text-align', 'right');
 
-    cy.get('[data-testid="rte-align-left"]').filter(':visible').click();
+    cy.get('[data-testid="rte-align-left"]').first().scrollIntoView().click({ force: true });
     cy.get('[data-testid^="text-html"]')
       .filter(':contains("Edited HTML Description")')
       .find('p')
@@ -87,9 +94,9 @@ describe('Text Card Block Form', () => {
   };
 
   const changeButtonVariants = () => {
-    cy.get('[data-testid="button-outline-secondary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-secondary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:text-primary-900');
-    cy.get('[data-testid="button-outline-primary"]').should('exist').click();
+    cy.get('[data-testid="button-variant-primary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
   };
 

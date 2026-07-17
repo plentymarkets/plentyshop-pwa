@@ -112,7 +112,7 @@ const {
 } = useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
-  const footerIndex = pageBlocks.value.findIndex((block: Block) => isFooterBlock(block));
+  const footerIndex = pageBlocks.value.findIndex((block: Block) => isFooterContainerBlock(block));
   const lastIndex = pageBlocks.value.length - 1;
   if (footerIndex !== -1 && footerIndex !== lastIndex) {
     const footerBlock = pageBlocks.value.splice(footerIndex, 1)[0];
@@ -138,7 +138,7 @@ const {
   siteConfigurationDrawerView: siteConfigurationDrawerViewRef,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const { shouldShowBlock, clearRegistry } = useBlocksVisibility();
+const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const drawerOpen = computed<boolean>(() => siteConfigurationDrawerOpenRef.value);
 const drawerView = computed<string | null>(() => siteConfigurationDrawerViewRef.value);
@@ -150,6 +150,10 @@ const enabledActions = computed(
 useEditorUnsavedChangesGuard({
   enabled: !props.readOnly,
   onConfirmLeave: () => closeSiteConfigurationDrawer(),
+});
+
+onMounted(() => {
+  isHydrationComplete.value = true;
 });
 
 onBeforeUnmount(() => {

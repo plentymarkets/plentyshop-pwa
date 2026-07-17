@@ -1,10 +1,5 @@
 import type { Block } from '@plentymarkets/shop-api';
-
-export type BlockLayoutResolvedRule = {
-  container: boolean;
-  padding: boolean;
-  defaultFullWidth: boolean;
-};
+import type { BlockLayoutResolvedRule } from './types';
 
 /**
  * Computes CSS classes for a Plenty block using resolved layout rules and a horizontal spacing key.
@@ -26,7 +21,7 @@ export const buildBlockClasses = (
   const depth = getBlockDepth(block.meta.uuid);
   // depth === -1 means the block wasn't found in the page tree (e.g. global blocks like Header
   // that live outside the page block hierarchy). Treat these the same as root-level blocks.
-  const isRootNonFooter = (depth === 0 || depth === -1) && block.name !== 'Footer';
+  const isRootNonFooter = (depth === 0 || depth === -1) && block.name !== 'Footer' && !isFooterContainerBlock(block);
 
   const horizontalClass = getHorizontalClass(!fullWidth && !isContainerExcluded ? horizontalSpacing : undefined);
   const verticalClass = getVerticalClass(verticalSpacing);
@@ -36,6 +31,6 @@ export const buildBlockClasses = (
     [horizontalClass]: !fullWidth && !isContainerExcluded,
     [verticalClass]: shouldApplyVerticalSpacing,
     'mx-auto': !isContainerExcluded,
-    'p-4 md:px-6 lg:px-10': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
+    'p-4': !isPaddingExcluded && !fullWidth && !isContainerExcluded,
   };
 };

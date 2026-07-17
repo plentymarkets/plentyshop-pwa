@@ -1,12 +1,12 @@
 <template>
-  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
   <h2
-    class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+    class="hidden @md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
     data-testid="account-orders-heading"
   >
     {{ t('account.accountSettings.section.personalData') }}
   </h2>
-  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
   <AccountData
     class="col-span-3"
     :header="t('account.accountSettings.personalData.yourName')"
@@ -16,7 +16,7 @@
   >
     {{ user?.firstName }} {{ user?.lastName }}
   </AccountData>
-  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
   <AccountData
     class="col-span-3"
     :header="t('account.accountSettings.personalData.contactInformation')"
@@ -26,7 +26,7 @@
   >
     {{ user?.email }}
   </AccountData>
-  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
   <AccountData
     class="col-span-3"
     :header="t('account.accountSettings.personalData.yourPassword')"
@@ -37,13 +37,13 @@
   >
     ******
   </AccountData>
-  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto @md:mx-0" />
   <UiModal
     ref="modalElement"
     v-model="isOpen"
     tag="section"
     role="dialog"
-    class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+    class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
     aria-labelledby="address-modal-title"
   >
     <header>
@@ -57,7 +57,7 @@
       >
         <SfIconClose />
       </UiButton>
-      <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
+      <h3 id="address-modal-title" class="text-neutral-900 text-lg @md:text-2xl font-bold mb-6">
         {{ t(`account.accountSettings.personalData.${openedForm}`) }}
       </h3>
     </header>

@@ -12,11 +12,11 @@
       :model-value="true"
       :disable-click-away="true"
       :disable-esc="true"
-      class="w-full rounded shadow-none md:translate-x-0 z-[100] md:z-0 md:static md:!block -translate-x-full shrink-0 bg-white overflow-y-auto"
+      class="w-full rounded shadow-none @md:translate-x-0 z-editor-toolbar @md:z-base @md:static @md:!block -translate-x-full shrink-0 bg-white overflow-y-auto"
       data-testid="category-sidebar"
     >
-      <div class="grid grid-rows-category-sidebar md:h-full md:block">
-        <div class="p-4 flex justify-between items-center md:hidden">
+      <div class="grid grid-rows-category-sidebar @md:h-full @md:block">
+        <div class="p-4 flex justify-between items-center @md:hidden">
           <span class="font-bold text-lg">{{ t('common.labels.listSettings') }}</span>
           <UiButton variant="tertiary" :aria-label="t('common.navigation.closeListSettings')" @click="$emit('close')">
             <template #prefix>
@@ -24,9 +24,9 @@
             </template>
           </UiButton>
         </div>
-        <slot class="overflow-y-auto md:overflow-y-visible py-4 md:p-0" />
-        <div class="p-4 md:mt-2 flex flex-wrap justify-between border-t border-t-neutral-200 md:border-0 gap-3">
-          <UiButton class="md:hidden whitespace-nowrap flex flex-1" variant="primary" @click="$emit('close')">
+        <slot class="overflow-y-auto @md:overflow-y-visible py-4 @md:p-0" />
+        <div class="p-4 @md:mt-2 flex flex-wrap justify-between border-t border-t-neutral-200 @md:border-0 gap-3">
+          <UiButton class="@md:hidden whitespace-nowrap flex flex-1" variant="primary" @click="$emit('close')">
             {{ t('common.actions.showProducts') }}
           </UiButton>
         </div>

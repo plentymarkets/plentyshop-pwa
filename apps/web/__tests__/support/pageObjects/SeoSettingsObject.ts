@@ -43,6 +43,11 @@ export class SeoSettingsObject extends PageObject {
     return this;
   }
 
+  selectSearchEnginesSubcategory() {
+    this.searchEnginesSubcategory.should('be.visible').click();
+    return this;
+  }
+
   goBackSection() {
     this.backButton.should('be.visible').click();
     return this;
@@ -70,6 +75,10 @@ export class SeoSettingsObject extends PageObject {
 
   get siteSettingsItemUrlHandling() {
     return cy.getByTestId('site-settings-category-item-URL-handling');
+  }
+
+  get searchEnginesSubcategory() {
+    return cy.getByTestId('site-settings-category-search-engines');
   }
 
   get backButton() {

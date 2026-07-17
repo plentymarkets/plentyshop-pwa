@@ -63,15 +63,17 @@ import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CardFieldsOnApproveData } from '@paypal/paypal-js';
 import { usePayPal } from '../composables/usePayPal';
+import type { PayPalCreditPropsType } from '../types';
 
 const { data: cart, clearCartItems } = useCart();
 const { send } = useNotification();
 const { getScript, createTransaction, captureOrder, createPlentyPaymentFromPayPalOrder, createPlentyOrder } =
   usePayPal();
 const loading = ref(false);
-const emit = defineEmits(['confirmPayment', 'confirmCancel']);
-const localePath = useLocalePath();
-const { processingOrder } = useProcessingOrder();
+const emit = defineEmits(['confirmPayment', 'confirmCancel', 'on-payed']);
+const localePath = useLocalizedPath();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
+const props = defineProps<PayPalCreditPropsType>();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
 const { emit: emitPlentyEvent } = usePlentyEvent();
@@ -86,29 +88,37 @@ onMounted(() => {
     const cardFields = paypal.CardFields({
       async createOrder() {
         loading.value = true;
-        if (!(await useCartStockReservation().reserve())) {
-          loading.value = false;
-          return '';
-        }
         const data = await createTransaction({
-          type: 'basket',
+          type: props.order ? 'order' : 'basket',
+          plentyOrderId: props?.order?.order?.id,
         });
+
+        if (!props.order) {
+          if (!(await useCartStockReservation().reserve())) {
+            loading.value = false;
+            return '';
+          }
+        }
+
         return data?.id ?? '';
       },
       async onApprove(data: CardFieldsOnApproveData) {
-        const order = await createPlentyOrder();
+        const order = props.order ?? (await createPlentyOrder());
         if (order?.order?.id) {
           await captureOrder(data.orderID);
           await createPlentyPaymentFromPayPalOrder(data.orderID, order.order.id);
 
-          emitPlentyEvent('module:clearCart', null);
-          processingOrder.value = true;
-          clearCartItems();
-
-          emitPlentyEvent('frontend:orderCreated', order);
-          navigateTo(
-            localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
-          );
+          if (!props.order) {
+            emitPlentyEvent('module:clearCart', null);
+            processingOrder.value = true;
+            clearCartItems();
+            emitPlentyEvent('frontend:orderCreated', order);
+            navigateTo(
+              localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
+            );
+          } else {
+            emit('on-payed');
+          }
         }
         loading.value = false;
       },
