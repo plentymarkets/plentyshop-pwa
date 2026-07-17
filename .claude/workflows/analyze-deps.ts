@@ -72,8 +72,14 @@ const FINAL_REPORT_SCHEMA = {
   },
 };
 
-const prUrl = args;
-if (!prUrl || !prUrl.includes('github.com')) {
+const prUrl = String(args ?? '').trim();
+let parsedUrl;
+try {
+  parsedUrl = new URL(prUrl);
+} catch {
+  throw new Error('Invalid PR URL. Pass a valid GitHub PR URL as args, e.g.: https://github.com/owner/repo/pull/123');
+}
+if (parsedUrl.hostname !== 'github.com' || !/^\/[^/]+\/[^/]+\/pull\/\d+/.test(parsedUrl.pathname)) {
   throw new Error('Invalid PR URL. Pass a valid GitHub PR URL as args, e.g.: https://github.com/owner/repo/pull/123');
 }
 
