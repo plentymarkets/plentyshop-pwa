@@ -4,7 +4,7 @@
       <h1
         v-if="key === 'name' && texts.name"
         id="category-headline"
-        class="font-bold typography-headline-3 md:typography-headline-2"
+        class="font-bold typography-headline-3 @md:typography-headline-2"
         data-testid="category-name"
       >
         {{ texts.name }}

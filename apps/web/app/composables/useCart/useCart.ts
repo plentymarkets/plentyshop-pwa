@@ -130,6 +130,7 @@ export const useCart = () => {
           cart: state.value.data,
           addItemParams: params,
         });
+        useLogEvent().logAddItemToBasket();
       }
 
       return !!data;
@@ -180,6 +181,7 @@ export const useCart = () => {
             cart: state.value.data,
             addItemParams: param,
           });
+          useLogEvent().logAddItemToBasket();
         }
       });
 

@@ -2,29 +2,25 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useBlocks } from '../useBlocks';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
-import type { FooterContent } from '~/components/blocks/Footer/types';
 import { createProduct } from '~/utils/blockTemplates/product/factory';
 import { createCategory } from '~/utils/blockTemplates/category/factory';
 
 const mockFooterBlock: Block = {
-  name: 'Footer',
-  type: 'content',
+  name: 'FooterContainer',
+  type: 'structure',
   meta: { uuid: 'footer-uuid', isGlobalTemplate: true },
-  content: {
-    column1: { title: 'Legal' },
-    column2: { title: 'Services', description: 'Get in touch', showContactLink: true, showRegisterLink: false },
-    column3: { title: 'About', description: 'Learn more' },
-    column4: { title: 'Help', description: 'Support' },
-    footnote: '© Test Company 2024',
-    footnoteAlign: 'center',
-    colors: {
-      background: '#ffffff',
-      text: '#000000',
-      footnoteBackground: '#f5f5f5',
-      footnoteText: '#666666',
+  content: [
+    {
+      name: 'MultiGrid',
+      type: 'structure',
+      meta: { uuid: 'multigrid-uuid' },
+      content: [],
+      configuration: { columnWidths: [3, 3, 3, 3] },
     },
-  } as FooterContent,
-};
+    { name: 'TextCard', type: 'content', meta: { uuid: 'footnote-uuid' }, content: {} },
+  ],
+  configuration: { visible: true, colors: { background: '#cfe4ec', text: '#1c1c1c' } },
+} as unknown as Block;
 
 const mockHeaderContainerBlock: Block = {
   name: 'HeaderContainer',
@@ -75,12 +71,17 @@ const { useEditor } = vi.hoisted(() => ({
   }),
 }));
 
+const { clearNuxtData } = vi.hoisted(() => ({
+  clearNuxtData: vi.fn(),
+}));
+
 mockNuxtImport('useSdk', () => useSdk);
 mockNuxtImport('useAsyncData', () => useAsyncData);
 mockNuxtImport('useState', () => useState);
 mockNuxtImport('useNuxtApp', () => useNuxtApp);
 mockNuxtImport('useHandleError', () => useHandleError);
 mockNuxtImport('useEditor', () => useEditor);
+mockNuxtImport('clearNuxtData', () => clearNuxtData);
 
 const createMockState = () => ({
   value: {
@@ -89,6 +90,7 @@ const createMockState = () => ({
     defaultTemplateData: [] as Block[],
     loading: false,
     isSettling: false,
+    hasSnapshot: false,
   },
 });
 
@@ -97,6 +99,15 @@ const setupApiResponse = (responseData: unknown) =>
     fetcher();
     return {
       data: { value: { data: responseData } },
+      error: { value: null },
+    };
+  });
+
+const setupApiResponseWithMeta = (responseData: unknown, meta: Record<string, unknown>) =>
+  useAsyncData.mockImplementation((_key: string, fetcher: () => unknown) => {
+    fetcher();
+    return {
+      data: { value: { data: responseData, meta } },
       error: { value: null },
     };
   });
@@ -192,6 +203,16 @@ describe('useBlocks', () => {
       await useBlocks().fetchBlocks('index', 'immutable');
       expect(mockStateRef.value.loading).toBe(false);
     });
+
+    it('should not apply default blocks when meta.hasSnapshot is true and blocks array is empty', async () => {
+      setupApiResponseWithMeta(
+        { HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock },
+        { hasSnapshot: true },
+      );
+      await useBlocks().fetchBlocks('index', 'immutable');
+      expect(mockStateRef.value.hasSnapshot).toBe(true);
+      expect(mockStateRef.value.data.blocks).toHaveLength(0);
+    });
   });
 
   describe('saveBlocks', () => {
@@ -237,6 +258,15 @@ describe('useBlocks', () => {
       expect(mockStateRef.value.loading).toBe(false);
       consoleSpy.mockRestore();
     });
+
+    it('should not apply default blocks when saving results in an empty blocks array', async () => {
+      mockDoSaveBlocksWithGlobalBlocks.mockResolvedValue({
+        data: { HeaderContainer: mockHeaderContainerBlock, blocks: [], Footer: mockFooterBlock },
+      });
+      await useBlocks().saveBlocks('index', 'immutable', '[]');
+      expect(mockStateRef.value.hasSnapshot).toBe(true);
+      expect(mockStateRef.value.data.blocks).toHaveLength(0);
+    });
   });
 
   describe('updateBlocks', () => {
@@ -248,7 +278,7 @@ describe('useBlocks', () => {
         Footer: undefined,
       } as unknown as GetBlocksResponse;
       useBlocks().updateBlocks(newBlocks);
-      expect(mockStateRef.value.data.blocks).toBe(newBlocks);
+      expect(mockStateRef.value.data.blocks).toEqual(newBlocks);
     });
   });
 

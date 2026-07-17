@@ -5,15 +5,18 @@
     :back-label-mobile="t('common.actions.back')"
     :heading="t('cart.myCart')"
   >
-    <div v-if="!cartIsEmpty" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
-      <div class="col-span-7 mb-2 md:mb-0">
+    <div v-if="!cartIsEmpty" class="@md:grid @md:grid-cols-12 @md:gap-x-6" data-testid="cart-page-content">
+      <div class="col-span-7 mb-2 @md:mb-0">
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
         <Coupon v-if="viewport.isLessThan('lg')" class="mb-2" />
       </div>
-      <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+      <div
+        class="relative col-span-5 @md:sticky @md:top-10 h-fit"
+        :class="{ 'pointer-events-none opacity-50': loading }"
+      >
+        <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-loader" size="2xl" />
         <OrderSummary :cart="cart">
           <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />
           <UiButton
@@ -21,7 +24,7 @@
             :tag="NuxtLink"
             :to="goToCheckout()"
             size="lg"
-            class="w-full mb-4 md:mb-0"
+            class="w-full mb-4 @md:mb-0"
           >
             {{ t('common.actions.goToCheckout') }}
           </UiButton>
@@ -58,7 +61,7 @@ definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');
 const viewport = useViewport();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { isAuthorized } = useCustomer();
 const { data: cart, cartIsEmpty, loading } = useCart();
 const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));

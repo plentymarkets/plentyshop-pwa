@@ -12,7 +12,7 @@
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="!isGlobalBlock(block)" class="flex items-center space-x-2">
-          <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
+          <button data-testid="delete-form-block-button" @click="deleteBlock(customUuid ?? blockUuid)">
             <SfIconDelete />
           </button>
           <div class="w-px h-4 bg-gray-300" />
@@ -22,6 +22,9 @@
         </button>
       </div>
     </header>
+
+    <BlockEditBreadcrumbs />
+
     <div class="h-[80vh] overflow-y-auto">
       <component
         :is="currentComponent"
@@ -29,7 +32,7 @@
         :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
         :uuid="blockUuid"
-        @vue:mounted="handleBackClick"
+        @vue:mounted="resetEditState"
       />
     </div>
   </div>
@@ -54,18 +57,32 @@ watch(
 );
 const { deleteBlock } = useBlockManager();
 
-const { editTitle: customTitle, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
-onBeforeUnmount(() => clearCustomTitle());
+const { editTitle: customTitle, editUuid: customUuid, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
+const { popEdit, clearStack, clearPendingEditChain, consumePendingEditChain } = useBlockEditStack();
+
+onBeforeUnmount(() => {
+  clearStack();
+  clearPendingEditChain();
+  clearCustomTitle();
+});
+
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
 const handleBackClick = () => {
+  if (popEdit()) {
+    return;
+  }
+
   if (childComponentRef.value?.exitEditMode) {
-    const fullyExited = childComponentRef.value.exitEditMode(false);
-    if (fullyExited !== false) {
-      clearCustomTitle();
-    }
+    childComponentRef.value.exitEditMode(true);
   } else {
     clearCustomTitle();
   }
+};
+
+const resetEditState = () => {
+  clearStack();
+  clearCustomTitle();
+  consumePendingEditChain();
 };
 
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();

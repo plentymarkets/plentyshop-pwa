@@ -1,6 +1,6 @@
 <template>
   <div :style="headerPaletteStyle">
-    <header class="relative w-full md:sticky md:shadow-md z-10">
+    <header class="relative w-full @md:sticky @md:shadow-md">
       <div
         v-if="viewport.isLessThan('md')"
         class="flex items-center w-full"
@@ -30,7 +30,7 @@
         </div>
         <div class="flex items-center gap-2">
           <UiButton
-            v-if="localeCodes.length > 1"
+            v-if="isActionVisible('language')"
             variant="tertiary"
             class="relative hover:!bg-header-400 active:!bg-header-400 rounded-md"
             square
@@ -73,7 +73,7 @@
           <SfIconMenu aria-hidden="true" />
         </UiButton>
 
-        <div v-if="isSectionVisible('logo')" class="flex items-center" :style="getSectionColumnStyle('logo')">
+        <div v-if="isSectionVisible('logo')" class="flex items-center justify-center" :style="slotStyle('logo')">
           <NuxtLink
             id="blockified-logo"
             data-testid="logo-link"
@@ -85,56 +85,56 @@
           </NuxtLink>
         </div>
 
-        <template v-if="isSectionVisible('search')">
-          <div
-            ref="iconSearchContainerRef"
-            :style="getSectionColumnStyle('search')"
-            :class="isFullSearchMode || isIconSearchExpanded || isSearchClosing ? '' : 'flex-none w-10 shrink-0'"
-          >
-            <template v-if="isFullSearchMode">
-              <UiSearch />
-            </template>
+        <div
+          v-if="isSectionVisible('search')"
+          ref="iconSearchContainerRef"
+          class="flex items-center justify-center min-w-0"
+          :style="slotStyle('search')"
+        >
+          <template v-if="isFullSearchMode">
+            <UiSearch class="w-full" />
+          </template>
 
-            <template v-else>
-              <div class="relative">
-                <Transition
-                  mode="out-in"
-                  enter-active-class="transition-opacity duration-120 ease-out"
-                  enter-from-class="opacity-0"
-                  enter-to-class="opacity-100"
-                  leave-active-class="transition-opacity duration-120 ease-out absolute inset-0"
-                  leave-from-class="opacity-100"
-                  leave-to-class="opacity-0"
-                  @after-leave="handleSearchAfterLeave"
-                >
-                  <UiSearch
-                    v-if="isIconSearchExpanded"
-                    class="w-[100%]"
-                    :style="{ transformOrigin: searchExpandOrigin }"
-                    :close="collapseIconSearch"
-                  />
-                </Transition>
-                <UiButton
-                  v-if="showSearchIcon && !isIconSearchExpanded"
-                  variant="tertiary"
-                  square
-                  class="hover:!bg-header-400 rounded-md"
-                  :style="{ color: iconColor }"
-                  :aria-label="t('common.actions.search')"
-                  @click="expandIconSearch"
-                >
-                  <SfIconSearch />
-                </UiButton>
-              </div>
-            </template>
-          </div>
-        </template>
+          <template v-else>
+            <div class="relative">
+              <Transition
+                mode="out-in"
+                enter-active-class="transition-opacity duration-120 ease-out"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition-opacity duration-120 ease-out absolute inset-0"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+                @after-leave="handleSearchAfterLeave"
+              >
+                <UiSearch
+                  v-if="isIconSearchExpanded"
+                  class="w-full"
+                  style="transform-origin: center center"
+                  :close="collapseIconSearch"
+                />
+              </Transition>
+              <UiButton
+                v-if="showSearchIcon && !isIconSearchExpanded"
+                variant="tertiary"
+                square
+                class="hover:!bg-header-400 rounded-md"
+                :style="{ color: iconColor }"
+                :aria-label="t('common.actions.search')"
+                @click="expandIconSearch"
+              >
+                <SfIconSearch />
+              </UiButton>
+            </div>
+          </template>
+        </div>
+
         <nav
           v-if="isSectionVisible('actions')"
-          :style="getSectionColumnStyle('actions')"
-          class="flex flex-row flex-nowrap"
+          class="flex flex-row flex-nowrap items-center justify-center"
+          :style="slotStyle('actions')"
         >
-          <template v-if="localeCodes.length > 1 && isActionVisible('language')">
+          <template v-if="isActionVisible('language')">
             <UiButton
               v-if="!isLanguageSelectOpen"
               class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
@@ -217,55 +217,63 @@
               />
             </template>
           </UiButton>
-          <SfDropdown
+          <div
             v-if="isAuthorized && isActionVisible('account')"
-            v-model="isAccountDropdownOpen"
-            placement="bottom-end"
-            class="z-50"
+            ref="accountDropdownTriggerRef"
             :style="{ order: getActionOrder('account') }"
           >
-            <template #trigger>
-              <UiButton
-                variant="tertiary"
-                class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
-                :style="{ color: iconColor, order: getActionOrder('account') }"
-                :class="{ 'bg-primary-700': isAccountDropdownOpen }"
-                data-testid="account-dropdown-button"
-                @click="accountDropdownToggle()"
+            <UiButton
+              variant="tertiary"
+              class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
+              :style="{ color: iconColor, order: getActionOrder('account') }"
+              :class="{ 'bg-primary-700': isAccountDropdownOpen }"
+              data-testid="account-dropdown-button"
+              @click="accountDropdownToggle()"
+            >
+              <template #prefix>
+                <SfIconPerson />
+              </template>
+              {{ user?.firstName }}
+            </UiButton>
+          </div>
+          <Teleport to="body">
+            <div
+              v-if="isAccountDropdownOpen"
+              ref="accountDropdownRef"
+              class="z-dropdown"
+              :style="accountDropdownFloatingStyles"
+            >
+              <ul
+                class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2 [&_a]:no-underline [&_a]:text-neutral-900"
               >
-                <template #prefix>
-                  <SfIconPerson />
-                </template>
-                {{ user?.firstName }}
-              </UiButton>
-            </template>
-            <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
-              <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
-                <template v-if="label === t('account.logout')">
-                  <UiDivider class="my-2" />
+                <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
+                  <template v-if="label === t('account.logout')">
+                    <UiDivider class="my-2" />
+                    <SfListItem
+                      tag="button"
+                      class="text-left"
+                      data-testid="account-dropdown-logout-item"
+                      @click="logOut()"
+                    >
+                      {{ label }}
+                    </SfListItem>
+                  </template>
                   <SfListItem
-                    tag="button"
-                    class="text-left"
-                    data-testid="account-dropdown-logout-item"
-                    @click="logOut()"
+                    v-else
+                    :tag="NuxtLink"
+                    :to="link"
+                    :class="{ 'bg-neutral-200': route.path === link }"
+                    data-testid="account-dropdown-list-item"
+                    @click="closeAccountDropdown()"
                   >
                     {{ label }}
                   </SfListItem>
-                </template>
-                <SfListItem
-                  v-else
-                  :tag="NuxtLink"
-                  :to="link"
-                  :class="{ 'bg-neutral-200': route.path === link }"
-                  data-testid="account-dropdown-list-item"
-                >
-                  {{ label }}
-                </SfListItem>
-              </li>
-            </ul>
-          </SfDropdown>
+                </li>
+              </ul>
+            </div>
+          </Teleport>
           <UiButton
-            v-else-if="!isAuthorized && isActionVisible('account')"
+            v-if="!isAuthorized && isActionVisible('account')"
             :style="{ color: iconColor, order: getActionOrder('account') }"
             class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
@@ -290,7 +298,7 @@
       v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+      class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
     >
       <header>
         <UiButton
@@ -316,7 +324,7 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-50"
+        class="w-full h-full z-modal"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
@@ -344,7 +352,6 @@
 <script setup lang="ts">
 import {
   SfBadge,
-  SfDropdown,
   SfIconClose,
   SfIconLanguage,
   SfIconMenu,
@@ -356,17 +363,13 @@ import {
   SfIconFavorite,
   useDisclosure,
 } from '@storefront-ui/vue';
+import { useFloating, flip, offset, shift } from '@floating-ui/vue';
 import { onClickOutside } from '@vueuse/core';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 
-import type { UtilityBarProps } from './types';
+import type { UtilityBarComponentProps } from './types';
 
-interface Props extends Partial<UtilityBarProps> {
-  enableActions?: boolean;
-  root?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<UtilityBarComponentProps>(), {
   enableActions: false,
   root: true,
 });
@@ -376,7 +379,6 @@ const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
 const { open: openMegaMenu } = useMegaMenu();
-const { data: categoryTree, getCategoryTree } = useCategoryTree();
 
 const {
   content,
@@ -394,10 +396,16 @@ const headerBackgroundColor = computed(() => content.value?.color?.backgroundCol
 const headerPaletteStyle = useGenerateTailwindPalette('header', headerBackgroundColor);
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
 const route = useRoute();
-const localePath = useLocalePath();
-const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
+const localePath = useLocalizedPath();
+const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle, close: closeAccountDropdown } = useDisclosure();
+const accountDropdownTriggerRef = ref<HTMLElement | null>(null);
+const accountDropdownRef = ref<HTMLElement | null>(null);
+const { floatingStyles: accountDropdownFloatingStyles } = useFloating(accountDropdownTriggerRef, accountDropdownRef, {
+  placement: 'bottom-end',
+  middleware: [offset(4), flip(), shift()],
+});
+onClickOutside(accountDropdownRef, () => closeAccountDropdown(), { ignore: [accountDropdownTriggerRef] });
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
@@ -409,10 +417,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) {
-    await getCategoryTree();
-  }
-
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 
@@ -421,40 +425,21 @@ const showSearchIcon = ref(true);
 const isSearchClosing = ref(false);
 const iconSearchContainerRef = ref<HTMLElement | null>(null);
 
-const visibleSectionsCount = computed(() => sections.value.filter((section) => section.visible).length);
-
-const SECTION_GAP = '16px';
-
-const getSectionColumnStyle = (sectionId: string) => {
+const slotStyle = (sectionId: string) => {
   const order = getSectionFlexOrder(sectionId);
-  const total = visibleSectionsCount.value;
-  const isFirst = order === 0;
-  const isLast = total > 1 && order === total - 1;
-  const isMiddle = total > 2 && !isFirst && !isLast;
+  const isMiddleSlot = order === 1 && sections.value.filter((section) => section.visible).length === 3;
 
-  const isSearchActive =
-    sectionId === 'search' && (isFullSearchMode.value || isIconSearchExpanded.value || isSearchClosing.value);
-
-  const middleMargin = isMiddle ? { marginLeft: SECTION_GAP, marginRight: SECTION_GAP } : {};
-
-  if (isFirst) {
-    return { order, flex: '1', display: 'flex', ...middleMargin };
-  }
-  if (isLast) {
-    return { order, flex: '1', display: 'flex', justifyContent: 'flex-end', ...middleMargin };
+  if (isMiddleSlot) {
+    return { order, flex: '5', marginLeft: '16px', marginRight: '16px' };
   }
 
-  if (isSearchActive) {
-    return { order, flex: '5', ...middleMargin };
+  const isTabletSearchSide = sectionId === 'search' && viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg');
+  if (isTabletSearchSide) {
+    return { order, flex: '1', minWidth: '220px' };
   }
-  return { order, ...middleMargin };
+
+  return { order, flex: '1' };
 };
-
-const searchExpandOrigin = computed(() => {
-  const searchOrder = getSectionFlexOrder('search');
-  if (searchOrder === 0) return 'left center';
-  return 'center center';
-});
 
 const expandIconSearch = () => {
   showSearchIcon.value = false;
@@ -525,7 +510,7 @@ const navigateToLogin = () => {
 </script>
 <style scoped>
 :deep(input[data-testid='search-bar-input']) {
-  min-width: 172px;
+  min-width: 0;
 }
 
 #blockified-logo :deep(img) {

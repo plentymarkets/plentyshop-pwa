@@ -1,4 +1,4 @@
-import { createFooter } from './factory';
+import { createFooterContainer } from './factory';
 import type { Block } from '@plentymarkets/shop-api';
 
 const cache = new Map<string, Block>();
@@ -11,7 +11,7 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
 
   if (useCache && cached) return deepClone(cached);
 
-  const block = createFooter();
+  const block = createFooterContainer();
 
   if (useCache) {
     cache.set(locale, block);

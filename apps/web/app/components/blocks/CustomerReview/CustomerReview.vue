@@ -9,7 +9,7 @@
     <SfLoaderCircular
       v-if="loadingReviews"
       data-testid="loader"
-      class="absolute top-[130px] right-0 left-0 m-auto z-[999]"
+      class="absolute top-[130px] right-0 left-0 m-auto z-raised"
       size="2xl"
     />
 
@@ -20,10 +20,11 @@
     >
       <UiAccordionItem
         v-model="reviewsOpen"
-        summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
+        summary-class="@md:rounded-md w-full hover:bg-neutral-100 py-2 flex justify-between items-center select-none"
+        content-padding-class=""
       >
         <template #summary>
-          <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 md:text-2xl">
+          <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 @md:text-2xl">
             {{ props.content.text.title }}
           </h2>
         </template>
@@ -52,7 +53,7 @@
     </div>
 
     <div v-else>
-      <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 md:text-2xl">
+      <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 @md:text-2xl">
         {{ props.content.text.title }}
       </h2>
 

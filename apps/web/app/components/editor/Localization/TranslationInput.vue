@@ -1,14 +1,15 @@
 <template>
   <div
-    class="w-64 flex-shrink-0 m-1 mr-2 group relative last:mr-0"
+    class="w-64 flex-shrink-0 my-1 group relative"
     :class="{
-      'min-w-64 !w-[calc(100%-12px)]': selectedLocales.length === 1,
-      'min-w-64 !w-[calc(50%-12px)]': selectedLocales.length === 2,
+      '!w-full': selectedLocales.length === 1,
+      'min-w-64 !w-[calc(50%-4px)]': selectedLocales.length === 2,
     }"
   >
     <textarea
       v-if="translation?.input !== undefined"
       :id="`translation-${rowKey}-${lang}`"
+      :aria-label="`${rowKey} (${lang})`"
       :value="localValue"
       class="p-2 h-10 resize-none border rounded-lg w-full text-xs absolute"
       @input="onInput"
@@ -16,7 +17,7 @@
     <SfTooltip
       v-show="isDefaultValue"
       :label="getEditorTranslation('default-tooltip')"
-      class="top-1 right-0 h-8 z-10 !absolute hidden group-hover:block"
+      class="top-1 right-0 h-8 z-dropdown !absolute hidden group-hover:block"
       strategy="absolute"
       :show-arrow="true"
       placement="right"
@@ -28,19 +29,16 @@
     <SfTooltip
       v-show="hasCustomValue"
       :label="getEditorTranslation('revert-to-default')"
-      class="right-0 z-10 !absolute hidden group-hover:block"
+      class="right-0 z-dropdown !absolute hidden group-hover:block"
       strategy="absolute"
       :show-arrow="true"
       placement="right"
     >
       <div class="h-10 p-2 flex items-center cursor-pointer" @click="onRevert">
-        <SfIconBase viewBox="0 -960 960 960" size="xs" class="fill-none">
+        <SfIconBase viewBox="0 -960 960 960" size="xs">
           <path
-            fill="rgb(var(--colors-2-primary-500) / 1)"
+            fill="currentColor"
             d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           />
         </SfIconBase>
       </div>

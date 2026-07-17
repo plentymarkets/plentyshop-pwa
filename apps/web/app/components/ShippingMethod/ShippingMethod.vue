@@ -1,11 +1,11 @@
 <template>
-  <div data-testid="shipping-method" class="md:px-4 my-6">
+  <div data-testid="shipping-method" class="@md:px-4 my-6">
     <h3 class="text-neutral-900 text-lg font-bold">{{ t('shipping.method.heading') }}</h3>
     <div v-if="hasCheckoutAddress">
       <div v-if="!loading" class="mt-4">
         <ul
           v-if="shippingMethods && shippingMethods.length > 0"
-          class="grid gap-y-4 md:grid-cols-2 md:gap-x-4"
+          class="grid gap-y-4 @md:grid-cols-2 @md:gap-x-4"
           role="radiogroup"
           data-testid="shipping-method-list"
         >
@@ -47,7 +47,7 @@
 
         <div
           v-else
-          class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md"
+          class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md"
           data-testid="no-shipping-method-available"
         >
           <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
@@ -63,7 +63,7 @@
     <div
       v-else
       data-testid="shipping-method-no-address-set"
-      class="mt-4 bg-gray-200 shadow-md p-4 ring-1 ring-gray-300 text-gray-700 typography-text-sm md:typography-text-base rounded-md"
+      class="mt-4 bg-gray-200 shadow-md p-4 ring-1 ring-gray-300 text-gray-700 typography-text-sm @md:typography-text-base rounded-md"
     >
       {{ t('shipping.noShippingMethodsNoAddress') }}
     </div>

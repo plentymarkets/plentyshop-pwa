@@ -1,19 +1,21 @@
 <template>
   <NuxtLink
     :to="getSearchPath(item.label)"
-    class="flex py-2 px-4 gap-2 text-neutral-500 cursor-pointer hover:bg-neutral-100 transition duration-200 ease-in-out"
+    class="flex items-center gap-3 h-8 px-2.5 -mx-2.5 rounded text-sm text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 transition-colors duration-150"
     data-testid="search-suggestion-item"
   >
-    <SfIconSearch class="mt-0.5 shrink-0" size="sm" aria-hidden="true" />
-    <span class="text-black">
+    <SfIconSearch class="shrink-0 text-neutral-500" size="sm" aria-hidden="true" />
+    <span class="truncate">
       <template v-if="match">
-        {{ parsedText.before }}<b>{{ parsedText.match }}</b
-        >{{ parsedText.after }}
+        {{ parsedText.before }}
+        <strong class="font-semibold text-neutral-900">
+          {{ parsedText.match }}
+        </strong>
+        {{ parsedText.after }}
       </template>
       <template v-else>{{ item.label }}</template>
     </span>
-
-    <span>({{ item.count }})</span>
+    <span class="ml-auto shrink-0 text-xs text-neutral-500">({{ item.count }})</span>
   </NuxtLink>
 </template>
 

@@ -3,14 +3,14 @@
     <div v-if="isInEditor">
       <div
         v-if="!bannerIsHidden"
-        class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
+        class="fixed z-dropdown w-fit h-fit bottom-[7.3rem] @md:bottom-14 left-2 @xl:left-auto @xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
         <div v-if="hasUnsavedChanges()" class="w-full flex flex-col">
           <div class="mb-4 text-center typography-text-lg font-bold">
             <h2>{{ t('previewModeBar.title') }}</h2>
           </div>
           <div
-            class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+            class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
           >
             <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
             <span class="py-2 mr-2">
@@ -43,7 +43,7 @@
 
       <UiButton
         variant="secondary"
-        class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-16 right-auto xl:right-16 xl:left-auto bg-white !py-1"
+        class="z-dropdown fixed bottom-[4.3rem] @md:bottom-2 left-16 right-auto @xl:right-16 @xl:left-auto bg-white !py-1"
         :aria-label="t('previewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >

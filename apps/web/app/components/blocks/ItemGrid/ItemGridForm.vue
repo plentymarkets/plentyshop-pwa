@@ -1,13 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-settings-label')"
     data-testid="item-grid-layout"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
-    </template>
     <div class="space-y-4">
       <div>
         <UiFormLabel class="flex justify-between">
@@ -62,18 +58,9 @@
         />
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="cardOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    data-testid="item-grid-card"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('item-card-label') }}</h2>
-    </template>
-
+  <EditorFormPanel v-model="cardOpen" :title="getEditorTranslation('item-card-label')" data-testid="item-grid-card">
     <div class="py-4">
       <draggable
         v-if="uiItemGridBlock.fieldsOrder.length"
@@ -87,7 +74,7 @@
           <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
             <div class="flex items-center gap-3">
               <button
-                class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                class="drag-slides-handle top-2 left-2 z-raised cursor-grab p-2 hover:bg-gray-100 rounded-full"
                 :aria-label="getEditorTranslation('drag-reorder-aria')"
                 :data-testid="`actions-drag-slide-handle-${index}`"
               >
@@ -140,18 +127,13 @@
         :options="addToCartStyleOptions"
       />
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="paginationOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('pagination-label')"
     data-testid="item-grid-pagination"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('pagination-label') }}</h2>
-    </template>
-
     <div class="space-y-4">
       <div>
         <UiFormLabel>{{ getEditorTranslation('pagination-position') }}</UiFormLabel>
@@ -166,7 +148,7 @@
         </select>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -201,7 +183,6 @@ const fieldLabels: Record<string, string> = {
   title: getEditorTranslation('field-item-title'),
   rating: getEditorTranslation('field-item-rating'),
   previewText: getEditorTranslation('field-preview-text'),
-  shippingBadge: getEditorTranslation('field-shipping-badge'),
   price: getEditorTranslation('field-price'),
   addToCart: getEditorTranslation('field-add-to-cart'),
 };
@@ -238,7 +219,6 @@ const {
     "field-item-title": "Item title",
     "field-item-rating": "Item rating",
     "field-preview-text": "Preview text",
-    "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
     "content-alignment": "Content alignment",
@@ -271,7 +251,6 @@ const {
     "field-item-title": "Item title",
     "field-item-rating": "Item rating",
     "field-preview-text": "Preview text",
-    "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
     "content-alignment": "Content alignment",

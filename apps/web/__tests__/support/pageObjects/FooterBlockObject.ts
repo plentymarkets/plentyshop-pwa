@@ -5,16 +5,12 @@ export class FooterBlockObject extends PageObject {
     return cy.getByTestId('footer-settings-drawer');
   }
 
-  get firstColumnSection() {
-    return cy.getByTestId('first-column-section');
-  }
-
   get colorSection() {
     return cy.getByTestId('color-column-section');
   }
 
-  get columnOneTitle() {
-    return cy.getByTestId('input-title-column-1');
+  get backgroundColorInput() {
+    return cy.getByTestId('footer-bg-color-select');
   }
 
   get lastBlockWrapper() {
@@ -40,31 +36,29 @@ export class FooterBlockObject extends PageObject {
   }
 
   openSettingsDrawer() {
-    cy.get('[data-testid^="toc-item-"]').last().click({ force: true });
+    cy.getByTestId('toc-section-footer-settings').click({ force: true });
     this.footerSettingsDrawer.should('be.visible');
     return this;
   }
 
   assertSettingsSections() {
-    this.firstColumnSection.should('exist');
     this.colorSection.should('exist');
     return this;
   }
 
-  assertColumnInteractive() {
-    this.firstColumnSection.click();
-    this.columnOneTitle.should('be.visible');
+  assertColorSectionInteractive() {
+    this.colorSection.click();
+    this.backgroundColorInput.should('be.visible');
     return this;
   }
 
-  changeColumnTitle(title: string) {
-    this.firstColumnSection.click();
-    this.columnOneTitle.clear().type(title);
+  changeBackgroundColor(value: string) {
+    this.backgroundColorInput.clear().type(value);
     return this;
   }
 
-  assertColumnTitleValue(title: string) {
-    this.columnOneTitle.should('have.value', title);
+  assertBackgroundColorValue(value: string) {
+    this.backgroundColorInput.should('have.value', value);
     return this;
   }
 
