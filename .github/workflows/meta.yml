@@ -19,7 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Label Pull Request
-        uses: fuxingloh/multi-labeler@v4
+        uses: fuxingloh/multi-labeler@v5
       - name: Assign author to PR
         if: github.event.action == 'opened'
         uses: toshimaru/auto-author-assign@v3.0.3
