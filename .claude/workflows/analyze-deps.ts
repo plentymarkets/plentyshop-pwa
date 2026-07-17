@@ -1,6 +1,7 @@
 export const meta = {
   name: 'analyze-deps',
-  description: 'Comprehensive analysis of dependency updates from a PR URL (npm packages or GitHub Actions), checking for breaking changes, conflicts, and compatibility issues',
+  description:
+    'Comprehensive analysis of dependency updates from a PR URL (npm packages or GitHub Actions), checking for breaking changes, conflicts, and compatibility issues',
   phases: [
     { title: 'Fetch PR', detail: 'Get PR metadata and diff' },
     { title: 'Analyze Changes', detail: 'Parse dependency updates' },
@@ -9,8 +10,9 @@ export const meta = {
     { title: 'Security Review', detail: 'Check for known vulnerabilities' },
     { title: 'Report', detail: 'Compile comprehensive safety assessment' },
   ],
-  whenToUse: 'Before merging dependency update PRs (npm or GitHub Actions), to assess risk and identify potential breakpoints'
-}
+  whenToUse:
+    'Before merging dependency update PRs (npm or GitHub Actions), to assess risk and identify potential breakpoints',
+};
 
 const ANALYSIS_SCHEMA = {
   type: 'object',
@@ -29,13 +31,13 @@ const ANALYSIS_SCHEMA = {
           isPatchUpdate: { type: 'boolean' },
           breakingChanges: { type: 'array', items: { type: 'string' } },
           riskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'critical'] },
-        }
-      }
+        },
+      },
     },
     prTitle: { type: 'string' },
-    prUrl: { type: 'string' }
-  }
-}
+    prUrl: { type: 'string' },
+  },
+};
 
 const USAGE_SCHEMA = {
   type: 'object',
@@ -44,8 +46,8 @@ const USAGE_SCHEMA = {
     usageFiles: { type: 'array', items: { type: 'string' } },
     usageContext: { type: 'string' },
     potentialBreakpoints: { type: 'array', items: { type: 'string' } },
-  }
-}
+  },
+};
 
 const FINAL_REPORT_SCHEMA = {
   type: 'object',
@@ -62,20 +64,20 @@ const FINAL_REPORT_SCHEMA = {
           riskLevel: { type: 'string' },
           findings: { type: 'array', items: { type: 'string' } },
           recommendations: { type: 'array', items: { type: 'string' } },
-        }
-      }
+        },
+      },
     },
     criticalIssues: { type: 'array', items: { type: 'string' } },
     actionItems: { type: 'array', items: { type: 'string' } },
-  }
-}
+  },
+};
 
-const prUrl = args
+const prUrl = args;
 if (!prUrl || !prUrl.includes('github.com')) {
-  throw new Error('Invalid PR URL. Pass a valid GitHub PR URL as args, e.g.: https://github.com/owner/repo/pull/123')
+  throw new Error('Invalid PR URL. Pass a valid GitHub PR URL as args, e.g.: https://github.com/owner/repo/pull/123');
 }
 
-phase('Fetch PR')
+phase('Fetch PR');
 const prDetails = await agent(
   `Fetch this GitHub PR and extract all dependency changes from the diff.
 
@@ -92,16 +94,16 @@ Return:
 - Identify major/minor/patch changes
 
 If no dependency updates found, return empty packages array.`,
-  { label: 'fetch-pr', schema: ANALYSIS_SCHEMA }
-)
+  { label: 'fetch-pr', schema: ANALYSIS_SCHEMA },
+);
 
 if (!prDetails?.packages?.length) {
-  throw new Error('No dependency updates found in PR')
+  throw new Error('No dependency updates found in PR');
 }
 
-log(`Found ${prDetails.packages.length} dependency updates to analyze in: ${prDetails.prTitle}`)
+log(`Found ${prDetails.packages.length} dependency updates to analyze in: ${prDetails.prTitle}`);
 
-phase('Analyze Changes')
+phase('Analyze Changes');
 const detailedAnalysis = await agent(
   `For each dependency update, research what changed and identify risks:
 
@@ -115,12 +117,12 @@ For each:
 5. Assign risk level (low/medium/high/critical)
 
 Be thorough - check actual release notes and changelogs.`,
-  { label: 'analyze-changes', schema: ANALYSIS_SCHEMA }
-)
+  { label: 'analyze-changes', schema: ANALYSIS_SCHEMA },
+);
 
-log(`Analyzed ${detailedAnalysis.packages.length} packages`)
+log(`Analyzed ${detailedAnalysis.packages.length} packages`);
 
-phase('Check Local Usage')
+phase('Check Local Usage');
 const localUsage = await Promise.all(
   detailedAnalysis.packages.map((pkg) =>
     agent(
@@ -136,13 +138,13 @@ List:
 3. Potential breaking points for the version change`,
       {
         label: `usage-${pkg.name}`,
-        schema: USAGE_SCHEMA
-      }
-    )
-  )
-)
+        schema: USAGE_SCHEMA,
+      },
+    ),
+  ),
+);
 
-phase('Validate Constraints')
+phase('Validate Constraints');
 const constraintValidation = await agent(
   `Validate compatibility:
 
@@ -155,10 +157,10 @@ Check:
 4. Lock file validity (package-lock.json)
 
 Report any constraint violations.`,
-  { label: 'validate-constraints' }
-)
+  { label: 'validate-constraints' },
+);
 
-phase('Security Review')
+phase('Security Review');
 const securityReview = await agent(
   `Security assessment:
 
@@ -170,10 +172,10 @@ Check:
 3. Deprecated or unmaintained packages
 4. Supply chain concerns (new maintainers, ownership changes)
 5. Security advisories`,
-  { label: 'security-review' }
-)
+  { label: 'security-review' },
+);
 
-phase('Report')
+phase('Report');
 const finalReport = await agent(
   `Create final safety assessment:
 
@@ -190,7 +192,7 @@ Report should include:
 4. Critical issues (if any)
 5. Action items before merging
 6. Final recommendation: SAFE TO MERGE / CONDITIONAL / NEEDS REVIEW / DO NOT MERGE`,
-  { label: 'final-report', schema: FINAL_REPORT_SCHEMA }
-)
+  { label: 'final-report', schema: FINAL_REPORT_SCHEMA },
+);
 
-return finalReport
+return finalReport;

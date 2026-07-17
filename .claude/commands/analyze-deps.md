@@ -3,6 +3,7 @@ Run the `analyze-deps` workflow to do a comprehensive analysis of a dependency u
 Pass `$ARGUMENTS` as the args to the Workflow tool with scriptPath `.claude/workflows/analyze-deps.ts`.
 
 When the workflow completes, present the final report clearly to the user:
+
 - Overall risk level (safe/low/medium/high/critical)
 - Executive summary
 - Per-package findings and recommendations
