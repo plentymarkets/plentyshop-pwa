@@ -22,27 +22,23 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
     return;
   }
 
-  const url = new URL(canonicalLink);
-  const baseUrl = `${url.protocol}//${url.host}${url.pathname}`;
+  const domain = useRuntimeConfig().public.domain as string;
+  const url = new URL(canonicalLink, domain);
+  const baseUrl = `${url.origin}${url.pathname}`;
 
-  if (facetsFromUrl.page === 2) {
-    useHead({
-      link: [
-        {
-          rel: 'prev',
-          href: baseUrl,
-        },
-      ],
-    });
-  }
-  if (facetsFromUrl.page > 2) {
+  if (facetsFromUrl.page >= 2) {
     const prevParams = new URLSearchParams(url.search);
-    prevParams.set('page', String(facetsFromUrl.page - 1));
+    if (facetsFromUrl.page === 2) {
+      prevParams.delete('page');
+    } else {
+      prevParams.set('page', String(facetsFromUrl.page - 1));
+    }
+    const prevSearch = prevParams.toString();
     useHead({
       link: [
         {
           rel: 'prev',
-          href: `${baseUrl}?${prevParams.toString()}`,
+          href: prevSearch ? `${baseUrl}?${prevSearch}` : baseUrl,
         },
       ],
     });
