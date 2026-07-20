@@ -4,7 +4,7 @@ import QuickAdd from '../QuickAdd.vue';
 import type { QuickAddOption } from '../types';
 
 mockNuxtImport('useRuntimeConfig', () => () => ({
-  public: { enableQuickAdd: true },
+  public: {},
 }));
 
 mockNuxtImport('getBlockIconSvg', () => (blockName: string) => {

@@ -139,10 +139,7 @@ import ColumnWidthInput from '~/components/editor/ColumnWidthInput.vue';
 
 const props = defineProps<{ uuid?: string }>();
 
-const enableAddBlockPopover = useRuntimeConfig().public.enableAddBlockPopover as boolean;
 const { openAddBlockPopover } = useAddBlockPopover();
-const { openDrawerWithView } = useSiteConfiguration();
-const { setInsertColumnUuid } = useBlocksMutations();
 const { blockUuid } = useSiteConfiguration();
 const resolvedUuid = computed(() => props.uuid || blockUuid.value);
 const { allBlocks } = useBlocks();
@@ -233,12 +230,7 @@ const handleInsertBefore = (block: Block, anchorEl: HTMLElement) => {
     }
   };
 
-  if (enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl, targetUuid: newBlock.meta.uuid, position: 'inside', onCancel: cleanup });
-  } else {
-    setInsertColumnUuid(newBlock.meta.uuid);
-    openDrawerWithView('blocksList');
-  }
+  openAddBlockPopover({ anchorEl, targetUuid: newBlock.meta.uuid, position: 'inside', onCancel: cleanup });
 };
 
 const elementsOpen = ref(true);

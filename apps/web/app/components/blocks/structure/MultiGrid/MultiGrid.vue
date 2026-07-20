@@ -7,7 +7,7 @@
     <template v-for="(gridRow, rowIndex) in gridRows" :key="rowIndex">
       <template v-for="cell in gridRow.cells" :key="cell.colIndex">
         <div
-          v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
+          v-if="columns[cell.colIndex]?.length || shouldEnableEditorFeatures"
           :class="getColumnClasses(cell.colIndex)"
           class="group/col relative"
           data-testid="multi-grid-column"
@@ -32,7 +32,7 @@
 
       <ClientOnly>
         <div
-          v-if="gridRow.free > 0 && shouldEnableEditorFeatures && enableMultiGridEditor"
+          v-if="gridRow.free > 0 && shouldEnableEditorFeatures"
           :class="`col-span-${gridRow.free}`"
           class="self-stretch rounded-md border border-dashed border-editor-canvas-border bg-editor-hatched flex items-center justify-center"
           aria-hidden="true"
@@ -68,7 +68,6 @@ const onRowLeave = () => {
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
-const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 
