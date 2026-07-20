@@ -1,11 +1,11 @@
 <template>
   <client-only>
-    <div v-if="isInEditor">
+    <div v-if="isInEditor || isPreviewMode">
       <div
         v-if="!bannerIsHidden"
         class="fixed z-dropdown w-fit h-fit bottom-[7.3rem] @md:bottom-14 left-2 @xl:left-auto @xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
-        <div v-if="hasUnsavedChanges()" class="w-full flex flex-col">
+        <div v-if="hasUnsavedChanges() && !isPreviewMode" class="w-full flex flex-col">
           <div class="mb-4 text-center typography-text-lg font-bold">
             <h2>{{ t('previewModeBar.title') }}</h2>
           </div>
@@ -34,9 +34,15 @@
           </UiButton>
         </div>
 
-        <div v-else class="w-full flex flex-col">
-          <UiButton class="w-full my-2" @click="removeLookupCookie()">
+        <div v-else class="w-full flex flex-col p-2 gap-2">
+          <div v-if="config.configId" class="p-2 bg-gray-100 rounded text-sm text-center">
+            <span class="font-semibold">Config ID:</span> {{ config.configId }}
+          </div>
+          <UiButton v-if="isInEditor" class="w-full" @click="removeLookupCookie()">
             {{ t(`previewModeBar.exitEditor`) }}
+          </UiButton>
+          <UiButton v-if="isPreviewMode" class="w-full" @click="removeLookupCookie()">
+            {{ t(`previewModeBar.exitPreviewMode`) }}
           </UiButton>
         </div>
       </div>
@@ -58,7 +64,7 @@ import storeBlack from '/assets/icons/paths/store-black.svg';
 import { SfIconWarning } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
-const { isInEditor } = useEditorState();
+const { isInEditor, isPreviewMode } = useEditorState();
 
 const { isEditingEnabled } = useEditor();
 const { settingsIsDirty } = useSiteSettings();

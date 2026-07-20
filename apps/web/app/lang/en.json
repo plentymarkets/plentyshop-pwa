@@ -1020,6 +1020,7 @@
   },
   "previewModeBar": {
     "exitEditor": "Exit editor and visit live shop",
+    "exitPreviewMode": "Exit preview mode",
     "exitWithoutSaving": "Exit without saving",
     "label": "Editor controls",
     "saveAndExit": "Save changes and exit",

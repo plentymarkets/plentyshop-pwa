@@ -1020,6 +1020,7 @@
   },
   "previewModeBar": {
     "exitEditor": "Editor verlassen und zum Liveshop wechseln",
+    "exitPreviewMode": "Vorschaumodus beenden",
     "exitWithoutSaving": "Ohne Speichern verlassen",
     "label": "Steuerelemente für Editor",
     "saveAndExit": "Speichern und verlassen",
