@@ -2,7 +2,7 @@ import type { UseEditorStateReturn } from './types';
 
 /**
  * @description Composable for managing editor state conditions
- * Centralizes all `$isPreview` logic into semantic, well-named computed properties
+ * Centralizes all `$isEditor`/`$isPreview` logic into semantic, well-named computed properties
  * @returns UseEditorStateReturn - Editor state properties and feature flags
  * @example
  * ``` ts
@@ -13,21 +13,21 @@ import type { UseEditorStateReturn } from './types';
  * ```
  */
 export const useEditorState = (): UseEditorStateReturn => {
-  const { $isPreview } = useNuxtApp();
+  const { $isEditor, $isPreview } = useNuxtApp();
   const { disableActions } = useEditor();
   const { device, width: previewWidth } = useEditorDevice();
 
   /** @description Whether we are in the editor environment (true in both edit and preview modes) */
-  const isInEditor = computed(() => !!$isPreview);
+  const isInEditor = computed(() => !!$isEditor);
 
   /** @description Whether we are in edit mode (can modify blocks, shows editor UI, uses fake data) */
-  const isEditMode = computed(() => !!$isPreview && disableActions.value);
+  const isEditMode = computed(() => !!$isEditor && disableActions.value);
 
   /** @description Whether we are in preview mode (viewing changes without editing) */
-  const isPreviewMode = computed(() => !!$isPreview && !disableActions.value);
+  const isPreviewMode = computed(() => (!!$isEditor && !disableActions.value) || !!$isPreview);
 
   /** @description Whether we are in live/production mode (no editor features) */
-  const isLiveMode = computed(() => !$isPreview);
+  const isLiveMode = computed(() => !$isEditor && !$isPreview);
 
   /** @description Whether to show editor UI elements (toolbars, overlays, etc.) */
   const shouldShowEditorUI = computed(() => isEditMode.value);
@@ -44,7 +44,7 @@ export const useEditorState = (): UseEditorStateReturn => {
   /** @description Client-side only editor check (guaranteed to be set post-hydration) */
   const isInEditorClient = ref(false);
   onNuxtReady(() => {
-    isInEditorClient.value = !!$isPreview;
+    isInEditorClient.value = !!$isEditor;
   });
   const isMobilePreview = computed(() => isInEditorClient.value && device.value !== 'desktop');
   return {
