@@ -22,22 +22,27 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
     return;
   }
 
+  const url = new URL(canonicalLink);
+  const baseUrl = `${url.protocol}//${url.host}${url.pathname}`;
+
   if (facetsFromUrl.page === 2) {
     useHead({
       link: [
         {
           rel: 'prev',
-          href: canonicalLink,
+          href: baseUrl,
         },
       ],
     });
   }
   if (facetsFromUrl.page > 2) {
+    const prevParams = new URLSearchParams(url.search);
+    prevParams.set('page', String(facetsFromUrl.page - 1));
     useHead({
       link: [
         {
           rel: 'prev',
-          href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
+          href: `${baseUrl}?${prevParams.toString()}`,
         },
       ],
     });
@@ -46,11 +51,13 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
     productsCatalog.pagination?.totals &&
     facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage
   ) {
+    const nextParams = new URLSearchParams(url.search);
+    nextParams.set('page', String(facetsFromUrl.page + 1));
     useHead({
       link: [
         {
           rel: 'next',
-          href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
+          href: `${baseUrl}?${nextParams.toString()}`,
         },
       ],
     });
