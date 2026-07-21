@@ -77,7 +77,7 @@
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
-    <component :is="AddBlockPopoverComponent" v-if="enablePopover && clientPreview" />
+    <component :is="AddBlockPopoverComponent" v-if="clientPreview" />
   </ClientOnly>
 </template>
 
@@ -92,8 +92,6 @@ const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient, isMobilePreview, previewWidth } = useEditorState();
-
-const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 const clientPreview = computed(() => isInEditorClient.value && isLargeScreen.value);

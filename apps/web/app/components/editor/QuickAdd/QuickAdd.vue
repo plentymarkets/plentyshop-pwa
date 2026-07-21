@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isEnabled && options.length" class="flex flex-wrap justify-center gap-1.5 px-4">
+  <div v-if="options.length" class="flex flex-wrap justify-center gap-1.5 px-4">
     <button
       v-for="option in options"
       :key="option.blockName"
@@ -25,8 +25,6 @@
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import type { QuickAddOption, QuickAddProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-
-const isEnabled = useRuntimeConfig().public.enableQuickAdd;
 
 const props = defineProps<QuickAddProps>();
 
