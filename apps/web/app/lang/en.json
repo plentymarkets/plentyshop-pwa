@@ -1019,6 +1019,7 @@
     }
   },
   "previewModeBar": {
+    "configId": "Configuration ID:",
     "exitEditor": "Exit editor and visit live shop",
     "exitPreviewMode": "Exit preview mode",
     "exitWithoutSaving": "Exit without saving",

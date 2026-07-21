@@ -1019,6 +1019,7 @@
     }
   },
   "previewModeBar": {
+    "configId": "Konfigurations-ID:",
     "exitEditor": "Editor verlassen und zum Liveshop wechseln",
     "exitPreviewMode": "Vorschaumodus beenden",
     "exitWithoutSaving": "Ohne Speichern verlassen",

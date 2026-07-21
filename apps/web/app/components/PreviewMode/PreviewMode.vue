@@ -36,7 +36,7 @@
 
         <div v-else class="w-full flex flex-col p-2 gap-2">
           <div v-if="config.configId" class="p-2 bg-gray-100 rounded text-sm text-center">
-            <span class="font-semibold">Config ID:</span> {{ config.configId }}
+            <span class="font-semibold">{{ t('previewModeBar.configId') }}</span> {{ config.configId }}
           </div>
           <UiButton v-if="isInEditor" class="w-full" @click="removeLookupCookie()">
             {{ t(`previewModeBar.exitEditor`) }}
