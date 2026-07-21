@@ -1,108 +1,105 @@
 <template>
-  <MultiGridFormLegacy v-if="!enableMultiGridEditor" :uuid="uuid" />
-  <template v-else>
-    <div v-if="editingBlock" class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-      <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
-    </div>
-    <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
-      <EditorGridElementsPanel
-        v-model="elementsOpen"
-        :uuid="resolvedUuid"
-        :quick-add-options="multiGridQuickAddOptions"
-        @edit-element="editElement"
-        @insert-before="handleInsertBefore"
+  <div v-if="editingBlock" class="sticky h-[calc(100vh-52px)] overflow-y-auto">
+    <component :is="blockForm" :uuid="editingBlock.meta.uuid" />
+  </div>
+  <div v-else class="sticky h-[calc(100vh-52px)] overflow-y-auto">
+    <EditorGridElementsPanel
+      v-model="elementsOpen"
+      :uuid="resolvedUuid"
+      :quick-add-options="multiGridQuickAddOptions"
+      @edit-element="editElement"
+      @insert-before="handleInsertBefore"
+    />
+
+    <EditorFormPanel v-model="gridLayoutOpen" :title="getEditorTranslation('grid-layout')">
+      <div v-if="allEmpty" class="mb-3.5">
+        <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
+          {{ getEditorTranslation('layout-preset') }}
+        </div>
+        <div class="grid grid-cols-3 gap-1.5">
+          <button
+            v-for="preset in LAYOUT_PRESETS"
+            :key="preset.label"
+            class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
+            @click="applyPreset(preset.columnWidths)"
+          >
+            <div class="flex gap-0.5 w-full h-[9px]">
+              <div
+                v-for="(span, i) in preset.columnWidths"
+                :key="i"
+                class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
+                :style="{ flex: span }"
+              />
+            </div>
+            <span class="text-3xs text-editor-text-subtle">{{ preset.label }}</span>
+          </button>
+        </div>
+      </div>
+
+      <MultiGridEditor
+        :column-widths="visibleGrid.columnWidths"
+        :blocks="visibleGrid.blocks"
+        @update:column-widths="handleColumnWidthsUpdate"
+        @click-add-row="handleClickAddRow"
+        @add-free-column="handleAddFreeColumn"
       />
 
-      <EditorFormPanel v-model="gridLayoutOpen" :title="getEditorTranslation('grid-layout')">
-        <div v-if="allEmpty" class="mb-3.5">
-          <div class="text-3xs text-editor-text-ghost font-bold tracking-[0.07em] mb-2 uppercase">
-            {{ getEditorTranslation('layout-preset') }}
-          </div>
-          <div class="grid grid-cols-3 gap-1.5">
+      <div v-if="multiGridStructure.configuration.layout" class="mt-3.5 pt-3 border-t border-editor-surface-muted">
+        <div class="flex items-center gap-2">
+          <span class="flex-1 text-xs text-editor-text-subtle">{{ getEditorTranslation('gap-label') }}</span>
+          <div class="flex gap-1">
             <button
-              v-for="preset in LAYOUT_PRESETS"
-              :key="preset.label"
-              class="px-1 pt-2 pb-1.5 rounded-lg border border-editor-border bg-white cursor-pointer flex flex-col items-center gap-1.5 hover:bg-editor-toc-hover hover:border-editor-accent-border-hover transition-all duration-150"
-              @click="applyPreset(preset.columnWidths)"
+              v-for="gapOption in gapOptions"
+              :key="gapOption"
+              type="button"
+              data-testid="gap-btn"
+              class="w-7 h-6 rounded-md text-3xs cursor-pointer transition-colors"
+              :class="
+                gapOption === multiGridStructure.configuration.layout.gap
+                  ? 'border border-editor-accent bg-editor-accent/[8%] text-editor-accent font-bold'
+                  : 'border border-editor-canvas-border bg-white text-editor-text-faint'
+              "
+              @click="multiGridStructure.configuration.layout.gap = gapOption"
             >
-              <div class="flex gap-0.5 w-full h-[9px]">
-                <div
-                  v-for="(span, i) in preset.columnWidths"
-                  :key="i"
-                  class="h-full rounded-sm bg-editor-accent/[18%] border border-dashed border-editor-accent/50"
-                  :style="{ flex: span }"
-                />
-              </div>
-              <span class="text-3xs text-editor-text-subtle">{{ preset.label }}</span>
+              {{ gapOption }}
             </button>
           </div>
         </div>
+        <div class="mt-1.5 text-2xs text-editor-text-placeholder">
+          {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
+        </div>
+      </div>
+    </EditorFormPanel>
 
-        <MultiGridEditor
-          :column-widths="visibleGrid.columnWidths"
-          :blocks="visibleGrid.blocks"
-          @update:column-widths="handleColumnWidthsUpdate"
-          @click-add-row="handleClickAddRow"
-          @add-free-column="handleAddFreeColumn"
-        />
+    <MultiGridLayoutPanel :uuid="resolvedUuid" />
 
-        <div v-if="multiGridStructure.configuration.layout" class="mt-3.5 pt-3 border-t border-editor-surface-muted">
-          <div class="flex items-center gap-2">
-            <span class="flex-1 text-xs text-editor-text-subtle">{{ getEditorTranslation('gap-label') }}</span>
-            <div class="flex gap-1">
-              <button
-                v-for="gapOption in gapOptions"
-                :key="gapOption"
-                type="button"
-                data-testid="gap-btn"
-                class="w-7 h-6 rounded-md text-3xs cursor-pointer transition-colors"
-                :class="
-                  gapOption === multiGridStructure.configuration.layout.gap
-                    ? 'border border-editor-accent bg-editor-accent/[8%] text-editor-accent font-bold'
-                    : 'border border-editor-canvas-border bg-white text-editor-text-faint'
-                "
-                @click="multiGridStructure.configuration.layout.gap = gapOption"
+    <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
+      <div v-if="multiGridStructure.configuration.layout">
+        <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
+        <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
+          <template #trigger="{ color, toggle }">
+            <div>
+              <SfInput
+                v-model="multiGridStructure.configuration.layout.backgroundColor"
+                type="text"
+                data-testid="input-background-color"
               >
-                {{ gapOption }}
-              </button>
+                <template #suffix>
+                  <button
+                    type="button"
+                    class="border border-editor-input-border rounded-lg cursor-pointer w-10 h-8"
+                    :style="{ backgroundColor: color }"
+                    @mousedown.stop
+                    @click.stop="toggle"
+                  />
+                </template>
+              </SfInput>
             </div>
-          </div>
-          <div class="mt-1.5 text-2xs text-editor-text-placeholder">
-            {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
-          </div>
-        </div>
-      </EditorFormPanel>
-
-      <MultiGridLayoutPanel :uuid="resolvedUuid" />
-
-      <EditorFormPanel v-model="backgroundOpen" :title="getEditorTranslation('layout-background')">
-        <div v-if="multiGridStructure.configuration.layout">
-          <div class="text-2xs text-editor-text-faint mb-1.5">{{ getEditorTranslation('background-color-label') }}</div>
-          <EditorColorPicker v-model="multiGridStructure.configuration.layout.backgroundColor" class="w-full">
-            <template #trigger="{ color, toggle }">
-              <div>
-                <SfInput
-                  v-model="multiGridStructure.configuration.layout.backgroundColor"
-                  type="text"
-                  data-testid="input-background-color"
-                >
-                  <template #suffix>
-                    <button
-                      type="button"
-                      class="border border-editor-input-border rounded-lg cursor-pointer w-10 h-8"
-                      :style="{ backgroundColor: color }"
-                      @mousedown.stop
-                      @click.stop="toggle"
-                    />
-                  </template>
-                </SfInput>
-              </div>
-            </template>
-          </EditorColorPicker>
-        </div>
-      </EditorFormPanel>
-    </div>
-  </template>
+          </template>
+        </EditorColorPicker>
+      </div>
+    </EditorFormPanel>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -110,13 +107,10 @@ import type { ColumnBlock, GapSize } from '~/components/blocks/structure/MultiGr
 import type { Block } from '@plentymarkets/shop-api';
 import { SfInput } from '@storefront-ui/vue';
 import MultiGridEditor from './MultiGridEditor.vue';
-import MultiGridFormLegacy from './MultiGridFormLegacy.vue';
 import MultiGridLayoutPanel from './MultiGridLayoutPanel.vue';
 import { LAYOUT_PRESETS } from '~/components/AddBlockPopover/constants';
 import { computeVisibleGrid } from '~/components/blocks/structure/MultiGrid/multiGridVisibility';
 import { useMultiGridDeviceWidths } from '~/components/blocks/structure/MultiGrid/multiGridDeviceWidths';
-
-const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 
 const props = defineProps<{ uuid?: string }>();
 
