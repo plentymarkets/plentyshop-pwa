@@ -5,7 +5,7 @@
         v-if="!bannerIsHidden"
         class="fixed z-dropdown w-fit h-fit bottom-[7.3rem] @md:bottom-14 left-2 @xl:left-auto @xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
-        <div v-if="hasUnsavedChanges() && !isPreviewMode" class="w-full flex flex-col">
+        <div v-if="!isPreviewMode && hasUnsavedChanges()" class="w-full flex flex-col">
           <div class="mb-4 text-center typography-text-lg font-bold">
             <h2>{{ t('previewModeBar.title') }}</h2>
           </div>

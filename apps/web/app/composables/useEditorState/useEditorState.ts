@@ -17,7 +17,7 @@ export const useEditorState = (): UseEditorStateReturn => {
   const { disableActions } = useEditor();
   const { device, width: previewWidth } = useEditorDevice();
 
-  /** @description Whether we are in the editor environment (true in both edit and preview modes) */
+  /** @description Whether we are in the editor environment (write permission; editor UI enabled) */
   const isInEditor = computed(() => !!$isEditor);
 
   /** @description Whether we are in edit mode (can modify blocks, shows editor UI, uses fake data) */

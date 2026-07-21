@@ -12,7 +12,7 @@ During local development you usually run the shop outside the editor, so editor 
 
 ## Force editor mode with an environment variable
 
-Set the `NUXT_PUBLIC_IS_PREVIEW` environment variable. It maps to the `isPreview` public runtime config key, and when truthy `resolvePreviewState` short-circuits and returns `true` before any cookie or backend check runs.
+Set the `NUXT_PUBLIC_IS_PREVIEW` environment variable. It maps to the `isPreview` public runtime config key, and when truthy `resolvePreviewState` short-circuits and returns `true` for the isEditor before any cookie or backend check runs.
 
 Add it to `apps/web/.env`:
 
