@@ -74,12 +74,13 @@
 </template>
 
 <script lang="ts" setup>
+import type { Component } from 'vue';
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
-const draggableComp = shallowRef<object | null>(null);
+const draggableComp = shallowRef<Component | null>(null);
 
 const { isLiveMode, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
@@ -181,10 +182,7 @@ watch(
   enabledActions,
   async (val) => {
     if (val && !draggableComp.value) {
-      const [mod] = await Promise.all([
-        import('vuedraggable/src/vuedraggable'),
-        import('./draggable.css'),
-      ]);
+      const [mod] = await Promise.all([import('vuedraggable/src/vuedraggable'), import('./draggable.css')]);
       draggableComp.value = mod.default;
     }
   },
