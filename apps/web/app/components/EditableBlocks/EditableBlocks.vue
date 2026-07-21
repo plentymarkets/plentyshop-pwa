@@ -1,19 +1,48 @@
 <template>
   <div>
-    <draggable
-      v-if="data.length"
-      v-model="data"
-      item-key="meta.uuid"
-      handle=".drag-handle"
-      class="content"
-      :filter="'.no-drag'"
-      :prevent-on-filter="false"
-      @change="scrollToBlock"
-      @start="handleDragStart"
-      @end="handleDragEnd"
-    >
-      <template #item="{ element: block }">
-        <div>
+    <template v-if="data.length">
+      <component
+        :is="draggableComp"
+        v-if="enabledActions && draggableComp"
+        v-model="data"
+        item-key="meta.uuid"
+        handle=".drag-handle"
+        class="content"
+        :filter="'.no-drag'"
+        :prevent-on-filter="false"
+        @change="scrollToBlock"
+        @start="handleDragStart"
+        @end="handleDragEnd"
+      >
+        <template #item="{ element: block }">
+          <div>
+            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
+            <component
+              :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+              v-if="shouldShowBlock(block, enabledActions)"
+            >
+              <PageBlock
+                :index="getIndex(block)"
+                :block="block"
+                :enable-actions="enabledActions"
+                :is-clicked="isClicked"
+                :clicked-block-index="clickedBlockIndex"
+                :is-tablet="isTablet"
+                :change-block-position="changeBlockPosition"
+                root
+                :read-only="readOnly"
+                class="group"
+                :class="getBlockClass(block).value"
+                data-testid="block-wrapper"
+                @click="tabletEdit(getIndex(block))"
+              />
+            </component>
+            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
+          </div>
+        </template>
+      </component>
+      <div v-else class="content">
+        <div v-for="block in data" :key="block.meta.uuid">
           <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
           <component
             :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
@@ -37,19 +66,20 @@
           </component>
           <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
-      </template>
-    </draggable>
+      </div>
+    </template>
     <CategoryEmptyState v-else-if="!readOnly && isContentEmptyInLive" />
     <EmptyBlock v-else />
   </div>
 </template>
 
 <script lang="ts" setup>
-import draggable from 'vuedraggable/src/vuedraggable';
 import type { Block } from '@plentymarkets/shop-api';
 import type { DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
+
+const draggableComp = shallowRef<object | null>(null);
 
 const { isLiveMode, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
@@ -145,6 +175,20 @@ const drawerView = computed<string | null>(() => siteConfigurationDrawerViewRef.
 
 const enabledActions = computed(
   () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
+);
+
+watch(
+  enabledActions,
+  async (val) => {
+    if (val && !draggableComp.value) {
+      const [mod] = await Promise.all([
+        import('vuedraggable/src/vuedraggable'),
+        import('./draggable.css'),
+      ]);
+      draggableComp.value = mod.default;
+    }
+  },
+  { immediate: true },
 );
 
 useEditorUnsavedChangesGuard({

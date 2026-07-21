@@ -10,7 +10,7 @@
 
     <component
       :is="SiteConfigurationDrawer"
-      v-if="siteConfigurationDrawerOpen"
+      v-if="siteConfigurationDrawerOpen && clientPreview"
       class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
     />
 
@@ -69,7 +69,7 @@
 
     <component
       :is="BlocksConfigurationDrawer"
-      v-if="blocksConfigurationDrawerOpen"
+      v-if="blocksConfigurationDrawerOpen && clientPreview"
       class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
     />
   </div>
