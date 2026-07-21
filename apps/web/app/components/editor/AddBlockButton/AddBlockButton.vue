@@ -67,16 +67,7 @@ const showButton = computed(() => {
 });
 
 const addNewBlock = (block: Block, position: BlockPosition, event: MouseEvent) => {
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position });
-  } else {
-    const { openDrawerWithView } = useSiteConfiguration();
-    const { togglePlaceholder } = useBlockManager();
-    const { clearInsertColumnUuid } = useBlocksMutations();
-    togglePlaceholder(block.meta.uuid, position);
-    openDrawerWithView('blocksList');
-    clearInsertColumnUuid();
-  }
+  openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: block.meta.uuid, position });
   logContentCreateBlock();
 };
 </script>
