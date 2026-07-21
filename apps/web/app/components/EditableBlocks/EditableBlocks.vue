@@ -18,7 +18,7 @@
           <div>
             <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
             <component
-              :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+              :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
               v-if="shouldShowBlock(block, enabledActions)"
             >
               <PageBlock
@@ -45,7 +45,7 @@
         <div v-for="block in data" :key="block.meta.uuid">
           <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
           <component
-            :is="block?.content?.layout?.narrowContainer || block?.layout?.narrowContainer ? NarrowContainer : 'div'"
+            :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
             v-if="shouldShowBlock(block, enabledActions)"
           >
             <PageBlock
@@ -74,13 +74,18 @@
 </template>
 
 <script lang="ts" setup>
-import type { Component } from 'vue';
+import type { ConcreteComponent } from 'vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { DragEvent, EditableBlocksProps } from './types';
+import type { BlockWithLayout, DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
 
-const draggableComp = shallowRef<Component | null>(null);
+const isNarrowContainer = (block: Block) => {
+  const layoutBlock = block as BlockWithLayout;
+  return layoutBlock.content?.layout?.narrowContainer || layoutBlock.layout?.narrowContainer;
+};
+
+const draggableComp = shallowRef<ConcreteComponent | null>(null);
 
 const { isLiveMode, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
@@ -178,12 +183,16 @@ const enabledActions = computed(
   () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 
+const loadDraggable = async () => {
+  const [mod] = await Promise.all([import('vuedraggable/src/vuedraggable'), import('./draggable.css')]);
+  draggableComp.value = mod.default as ConcreteComponent;
+};
+
 watch(
   enabledActions,
-  async (val) => {
+  (val) => {
     if (val && !draggableComp.value) {
-      const [mod] = await Promise.all([import('vuedraggable/src/vuedraggable'), import('./draggable.css')]);
-      draggableComp.value = mod.default;
+      loadDraggable();
     }
   },
   { immediate: true },
