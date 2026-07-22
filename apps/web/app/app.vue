@@ -277,31 +277,23 @@ onMounted(() => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
-const { $isPreview } = useNuxtApp();
-
-const SafeModeBanner = $isPreview
-  ? defineAsyncComponent(() => import('~/components/SafeModeBanner/SafeModeBanner.vue'))
-  : null;
-const Toolbar = $isPreview ? defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue')) : null;
-const SettingsToolbar = $isPreview
-  ? defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'))
-  : null;
-const SiteConfigurationDrawer = $isPreview
-  ? defineAsyncComponent(() => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue'))
-  : null;
-const BlocksConfigurationDrawer = $isPreview
-  ? defineAsyncComponent(() => import('~/components/SiteConfigurationDrawer/BlocksConfigurationDrawer.vue'))
-  : null;
-const PageModal = $isPreview ? defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue')) : null;
-const UnlinkCategoryModal = $isPreview
-  ? defineAsyncComponent(() => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'))
-  : null;
-const ResetProductPageModal = $isPreview
-  ? defineAsyncComponent(() => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'))
-  : null;
-const AddBlockPopoverComponent = $isPreview
-  ? defineAsyncComponent(() => import('~/components/AddBlockPopover/AddBlockPopover.vue'))
-  : null;
+const SafeModeBanner = defineAsyncComponent(() => import('~/components/SafeModeBanner/SafeModeBanner.vue'));
+const Toolbar = defineAsyncComponent(() => import('~/components/ui/Toolbar/Toolbar.vue'));
+const SettingsToolbar = defineAsyncComponent(() => import('~/components/SettingsToolbar/SettingsToolbar.vue'));
+const SiteConfigurationDrawer = defineAsyncComponent(
+  () => import('~/components/SiteConfigurationDrawer/SiteConfigurationDrawer.vue'),
+);
+const BlocksConfigurationDrawer = defineAsyncComponent(
+  () => import('~/components/SiteConfigurationDrawer/BlocksConfigurationDrawer.vue'),
+);
+const PageModal = defineAsyncComponent(() => import('~/components/ui/PageModal/PageModal.vue'));
+const UnlinkCategoryModal = defineAsyncComponent(
+  () => import('~/components/ui/UnlinkCategoryModal/UnlinkCategoryModal.vue'),
+);
+const ResetProductPageModal = defineAsyncComponent(
+  () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
+);
+const AddBlockPopoverComponent = defineAsyncComponent(() => import('~/components/AddBlockPopover/AddBlockPopover.vue'));
 </script>
 
 <style lang="scss">
