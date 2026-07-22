@@ -1023,7 +1023,8 @@
     "exitEditor": "Exit editor and visit live shop",
     "exitPreviewMode": "Exit preview mode",
     "exitWithoutSaving": "Exit without saving",
-    "label": "Preview/editor controls",
+    "editorLabel": "Editor controls",
+    "previewLabel": "Preview controls",
     "saveAndExit": "Save changes and exit",
     "title": "Exit editor and visit live shop?",
     "unsavedChangesWarning": "You have unsaved changes."

@@ -1023,7 +1023,8 @@
     "exitEditor": "Editor verlassen und zum Liveshop wechseln",
     "exitPreviewMode": "Vorschaumodus beenden",
     "exitWithoutSaving": "Ohne Speichern verlassen",
-    "label": "Steuerelemente für Editor/Vorschau",
+    "editorLabel": "Steuerelemente für den Editor",
+    "previewLabel": "Steuerelemente für die Vorschau",
     "saveAndExit": "Speichern und verlassen",
     "title": "Editor verlassen und zum Liveshop wechseln?",
     "unsavedChangesWarning": "Es gibt ungespeicherte Änderungen."
