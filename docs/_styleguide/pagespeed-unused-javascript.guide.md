@@ -24,7 +24,7 @@ The actual cost to a shop visitor is a few hundred bytes of dead function refere
 
 ## Why we accept this
 
-This project is a single Nuxt build that serves both the shop storefront and the editor iframe. `app.vue` is the universal entry point. Because Vite's static analysis is purely source-based, any `import()` call that appears in `app.vue`'s source — regardless of what runtime condition surrounds it — will be registered in the chunk graph and will appear in `__vite__mapDeps`.
+This project is a single Nuxt build that serves both the shop storefront and the editor. `app.vue` is the universal entry point. Because Vite's static analysis is purely source-based, any `import()` call that appears in `app.vue`'s source — regardless of what runtime condition surrounds it — will be registered in the chunk graph and will appear in `__vite__mapDeps`.
 
 Moving the `defineAsyncComponent` calls behind a `$isPreview` runtime check (as was attempted) has no effect on the coverage report because the `import()` call still exists in the source — Vite bundles it regardless of any runtime condition wrapping it, so Chrome still sees the unexecuted `__vitePreload` wrapper and flags it.
 
