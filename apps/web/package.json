@@ -68,7 +68,7 @@
     "eslint-plugin-vuejs-accessibility": "^2.5.0",
     "happy-dom": "^20.9.0",
     "msw": "^2.14.6",
-    "nuxt": "^4.4.6",
+    "nuxt": "^4.5.0",
     "sass": "^1.99.0",
     "tsx": "^4.21.1",
     "vitepress": "^1.6.4",
