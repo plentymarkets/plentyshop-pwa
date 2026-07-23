@@ -31,6 +31,10 @@ export default defineVitestConfig({
     testTimeout: 6000,
     environment: 'nuxt',
     globals: true,
+    // Nuxt's own client plugins (e.g. nuxt-viewport) emit async unhandled rejections while running
+    // inside the unit-test Nuxt environment. Vitest 3 ignored these; Vitest 4 fails the run on them.
+    // They are environment noise, not assertion failures, so restore the previous behaviour.
+    dangerouslyIgnoreUnhandledErrors: true,
     clearMocks: true,
     setupFiles: './vitest.config.setup.ts',
     include: ['**/*/?(*.)+(spec|test).[jt]s'],

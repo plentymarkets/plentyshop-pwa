@@ -1,11 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { useEditModeNotification } from '../useEditModeNotification';
 
 const send = vi.fn();
 
 mockNuxtImport('useNotification', () => () => ({ send }));
-mockNuxtImport('useNuxtApp', () => () => ({ $isEditor: true }));
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp({ $isEditor: true }));
 mockNuxtImport('useEditor', () => () => ({ disableActions: ref(false) }));
 
 describe('useEditModeNotification', () => {

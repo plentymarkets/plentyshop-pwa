@@ -1,5 +1,6 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import type { Block } from '@plentymarkets/shop-api';
 import type { UtilityBarContent, UtilityBarProps } from '~/components/blocks/UtilityBar/types';
 
@@ -50,11 +51,7 @@ mockNuxtImport('useSiteConfiguration', () => () => ({
 
 mockNuxtImport('useRoute', () => () => routeRef.value);
 
-mockNuxtImport('useNuxtApp', () => () => ({
-  $i18n: {
-    locale: localeRef,
-  },
-}));
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp({ $i18n: { locale: localeRef } }));
 
 mockNuxtImport('useBlocks', () => () => ({
   allBlocks: templatesRef,

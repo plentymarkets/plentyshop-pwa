@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { useBlockManager } from '../useBlockManager';
 import type { Block } from '@plentymarkets/shop-api';
 
@@ -40,11 +41,9 @@ mockNuxtImport('useNotification', () => () => ({
   send: vi.fn(),
 }));
 
-mockNuxtImport('useNuxtApp', () => () => ({
-  $i18n: { locale: ref('en') },
-  payload: { state: {} },
-  _state: {},
-}));
+mockNuxtImport('useNuxtApp', () => () =>
+  proxyNuxtApp({ $i18n: { locale: ref('en') }, payload: { state: {} }, _state: {} }),
+);
 
 mockNuxtImport('useViewport', () => () => ({
   isLessThan: vi.fn().mockReturnValue(false),

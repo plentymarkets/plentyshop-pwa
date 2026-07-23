@@ -15,7 +15,7 @@ const { useSiteSettingsMock } = vi.hoisted(() => ({
 }));
 mockNuxtImport('useSiteSettings', () => useSiteSettingsMock);
 
-const runtimeConfigRef = { public: { ogTitle: '' } };
+const runtimeConfigRef = { app: { baseURL: '/' }, public: { ogTitle: '' } };
 const { useRuntimeConfigMock } = vi.hoisted(() => ({
   useRuntimeConfigMock: vi.fn(() => runtimeConfigRef),
 }));

@@ -4,7 +4,8 @@ const mockRoute = {
   fullPath: ref('/initial'),
 };
 
-vi.mock('vue-router', () => ({
+vi.mock('vue-router', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('vue-router')>()),
   useRoute: () => mockRoute,
 }));
 

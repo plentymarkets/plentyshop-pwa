@@ -14,7 +14,7 @@ import {
 const { mockUseHead } = vi.hoisted(() => ({ mockUseHead: vi.fn() }));
 mockNuxtImport('useHead', () => mockUseHead);
 
-const runtimeConfigRef = { public: { domain: 'https://shop.example.com' } };
+const runtimeConfigRef = { app: { baseURL: '/' }, public: { domain: 'https://shop.example.com' } };
 const { useRuntimeConfigMock } = vi.hoisted(() => ({
   useRuntimeConfigMock: vi.fn(() => runtimeConfigRef),
 }));

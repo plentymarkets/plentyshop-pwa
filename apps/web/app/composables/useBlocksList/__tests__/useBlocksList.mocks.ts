@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksList, BlockListCategory } from '../types';
 
@@ -97,13 +98,7 @@ export const mockSimpleBlocksList: BlocksList = {
 };
 
 export const setupNuxtMocks = () => {
-  mockNuxtImport('useNuxtApp', () => () => ({
-    $i18n: {
-      locale: {
-        value: 'en',
-      },
-    },
-  }));
+  mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp({ $i18n: { locale: { value: 'en' } } }));
 };
 
 export const mockBuildBlocksListSuccess = (mock: ReturnType<typeof vi.fn>, data: unknown) => {

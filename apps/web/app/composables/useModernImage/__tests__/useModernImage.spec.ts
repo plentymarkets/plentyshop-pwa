@@ -4,7 +4,7 @@ import { useModernImage } from '../useModernImage';
 const { useRuntimeConfig } = vi.hoisted(() => {
   return {
     useRuntimeConfig: vi.fn().mockImplementation(() => {
-      return {};
+      return { app: { baseURL: '/' } };
     }),
   };
 });

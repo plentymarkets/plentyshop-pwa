@@ -15,8 +15,11 @@ const checkElementOrder = (
 
 describe('Banner', () => {
   describe('with default settings', () => {
-    const wrapper = mount(BlocksBanner, {
-      props: {
+    let wrapper: ReturnType<typeof mount>;
+
+    beforeAll(() => {
+      wrapper = mount(BlocksBanner, {
+        props: {
         name: 'Banner',
         type: 'content',
         content: {
@@ -48,7 +51,8 @@ describe('Banner', () => {
         meta: {
           uuid: bannerBlockUuid,
         },
-      },
+        },
+      });
     });
 
     it('should render', () => {
