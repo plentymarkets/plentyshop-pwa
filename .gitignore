@@ -16,6 +16,7 @@ node_modules
 # nuxt dev/build outputs
 .output
 .nuxt
+.nuxtrc
 .nitro
 .cache
 cache

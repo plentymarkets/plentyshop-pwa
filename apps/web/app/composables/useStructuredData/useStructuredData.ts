@@ -303,7 +303,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
       const alternateLocales = canonicalAlternates.map((item: CanonicalAlternate) => {
         return {
-          rel: 'alternate',
+          rel: 'alternate' as const,
           hreflang: productSeoSettingsGetters.getCanonicalAlternateHreflang(item),
           href: applyTrailingSlashToUrl(productSeoSettingsGetters.getCanonicalAlternateHref(item)),
         };
