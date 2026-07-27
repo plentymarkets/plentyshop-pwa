@@ -126,6 +126,7 @@ export default defineNuxtConfig({
   ],
   vuetify: {
     moduleOptions: {
+      prefixComposables: true,
       disableVuetifyStyles: true,
     },
     vuetifyOptions: {
