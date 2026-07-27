@@ -76,7 +76,7 @@
     <!-- ROW 3: Navigasyon barı + Mega Menü (sadece desktop) -->
     <div class="hidden lg:block bg-white border-b border-neutral-200 relative">
       <div class="max-w-[1536px] mx-auto px-6 lg:px-8 flex items-center justify-between">
-        <nav class="flex items-center -ml-4">
+        <nav class="flex flex-wrap items-center -ml-4">
           <NuxtLink
             v-for="cat in topCategories"
             :key="cat.id"

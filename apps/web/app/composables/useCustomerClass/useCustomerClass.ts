@@ -28,7 +28,12 @@ export const useCustomerClass: UseCustomerClassesReturn = () => {
       const data = await useSdk().plentysystems.getCustomerClasses();
       state.value.data = data.data ?? [];
     } catch (error) {
-      useHandleError(error as ApiError);
+      // getCustomerClasses requires a valid ShopBuilder editor session on the backend.
+      // On a normal storefront (no editor hash) it returns `editor.invalidEditorHash`,
+      // which is expected here — swallow it instead of surfacing a toast to the user.
+      if ((error as ApiError)?.key !== 'editor.invalidEditorHash') {
+        useHandleError(error as ApiError);
+      }
     } finally {
       state.value.loading = false;
     }
