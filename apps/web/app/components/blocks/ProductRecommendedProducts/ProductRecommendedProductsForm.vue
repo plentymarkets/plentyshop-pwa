@@ -67,7 +67,7 @@
       </div>
 
       <div
-        v-else
+        v-else-if="recommendedBlock.source.type === 'last_seen'"
         class="bg-warning-200 mx-4 mt-4 mb-4 p-2 text-sm"
         role="alert"
         aria-live="polite"
