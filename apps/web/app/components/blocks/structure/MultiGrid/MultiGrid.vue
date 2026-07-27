@@ -7,9 +7,9 @@
     <template v-for="(gridRow, rowIndex) in gridRows" :key="rowIndex">
       <template v-for="cell in gridRow.cells" :key="cell.colIndex">
         <div
-          v-if="columns[cell.colIndex]?.length || (shouldEnableEditorFeatures && enableMultiGridEditor)"
+          v-if="columns[cell.colIndex]?.length || shouldEnableEditorFeatures"
           :class="getColumnClasses(cell.colIndex)"
-          class="group/col relative @md:z-raised"
+          class="group/col relative"
           data-testid="multi-grid-column"
         >
           <div
@@ -32,7 +32,7 @@
 
       <ClientOnly>
         <div
-          v-if="gridRow.free > 0 && shouldEnableEditorFeatures && enableMultiGridEditor"
+          v-if="gridRow.free > 0 && shouldEnableEditorFeatures"
           :class="`col-span-${gridRow.free}`"
           class="self-stretch rounded-md border border-dashed border-editor-canvas-border bg-editor-hatched flex items-center justify-center"
           aria-hidden="true"
@@ -68,7 +68,6 @@ const onRowLeave = () => {
 const isRowHovered = (row: Block) => hoveredRowUuid.value === row.meta.uuid;
 
 const { shouldEnableEditorFeatures } = useEditorState();
-const enableMultiGridEditor = useRuntimeConfig().public.enableMultiGridEditor as boolean;
 const { getSetting: getBlockSize } = useSiteSettings('verticalBlockSize');
 const blockSize = computed(() => getBlockSize());
 
@@ -103,11 +102,17 @@ const getGridClasses = () => {
   return gridClassFor({ mobile: 12, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', alignClass]);
 };
 
-const { widths: gridColumnsWidth } = useMultiGridDeviceWidths(computed(() => props.configuration));
+const { widths: gridColumnsWidth, mobileFullWidthColumn } = useMultiGridDeviceWidths(
+  computed(() => props.configuration),
+);
 
 const visibleGrid = computed(() => computeVisibleGrid(props.content, gridColumnsWidth.value));
 
 const getColumnClasses = (filteredColIndex: number) => {
+  if (mobileFullWidthColumn.value) {
+    return ['col-span-12'];
+  }
+
   const classes = [`col-span-${visibleGrid.value.columnWidths[filteredColIndex]}`];
   const originalIdx = visibleGrid.value.filteredToOriginal[filteredColIndex] ?? -1;
   if (Array.isArray(props.configuration.sticky) && props.configuration.sticky.includes(originalIdx)) {

@@ -57,7 +57,7 @@ export const FacetMock = {
                 alternate: '',
               },
               urlMiddle:
-                'https://cdn02.plentymarkets.com/mevofvd5omld/item/images/109/middle/109-Barhocker-White-SanFrancisco.jpg',
+                'https://cdn02.plentyone.com/mevofvd5omld/item/images/109/middle/109-Barhocker-White-SanFrancisco.jpg',
               position: 0,
               path: 'S3:109:109-Barhocker-White-SanFrancisco.jpg',
               cleanImageName: '109-Barhocker-White-SanFrancisco.jpg',

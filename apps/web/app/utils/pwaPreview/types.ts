@@ -4,3 +4,8 @@ export interface ResolvePreviewStateOptions {
   isPreviewConfig: boolean;
   getPreviewValid: () => Promise<PreviewValidResponse | null | undefined>;
 }
+
+export interface PreviewState {
+  isEditor: boolean;
+  isPreview: boolean;
+}

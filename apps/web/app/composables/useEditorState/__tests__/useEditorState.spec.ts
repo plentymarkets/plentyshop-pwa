@@ -3,11 +3,13 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { useEditorState } from '../useEditorState';
 import type { PreviewDevice } from '~/composables/useEditorDevice';
 
+const $isEditor = ref(false);
 const $isPreview = ref(false);
 const disableActions = ref(true);
 const deviceRef = ref<PreviewDevice>('desktop');
 
 mockNuxtImport('useNuxtApp', () => () => ({
+  $isEditor: $isEditor.value,
   $isPreview: $isPreview.value,
 }));
 
@@ -28,6 +30,7 @@ mockNuxtImport('useEditorDevice', () => () => ({
 describe('useEditorState', () => {
   describe('when in live mode', () => {
     beforeEach(() => {
+      $isEditor.value = false;
       $isPreview.value = false;
       disableActions.value = true;
     });
@@ -63,7 +66,8 @@ describe('useEditorState', () => {
 
   describe('when in edit mode', () => {
     beforeEach(() => {
-      $isPreview.value = true;
+      $isEditor.value = true;
+      $isPreview.value = false;
       disableActions.value = true;
     });
 
@@ -98,7 +102,8 @@ describe('useEditorState', () => {
 
   describe('when in preview mode', () => {
     beforeEach(() => {
-      $isPreview.value = true;
+      $isEditor.value = true;
+      $isPreview.value = false;
       disableActions.value = false;
     });
 
@@ -131,9 +136,26 @@ describe('useEditorState', () => {
     });
   });
 
+  describe('when preview permission is read-only', () => {
+    beforeEach(() => {
+      $isEditor.value = false;
+      $isPreview.value = true;
+      disableActions.value = true;
+    });
+
+    it('should return preview mode without editor access', () => {
+      const state = useEditorState();
+      expect(state.isInEditor.value).toBe(false);
+      expect(state.isPreviewMode.value).toBe(true);
+      expect(state.isEditMode.value).toBe(false);
+      expect(state.isLiveMode.value).toBe(false);
+    });
+  });
+
   describe('client-side hydration support', () => {
     beforeEach(() => {
-      $isPreview.value = true;
+      $isEditor.value = true;
+      $isPreview.value = false;
       disableActions.value = true;
     });
 

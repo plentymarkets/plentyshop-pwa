@@ -15,16 +15,7 @@ const { openAddBlockPopover } = useAddBlockPopover();
 const { logContentCreateBlock } = useLogEvent();
 
 const addNewBlock = (event: MouseEvent, position: BlockPosition) => {
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: '0', position });
-  } else {
-    const { openDrawerWithView } = useSiteConfiguration();
-    const { togglePlaceholder } = useBlockManager();
-    const { clearInsertColumnUuid } = useBlocksMutations();
-    togglePlaceholder('0', position);
-    openDrawerWithView('blocksList');
-    clearInsertColumnUuid();
-  }
+  openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: '0', position });
   logContentCreateBlock();
 };
 </script>

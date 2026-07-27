@@ -16,5 +16,6 @@ export type TextContentProps = {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
+    alignment?: 'left' | 'center' | 'right';
   };
 };

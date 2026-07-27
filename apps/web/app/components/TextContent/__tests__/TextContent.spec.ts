@@ -3,16 +3,18 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import type { Product } from '@plentymarkets/shop-api';
 import TextContent from '../TextContent.vue';
 
-const { useRouterMock, isInternalLinkMock, useProductsMock } = vi.hoisted(() => ({
+const { useRouterMock, isInternalLinkMock, useProductsMock, tMock } = vi.hoisted(() => ({
   useRouterMock: vi.fn(),
   isInternalLinkMock: vi.fn(),
   useProductsMock: vi.fn(),
+  tMock: vi.fn(),
 }));
 
 mockNuxtImport('useRouter', () => useRouterMock);
 mockNuxtImport('useLocalePath', () => () => (path: string) => `/de${path}`);
 mockNuxtImport('isInternalLink', () => isInternalLinkMock);
 mockNuxtImport('useProducts', () => useProductsMock);
+mockNuxtImport('t', () => tMock);
 
 const mockPush = vi.fn();
 const mockProduct = {
@@ -45,6 +47,7 @@ describe('TextContent - renderedHtmlDescription', () => {
     useRouterMock.mockReturnValue({ push: mockPush, resolve: vi.fn() });
     isInternalLinkMock.mockImplementation((href: string) => href.startsWith('/'));
     useProductsMock.mockReturnValue({ currentProduct: ref(mockProduct) });
+    tMock.mockImplementation((key: string) => ({ 'checkout.title': 'Checkout' })[key] ?? key);
   });
 
   it('should localize internal hrefs with localePath', () => {
@@ -118,6 +121,17 @@ describe('TextContent - renderedHtmlDescription', () => {
     const html = wrapper.find('[data-testid="text-html"]').html();
     expect(html).toContain('data-property-kind="property-value"');
     expect(html).toContain('>{value}</span>');
+  });
+
+  it('should render i18n placeholders with the current translation value', () => {
+    const wrapper = mountComponent(
+      '<p><span data-i18n-key="checkout.title" title="i18n: checkout.title" class="rte-i18n-placeholder" contenteditable="false">title</span></p>',
+    );
+
+    const html = wrapper.find('[data-testid="text-html"]').html();
+    expect(html).toContain('data-i18n-key="checkout.title"');
+    expect(html).not.toContain('data-i18n-label');
+    expect(html).toContain('>Checkout</span>');
   });
 });
 

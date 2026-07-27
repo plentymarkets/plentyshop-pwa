@@ -21,5 +21,9 @@ export const createMockUseRichTextEditor = (overrides: Record<string, unknown> =
   toggleLink: vi.fn(),
   clearFormatting: vi.fn(),
   focus: vi.fn(),
+  insertIcon: vi.fn(),
+  insertEmoji: vi.fn(),
+  insertI18nPlaceholder: vi.fn(),
+  insertPropertyPlaceholders: vi.fn(),
   ...overrides,
 });

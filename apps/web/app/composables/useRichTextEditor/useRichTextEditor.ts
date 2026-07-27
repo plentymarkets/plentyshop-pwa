@@ -22,7 +22,9 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Emoji, { emojis } from '@tiptap/extension-emoji';
 import { getMarkRange } from '@tiptap/core';
 import { PropertyPlaceholderNode } from './helpers/propertyPlaceholderExtension';
-import type { PropertyPlaceholderToken } from './types';
+import { I18nPlaceholderNode } from './helpers/i18nPlaceholderExtension';
+import { createI18nPlaceholderShortcutExtension } from './helpers/i18nPlaceholderShortcutExtension';
+import type { I18nPlaceholderToken, PropertyPlaceholderToken } from './types';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
@@ -42,6 +44,8 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         autolink: true,
         linkOnPaste: true,
       }),
+      I18nPlaceholderNode,
+      createI18nPlaceholderShortcutExtension(args.onOpenI18nModal),
       PropertyPlaceholderNode,
       TextStyle,
       FontSize,
@@ -168,6 +172,16 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const insertEmoji = (name: string) => {
     editor.value?.chain().focus().setEmoji(name).run();
   };
+
+  const insertI18nPlaceholder = ({ key, label }: I18nPlaceholderToken) => {
+    if (!key) return;
+    editor.value
+      ?.chain()
+      .focus()
+      .insertI18nPlaceholder(key, label ?? key)
+      .run();
+  };
+
   const insertPropertyPlaceholders = (tokens: PropertyPlaceholderToken[]) => {
     if (!tokens.length || !editor.value) return;
 
@@ -209,6 +223,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     focus,
     insertIcon,
     insertEmoji,
+    insertI18nPlaceholder,
     insertPropertyPlaceholders,
   };
 }

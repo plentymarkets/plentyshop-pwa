@@ -25,23 +25,23 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   }));
 
   const updateSetting: UpdateSetting = async (value) => {
-    state.value.data = { ...state.value.data, [setting as string]: value };
+    if (setting) {
+      state.value.data = { ...state.value.data, [setting]: value };
+    }
   };
 
   const getSetting: GetSetting = () => {
-    return (
-      (state.value.data?.[setting as string] as string) ??
-      (state.value.initialData?.[setting as string] as string) ??
-      ''
-    );
+    if (!setting) return '';
+    return (state.value.data?.[setting] as string) ?? (state.value.initialData?.[setting] as string) ?? '';
   };
 
   const getJsonSetting: () => string[] = () => {
-    const runtimeSetting = state.value.initialData?.[setting as string];
+    if (!setting) return [];
+    const runtimeSetting = state.value.initialData?.[setting];
 
     const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);
 
-    return JSON.parse((state.value.data?.[setting as string] as string) || defaultSetting);
+    return JSON.parse((state.value.data?.[setting] as string) ?? defaultSetting);
   };
 
   const setInitialData: SetSettingsInitialData = (settings: Setting[]) => {
@@ -89,7 +89,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
       const settings = [
         ...Object.entries(state.value.data || {}).map(([key, val]) => ({
           key,
-          value: String(val || ''),
+          value: typeof val === 'string' ? val : JSON.stringify(val ?? ''),
         })),
       ];
       await useSdk().plentysystems.setConfiguration({ settings });

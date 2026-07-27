@@ -7,6 +7,9 @@ enum AnalyticsEventName {
   openingCheckout = 'openingCheckout',
   paypalExpressFlow = 'paypalExpressFlow',
   guestLoginPage = 'guestLoginPage',
+  aiGenerateDraft = 'aiGenerateDraft',
+  aiKeepDraft = 'aiKeepDraft',
+  aiDiscardDraft = 'aiDiscardDraft',
 }
 
 export const useLogEvent = () => {
@@ -82,6 +85,33 @@ export const useLogEvent = () => {
     });
   };
 
+  const logAiGenerateDraft = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.aiGenerateDraft,
+      loggableType: 'ai',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
+  const logAiKeepDraft = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.aiKeepDraft,
+      loggableType: 'ai',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
+  const logAiDiscardDraft = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.aiDiscardDraft,
+      loggableType: 'ai',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
   return {
     logToCOpened,
     logToCCreateBlock,
@@ -91,5 +121,8 @@ export const useLogEvent = () => {
     logOpeningCheckout,
     logPayPalExpressFlow,
     logOpenGuestLoginPage,
+    logAiGenerateDraft,
+    logAiKeepDraft,
+    logAiDiscardDraft,
   };
 };

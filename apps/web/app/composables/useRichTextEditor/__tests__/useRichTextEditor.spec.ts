@@ -15,6 +15,7 @@ const {
   unsetLinkSpy,
   runSpy,
   focusSpy,
+  insertI18nPlaceholderSpy,
   isActiveSpy,
 } = vi.hoisted(() => {
   const setColorSpy = vi.fn();
@@ -28,6 +29,7 @@ const {
   const unsetLinkSpy = vi.fn();
   const setLinkSpy = vi.fn();
   const extendMarkRangeSpy = vi.fn();
+  const insertI18nPlaceholderSpy = vi.fn();
   const runSpy = vi.fn();
   const focusSpy = vi.fn();
   const isActiveSpy = vi.fn().mockReturnValue(false);
@@ -94,6 +96,11 @@ const {
     return chainReturn;
   };
 
+  chainReturn.insertI18nPlaceholder = (...args: unknown[]) => {
+    insertI18nPlaceholderSpy(...args);
+    return chainReturn;
+  };
+
   chainReturn.run = (...args: unknown[]) => {
     runSpy(...args);
     return chainReturn;
@@ -144,6 +151,7 @@ const {
     unsetLinkSpy,
     runSpy,
     focusSpy,
+    insertI18nPlaceholderSpy,
     isActiveSpy,
   };
 });
@@ -397,5 +405,24 @@ describe('useRichTextEditor', () => {
     toggleLink();
 
     expect(onOpenLinkModal).toHaveBeenCalled();
+  });
+
+  it('should insert an i18n placeholder', () => {
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
+
+    const { insertI18nPlaceholder } = useRichTextEditor({
+      modelValue,
+      onUpdateModelValue,
+      expanded,
+      onUpdateExpanded,
+      textAlign,
+    });
+
+    insertI18nPlaceholder({ key: 'checkout.title', label: 'checkout.title' });
+
+    expect(chainSpy).toHaveBeenCalled();
+    expect(focusSpy).toHaveBeenCalled();
+    expect(insertI18nPlaceholderSpy).toHaveBeenCalledWith('checkout.title', 'checkout.title');
+    expect(runSpy).toHaveBeenCalled();
   });
 });

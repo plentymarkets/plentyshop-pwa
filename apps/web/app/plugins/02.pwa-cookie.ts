@@ -1,7 +1,7 @@
 import { resolvePreviewState } from '~/utils/pwaPreview';
 
 /**
- * This plugin checks for the presence of a 'pwa' cookie to determine if the user is in preview mode.
+ * This plugin checks for the presence of a 'pwa' cookie to determine if the user is in editor or preview mode.
  */
 export default defineNuxtPlugin({
   name: 'pwa-cookie',
@@ -18,16 +18,16 @@ export default defineNuxtPlugin({
       return data?.data;
     };
 
-    const isPreview = await resolvePreviewState({
+    const { isEditor, isPreview } = await resolvePreviewState({
       cookieValue: pwaCookie.value,
       isPreviewConfig,
       getPreviewValid: () => getPreviewValid(),
     }).catch(() => {
-      return false;
+      return { isEditor: false, isPreview: false };
     });
 
     return {
-      provide: { isPreview },
+      provide: { isEditor, isPreview },
     };
   },
 });

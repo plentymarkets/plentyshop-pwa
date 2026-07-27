@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Z-Index Token Scale > should match the approved z-index scale (snapshot) 1`] = `
+{
+  "base": "0",
+  "cookiebar": "90",
+  "drawer": "80",
+  "drawer-backdrop": "70",
+  "dropdown": "50",
+  "editor-drawer": "10",
+  "editor-inline": "30",
+  "editor-toolbar": "100",
+  "loader": "300",
+  "max": "9999",
+  "modal": "210",
+  "modal-backdrop": "200",
+  "notifications": "60",
+  "overlap": "2",
+  "picker": "400",
+  "popover": "220",
+  "raised": "1",
+  "sticky": "40",
+  "toast": "500",
+}
+`;

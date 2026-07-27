@@ -24,11 +24,11 @@ onMounted(async () => {
 {
   "en": {
     "groups-title": "Customer Management",
-    "description": "Assign default customer classes for B2C and B2B customers."
+    "description": "Assign default customer classes for B2C customers."
   },
   "de": {
     "groups-title": "Customer Management",
-    "description": "Assign default customer classes for B2C and B2B customers."
+    "description": "Assign default customer classes for B2C customers."
   }
 }
 </i18n>

@@ -20,21 +20,13 @@
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
+        <UiFormLabel for="image-form-alt">{{ getEditorTranslation('alt-label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input">
-          <template #suffix>
-            <label for="alt" class="rounded-lg cursor-pointer">
-              <input id="alt" v-model="uiImageTextBlock.image.alt" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
+      <SfInput id="image-form-alt" v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input" />
     </div>
 
     <div class="py-2">
-      <label class="block text-sm font-medium mb-4">Brightness</label>
+      <label for="image-form-brightness" class="block text-sm font-medium mb-4">Brightness</label>
       <div class="flex items-center gap-4">
         <div class="flex-1 space-y-1">
           <div class="flex justify-between text-xs text-gray-500">
@@ -42,21 +34,25 @@
             <span>100%</span>
           </div>
           <input
+            id="image-form-brightness"
             v-model.number="uiImageTextBlock.image.brightness"
             type="range"
             min="0"
             max="1"
             step="0.01"
             class="w-full"
+            aria-label="Brightness slider"
           />
         </div>
 
         <div class="relative">
           <input
+            id="image-form-brightness-number"
             v-model.number="uiImageTextBlock.image.brightness"
             type="number"
             min="0"
             max="1"
+            aria-label="Brightness value"
             class="w-20 px-2 py-1 border rounded text-color-red-500"
             @input="clampBrightness($event, 'image')"
           />
@@ -76,17 +72,14 @@
     </div>
     <div class="py-2">
       <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
+        <UiFormLabel for="image-form-linktarget">{{ getEditorTranslation('linktarget-label') }}</UiFormLabel>
       </div>
-      <label>
-        <SfInput v-model="uiImageTextBlock.image.linktarget" type="text" data-testid="linktarget-input">
-          <template #suffix>
-            <label for="linktarget" class="rounded-lg cursor-pointer">
-              <input id="linktarget" v-model="uiImageTextBlock.image.linktarget" type="text" class="invisible w-8" />
-            </label>
-          </template>
-        </SfInput>
-      </label>
+      <SfInput
+        id="image-form-linktarget"
+        v-model="uiImageTextBlock.image.linktarget"
+        type="text"
+        data-testid="linktarget-input"
+      />
     </div>
   </EditorFormPanel>
   <EditorFormPanel v-model="textGroupOpen" :title="getEditorTranslation('text-overlay-label')" data-testid="text-group">
@@ -96,6 +89,15 @@
       :block-uuid="blockUuid"
       @update:model-value="uiImageTextBlock.text.textOverlay = $event"
     />
+
+    <div class="py-2">
+      <EditorOptionsTabs
+        v-model="textOverlayAlignXModel"
+        :legend="getEditorTranslation('text-overlay-align-x-label')"
+        test-id-prefix="text-overlay-align-x"
+        :options="textOverlayAlignXOptions"
+      />
+    </div>
 
     <div class="py-2">
       <EditorOptionsTabs
@@ -114,20 +116,24 @@
   >
     <div class="images">
       <div class="mb-6 mt-4">
-        <label>
-          <UiFormLabel class="mb-1">{{ getEditorTranslation('button-text-label') }}</UiFormLabel>
-          <SfInput
-            v-model="uiImageTextBlock.button.label"
-            data-testid="slider-button-label"
-            name="label"
-            type="text"
-            :placeholder="getEditorTranslation('button-text-placeholder')"
-          />
-        </label>
+        <UiFormLabel class="mb-1" for="image-form-button-label">
+          {{ getEditorTranslation('button-text-label') }}
+        </UiFormLabel>
+        <SfInput
+          id="image-form-button-label"
+          v-model="uiImageTextBlock.button.label"
+          data-testid="slider-button-label"
+          name="label"
+          type="text"
+          :placeholder="getEditorTranslation('button-text-placeholder')"
+        />
       </div>
       <div class="mb-6">
-        <UiFormLabel class="mb-1">{{ getEditorTranslation('button-link-label') }}</UiFormLabel>
+        <UiFormLabel for="image-form-button-link" class="mb-1">{{
+          getEditorTranslation('button-link-label')
+        }}</UiFormLabel>
         <SfInput
+          id="image-form-button-link"
           v-model="uiImageTextBlock.button.link"
           name="link"
           data-testid="slider-button-link"
@@ -141,6 +147,15 @@
           :legend="getEditorTranslation('button-variant-label')"
           test-id-prefix="slider-button-variant"
           :options="buttonVariantOptions"
+        />
+      </div>
+
+      <div class="mb-6">
+        <EditorOptionsTabs
+          v-model="buttonAlignModel"
+          :legend="getEditorTranslation('button-align-label')"
+          test-id-prefix="slider-button-align"
+          :options="buttonAlignOptions"
         />
       </div>
     </div>
@@ -169,19 +184,18 @@
       </div>
       <EditorColorPicker v-model="backgroundColor" class="w-full">
         <template #trigger="{ color, toggle }">
-          <label>
-            <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
-              <template #suffix>
-                <button
-                  type="button"
-                  class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
-                  :style="{ backgroundColor: color }"
-                  @mousedown.stop
-                  @click.stop="toggle"
-                />
-              </template>
-            </SfInput>
-          </label>
+          <SfInput v-model="backgroundColor" type="text" data-testid="input-background-color">
+            <template #suffix>
+              <button
+                type="button"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer w-10 h-8"
+                :style="{ backgroundColor: color }"
+                aria-label="Color picker"
+                @mousedown.stop
+                @click.stop="toggle"
+              />
+            </template>
+          </SfInput>
         </template>
       </EditorColorPicker>
     </div>
@@ -204,42 +218,50 @@
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowUpward /></span>
           <input
+            id="image-form-padding-top"
             v-model.number="uiImageTextBlock.layout.paddingTop"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-top"
             :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
+            aria-label="Top padding"
           />
         </div>
 
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowDownward /></span>
           <input
+            id="image-form-padding-bottom"
             v-model.number="uiImageTextBlock.layout.paddingBottom"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-bottom"
             :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
+            aria-label="Bottom padding"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
           <span><SfIconArrowBack /></span>
           <input
+            id="image-form-padding-left"
             v-model.number="uiImageTextBlock.layout.paddingLeft"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-left"
             :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
+            aria-label="Left padding"
           />
         </div>
         <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
           <span><SfIconArrowForward /></span>
           <input
+            id="image-form-padding-right"
             v-model.number="uiImageTextBlock.layout.paddingRight"
             type="number"
             class="w-12 text-center outline-none"
             data-testid="padding-right"
             :disabled="uiImageTextBlock.image.fillMode !== 'fit'"
+            aria-label="Right padding"
           />
         </div>
       </div>
@@ -282,25 +304,36 @@ const DEFAULT_LAYOUT = {
 const {
   fillModeModel,
   fillModeOptions,
+  textOverlayAlignXModel,
+  textOverlayAlignXOptions,
   textOverlayAlignYModel,
   textOverlayAlignYOptions,
   buttonVariantModel,
   buttonVariantOptions,
+  buttonAlignModel,
+  buttonAlignOptions,
 } = useEditorOptionsTabs(() => uiImageTextBlock.value, getEditorTranslation);
 
 const uiImageTextBlock = computed(() => {
   const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
   const migrated = migrateImageContent(rawContent as ImageContent | OldContent);
 
-  if (!migrated.layout) {
-    migrated.layout = { ...DEFAULT_LAYOUT };
-  } else {
+  if (migrated.layout) {
     (Object.keys(DEFAULT_LAYOUT) as Array<keyof typeof DEFAULT_LAYOUT>).forEach((key) => {
       if (typeof migrated.layout[key] !== 'number') {
         migrated.layout[key] = DEFAULT_LAYOUT[key];
       }
     });
+  } else {
+    migrated.layout = { ...DEFAULT_LAYOUT };
   }
+
+  if (!migrated.button) {
+    migrated.button = { alignment: 'center' };
+  } else if (!migrated.button.alignment) {
+    migrated.button.alignment = 'center';
+  }
+
   return migrated;
 });
 
@@ -369,6 +402,10 @@ const clampBrightness = (event: Event, type: string) => {
 
     "keep-transparent-label": "Keep background transparent",
 
+    "text-overlay-align-x-label": "Horizontal Alignment (x)",
+    "text-overlay-align-x-left": "Left",
+    "text-overlay-align-x-center": "Center",
+    "text-overlay-align-x-right": "Right",
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
@@ -380,7 +417,11 @@ const clampBrightness = (event: Event, type: string) => {
     "button-link-placeholder": "Enter URL here",
     "button-variant-label": "Variant",
     "button-variant-primary-label": "Primary",
-    "button-variant-secondary-label": "Secondary"
+    "button-variant-secondary-label": "Secondary",
+    "button-align-label": "Button Alignment (x)",
+    "button-align-option-left-label": "Left",
+    "button-align-option-center-label": "Center",
+    "button-align-option-right-label": "Right"
   },
   "de": {
     "images-group-label": "Images",
@@ -399,6 +440,10 @@ const clampBrightness = (event: Event, type: string) => {
 
     "text-overlay-label": "Text",
 
+    "text-overlay-align-x-label": "Horizontal Alignment (x)",
+    "text-overlay-align-x-left": "Left",
+    "text-overlay-align-x-center": "Center",
+    "text-overlay-align-x-right": "Right",
     "text-overlay-align-y-label": "Vertical Alignment (y)",
     "text-overlay-align-y-top": "Top",
     "text-overlay-align-y-center": "Center",
@@ -410,7 +455,11 @@ const clampBrightness = (event: Event, type: string) => {
     "button-link-placeholder": "Enter URL here",
     "button-variant-label": "Variant",
     "button-variant-primary-label": "Primary",
-    "button-variant-secondary-label": "Secondary"
+    "button-variant-secondary-label": "Secondary",
+    "button-align-label": "Button Alignment (x)",
+    "button-align-option-left-label": "Left",
+    "button-align-option-center-label": "Center",
+    "button-align-option-right-label": "Right"
   }
 }
 </i18n>

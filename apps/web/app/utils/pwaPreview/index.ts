@@ -1,23 +1,27 @@
-import type { ResolvePreviewStateOptions } from './types';
+import type { PreviewState, ResolvePreviewStateOptions } from './types';
 
 export const resolvePreviewState = async ({
   cookieValue,
   isPreviewConfig,
   getPreviewValid,
-}: ResolvePreviewStateOptions): Promise<boolean> => {
+}: ResolvePreviewStateOptions): Promise<PreviewState> => {
   if (isPreviewConfig) {
-    return true;
+    return { isEditor: true, isPreview: false };
   }
 
   if (!cookieValue) {
-    return false;
+    return { isEditor: false, isPreview: false };
   }
 
   const data = await getPreviewValid();
 
   if (data?.valid && data.permission === 'write') {
-    return true;
+    return { isEditor: true, isPreview: false };
   }
 
-  return false;
+  if (data?.valid && data.permission === 'read') {
+    return { isEditor: false, isPreview: true };
+  }
+
+  return { isEditor: false, isPreview: false };
 };

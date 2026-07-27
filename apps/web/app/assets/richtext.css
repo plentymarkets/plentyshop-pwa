@@ -79,6 +79,9 @@
 
 .editor-parent .ProseMirror {
   padding: 0.25rem;
+  width: 100%;
+  min-height: 100%;
+  outline: none;
 }
 .rte__content .ProseMirror {
   position: relative;
@@ -111,6 +114,14 @@
   border-radius: 2px;
 }
 
+.ProseMirror-selectednode.rte-i18n-placeholder,
+.editor-parent:focus-within .rte-atom-selected.rte-i18n-placeholder {
+  border-color: #0891b2;
+  outline: 2px solid #0891b2;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(103, 232, 249, 0.35);
+}
+
 .editor-parent:focus-within .rte-atom-selected {
   outline: 2px solid rgb(100 116 139);
   outline-offset: 1px;
@@ -120,10 +131,4 @@
 .editor-parent:focus-within {
   border-color: #111827;
   border-width: 2px;
-}
-
-.editor-parent .ProseMirror {
-  width: 100%;
-  min-height: 100%;
-  outline: none;
 }

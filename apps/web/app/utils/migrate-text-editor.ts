@@ -67,6 +67,7 @@ export const mapToTextContentProps = (mapping: {
   buttonLabel?: string;
   buttonLink?: string;
   buttonVariant?: 'primary' | 'secondary';
+  buttonAlignment?: 'left' | 'center' | 'right';
   index?: number;
 }): TextContentProps => {
   const {
@@ -79,6 +80,7 @@ export const mapToTextContentProps = (mapping: {
     buttonLabel,
     buttonLink,
     buttonVariant,
+    buttonAlignment,
     index,
   } = mapping;
 
@@ -96,6 +98,7 @@ export const mapToTextContentProps = (mapping: {
       label: buttonLabel,
       link: buttonLink,
       variant: buttonVariant,
+      alignment: buttonAlignment,
     },
   };
 };

@@ -3,25 +3,24 @@
 </template>
 
 <script lang="ts" setup>
-import type { PayPalAddToCartCallback } from '../types';
+import type { PayPalCreditPropsType } from '../types';
 import { usePayPal } from '../composables/usePayPal';
+import type { ButtonClickedEmits } from '~/composables/useApplePay/types';
 
 const { initialize, config, processPayment, getTransactionInfo } = useApplePay();
 const { getCurrentScript } = usePayPal();
 const { data: cart } = useCart();
 const { locale } = useI18n();
 
-const emits = defineEmits<{
-  (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
-  (event: 'on-payed'): void;
-}>();
+const props = defineProps<PayPalCreditPropsType>();
+const emits = defineEmits<ButtonClickedEmits>();
 
 const basketAmount = computed(() => cart.value?.basketAmount ?? 0);
 const payPalScript = computed(() => getCurrentScript());
 
 const renderButton = async () => {
   if ((await initialize()) && config.value.isEligible) {
-    await getTransactionInfo();
+    await getTransactionInfo(props.order?.order?.id);
     const applePayButtonContainer = document.querySelector('#apple-pay-button');
     if (applePayButtonContainer) {
       applePayButtonContainer.innerHTML =
@@ -30,7 +29,7 @@ const renderButton = async () => {
       const applePayButton = document.querySelector('#btn-appl');
       if (applePayButton) {
         applePayButton.addEventListener('click', () => {
-          processPayment(emits);
+          processPayment(emits, props.order);
         });
       }
     }

@@ -12,6 +12,10 @@
         "link": "/guide/modules/components.md"
       },
       {
+        "text": "Blocks",
+        "link": "/guide/modules/blocks.md"
+      },
+      {
         "text": "Inject components into shop areas",
         "link": "/guide/modules/inject-components.md"
       },

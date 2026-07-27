@@ -22,6 +22,7 @@ export type TextCardContent = {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
+    alignment?: 'left' | 'center' | 'right';
   };
   layout: {
     backgroundColor?: string;

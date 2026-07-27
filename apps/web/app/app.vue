@@ -10,7 +10,7 @@
 
     <component
       :is="SiteConfigurationDrawer"
-      v-if="siteConfigurationDrawerOpen"
+      v-if="siteConfigurationDrawerOpen && clientPreview"
       class="flex-shrink-0 bg-white font-editor border-r border-gray-300 overflow-visible"
     />
 
@@ -45,8 +45,9 @@
                 display: 'flex',
                 flexDirection: 'column',
                 '--viewport-height': '90dvh',
+                isolation: 'isolate',
               }
-            : undefined
+            : { isolation: 'isolate' }
         "
         :class="isMobilePreview ? 'mx-auto bg-white my-auto shadow-md @container' : '@container'"
         data-testid="editor-preview-container"
@@ -68,7 +69,7 @@
 
     <component
       :is="BlocksConfigurationDrawer"
-      v-if="blocksConfigurationDrawerOpen"
+      v-if="blocksConfigurationDrawerOpen && clientPreview"
       class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
     />
   </div>
@@ -76,7 +77,7 @@
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
-    <component :is="AddBlockPopoverComponent" v-if="enablePopover && clientPreview" />
+    <component :is="AddBlockPopoverComponent" v-if="clientPreview" />
   </ClientOnly>
 </template>
 
@@ -91,8 +92,6 @@ const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient, isMobilePreview, previewWidth } = useEditorState();
-
-const enablePopover = useRuntimeConfig().public.enableAddBlockPopover;
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 const clientPreview = computed(() => isInEditorClient.value && isLargeScreen.value);
@@ -209,7 +208,13 @@ useSeoMeta({
   generator: 'plentymarkets',
 });
 
+const localeHead = useLocaleHead();
+
 useHead({
+  htmlAttrs: {
+    lang: () => localeHead.value.htmlAttrs.lang,
+    dir: () => localeHead.value.htmlAttrs.dir as 'ltr' | 'rtl' | 'auto' | undefined,
+  },
   link: () => [
     { rel: 'icon', href: fav.value },
     { rel: 'apple-touch-icon', href: fav.value },

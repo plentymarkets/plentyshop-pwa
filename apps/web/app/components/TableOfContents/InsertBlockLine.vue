@@ -70,16 +70,7 @@ const handleFocusOut = () => {
 
 const handleAddBlock = (event: MouseEvent | KeyboardEvent) => {
   const position = props.isTop ? 'top' : 'bottom';
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: props.block.meta.uuid, position });
-  } else {
-    const { openDrawerWithView } = useSiteConfiguration();
-    const { togglePlaceholder } = useBlockManager();
-    const { clearInsertColumnUuid } = useBlocksMutations();
-    togglePlaceholder(props.block.meta.uuid, position);
-    openDrawerWithView('blocksList');
-    clearInsertColumnUuid();
-  }
+  openAddBlockPopover({ anchorEl: event.currentTarget as HTMLElement, targetUuid: props.block.meta.uuid, position });
   scrollIntoBlockView(props.block, true, position);
 };
 

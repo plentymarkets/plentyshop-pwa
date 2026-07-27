@@ -26,34 +26,19 @@ import type { EmptyGridBlockProps } from '~/components/blocks/structure/MultiGri
 
 const props = defineProps<EmptyGridBlockProps>();
 const { isEditMode } = useEditorState();
-const { insertColumnUuid, setInsertColumnUuid } = useBlocksMutations();
+const { insertColumnUuid } = useBlocksMutations();
 const { openAddBlockPopover, popoverState } = useAddBlockPopover();
-const { siteConfigurationDrawerOpen, siteConfigurationDrawerView, openDrawerWithView } = useSiteConfiguration();
 
 const isActiveColumn = computed(() => insertColumnUuid.value === props.meta.uuid);
 
-const isActiveColumnOpen = computed(() => {
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    return !!(popoverState.value && isActiveColumn.value);
-  }
-  return !!(
-    siteConfigurationDrawerOpen.value &&
-    siteConfigurationDrawerView.value === 'blocksList' &&
-    isActiveColumn.value
-  );
-});
+const isActiveColumnOpen = computed(() => !!(popoverState.value && isActiveColumn.value));
 
 const addBlockToColumn = (event: MouseEvent) => {
-  if (useRuntimeConfig().public.enableAddBlockPopover) {
-    openAddBlockPopover({
-      anchorEl: event.currentTarget as HTMLElement,
-      targetUuid: props.meta.uuid,
-      position: 'inside',
-    });
-  } else {
-    setInsertColumnUuid(props.meta.uuid);
-    openDrawerWithView('blocksList');
-  }
+  openAddBlockPopover({
+    anchorEl: event.currentTarget as HTMLElement,
+    targetUuid: props.meta.uuid,
+    position: 'inside',
+  });
 };
 </script>
 

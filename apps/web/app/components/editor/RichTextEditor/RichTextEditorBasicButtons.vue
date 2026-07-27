@@ -128,11 +128,10 @@
   />
 
   <EditorRichTextEditorMenuButton
-    v-if="showPropertiesButton && onOpenPropertiesModal"
-    :title="'Insert property'"
-    data-testid="rte-properties-button"
-    icon-name="add"
-    @click="handleOpenPropertiesModal"
+    :title="'Insert i18n key'"
+    data-testid="rte-i18n-button"
+    icon-name="translate"
+    @click="handleOpenI18nModal"
   />
 
   <EditorRichTextEditorIconEmojiPicker @select-icon="insertIcon" @select-emoji="insertEmoji" />
@@ -173,8 +172,7 @@ const props = defineProps<{
   toggleLink: () => void;
   insertIcon: (name: string) => void;
   insertEmoji: (name: string) => void;
-  showPropertiesButton?: boolean;
-  onOpenPropertiesModal?: () => void;
+  onOpenI18nModal?: () => void;
 }>();
 
 const isBlockTypeOpen = ref(false);
@@ -262,9 +260,9 @@ const selectFontSize = (value: string) => {
   isFontSizeOpen.value = false;
 };
 
-const handleOpenPropertiesModal = () => {
-  if (props.onOpenPropertiesModal) {
-    props.onOpenPropertiesModal();
+const handleOpenI18nModal = () => {
+  if (props.onOpenI18nModal) {
+    props.onOpenI18nModal();
   }
 };
 </script>

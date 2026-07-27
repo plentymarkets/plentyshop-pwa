@@ -50,6 +50,8 @@ describe('composables index exports', () => {
     'useMultiGridQuickAdd',
     'useColumnSticky',
     'useEditorItemProperties',
+    'useAiDraftFlow',
+    'useAiTextGeneration',
   ];
 
   const allFileModules = fs

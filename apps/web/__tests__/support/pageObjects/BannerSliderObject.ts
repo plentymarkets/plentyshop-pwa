@@ -103,7 +103,7 @@ export class BannerSliderObject extends PageObject {
     cy.get('[data-testid^="banner-image-"]').first().should('be.visible');
     cy.get('[data-testid^="banner-image-"]')
       .first()
-      .should('have.attr', 'src', 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/123-demo-picture.jpeg');
+      .should('have.attr', 'src', 'https://cdn02.plentyone.com/mevofvd5omld/frontend/123-demo-picture.jpeg');
   }
 
   checkBannerAltText() {

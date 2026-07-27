@@ -31,6 +31,7 @@
               :on-text-size-change="setFontSize"
               :insert-icon="insertIcon"
               :insert-emoji="insertEmoji"
+              :on-open-i18n-modal="onOpenI18nModal"
             />
 
             <EditorRichTextEditorExtendedButtons
@@ -93,6 +94,7 @@ defineProps<{
   clearFormatting: () => void;
   insertIcon: (name: string) => void;
   insertEmoji: (name: string) => void;
+  onOpenI18nModal?: () => void;
 }>();
 
 const emit = defineEmits<{

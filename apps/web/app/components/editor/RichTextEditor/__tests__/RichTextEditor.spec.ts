@@ -256,4 +256,32 @@ describe('RichTextEditor', () => {
 
     expect(wrapper.find('[data-testid="item-properties-modal"]').exists()).toBe(true);
   });
+
+  it('should open the i18n modal and insert the selected key', async () => {
+    const insertI18nPlaceholder = vi.fn();
+    useRichTextEditor.mockReturnValue(createMockUseRichTextEditor({ insertI18nPlaceholder }));
+
+    const wrapper = mount(RichTextEditor, {
+      global: {
+        stubs: {
+          EditorContent: true,
+          EditorColorPicker: true,
+          I18nKeySelectModal: {
+            emits: ['insert', 'close'],
+            template:
+              "<button data-testid=\"i18n-key-modal\" @click=\"$emit('insert', { key: 'checkout.title', label: 'checkout.title' })\" />",
+          },
+        },
+      },
+    });
+
+    await wrapper.get('[data-testid="rte-i18n-button"]').trigger('click');
+    await nextTick();
+
+    expect(wrapper.find('[data-testid="i18n-key-modal"]').exists()).toBe(true);
+
+    await wrapper.get('[data-testid="i18n-key-modal"]').trigger('click');
+
+    expect(insertI18nPlaceholder).toHaveBeenCalledWith({ key: 'checkout.title', label: 'checkout.title' });
+  });
 });

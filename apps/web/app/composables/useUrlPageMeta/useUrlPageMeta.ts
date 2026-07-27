@@ -22,22 +22,23 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
     return;
   }
 
-  if (facetsFromUrl.page === 2) {
+  const domain = useRuntimeConfig().public.domain as string;
+  const url = new URL(canonicalLink, domain);
+  const baseUrl = `${url.origin}${url.pathname}`;
+
+  if (facetsFromUrl.page >= 2) {
+    const prevParams = new URLSearchParams(url.search);
+    if (facetsFromUrl.page === 2) {
+      prevParams.delete('page');
+    } else {
+      prevParams.set('page', String(facetsFromUrl.page - 1));
+    }
+    const prevSearch = prevParams.toString();
     useHead({
       link: [
         {
           rel: 'prev',
-          href: canonicalLink,
-        },
-      ],
-    });
-  }
-  if (facetsFromUrl.page > 2) {
-    useHead({
-      link: [
-        {
-          rel: 'prev',
-          href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
+          href: prevSearch ? `${baseUrl}?${prevSearch}` : baseUrl,
         },
       ],
     });
@@ -46,11 +47,13 @@ const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSear
     productsCatalog.pagination?.totals &&
     facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage
   ) {
+    const nextParams = new URLSearchParams(url.search);
+    nextParams.set('page', String(facetsFromUrl.page + 1));
     useHead({
       link: [
         {
           rel: 'next',
-          href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
+          href: `${baseUrl}?${nextParams.toString()}`,
         },
       ],
     });
@@ -174,7 +177,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
   };
 
   /**
-   * @description Computed robots meta content for category pages. Returns `noindex, nofollow`
+   * @description Computed robots meta content for category pages. Returns `noindex, follow`
    * when the current page number exceeds the configured max indexed page; otherwise falls back
    * to the category's own robots setting.
    * @returns ComputedRef<string>
@@ -187,7 +190,9 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const route = useRoute();
     const { getSetting: getSeoCategoryRobotsNoIndex } = useSiteSettings('seoCategoryRobotsNoIndex');
     const currentPage = computed(() => Number(route.query.page as string) || 1);
-    const maxIndexedPage = computed(() => Number(getSeoCategoryRobotsNoIndex()) || 0);
+    const maxIndexedPage = computed(() =>
+      Number(getSeoCategoryRobotsNoIndex()) > 0 ? Number(getSeoCategoryRobotsNoIndex()) : 1,
+    );
 
     return computed((): string => {
       if (!productsCatalog.value?.category) {
@@ -195,7 +200,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
       }
 
       if (currentPage.value >= maxIndexedPage.value + 1) {
-        return 'noindex, nofollow';
+        return 'noindex, follow';
       }
       return categoryGetters.getCategoryRobots(productsCatalog.value.category);
     });

@@ -105,8 +105,7 @@ The header and footer are editable here and changes propagate to all pages.
 
 ### Developer adding a new block type
 
-A developer creates a new block component under `components/blocks/`, registers it in `utils/blocks/blocks-imports.ts`, and optionally adds a form component with the `Form` suffix.
-The block immediately appears in the editor's block catalogue for the configured page contexts.
+A developer creates a new folder under `components/blocks/` containing the block's `.vue` component and its paired `Form.vue`, a `defaults.ts` that exports the catalogue entry via `getBlocksList()`, and an `icon.svg`. No manual registration is needed, the shop discovers the block by itself from a fixed set of glob patterns. See [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for the full mechanism and how Nuxt modules contribute the same way.
 
 ### Content manager building a landing page
 
@@ -118,13 +117,15 @@ Because content categories are blockified, they can use the full blocks editor t
 How-to guides
 
 1. [Site settings](/guide/editor/site-settings.md) — How to add custom settings to the editor
-2. [Editor overview](/guide/editor/index.md) — Overview of all editor-related guides
+2. [How to add or override a block from a module](/guide/modules/blocks.md)
+3. [Editor overview](/guide/editor/index.md) — Overview of all editor-related guides
 
 Linked concepts
 
-1. [Blocks rendering](/guide/editor/blocks-rendering.md) — How blocks are rendered on the frontend
-2. [Blocks saving](/guide/editor/blocks-saving.md) — How block data is persisted
-3. [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
-4. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — The two block types and how they compose
-5. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow concept
-6. [Composable-centric data fetching](/guide/themes/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA
+1. [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) — How components, catalogue entries, and icons are collected from core and Nuxt modules
+2. [Blocks rendering](/guide/editor/blocks-rendering.md) — How blocks are rendered on the frontend
+3. [Blocks saving](/guide/editor/blocks-saving.md) — How block data is persisted
+4. [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
+5. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — The two block types and how they compose
+6. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow concept
+7. [Composable-centric data fetching](/guide/themes/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA

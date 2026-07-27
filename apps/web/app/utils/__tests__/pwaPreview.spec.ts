@@ -4,29 +4,29 @@ import { resolvePreviewState } from '../pwaPreview';
 const getPreviewValid = vi.fn();
 
 describe('resolvePreviewState', () => {
-  it('should return true immediately when isPreviewConfig is true, without calling the SDK', async () => {
+  it('should return isEditor true immediately when isPreviewConfig is true, without calling the SDK', async () => {
     const result = await resolvePreviewState({
       cookieValue: null,
       isPreviewConfig: true,
       getPreviewValid,
     });
 
-    expect(result).toBe(true);
+    expect(result).toEqual({ isEditor: true, isPreview: false });
     expect(getPreviewValid).not.toHaveBeenCalled();
   });
 
-  it('should return false when there is no cookie and isPreviewConfig is false', async () => {
+  it('should return isEditor and isPreview false when there is no cookie and isPreviewConfig is false', async () => {
     const result = await resolvePreviewState({
       cookieValue: null,
       isPreviewConfig: false,
       getPreviewValid,
     });
 
-    expect(result).toBe(false);
+    expect(result).toEqual({ isEditor: false, isPreview: false });
     expect(getPreviewValid).not.toHaveBeenCalled();
   });
 
-  it('should return true when cookie is present and the response is valid with write permission', async () => {
+  it('should return isEditor true when cookie is present and the response is valid with write permission', async () => {
     getPreviewValid.mockResolvedValueOnce({ valid: true, permission: 'write' });
 
     const result = await resolvePreviewState({
@@ -35,11 +35,11 @@ describe('resolvePreviewState', () => {
       getPreviewValid,
     });
 
-    expect(result).toBe(true);
+    expect(result).toEqual({ isEditor: true, isPreview: false });
     expect(getPreviewValid).toHaveBeenCalledOnce();
   });
 
-  it('should return false when the response is valid but the permission is not write', async () => {
+  it('should return isPreview true when the response is valid with read permission', async () => {
     getPreviewValid.mockResolvedValueOnce({ valid: true, permission: 'read' });
 
     const result = await resolvePreviewState({
@@ -48,10 +48,10 @@ describe('resolvePreviewState', () => {
       getPreviewValid,
     });
 
-    expect(result).toBe(false);
+    expect(result).toEqual({ isEditor: false, isPreview: true });
   });
 
-  it('should return false when the response is not valid', async () => {
+  it('should return isEditor and isPreview false when the response is not valid', async () => {
     getPreviewValid.mockResolvedValueOnce({ valid: false, permission: 'write' });
 
     const result = await resolvePreviewState({
@@ -60,10 +60,10 @@ describe('resolvePreviewState', () => {
       getPreviewValid,
     });
 
-    expect(result).toBe(false);
+    expect(result).toEqual({ isEditor: false, isPreview: false });
   });
 
-  it('should return false when the response is empty', async () => {
+  it('should return isEditor and isPreview false when the response is empty', async () => {
     getPreviewValid.mockResolvedValueOnce(null);
 
     const result = await resolvePreviewState({
@@ -72,7 +72,7 @@ describe('resolvePreviewState', () => {
       getPreviewValid,
     });
 
-    expect(result).toBe(false);
+    expect(result).toEqual({ isEditor: false, isPreview: false });
   });
 
   it('should propagate SDK errors so the caller can handle them', async () => {

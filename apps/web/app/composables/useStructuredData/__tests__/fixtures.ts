@@ -43,6 +43,19 @@ export const buildProductWithUrlPath = (path: string): Product => {
   };
 };
 
+export const buildProductWithCanonicalHref = (href: string): Product => {
+  const product = buildProduct();
+  return {
+    ...product,
+    seoSettings: {
+      canonical: {
+        href,
+        alternate: [],
+      },
+    },
+  } as unknown as Product;
+};
+
 export const buildReviewWithCounts = (total: number, average: string): Review =>
   ({
     feedbacks: [],

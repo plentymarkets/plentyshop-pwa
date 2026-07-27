@@ -115,15 +115,8 @@ export const useTableOfContents = () => {
 
   const replaceEmptyBlock = (event: MouseEvent | KeyboardEvent, block: Block) => {
     const anchorEl = event.currentTarget as HTMLElement;
-    if (useRuntimeConfig().public.enableAddBlockPopover) {
-      const { openAddBlockPopover } = useAddBlockPopover();
-      openAddBlockPopover({ anchorEl, targetUuid: block.meta.uuid, position: 'inside' });
-    } else {
-      const { openDrawerWithView } = useSiteConfiguration();
-      const { setInsertColumnUuid } = useBlocksMutations();
-      setInsertColumnUuid(block.meta.uuid);
-      openDrawerWithView('blocksList');
-    }
+    const { openAddBlockPopover } = useAddBlockPopover();
+    openAddBlockPopover({ anchorEl, targetUuid: block.meta.uuid, position: 'inside' });
   };
 
   const addBlockAtBottom = (event: MouseEvent) => {
@@ -136,21 +129,12 @@ export const useTableOfContents = () => {
     const footerBlock = footerIndex >= 0 ? blocks[footerIndex] : null;
 
     if (footerBlock) {
-      if (useRuntimeConfig().public.enableAddBlockPopover) {
-        const { openAddBlockPopover } = useAddBlockPopover();
-        openAddBlockPopover({
-          anchorEl: event.currentTarget as HTMLElement,
-          targetUuid: footerBlock.meta.uuid,
-          position: 'top',
-        });
-      } else {
-        const { openDrawerWithView } = useSiteConfiguration();
-        const { togglePlaceholder } = useBlockManager();
-        const { clearInsertColumnUuid } = useBlocksMutations();
-        togglePlaceholder(footerBlock.meta.uuid, 'top');
-        openDrawerWithView('blocksList');
-        clearInsertColumnUuid();
-      }
+      const { openAddBlockPopover } = useAddBlockPopover();
+      openAddBlockPopover({
+        anchorEl: event.currentTarget as HTMLElement,
+        targetUuid: footerBlock.meta.uuid,
+        position: 'top',
+      });
       scrollIntoBlockView(footerBlock);
     }
   };
@@ -168,17 +152,8 @@ export const useTableOfContents = () => {
     const targetUuid = lastChild?.meta?.uuid ?? container.meta.uuid;
     const position = lastChild ? 'bottom' : 'top';
 
-    if (useRuntimeConfig().public.enableAddBlockPopover) {
-      const { openAddBlockPopover } = useAddBlockPopover();
-      openAddBlockPopover({ anchorEl, targetUuid, position });
-    } else {
-      const { openDrawerWithView } = useSiteConfiguration();
-      const { togglePlaceholder } = useBlockManager();
-      const { clearInsertColumnUuid } = useBlocksMutations();
-      togglePlaceholder(targetUuid, position);
-      openDrawerWithView('blocksList');
-      clearInsertColumnUuid();
-    }
+    const { openAddBlockPopover } = useAddBlockPopover();
+    openAddBlockPopover({ anchorEl, targetUuid, position });
     scrollIntoBlockView(lastChild ?? container);
   };
 
@@ -190,17 +165,8 @@ export const useTableOfContents = () => {
     const { scrollIntoBlockView } = useBlockManager();
     const anchorEl = event.currentTarget as HTMLElement;
 
-    if (useRuntimeConfig().public.enableAddBlockPopover) {
-      const { openAddBlockPopover } = useAddBlockPopover();
-      openAddBlockPopover({ anchorEl, targetUuid: anchor.meta.uuid, position: 'top' });
-    } else {
-      const { openDrawerWithView } = useSiteConfiguration();
-      const { togglePlaceholder } = useBlockManager();
-      const { clearInsertColumnUuid } = useBlocksMutations();
-      togglePlaceholder(anchor.meta.uuid, 'top');
-      openDrawerWithView('blocksList');
-      clearInsertColumnUuid();
-    }
+    const { openAddBlockPopover } = useAddBlockPopover();
+    openAddBlockPopover({ anchorEl, targetUuid: anchor.meta.uuid, position: 'top' });
     scrollIntoBlockView(anchor);
   };
 
