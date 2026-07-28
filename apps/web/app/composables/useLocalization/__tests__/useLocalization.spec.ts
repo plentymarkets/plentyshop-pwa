@@ -32,11 +32,11 @@ describe('useLocalization', () => {
     }));
 
     setI18n({
-        locale: ref('de'),
-        defaultLocale: 'en',
-        strategy: 'prefix_and_default',
-        locales: ref([{ code: 'de' }, { code: 'en' }]),
-      });
+      locale: ref('de'),
+      defaultLocale: 'en',
+      strategy: 'prefix_and_default',
+      locales: ref([{ code: 'de' }, { code: 'en' }]),
+    });
   });
 
   it('should get url without language prefix for prefix_and_default strategy', async () => {
@@ -49,11 +49,11 @@ describe('useLocalization', () => {
 
   it('should test strategy "prefix_except_default"', async () => {
     setI18n({
-        locale: ref('de'),
-        defaultLocale: 'de',
-        strategy: 'prefix_except_default',
-        locales: ref([]),
-      });
+      locale: ref('de'),
+      defaultLocale: 'de',
+      strategy: 'prefix_except_default',
+      locales: ref([]),
+    });
 
     const { useLocalization } = await import('../useLocalization');
 
@@ -64,11 +64,11 @@ describe('useLocalization', () => {
 
   it('should test strategy "prefix"', async () => {
     setI18n({
-        locale: ref('en'),
-        defaultLocale: 'de',
-        strategy: 'prefix',
-        locales: ref([]),
-      });
+      locale: ref('en'),
+      defaultLocale: 'de',
+      strategy: 'prefix',
+      locales: ref([]),
+    });
 
     const { useLocalization } = await import('../useLocalization');
 

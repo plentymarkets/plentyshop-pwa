@@ -41,8 +41,9 @@ mockNuxtImport('useNotification', () => () => ({
   send: vi.fn(),
 }));
 
-mockNuxtImport('useNuxtApp', () => () =>
-  proxyNuxtApp({ $i18n: { locale: ref('en') }, payload: { state: {} }, _state: {} }),
+mockNuxtImport(
+  'useNuxtApp',
+  () => () => proxyNuxtApp({ $i18n: { locale: ref('en') }, payload: { state: {} }, _state: {} }),
 );
 
 mockNuxtImport('useViewport', () => () => ({
