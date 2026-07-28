@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div v-else class="py-4">
+      <div v-else-if="recommendedBlock.source.type === 'category'" class="py-4">
         <UiFormLabel>{{ getEditorTranslation('categories-label') }}</UiFormLabel>
 
         <EditorCategorySelect
@@ -64,6 +64,22 @@
           :base-search-params="{ type: 'in:item', sortBy: 'position_asc,name_asc', with: 'details,clients' }"
           data-testid="recommended-form-categories"
         />
+      </div>
+
+      <div
+        v-else-if="recommendedBlock.source.type === 'last_seen'"
+        class="bg-warning-200 mx-4 mt-4 mb-4 p-2 text-sm"
+        role="alert"
+        aria-live="polite"
+        data-testid="recommended-form-last-seen-hint"
+      >
+        <div class="flex items-start gap-2 mb-1">
+          <SfIconWarning class="shrink-0 text-yellow-700" aria-hidden="true" />
+          <div class="font-semibold text-neutral-800 typography-text-base">
+            {{ getEditorTranslation('last-seen-hint-title') }}
+          </div>
+        </div>
+        <div class="text-neutral-600">{{ getEditorTranslation('last-seen-hint') }}</div>
       </div>
     </EditorFormPanel>
 
@@ -79,7 +95,7 @@
 
 <script setup lang="ts">
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
-import { SfInput } from '@storefront-ui/vue';
+import { SfInput, SfIconWarning } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';
@@ -175,9 +191,13 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "source-type-label": "Choose source",
     "source-type-product": "Product",
     "source-type-category": "Category",
+    "source-type-last-seen": "Last seen",
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
+    "last-seen-hint-title": "Legal compliance",
+    "last-seen-hint": "When using this option, you may have to update your privacy policy to comply with GDPR. Products are tracked based on the customer's last seen activity and this information is temporarily stored server-side on the session. Whether legitimate interest (Art. 6(1)(f) GDPR) can serve as the legal basis shall be independently verified.",
+
     "layout-label": "Layout",
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
@@ -192,9 +212,12 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "source-type-label": "Choose source",
     "source-type-product": "Product",
     "source-type-category": "Category",
+    "source-type-last-seen": "Last seen",
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
+    "last-seen-hint-title": "Legal compliance",
+    "last-seen-hint": "When using this option, you may have to update your privacy policy to comply with GDPR. Products are tracked based on the customer's last seen activity and this information is temporarily stored server-side on the session. Whether legitimate interest (Art. 6(1)(f) GDPR) can serve as the legal basis shall be independently verified.",
 
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",

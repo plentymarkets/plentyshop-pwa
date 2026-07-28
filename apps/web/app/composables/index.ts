@@ -45,6 +45,7 @@ export * from './useEditorState';
 export * from './useGooglePay';
 export * from './useInitialSetup';
 export * from './useImageZoom';
+export * from './useLastSeen';
 export * from './useLegalInformation';
 export * from './useProductLegalDetailsDrawer';
 export * from './useLocalization';

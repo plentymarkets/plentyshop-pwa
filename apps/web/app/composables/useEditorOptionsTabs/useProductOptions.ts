@@ -63,6 +63,11 @@ export const useProductOptions = (getTarget: () => EditorTarget, t: TranslateFn)
       testId: 'recommended-form-source-product',
     },
     { value: 'category' as SourceType, label: t('source-type-category'), testId: 'recommended-form-source-category' },
+    {
+      value: 'last_seen' as SourceType,
+      label: t('source-type-last-seen'),
+      testId: 'recommended-form-source-last-seen',
+    },
   ]);
 
   const sourceTypeModel = computed<SourceType>({
