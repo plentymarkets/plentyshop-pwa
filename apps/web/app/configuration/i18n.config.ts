@@ -1,4 +1,5 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
+import { validateApiUrl } from '../utils/pathHelper.ts';
 
 export const getLocales = (): LocaleObject[] => {
   const locales: unknown[] = [];
@@ -51,6 +52,7 @@ const getDefaultLocale = () => {
 export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: getLocales(),
   defaultLocale: getDefaultLocale(),
+  baseUrl: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
   langDir: '../app/lang',
   strategy: 'prefix_and_default',
   vueI18n: '~/configuration/vueI18n.config.ts',

@@ -59,8 +59,8 @@ mockNuxtImport('useRoute', () => useRoute);
 describe('useEditorUnsavedChangesGuard', () => {
   let isEditingEnabled: Ref<boolean>;
   let settingsIsDirty: Ref<boolean>;
-  let closeDrawer: ReturnType<typeof vi.fn>;
-  let discardChanges: ReturnType<typeof vi.fn>;
+  let closeDrawer: ReturnType<typeof vi.fn<() => void>>;
+  let discardChanges: ReturnType<typeof vi.fn<() => void>>;
   let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
 
   const callMiddleware = (toPath = '/other') => {
@@ -72,8 +72,8 @@ describe('useEditorUnsavedChangesGuard', () => {
 
     isEditingEnabled = ref<boolean>(false);
     settingsIsDirty = ref<boolean>(false);
-    closeDrawer = vi.fn();
-    discardChanges = vi.fn();
+    closeDrawer = vi.fn<() => void>();
+    discardChanges = vi.fn<() => void>();
     middlewareCallback = null;
 
     useEditor.mockReturnValue({

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { useEditorState } from '../useEditorState';
 import type { PreviewDevice } from '~/composables/useEditorDevice';
 
@@ -8,10 +9,7 @@ const $isPreview = ref(false);
 const disableActions = ref(true);
 const deviceRef = ref<PreviewDevice>('desktop');
 
-mockNuxtImport('useNuxtApp', () => () => ({
-  $isEditor: $isEditor.value,
-  $isPreview: $isPreview.value,
-}));
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp({ $isEditor: $isEditor.value, $isPreview: $isPreview.value }));
 
 mockNuxtImport('useEditor', () => () => ({
   disableActions,

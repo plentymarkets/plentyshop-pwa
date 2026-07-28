@@ -6,10 +6,10 @@
   >
     <label>
       <UiFormLabel>{{ props.title }} {{ t('form.required') }}</UiFormLabel>
-      <SfInput v-model="input" type="text" required />
+      <SfInput id="input-soft-login" v-model="input" type="text" required />
     </label>
 
-    <UiButton type="submit" class="mt-2" :disabled="loading">
+    <UiButton id="submit-soft-login" type="submit" class="mt-2" :disabled="loading">
       <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
       <span v-if="!loading">
         {{ t('orderConfirmation.softLogin.check') }}
