@@ -31,6 +31,7 @@ const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
 const { variationId } = useProductAttributes();
+const { addLastSeen } = useLastSeen();
 let variationWatchHandler: WatchStopHandle | undefined;
 
 definePageMeta({
@@ -70,6 +71,7 @@ setCurrentProduct(productForEditor.value || ({} as Product));
 setProductMeta();
 setBlocksListContext('product');
 setBreadcrumbs();
+addLastSeen(product.value);
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
