@@ -13,7 +13,12 @@ const normalizeSetting = (value: unknown): number => {
 const applyTrailingSlashToRelativePath = (path: string, setting: number): string => {
   if (!path || setting === NO_CHANGE) return path;
 
-  const url = new URL(path, 'http://localhost');
+  let url: URL;
+  try {
+    url = new URL(path, 'http://localhost');
+  } catch {
+    return path;
+  }
 
   if (setting === ALWAYS && !url.pathname.endsWith('/')) {
     url.pathname = `${url.pathname}/`;
