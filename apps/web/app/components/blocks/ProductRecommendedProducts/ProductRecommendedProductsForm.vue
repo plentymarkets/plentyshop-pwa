@@ -65,22 +65,6 @@
           data-testid="recommended-form-categories"
         />
       </div>
-
-      <div
-        v-else-if="recommendedBlock.source.type === 'last_seen'"
-        class="bg-warning-200 mx-4 mt-4 mb-4 p-2 text-sm"
-        role="alert"
-        aria-live="polite"
-        data-testid="recommended-form-last-seen-hint"
-      >
-        <div class="flex items-start gap-2 mb-1">
-          <SfIconWarning class="shrink-0 text-yellow-700" aria-hidden="true" />
-          <div class="font-semibold text-neutral-800 typography-text-base">
-            {{ getEditorTranslation('last-seen-hint-title') }}
-          </div>
-        </div>
-        <div class="text-neutral-600">{{ getEditorTranslation('last-seen-hint') }}</div>
-      </div>
     </EditorFormPanel>
 
     <EditorFormPanel
@@ -95,7 +79,7 @@
 
 <script setup lang="ts">
 import type { CrossSellingRelationType, ProductRecommendedProductsContent } from '../ProductRecommendedProducts/types';
-import { SfInput, SfIconWarning } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { productGetters } from '@plentymarkets/shop-api';
 import Multiselect from 'vue-multiselect';

@@ -123,4 +123,5 @@ export default {
   customAssetsSafeMode: process.env.NUXT_PUBLIC_CUSTOM_ASSETS_SAFE_MODE === 'true',
   enableSingleProductUrlScheme: process.env.NUXT_PUBLIC_ENABLE_SINGLE_PRODUCT_URL_SCHEME === 'true',
   enableOrderChangePaymentMethod: process.env.NUXT_PUBLIC_ENABLE_ORDER_CHANGE_PAYMENT_METHOD !== 'false',
+  enableLastSeenTracking: process.env.NUXT_PUBLIC_ENABLE_LAST_SEEN_TRACKING === 'true',
 };
