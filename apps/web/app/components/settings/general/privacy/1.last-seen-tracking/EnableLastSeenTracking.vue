@@ -4,7 +4,7 @@
 
     <EditorAdmonitionWarning
       class="my-4"
-      data-testid="recommended-last-seen-tracking-hint"
+      data-testid="privacy-last-seen-tracking-legal-hint"
       :title="getEditorTranslation('hint-title')"
       :message="getEditorTranslation('hint')"
     />

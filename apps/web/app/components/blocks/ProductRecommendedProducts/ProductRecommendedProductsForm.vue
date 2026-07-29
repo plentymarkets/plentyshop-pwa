@@ -179,8 +179,6 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
-    "last-seen-hint-title": "Legal compliance",
-    "last-seen-hint": "When using this option, you may have to update your privacy policy to comply with GDPR. Products are tracked based on the customer's last seen activity and this information is temporarily stored server-side on the session. Whether legitimate interest (Art. 6(1)(f) GDPR) can serve as the legal basis shall be independently verified.",
 
     "layout-label": "Layout",
     "cross-selling-relation-label": "Cross-selling relation",
@@ -200,8 +198,6 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
-    "last-seen-hint-title": "Legal compliance",
-    "last-seen-hint": "When using this option, you may have to update your privacy policy to comply with GDPR. Products are tracked based on the customer's last seen activity and this information is temporarily stored server-side on the session. Whether legitimate interest (Art. 6(1)(f) GDPR) can serve as the legal basis shall be independently verified.",
 
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
