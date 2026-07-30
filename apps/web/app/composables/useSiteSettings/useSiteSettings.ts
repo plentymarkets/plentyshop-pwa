@@ -3,6 +3,8 @@ import type {
   UseSiteSettingsReturn,
   UseSiteSettingsState,
   GetSetting,
+  GetBooleanSetting,
+  GetJsonSetting,
   SaveSiteSettings,
   SetSettingsInitialData,
   SettingValue,
@@ -35,7 +37,9 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     return (state.value.data?.[setting] as string) ?? (state.value.initialData?.[setting] as string) ?? '';
   };
 
-  const getJsonSetting: () => string[] = () => {
+  const getBooleanSetting: GetBooleanSetting = () => getSetting().toString() === 'true';
+
+  const getJsonSetting: GetJsonSetting = () => {
     if (!setting) return [];
     const runtimeSetting = state.value.initialData?.[setting];
 
@@ -107,6 +111,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     ...toRefs(state.value),
     updateSetting,
     getSetting,
+    getBooleanSetting,
     getJsonSetting,
     settingsIsDirty,
     dirtyKeys,

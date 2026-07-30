@@ -22,10 +22,10 @@
 <script setup lang="ts">
 import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('useWebp');
+const { updateSetting, getBooleanSetting } = useSiteSettings('useWebp');
 
 const useWebp = computed({
-  get: () => Boolean(getSetting()),
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

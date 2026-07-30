@@ -21,10 +21,10 @@
 <script setup lang="ts">
 import { SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('showNotifyMe');
+const { updateSetting, getBooleanSetting } = useSiteSettings('showNotifyMe');
 
 const showNotifyMeFeature = computed({
-  get: () => !!getSetting(),
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

@@ -23,10 +23,10 @@
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('enableLastSeenTracking');
+const { updateSetting, getBooleanSetting } = useSiteSettings('enableLastSeenTracking');
 
 const enableLastSeenTracking = computed({
-  get: () => getSetting().toString() === 'true',
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

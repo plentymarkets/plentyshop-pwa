@@ -14,10 +14,10 @@
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('registerCookieAsOptOut');
+const { updateSetting, getBooleanSetting } = useSiteSettings('registerCookieAsOptOut');
 
 const registerCookieAsOptOut = computed({
-  get: () => !!getSetting(),
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

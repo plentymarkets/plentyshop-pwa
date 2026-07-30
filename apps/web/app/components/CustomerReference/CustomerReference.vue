@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
-const { getSetting } = useSiteSettings('showCustomerReferenceComponent');
+const { getBooleanSetting } = useSiteSettings('showCustomerReferenceComponent');
 const { setCustomerSign } = useAdditionalInformation();
-const showCustomerReferenceComponent = computed(() => getSetting().toString() === 'true');
+const showCustomerReferenceComponent = computed(() => getBooleanSetting());
 const customerSign = ref('');
 </script>

@@ -23,10 +23,10 @@
 <script setup lang="ts">
 import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('useAvif');
+const { updateSetting, getBooleanSetting } = useSiteSettings('useAvif');
 
 const useAvif = computed({
-  get: () => Boolean(getSetting()),
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

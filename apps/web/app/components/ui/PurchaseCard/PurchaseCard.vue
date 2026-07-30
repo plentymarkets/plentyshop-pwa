@@ -316,8 +316,8 @@ const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
-const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
-const showNotifyMe = computed(() => getNotifyMeSetting().toString() === 'true');
+const { getBooleanSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
+const showNotifyMe = computed(() => getNotifyMeSetting());
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {

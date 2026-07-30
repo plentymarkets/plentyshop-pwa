@@ -25,10 +25,10 @@ export const useLastSeen = () => {
    *
    * @param product - The product to add to the last seen list
    */
-  const { getSetting: isLastSeenTrackingEnabled } = useSiteSettings('enableLastSeenTracking');
+  const { getBooleanSetting: isLastSeenTrackingEnabled } = useSiteSettings('enableLastSeenTracking');
 
   const addLastSeen = (product: Product) => {
-    if (import.meta.client && isLastSeenTrackingEnabled().toString() === 'true') {
+    if (import.meta.client && isLastSeenTrackingEnabled()) {
       try {
         useSdk().plentysystems.doAddLastSeen(productGetters.getVariationId(product));
       } catch {
