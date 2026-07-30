@@ -4,7 +4,14 @@ import type { Product } from '@plentymarkets/shop-api';
 import TextContent from '../TextContent.vue';
 
 const { useRouterMock, isInternalLinkMock, useProductsMock, tMock } = vi.hoisted(() => ({
-  useRouterMock: vi.fn(),
+  useRouterMock: vi.fn(() => ({
+    push: vi.fn(),
+    resolve: vi.fn(),
+    options: {},
+    afterEach: vi.fn(),
+    beforeEach: vi.fn(),
+    beforeResolve: vi.fn(),
+  })),
   isInternalLinkMock: vi.fn(),
   useProductsMock: vi.fn(),
   tMock: vi.fn(),
@@ -44,7 +51,14 @@ const mountComponent = (htmlDescription: string) =>
 describe('TextContent - renderedHtmlDescription', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    useRouterMock.mockReturnValue({ push: mockPush, resolve: vi.fn() });
+    useRouterMock.mockReturnValue({
+      push: mockPush,
+      resolve: vi.fn(),
+      options: {},
+      afterEach: vi.fn(),
+      beforeEach: vi.fn(),
+      beforeResolve: vi.fn(),
+    });
     isInternalLinkMock.mockImplementation((href: string) => href.startsWith('/'));
     useProductsMock.mockReturnValue({ currentProduct: ref(mockProduct) });
     tMock.mockImplementation((key: string) => ({ 'checkout.title': 'Checkout' })[key] ?? key);
@@ -138,7 +152,14 @@ describe('TextContent - renderedHtmlDescription', () => {
 describe('TextContent - handleRteClick', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    useRouterMock.mockReturnValue({ push: mockPush, resolve: vi.fn() });
+    useRouterMock.mockReturnValue({
+      push: mockPush,
+      resolve: vi.fn(),
+      options: {},
+      afterEach: vi.fn(),
+      beforeEach: vi.fn(),
+      beforeResolve: vi.fn(),
+    });
   });
 
   it('should navigate via router.push for internal links', async () => {

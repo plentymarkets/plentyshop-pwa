@@ -87,7 +87,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
 
     const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
-        rel: 'alternate',
+        rel: 'alternate' as const,
         hreflang: locale,
         href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath, locale)}`),
       };

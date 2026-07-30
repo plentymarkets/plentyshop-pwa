@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import type { GetBlocksResponse } from '@plentymarkets/shop-api';
 import { useBlocks } from '../useBlocks';
 
@@ -25,7 +26,7 @@ const { useEditor } = vi.hoisted(() => ({
 mockNuxtImport('useSdk', () => useSdk);
 mockNuxtImport('useAsyncData', () => useAsyncData);
 mockNuxtImport('useState', () => useState);
-mockNuxtImport('useNuxtApp', () => useNuxtApp);
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp((useNuxtApp() ?? {}) as Record<string, unknown>));
 mockNuxtImport('useEditor', () => useEditor);
 
 const emptyResponse = (): GetBlocksResponse =>

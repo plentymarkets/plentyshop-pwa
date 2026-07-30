@@ -3,6 +3,11 @@ import { config } from '@vue/test-utils';
 import { vi } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
+// happy-dom does not implement window.confirm; provide a stub so tests can spy on it.
+if (typeof window !== 'undefined' && typeof window.confirm !== 'function') {
+  window.confirm = () => false;
+}
+
 const plentysystemsMethodMocks = new Map<PropertyKey, ReturnType<typeof vi.fn>>();
 
 mockNuxtImport('useSdk', () => () => ({

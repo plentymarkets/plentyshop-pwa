@@ -1,5 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { useBlocks } from '../useBlocks';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import { createProduct } from '~/utils/blockTemplates/product/factory';
@@ -78,7 +79,7 @@ const { clearNuxtData } = vi.hoisted(() => ({
 mockNuxtImport('useSdk', () => useSdk);
 mockNuxtImport('useAsyncData', () => useAsyncData);
 mockNuxtImport('useState', () => useState);
-mockNuxtImport('useNuxtApp', () => useNuxtApp);
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp((useNuxtApp() ?? {}) as Record<string, unknown>));
 mockNuxtImport('useHandleError', () => useHandleError);
 mockNuxtImport('useEditor', () => useEditor);
 mockNuxtImport('clearNuxtData', () => clearNuxtData);

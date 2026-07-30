@@ -6,7 +6,12 @@ import Navigation from '../Navigation.vue';
 
 const { useViewportMock, useRouterMock, useMegaMenuMock, useCategoryTreeMock } = vi.hoisted(() => ({
   useViewportMock: vi.fn(),
-  useRouterMock: vi.fn(),
+  useRouterMock: vi.fn(() => ({
+    afterEach: vi.fn(),
+    beforeEach: vi.fn(),
+    beforeResolve: vi.fn(),
+    options: {},
+  })),
   useMegaMenuMock: vi.fn(),
   useCategoryTreeMock: vi.fn(),
 }));
@@ -27,7 +32,10 @@ describe('Navigation.vue', () => {
     });
 
     useRouterMock.mockReturnValue({
-      afterEach: () => () => undefined,
+      afterEach: vi.fn(),
+      beforeEach: vi.fn(),
+      beforeResolve: vi.fn(),
+      options: {},
     });
 
     useMegaMenuMock.mockReturnValue({
