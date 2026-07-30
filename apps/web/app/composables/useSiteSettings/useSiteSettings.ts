@@ -4,6 +4,7 @@ import type {
   UseSiteSettingsState,
   GetSetting,
   GetBooleanSetting,
+  GetNumberSetting,
   GetJsonSetting,
   SaveSiteSettings,
   SetSettingsInitialData,
@@ -38,6 +39,13 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   };
 
   const getBooleanSetting: GetBooleanSetting = () => getSetting().toString() === 'true';
+
+  const getNumberSetting: GetNumberSetting = (fallback = 0) => {
+    const value = getSetting();
+    if (!value) return fallback;
+    const parsed = Number(value);
+    return Number.isNaN(parsed) ? fallback : parsed;
+  };
 
   const getJsonSetting: GetJsonSetting = () => {
     if (!setting) return [];
@@ -112,6 +120,7 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     updateSetting,
     getSetting,
     getBooleanSetting,
+    getNumberSetting,
     getJsonSetting,
     settingsIsDirty,
     dirtyKeys,
