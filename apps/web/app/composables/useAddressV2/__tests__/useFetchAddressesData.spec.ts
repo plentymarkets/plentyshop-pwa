@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { Address } from '@plentymarkets/shop-api';
 import { useFetchAddressesData } from '../useFetchAddressesData';
@@ -29,7 +30,7 @@ mockNuxtImport('useAggregatedCountries', () => useAggregatedCountries);
 mockNuxtImport('useCart', () => useCart);
 mockNuxtImport('useCustomer', () => useCustomer);
 mockNuxtImport('usePrimaryAddress', () => usePrimaryAddress);
-mockNuxtImport('useNuxtApp', () => useNuxtApp);
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp((useNuxtApp() ?? {}) as Record<string, unknown>));
 mockNuxtImport('useState', () => useState);
 
 const setupSdk = (response: unknown) =>

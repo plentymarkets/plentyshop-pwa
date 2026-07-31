@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div v-else class="py-4">
+      <div v-else-if="recommendedBlock.source.type === 'category'" class="py-4">
         <UiFormLabel>{{ getEditorTranslation('categories-label') }}</UiFormLabel>
 
         <EditorCategorySelect
@@ -175,9 +175,11 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "source-type-label": "Choose source",
     "source-type-product": "Product",
     "source-type-category": "Category",
+    "source-type-last-seen": "Last seen",
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",
+
     "layout-label": "Layout",
     "cross-selling-relation-label": "Cross-selling relation",
     "cross-selling-relation-accessory": "Accessory",
@@ -192,6 +194,7 @@ const { sourceTypeModel, sourceTypeOptions } = useEditorOptionsTabs(() => recomm
     "source-type-label": "Choose source",
     "source-type-product": "Product",
     "source-type-category": "Category",
+    "source-type-last-seen": "Last seen",
     "product-id-label": "Product ID",
     "product-id-placeholder": "Enter Product ID",
     "categories-label": "Categories",

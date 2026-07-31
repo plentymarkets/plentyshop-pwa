@@ -1,6 +1,13 @@
 <template>
   <div ref="blockRef" v-bind="$attrs">
     <TextContent data-testid="recommended-block" class="pb-4" :text="props.content.text" :index="props.index" />
+    <EditorAdmonitionWarning
+      v-if="showLastSeenTrackingHint"
+      class="m-4"
+      data-testid="recommended-last-seen-tracking-hint"
+      :title="getEditorTranslation('last-seen-hint-title')"
+      :message="getEditorTranslation('last-seen-tracking-disabled-hint')"
+    />
     <ProductSlider v-if="shouldShowSlider" :items="recommendedProducts" />
   </div>
 </template>
@@ -14,6 +21,8 @@ const props = withDefaults(defineProps<ProductRecommendedProductsProps>(), { sho
 const { locale } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const { currentProduct } = useProducts();
+const { isEditMode } = useEditorState();
+const { getSetting: isLastSeenTrackingEnabled } = useSiteSettings('enableLastSeenTracking');
 const blockRef = ref<HTMLElement | null>(null);
 const { isNearViewport } = useNearViewport(blockRef, {
   rootMargin: '200px 0px 200px 0px',
@@ -33,17 +42,25 @@ const shouldRenderAfterUpdate = ref(false);
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.meta.uuid);
 const { registerBlockVisibility } = useBlocksVisibility();
 
+const isCategory = computed(() => props.content.source?.type === 'category');
+const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
+const isLastSeen = computed(() => props.content.source?.type === 'last_seen');
+
+const showLastSeenTrackingHint = computed(
+  () => isLastSeen.value && isEditMode.value && isLastSeenTrackingEnabled().toString() !== 'true',
+);
+
 const shouldShowSlider = computed(
   () =>
+    showLastSeenTrackingHint.value === false &&
     isNearViewport.value &&
     !!recommendedProducts.value?.length &&
     (shouldRender.value || shouldRenderAfterUpdate.value),
 );
-const isCategory = computed(() => props.content.source?.type === 'category');
-const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
+
 const shouldRender = computed(() => props.shouldLoad === undefined || props.shouldLoad === true);
 const shouldFetch = computed(() => {
-  return isNearViewport.value && shouldRender.value && (isCategory.value || isProduct.value);
+  return isNearViewport.value && shouldRender.value && (isCategory.value || isProduct.value || isLastSeen.value);
 });
 const contentSource = computed(() => ({
   ...props.content.source,
@@ -75,7 +92,8 @@ watch(
     if (
       shouldFetch.value &&
       ((props.content.source?.itemId && props.content.source?.type === 'cross_selling') ||
-        (props.content.source?.categoryId && props.content.source?.type === 'category'))
+        (props.content.source?.categoryId && props.content.source?.type === 'category') ||
+        props.content.source?.type === 'last_seen')
     ) {
       const products = await fetchProductRecommended(contentSource.value);
       registerBlockVisibility(props.meta.uuid, (products?.length ?? 0) > 0);
@@ -84,3 +102,16 @@ watch(
   },
 );
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "last-seen-hint-title": "Last seen products",
+    "last-seen-tracking-disabled-hint": "The \"Track last seen products\" setting is disabled. Enable it under General » Privacy so this block can show recommendations."
+  },
+  "de": {
+    "last-seen-hint-title": "Last seen products",
+    "last-seen-tracking-disabled-hint": "The \"Track last seen products\" setting is disabled. Enable it under General » Privacy so this block can show recommendations."
+  }
+}
+</i18n>

@@ -5,7 +5,8 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { ProductMock } from '../../../../../__tests__/__mocks__/product.mock';
 import type { PriceCardContent, PriceCardTextBlockItem, PriceCardOrderItem } from '../types';
 
-vi.mock('vue-router', () => ({
+vi.mock('vue-router', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('vue-router')>()),
   useRouter: () => ({
     push: vi.fn(),
   }),

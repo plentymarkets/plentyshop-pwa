@@ -36,6 +36,13 @@ export default defineNuxtConfig({
       },
     },
     plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
+    resolve: {
+      // cookiejs (via nuxt-viewport) ships a UMD `browser` entry without a default export.
+      // Vite 8 resolves to it and breaks the client bundle; force the ESM build instead.
+      alias: {
+        cookiejs: 'cookiejs/dist/cookie.esm.js',
+      },
+    },
     optimizeDeps: {
       include: [...thirdPartyDeps, ...localPackageDeps],
     },
@@ -119,6 +126,7 @@ export default defineNuxtConfig({
   ],
   vuetify: {
     moduleOptions: {
+      prefixComposables: true,
       disableVuetifyStyles: true,
     },
     vuetifyOptions: {

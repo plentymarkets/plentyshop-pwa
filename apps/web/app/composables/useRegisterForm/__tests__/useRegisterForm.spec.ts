@@ -1,5 +1,6 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { flushPromises, mount } from '@vue/test-utils';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 
 mockNuxtImport('t', () => {
   return () => 'Your account has been created successfully';
@@ -25,6 +26,7 @@ const { useNotification } = vi.hoisted(() => {
 const { useRuntimeConfig } = vi.hoisted(() => {
   return {
     useRuntimeConfig: vi.fn().mockReturnValue({
+      app: { baseURL: '/' },
       public: {
         turnstileSiteKey: 'test-turnstile-key',
         passwordMinLength: 8,
@@ -46,14 +48,6 @@ const { useAggregatedCountries } = vi.hoisted(() => {
   return {
     useAggregatedCountries: vi.fn().mockReturnValue({
       getCountryZipCodeRegex: vi.fn(() => null),
-    }),
-  };
-});
-
-const { useRouter } = vi.hoisted(() => {
-  return {
-    useRouter: vi.fn().mockReturnValue({
-      currentRoute: { value: { query: {} } },
     }),
   };
 });
@@ -103,10 +97,9 @@ mockNuxtImport('useNotification', () => useNotification);
 mockNuxtImport('useRuntimeConfig', () => useRuntimeConfig);
 mockNuxtImport('useCart', () => useCart);
 mockNuxtImport('useAggregatedCountries', () => useAggregatedCountries);
-mockNuxtImport('useRouter', () => useRouter);
 mockNuxtImport('useLocalePath', () => useLocalePath);
 mockNuxtImport('navigateTo', () => navigateTo);
-mockNuxtImport('useNuxtApp', () => useNuxtApp);
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp((useNuxtApp() ?? {}) as Record<string, unknown>));
 mockNuxtImport('useState', () => useState);
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
 
@@ -122,6 +115,7 @@ describe('useRegisterForm', () => {
     });
 
     useRuntimeConfig.mockReturnValue({
+      app: { baseURL: '/' },
       public: {
         turnstileSiteKey: 'test-key',
         passwordMinLength: 8,
@@ -144,10 +138,6 @@ describe('useRegisterForm', () => {
 
     useAggregatedCountries.mockReturnValue({
       getCountryZipCodeRegex: vi.fn(() => null),
-    });
-
-    useRouter.mockReturnValue({
-      currentRoute: { value: { query: {} } },
     });
 
     useLocalePath.mockReturnValue(vi.fn((path: string) => path));
