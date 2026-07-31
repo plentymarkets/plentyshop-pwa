@@ -2,7 +2,7 @@
   <div class="mt-4">
     <div class="flex justify-between mb-4">
       <p>{{ getEditorTranslation('description') }}</p>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-dropdown">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
     </div>

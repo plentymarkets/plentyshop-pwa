@@ -1,4 +1,4 @@
-import { handlePreviousRouteNavigation } from '~/utils/urlHelper';
+import { handlePreviousRouteNavigation, isInternalLink } from '~/utils/urlHelper';
 import { paths } from '~/utils/paths';
 import { vi } from 'vitest';
 import type { Router } from 'vue-router';
@@ -77,5 +77,47 @@ describe('handlePreviousRouteNavigation', () => {
     handlePreviousRouteNavigation(dependencies);
     expect(mockNavigateTo).toHaveBeenCalledWith('/en/');
     expect(mockLocalePath).toHaveBeenCalledWith(paths.home);
+  });
+});
+
+describe('isInternalLink', () => {
+  const makeRouter = (matchedLength: number, name: string | null = 'some-route') =>
+    ({
+      resolve: vi.fn(() => ({
+        matched: new Array(matchedLength),
+        name,
+      })),
+    }) as unknown as Router;
+
+  it('should return true for a known internal path', () => {
+    expect(isInternalLink('/shop', makeRouter(1))).toBe(true);
+  });
+
+  it('should return true for a path with locale prefix', () => {
+    expect(isInternalLink('/de/shop', makeRouter(1))).toBe(true);
+  });
+
+  it('should return false for an http URL', () => {
+    expect(isInternalLink('https://google.com', makeRouter(1))).toBe(false);
+  });
+
+  it('should return false for a protocol-relative URL', () => {
+    expect(isInternalLink('//cdn.example.com', makeRouter(1))).toBe(false);
+  });
+
+  it('should return false for a mailto link', () => {
+    expect(isInternalLink('mailto:info@example.com', makeRouter(1))).toBe(false);
+  });
+
+  it('should return false for a fragment-only href', () => {
+    expect(isInternalLink('#anchor', makeRouter(1))).toBe(false);
+  });
+
+  it('should return false when resolved route is the error/404 route', () => {
+    expect(isInternalLink('/anything', makeRouter(1, 'error'))).toBe(false);
+  });
+
+  it('should return false for an empty string', () => {
+    expect(isInternalLink('', makeRouter(1))).toBe(false);
   });
 });

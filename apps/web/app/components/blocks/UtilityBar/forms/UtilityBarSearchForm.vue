@@ -1,14 +1,6 @@
 <template>
   <div class="block-form-section">
-    <UiAccordionItem
-      v-model="searchOpen"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>{{ getEditorTranslation('search-section-label') }}</h2>
-      </template>
-
+    <EditorFormPanel v-model="searchOpen" :title="getEditorTranslation('search-section-label')">
       <div class="py-2">
         <div class="flex items-center justify-between">
           <UiFormLabel class="mb-1">{{ getEditorTranslation('icon-only-label') }}</UiFormLabel>
@@ -19,7 +11,7 @@
           />
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 

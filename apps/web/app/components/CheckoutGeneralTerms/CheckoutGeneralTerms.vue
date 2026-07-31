@@ -1,5 +1,5 @@
 <template>
-  <div class="text-sm mx-4 md:pb-0">
+  <div class="text-sm mx-4 @md:pb-0">
     <div class="flex items-center">
       <SfCheckbox
         id="terms-checkbox"
@@ -12,33 +12,33 @@
       <label for="terms-checkbox" class="select-none">
         <i18n-t keypath="legal.termsInfo" scope="global">
           <template #terms>
-            <SfLink
+            <UiLink
               :href="localePath(paths.termsAndConditions)"
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
               {{ t('legal.termsAndConditions') }}
-            </SfLink>
+            </UiLink>
           </template>
 
           <template #cancellationRights>
-            <SfLink
+            <UiLink
               :href="localePath(paths.cancellationRights)"
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
               {{ t('legal.cancellationRights') }}
-            </SfLink>
+            </UiLink>
           </template>
 
           <template #privacyPolicy>
-            <SfLink
+            <UiLink
               :href="localePath(paths.privacyPolicy)"
               target="_blank"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
               {{ t('legal.privacyPolicy') }}
-            </SfLink>
+            </UiLink>
           </template>
         </i18n-t>
       </label>
@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfCheckbox, SfLink } from '@storefront-ui/vue';
+import { SfCheckbox } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();

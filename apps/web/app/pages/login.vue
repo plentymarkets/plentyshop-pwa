@@ -20,6 +20,9 @@ const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
 setPageMeta(t('authentication.login.submitLabel'), icon);
+useHead({
+  meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+});
 
 const router = useRouter();
 const localePath = useLocalePath();

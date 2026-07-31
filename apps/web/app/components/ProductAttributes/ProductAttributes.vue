@@ -28,22 +28,12 @@ const props = defineProps<ProductAttributesProps>();
 const product = computed(() => props.product);
 const route = useRoute();
 
-const lastSegment = route.path.split('/').pop() ?? '';
+const normalizedPath = route.path.endsWith('/') ? route.path.slice(0, -1) : route.path;
+const lastSegment = normalizedPath.split('/').pop() ?? '';
 const selectAttributes = ref(lastSegment.split('_').length > 2 || useCallisto().isEnabled);
+setAttribute(product.value, selectAttributes.value);
 
-watch(
-  selectAttributes,
-  () => {
-    setAttribute(product.value, selectAttributes.value);
-  },
-  { immediate: true },
-);
-
-watch(
-  product,
-  (newProduct) => {
-    setAttribute(newProduct, selectAttributes.value);
-  },
-  { immediate: false },
-);
+watch(product, (newProduct) => {
+  setAttribute(newProduct, true);
+});
 </script>

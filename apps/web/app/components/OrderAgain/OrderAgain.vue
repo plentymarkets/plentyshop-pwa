@@ -1,7 +1,7 @@
 <template>
-  <UiModal v-model="isOpen" tag="section" class="w-full h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto">
+  <UiModal v-model="isOpen" tag="section" class="w-full h-full @md:h-fit m-0 p-0 @lg:w-[1000px] overflow-y-auto">
     <header>
-      <h2 class="font-bold text-lg leading-6 md:text-2xl">
+      <h2 class="font-bold text-lg leading-6 @md:text-2xl">
         <span>{{ t('account.ordersAndReturns.orderAgain.heading') }}</span>
       </h2>
       <div v-if="!loading">
@@ -27,7 +27,7 @@
 
     <div class="w-full">
       <div
-        class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-225px)] md:max-h-[calc(100vh-270px)]"
+        class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-225px)] @md:max-h-[calc(100vh-270px)]"
       >
         <div v-if="!loading">
           <OrderAgainItem v-for="item in orderGetters.getItems(order)" :key="item.id" :item="item" :order="order" />
@@ -36,20 +36,20 @@
           <SkeletonsOrderAgainItem v-for="item in orderGetters.getItems(order)" :key="item.id" />
         </div>
       </div>
-      <div class="h-auto flex-shrink-0 block sm:flex gap-2 relative mt-3">
-        <div class="typography-text-xs flex gap-1 mb-3 sm:mb-0">
+      <div class="h-auto flex-shrink-0 block @sm:flex gap-2 relative mt-3">
+        <div class="typography-text-xs flex gap-1 mb-3 @sm:mb-0">
           <span>{{ t('common.labels.asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
           <span v-else>{{ t('product.priceInclVAT') }}</span>
           <i18n-t keypath="shipping.excludedLabel" scope="global">
             <template #shipping>
-              <SfLink
+              <UiLink
                 :href="localePath(paths.shipping)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
                 {{ t('common.labels.delivery') }}
-              </SfLink>
+              </UiLink>
             </template>
           </i18n-t>
         </div>
@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfLoaderCircular, SfLink } from '@storefront-ui/vue';
+import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
 import { orderGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';

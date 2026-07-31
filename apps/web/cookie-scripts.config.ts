@@ -1,3 +1,4 @@
+// eslint-disable-next-line custom-rules/file-organization-types
 type CookieScripts = {
   [key: string]: () => void;
 };

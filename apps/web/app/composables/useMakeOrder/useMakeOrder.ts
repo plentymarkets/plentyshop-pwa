@@ -23,7 +23,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
   const handleMakeOrderError = (error: unknown) => {
     if (error) useHandleError(error as ApiError);
     state.value.loading = false;
-    useProcessingOrder().processingOrder.value = false;
+    useDynamicPaymentButtons().createOrderLoading.value = false;
     return null;
   };
 

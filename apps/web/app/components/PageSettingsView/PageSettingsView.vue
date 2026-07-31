@@ -5,15 +5,7 @@
     data-testid="pages-general-settings-drawer"
   >
     <form data-testid="basic-settings-form" class="w-full shadow-[inset_0px_0px_20px_-20px_#111] absolute bg-white">
-      <UiAccordionItem
-        v-model="basicSettingsOpen"
-        data-testid="open-basic-settings"
-        summary-active-class="bg-neutral-100 border-t-0"
-        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-      >
-        <template #summary>
-          <h2>Basics</h2>
-        </template>
+      <EditorFormPanel v-model="basicSettingsOpen" title="Basics" data-testid="open-basic-settings">
         <div class="py-2">
           <div class="flex justify-between">
             <UiFormLabel class="mb-1">Page ID </UiFormLabel>
@@ -21,7 +13,7 @@
               label="Unique ID of the page. Cannot be changed."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -50,7 +42,7 @@
               label="The page type defines the purpose and functionality of a page. A content page can be freely filled with content, while a category page is used to assign and display products."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-100"
+              class="ml-2 z-editor-toolbar"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -76,7 +68,7 @@
               label="The page name is used to identify the page in the page list and can be visible in the navigation, depending on the settings. It can be changed at any time."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -98,7 +90,7 @@
               label="Select a parent to create a subpage. The parent page can also be left empty."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -126,7 +118,7 @@
               label="The URL slug defines the page’s web address and affects SEO as well as URL readability. Changing it may break existing links."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -148,7 +140,7 @@
               label="The position determines the page order in the navigation and the editor. Lower positions come first."
               :placement="'top'"
               :show-arrow="true"
-              class="ml-2 z-10"
+              class="ml-2 z-dropdown"
             >
               <SfIconInfo :size="'sm'" />
             </SfTooltip>
@@ -171,7 +163,7 @@
                 label="If you deactivate this page, customers and search engines won't be able to access it via the navigation or direct links. You can reactivate the page at any time."
                 :placement="'top'"
                 :show-arrow="true"
-                class="ml-2 z-10"
+                class="ml-2 z-dropdown"
               >
                 <SfIconInfo :size="'sm'" />
               </SfTooltip>
@@ -201,7 +193,7 @@
             />
           </div>
         </div>
-      </UiAccordionItem>
+      </EditorFormPanel>
     </form>
   </div>
   <div v-else class="flex justify-center items-center mt-5">

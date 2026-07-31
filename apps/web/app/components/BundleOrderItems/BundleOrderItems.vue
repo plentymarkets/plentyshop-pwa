@@ -1,7 +1,7 @@
 <template>
   <div v-if="product.bundleComponents" class="border-t-2 my-2" data-testid="bundle-components-list">
     <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-2">
-      <SfLink
+      <UiLink
         v-if="isLinkable(item)"
         :tag="NuxtLink"
         :to="localePath(productBundleGetters.getBundleItemUrl(item))"
@@ -14,7 +14,7 @@
           :alt="productBundleGetters.getBundleItemName(item)"
           loading="lazy"
         />
-      </SfLink>
+      </UiLink>
 
       <NuxtImg
         v-else
@@ -28,14 +28,14 @@
       <div class="h-24 self-center">
         <div class="inline-flex font-medium typography-text-sm">
           <div class="mr-1">{{ productBundleGetters.getBundleItemQuantity(item) }} x</div>
-          <SfLink
+          <UiLink
             v-if="isLinkable(item)"
             :tag="NuxtLink"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
           >
             {{ productBundleGetters.getBundleItemName(item) }}
-          </SfLink>
+          </UiLink>
           <span v-else>{{ productBundleGetters.getBundleItemName(item) }}</span>
         </div>
 
@@ -52,12 +52,11 @@
 <script setup lang="ts">
 import { type ProductBundleComponent, productBundleGetters } from '@plentymarkets/shop-api';
 import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
-import { SfLink } from '@storefront-ui/vue';
 
 const { product } = defineProps<BundleOrderItemsProps>();
 const NuxtLink = resolveComponent('NuxtLink');
-const localePath = useLocalePath();
 const { addModernImageExtension } = useModernImage();
+const localePath = useLocalizedPath();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (

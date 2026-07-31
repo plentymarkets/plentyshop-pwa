@@ -1,13 +1,13 @@
 <template>
-  <div class="shadow-lg md:rounded-md md:border md:border-neutral-100" data-testid="order-summary">
-    <div class="flex justify-between items-end py-2 px-4 md:px-6 md:pt-6 md:pb-4">
-      <h2 class="typography-headline-4 font-bold md:typography-headline-3">{{ t('common.labels.orderSummary') }}</h2>
+  <div class="shadow-lg @md:rounded-md @md:border @md:border-neutral-100" data-testid="order-summary">
+    <div class="flex justify-between items-end py-2 px-4 @md:px-6 @md:pt-6 @md:pb-4">
+      <h2 class="typography-headline-4 font-bold @md:typography-headline-3">{{ t('common.labels.orderSummary') }}</h2>
       <p class="typography-text-base font-medium" data-testid="total-in-cart">
         {{ t('cart.itemCount', { count: cartItemsCount }) }}
       </p>
     </div>
 
-    <div class="px-4 pb-4 mt-3 md:px-6 md:pb-6 md:mt-0">
+    <div class="px-4 pb-4 mt-3 @md:px-6 @md:pb-6 @md:mt-0">
       <div v-if="orderPropertiesWithVatAdditionalCosts.length > 0" class="mb-4">
         <div
           v-for="property in orderPropertiesWithVatAdditionalCosts"

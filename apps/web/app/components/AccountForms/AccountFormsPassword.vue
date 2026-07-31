@@ -36,7 +36,7 @@
         pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
       />
     </label>
-    <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
+    <div class="mt-6 flex flex-col-reverse @md:flex-row @md:justify-end gap-4">
       <UiButton type="reset" variant="secondary" @click="$emit('on-cancel')">
         {{ t('common.actions.cancel') }}
       </UiButton>

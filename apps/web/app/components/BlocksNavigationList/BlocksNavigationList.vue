@@ -1,14 +1,10 @@
 <template>
   <template v-for="(category, categoryIndex) in blocksLists" :key="categoryIndex">
-    <UiAccordionItem
+    <EditorFormPanel
       v-if="pageHasAccessToCategory(category)"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      :title="category.title"
       :data-testid="'block-category-' + categoryIndex"
     >
-      <template #summary>
-        <h2>{{ category.title }}</h2>
-      </template>
       <div class="px-4 py-4 mb-4">
         <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="mb-10">
           <div class="relative w-fit mx-auto">
@@ -20,10 +16,7 @@
               :class="{
                 'cursor-not-allowed opacity-50': isAddDisabled(category, variation, targetUuid),
               }"
-              @click="
-                closeSiteConfigurationDrawer();
-                addNewBlock(category.category, variationIndex, targetUuid, blockPosition);
-              "
+              @click="handleAddBlock(category.category, variationIndex)"
             >
               <SfTooltip
                 v-if="isSingleInstanceOnPage(variation.template.en.name)"
@@ -52,7 +45,7 @@
           <span class="italic">{{ getEditorTranslation('disabledNotCompatibleWithLayouts') }}</span>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </template>
 </template>
 
@@ -65,9 +58,10 @@ const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList()
 await getBlocksLists();
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
-const { multigridColumnUuid, visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
+const { visiblePlaceholder, addNewBlock, getBlockDepth, blockExistsOnPage } = useBlockManager();
+const { insertColumnUuid } = useBlocksMutations();
 
-const targetUuid = computed(() => multigridColumnUuid.value || visiblePlaceholder.value.uuid);
+const targetUuid = computed(() => insertColumnUuid.value || visiblePlaceholder.value.uuid);
 const isNestedMultigrid = (category: BlockListCategory, uuid: string) => {
   return category.blockName === 'MultiGrid' && getBlockDepth(uuid) > 0;
 };
@@ -89,9 +83,14 @@ const isAddDisabled = (category: BlockListCategory, variation: BlockTemplateVari
 };
 
 const blockPosition = computed(() => {
-  if (multigridColumnUuid.value) return 'inside';
+  if (insertColumnUuid.value) return 'inside';
   return visiblePlaceholder.value.position;
 });
+
+const handleAddBlock = (categoryName: string, variationIndex: number) => {
+  closeSiteConfigurationDrawer();
+  addNewBlock(categoryName, variationIndex, targetUuid.value, blockPosition.value);
+};
 </script>
 
 <i18n lang="json">

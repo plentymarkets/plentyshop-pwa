@@ -74,8 +74,8 @@ describe('UtilityBarActionsForm', () => {
       props: { uuid: 'utility-actions-form-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            template: '<div><slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',
@@ -102,8 +102,8 @@ describe('UtilityBarActionsForm', () => {
       props: { uuid: 'utility-actions-form-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            template: '<div><slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',
@@ -129,8 +129,8 @@ describe('UtilityBarActionsForm', () => {
       props: { uuid: 'utility-actions-form-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            template: '<div><slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',

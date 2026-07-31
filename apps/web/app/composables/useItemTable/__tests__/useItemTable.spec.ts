@@ -11,7 +11,7 @@ const { useSdk } = vi.hoisted(() => {
   return {
     useSdk: vi.fn().mockReturnValue({
       plentysystems: {
-        getStorageItems: vi.fn().mockResolvedValue({ data: [] }),
+        getTruncatedStorageItems: vi.fn().mockResolvedValue({ data: { objects: [], isTruncated: false } }),
         doUploadStorageItem: vi
           .fn()
           .mockResolvedValue({ data: { key: 'uploaded.png', size: '123', publicUrl: 'url' } }),
@@ -34,12 +34,12 @@ vi.mock('../useItemTable', async (importOriginal) => {
 });
 
 describe('useItemsTable', () => {
-  it('should use all expected image types in getStorageItems default fileTypes', async () => {
+  it('should use all expected image types in getTruncatedStorageItems default fileTypes', async () => {
     const { getStorageItems } = (await import('../useItemTable')).useItemsTable();
 
     await getStorageItems(getAllowedImageExtensions());
 
-    const mockGetStorageItems = useSdk().plentysystems.getStorageItems as ReturnType<typeof vi.fn>;
+    const mockGetStorageItems = useSdk().plentysystems.getTruncatedStorageItems as ReturnType<typeof vi.fn>;
 
     expect(mockGetStorageItems).toHaveBeenCalledWith(
       expect.objectContaining({

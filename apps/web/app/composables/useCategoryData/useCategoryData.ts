@@ -23,6 +23,7 @@ export const useCategoryData = () => {
   const isBlank = (v: string | null | undefined): boolean => v == null || v.trim() === '';
 
   const IMAGE_KEYS = ['wideScreen', 'desktop', 'tablet', 'mobile'] as const;
+  // eslint-disable-next-line custom-rules/file-organization-types
   type ImageKey = (typeof IMAGE_KEYS)[number];
 
   const hasAnyLinkedImage = computed<boolean>(() => {

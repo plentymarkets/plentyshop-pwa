@@ -1,7 +1,7 @@
 <template>
-  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-10">
+  <header ref="referenceRef" :class="headerClass" class="relative w-full @md:sticky @md:shadow-md z-sticky">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      class="flex justify-between items-center flex-wrap @md:flex-nowrap px-4 @md:px-10 py-2 @md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
@@ -21,7 +21,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full @lg:w-48 items-center mr-auto text-white @md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -30,17 +30,8 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
-      <ul
-        class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
-        @blur="
-          (event: FocusEvent) => {
-            if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
-              close();
-            }
-          }
-        "
-      >
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" @mouseleave="onMouseLeave">
+      <ul class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid" @focusout="onNavBlur">
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
@@ -93,8 +84,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
-            @mouseleave="onMouseLeave"
+            class="hidden @md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-sticky max-h-[calc(100vh-300px)] overflow-y-auto"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
             @keydown.down="navigateDropdownItems($event, 'down')"
@@ -145,12 +135,12 @@
     </nav>
 
     <template v-else>
-      <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
+      <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
         v-model="isOpen"
         placement="left"
-        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        class="right-12 max-w-96 bg-white overflow-y-auto z-drawer"
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
@@ -269,7 +259,7 @@ const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
-const tappedCategories = ref<Map<number, boolean>>(new Map());
+const tappedCategoryId = ref<number | null>(null);
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
   'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900';
@@ -282,7 +272,7 @@ const trapFocusOptions = {
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
-const headerClass = computed(() => ({ 'z-[10]': isOpen.value }));
+const headerClass = computed(() => ({ 'z-sticky': isOpen.value }));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -337,7 +327,7 @@ const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
 
 const onEnterKey = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') => {
@@ -346,16 +336,11 @@ const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') =
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
-  const nextIndex =
-    direction === 'down'
-      ? currentIndex < focusableItems.length - 1
-        ? currentIndex + 1
-        : 0
-      : currentIndex > 0
-        ? currentIndex - 1
-        : focusableItems.length - 1;
+  const downIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const upIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextIndex = direction === 'down' ? downIndex : upIndex;
 
   focusableItems[nextIndex]?.focus();
 };
@@ -365,24 +350,27 @@ const handleTabInDropdown = (event: KeyboardEvent) => {
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
   event.preventDefault();
 
-  const nextIndex = event.shiftKey
-    ? currentIndex > 0
-      ? currentIndex - 1
-      : focusableItems.length - 1
-    : currentIndex < focusableItems.length - 1
-      ? currentIndex + 1
-      : 0;
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextFwdIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const nextIndex = event.shiftKey ? prevIndex : nextFwdIndex;
 
   focusableItems[nextIndex]?.focus();
 };
 
+const onNavBlur = (event: FocusEvent) => {
+  if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
+    close();
+    tappedCategoryId.value = null;
+  }
+};
+
 const onMouseLeave = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
@@ -411,13 +399,12 @@ const onMouseDown = () => {
 };
 
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
-  tappedCategories.value.clear();
-  tappedCategories.value.set(menuNode.id, true);
+  tappedCategoryId.value = menuNode.id;
   onCategoryMouseEnter(menuNode);
 };
 
 const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) => {
-  if (isUsingTouch.value && menuNode.childCount > 0 && !tappedCategories.value.get(menuNode.id)) {
+  if (isUsingTouch.value && menuNode.childCount > 0 && tappedCategoryId.value !== menuNode.id) {
     event.stopPropagation();
     event.preventDefault();
     handleFirstTouch(menuNode);
@@ -425,11 +412,14 @@ const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) =
   }
 
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 onMounted(() => {
-  removeHook = router.afterEach(() => close());
+  removeHook = router.afterEach(() => {
+    close();
+    tappedCategoryId.value = null;
+  });
 });
 
 onBeforeUnmount(() => removeHook?.());
@@ -440,9 +430,8 @@ watch(
     categoryTree.value = categoryTreeGetters.getTree(categories);
     setCategory(categoryTree.value);
   },
+  { immediate: true },
 );
-
-setCategory(categoryTree.value);
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>

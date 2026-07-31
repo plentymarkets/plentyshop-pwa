@@ -30,9 +30,9 @@
 
     <div
       v-show="configuration.thumbnails.showThumbnails"
-      :class="['md:relative', thumbContainerClass, isSide ? 'md:self-stretch' : 'md:w-full']"
+      :class="['@md:relative', thumbContainerClass, isSide ? '@md:self-stretch' : '@md:w-full']"
     >
-      <div class="hidden md:block md:relative md:h-full md:overflow-hidden">
+      <div class="hidden @md:block @md:relative @md:h-full @md:overflow-hidden">
         <Swiper
           :modules="thumbsModules"
           :direction="thumbsDirection"
@@ -87,7 +87,7 @@
         </template>
       </div>
 
-      <div v-if="hasMoreImages" class="flex md:hidden gap-0.5" v-bind="carouselProps">
+      <div v-if="hasMoreImages" class="flex @md:hidden gap-0.5" v-bind="carouselProps">
         <button
           v-for="(image, index) in images"
           :key="productImageGetters.getImageUrl(image)"
@@ -137,8 +137,8 @@ const isSide = computed(() => type.value === 'left-vertical' || type.value === '
 const isLeft = computed(() => type.value === 'left-vertical');
 
 const galleryDirClass = computed(() => (isSide.value ? 'flex-col md:flex-row' : 'flex-col md:flex-col'));
-const galleryGapClass = computed(() => (isSide.value ? 'md:gap-4' : 'md:gap-2'));
-const thumbContainerClass = computed(() => [isLeft.value ? 'md:order-first' : 'md:order-last']);
+const galleryGapClass = computed(() => (isSide.value ? '@md:gap-4' : '@md:gap-2'));
+const thumbContainerClass = computed(() => [isLeft.value ? '@md:order-first' : '@md:order-last']);
 const hasMoreImages = computed(() => images.value.length > 1);
 
 const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
@@ -160,14 +160,14 @@ const thumbSlideClass = (index: number) =>
 
 const prevThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-raised rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
 
 const nextThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-raised rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
     isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );

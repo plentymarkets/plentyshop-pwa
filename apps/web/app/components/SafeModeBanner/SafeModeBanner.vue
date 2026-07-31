@@ -1,7 +1,7 @@
 <template>
   <header
     v-if="!isHidden"
-    class="fixed h-auto md:h-8 top-0 left-0 w-full z-50 bg-warning-200 px-4 py-2 flex justify-between items-center shadow-md font-medium"
+    class="fixed h-auto @md:h-8 top-0 left-0 w-full z-dropdown bg-warning-200 px-4 py-2 flex justify-between items-center shadow-md font-medium"
     data-testid="safe-mode-banner"
   >
     <div class="flex-grow text-center">

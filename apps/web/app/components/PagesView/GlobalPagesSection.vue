@@ -1,14 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="globalPagesOpen"
+    :title="getEditorTranslation('global-pages-label')"
     data-testid="global-pages-section"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between select-none border-b"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('global-pages-label') }}</h2>
-    </template>
-
     <div class="mt-4">
       <p class="mb-4">{{ getEditorTranslation('global-pages-description') }}</p>
     </div>
@@ -42,7 +37,7 @@
 
       <div v-if="index < globalPagesButtons.length - 1" class="border-b border-neutral-200 my-4" />
     </template>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">

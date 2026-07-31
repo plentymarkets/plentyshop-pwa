@@ -136,7 +136,7 @@ describe('useMakeOrder', () => {
         paymentId: 1,
         shippingPrivacyHintAccepted: true,
       });
-      expect(useProcessingOrder().processingOrder.value).toBe(false);
+      expect(useDynamicPaymentButtons().createOrderLoading.value).toBe(false);
     });
 
     it('should set loading to false if any call fails', async () => {

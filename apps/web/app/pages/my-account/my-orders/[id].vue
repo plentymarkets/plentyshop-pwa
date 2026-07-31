@@ -5,10 +5,10 @@
       v-model="isOpen"
       as="section"
       role="dialog"
-      class="h-full w-full overflow-auto !p-4 md:!p-10 md:max-w-[770px] md:h-fit"
+      class="h-full w-full overflow-auto !p-4 @md:!p-10 @md:max-w-[770px] @md:h-fit"
     >
       <header
-        class="flex justify-between bg-white items-center typography-headline-4 md:typography-headline-3 font-bold"
+        class="flex justify-between bg-white items-center typography-headline-4 @md:typography-headline-3 font-bold"
       >
         <h3>{{ t('account.ordersAndReturns.orderDetails.heading') }}</h3>
         <UiButton
@@ -17,18 +17,18 @@
           :tag="NuxtLink"
           :aria-label="t('common.navigation.closeDialog')"
           :to="localePath(paths.accountMyOrders)"
-          class="md:absolute md:top-2 md:right-2"
+          class="@md:absolute @md:top-2 @md:right-2"
         >
           <SfIconClose class="text-neutral-500" />
         </UiButton>
       </header>
       <main class="mt-6">
-        <ul class="bg-neutral-100 p-4 rounded-md md:columns-2 mb-6">
+        <ul class="bg-neutral-100 p-4 rounded-md @md:columns-2 mb-6">
           <li>
             <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.orderId') }}</p>
             <span>{{ orderGetters.getId(data) }}</span>
           </li>
-          <li class="my-4 md:mb-0">
+          <li class="my-4 @md:mb-0">
             <p class="font-medium">{{ t('account.ordersAndReturns.orderDetails.orderDate') }}</p>
             <span>{{ orderGetters.getDate(data, locale) }}</span>
           </li>
@@ -41,7 +41,7 @@
             <span>{{ orderGetters.getStatus(data) }}</span>
           </li>
         </ul>
-        <div v-for="(variation, i) in data.variations" :key="i" class="md:hidden border-t border-neutral-200">
+        <div v-for="(variation, i) in data.variations" :key="i" class="@md:hidden border-t border-neutral-200">
           <!--
           <UiProductCardHorizontal :product="product" />
           <ul class="flex">
@@ -60,7 +60,7 @@
           </ul>
           -->
         </div>
-        <table class="hidden md:table w-full text-left typography-text-sm mx-4 md:mx-0">
+        <table class="hidden @md:table w-full text-left typography-text-sm mx-4 @md:mx-0">
           <caption class="hidden">
             {{
               t('account.ordersAndReturns.orderDetails.tableCaption')
@@ -69,7 +69,7 @@
           <thead>
             <tr class="border-b-2 border-neutral-200">
               <th class="py-3 font-medium">{{ t('account.ordersAndReturns.orderDetails.product') }}</th>
-              <th class="py-3 px-4 font-medium lg:whitespace-nowrap">
+              <th class="py-3 px-4 font-medium @lg:whitespace-nowrap">
                 {{ t('account.ordersAndReturns.orderDetails.price') }}
               </th>
               <th class="py-3 px-4 font-medium">{{ t('account.ordersAndReturns.orderDetails.quantity') }}</th>
@@ -79,10 +79,10 @@
           <tbody>
             <!--
             <tr v-for="(product, i) in data?.products" :key="i" class="border-b border-neutral-200 align-top">
-              <td class="pb-4 pr-4 lg:whitespace-nowrap typography-text-base">
+              <td class="pb-4 pr-4 @lg:whitespace-nowrap typography-text-base">
                 <UiProductCardHorizontal :product="product" />
               </td>
-              <td class="p-4 lg:whitespace-nowrap typography-text-base">${{ product.price?.regularPrice.amount }}</td>
+              <td class="p-4 @lg:whitespace-nowrap typography-text-base">${{ product.price?.regularPrice.amount }}</td>
               <td class="p-4 typography-text-base">{{ product.quantity }}</td>
               <td class="p-4 typography-text-base">${{ product.price?.regularPrice.precisionAmount }}</td>
             </tr>
@@ -90,7 +90,7 @@
           </tbody>
         </table>
 
-        <div class="flex justify-between pt-4 border-t border-neutral-200 md:border-0">
+        <div class="flex justify-between pt-4 border-t border-neutral-200 @md:border-0">
           <p>{{ t('account.ordersAndReturns.orderDetails.itemsSubtotal') }}</p>
           <span>${{ orderGetters.getSubTotal(data.totals) }}</span>
         </div>
@@ -107,7 +107,7 @@
           <span>${{ orderGetters.getTotal(data.totals) }}</span>
         </div>
         <!--
-        <ul class="md:columns-2 mt-6">
+        <ul class="@md:columns-2 mt-6">
           <li class="mb-4">
             <p class="typography-text-sm font-medium mb-2">
               {{ t('account.ordersAndReturns.orderDetails.billingAddress') }}
@@ -120,7 +120,7 @@
               {{ data?.billingAddress.postalCode }}
             </span>
           </li>
-          <li class="mb-4 md:mb-0">
+          <li class="mb-4 @md:mb-0">
             <p class="typography-text-sm font-medium mb-2">
               {{ t('account.ordersAndReturns.orderDetails.paymentMethod') }}
             </p>
@@ -138,7 +138,7 @@
               {{ data?.shippingAddress.postalCode }}
             </span>
           </li>
-          <li class="mb-4 md:mb-0">
+          <li class="mb-4 @md:mb-0">
             <p class="typography-text-sm font-medium mb-2">
               {{ t('account.ordersAndReturns.orderDetails.paymentMethod') }}
             </p>

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center lg:justify-start mb-4 lg:mb-0" data-testid="average-section">
-    <div class="lg:flex my-2">
-      <div class="lg:w-1/2 flex flex-col lg:mr-8">
+  <div class="flex justify-center @lg:justify-start mb-4 @lg:mb-0" data-testid="average-section">
+    <div class="@lg:flex my-2">
+      <div class="@lg:w-1/2 flex flex-col @lg:mr-8">
         <p class="text-center text-sm" data-testid="average-info">{{ t('product.averageRating') }}</p>
         <div class="flex justify-center">
           <SfRating
@@ -38,7 +38,7 @@
             :value="proportionalRating"
             aria-label="proportional-rating-in-percent"
           />
-          <p class="lg:w-20 ml-2">( {{ splitRatings[key] }} )</p>
+          <p class="@lg:w-20 ml-2">( {{ splitRatings[key] }} )</p>
         </div>
       </div>
     </div>

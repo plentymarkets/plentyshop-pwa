@@ -4,6 +4,7 @@ export interface UseStructuredDataState {
 }
 
 export type SetProductMetaData = (product: Product) => void;
+export type SetItemListMetaData = (products: Product[]) => void;
 export type SetLogoMeta = () => void;
 export type SetProductRobotsMetaData = (product: Product) => void;
 export type SetProductCanonicalMetaData = (product: Product) => void;
@@ -12,6 +13,7 @@ export interface UseStructuredData {
   loading: Readonly<Ref<boolean>>;
   setLogoMeta: SetLogoMeta;
   setProductMetaData: SetProductMetaData;
+  setItemListMetaData: SetItemListMetaData;
   setProductRobotsMetaData: SetProductRobotsMetaData;
   setProductCanonicalMetaData: SetProductCanonicalMetaData;
 }

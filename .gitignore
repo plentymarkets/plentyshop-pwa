@@ -16,6 +16,7 @@ node_modules
 # nuxt dev/build outputs
 .output
 .nuxt
+.nuxtrc
 .nitro
 .cache
 cache
@@ -30,6 +31,7 @@ apps/web/coverage/*
 packages/shop-cli/coverage/*
 !packages/shop-cli/coverage/coverage-summary.json
 !packages/shop-cli/coverage/coverage-final.json
+/docs/.vitepress/tmp/.htmltest
 
 # misc
 .DS_Store

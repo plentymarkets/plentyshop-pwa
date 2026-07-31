@@ -44,4 +44,18 @@ export const CategoryMock: Category = {
       plentyId: 60796,
     },
   ],
+  subcategories: [
+    {
+      id: 18,
+      name: 'Sessel',
+      nameUrl: 'sessel',
+      itemCount: 5,
+    },
+    {
+      id: 19,
+      name: 'Hocker',
+      nameUrl: 'hocker',
+      itemCount: 3,
+    },
+  ],
 };

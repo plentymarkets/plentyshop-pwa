@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4 md:px-0 flex items-center flex-col" data-testid="order-success-page">
-    <div class="p-4 md:p-6 flex flex-col max-w-2xl mx-auto">
+  <div class="px-4 @md:px-0 flex items-center flex-col" data-testid="order-success-page">
+    <div class="p-4 @md:p-6 flex flex-col max-w-2xl mx-auto">
       <h1 class="mt-6 mb-1 text-2xl text-center" data-testid="success-header">
         {{ !orderGetters.isReturn(order) ? t('order.successHeader') : t('order.successReturnHeader') }}
       </h1>
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col md:flex-row w-full md:w-auto lg:w-3/4 flex-wrap gap-x-6">
+    <div class="flex flex-col @md:flex-row w-full @md:w-auto @lg:w-3/4 flex-wrap gap-x-6">
       <div class="flex-1">
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
           <OrderDetails :order="order" />
@@ -44,7 +44,7 @@
           v-if="!isAuthorized"
           class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full mt-4 text-sm items-center flex flex-col"
         >
-          <div class="font-bold text-primary-700 md:text-lg text-center mt-5">
+          <div class="font-bold text-primary-700 @md:text-lg text-center mt-5">
             {{ t('orderConfirmation.saveOrderToAccount') }}
           </div>
           <div class="font-bold text-center mt-3">{{ t('orderConfirmation.createAccountForBenefits') }}</div>
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
+    <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="@max-md:w-full mt-6 mb-8" variant="secondary">
       {{ t('common.actions.continueShopping') }}
     </UiButton>
   </div>
@@ -72,7 +72,7 @@
     v-if="isAuthenticationOpen"
     v-model="isAuthenticationOpen"
     tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+    class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
     aria-labelledby="login-modal"
   >
     <header>
@@ -108,8 +108,8 @@ const { isOpen: isAuthenticationOpen, toggle: closeAuthentication } = useDisclos
 const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const localePath = useLocalePath();
-const bankDetails = orderGetters.getOrderPaymentBankDetails(order);
-useProcessingOrder().processingOrder.value = false;
+const bankDetails = computed(() => orderGetters.getOrderPaymentBankDetails(order));
+useDynamicPaymentButtons().createOrderLoading.value = false;
 
 await getActiveShippingCountries();
 </script>

@@ -1,6 +1,6 @@
 <template>
   <form
-    class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
+    class="grid grid-cols-1 @md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="address-form"
     @submit.prevent="$emit('on-save', defaultValues, useAsShippingAddress)"
   >
@@ -8,11 +8,11 @@
       <UiFormLabel>{{ t('form.firstNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput v-model="defaultValues.firstName" name="firstName" autocomplete="given-name" required />
     </label>
-    <label class="md:col-span-2">
+    <label class="@md:col-span-2">
       <UiFormLabel>{{ t('form.lastNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput v-model="defaultValues.lastName" name="lastName" autocomplete="family-name" required />
     </label>
-    <label class="md:col-span-3">
+    <label class="@md:col-span-3">
       <UiFormLabel class="flex">
         <span class="mr-1">{{ t('form.phoneLabel') }}</span>
         <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
@@ -26,7 +26,7 @@
         autocomplete="tel"
       />
     </label>
-    <label class="md:col-span-3">
+    <label class="@md:col-span-3">
       <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
         v-model="defaultValues.country"
@@ -43,7 +43,7 @@
         </option>
       </SfSelect>
     </label>
-    <label class="md:col-span-2">
+    <label class="@md:col-span-2">
       <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput v-model="defaultValues.streetName" name="streetName" autocomplete="address-line1" required />
     </label>
@@ -51,11 +51,11 @@
       <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput v-model="defaultValues.apartment" name="streetNumber" required />
     </label>
-    <label class="md:col-span-3">
+    <label class="@md:col-span-3">
       <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput v-model="defaultValues.city" name="city" autocomplete="address-level2" required />
     </label>
-    <label v-if="states.length > 0" class="md:col-span-2">
+    <label v-if="states.length > 0" class="@md:col-span-2">
       <UiFormLabel class="flex">
         <span class="mr-1">{{ t('form.stateLabel') }}</span>
         <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
@@ -76,15 +76,15 @@
       <SfInput v-model="defaultValues.zipCode" name="postalCode" autocomplete="postal-code" required />
     </label>
 
-    <label v-if="type === AddressType.Billing" class="md:col-span-3 flex items-center gap-2">
+    <label v-if="type === AddressType.Billing" class="@md:col-span-3 flex items-center gap-2">
       <SfCheckbox v-model="useAsShippingAddress" name="useAsShipping" />
       {{ t('form.useAsShippingLabel') }}
     </label>
 
-    <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end mt-6 gap-4">
+    <div class="@md:col-span-3 flex flex-col-reverse @md:flex-row justify-end mt-6 gap-4">
       <UiButton
         type="button"
-        class="max-md:w-1/2"
+        class="@max-md:w-1/2"
         variant="secondary"
         :disabled="isCartUpdateLoading"
         @click="clearInputs"

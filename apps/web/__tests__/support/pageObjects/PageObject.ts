@@ -4,11 +4,13 @@ export class PageObject {
   }
 
   get multiGridStructure() {
-    return cy.getByTestId('multi-grid-structure');
+    return cy
+      .get('[data-testid="multi-grid-structure"]')
+      .not('[data-testid="footer"] [data-testid="multi-grid-structure"]');
   }
 
   get multiGridColumn() {
-    return cy.getByTestId('multi-grid-column');
+    return cy.get('[data-testid="multi-grid-column"]').not('[data-testid="footer"] [data-testid="multi-grid-column"]');
   }
 
   waitFor(intercepts: string[]) {

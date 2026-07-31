@@ -1,6 +1,6 @@
 <template>
-  <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div v-if="isLoading" class="flex flex-col sm:flex-row sm:items-center justify-between">
+  <div data-testid="checkout-address" class="@md:px-4 py-6">
+    <div v-if="isLoading" class="flex flex-col @sm:flex-row @sm:items-center justify-between">
       <div class="relative w-full">
         <h2 class="text-neutral-900 text-lg font-bold mb-5 mt-2">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
@@ -9,12 +9,12 @@
       </div>
     </div>
     <div v-else>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+      <div class="flex flex-col @sm:flex-row @sm:items-center justify-between mb-4">
         <h2 class="text-neutral-900 text-lg font-bold">
           {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
         </h2>
 
-        <div class="flex mt-4 sm:justify-center sm:mt-0">
+        <div class="flex mt-4 @sm:justify-center @sm:mt-0">
           <AddressSelect
             v-if="showAddressSelection"
             :type="type"

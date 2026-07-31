@@ -4,7 +4,7 @@
       {{ t('authentication.login.heading') }}
     </div>
     <div class="flex flex-col items-center justify-center my-1">
-      <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="loginUser">
+      <form class="flex flex-col gap-4 p-2 @md:p-6 rounded-md w-full @md:w-[400px]" @submit.prevent="loginUser">
         <label>
           <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput v-model="email" name="email" type="email" autocomplete="email" required />
@@ -16,9 +16,9 @@
         </label>
 
         <div class="text-end">
-          <SfLink variant="primary" class="cursor-pointer" @click="changeToForgotPassword">
+          <UiLink variant="primary" class="cursor-pointer" @click="changeToForgotPassword">
             {{ t('authentication.login.forgotPasswordLabel') }}
-          </SfLink>
+          </UiLink>
         </div>
 
         <UiButton type="submit" class="mt-2" :disabled="loading" data-testid="login-submit">
@@ -29,9 +29,9 @@
         </UiButton>
         <div v-if="!isSoftLogin" class="text-center">
           <div class="my-5 font-bold">{{ t('authentication.login.createAccount') }}</div>
-          <SfLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
+          <UiLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
             {{ t('authentication.login.createAccountLinkLabel') }}
-          </SfLink>
+          </UiLink>
         </div>
       </form>
     </div>
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { LoginProps } from './types';
 
 const { login, loading } = useCustomer();

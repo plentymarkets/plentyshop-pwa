@@ -51,7 +51,7 @@
           label="You have unsaved changes on this page"
           :placement="'top'"
           :show-arrow="true"
-          class="ml-2 z-10"
+          class="ml-2 z-dropdown"
         >
           <SfIconError viewBox="0 0 24 24" class="w-5 h-5" />
         </SfTooltip>

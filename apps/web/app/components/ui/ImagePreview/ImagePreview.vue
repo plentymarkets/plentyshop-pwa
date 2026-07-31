@@ -8,7 +8,7 @@
         <strong>{{ props.name }}</strong>
         <div v-if="meta.width && meta.height" class="text-xs mt-1">{{ meta.width }} x {{ meta.height }} px</div>
       </div>
-      <SfTooltip label="Click here to upload" placement="top" :show-arrow="true" class="z-10">
+      <SfTooltip label="Click here to upload" placement="top" :show-arrow="true" class="z-dropdown">
         <button
           type="button"
           aria-label="Close preview and open upload"

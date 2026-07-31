@@ -1,10 +1,10 @@
 <template>
   <NuxtLayout name="default">
     <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-      <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+      <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-max" size="2xl" />
       <CategoryPageContent
         v-if="productsCatalog"
-        :title="t('resultsFor', { phrase: tagName })"
+        :title="t('search.searchResults', { phrase: tagName })"
         :total-products="searchPaginationTotals"
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
@@ -34,17 +34,25 @@ defineI18nRoute({
 definePageMeta({ layout: false });
 
 const route = useRoute();
+const { setItemListMetaData } = useStructuredData();
 const { data: productsCatalog, productsPerPage, loading, searchByTag } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
 const slug = route.params.slug?.toString() ?? '';
 const [tagName, tagId] = slug.split('_');
 
-onNuxtReady(async () => await searchByTag(tagId ?? '', getFacetsFromURL()));
+const handleQueryUpdate = async () => {
+  await searchByTag(tagId ?? '', getFacetsFromURL());
+  setItemListMetaData(productsCatalog.value?.products || []);
+};
+
+await handleQueryUpdate();
 
 const searchPaginationTotals = computed(() => productsCatalog.value?.pagination?.totals || 0);
 
 watch(
   () => route.query,
-  async () => await searchByTag(tagId ?? '', getFacetsFromURL()),
+  async () => {
+    await handleQueryUpdate();
+  },
 );
 </script>

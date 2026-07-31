@@ -45,7 +45,7 @@ import type { ImageProps, BreakpointEntry } from './types';
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { getBlockDepth } = useBlockManager();
 
 const props = defineProps<ImageProps>();
@@ -68,6 +68,7 @@ const textContentProps = computed(() =>
     buttonLabel: props.content?.button.label,
     buttonLink: props.content?.button.link,
     buttonVariant: props.content?.button.variant,
+    buttonAlignment: props.content?.button.alignment,
   }),
 );
 

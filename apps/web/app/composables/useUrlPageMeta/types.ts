@@ -9,11 +9,13 @@ export type CategoriesPageMeta = (
   facetsFromUrl: FacetSearchCriteria,
   canonicalOverride?: string,
 ) => void;
+export type GetCategoryRobotsContent = (productsCatalog: Ref<Facet>) => ComputedRef<string>;
 
 export interface UseUrlPageMeta {
   loading: Readonly<Ref<boolean>>;
   setStaticPageMeta: StaticPageMeta;
   setCategoriesPageMeta: CategoriesPageMeta;
+  getCategoryRobotsContent: GetCategoryRobotsContent;
 }
 
 export type UseUrlPageMetaReturn = () => UseUrlPageMeta;

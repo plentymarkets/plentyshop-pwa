@@ -1,5 +1,11 @@
 import type { OrderSearchParams, Order, GetOrderError, ApiError } from '@plentymarkets/shop-api';
-import type { FetchOrder, UseCustomerOrderReturn, UseCustomerOrderState } from '~/composables/useCustomerOrder/types';
+import { orderGetters } from '@plentymarkets/shop-api';
+import type {
+  ChangePaymentMethod,
+  FetchOrder,
+  UseCustomerOrderReturn,
+  UseCustomerOrderState,
+} from '~/composables/useCustomerOrder/types';
 
 /**
  * @description Composable for managing customer order.
@@ -15,6 +21,7 @@ export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
     data: null,
     loading: false,
     error: null,
+    changePaymentMethodModalOpen: false,
   }));
 
   /**
@@ -91,9 +98,46 @@ export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
     return state.value.data;
   };
 
+  const changePaymentMethod: ChangePaymentMethod = async (paymentMethodId: number) => {
+    if (!state.value.data) return false;
+    try {
+      const shippingAddress = orderGetters.getShippingAddress(state.value.data);
+      const { data } = await useSdk().plentysystems.setOrderPaymentMethod({
+        orderId: orderGetters.getId(state.value.data),
+        accessKey: orderGetters.getAccessKey(state.value.data),
+        postcode: shippingAddress?.postalCode,
+        name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
+        paymentId: paymentMethodId,
+      });
+      state.value.data = data;
+      useNotification().send({
+        type: 'positive',
+        message: t('account.ordersAndReturns.changePaymentMethod.success'),
+      });
+      return true;
+    } catch (e) {
+      useHandleError(e as ApiError);
+    }
+    return false;
+  };
+
+  const refetchOrder = async () => {
+    if (!state.value.data) return false;
+    const shippingAddress = orderGetters.getShippingAddress(state.value.data);
+    await fetchOrderClient({
+      orderId: orderGetters.getId(state.value.data),
+      accessKey: orderGetters.getAccessKey(state.value.data),
+      postcode: shippingAddress?.postalCode,
+      name: shippingAddress?.name3 || shippingAddress?.name1 || undefined,
+    });
+    return true;
+  };
+
   return {
     fetchOrder,
+    refetchOrder,
     fetchOrderClient,
+    changePaymentMethod,
     ...toRefs(state.value),
   };
 };

@@ -1,15 +1,10 @@
 <template>
   <div>
-    <UiAccordionItem
+    <EditorFormPanel
       v-model="textSettings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      :title="getEditorTranslation('text-settings-label')"
       data-testid="item-text-settings"
     >
-      <template #summary>
-        <h2>{{ getEditorTranslation('text-settings-label') }}</h2>
-      </template>
-
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>{{ getEditorTranslation('main-title-label') }}</UiFormLabel>
@@ -24,18 +19,13 @@
           </SfInput>
         </label>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
 
-    <UiAccordionItem
+    <EditorFormPanel
       v-model="layoutSettings"
-      summary-active-class="bg-neutral-100 border-t-0"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      :title="getEditorTranslation('layout-settings-label')"
       data-testid="item-text-layout"
     >
-      <template #summary>
-        <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
-      </template>
-
       <div class="flex justify-between my-5">
         <span>{{ getEditorTranslation('display-as-collapsable') }}</span>
         <span>
@@ -100,7 +90,7 @@
           </div>
         </div>
       </div>
-    </UiAccordionItem>
+    </EditorFormPanel>
   </div>
 </template>
 
@@ -133,8 +123,8 @@ const itemTextBlock = computed<ItemTextContent>(() => {
 
 const { isFullWidth } = useFullWidthToggleForContent(itemTextBlock);
 
-const textSettings = ref(false);
-const layoutSettings = ref(false);
+const textSettings = ref(true);
+const layoutSettings = ref(true);
 
 const isCollapsibleInit = itemTextBlock.value.layout.displayAsCollapsable;
 const isCollapsible = ref(isCollapsibleInit);

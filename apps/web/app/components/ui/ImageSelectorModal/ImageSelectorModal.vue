@@ -3,17 +3,23 @@
     <div
       v-if="props.open"
       data-testid="image-selector-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-modal-backdrop"
     >
       <div class="bg-white w-[1500px] h-[90%] p-6 rounded-lg overflow-hidden shadow-xl flex flex-col overflow-y-auto">
         <header class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold">Add image {{ imageTypeLabel }}</h2>
+            <div v-if="loadingMore" class="text-gray-500 flex items-center text-xs gap-2">
+              <span>Loading more images</span>
+              <SfLoaderCircular size="xs" />
+            </div>
+          </div>
           <div class="flex items-center gap-2">
             <SfTooltip
-              label="If you want to delete images or create/delete folders, please do this in the Webspace (under Shop), as these functions are not yet available in the editor."
+              label="If you want to delete images or create/delete folders, please do this in the File Manager (under Shop), as these functions are not yet available in the editor."
               placement="top"
               :show-arrow="true"
-              class="z-10"
+              class="z-picker"
             >
               <SfIconInfo size="sm" />
             </SfTooltip>
@@ -128,7 +134,15 @@ const selectedRowKey = ref<string | null>(null);
 const selectedKey = ref<string | null>(null);
 
 const { placeholderImg, getImageTypeLabel } = usePickerHelper();
-const { data: items, loading, getStorageItems, uploadStorageItem, revokeAllBlobUrls, folders } = useItemsTable();
+const {
+  data: items,
+  loading,
+  getStorageItems,
+  uploadStorageItem,
+  revokeAllBlobUrls,
+  folders,
+  loadingMore,
+} = useItemsTable();
 
 const canAdd = computed(() => {
   const image = selectedImage.value?.image;

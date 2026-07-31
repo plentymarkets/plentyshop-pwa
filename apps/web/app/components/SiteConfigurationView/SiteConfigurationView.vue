@@ -1,7 +1,11 @@
 <template>
-  <div class="site-settings-view sticky" data-testid="site-settings-drawer">
-    <div v-if="subCategories.length > 1 && !activeSubCategory" key="sub-list" class="sub-categories">
-      <header class="border-b">
+  <div class="site-settings-view sticky h-full max-h-screen flex flex-col pb-4" data-testid="site-settings-drawer">
+    <div
+      v-if="subCategories.length > 1 && !activeSubCategory"
+      key="sub-list"
+      class="sub-categories flex flex-col flex-1 min-h-0"
+    >
+      <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-5">
           <div class="flex items-center w-full">
             <div class="flex items-center">
@@ -19,23 +23,24 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="h-[80vh] overflow-y-auto">
-        <SfListItem
+      <div class="flex-1 min-h-0 overflow-y-auto" data-testid="site-settings-scroll-container">
+        <button
           v-for="subCategory in subCategories"
           :key="subCategory"
-          class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+          type="button"
+          class="w-full flex items-center gap-1.5 px-3.5 py-2 bg-editor-surface border-b border-editor-border hover:bg-editor-toc-hover transition-colors cursor-pointer text-left select-none"
           :data-testid="`site-settings-category-${subCategory}`"
           @click="activeSubCategory = subCategory"
         >
-          <span class="break-words">
+          <span class="flex-1 text-2xs font-bold text-editor-text-subtle tracking-wider uppercase break-words">
             {{ getEditorUITranslation(subCategory) }}
           </span>
-          <template #suffix><SfIconChevronRight /></template>
-        </SfListItem>
+          <SfIconChevronRight size="xs" class="text-editor-text-placeholder flex-shrink-0" />
+        </button>
       </div>
     </div>
-    <div v-else key="groups" class="groups">
-      <header class="border-b">
+    <div v-else key="groups" class="groups flex flex-col flex-1 min-h-0">
+      <header class="border-b flex-shrink-0">
         <div class="flex items-center justify-between px-4 py-4">
           <div class="flex items-start flex-col">
             <div class="flex items-center text-sm cursor-pointer" @click="activeSubCategory = ''">
@@ -63,7 +68,7 @@
         <slot name="setting-description" />
       </header>
 
-      <div class="h-[80vh] overflow-y-auto">
+      <div class="flex-1 min-h-0 overflow-y-auto" data-testid="site-settings-scroll-container">
         <SettingsGroup v-for="group in groups" :key="group.title" :data-testid="`${group.slug}-section`">
           <template #settings-group-title>{{ group.title }}</template>
 
@@ -77,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfListItem, SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
+import { SfIconChevronRight, SfIconChevronLeft, SfIconClose } from '@storefront-ui/vue';
 
 const { closeSiteConfigurationDrawer, activeSetting, activeSubCategory, setActiveSubCategory } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
@@ -97,13 +102,6 @@ const groups = computed(() => {
   const allGroups = getSettingsGroups(activeSetting.value ?? '', activeSubCategory.value ?? '');
   const excludedGroups = runtimeConfig.public.disabledEditorSettings as string[];
 
-  return allGroups
-    .filter((group) => !excludedGroups.includes(group.slug))
-    .filter((group) => {
-      if (group.slug === 'cancellation-form') {
-        return runtimeConfig.public.enableCancellationForm;
-      }
-      return true;
-    });
+  return allGroups.filter((group) => !excludedGroups.includes(group.slug));
 });
 </script>

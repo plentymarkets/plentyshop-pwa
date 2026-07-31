@@ -42,17 +42,14 @@ const createContent = (): UtilityBarContent => ({
 describe('UtilityBarLayoutSettings', () => {
   const content = ref<UtilityBarContent>(createContent());
 
-  const UiAccordionItemStub = defineComponent({
-    name: 'UiAccordionItem',
+  const EditorFormPanelStub = defineComponent({
+    name: 'EditorFormPanel',
     props: {
-      modelValue: {
-        type: Boolean,
-        required: false,
-        default: true,
-      },
+      title: { type: String, required: false, default: '' },
+      modelValue: { type: Boolean, required: false, default: true },
     },
     emits: ['update:modelValue'],
-    template: '<div><slot name="summary" /><slot /></div>',
+    template: '<div><div>{{ title }}</div><slot /></div>',
   });
 
   const EditorColorPickerStub = defineComponent({
@@ -106,7 +103,7 @@ describe('UtilityBarLayoutSettings', () => {
       props: { uuid: 'utility-layout-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: UiAccordionItemStub,
+          EditorFormPanel: EditorFormPanelStub,
           UiFormLabel: {
             template: '<label><slot /></label>',
           },
@@ -120,7 +117,7 @@ describe('UtilityBarLayoutSettings', () => {
       },
     });
 
-    expect(wrapper.getByTestId('utility-bar-layout-title').text()).toBe('layout-label');
+    expect(wrapper.text()).toContain('layout-label');
     expect((wrapper.getByTestId('padding-top').element as HTMLInputElement).value).toBe('20');
     expect((wrapper.getByTestId('padding-bottom').element as HTMLInputElement).value).toBe('21');
     expect((wrapper.getByTestId('padding-left').element as HTMLInputElement).value).toBe('22');
@@ -132,7 +129,7 @@ describe('UtilityBarLayoutSettings', () => {
       props: { uuid: 'utility-layout-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: UiAccordionItemStub,
+          EditorFormPanel: EditorFormPanelStub,
           UiFormLabel: {
             template: '<label><slot /></label>',
           },
@@ -162,7 +159,7 @@ describe('UtilityBarLayoutSettings', () => {
       props: { uuid: 'utility-layout-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: UiAccordionItemStub,
+          EditorFormPanel: EditorFormPanelStub,
           UiFormLabel: {
             template: '<label><slot /></label>',
           },

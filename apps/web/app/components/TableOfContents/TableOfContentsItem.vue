@@ -1,17 +1,15 @@
 <template>
-  <li
-    role="button"
-    tabindex="0"
-    class="flex items-center justify-between cursor-pointer transition-colors gap-1 group"
+  <button
+    type="button"
+    class="flex items-center justify-between cursor-pointer transition-colors gap-1 group w-full text-left"
     :data-testid="`toc-item-${item.uuid}`"
-    @click="editBlock(item.block)"
-    @keydown.enter="editBlock(item.block)"
-    @keydown.space.prevent="editBlock(item.block)"
+    :style="item.depth > 0 ? { paddingLeft: `${item.depth * 16}px` } : undefined"
+    @click="handleItemClick"
+    @keydown.enter="handleItemClick"
+    @keydown.space.prevent="handleItemClick"
     @mouseenter="hoveredUuid = item.uuid"
     @mouseleave="hoveredUuid = ''"
   >
-    <div v-if="item.depth > 0 && !isStructureBlock(item.block)" class="shrink-0 w-4" />
-
     <TableOfContentsItemContent
       :uuid="item.uuid"
       :block-name="item.block.name"
@@ -33,7 +31,7 @@
         </button>
       </template>
     </TableOfContentsItemContent>
-  </li>
+  </button>
 
   <template v-if="(expandedBlocks.has(item.uuid) || !isStructureBlock(item.block)) && getChildren(item).length">
     <TableOfContentsItem v-for="child in getChildren(item)" :key="child.uuid" :item="child" />
@@ -47,8 +45,24 @@ import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfC
 
 const props = defineProps<TableOfContentsItemProps>();
 
-const { selectedUuid, hoveredUuid, expandedBlocks, isStructureBlock, toggleBlockExpansion, getChildren, editBlock } =
-  useTableOfContents();
+const {
+  selectedUuid,
+  hoveredUuid,
+  expandedBlocks,
+  isStructureBlock,
+  toggleBlockExpansion,
+  getChildren,
+  editBlock,
+  replaceEmptyBlock,
+} = useTableOfContents();
 
 const isItemSelected = computed(() => selectedUuid.value === props.item.uuid);
+
+const handleItemClick = (event: MouseEvent | KeyboardEvent) => {
+  if (props.item.block.name === 'EmptyGridBlock') {
+    replaceEmptyBlock(event, props.item.block);
+  } else {
+    editBlock(props.item.block);
+  }
+};
 </script>

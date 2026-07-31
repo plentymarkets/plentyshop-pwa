@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-primary-500 md:text-lg mb-3">
+  <div class="font-bold text-primary-500 @md:text-lg mb-3">
     <span v-if="!orderGetters.isReturn(order)">
       {{ t('account.ordersAndReturns.orderDetails.heading') }}
     </span>
@@ -7,7 +7,7 @@
       {{ t('returns.detailsHeading') }}
     </span>
   </div>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
+  <div class="grid @md:grid-cols-2 @lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
       <span v-if="!orderGetters.isReturn(order)">
         {{ t('account.ordersAndReturns.orderNumber') }}
@@ -18,11 +18,11 @@
     </p>
     <p>{{ orderGetters.getId(order) }}</p>
   </div>
-  <div v-if="orderGetters.isReturn(order)" class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
+  <div v-if="orderGetters.isReturn(order)" class="grid @md:grid-cols-2 @lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">{{ t('account.ordersAndReturns.orderNumber') }}</p>
     <p>{{ orderGetters.getOrderReferenceOriginId(order) }}</p>
   </div>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
+  <div class="grid @md:grid-cols-2 @lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
       <span v-if="!orderGetters.isReturn(order)">
         {{ t('account.ordersAndReturns.orderDate') }}
@@ -33,7 +33,7 @@
     </p>
     <p>{{ orderGetters.getDate(order, locale) }}</p>
   </div>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
+  <div class="grid @md:grid-cols-2 @lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
       {{ t('account.ordersAndReturns.status') }}
     </p>

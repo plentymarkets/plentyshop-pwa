@@ -2,7 +2,6 @@ import { useEditor } from '@tiptap/vue-3';
 import type { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
-import Link from '@tiptap/extension-link';
 import { TextStyle } from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
@@ -15,22 +14,39 @@ import { setupRichTextEditorAlignment } from './helpers/alignment';
 import { setupRichTextEditorHistory } from './helpers/history';
 import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
+import { CustomLink } from './helpers/customLinkExtension';
 import { FontSize } from './helpers/fontSizeExtension';
+import { IconNode } from './helpers/iconExtension';
+import { AtomSelectionDecoration } from './helpers/atomSelectionDecoration';
 import Placeholder from '@tiptap/extension-placeholder';
+import Emoji, { emojis } from '@tiptap/extension-emoji';
+import { getMarkRange } from '@tiptap/core';
+import { PropertyPlaceholderNode } from './helpers/propertyPlaceholderExtension';
+import { I18nPlaceholderNode } from './helpers/i18nPlaceholderExtension';
+import { createI18nPlaceholderShortcutExtension } from './helpers/i18nPlaceholderShortcutExtension';
+import type { I18nPlaceholderToken, PropertyPlaceholderToken } from './types';
 
 export function useRichTextEditor(args: UseRichTextEditorArgs) {
   const { expandedLocal } = setupRichTextEditorExpansion(args);
 
+  let isReady = false;
+
   const editor = useEditor({
     content: args.modelValue.value ?? '',
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        link: false,
+        underline: false,
+      }),
       Underline,
-      Link.configure({
+      CustomLink.configure({
         openOnClick: false,
         autolink: true,
         linkOnPaste: true,
       }),
+      I18nPlaceholderNode,
+      createI18nPlaceholderShortcutExtension(args.onOpenI18nModal),
+      PropertyPlaceholderNode,
       TextStyle,
       FontSize,
       Color,
@@ -41,27 +57,66 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
       Placeholder.configure({
         placeholder: args.placeholder?.value ?? 'Enter text here...',
       }),
+      IconNode,
+      AtomSelectionDecoration,
+      Emoji.extend({ marks: '_' }).configure({
+        emojis,
+        enableEmoticons: true,
+      }),
     ],
     editorProps: {
-      transformPastedHTML: (html) => {
-        return stripInlineFontSizesFromHtml(html);
+      transformPastedHTML: (html) => stripInlineFontSizesFromHtml(html),
+      handleDOMEvents: {
+        mousedown: (view, event) => {
+          const target = event.target as HTMLElement | null;
+          const anchor = target?.closest('a');
+
+          if (!anchor) return false;
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          const linkMark = view.state.schema.marks.link;
+          if (!linkMark) return true;
+
+          const pos = view.posAtDOM(anchor.firstChild ?? anchor, 0);
+          const safePos = Math.max(1, Math.min(pos, view.state.doc.content.size));
+          const $pos = view.state.doc.resolve(safePos);
+          const range = getMarkRange($pos, linkMark);
+
+          if (range) {
+            editor.value?.chain().focus().setTextSelection(range).run();
+          }
+
+          args.onOpenLinkModal?.();
+
+          return true;
+        },
       },
     },
+    onCreate: () => {
+      isReady = true;
+    },
     onUpdate: ({ editor }: { editor: Editor }) => {
-      args.onUpdateModelValue(editor.getHTML());
+      if (!isReady) return;
+      const next = editor.getHTML();
+      if (decodeHtmlEntities(next) !== decodeHtmlEntities(args.modelValue.value ?? '')) {
+        args.onUpdateModelValue(next);
+      }
     },
   });
 
-  watch(args.modelValue, (next) => {
-    if (!editor.value) return;
-    const wanted = next ?? '';
-    const current = editor.value.getHTML();
+  watch(args.modelValue, (next = '') => {
+    if (!editor.value) {
+      return;
+    }
 
-    const normalizedWanted = decodeHtmlEntities(wanted);
+    const current = editor.value.getHTML();
+    const normalizedWanted = decodeHtmlEntities(next);
     const normalizedCurrent = decodeHtmlEntities(current);
 
     if (normalizedCurrent !== normalizedWanted) {
-      editor.value.commands.setContent(wanted, { emitUpdate: false });
+      editor.value.commands.setContent(next, { emitUpdate: false });
     }
   });
 
@@ -71,7 +126,9 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
 
   const cmd = (name: RteCommand) => {
     const chain = focusChain();
-    if (!chain) return;
+    if (!chain) {
+      return;
+    }
     chain[name]().run();
   };
 
@@ -101,10 +158,46 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     args.textAlign,
   );
   const { canUndo, canRedo, undo, redo } = setupRichTextEditorHistory(editor as Ref<Editor | null> | null, focusChain);
-  const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(editor as Ref<Editor | null> | null);
+  const { toggleLink, clearFormatting } = setupRichTextEditorLinksFormatting(
+    editor as Ref<Editor | null> | null,
+    args.onOpenLinkModal,
+  );
 
   const focus = () => editor.value?.commands.focus();
 
+  const insertIcon = (name: string) => {
+    editor.value?.chain().focus().insertIcon(name).run();
+  };
+
+  const insertEmoji = (name: string) => {
+    editor.value?.chain().focus().setEmoji(name).run();
+  };
+
+  const insertI18nPlaceholder = ({ key, label }: I18nPlaceholderToken) => {
+    if (!key) return;
+    editor.value
+      ?.chain()
+      .focus()
+      .insertI18nPlaceholder(key, label ?? key)
+      .run();
+  };
+
+  const insertPropertyPlaceholders = (tokens: PropertyPlaceholderToken[]) => {
+    if (!tokens.length || !editor.value) return;
+
+    const chain = editor.value.chain().focus();
+    tokens.forEach(({ token, label, propertyId, kind, cast }, index) => {
+      chain.insertPropertyPlaceholder(token, label || formatPropertyPlaceholderLabel(token), {
+        propertyId,
+        kind,
+        cast,
+      });
+      if (index < tokens.length - 1) {
+        chain.setHardBreak();
+      }
+    });
+    chain.run();
+  };
   return {
     editor,
     expandedLocal,
@@ -128,5 +221,9 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
     toggleLink,
     clearFormatting,
     focus,
+    insertIcon,
+    insertEmoji,
+    insertI18nPlaceholder,
+    insertPropertyPlaceholders,
   };
 }

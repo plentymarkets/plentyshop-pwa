@@ -24,7 +24,7 @@
           <p class="text-sm text-gray-500">{{ dimensions }}</p>
         </template>
         <template v-else>
-          <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+          <p class="typography-text-xs text-gray-500 flex gap-1 mt-2 @sm:mb-0">
             Recommended dimensions: {{ dimensions }}
           </p>
         </template>

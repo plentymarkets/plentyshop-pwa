@@ -5,34 +5,10 @@ import { createSharedComposable } from '@vueuse/core';
 
 export const useLocalization = createSharedComposable(() => {
   const isOpen = ref(false);
+  const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+  const localePath = useLocalizedPath();
 
   const toggle = () => (isOpen.value = !isOpen.value);
-
-  /**
-   * @description Function for wrapping the category language path.
-   *
-   * @param path category path that is provided by the category response to redirect after a language switch
-   * @returns category path that is then navigated to
-   * @example buildCategoryLanguagePath('')
-   */
-  const buildCategoryLanguagePath = (path: string) => {
-    const localePath = useLocalePath();
-
-    return localePath(path);
-  };
-
-  /**
-   * @description Function for wrapping the product language path.
-   *
-   * @param path product path that is provided by the product response to redirect after a language switch
-   * @returns product path that is then navigated to
-   * @example buildProductLanguagePath('')
-   */
-  const buildProductLanguagePath = (path: string) => {
-    const localePath = useLocalePath();
-
-    return localePath(path);
-  };
 
   /**
    * @description Used to generate the category path inside the mega menu and other navigation trees.
@@ -43,7 +19,8 @@ export const useLocalization = createSharedComposable(() => {
    * @example buildCategoryMenuLink(category, categoryTree)
    */
   const buildCategoryMenuLink = (category: CategoryTreeItem, categoryTree: CategoryTreeItem[]) => {
-    return categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
+    const path = categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
+    return resolvePathTrailingSlash(path);
   };
 
   /**
@@ -85,21 +62,20 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
-   * @description Function for creating a path with a specific locale. (useLocaleRoute or useLocalePath)
+   * @description Function for creating a path with a specific locale. (useLocalePath)
    * @param path  e.g. '/login'
    * @param locale to be added to the path
    * @returns localized path with the locale prefix if necessary
    * @example createLocalePath('/login', 'de');
    */
-  const createLocalePath = (path: string, locale: string) => {
+  const createLocalePath = (path: string, locale: string): string => {
     const { locales } = useNuxtApp().$i18n;
     const localeCodes = locales.value.map((_locale) => _locale.code.toString());
     const localeSupported = localeCodes.includes(locale);
-    const localeRoute = useLocaleRoute();
-    const localePath = useLocalePath();
+    const localizedPath = useLocalePath();
 
     if (localeSupported) {
-      return localeRoute(path, locale as Locale);
+      return resolvePathTrailingSlash(localizedPath(path, locale as Locale));
     }
     return localePath(path);
   };
@@ -113,11 +89,13 @@ export const useLocalization = createSharedComposable(() => {
     const { localeCodes, availableLocales } = useI18n();
     const config = useRuntimeConfig();
 
-    const activeLanguages = (config.public.activeLanguages as string)
-      .split(',')
-      .map((lang: string) => lang.trim())
-      .filter((lang) => (availableLocales as string[]).includes(lang));
-    return localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode));
+    const activeLanguages = new Set(
+      (config.public.activeLanguages as string)
+        .split(',')
+        .map((lang: string) => lang.trim())
+        .filter((lang) => (availableLocales as string[]).includes(lang)),
+    );
+    return localeCodes.value.filter((localeCode) => activeLanguages.has(localeCode));
   };
 
   /**
@@ -145,8 +123,6 @@ export const useLocalization = createSharedComposable(() => {
   return {
     getCategoryUrlFromRoute,
     buildCategoryMenuLink,
-    buildCategoryLanguagePath,
-    buildProductLanguagePath,
     isOpen,
     toggle,
     switchLocale,

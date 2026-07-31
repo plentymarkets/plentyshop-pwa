@@ -1,5 +1,5 @@
 <template>
-  <section data-testid="category-empty-state" class="flex flex-col items-center md:mt-16">
+  <section data-testid="category-empty-state" class="flex flex-col items-center @md:mt-16">
     <NuxtImg
       src="/_nuxt-plenty/images/something-went-wrong.svg"
       :alt="t('search.emptyStateImageAlt')"

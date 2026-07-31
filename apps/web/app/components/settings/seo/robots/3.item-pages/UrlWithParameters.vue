@@ -4,7 +4,7 @@
       <UiFormLabel class="mb-1">
         {{ getEditorTranslation('label') }}
       </UiFormLabel>
-      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="mr-6 z-10">
+      <SfTooltip :label="getEditorTranslation('tooltip')" :placement="'top'" :show-arrow="true" class="mr-6 z-dropdown">
         <SfIconInfo :size="'sm'" />
       </SfTooltip>
       <SfSwitch

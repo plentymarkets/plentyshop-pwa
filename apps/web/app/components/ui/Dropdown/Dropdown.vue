@@ -1,11 +1,11 @@
 <template>
   <SfDropdown v-model="isOpen" placement="bottom-end">
     <template #trigger>
-      <div class="z-0" @click="toggle()">
+      <div class="z-base" @click="toggle()">
         <slot name="trigger" />
       </div>
     </template>
-    <div class="relative z-20">
+    <div class="relative z-editor-inline">
       <slot />
     </div>
   </SfDropdown>

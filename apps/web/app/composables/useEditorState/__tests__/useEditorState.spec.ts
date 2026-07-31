@@ -1,21 +1,34 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { useEditorState } from '../useEditorState';
+import type { PreviewDevice } from '~/composables/useEditorDevice';
 
+const $isEditor = ref(false);
 const $isPreview = ref(false);
 const disableActions = ref(true);
+const deviceRef = ref<PreviewDevice>('desktop');
 
-mockNuxtImport('useNuxtApp', () => () => ({
-  $isPreview: $isPreview.value,
-}));
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp({ $isEditor: $isEditor.value, $isPreview: $isPreview.value }));
 
 mockNuxtImport('useEditor', () => () => ({
   disableActions,
 }));
 
+mockNuxtImport('useEditorDevice', () => () => ({
+  device: deviceRef,
+  width: computed(() => {
+    if (deviceRef.value === 'mobile') return '375px';
+    if (deviceRef.value === 'tablet') return '768px';
+    return '100%';
+  }),
+  setDevice: vi.fn(),
+}));
+
 describe('useEditorState', () => {
   describe('when in live mode', () => {
     beforeEach(() => {
+      $isEditor.value = false;
       $isPreview.value = false;
       disableActions.value = true;
     });
@@ -51,7 +64,8 @@ describe('useEditorState', () => {
 
   describe('when in edit mode', () => {
     beforeEach(() => {
-      $isPreview.value = true;
+      $isEditor.value = true;
+      $isPreview.value = false;
       disableActions.value = true;
     });
 
@@ -86,7 +100,8 @@ describe('useEditorState', () => {
 
   describe('when in preview mode', () => {
     beforeEach(() => {
-      $isPreview.value = true;
+      $isEditor.value = true;
+      $isPreview.value = false;
       disableActions.value = false;
     });
 
@@ -119,15 +134,85 @@ describe('useEditorState', () => {
     });
   });
 
+  describe('when preview permission is read-only', () => {
+    beforeEach(() => {
+      $isEditor.value = false;
+      $isPreview.value = true;
+      disableActions.value = true;
+    });
+
+    it('should return preview mode without editor access', () => {
+      const state = useEditorState();
+      expect(state.isInEditor.value).toBe(false);
+      expect(state.isPreviewMode.value).toBe(true);
+      expect(state.isEditMode.value).toBe(false);
+      expect(state.isLiveMode.value).toBe(false);
+    });
+  });
+
   describe('client-side hydration support', () => {
     beforeEach(() => {
-      $isPreview.value = true;
+      $isEditor.value = true;
+      $isPreview.value = false;
       disableActions.value = true;
     });
 
     it('should initialize isInEditorClient as false', () => {
       const state = useEditorState();
       expect(state.isInEditorClient.value).toBe(false);
+    });
+  });
+
+  describe('isMobilePreview', () => {
+    beforeEach(() => {
+      deviceRef.value = 'desktop';
+    });
+
+    it('is false when isInEditorClient is false regardless of device', () => {
+      deviceRef.value = 'mobile';
+      const state = useEditorState();
+      expect(state.isMobilePreview.value).toBe(false);
+    });
+
+    it('is true when isInEditorClient is true and device is mobile', () => {
+      const state = useEditorState();
+      state.isInEditorClient.value = true;
+      deviceRef.value = 'mobile';
+      expect(state.isMobilePreview.value).toBe(true);
+    });
+
+    it('is true when isInEditorClient is true and device is tablet', () => {
+      const state = useEditorState();
+      state.isInEditorClient.value = true;
+      deviceRef.value = 'tablet';
+      expect(state.isMobilePreview.value).toBe(true);
+    });
+
+    it('is false when isInEditorClient is true but device is desktop', () => {
+      const state = useEditorState();
+      state.isInEditorClient.value = true;
+      deviceRef.value = 'desktop';
+      expect(state.isMobilePreview.value).toBe(false);
+    });
+  });
+
+  describe('previewWidth', () => {
+    it('returns 375px for mobile device', () => {
+      deviceRef.value = 'mobile';
+      const { previewWidth } = useEditorState();
+      expect(previewWidth.value).toBe('375px');
+    });
+
+    it('returns 768px for tablet device', () => {
+      deviceRef.value = 'tablet';
+      const { previewWidth } = useEditorState();
+      expect(previewWidth.value).toBe('768px');
+    });
+
+    it('returns 100% for desktop device', () => {
+      deviceRef.value = 'desktop';
+      const { previewWidth } = useEditorState();
+      expect(previewWidth.value).toBe('100%');
     });
   });
 });

@@ -5,5 +5,4 @@ export type UseUtilityBarActionsOptions = {
   editingSectionIndex: Ref<number | undefined>;
   openSectionMenuIndex: Ref<number | undefined>;
   getEditorTranslation: (key: string) => string;
-  emit: ((event: 'set-edit-title', title: string) => void) & ((event: 'clear-edit-title') => void);
 };

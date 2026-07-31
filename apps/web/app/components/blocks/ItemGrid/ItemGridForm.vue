@@ -1,13 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-settings-label')"
     data-testid="item-grid-layout"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('layout-settings-label') }}</h2>
-    </template>
     <div class="space-y-4">
       <div>
         <UiFormLabel class="flex justify-between">
@@ -53,57 +49,18 @@
       </div>
 
       <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="props.uuid || blockUuid" />
-      <div v-if="uiItemGridBlock.showItemCount">
-        <UiFormLabel>{{ getEditorTranslation('item-count-position') }}</UiFormLabel>
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.itemCountPosition === 'left' }"
-            data-testid="item-count-left"
-            @click="uiItemGridBlock.itemCountPosition = 'left'"
-          >
-            <SfIconCheck :class="{ invisible: uiItemGridBlock.itemCountPosition !== 'left' }" class="w-[1.1rem] mr-1" />
-            {{ getEditorTranslation('position-left') }}
-          </div>
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.itemCountPosition === 'center' }"
-            data-testid="item-count-center"
-            @click="uiItemGridBlock.itemCountPosition = 'center'"
-          >
-            <SfIconCheck
-              :class="{ invisible: uiItemGridBlock.itemCountPosition !== 'center' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('position-center') }}
-          </div>
-          <div
-            class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.itemCountPosition === 'right' }"
-            data-testid="item-count-right"
-            @click="uiItemGridBlock.itemCountPosition = 'right'"
-          >
-            <SfIconCheck
-              :class="{ invisible: uiItemGridBlock.itemCountPosition !== 'right' }"
-              class="w-[1.1rem] mr-1"
-            />
-            {{ getEditorTranslation('position-right') }}
-          </div>
-        </div>
+      <div v-if="uiItemGridBlock.showItemCount" class="py-2">
+        <EditorOptionsTabs
+          v-model="itemCountPositionModel"
+          :legend="getEditorTranslation('item-count-position')"
+          test-id-prefix="item-count"
+          :options="itemCountPositionOptions"
+        />
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
-    v-model="cardOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    data-testid="item-grid-card"
-  >
-    <template #summary>
-      <h2>{{ getEditorTranslation('item-card-label') }}</h2>
-    </template>
-
+  <EditorFormPanel v-model="cardOpen" :title="getEditorTranslation('item-card-label')" data-testid="item-grid-card">
     <div class="py-4">
       <draggable
         v-if="uiItemGridBlock.fieldsOrder.length"
@@ -117,7 +74,7 @@
           <div :key="elem" class="flex items-center justify-between drag-slides-handle cursor-move">
             <div class="flex items-center gap-3">
               <button
-                class="drag-slides-handle top-2 left-2 z-50 cursor-grab p-2 hover:bg-gray-100 rounded-full"
+                class="drag-slides-handle top-2 left-2 z-raised cursor-grab p-2 hover:bg-gray-100 rounded-full"
                 :aria-label="getEditorTranslation('drag-reorder-aria')"
                 :data-testid="`actions-drag-slide-handle-${index}`"
               >
@@ -139,36 +96,12 @@
     <hr class="mb-6" />
 
     <div class="mb-6">
-      <UiFormLabel>{{ getEditorTranslation('content-alignment') }}</UiFormLabel>
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.contentAlignment === 'left' }"
-          data-testid="content-align-left"
-          @click="uiItemGridBlock.contentAlignment = 'left'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.contentAlignment !== 'left' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('position-left') }}
-        </div>
-        <div
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.contentAlignment === 'center' }"
-          data-testid="content-align-center"
-          @click="uiItemGridBlock.contentAlignment = 'center'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.contentAlignment !== 'center' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('position-center') }}
-        </div>
-        <div
-          class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.contentAlignment === 'right' }"
-          data-testid="content-align-right"
-          @click="uiItemGridBlock.contentAlignment = 'right'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.contentAlignment !== 'right' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('position-right') }}
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="contentAlignmentModel"
+        :legend="getEditorTranslation('content-alignment')"
+        test-id-prefix="content-align"
+        :options="contentAlignmentOptions"
+      />
     </div>
 
     <div class="flex items-center justify-between mb-4">
@@ -187,40 +120,20 @@
     </div>
 
     <div>
-      <UiFormLabel>{{ getEditorTranslation('add-to-cart-button-style') }}</UiFormLabel>
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm border-r"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.addToCartStyle === 'primary' }"
-          data-testid="add-to-cart-primary"
-          @click="uiItemGridBlock.addToCartStyle = 'primary'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.addToCartStyle !== 'primary' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('button-primary') }}
-        </div>
-        <div
-          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-          :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiItemGridBlock.addToCartStyle === 'secondary' }"
-          data-testid="add-to-cart-secondary"
-          @click="uiItemGridBlock.addToCartStyle = 'secondary'"
-        >
-          <SfIconCheck :class="{ invisible: uiItemGridBlock.addToCartStyle !== 'secondary' }" class="w-[1.1rem] mr-1" />
-          {{ getEditorTranslation('button-secondary') }}
-        </div>
-      </div>
+      <EditorOptionsTabs
+        v-model="addToCartStyleModel"
+        :legend="getEditorTranslation('add-to-cart-button-style')"
+        test-id-prefix="add-to-cart"
+        :options="addToCartStyleOptions"
+      />
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="paginationOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('pagination-label')"
     data-testid="item-grid-pagination"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('pagination-label') }}</h2>
-    </template>
-
     <div class="space-y-4">
       <div>
         <UiFormLabel>{{ getEditorTranslation('pagination-position') }}</UiFormLabel>
@@ -235,11 +148,11 @@
         </select>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
-import { SfSwitch, SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
+import { SfSwitch, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 import type { ItemGridFormProps, ItemGridContent, ItemGridFieldKey } from './types';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import draggable from 'vuedraggable/src/vuedraggable';
@@ -270,10 +183,18 @@ const fieldLabels: Record<string, string> = {
   title: getEditorTranslation('field-item-title'),
   rating: getEditorTranslation('field-item-rating'),
   previewText: getEditorTranslation('field-preview-text'),
-  shippingBadge: getEditorTranslation('field-shipping-badge'),
   price: getEditorTranslation('field-price'),
   addToCart: getEditorTranslation('field-add-to-cart'),
 };
+
+const {
+  itemCountPositionModel,
+  itemCountPositionOptions,
+  contentAlignmentModel,
+  contentAlignmentOptions,
+  addToCartStyleModel,
+  addToCartStyleOptions,
+} = useEditorOptionsTabs(() => uiItemGridBlock.value, getEditorTranslation);
 </script>
 
 <i18n lang="json">
@@ -298,7 +219,6 @@ const fieldLabels: Record<string, string> = {
     "field-item-title": "Item title",
     "field-item-rating": "Item rating",
     "field-preview-text": "Preview text",
-    "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
     "content-alignment": "Content alignment",
@@ -331,7 +251,6 @@ const fieldLabels: Record<string, string> = {
     "field-item-title": "Item title",
     "field-item-rating": "Item rating",
     "field-preview-text": "Preview text",
-    "field-shipping-badge": "Shipping badge",
     "field-price": "Price",
     "field-add-to-cart": "“Add to cart” button",
     "content-alignment": "Content alignment",

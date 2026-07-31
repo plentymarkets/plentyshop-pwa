@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="deliveryCountry && shopCountry"
-    class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md mb-4"
+    class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm @md:typography-text-base py-1 rounded-md mb-4"
   >
     <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
     <div class="py-2 mr-2">

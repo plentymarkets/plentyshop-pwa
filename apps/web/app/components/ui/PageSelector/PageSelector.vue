@@ -1,10 +1,10 @@
 <template>
-  <div class="page-selector relative flex items-center space-x-1 md:space-x-2">
+  <div class="page-selector relative flex items-center space-x-1 @md:space-x-2">
     <SfTooltip :label="pageLabel" placement="right" :show-arrow="true">
       <button class="flex items-center gap-1" @click="toggleDropdown">
-        <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 md:w-6 md:h-6" />
+        <SfIconHome v-if="pageMeta.icon === 'home'" class="w-4 h-4 @md:w-6 @md:h-6" />
         <span>{{ pageMeta.name }}</span>
-        <SfIconExpandMore class="w-4 h-4 md:w-6 md:h-6" />
+        <SfIconExpandMore class="w-4 h-4 @md:w-6 @md:h-6" />
       </button>
     </SfTooltip>
 

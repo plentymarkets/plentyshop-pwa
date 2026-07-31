@@ -14,7 +14,7 @@
     v-if="!disabled"
     v-model="isOpen"
     tag="section"
-    class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+    class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
     aria-labelledby="address-modal-title"
     data-testid="checkout-pick-address-modal"
   >
@@ -28,7 +28,7 @@
       >
         <SfIconClose />
       </UiButton>
-      <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+      <h3 id="address-modal-title" class="text-neutral-900 text-lg @md:text-2xl font-bold">
         {{ t('address.pickSavedAddress') }}
       </h3>
       <h1 class="my-2 mb-6 font-semibold">{{ t('address.pickSavedSubtitle') }}</h1>
@@ -47,7 +47,7 @@
       @make-default="handleSetDefaultAddress(address)"
       @on-edit="emitEditAddressEvent(address)"
     >
-      <UiDivider class="col-span-3 mx-4 !w-auto md:mx-0 group-hover:opacity-0" />
+      <UiDivider class="col-span-3 mx-4 !w-auto @md:mx-0 group-hover:opacity-0" />
     </Address>
 
     <div class="flex justify-end w-full">

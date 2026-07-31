@@ -1,7 +1,8 @@
-import type { Category } from '@plentymarkets/shop-api';
+import type { Category, CategoryBreadcrumb } from '@plentymarkets/shop-api';
 
 export type CategoryTreeProps = {
   category: Category;
+  breadcrumbs?: CategoryBreadcrumb[];
 };
 
 export type CategoryTreeItemType = {

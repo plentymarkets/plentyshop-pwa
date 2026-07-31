@@ -10,8 +10,7 @@ import { StateEffect, EditorState } from '@codemirror/state';
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import jsBeautify from 'js-beautify';
-
-type Language = 'css' | 'javascript' | 'meta' | 'external';
+import type { Language } from './types';
 
 const props = defineProps<{
   modelValue: string;

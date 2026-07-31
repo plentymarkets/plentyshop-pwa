@@ -1,0 +1,68 @@
+[
+  {
+    "text": "Introduction",
+    "link": "/guide/editor/index.md"
+  },
+  {
+    "text": "Guides",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Add a site setting",
+        "link": "/guide/editor/site-settings.md"
+      },
+      {
+        "text": "Control block visibility",
+        "link": "/guide/editor/blocks-visibility.md"
+      },
+      {
+        "text": "Migrate site settings",
+        "link": "/guide/editor/site-settings-migration.md"
+      },
+      {
+        "text": "Rich text editor extension",
+        "link": "/guide/editor/rte-custom-extensions.md"
+      },
+      {
+        "text": "Enable editor mode locally",
+        "link": "/guide/editor/editor-mode.md"
+      }
+    ]
+  },
+  {
+    "text": "Concepts",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Blocks",
+        "collapsed": true,
+        "items": [
+        {
+          "text": "Global vs. Local",
+          "link": "/guide/editor/blocks-global-vs-non-global"
+        },
+        {
+          "text": "Rendering",
+          "link": "/guide/editor/blocks-rendering"
+        },
+        {
+          "text": "Saving",
+          "link": "/guide/editor/blocks-saving"
+        },
+        {
+          "text": "Structure vs. Content Form",
+          "link": "/guide/editor/blocks-structure-vs-content"
+        },
+        {
+          "text": "Discovery and overrides",
+          "link": "/guide/editor/blocks-discovery"
+        }
+        ]
+      },
+      {
+        "text": "Site settings architecture",
+        "link": "/guide/editor/site-settings-architecture.md"
+      }
+    ]
+  }
+]

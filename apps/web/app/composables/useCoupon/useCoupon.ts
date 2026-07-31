@@ -1,5 +1,5 @@
 import type { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
-import type { ApiError, Cart, DoAddCouponParams } from '@plentymarkets/shop-api';
+import type { ApiError, Cart, DoAddCouponParams, PlentyEvents } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing coupons.
@@ -10,6 +10,7 @@ import type { ApiError, Cart, DoAddCouponParams } from '@plentymarkets/shop-api'
  * ```
  */
 export const useCoupon: UseCouponReturn = () => {
+  const { emit } = usePlentyEvent();
   const state = useState<UseCouponState>('coupon', () => ({
     loading: false,
   }));
@@ -36,7 +37,15 @@ export const useCoupon: UseCouponReturn = () => {
     }
 
     try {
-      await useSdk().plentysystems.doAddCoupon(params);
+      const { data } = await useSdk().plentysystems.doAddCoupon(params);
+
+      if (data?.apiEvents) {
+        Object.entries(data.apiEvents as PlentyEvents).forEach(([event, data]) =>
+          // @ts-expect-error The type of `backend:${event}` is not assignable
+          emit(`backend:${event}`, data),
+        );
+      }
+
       await fetchSession();
       send({ message: t('coupon.couponApplied'), type: 'positive' });
     } catch (err) {
@@ -62,6 +71,12 @@ export const useCoupon: UseCouponReturn = () => {
       const { data } = await useSdk().plentysystems.deleteCoupon(params);
 
       if (data) {
+        if (data?.apiEvents) {
+          Object.entries(data.apiEvents as PlentyEvents).forEach(([event, data]) =>
+            // @ts-expect-error The type of `backend:${event}` is not assignable
+            emit(`backend:${event}`, data),
+          );
+        }
         await fetchSession();
         send({ message: t('coupon.couponRemoved'), type: 'positive' });
       }

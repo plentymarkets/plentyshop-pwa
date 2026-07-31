@@ -2,38 +2,36 @@
   <div>
     <MegaMenu :categories="categoryTree">
       <template v-if="viewport.isGreaterOrEquals('md')">
-        <UiSearch class="hidden md:block flex-1" />
-        <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-          <template v-if="localeCodes.length > 1">
-            <UiButton
-              v-if="!isLanguageSelectOpen"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-              :aria-label="t('common.navigation.languageSelector')"
-              variant="tertiary"
-              :style="{ color: resolvedIconColor }"
-              square
-              data-testid="open-languageselect-button"
-              :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-              @click="toggleLanguageSelect()"
-            >
-              <template #prefix>
-                <SfIconLanguage class="relative" />
-              </template>
-            </UiButton>
-            <UiButton
-              v-else
-              class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
-              :aria-label="t('common.navigation.languageSelector')"
-              :style="{ color: isActive ? resolvedIconColor : '' }"
-              variant="tertiary"
-              square
-              data-testid="open-languageselect-button"
-            >
-              <template #prefix>
-                <SfIconLanguage class="relative" />
-              </template>
-            </UiButton>
-          </template>
+        <UiSearch class="hidden @md:block flex-1" />
+        <nav class="hidden ml-4 @md:flex @md:flex-row @md:flex-nowrap">
+          <UiButton
+            v-if="!isLanguageSelectOpen"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            variant="tertiary"
+            :style="{ color: resolvedIconColor }"
+            square
+            data-testid="open-languageselect-button"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            @click="toggleLanguageSelect()"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </UiButton>
+          <UiButton
+            v-else
+            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('common.navigation.languageSelector')"
+            :style="{ color: isActive ? resolvedIconColor : '' }"
+            variant="tertiary"
+            square
+            data-testid="open-languageselect-button"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </UiButton>
           <UiButton
             class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
@@ -85,7 +83,7 @@
               />
             </template>
           </UiButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-dropdown">
             <template #trigger>
               <UiButton
                 variant="tertiary"
@@ -98,7 +96,16 @@
                 <template #prefix>
                   <SfIconPerson />
                 </template>
-                {{ user?.firstName }}
+                <Transition
+                  appear
+                  enter-from-class="opacity-0 max-w-0"
+                  enter-active-class="inline-block overflow-hidden transition-[max-width,opacity] duration-[250ms] ease-in"
+                  enter-to-class="opacity-100 max-w-[10rem]"
+                >
+                  <span v-if="user?.firstName" class="whitespace-nowrap inline-block overflow-hidden">{{
+                    user?.firstName
+                  }}</span>
+                </Transition>
               </UiButton>
             </template>
             <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -143,7 +150,7 @@
       <div v-if="viewport.isLessThan('lg')">
         <UiButton
           variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md @md:hidden"
           square
           data-testid="open-languageselect-button"
           :style="{ color: resolvedIconColor }"
@@ -155,7 +162,7 @@
         </UiButton>
         <UiButton
           variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md @md:hidden"
           square
           :style="{ color: resolvedIconColor }"
           :aria-label="t('common.navigation.openSearchModal')"
@@ -170,7 +177,7 @@
       v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+      class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
     >
       <header>
         <UiButton
@@ -195,7 +202,7 @@
     <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
       <SfModal
         v-model="isSearchModalOpen"
-        class="w-full h-full z-50"
+        class="w-full h-full z-dropdown"
         tag="section"
         role="dialog"
         aria-labelledby="search-modal-title"
@@ -255,14 +262,13 @@ const resolvedIconColor = computed(() => props.content.iconColor || getIconColor
 const resolvedBackgroundColor = computed(() => props.content.backgroundColor || getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
-const { data: categoryTree, getCategoryTree } = useCategoryTree();
+const { data: categoryTree } = useCategoryTree();
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -271,7 +277,6 @@ const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
 onNuxtReady(async () => {
-  if (categoryTree.value.length === 0) await getCategoryTree();
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 

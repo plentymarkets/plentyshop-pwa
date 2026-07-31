@@ -12,7 +12,7 @@
       </div>
       <div class="flex items-center space-x-2">
         <div v-if="!isGlobalBlock(block)" class="flex items-center space-x-2">
-          <button data-testid="delete-form-block-button" @click="deleteBlock(blockUuid)">
+          <button data-testid="delete-form-block-button" @click="deleteBlock(customUuid ?? blockUuid)">
             <SfIconDelete />
           </button>
           <div class="w-px h-4 bg-gray-300" />
@@ -22,6 +22,9 @@
         </button>
       </div>
     </header>
+
+    <BlockEditBreadcrumbs />
+
     <div class="h-[80vh] overflow-y-auto">
       <component
         :is="currentComponent"
@@ -29,9 +32,7 @@
         :key="`${blockType}-${blockUuid}`"
         ref="childComponentRef"
         :uuid="blockUuid"
-        @vue:mounted="handleBackClick"
-        @set-edit-title="handleSetEditTitle"
-        @clear-edit-title="clearCustomTitle"
+        @vue:mounted="resetEditState"
       />
     </div>
   </div>
@@ -56,36 +57,49 @@ watch(
 );
 const { deleteBlock } = useBlockManager();
 
-const customTitle = ref<string | null>(null);
+const { editTitle: customTitle, editUuid: customUuid, clearEditTitle: clearCustomTitle } = useBlockEditTitle();
+const { popEdit, clearStack, clearPendingEditChain, consumePendingEditChain } = useBlockEditStack();
+
+onBeforeUnmount(() => {
+  clearStack();
+  clearPendingEditChain();
+  clearCustomTitle();
+});
+
 const childComponentRef = ref<{ exitEditMode?: (shouldEmit?: boolean) => boolean | undefined } | null>(null);
-
-const handleSetEditTitle = (title: string) => {
-  customTitle.value = title;
-};
-
-const clearCustomTitle = () => {
-  customTitle.value = null;
-};
 const handleBackClick = () => {
+  if (popEdit()) {
+    return;
+  }
+
   if (childComponentRef.value?.exitEditMode) {
-    const fullyExited = childComponentRef.value.exitEditMode(false);
-    if (fullyExited !== false) clearCustomTitle();
+    childComponentRef.value.exitEditMode(true);
   } else {
     clearCustomTitle();
   }
 };
 
+const resetEditState = () => {
+  clearStack();
+  clearCustomTitle();
+  consumePendingEditChain();
+};
+
 const componentCache = new Map<string, ReturnType<typeof defineAsyncComponent>>();
 
 const getComponent = (name: string) => {
-  if (!name) return null;
+  if (!name) {
+    return null;
+  }
 
   if (componentCache.has(name)) {
     return componentCache.get(name);
   }
 
   const loader = getBlockFormLoader(name);
-  if (!loader) return null;
+  if (!loader) {
+    return null;
+  }
 
   const component = defineAsyncComponent(loader);
   componentCache.set(name, component);

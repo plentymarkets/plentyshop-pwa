@@ -13,10 +13,9 @@ const {
   undoSpy,
   redoSpy,
   unsetLinkSpy,
-  setLinkSpy,
-  extendMarkRangeSpy,
   runSpy,
   focusSpy,
+  insertI18nPlaceholderSpy,
   isActiveSpy,
 } = vi.hoisted(() => {
   const setColorSpy = vi.fn();
@@ -30,6 +29,7 @@ const {
   const unsetLinkSpy = vi.fn();
   const setLinkSpy = vi.fn();
   const extendMarkRangeSpy = vi.fn();
+  const insertI18nPlaceholderSpy = vi.fn();
   const runSpy = vi.fn();
   const focusSpy = vi.fn();
   const isActiveSpy = vi.fn().mockReturnValue(false);
@@ -96,6 +96,11 @@ const {
     return chainReturn;
   };
 
+  chainReturn.insertI18nPlaceholder = (...args: unknown[]) => {
+    insertI18nPlaceholderSpy(...args);
+    return chainReturn;
+  };
+
   chainReturn.run = (...args: unknown[]) => {
     runSpy(...args);
     return chainReturn;
@@ -121,6 +126,9 @@ const {
     can: canSpy,
     isActive: isActiveSpy,
     getHTML: getHTMLSpy,
+    state: {
+      selection: { empty: true, from: 0, to: 0 },
+    },
     commands: {
       focus: vi.fn(),
     },
@@ -141,10 +149,9 @@ const {
     undoSpy,
     redoSpy,
     unsetLinkSpy,
-    setLinkSpy,
-    extendMarkRangeSpy,
     runSpy,
     focusSpy,
+    insertI18nPlaceholderSpy,
     isActiveSpy,
   };
 });
@@ -152,6 +159,9 @@ const {
 vi.mock('@tiptap/vue-3', () => {
   return {
     useEditor: vi.fn(() => ref(editorMock)),
+    VueNodeViewRenderer: vi.fn(),
+    NodeViewWrapper: { template: '<div><slot /></div>' },
+    nodeViewProps: {},
   };
 });
 
@@ -381,7 +391,7 @@ describe('useRichTextEditor', () => {
 
     isActiveSpy.mockReturnValue(false);
 
-    const promptSpy = vi.spyOn(window, 'prompt').mockReturnValue('https://example.com');
+    const onOpenLinkModal = vi.fn();
 
     const { toggleLink } = useRichTextEditor({
       modelValue,
@@ -389,17 +399,30 @@ describe('useRichTextEditor', () => {
       expanded,
       onUpdateExpanded,
       textAlign,
+      onOpenLinkModal,
     } as UseRichTextEditorArgs);
 
     toggleLink();
 
-    expect(promptSpy).toHaveBeenCalled();
+    expect(onOpenLinkModal).toHaveBeenCalled();
+  });
+
+  it('should insert an i18n placeholder', () => {
+    const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();
+
+    const { insertI18nPlaceholder } = useRichTextEditor({
+      modelValue,
+      onUpdateModelValue,
+      expanded,
+      onUpdateExpanded,
+      textAlign,
+    });
+
+    insertI18nPlaceholder({ key: 'checkout.title', label: 'checkout.title' });
+
     expect(chainSpy).toHaveBeenCalled();
     expect(focusSpy).toHaveBeenCalled();
-    expect(extendMarkRangeSpy).toHaveBeenCalledWith('link');
-    expect(setLinkSpy).toHaveBeenCalledWith({ href: 'https://example.com' });
+    expect(insertI18nPlaceholderSpy).toHaveBeenCalledWith('checkout.title', 'checkout.title');
     expect(runSpy).toHaveBeenCalled();
-
-    promptSpy.mockRestore();
   });
 });

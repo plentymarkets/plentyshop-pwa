@@ -1,14 +1,14 @@
 <template>
   <div ref="reviewArea" class="relative col-span-5 h-fit" :class="{ 'pointer-events-none opacity-50': loadingReviews }">
-    <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+    <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-loader" size="2xl" />
 
     <div id="customerReviewsAccordion" data-testid="reviews-accordion">
       <UiAccordionItem
         v-model="reviewsOpen"
-        summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
+        summary-class="@md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
       >
         <template #summary>
-          <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 md:text-2xl">
+          <h2 id="customerReviewsClick" class="font-bold text-lg leading-6 @md:text-2xl">
             {{ t('product.customerReviews') }}
           </h2>
         </template>

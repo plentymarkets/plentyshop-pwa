@@ -2,13 +2,12 @@
   <div>
     <UiHeaderBlocks />
 
-    <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+    <NarrowContainer v-if="breadcrumbs?.length" class="p-4">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
     <main>
       <slot />
     </main>
-    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
     <UiFooterBlocks />
@@ -23,6 +22,5 @@ defineProps<DefaultLayoutProps>();
 
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
-const viewport = useViewport();
 setLogoMeta();
 </script>

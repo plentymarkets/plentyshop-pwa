@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-6 md:col-span-3 flex items-start gap-2" :class="[!showErrors ? 'mb-6' : 'mb-2']">
+  <div class="mt-6 @md:col-span-3 flex items-start gap-2" :class="[!showErrors ? 'mb-6' : 'mb-2']">
     <SfCheckbox
       id="shipping-agreement-checkbox"
       :value="shippingPrivacyAgreement"

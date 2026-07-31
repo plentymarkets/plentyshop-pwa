@@ -1,17 +1,7 @@
 <template>
   <div ref="referenceRef" :style="navigationRootStyle" class="relative w-full">
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
-      <ul
-        :class="navigationContainerClasses"
-        :style="navigationContainerStyle"
-        @blur="
-          (event: FocusEvent) => {
-            if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
-              close();
-            }
-          }
-        "
-      >
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" @mouseleave="onMouseLeave">
+      <ul :class="navigationContainerClasses" :style="navigationContainerStyle" @focusout="onNavBlur">
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
@@ -68,10 +58,9 @@
             ref="megaMenuReference"
             :style="{ ...style, backgroundColor: resolvedContent.color.backgroundColor || 'white' }"
             :class="[
-              'hidden md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto',
+              'hidden @md:grid gap-x-6 grid-cols-4 shadow-lg p-6 pt-5 left-0 right-0 outline-none z-sticky max-h-[calc(100vh-300px)] overflow-y-auto',
               submenuGridAlignmentClass,
             ]"
-            @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
             @keydown.down="navigateDropdownItems($event, 'down')"
@@ -125,12 +114,12 @@
     </nav>
 
     <template v-else>
-      <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
+      <div v-if="isOpen" class="fixed z-drawer-backdrop inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
         v-model="isOpen"
         placement="left"
-        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        class="right-12 max-w-96 bg-white overflow-y-auto z-drawer"
       >
         <nav>
           <div class="flex items-center justify-between p-4">
@@ -219,10 +208,7 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
-import type { MegaMenuProps } from '~/components/MegaMenu/types';
-import type { NavigationProps } from './types';
-
-type NavigationBlockProps = Partial<MegaMenuProps> & Partial<NavigationProps>;
+import type { NavigationBlockProps } from './types';
 
 const props = withDefaults(defineProps<NavigationBlockProps>(), {
   categories: () => [],
@@ -265,7 +251,7 @@ const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
-const tappedCategories = ref<Map<number, boolean>>(new Map());
+const tappedCategoryId = ref<number | null>(null);
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
   'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 nav-hover-bg active:!bg-neutral-300';
@@ -396,7 +382,7 @@ const openMenuAndFocusFirst = (menuNode: CategoryTreeItem) => {
 
 const onEnterKey = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') => {
@@ -405,16 +391,11 @@ const navigateDropdownItems = (event: KeyboardEvent, direction: 'up' | 'down') =
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
-  const nextIndex =
-    direction === 'down'
-      ? currentIndex < focusableItems.length - 1
-        ? currentIndex + 1
-        : 0
-      : currentIndex > 0
-        ? currentIndex - 1
-        : focusableItems.length - 1;
+  const downIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const upIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextIndex = direction === 'down' ? downIndex : upIndex;
 
   focusableItems[nextIndex]?.focus();
 };
@@ -424,24 +405,27 @@ const handleTabInDropdown = (event: KeyboardEvent) => {
   if (!dropdown) return;
 
   const focusableItems = Array.from(dropdown.querySelectorAll('a')) as HTMLElement[];
-  const currentIndex = focusableItems.findIndex((item) => item === document.activeElement);
+  const currentIndex = focusableItems.indexOf(document.activeElement as HTMLElement);
 
   event.preventDefault();
 
-  const nextIndex = event.shiftKey
-    ? currentIndex > 0
-      ? currentIndex - 1
-      : focusableItems.length - 1
-    : currentIndex < focusableItems.length - 1
-      ? currentIndex + 1
-      : 0;
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : focusableItems.length - 1;
+  const nextFwdIndex = currentIndex < focusableItems.length - 1 ? currentIndex + 1 : 0;
+  const nextIndex = event.shiftKey ? prevIndex : nextFwdIndex;
 
   focusableItems[nextIndex]?.focus();
 };
 
+const onNavBlur = (event: FocusEvent) => {
+  if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
+    close();
+    tappedCategoryId.value = null;
+  }
+};
+
 const onMouseLeave = () => {
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
@@ -470,13 +454,12 @@ const onMouseDown = () => {
 };
 
 const handleFirstTouch = (menuNode: CategoryTreeItem) => {
-  tappedCategories.value.clear();
-  tappedCategories.value.set(menuNode.id, true);
+  tappedCategoryId.value = menuNode.id;
   onCategoryMouseEnter(menuNode);
 };
 
 const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) => {
-  if (isUsingTouch.value && menuNode.childCount > 0 && !tappedCategories.value.get(menuNode.id)) {
+  if (isUsingTouch.value && menuNode.childCount > 0 && tappedCategoryId.value !== menuNode.id) {
     event.stopPropagation();
     event.preventDefault();
     handleFirstTouch(menuNode);
@@ -484,11 +467,14 @@ const onCategoryClickCapture = (event: MouseEvent, menuNode: CategoryTreeItem) =
   }
 
   close();
-  tappedCategories.value.clear();
+  tappedCategoryId.value = null;
 };
 
 onMounted(() => {
-  removeHook = router.afterEach(() => close());
+  removeHook = router.afterEach(() => {
+    close();
+    tappedCategoryId.value = null;
+  });
 });
 
 onBeforeUnmount(() => removeHook?.());

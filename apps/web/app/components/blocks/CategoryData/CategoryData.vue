@@ -49,8 +49,8 @@
         <div
           v-if="shouldShowTextBlock"
           :class="[
-            'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
-            { 'md:p-10': props.content.text.bgColor },
+            'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col @md:basis-2/4',
+            { '@md:p-10': props.content.text.bgColor },
           ]"
           :style="{
             color: props.content.text.color,
@@ -158,7 +158,7 @@ const inlineStyle = computed(() => {
 });
 
 const categoryDataContentClass = computed(() => {
-  return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%] mx-5';
+  return isMobile.value ? 'p-4 @md:p-6 rounded-lg w-full' : 'p-4 @md:p-6 rounded-lg @md:max-w-[50%] mx-5';
 });
 </script>
 <i18n lang="json">

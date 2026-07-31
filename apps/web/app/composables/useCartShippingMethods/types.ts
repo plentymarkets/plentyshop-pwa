@@ -12,12 +12,15 @@ export type SaveShippingMethod = (shippingMethodId: number) => Promise<ShippingP
 
 export type SetSelectedMethod = (shippingMethodId: number) => void;
 
+export type SetShippingMethods = (list: ShippingMethod[], selectedId: number) => void;
+
 export interface UseCartShippingMethods {
   data: Readonly<Ref<UseCartShippingMethodsState['data']>>;
   loading: Readonly<Ref<boolean>>;
   selectedMethod: Readonly<Ref<UseCartShippingMethodsState['selectedMethod']>>;
   getShippingMethods: GetShippingMethods;
   saveShippingMethod: SaveShippingMethod;
+  setShippingMethods: SetShippingMethods;
 }
 
 export type UseCartShippingMethodsReturn = () => UseCartShippingMethods;

@@ -1,5 +1,17 @@
 import type { Block } from '@plentymarkets/shop-api';
 
+export type TocSectionId = 'header' | 'content' | 'footer';
+
+export interface TocSection {
+  id: TocSectionId;
+  label: string;
+  elements: Block[];
+  container?: Block;
+  addTestId: string;
+  setOrder: (next: Block[]) => void;
+  canMove?: (evt: BlockMoveEvent) => boolean;
+}
+
 export interface FlatBlock {
   uuid: string;
   label: string;

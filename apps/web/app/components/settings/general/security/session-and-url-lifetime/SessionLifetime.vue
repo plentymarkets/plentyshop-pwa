@@ -6,7 +6,7 @@
         :label="getEditorTranslation('tooltip')"
         :placement="'top'"
         :show-arrow="true"
-        class="ml-2 z-10"
+        class="ml-2 z-dropdown"
         data-testid="session-lifetime-tooltip"
       >
         <SfIconInfo :size="'sm'" />
@@ -32,7 +32,6 @@
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import type { SettingOption } from '~/utils/editorSettings';
 import { getSessionLifetimeOptions } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('sessionLifetime');

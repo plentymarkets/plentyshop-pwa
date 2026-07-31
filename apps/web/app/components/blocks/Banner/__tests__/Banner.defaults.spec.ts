@@ -15,40 +15,44 @@ const checkElementOrder = (
 
 describe('Banner', () => {
   describe('with default settings', () => {
-    const wrapper = mount(BlocksBanner, {
-      props: {
-        name: 'Banner',
-        type: 'content',
-        content: {
-          image: {
-            wideScreen: '/test-desktop.jpg',
-            desktop: '/test-desktop.jpg',
-            tablet: '/test-tablet.jpg',
-            mobile: '/test-mobile.jpg',
-            alt: 'test alt text',
+    let wrapper: ReturnType<typeof mount>;
+
+    beforeAll(() => {
+      wrapper = mount(BlocksBanner, {
+        props: {
+          name: 'Banner',
+          type: 'content',
+          content: {
+            image: {
+              wideScreen: '/test-desktop.jpg',
+              desktop: '/test-desktop.jpg',
+              tablet: '/test-tablet.jpg',
+              mobile: '/test-mobile.jpg',
+              alt: 'test alt text',
+            },
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              textAlignment: 'left',
+              justify: 'top',
+              align: 'left',
+              background: true,
+            },
+            button: {
+              label: 'Test button',
+              link: '/test-link',
+              variant: 'primary',
+            },
           },
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-            textAlignment: 'left',
-            justify: 'top',
-            align: 'left',
-            background: true,
-          },
-          button: {
-            label: 'Test button',
-            link: '/test-link',
-            variant: 'primary',
+          index: 0,
+          lazyLoading: 'eager',
+          meta: {
+            uuid: bannerBlockUuid,
           },
         },
-        index: 0,
-        lazyLoading: 'eager',
-        meta: {
-          uuid: bannerBlockUuid,
-        },
-      },
+      });
     });
 
     it('should render', () => {

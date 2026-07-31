@@ -15,17 +15,15 @@ An event bus allows you to:
 - Broadcast changes across components without direct dependencies
 - Keep your business logic organized and separated from UI concerns
 
-## API
+## usePlentyEvent
 
-### usePlentyEvent
-
-The `usePlentyEvent` composable exposes a simple API for working with events:
+The `usePlentyEvent` composable offers an event bus for emitting and listening to custom shop events. This enables decoupled communication between different parts of your app, such as reacting to cart changes or user actions.
 
 ```ts
 const { on, emit } = usePlentyEvent();
 
 on('frontend:addToCart', (payload) => {
-  // Handle event when a product is added to the cart
+  /* Handle cart add event */
 });
 
 emit('frontend:addToCart', { productId: 123 });

@@ -1,7 +1,7 @@
 import type { PickerHelperTemplate, UsePickerHelperReturn, ImageType } from './types';
 
 export const usePickerHelper: UsePickerHelperReturn = () => {
-  const placeholderImg = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
+  const placeholderImg = 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
   const imageTypes = ['wideScreen', 'desktop', 'tablet', 'mobile'] as const;
 

@@ -108,6 +108,46 @@ export class SiteSettingsObject extends PageObject {
     return cy.getByTestId('editor-bundleSettings-select');
   }
 
+  assertGroupsScrollable() {
+    cy.getByTestId('site-settings-scroll-container').first().as('groupsScrollContainer');
+
+    cy.get('@groupsScrollContainer')
+      .find('[data-testid$="-section"] button')
+      .each(($btn) => {
+        cy.wrap($btn).click({ force: true });
+      });
+
+    cy.get('@groupsScrollContainer').then(($container) => {
+      const element = $container.get(0);
+      expect(element).to.not.equal(undefined);
+
+      expect(element.clientHeight).to.be.greaterThan(0);
+
+      const hasOverflow = element.scrollHeight > element.clientHeight;
+
+      if (hasOverflow) {
+        cy.wrap(element).scrollTo('bottom');
+      }
+    });
+
+    cy.getByTestId('site-settings-drawer').then(($drawer) => {
+      const drawerElement = $drawer.get(0);
+      expect(drawerElement).to.not.equal(undefined);
+      const drawerRect = drawerElement.getBoundingClientRect();
+
+      cy.get('@groupsScrollContainer').then(($container) => {
+        const containerElement = $container.get(0);
+        expect(containerElement).to.not.equal(undefined);
+
+        const containerRect = containerElement.getBoundingClientRect();
+
+        expect(containerRect.bottom).to.be.at.most(drawerRect.bottom);
+      });
+    });
+
+    return this;
+  }
+
   back() {
     this.backButton.should('exist').click({ force: true });
     return this;
@@ -151,6 +191,7 @@ export class SiteSettingsObject extends PageObject {
 
   changeCustomScript() {
     this.customJsAccordion.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.customSettingsSection.find('button').first().click({ force: true });
     this.addSnippetButtonEmpty.should('be.visible').scrollIntoView().click({ force: true });
     cy.wait(500);
     this.positionSelect.should('be.visible').should('have.value', 'head_end');
@@ -195,22 +236,22 @@ export class SiteSettingsObject extends PageObject {
   }
 
   toggleFonts() {
-    this.fontSection.should('be.visible').click({ force: true }); // force needed due to tooltip overlap
+    this.fontSection.find('button').first().click({ force: true });
     return this;
   }
 
   toggleColor() {
-    this.colorSection.should('be.visible').click();
+    this.colorSection.find('button').first().click({ force: true });
     return this;
   }
 
   toggleBlockSpacing() {
-    this.blockSpacingSection.should('be.visible').click();
+    this.blockSpacingSection.find('button').first().click({ force: true });
     return this;
   }
 
   toggleItemBundlesSection() {
-    this.itemBundlesSection.should('be.visible').click();
+    this.itemBundlesSection.find('button').first().click({ force: true });
     return this;
   }
 

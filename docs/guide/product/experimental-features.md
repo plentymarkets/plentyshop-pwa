@@ -21,7 +21,7 @@ To create a new experimental feature, carry out the following steps:
    The flag is accessible via `useRuntimeConfig().public.<myFlag>`.
 
 ::: tip :bulb: Opt-in
-If you want to allow users to opt in to the feature, create a [site setting](../how-to/editor/site-settings.md) for it.
+If you want to allow users to opt in to the feature, create a [site setting](/guide/editor/site-settings.md) for it.
 :::
 
 ## Further reading

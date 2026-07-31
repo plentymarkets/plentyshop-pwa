@@ -55,7 +55,6 @@ Outdated reference, see our [Google Analytics implementation](https://github.com
 
 ## Available pages
 
-- [Usage Guide](/guide/modules/shop-core/usage-guide.md)
 - [Cookie Consent System](/guide/modules/shop-core/cookie-consent.md)
 - [Event Bus](/guide/modules/shop-core/event-bus.md)
 - [Error handling](/guide/modules/shop-core/error-handling.md)

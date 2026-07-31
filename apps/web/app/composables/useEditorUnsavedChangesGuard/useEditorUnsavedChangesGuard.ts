@@ -1,8 +1,4 @@
-export interface UseEditorUnsavedChangesGuardOptions {
-  enabled?: boolean;
-  hasUnsavedChanges?: () => boolean;
-  onConfirmLeave?: () => void;
-}
+import type { UseEditorUnsavedChangesGuardOptions } from './types';
 
 /** Guards against accidental navigation away from a page with unsaved editor changes */
 export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGuardOptions = {}) => {

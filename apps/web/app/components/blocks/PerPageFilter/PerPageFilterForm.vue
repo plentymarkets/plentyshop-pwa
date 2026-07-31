@@ -1,13 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="per-page-form-layout-label"
   >
-    <template #summary>
-      <h2 data-testid="per-page-form-layout-label">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
-
     <div class="py-2 flex items-center justify-between gap-3">
       <UiFormLabel for="show-placeholder" class="m-0">
         {{ getEditorTranslation('show-selectionModeCompact-label') }}
@@ -64,7 +60,7 @@
         </div>
       </div>
     </div>
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 <script setup lang="ts">
 import {
@@ -105,7 +101,7 @@ const perPageBlock = computed<PerPageContent>(() => {
 });
 
 const { isFullWidth } = useFullWidthToggleForContent(perPageBlock);
-const layoutOpen = ref(false);
+const layoutOpen = ref(true);
 </script>
 
 <i18n lang="json">

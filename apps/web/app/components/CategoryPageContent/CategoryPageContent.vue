@@ -1,15 +1,15 @@
 <template>
-  <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
-    <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
-    <div class="md:flex gap-6" data-testid="category-page-content">
-      <CategorySidebar class="md:w-[303px]" :is-open="isOpen" @close="close">
+  <NarrowContainer class="mb-20 px-4 @md:px-0" data-testid="category-layout">
+    <h1 class="my-10 font-bold typography-headline-3 @md:typography-headline-2">{{ title }}</h1>
+    <div class="@md:flex gap-6" data-testid="category-page-content">
+      <CategorySidebar class="@md:w-[303px]" :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
           <slot name="sidebar" />
         </NuxtLazyHydrate>
       </CategorySidebar>
       <div class="flex-1">
         <div class="flex justify-between items-center mb-6">
-          <span class="font-bold md:text-lg">
+          <span class="font-bold @md:text-lg">
             {{
               t('search.numberOfProducts', {
                 count: products?.length ?? 0,
@@ -17,7 +17,7 @@
               })
             }}
           </span>
-          <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
+          <UiButton variant="tertiary" class="@md:hidden whitespace-nowrap" @click="open">
             <template #prefix>
               <SfIconTune />
             </template>
@@ -26,7 +26,7 @@
         </div>
         <section
           v-if="products?.length"
-          class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
+          class="grid grid-cols-1 @2xs:grid-cols-2 gap-4 @md:gap-6 @md:grid-cols-2 @lg:grid-cols-3 @3xl:grid-cols-4 mb-10 @md:mb-5"
           data-testid="category-grid"
         >
           <NuxtLazyHydrate
@@ -64,13 +64,13 @@
           <span v-else>{{ t('product.priceInclVAT') }}</span>
           <i18n-t keypath="shipping.excludedLabel" scope="global">
             <template #shipping>
-              <SfLink
+              <UiLink
                 :href="localePath(paths.shipping)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
                 {{ t('common.labels.delivery') }}
-              </SfLink>
+              </UiLink>
             </template>
           </i18n-t>
         </div>
@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, useDisclosure, SfLink } from '@storefront-ui/vue';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 import { paths } from '~/utils/paths';
 

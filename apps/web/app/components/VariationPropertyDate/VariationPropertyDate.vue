@@ -1,11 +1,11 @@
 <template>
   <div class="w-full flex row variation-property-date">
-    <span v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold">
-      {{ productPropertyGetters.getPropertyName(variationProperty) }}
-    </span>
-    <span v-if="productPropertyGetters.getPropertyName(variationProperty) && preatyDate" class="mr-1">: </span>
-    <span v-if="preatyDate">
-      {{ preatyDate }}
+    <div v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold mr-1">
+      <span>{{ productPropertyGetters.getPropertyName(variationProperty) }}</span>
+      <span v-if="prettyDate">:</span>
+    </div>
+    <span v-if="prettyDate">
+      {{ prettyDate }}
     </span>
   </div>
 </template>
@@ -14,5 +14,5 @@
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyDateProps } from './types';
 const props = defineProps<VariationPropertyDateProps>();
-const preatyDate = computed(() => productPropertyGetters.getPropertyValue(props.variationProperty)?.split(' ')[0]);
+const prettyDate = computed(() => productPropertyGetters.getPropertyValue(props.variationProperty)?.split(' ')[0]);
 </script>

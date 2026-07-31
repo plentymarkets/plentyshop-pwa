@@ -66,6 +66,10 @@ export class HeaderBlockObject extends PageObject {
     return cy.getByTestId('input-background-color');
   }
 
+  get headerBlockActions() {
+    return cy.get('.header-blocks [data-testid="edit-block-actions"]');
+  }
+
   assertVisible() {
     this.headerContainer.should('be.visible');
     return this;
@@ -113,7 +117,7 @@ export class HeaderBlockObject extends PageObject {
   }
 
   openHeaderContainerForm() {
-    cy.get('[data-testid^="toc-item-"]').first().click({ force: true });
+    cy.getByTestId('HeaderContainer-open-editor-button').click({ force: true });
     cy.getByTestId('block-edit-view').should('be.visible');
     this.headerContainerForm.should('be.visible');
     return this;
@@ -178,9 +182,8 @@ export class HeaderBlockObject extends PageObject {
   }
 
   selectTextBlockToAdd() {
-    cy.getByTestId('block-category-text').click({ force: true });
-    cy.wait(500);
-    cy.get('[data-testid*="block-add-text-0"]').click({ force: true });
+    cy.getByTestId('add-block-popover').should('be.visible');
+    cy.get('[data-testid="block-add-text-0"]').click({ force: true });
     cy.wait(1000);
     return this;
   }
@@ -205,6 +208,11 @@ export class HeaderBlockObject extends PageObject {
 
   assertButtonLabelOnPage(label: string) {
     cy.get('.header-blocks').find('[data-testid="text-button"]').last().should('contain.text', label);
+    return this;
+  }
+
+  assertNotEditableOnPage() {
+    this.headerBlockActions.should('not.exist');
     return this;
   }
 }

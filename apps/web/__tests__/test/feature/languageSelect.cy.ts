@@ -17,7 +17,12 @@ describe('Feature: Language Selector', () => {
   it('Should change the language from EN to DE', () => {
     cy.visitAndHydrate(paths.home);
 
-    languageSelect.openModal().changeLanguage('de');
+    // prettier-ignore
+    languageSelect
+      .checkHtmlLang('en-GB')
+      .openModal()
+      .changeLanguage('de')
+      .checkHtmlLang('de-DE');
   });
 
   it('Should stay on the same category page', () => {

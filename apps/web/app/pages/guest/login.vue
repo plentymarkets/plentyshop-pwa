@@ -5,8 +5,8 @@
     :back-label-mobile="t('common.actions.back')"
     :heading="t('common.labels.checkout')"
   >
-    <div class="md:w-full md:flex md:justify-center">
-      <div class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-2/3 lg:w-1/2 3xl:w-2/5">
+    <div class="@md:w-full @md:flex @md:justify-center">
+      <div class="flex flex-col gap-4 p-2 @md:p-6 rounded-md w-full @md:w-2/3 @lg:w-1/2 @3xl:w-2/5">
         <h2 class="font-bold text-lg">{{ t('checkout.guestCheckout') }}</h2>
 
         <UiButton
@@ -44,9 +44,9 @@
           </label>
 
           <div class="text-end mt-4">
-            <SfLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
+            <UiLink variant="primary" class="underline cursor-pointer" @click="toggleForgotPasswordModal">
               {{ t('authentication.login.forgotPasswordLabel') }}
-            </SfLink>
+            </UiLink>
           </div>
 
           <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">
@@ -64,7 +64,7 @@
         v-if="isAuthenticationOpen"
         v-model="isAuthenticationOpen"
         tag="section"
-        class="h-full w-full overflow-auto md:w-[500px] md:h-fit"
+        class="h-full w-full overflow-auto @md:w-[500px] @md:h-fit"
       >
         <header>
           <UiButton
@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
@@ -103,10 +103,13 @@ const { login, loading } = useCustomer();
 const { send } = useNotification();
 const { data: cart } = useCart();
 const { loadConfig, loadedConfig, isAvailable } = usePayPal();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 
-onBeforeMount(async () => await loadConfig());
+onBeforeMount(async () => {
+  await loadConfig();
+  useLogEvent().logOpenGuestLoginPage();
+});
 
 const email = ref('');
 const password = ref('');

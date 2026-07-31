@@ -7,3 +7,16 @@ export type Option<T extends OptionValue = OptionValue> = {
   labelKey?: string;
   testId?: string;
 };
+export type TooltipPlacement =
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end'
+  | 'right-start'
+  | 'right-end';

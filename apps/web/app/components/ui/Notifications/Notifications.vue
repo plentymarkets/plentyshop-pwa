@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0 h-0">
+  <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-notifications top-0 h-0">
     <div v-for="notification of notifications" :key="notification.id" class="my-2">
       <UiAlert :size="'base'" :variant="notification.type" class="pl-4">
         <component
@@ -26,7 +26,7 @@
         <button
           v-if="notification?.action?.onClick"
           type="button"
-          class="py-1.5 px-3 md:py-2 md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset"
+          class="py-1.5 px-3 @md:py-2 @md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset"
           :class="[getButtonClasses(notification)]"
           @click="notification?.action?.onClick"
         >
@@ -34,13 +34,13 @@
         </button>
         <button
           type="button"
-          class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
+          class="p-1.5 @md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset"
           :class="[{ 'ml-auto': !notification?.action?.text }, getButtonClasses(notification)]"
           :aria-label="t('common.navigation.closeNeutralAlert')"
           @click="notification.dismiss"
         >
-          <SfIconClose class="hidden md:block" />
-          <SfIconClose size="sm" class="block md:hidden" />
+          <SfIconClose class="hidden @md:block" />
+          <SfIconClose size="sm" class="block @md:hidden" />
         </button>
       </UiAlert>
     </div>

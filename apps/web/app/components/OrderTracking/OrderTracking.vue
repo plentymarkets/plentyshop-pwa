@@ -5,9 +5,9 @@
     </p>
     <p>
       <span v-for="(number, index) in trackingNumbers" :key="index">
-        <SfLink :href="trackingUrl" target="_blank" class="hover:cursor-pointer">
+        <UiLink :href="trackingUrl" target="_blank" class="hover:cursor-pointer">
           {{ number }}
-        </SfLink>
+        </UiLink>
         <span v-if="index < trackingNumbers.length - 1">, </span>
       </span>
     </p>
@@ -17,7 +17,6 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderTrackingProps } from './types';
-import { SfLink } from '@storefront-ui/vue';
 
 const { order } = defineProps<OrderTrackingProps>();
 

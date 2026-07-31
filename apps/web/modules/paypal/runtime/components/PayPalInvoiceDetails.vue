@@ -1,5 +1,5 @@
 <template>
-  <div v-if="order.paymentMethodKey === PayPalPayUponInvoiceKey" class="mt-4">
+  <div v-if="order.paymentMethodKey === PayPalPayUponInvoiceKey && !order.allowPaymentMethodSwitchFrom" class="mt-4">
     <h2 class="font-medium text-base">{{ t('account.ordersAndReturns.orderDetails.bankDetails.heading') }}</h2>
     <div v-if="paymentText && typeof paymentText !== 'string'">
       <p>{{ t('paypalPayment.puiBankDataAvailable') }}</p>

@@ -16,7 +16,7 @@
       @click="downloadPropertyFile"
     >
       <span>: {{ value }}</span>
-      <SfLoaderCircular v-if="loading" class="absolute ml-2 z-[999]" size="sm" />
+      <SfLoaderCircular v-if="loading" class="absolute ml-2 z-loader" size="sm" />
     </span>
     <span v-else-if="!productPropertyGetters.isOrderPropertyCheckbox(property)">: {{ value }}</span>
   </div>

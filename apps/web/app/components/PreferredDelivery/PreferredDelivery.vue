@@ -16,7 +16,7 @@
               width="100"
               height="auto"
               loading="lazy"
-              class="block rounded-lg bg-[rgb(255,204,0)] p-3 mr-2 sm:mr-4"
+              class="block rounded-lg bg-[rgb(255,204,0)] p-3 mr-2 @sm:mr-4"
             />
           </header>
           <SfIconChevronLeft :class="['text-neutral-500', deliveryAccordionOpen ? 'rotate-90' : '-rotate-90']" />
@@ -52,7 +52,7 @@
                 }}
               </div>
 
-              <div class="grid gap-1 grid-cols-3 md:grid-cols-6 mt-1">
+              <div class="grid gap-1 grid-cols-3 @md:grid-cols-6 mt-1">
                 <label v-for="(day, index) in data.preferredDays" :key="`preferred-day-${index}`">
                   <input
                     type="radio"

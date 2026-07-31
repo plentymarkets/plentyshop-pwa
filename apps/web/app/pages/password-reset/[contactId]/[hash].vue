@@ -2,7 +2,7 @@
   <NuxtLayout name="auth" :heading="t('authentication.setNewPassword.heading')">
     <form
       novalidate
-      class="pb-4 md:p-6 my-10 md:border md:border-neutral-200 rounded-md"
+      class="pb-4 @md:p-6 my-10 @md:border @md:border-neutral-200 rounded-md"
       @submit.prevent="executeResetPassword"
     >
       <p class="mb-6">{{ t('authentication.setNewPassword.description') }}</p>
@@ -80,9 +80,9 @@
 
       <div class="text-center mt-2">
         <span class="my-5 mr-1">{{ t('authentication.setNewPassword.rememberPassword') }}</span>
-        <SfLink variant="primary" class="cursor-pointer" @click="openAuthentication">
+        <UiLink variant="primary" class="cursor-pointer" @click="openAuthentication">
           {{ t('account.navBottomHeadingLogin') }}
-        </SfLink>
+        </UiLink>
       </div>
     </form>
 
@@ -90,7 +90,7 @@
       v-if="isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+      class="h-full @md:w-[500px] @md:h-fit m-0 p-0 overflow-y-auto"
     >
       <header>
         <UiButton
@@ -110,7 +110,7 @@
 
 <script lang="ts" setup>
 import type { ApiError } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
+import { SfLoaderCircular, useDisclosure, SfIconClose, SfIconCheck } from '@storefront-ui/vue';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({

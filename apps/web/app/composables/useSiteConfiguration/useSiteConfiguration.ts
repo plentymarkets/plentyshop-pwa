@@ -17,6 +17,11 @@ import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
  * ```
  */
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
+  const { isEditingEnabled } = useEditor();
+  const { scheduleCleanDataSync } = useBlocks();
+  const { clearStack } = useBlockEditStack();
+  const { clearEditTitle } = useBlockEditTitle();
+
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
     siteConfigurationDrawerOpen: false,
@@ -55,6 +60,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
+    if (view === 'blocksSettings' && block && !isEditingEnabled.value) {
+      scheduleCleanDataSync();
+    }
+
     if (block) {
       state.value.blockType = block.name;
       state.value.blockUuid = block.meta.uuid;
@@ -81,6 +90,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.siteConfigurationDrawerView = null;
     state.value.blocksConfigurationDrawerView = null;
     state.value.activeSetting = '';
+    clearStack();
+    clearEditTitle();
   };
 
   const closeSiteConfigurationDrawer = () => {
@@ -92,6 +103,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const closeBlocksConfigurationDrawer = () => {
     state.value.blocksConfigurationDrawerOpen = false;
     state.value.blocksConfigurationDrawerView = null;
+    clearStack();
+    clearEditTitle();
   };
 
   const updateNewBlockPosition = (position: number) => {

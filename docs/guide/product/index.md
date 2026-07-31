@@ -23,7 +23,7 @@ Based on the e-commerce framework Alokai, the shop of PlentyONE offers great per
 
 ## Demo
 
-Have a look at our official [Demo Shop](https://plentyshop.plentymarkets.com/).
+Have a look at our official [Demo Shop](https://shop.plentyone.com/).
 
 ## How to read this documentation
 

@@ -24,7 +24,7 @@
   </div>
 
   <div class="flex items-center justify-center my-1">
-    <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="onSubmit">
+    <form class="flex flex-col gap-4 p-2 @md:p-6 rounded-md w-full @md:w-[400px]" @submit.prevent="onSubmit">
       <label>
         <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
@@ -105,13 +105,13 @@
         >
           <i18n-t keypath="form.privacyPolicyLabel" scope="global">
             <template #privacyPolicy>
-              <SfLink
+              <UiLink
                 :href="localePath(paths.privacyPolicy)"
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
                 {{ t('legal.privacyPolicy') }}
-              </SfLink>
+              </UiLink>
             </template>
           </i18n-t>
           {{ t('form.required') }}
@@ -139,9 +139,9 @@
 
       <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('authentication.signup.alreadyHaveAccount') }}</div>
-        <SfLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
+        <UiLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
           {{ t('authentication.signup.logInLinkLabel') }}
-        </SfLink>
+        </UiLink>
       </div>
     </form>
   </div>
@@ -149,7 +149,6 @@
 
 <script lang="ts" setup>
 import {
-  SfLink,
   SfInput,
   SfLoaderCircular,
   SfCheckbox,

@@ -61,8 +61,9 @@ describe('UtilityBarSearchForm', () => {
       props: { uuid: 'utility-search-form-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            props: ['title'],
+            template: '<div>{{ title }}<slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',
@@ -82,8 +83,9 @@ describe('UtilityBarSearchForm', () => {
       props: { uuid: 'utility-search-form-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            props: ['title'],
+            template: '<div>{{ title }}<slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',
@@ -105,8 +107,9 @@ describe('UtilityBarSearchForm', () => {
       props: { uuid: 'utility-search-form-uuid' },
       global: {
         stubs: {
-          UiAccordionItem: {
-            template: '<div><slot name="summary" /><slot /></div>',
+          EditorFormPanel: {
+            props: ['title'],
+            template: '<div>{{ title }}<slot /></div>',
           },
           UiFormLabel: {
             template: '<label><slot /></label>',

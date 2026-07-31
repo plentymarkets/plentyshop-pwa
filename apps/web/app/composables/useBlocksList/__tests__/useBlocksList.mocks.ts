@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import type { Block } from '@plentymarkets/shop-api';
 import type { BlocksList, BlockListCategory } from '../types';
 
@@ -61,14 +62,14 @@ export const mockBlockCategories = {
     title: 'Content Blocks',
     blockName: 'ContentBlock',
     category: 'content',
-    accessControl: 'content' as const,
+    accessControl: ['content'] as const,
     variations: [],
   } as BlockListCategory,
   productBlocks: {
     title: 'Product Blocks',
     blockName: 'ProductBlock',
     category: 'product',
-    accessControl: 'product' as const,
+    accessControl: ['product'] as const,
     variations: [],
   } as BlockListCategory,
   universalBlocks: {
@@ -83,7 +84,7 @@ export const mockCategory: BlockListCategory = {
   title: 'Test Category',
   blockName: 'TestBlock',
   category: 'test',
-  accessControl: 'content' as const,
+  accessControl: ['content'] as const,
   variations: [],
 };
 
@@ -97,33 +98,13 @@ export const mockSimpleBlocksList: BlocksList = {
 };
 
 export const setupNuxtMocks = () => {
-  mockNuxtImport('useNuxtApp', () => () => ({
-    $i18n: {
-      locale: {
-        value: 'en',
-      },
-    },
-  }));
+  mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp({ $i18n: { locale: { value: 'en' } } }));
 };
 
-export const setupFetchMock = () => {
-  globalThis.fetch = vi.fn();
+export const mockBuildBlocksListSuccess = (mock: ReturnType<typeof vi.fn>, data: unknown) => {
+  mock.mockResolvedValueOnce(data);
 };
 
-export const mockFetchSuccess = <T>(data: T) => {
-  vi.mocked(globalThis.fetch).mockResolvedValueOnce({
-    ok: true,
-    json: async () => data,
-  } as Response);
-};
-
-export const mockFetchError = (status: number) => {
-  vi.mocked(globalThis.fetch).mockResolvedValueOnce({
-    ok: false,
-    status,
-  } as Response);
-};
-
-export const mockFetchNetworkError = (message: string) => {
-  vi.mocked(globalThis.fetch).mockRejectedValueOnce(new Error(message));
+export const mockBuildBlocksListError = (mock: ReturnType<typeof vi.fn>, message: string) => {
+  mock.mockRejectedValueOnce(new Error(message));
 };

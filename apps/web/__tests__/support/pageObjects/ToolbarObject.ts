@@ -14,4 +14,9 @@ export class ToolbarObject extends PageObject {
     this.saveButton.should('be.visible').and('be.disabled');
     return this;
   }
+
+  clickSave() {
+    this.saveButton.click();
+    return this;
+  }
 }

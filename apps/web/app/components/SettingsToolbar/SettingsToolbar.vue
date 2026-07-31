@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="h-[calc(100vh-50px)] bg-white z-[1] md:z-[10] lg:z-[150] mb-3 w-[54px] min-w-[54px] border-r"
+    class="h-[calc(100vh-50px)] bg-white z-editor-toolbar mb-3 w-toolbar min-w-toolbar border-r"
     data-testid="edit-mode-side-toolbar"
   >
     <div class="relative flex flex-col px-1 py-1">
@@ -36,7 +36,7 @@
           :class="{ 'bg-editor-button text-white rounded-md': siteConfigurationDrawerView === 'TableOfContents' }"
           aria-label="Open table of contents drawer"
           data-testid="open-table-of-contents-drawer"
-          @click="toggleDrawerView('TableOfContents')"
+          @click="toggleTableOfContentsDrawer()"
         >
           <NuxtImg
             v-if="siteConfigurationDrawerView === 'TableOfContents'"
@@ -77,6 +77,15 @@ const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
 const tableOfContentsLabel = 'Table of contents: view and navigate to all blocks on the current page.';
+
+const toggleTableOfContentsDrawer = () => {
+  if (siteConfigurationDrawerView.value === 'TableOfContents') {
+    closeSiteConfigurationDrawer();
+  } else {
+    openDrawerWithView('TableOfContents');
+    useLogEvent().logToCOpened();
+  }
+};
 
 function toggleDrawerView(view: DrawerView) {
   if (siteConfigurationDrawerView.value === 'LocalizationView') {

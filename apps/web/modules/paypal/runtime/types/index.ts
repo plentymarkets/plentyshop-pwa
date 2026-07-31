@@ -1,2 +1,3 @@
-export * from './PayPalComponentTypes';
-export * from './PayPalComposableTypes';
+export * from './PayPalComponent.types';
+export * from './PayPalComposable.types';
+export * from './PayPalComposable.constants';

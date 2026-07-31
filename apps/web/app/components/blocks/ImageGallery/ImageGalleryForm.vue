@@ -1,14 +1,9 @@
 <template>
-  <UiAccordionItem
+  <EditorFormPanel
     v-model="thumbsOpen"
-    summary-active-class="bg-neutral-100 border-t-0"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('item-image-label')"
     data-testid="item-image-thumbnails"
   >
-    <template #summary>
-      <h2>{{ getEditorTranslation('item-image-label') }}</h2>
-    </template>
-
     <div class="space-y-5">
       <div class="flex items-center justify-between">
         <UiFormLabel>{{ getEditorTranslation('show-thumbnails') }}</UiFormLabel>
@@ -49,18 +44,14 @@
         <SfSwitch v-model="uiItemImageBlock.thumbnails.enableHoverZoom" data-testid="enable-zoom-on-hover" />
       </div>
     </div>
-  </UiAccordionItem>
-  <UiAccordionItem
+  </EditorFormPanel>
+  <EditorFormPanel
     v-model="layoutOpen"
-    summary-active-class="bg-neutral-100"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    :title="getEditorTranslation('layout-label')"
+    data-testid="slider-button-group-title"
   >
-    <template #summary>
-      <h2 data-testid="slider-button-group-title">{{ getEditorTranslation('layout-label') }}</h2>
-    </template>
-
     <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="blockUuid" />
-  </UiAccordionItem>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
@@ -85,17 +76,17 @@ const layoutOpen = ref(true);
 const thumbnails: Thumbnails = [
   {
     type: 'left-vertical',
-    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
+    cdn: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-left.png',
     label: getEditorTranslation('thumb-left-vertical'),
   },
   {
     type: 'right-vertical',
-    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
+    cdn: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-right.png',
     label: getEditorTranslation('thumb-right-vertical'),
   },
   {
     type: 'bottom',
-    cdn: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
+    cdn: 'https://cdn02.plentyone.com/v5vzmmmcb10k/frontend/PWA/Blocks/preview-thumbs-bottom.png',
     label: getEditorTranslation('thumb-bottom'),
   },
 ];

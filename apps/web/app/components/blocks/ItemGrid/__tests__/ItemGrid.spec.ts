@@ -29,8 +29,8 @@ describe('ItemGrid.vue', () => {
     expect(grid.exists()).toBe(true);
     expect(grid.classes()).toContain('mb-10');
     expect(grid.classes()).toContain('gap-4');
-    expect(grid.classes()).toContain('md:gap-6');
-    expect(grid.classes()).toContain('md:mb-5');
+    expect(grid.classes()).toContain('@md:gap-6');
+    expect(grid.classes()).toContain('@md:mb-5');
   });
 
   it('should position product count correctly (left, center, right)', async () => {
@@ -162,8 +162,8 @@ describe('ItemGrid.vue', () => {
     });
 
     expect(wrapper.find('[data-testid="category-grid"]').classes()).toContain('grid-cols-2');
-    expect(wrapper.find('[data-testid="category-grid"]').classes()).toContain('md:grid-cols-3');
-    expect(wrapper.find('[data-testid="category-grid"]').classes()).toContain('lg:grid-cols-4');
+    expect(wrapper.find('[data-testid="category-grid"]').classes()).toContain('@md:grid-cols-3');
+    expect(wrapper.find('[data-testid="category-grid"]').classes()).toContain('@lg:grid-cols-4');
   });
   it('should show VAT ', async () => {
     const wrapper = mount(ItemGrid, {
@@ -188,8 +188,8 @@ describe('ItemGrid.vue', () => {
 
     const grid = wrapper.find('[data-testid="category-grid"]');
     expect(grid.classes()).toContain('grid-cols-1');
-    expect(grid.classes()).toContain('md:grid-cols-2');
-    expect(grid.classes()).toContain('lg:grid-cols-3');
+    expect(grid.classes()).toContain('@md:grid-cols-2');
+    expect(grid.classes()).toContain('@lg:grid-cols-3');
   });
 
   it('should render shipping information with a link', async () => {
