@@ -2,6 +2,17 @@ import type { Setting } from '@plentymarkets/shop-api';
 
 export type SettingValue = string | number | boolean | unknown[] | object | null;
 
+export interface UseSiteSettingsDeps {
+  sdk: {
+    plentysystems: {
+      setConfiguration: (params: {
+        settings: { key: string; value: string }[];
+      }) => Promise<{ data: unknown } | undefined>;
+    };
+  };
+  runtimeConfigPublic: Record<string, unknown>;
+}
+
 export interface UseSiteSettingsState {
   data: {
     [key: string]: unknown;
