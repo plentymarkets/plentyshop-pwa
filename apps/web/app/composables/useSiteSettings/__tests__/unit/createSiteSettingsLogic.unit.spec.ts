@@ -35,7 +35,7 @@ describe('createSiteSettingsLogic', () => {
       const state = makeState({ initialData: { useAvif: false } });
       const logic = createSiteSettingsLogic('useAvif', state, makeDeps());
 
-      expect(logic.getSetting()).toBe(false);
+      expect(logic.getSetting()).toBe('false');
     });
 
     it('prefers the value from data over initialData', () => {
@@ -111,6 +111,13 @@ describe('createSiteSettingsLogic', () => {
       const logic = createSiteSettingsLogic('categoryId', state, makeDeps());
 
       expect(logic.getNumberSetting(7)).toBe(7);
+    });
+
+    it('returns 0 as the actual value rather than falling back when the setting is legitimately 0', () => {
+      const state = makeState({ initialData: { passwordMinLength: 0 } });
+      const logic = createSiteSettingsLogic('passwordMinLength', state, makeDeps());
+
+      expect(logic.getNumberSetting(8)).toBe(0);
     });
   });
 

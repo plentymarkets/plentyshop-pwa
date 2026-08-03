@@ -13,9 +13,9 @@ describe('useSiteSettings integration', () => {
   });
 
   it('seeds initialData from useRuntimeConfig().public', () => {
-    const { getSetting } = useSiteSettings('useAvif');
+    const { getBooleanSetting } = useSiteSettings('useAvif');
 
-    expect(getSetting()).toBe(false);
+    expect(getBooleanSetting()).toBe(false);
   });
 
   it('shares state across separate useSiteSettings() calls', () => {

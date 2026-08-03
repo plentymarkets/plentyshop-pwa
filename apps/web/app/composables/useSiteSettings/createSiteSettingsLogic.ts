@@ -20,7 +20,7 @@ export const createSiteSettingsLogic = (
 ) => {
   const { sdk, runtimeConfigPublic } = deps;
 
-  const updateSetting: UpdateSetting = async (value) => {
+  const updateSetting: UpdateSetting = (value) => {
     if (setting) {
       state.value.data = { ...state.value.data, [setting]: value };
     }
@@ -28,14 +28,15 @@ export const createSiteSettingsLogic = (
 
   const getSetting: GetSetting = () => {
     if (!setting) return '';
-    return (state.value.data?.[setting] as string) ?? (state.value.initialData?.[setting] as string) ?? '';
+    const value = state.value.data?.[setting] ?? state.value.initialData?.[setting];
+    return value === undefined || value === null ? '' : String(value);
   };
 
-  const getBooleanSetting: GetBooleanSetting = () => getSetting().toString() === 'true';
+  const getBooleanSetting: GetBooleanSetting = () => getSetting() === 'true';
 
   const getNumberSetting: GetNumberSetting = (fallback = 0) => {
     const value = getSetting();
-    if (!value) return fallback;
+    if (value === '') return fallback;
     const parsed = Number(value);
     return Number.isNaN(parsed) ? fallback : parsed;
   };
