@@ -15,7 +15,7 @@
                 :class="{ 'ring-2 ring-blue-500 ring-offset-1 rounded': highlightedUuid === key.uuid }"
                 :data-uuid="key.uuid"
                 class="mb-2 font-normal typography-text-sm break-words no-preflight rte-prose rte-prose--render transition-all duration-300"
-                v-html="replacePropertyPlaceholdersInHtml(key.content, props.product)"
+                v-html="renderTextBlock(key.content)"
               />
             </template>
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
@@ -319,6 +319,18 @@ const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.prod
 const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
 const showNotifyMe = computed(() => getNotifyMeSetting().toString() === 'true');
 const localePath = useLocalePath();
+const router = useRouter();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+
+const renderTextBlock = (html: string): string => {
+  const localizedHtml = html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
+    if (isInternalLink(href, router)) {
+      return `<a${before}href=${quote}${resolvePathTrailingSlash(localePath(href))}${quote}`;
+    }
+    return match;
+  });
+  return replacePropertyPlaceholdersInHtml(localizedHtml, props.product);
+};
 
 const inlineStyle = computed(() => {
   const layout = props?.configuration?.layout || ({} as PriceCardPadding);
