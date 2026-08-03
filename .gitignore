@@ -40,6 +40,7 @@ packages/shop-cli/coverage/*
 .vscode
 *.code-workspace
 *.tsbuildinfo
+settings.local.json
 
 # debug
 npm-debug.log*
