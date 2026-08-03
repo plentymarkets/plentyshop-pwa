@@ -58,10 +58,10 @@ Node version is specified in `.nvmrc`.
 ### Frontend (`apps/web/app/`)
 
 - **`components/`** — 120+ Vue components. Each lives in its own folder: `ComponentName/ComponentName.vue`, `ComponentName/types.ts`, `ComponentName/index.ts`, `ComponentName/__tests__/ComponentName.spec.ts`
-    - `ui/` — Generic StorefrontUI block components (shop base components)
-    - `editor/` — CMS/editor base components
-    - `blocks/` — CMS-style content blocks (dynamically loaded)
-    - `settings/` — Admin configuration panels
+  - `ui/` — Generic StorefrontUI block components (shop base components)
+  - `editor/` — CMS/editor base components
+  - `blocks/` — CMS-style content blocks (dynamically loaded)
+  - `settings/` — Admin configuration panels
 - **`composables/`** — All business logic (140+). Same folder structure as components. State via `useState()` for SSR safety.
 - **`pages/`** — File-based routing
 - **`configuration/`** — i18n, `app.config.ts`, `feature-flags.config.ts`, `settings.config.ts`, `tailwind.config.ts`, `block-layout.config.ts`, `security.config.ts`
@@ -118,6 +118,7 @@ CMS blocks are loaded lazily by name via `getBlockLoader()` from `utils/blocks/b
   // ❌  const x = inject<Ref<HTMLElement | null>>('key', ref(null));  // ref(null) is Ref<null>
   // ✅  const x = inject('key', ref<HTMLElement | null>(null));        // type on the fallback ref
   ```
+
 - **Give complex types a dedicated `interface`/`type`** rather than inlining. Prop types are suffixed `Props` (e.g. `GalleryProps`, `HeadingProps`). All types belong in `types.ts` (see Enforced constraints).
 
 ### Enforced constraints (custom ESLint rules + restricted imports)
@@ -150,7 +151,7 @@ See `docs/_styleguide/design.guide.md` for additional guidance.
 
 - **Keep components presentational and single-responsibility.** Abstract business logic into composables or modules, not components.
 - **Composables** hold stateful logic and anything needing the Vue/Nuxt lifecycle or app context. **Modules** hold stateless, pure functions with no lifecycle/app dependency.
-    - A module tightly coupled to one composable lives in that composable's directory; a generic, reusable module lives in `utils/`.
+  - A module tightly coupled to one composable lives in that composable's directory; a generic, reusable module lives in `utils/`.
 - **Prefer `@storefront-ui/vue` components** for design consistency (except `SfButton`/`SfLink` — see Enforced constraints). Create additional base components in `components/ui` (shop) or `components/editor` (cms) to promote reuse.
 - **Lean on Nuxt auto-imports.** In templates, prefix component names with their folder (e.g. `UiButton` for `components/ui/Button.vue`). Use `defineAsyncComponent` for heavy components that aren't immediately needed.
 
