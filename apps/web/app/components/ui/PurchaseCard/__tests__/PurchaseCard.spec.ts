@@ -5,6 +5,16 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { ProductMock } from '../../../../../__tests__/__mocks__/product.mock';
 import type { PriceCardContent, PriceCardTextBlockItem, PriceCardOrderItem } from '../types';
 
+const { isInternalLinkMock } = vi.hoisted(() => ({
+  isInternalLinkMock: vi.fn((href: string) => href.startsWith('/')),
+}));
+
+mockNuxtImport('isInternalLink', () => isInternalLinkMock);
+mockNuxtImport('useLocalePath', () => () => (path: string) => `/de${path}`);
+mockNuxtImport('useUrlTrailingSlash', () => () => ({
+  resolvePathTrailingSlash: (path: string) => path,
+}));
+
 vi.mock('vue-router', async (importOriginal) => ({
   ...(await importOriginal<typeof import('vue-router')>()),
   useRouter: () => ({
@@ -191,5 +201,44 @@ describe('<PurchaseCard />', () => {
 
       expect(wrapper.find('[data-uuid="my-text-block"]').exists()).toBe(true);
     });
+  });
+});
+
+describe('PurchaseCard — renderTextBlock link localization', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    isInternalLinkMock.mockImplementation((href: string) => href.startsWith('/'));
+  });
+
+  const mountWithContent = (content: string) =>
+    mount(UiPurchaseCard, {
+      props: {
+        product: ProductMock,
+        configuration: createConfiguration({ fieldsOrder: [createTextBlock({ content })] }),
+      },
+      global: { stubs: globalStubs },
+    });
+
+  it('should localize an internal link using localePath', () => {
+    const wrapper = mountWithContent('<p><a href="/shipping">Shipping</a></p>');
+    expect(wrapper.find('[data-uuid="text-block-uuid-1"]').html()).toContain('href="/de/shipping"');
+  });
+
+  it('should strip a baked-in locale prefix and re-add the current locale', () => {
+    const wrapper = mountWithContent('<p><a href="/de/shipping">Shipping</a></p>');
+    expect(wrapper.find('[data-uuid="text-block-uuid-1"]').html()).toContain('href="/de/de/shipping"');
+  });
+
+  it('should leave external links unchanged', () => {
+    isInternalLinkMock.mockReturnValue(false);
+    const wrapper = mountWithContent('<p><a href="https://example.com">External</a></p>');
+    expect(wrapper.find('[data-uuid="text-block-uuid-1"]').html()).toContain('href="https://example.com"');
+  });
+
+  it('should not rewrite non-anchor elements with href', () => {
+    const wrapper = mountWithContent('<link href="/style.css"><a href="/shipping">Shipping</a>');
+    const html = wrapper.find('[data-uuid="text-block-uuid-1"]').html();
+    expect(html).toContain('href="/style.css"');
+    expect(html).toContain('href="/de/shipping"');
   });
 });
