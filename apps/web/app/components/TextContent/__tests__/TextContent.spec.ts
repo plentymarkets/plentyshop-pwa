@@ -20,6 +20,20 @@ const { useRouterMock, isInternalLinkMock, useProductsMock, tMock } = vi.hoisted
 mockNuxtImport('useRouter', () => useRouterMock);
 mockNuxtImport('useLocalePath', () => () => (path: string) => `/de${path}`);
 mockNuxtImport('isInternalLink', () => isInternalLinkMock);
+mockNuxtImport(
+  'localizeHtmlLinks',
+  () =>
+    (html: string, _router: unknown, localePath: (p: string) => string, resolveTrailingSlash: (p: string) => string) =>
+      html.replace(
+        /<a\b([^>]*?)href=(["'])([^"']*?)\2/gi,
+        (match: string, before: string, quote: string, href: string) => {
+          if (isInternalLinkMock(href)) {
+            return `<a${before}href=${quote}${resolveTrailingSlash(localePath(href))}${quote}`;
+          }
+          return match;
+        },
+      ),
+);
 mockNuxtImport('useProducts', () => useProductsMock);
 mockNuxtImport('t', () => tMock);
 
