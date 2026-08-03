@@ -62,6 +62,9 @@ const createTextBlock = (overrides?: Partial<PriceCardTextBlockItem>): PriceCard
   ...overrides,
 });
 
+const findTextBlock = (fieldsOrder: PriceCardOrderItem[], uuid: string) =>
+  fieldsOrder.find((field): field is PriceCardTextBlockItem => typeof field === 'object' && field.uuid === uuid);
+
 const DraggableStub = defineComponent({
   name: 'draggable',
   props: {
@@ -218,9 +221,7 @@ describe('PriceCardForm', () => {
       await wrapper.getByTestId('price-card-delete-textblock-tb-uuid-1').trigger('click');
 
       expect(content.fieldsOrder).toHaveLength(2);
-      expect(
-        content.fieldsOrder.every((f) => typeof f !== 'object' || (f as PriceCardTextBlockItem).uuid !== 'tb-uuid-1'),
-      ).toBe(true);
+      expect(findTextBlock(content.fieldsOrder, 'tb-uuid-1')).toBeUndefined();
     });
 
     it('should close the RTE when the open text block is deleted', async () => {
@@ -245,10 +246,7 @@ describe('PriceCardForm', () => {
 
       await wrapper.getByTestId('price-card-visible-textblock-tb-uuid-1').trigger('click');
 
-      const textBlock = content.fieldsOrder.find(
-        (field): field is PriceCardTextBlockItem =>
-          typeof field === 'object' && (field as PriceCardTextBlockItem).uuid === 'tb-uuid-1',
-      );
+      const textBlock = findTextBlock(content.fieldsOrder, 'tb-uuid-1');
       expect(textBlock?.visible).toBe(false);
     });
   });
@@ -266,10 +264,7 @@ describe('PriceCardForm', () => {
       await wrapper.getByTestId('rte-emit-btn').trigger('click');
       await nextTick();
 
-      const textBlock = content.fieldsOrder.find(
-        (field): field is PriceCardTextBlockItem =>
-          typeof field === 'object' && (field as PriceCardTextBlockItem).uuid === 'tb-uuid-1',
-      );
+      const textBlock = findTextBlock(content.fieldsOrder, 'tb-uuid-1');
       expect(textBlock?.content).toBe('<p>Updated</p>');
     });
   });
