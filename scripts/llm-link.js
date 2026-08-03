@@ -2,8 +2,9 @@
 'use strict';
 
 /**
- * Symlinks the source-of-truth agents/skills in .github/ into the
- * provider-specific folder(s) that each LLM coding tool reads from.
+ * Symlinks the source-of-truth agents/skills/context file in .github/ (and
+ * root AGENTS.md) into the provider-specific location(s) each LLM coding
+ * tool reads from.
  *
  * Usage: npm run llm:link <provider> [<provider> ...]
  *        npm run llm:link all
@@ -13,7 +14,10 @@
  * shows up automatically without rerunning this script. Falls back to
  * linking individual entries only when the destination already contains
  * content this script didn't create (a client's own folder), so nothing
- * of theirs is ever deleted or overwritten.
+ * of theirs is ever deleted or overwritten. The same "never touch what's
+ * already there" rule applies to the root context file (CLAUDE.md,
+ * GEMINI.md, ...): if the client already has their own, it's left alone
+ * and reported instead of being replaced.
  */
 
 const fs = require('node:fs');
@@ -22,14 +26,18 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const SKILLS_SRC = path.join(ROOT, '.github', 'skills');
 const AGENTS_SRC = path.join(ROOT, '.github', 'agents');
+const CONTEXT_SRC = path.join(ROOT, 'AGENTS.md');
 const DIR_SYMLINK_TYPE = process.platform === 'win32' ? 'junction' : 'dir';
 
 // Codex agents are TOML with a different schema (developer_instructions,
 // sandbox_mode, ...) so our Markdown+YAML agents can't be linked there.
+// contextFile is null for codex because it already reads AGENTS.md
+// directly at the repo root — the exact file that already is our source
+// of truth, so there's nothing to link.
 const PROVIDERS = {
-  claude: { dir: '.claude', skills: true, agents: true },
-  gemini: { dir: '.gemini', skills: true, agents: true },
-  codex: { dir: '.codex', skills: true, agents: false },
+  claude: { dir: '.claude', skills: true, agents: true, contextFile: 'CLAUDE.md' },
+  gemini: { dir: '.gemini', skills: true, agents: true, contextFile: 'GEMINI.md' },
+  codex: { dir: '.codex', skills: true, agents: false, contextFile: null },
 };
 
 function pathKind(targetPath) {
@@ -164,6 +172,12 @@ function linkProvider(name) {
     linkDir(path.join(providerRoot, 'agents'), AGENTS_SRC, listEntryNames);
   } else {
     console.log('  (agents not linked for this provider — incompatible file format)');
+  }
+
+  if (config.contextFile) {
+    linkEntry(path.join(ROOT, config.contextFile), CONTEXT_SRC, 'file');
+  } else {
+    console.log('  (no separate context file for this provider — it already reads AGENTS.md directly)');
   }
 
   return true;
