@@ -38,3 +38,16 @@ export const isInternalLink = (href: string, router: ReturnType<typeof useRouter
   const resolved = router.resolve(href);
   return resolved.matched.length > 0 && resolved.name !== 'error';
 };
+
+export const localizeHtmlLinks = (
+  html: string,
+  router: ReturnType<typeof useRouter>,
+  localePath: ReturnType<typeof useLocalePath>,
+  resolveTrailingSlash: (path: string) => string,
+): string =>
+  html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
+    if (isInternalLink(href, router)) {
+      return `<a${before}href=${quote}${resolveTrailingSlash(localePath(href))}${quote}`;
+    }
+    return match;
+  });

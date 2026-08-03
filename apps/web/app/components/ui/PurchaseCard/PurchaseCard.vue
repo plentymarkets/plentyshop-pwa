@@ -322,15 +322,11 @@ const localePath = useLocalePath();
 const router = useRouter();
 const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
-const renderTextBlock = (html: string): string => {
-  const localizedHtml = html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
-    if (isInternalLink(href, router)) {
-      return `<a${before}href=${quote}${resolvePathTrailingSlash(localePath(href))}${quote}`;
-    }
-    return match;
-  });
-  return replacePropertyPlaceholdersInHtml(localizedHtml, props.product);
-};
+const renderTextBlock = (html: string): string =>
+  replacePropertyPlaceholdersInHtml(
+    localizeHtmlLinks(html, router, localePath, resolvePathTrailingSlash),
+    props.product,
+  );
 
 const inlineStyle = computed(() => {
   const layout = props?.configuration?.layout || ({} as PriceCardPadding);
