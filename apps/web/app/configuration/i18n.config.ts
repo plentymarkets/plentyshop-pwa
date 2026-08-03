@@ -1,5 +1,5 @@
 import type { LocaleObject, NuxtI18nOptions } from '@nuxtjs/i18n';
-import { validateApiUrl } from '../utils/pathHelper.ts';
+import { validateApiUrl } from '../utils/pathHelper';
 
 export const getLocales = (): LocaleObject[] => {
   const locales: unknown[] = [];
