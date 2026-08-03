@@ -26,7 +26,7 @@ export const fileOrganizationTypes = {
   },
 
   create(context) {
-    const filename = context.getFilename();
+    const filename = context.filename;
     const isDeclarationFile = filename.endsWith('.d.ts');
     const isTestFile = filename.includes('/__tests__/') || filename.includes('\\__tests__\\');
     const isTypeFile =
