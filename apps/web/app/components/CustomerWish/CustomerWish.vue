@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { SfTextarea } from '@storefront-ui/vue';
 const { setCustomerWish } = useAdditionalInformation();
-const { getSetting } = useSiteSettings('showCustomerWishComponent');
+const { getBooleanSetting } = useSiteSettings('showCustomerWishComponent');
 const customerWish = ref('');
-const showCustomerWishComponent = computed(() => getSetting().toString() === 'true');
+const showCustomerWishComponent = computed(() => getBooleanSetting());
 setCustomerWish(null);
 </script>

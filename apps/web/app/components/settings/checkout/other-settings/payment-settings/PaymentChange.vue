@@ -16,10 +16,10 @@
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('enableOrderChangePaymentMethod');
+const { updateSetting, getBooleanSetting } = useSiteSettings('enableOrderChangePaymentMethod');
 
 const useOrderChangePaymentMethod = computed({
-  get: () => String(getSetting()) === 'true',
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

@@ -87,13 +87,10 @@
 <script setup lang="ts">
 import { SfIconCheck, SfTooltip, SfIconInfo } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('enableSingleProductUrlScheme');
+const { updateSetting, getBooleanSetting } = useSiteSettings('enableSingleProductUrlScheme');
 
 const urlScheme = computed({
-  get: () => {
-    const val = getSetting();
-    return String(val) === 'true';
-  },
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>

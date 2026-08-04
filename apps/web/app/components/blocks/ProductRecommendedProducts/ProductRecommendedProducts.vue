@@ -22,7 +22,7 @@ const { locale } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const { currentProduct } = useProducts();
 const { isEditMode } = useEditorState();
-const { getSetting: isLastSeenTrackingEnabled } = useSiteSettings('enableLastSeenTracking');
+const { getBooleanSetting: isLastSeenTrackingEnabled } = useSiteSettings('enableLastSeenTracking');
 const blockRef = ref<HTMLElement | null>(null);
 const { isNearViewport } = useNearViewport(blockRef, {
   rootMargin: '200px 0px 200px 0px',
@@ -46,9 +46,7 @@ const isCategory = computed(() => props.content.source?.type === 'category');
 const isProduct = computed(() => props.content.source?.type === 'cross_selling' && itemId.value);
 const isLastSeen = computed(() => props.content.source?.type === 'last_seen');
 
-const showLastSeenTrackingHint = computed(
-  () => isLastSeen.value && isEditMode.value && isLastSeenTrackingEnabled().toString() !== 'true',
-);
+const showLastSeenTrackingHint = computed(() => isLastSeen.value && isEditMode.value && !isLastSeenTrackingEnabled());
 
 const shouldShowSlider = computed(
   () =>
