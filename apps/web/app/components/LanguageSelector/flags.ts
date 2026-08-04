@@ -1,6 +1,6 @@
 import type { FlagImports } from './types';
 import {
-  US,
+  GB,
   DE,
   BG,
   FR,
@@ -29,7 +29,7 @@ import {
 } from 'country-flag-icons/string/3x2';
 
 export const flagImports: FlagImports = {
-  en: US as string,
+  en: GB as string,
   de: DE as string,
   bg: BG as string,
   fr: FR as string,
