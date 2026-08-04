@@ -48,12 +48,7 @@ const renderedHtmlDescription = computed(() => {
   const html = decodeHtmlEntities(props.text?.htmlDescription);
   if (!html) return '';
 
-  const localizedHtml = html.replace(/<a\b([^>]*?)href=(["'])([^"']*?)\2/gi, (match, before, quote, href) => {
-    if (isInternalLink(href, router)) {
-      return `<a${before}href=${quote}${resolvePathTrailingSlash(localePath(href))}${quote}`;
-    }
-    return match;
-  });
+  const localizedHtml = localizeHtmlLinks(html, router, localePath, resolvePathTrailingSlash);
 
   return replacePropertyPlaceholdersInHtml(
     replaceI18nPlaceholdersInHtml(localizedHtml, (key) => t(key)),
