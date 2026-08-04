@@ -72,7 +72,7 @@
     "@vee-validate/yup": "^4.15.1",
     "blaze-slider": "^1.9.3",
     "country-flag-icons": "^1.6.17",
-    "dotenv": "^16.6.1",
+    "dotenv": "^17.4.2",
     "drift-zoom": "^1.5.1",
     "nuxt-color-picker": "^1.2.8",
     "nuxt-swiper": "^1.2.2",
