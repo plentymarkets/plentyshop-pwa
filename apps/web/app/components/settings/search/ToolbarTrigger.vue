@@ -1,6 +1,5 @@
 <template>
   <SfTooltip
-    v-if="isShopSearchEnabled"
     :label="getEditorTranslation('tooltip')"
     placement="right"
     class="inline-grid font-editor"
@@ -25,9 +24,6 @@ import { SfIconSearch, SfTooltip } from '@storefront-ui/vue';
 defineProps({
   active: Boolean,
 });
-
-const runtimeConfig = useRuntimeConfig();
-const isShopSearchEnabled = ref(!runtimeConfig.public.disabledEditorSettings.includes('shop-search'));
 </script>
 
 <i18n lang="json">
