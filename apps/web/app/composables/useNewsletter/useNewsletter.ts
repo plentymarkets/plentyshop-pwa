@@ -1,5 +1,10 @@
 import type { ApiError, NewsletterParams } from '@plentymarkets/shop-api';
-import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
+import type {
+  UseNewsletterReturn,
+  UseNewsletterState,
+  Subscribe,
+  Unsubscribe,
+} from '~/composables/useNewsletter/types';
 
 /**
  * @description Composable for subscribing/unsubscribing to newsletter.
@@ -39,8 +44,22 @@ export const useNewsletter: UseNewsletterReturn = () => {
     return false;
   };
 
+  const unsubscribe: Unsubscribe = async (params) => {
+    try {
+      state.value.loading = true;
+      const { data } = await useSdk().plentysystems.deleteNewsletterSubscription(params);
+      return !!data;
+    } catch (error) {
+      useHandleError(error as ApiError);
+    } finally {
+      state.value.loading = false;
+    }
+    return false;
+  };
+
   return {
     subscribe,
+    unsubscribe,
     ...toRefs(state.value),
   };
 };

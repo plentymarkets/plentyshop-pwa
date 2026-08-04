@@ -5,10 +5,12 @@ export interface UseNewsletterState {
 }
 
 export type Subscribe = (params: NewsletterParams) => Promise<boolean>;
+export type Unsubscribe = (params: Pick<NewsletterParams, 'email'>) => Promise<boolean>;
 
 export interface UseNewsletter {
   loading: Readonly<Ref<boolean>>;
   subscribe: Subscribe;
+  unsubscribe: Unsubscribe;
 }
 
 export type UseNewsletterReturn = () => UseNewsletter;
