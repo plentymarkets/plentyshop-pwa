@@ -869,6 +869,13 @@
     "confirmation": {
       "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
       "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
+    },
+    "unsubscribe": {
+      "label": "Newsletter abbestellen",
+      "heading": "Newsletter abbestellen",
+      "info": "Geben Sie Ihre E-Mail-Adresse ein, um den Newsletter abzubestellen.",
+      "submit": "Abbestellen",
+      "success": "Sie wurden erfolgreich vom Newsletter abgemeldet."
     }
   },
   "offers": {

@@ -869,6 +869,13 @@
     "confirmation": {
       "newsletterOptInMessage": "Your email address has been confirmed.",
       "newsletterOptInMessageError": "An error occurred while confirming your email."
+    },
+    "unsubscribe": {
+      "label": "Newsletter Unsubscribe",
+      "heading": "Unsubscribe from Newsletter",
+      "info": "Enter your email address below to unsubscribe from our newsletter.",
+      "submit": "Unsubscribe",
+      "success": "You have been successfully unsubscribed from our newsletter."
     }
   },
   "offers": {

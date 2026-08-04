@@ -44,10 +44,10 @@ export const useNewsletter: UseNewsletterReturn = () => {
     return false;
   };
 
-  const unsubscribe: Unsubscribe = async (email: string) => {
+  const unsubscribe: Unsubscribe = async (params) => {
     try {
       state.value.loading = true;
-      const { data } = await useSdk().plentysystems.deleteNewsletterSubscription({ email });
+      const { data } = await useSdk().plentysystems.deleteNewsletterSubscription(params);
       return !!data;
     } catch (error) {
       useHandleError(error as ApiError);

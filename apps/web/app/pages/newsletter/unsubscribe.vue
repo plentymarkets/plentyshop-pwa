@@ -2,9 +2,9 @@
   <NuxtLayout name="default">
     <div class="@md:max-w-[677px] mx-auto px-4 pt-4 pb-20 @md:px-0 @md:mt-4">
       <h1 class="font-bold mb-4 typography-headline-3 @md:typography-headline-2">
-        {{ t('heading') }}
+        {{ t('newsletter.unsubscribe.heading') }}
       </h1>
-      <p class="mb-10">{{ t('info') }}</p>
+      <p class="mb-10">{{ t('newsletter.unsubscribe.info') }}</p>
 
       <form class="flex flex-col gap-4" novalidate @submit.prevent="onSubmit">
         <label>
@@ -22,7 +22,7 @@
 
         <UiButton type="submit" class="w-full" :disabled="loading" data-testid="newsletter-unsubscribe-button">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-          <span v-else>{{ t('submit') }}</span>
+          <span v-else>{{ t('newsletter.unsubscribe.submit') }}</span>
         </UiButton>
       </form>
     </div>
@@ -45,13 +45,20 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { t } = useI18n();
+const { getRobots, setRobotForStaticPage } = useRobots();
+const { setPageMeta } = usePageMeta();
+
+setPageMeta(t('newsletter.unsubscribe.label'), 'page');
+
+await getRobots();
+setRobotForStaticPage('NewsletterUnsubscribePage');
+
 const { unsubscribe, loading } = useNewsletter();
 const { send } = useNotification();
 
 const validationSchema = toTypedSchema(
   object({
-    email: string().email(t('error.email.valid')).required(t('error.email.required')).default(''),
+    email: string().trim().email(t('error.email.valid')).required(t('error.email.required')).default(''),
   }),
 );
 
@@ -59,29 +66,12 @@ const { errors, defineField, handleSubmit, resetForm } = useForm({ validationSch
 const [email, emailAttributes] = defineField('email');
 
 const submitForm = async () => {
-  const success = await unsubscribe(email.value || '');
+  const success = await unsubscribe({ email: email.value || '' });
   if (success) {
-    send({ type: 'positive', message: t('success') });
+    send({ type: 'positive', message: t('newsletter.unsubscribe.success') });
     resetForm();
   }
 };
 
 const onSubmit = handleSubmit(() => submitForm());
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "heading": "Unsubscribe from Newsletter",
-    "info": "Enter your email address below to unsubscribe from our newsletter.",
-    "submit": "Unsubscribe",
-    "success": "You have been successfully unsubscribed from our newsletter."
-  },
-  "de": {
-    "heading": "Newsletter abbestellen",
-    "info": "Geben Sie Ihre E-Mail-Adresse ein, um den Newsletter abzubestellen.",
-    "submit": "Abbestellen",
-    "success": "Sie wurden erfolgreich vom Newsletter abgemeldet."
-  }
-}
-</i18n>
