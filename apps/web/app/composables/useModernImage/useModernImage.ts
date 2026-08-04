@@ -13,8 +13,8 @@ const getImageForViewport = (product: Product, context: string, isTablet: boolea
 };
 
 export const useModernImage: UseModernImageReturn = () => {
-  const { getSetting: useAvif } = useSiteSettings('useAvif');
-  const { getSetting: useWebp } = useSiteSettings('useWebp');
+  const { getBooleanSetting: useAvif } = useSiteSettings('useAvif');
+  const { getBooleanSetting: useWebp } = useSiteSettings('useWebp');
 
   const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
   const avifExtension = 'avif';

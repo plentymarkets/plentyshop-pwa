@@ -82,7 +82,7 @@ describe('ProductRecommendedProducts', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useEditorStateMock.mockReturnValue({ isEditMode: ref(false) });
-    useSiteSettingsMock.mockReturnValue({ getSetting: vi.fn().mockReturnValue('true') });
+    useSiteSettingsMock.mockReturnValue({ getBooleanSetting: vi.fn().mockReturnValue(true) });
   });
 
   it('should render text content even when not visible', () => {
@@ -117,7 +117,7 @@ describe('ProductRecommendedProducts', () => {
 
   it('should show the last-seen tracking hint when source is last_seen, in edit mode, and tracking is disabled', () => {
     useEditorStateMock.mockReturnValue({ isEditMode: ref(true) });
-    useSiteSettingsMock.mockReturnValue({ getSetting: vi.fn().mockReturnValue('false') });
+    useSiteSettingsMock.mockReturnValue({ getBooleanSetting: vi.fn().mockReturnValue(false) });
 
     const wrapper = mount(ProductRecommendedProducts, {
       props: mockLastSeenProps,
@@ -128,7 +128,7 @@ describe('ProductRecommendedProducts', () => {
 
   it('should not show the last-seen tracking hint when tracking is enabled', () => {
     useEditorStateMock.mockReturnValue({ isEditMode: ref(true) });
-    useSiteSettingsMock.mockReturnValue({ getSetting: vi.fn().mockReturnValue('true') });
+    useSiteSettingsMock.mockReturnValue({ getBooleanSetting: vi.fn().mockReturnValue(true) });
 
     const wrapper = mount(ProductRecommendedProducts, {
       props: mockLastSeenProps,
@@ -139,7 +139,7 @@ describe('ProductRecommendedProducts', () => {
 
   it('should not show the last-seen tracking hint when not in edit mode', () => {
     useEditorStateMock.mockReturnValue({ isEditMode: ref(false) });
-    useSiteSettingsMock.mockReturnValue({ getSetting: vi.fn().mockReturnValue('false') });
+    useSiteSettingsMock.mockReturnValue({ getBooleanSetting: vi.fn().mockReturnValue(false) });
 
     const wrapper = mount(ProductRecommendedProducts, {
       props: mockLastSeenProps,
@@ -150,7 +150,7 @@ describe('ProductRecommendedProducts', () => {
 
   it('should not show the last-seen tracking hint when source is not last_seen', () => {
     useEditorStateMock.mockReturnValue({ isEditMode: ref(true) });
-    useSiteSettingsMock.mockReturnValue({ getSetting: vi.fn().mockReturnValue('false') });
+    useSiteSettingsMock.mockReturnValue({ getBooleanSetting: vi.fn().mockReturnValue(false) });
 
     const wrapper = mount(ProductRecommendedProducts, {
       props: mockProps,
@@ -161,7 +161,7 @@ describe('ProductRecommendedProducts', () => {
 
   it('should not render ProductSlider when the last-seen tracking hint is shown', () => {
     useEditorStateMock.mockReturnValue({ isEditMode: ref(true) });
-    useSiteSettingsMock.mockReturnValue({ getSetting: vi.fn().mockReturnValue('false') });
+    useSiteSettingsMock.mockReturnValue({ getBooleanSetting: vi.fn().mockReturnValue(false) });
 
     const wrapper = mount(ProductRecommendedProducts, {
       props: mockLastSeenProps,

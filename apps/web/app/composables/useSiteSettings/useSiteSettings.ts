@@ -1,13 +1,5 @@
-import type {
-  UpdateSetting,
-  UseSiteSettingsReturn,
-  UseSiteSettingsState,
-  GetSetting,
-  SaveSiteSettings,
-  SetSettingsInitialData,
-  SettingValue,
-} from '~/composables/useSiteSettings/types';
-import type { Setting } from '@plentymarkets/shop-api';
+import type { UseSiteSettingsReturn, UseSiteSettingsState } from '~/composables/useSiteSettings/types';
+import { createSiteSettingsLogic } from '~/composables/useSiteSettings/createSiteSettingsLogic';
 
 /**
  * @description Composable for managing site settings.
@@ -24,93 +16,8 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     initialData: useRuntimeConfig().public || {},
   }));
 
-  const updateSetting: UpdateSetting = async (value) => {
-    if (setting) {
-      state.value.data = { ...state.value.data, [setting]: value };
-    }
-  };
-
-  const getSetting: GetSetting = () => {
-    if (!setting) return '';
-    return (state.value.data?.[setting] as string) ?? (state.value.initialData?.[setting] as string) ?? '';
-  };
-
-  const getJsonSetting: () => string[] = () => {
-    if (!setting) return [];
-    const runtimeSetting = state.value.initialData?.[setting];
-
-    const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);
-
-    return JSON.parse((state.value.data?.[setting] as string) ?? defaultSetting);
-  };
-
-  const setInitialData: SetSettingsInitialData = (settings: Setting[]) => {
-    const result = settings.reduce((acc: Record<string, SettingValue>, { originalKey, value }) => {
-      let parsedValue = value;
-      if (typeof value === 'string') {
-        try {
-          parsedValue = JSON.parse(value);
-        } catch {
-          parsedValue = value;
-        }
-      }
-
-      acc[originalKey] = parsedValue;
-
-      return acc;
-    }, {});
-
-    state.value.initialData = { ...useRuntimeConfig().public, ...result };
-  };
-
-  const changedFields = computed(() => {
-    const config = state.value?.initialData ?? {};
-    const currentData = state.value?.data ?? {};
-
-    if (!currentData || Object.keys(currentData).length === 0) {
-      return { entries: [] as Array<[string, unknown]>, keys: [] as string[] };
-    }
-
-    const entries = Object.entries(currentData).filter(([key, value]) => !(key in config) || config[key] !== value);
-
-    return {
-      entries,
-      keys: entries.map(([key]) => key),
-    };
+  return createSiteSettingsLogic(setting, state, {
+    sdk: useSdk(),
+    runtimeConfigPublic: useRuntimeConfig().public,
   });
-
-  const dirtyKeys = computed(() => changedFields.value.keys);
-  const settingsIsDirty = computed(() => changedFields.value.keys.length > 0);
-
-  const saveSiteSettings: SaveSiteSettings = async () => {
-    try {
-      state.value.loading = true;
-
-      const settings = [
-        ...Object.entries(state.value.data || {}).map(([key, val]) => ({
-          key,
-          value: typeof val === 'string' ? val : JSON.stringify(val ?? ''),
-        })),
-      ];
-      await useSdk().plentysystems.setConfiguration({ settings });
-
-      state.value.initialData = { ...state.value.initialData, ...state.value.data };
-    } catch (error) {
-      console.error('Error saving settings:', error);
-    } finally {
-      state.value.loading = false;
-    }
-    return true;
-  };
-
-  return {
-    ...toRefs(state.value),
-    updateSetting,
-    getSetting,
-    getJsonSetting,
-    settingsIsDirty,
-    dirtyKeys,
-    saveSiteSettings,
-    setInitialData,
-  };
 };

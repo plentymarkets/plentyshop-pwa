@@ -36,14 +36,14 @@ const props = defineProps<OrderPaymentSummaryPropsType>();
 const { changePaymentMethodModalOpen, refetchOrder } = useCustomerOrder('soft-login');
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);
-const { getSetting } = useSiteSettings('enableOrderChangePaymentMethod');
+const { getBooleanSetting } = useSiteSettings('enableOrderChangePaymentMethod');
 const isUnpaid = computed(() => !orderConfirmationGetters.isOrderPaid(props.order));
 const validOrderPaymentStatus = computed(() => orderConfirmationGetters.orderStatusValidForPayment(props.order));
 const showPaymentButton = computed(
   () => isUnpaid.value && validOrderPaymentStatus.value && props.order.allowPaymentMethodSwitchFrom,
 );
 const sameAsShippingAddress = shippingAddress && billingAddress && shippingAddress.id === billingAddress.id;
-const enableOrderChangePaymentMethod = computed(() => getSetting().toString() === 'true');
+const enableOrderChangePaymentMethod = computed(() => getBooleanSetting());
 
 const { data: cart } = useCart();
 const { updateAvailableAPMs, getScript } = usePayPal();

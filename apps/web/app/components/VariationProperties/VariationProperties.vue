@@ -34,8 +34,8 @@ const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
   );
 };
 
-const { getSetting } = useSiteSettings('itemCanonicalId');
-const itemCanonicalId = computed(() => Number(getSetting() || -1));
+const { getNumberSetting } = useSiteSettings('itemCanonicalId');
+const itemCanonicalId = computed(() => getNumberSetting(-1));
 
 const variationPropertyGroups = computed(() => productGetters.getPropertyGroups(props.product ?? ({} as Product)));
 

@@ -17,10 +17,10 @@
 <script setup lang="ts">
 import { SfIconInfo, SfSwitch, SfTooltip } from '@storefront-ui/vue';
 
-const { updateSetting, getSetting } = useSiteSettings('robotsUrlWithParameters');
+const { updateSetting, getBooleanSetting } = useSiteSettings('robotsUrlWithParameters');
 
 const robotsUrlWithParameters = computed({
-  get: () => !!getSetting(),
+  get: () => getBooleanSetting(),
   set: (value) => updateSetting(value.toString()),
 });
 </script>
