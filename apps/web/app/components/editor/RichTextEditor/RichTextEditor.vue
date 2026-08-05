@@ -90,6 +90,8 @@
     >
       <EditorContent :editor="editor" :style="editorStyle" class="rte__content rte-prose" />
     </div>
+
+    <EditorCustomCodeHints :content="modelValue" />
   </div>
 
   <EditorRichTextEditorRichtextEditorModal
@@ -117,6 +119,7 @@
     :text-color="textColor"
     :toggle-link="toggleLink"
     :undo="undo"
+    :content="modelValue"
     @close="closeModal"
     @switch-to-html="handleSwitchToHtml"
   />
