@@ -57,6 +57,8 @@
           <li v-for="(e, idx) in htmlErrors.slice(0, 3)" :key="idx">{{ e }}</li>
         </ul>
       </div>
+
+      <EditorCustomCodeHints :content="htmlDraft" />
     </div>
 
     <EditorHtmlEditor
