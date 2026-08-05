@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import CustomCodeHints from '../CustomCodeHints.vue';
+
+const { getEditorTranslationMock } = vi.hoisted(() => ({
+  getEditorTranslationMock: vi.fn((key: string) => key),
+}));
+
+mockNuxtImport('getEditorTranslation', () => getEditorTranslationMock);
 
 describe('CustomCodeHints', () => {
   it('should not render when content has no custom code', () => {
@@ -34,7 +41,7 @@ describe('CustomCodeHints', () => {
     });
 
     const output = wrapper.find('[data-testid="custom-code-hints"]');
-    expect(output.text()).toContain('CSS detected');
+    expect(output.text()).toContain('customCodeHint.cssDetected');
   });
 
   it('should display JS hint when script tag is present', () => {
@@ -45,7 +52,7 @@ describe('CustomCodeHints', () => {
     });
 
     const output = wrapper.find('[data-testid="custom-code-hints"]');
-    expect(output.text()).toContain('JavaScript detected');
+    expect(output.text()).toContain('customCodeHint.jsDetected');
   });
 
   it('should display multiple hints', () => {
@@ -56,8 +63,8 @@ describe('CustomCodeHints', () => {
     });
 
     const output = wrapper.find('[data-testid="custom-code-hints"]');
-    expect(output.text()).toContain('CSS detected');
-    expect(output.text()).toContain('JavaScript detected');
+    expect(output.text()).toContain('customCodeHint.cssDetected');
+    expect(output.text()).toContain('customCodeHint.jsDetected');
   });
 
   it('should have correct styling classes', () => {
