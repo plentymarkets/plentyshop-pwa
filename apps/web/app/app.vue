@@ -107,7 +107,7 @@ const { getSetting: getMetaDescription } = useSiteSettings('metaDescription');
 const { getSetting: getMetaKeywords } = useSiteSettings('metaKeywords');
 const { getSetting: getRobots } = useSiteSettings('robots');
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
-const { getSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
+const { getBooleanSetting: customAssetsSafeMode } = useSiteSettings('customAssetsSafeMode');
 
 const { data: productsCatalog } = useProducts();
 
