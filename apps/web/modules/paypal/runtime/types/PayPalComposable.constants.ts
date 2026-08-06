@@ -1,4 +1,5 @@
 export const PayPalPaymentKey = 'PAYPAL';
+export const PayPalPayLaterPaymentKey = 'PAYPAL_PAY_LATER';
 export const PayPalPayLaterKey = 'PAYPAL_PAY_LATER';
 export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';
 

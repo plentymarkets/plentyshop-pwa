@@ -1,6 +1,6 @@
 <template>
   <template v-if="!order">
-    <div v-if="paymentKey === PayPalPaymentKey">
+    <div v-if="paymentKey === PayPalPaymentKey || paymentKey === PayPalPayLaterPaymentKey">
       <PayPalExpressButton
         :disabled="disableBuyButton"
         type="Checkout"
@@ -134,6 +134,7 @@ import {
   PayPalGooglePayKey,
   PayPalApplePayKey,
   PayPalPayUponInvoiceKey,
+  PayPalPayLaterPaymentKey,
   PayPalAlternativeFundingSourceMapper,
   type PayPalAddToCartCallback,
 } from '#paypal/types';
