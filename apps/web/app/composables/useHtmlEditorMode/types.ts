@@ -10,3 +10,8 @@ export type HtmlToken =
   | { kind: 'tag'; tagName: string; attributesSource: string; isClosing: boolean; isSelfClosing: boolean };
 
 export type QuoteState = 'none' | 'single' | 'double';
+
+export type CustomCodeHint = {
+  type: 'css' | 'js';
+  message: string;
+};
