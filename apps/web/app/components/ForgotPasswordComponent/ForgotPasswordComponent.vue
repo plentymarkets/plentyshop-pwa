@@ -55,7 +55,7 @@ const email = ref('');
 
 const submitPasswordReset = async () => {
   if (await sendEmail({ email: email.value })) {
-    send({message: t('authentication.resetPassword.emailSent'), type: 'positive'});
+    send({ message: t('authentication.resetPassword.emailSent'), type: 'positive' });
     emits('change-view-login');
   }
 };
