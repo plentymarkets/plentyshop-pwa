@@ -19,7 +19,11 @@ export const useUpdatePageTemplate = () => {
 
       let identifier: string | number = route.meta.identifier as string | number;
 
-      if (dataProducts.value?.category?.type === 'content' && dataProducts.value.category.id) {
+      if (
+        route.meta.type === 'category' &&
+        dataProducts.value?.category?.type === 'content' &&
+        dataProducts.value.category.id
+      ) {
         identifier = dataProducts.value.category.id;
       }
 
