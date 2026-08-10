@@ -117,7 +117,9 @@ export class ProductListPageObject extends PageObject {
   }
 
   assertPaginationLinkPage(rel: 'prev' | 'next', expectedPage: number | null) {
-    cy.get(`head link[rel="${rel}"]`).should(($link) => {
+    cy.get('head').then(($head) => {
+      const $link = $head.find(`link[rel="${rel}"]`);
+
       if (expectedPage === null) {
         expect($link, `expected no ${rel} link but found one`).to.have.length(0);
         return;
