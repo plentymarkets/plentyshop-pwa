@@ -16,6 +16,7 @@ export interface UseBlockSnapshotsState {
   dateFrom: string;
   dateTo: string;
   confirmingId: number | null;
+  restoredSnapshotId: number | null;
   restoring: boolean;
   currentPage: number;
   lastPage: number;

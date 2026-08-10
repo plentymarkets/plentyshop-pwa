@@ -13,12 +13,27 @@
         <div
           v-for="snapshot in group.items"
           :key="snapshot.id"
-          class="flex items-center gap-3 px-6 py-2.5 mx-1.5 rounded-lg hover:bg-editor-surface"
+          class="flex items-center gap-3 px-6 py-2.5 mx-1.5 rounded-lg border border-transparent hover:bg-editor-surface"
+          :class="{
+            'bg-editor-button/5 border-editor-button/30 shadow-sm': isActiveSnapshot(snapshot.id),
+          }"
           :data-testid="`version-history-item-${snapshot.id}`"
         >
-          <span class="w-2 h-2 rounded-full flex-none" :class="isToday(snapshot) ? 'bg-success-500' : 'bg-gray-200'" />
+          <span
+            class="w-2 h-2 rounded-full flex-none"
+            :class="isActiveSnapshot(snapshot.id) ? 'bg-editor-button' : 'bg-gray-200'"
+          />
           <div class="flex-1 min-w-0">
-            <span class="text-sm font-semibold text-editor-text-strong break-words">{{ versionName(snapshot) }}</span>
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="min-w-0 truncate text-sm font-semibold text-editor-text-strong">{{ versionName(snapshot) }}</span>
+              <span
+                v-if="isActiveSnapshot(snapshot.id)"
+                class="inline-flex flex-none items-center whitespace-nowrap rounded-full bg-editor-button/10 px-1.5 py-px text-2xs font-bold uppercase text-editor-button"
+                :data-testid="`version-history-active-${snapshot.id}`"
+              >
+                {{ activeLabel(snapshot.id) }}
+              </span>
+            </div>
             <div class="text-xs text-editor-text-muted mt-0.5 break-words">{{ subtitleFor(snapshot) }}</div>
           </div>
           <button
@@ -62,7 +77,16 @@ const ENTITY_TYPE_LABEL: Record<string, string> = {
   product: getEditorTranslation('entity-product'),
 };
 
-const { loading, loadingMore, hasMore, groupedSnapshots, requestRestore, loadMore } = useBlockSnapshots();
+const {
+  loading,
+  loadingMore,
+  hasMore,
+  groupedSnapshots,
+  requestRestore,
+  loadMore,
+  isActiveSnapshot,
+  isRestoredSnapshot,
+} = useBlockSnapshots();
 
 const entityTypeFor = (snapshot: BlockSnapshot): string =>
   ENTITY_TYPE_LABEL[snapshot.snapshotableType] || snapshot.snapshotableType;
@@ -71,21 +95,17 @@ const versionName = (snapshot: BlockSnapshot): string => getSnapshotVersionName(
 
 const subtitleFor = (snapshot: BlockSnapshot): string => `${entityTypeFor(snapshot)} · #${snapshot.id}`;
 
-const isToday = (snapshot: BlockSnapshot): boolean => {
-  const created = new Date(snapshot.createdAt);
-  const now = new Date();
-  return (
-    created.getFullYear() === now.getFullYear() &&
-    created.getMonth() === now.getMonth() &&
-    created.getDate() === now.getDate()
-  );
-};
+const activeLabel = (id: number): string =>
+  isRestoredSnapshot(id) ? getEditorTranslation('restored') : getEditorTranslation('in-use');
+
 </script>
 
 <i18n lang="json">
 {
   "en": {
     "restore": "Restore",
+    "restored": "Restored",
+    "in-use": "In use",
     "no-results": "No versions found in this date range.",
     "load-more": "Load more",
     "entity-immutable": "Homepage",
@@ -94,6 +114,8 @@ const isToday = (snapshot: BlockSnapshot): boolean => {
   },
   "de": {
     "restore": "Restore",
+    "restored": "Restored",
+    "in-use": "In use",
     "no-results": "No versions found in this date range.",
     "load-more": "Load more",
     "entity-immutable": "Homepage",

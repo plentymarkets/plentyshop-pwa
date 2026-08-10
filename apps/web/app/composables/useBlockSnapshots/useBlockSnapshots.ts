@@ -1,6 +1,9 @@
 import type { Block, BlockSnapshot, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { SnapshotDatePreset, SnapshotGroup, UseBlockSnapshotsState } from './types';
 import { assembleBlocks } from '~/utils/blocks/block-helpers';
+import { FOOTER_BLOCK_NAME } from '~/utils/blocks/block-names';
+import { FOOTER_CONTAINER_BLOCK_NAME } from '~/utils/blockTemplates/footer';
+import { HEADER_CONTAINER_BLOCK_NAME } from '~/utils/blockTemplates/header';
 
 const isSameDay = (a: Date, b: Date): boolean =>
   a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
@@ -19,6 +22,7 @@ export const useBlockSnapshots = () => {
     dateFrom: '',
     dateTo: '',
     confirmingId: null,
+    restoredSnapshotId: null,
     restoring: false,
     currentPage: 1,
     lastPage: 1,
@@ -62,6 +66,7 @@ export const useBlockSnapshots = () => {
     state.value.currentPage = 1;
     state.value.lastPage = 1;
     state.value.confirmingId = null;
+    state.value.restoredSnapshotId = null;
     state.value.snapshots = [];
     fetchSnapshots();
   };
@@ -104,7 +109,9 @@ export const useBlockSnapshots = () => {
   const hasMore = computed(() => state.value.currentPage < state.value.lastPage);
 
   const loadMore = async () => {
-    if (state.value.loadingMore || !hasMore.value) return;
+    if (state.value.loadingMore || !hasMore.value) {
+      return;
+    }
 
     state.value.loadingMore = true;
 
@@ -211,7 +218,9 @@ export const useBlockSnapshots = () => {
 
   const confirmRestore = async () => {
     const snapshotId = state.value.confirmingId;
-    if (snapshotId == null) return;
+    if (snapshotId == null) {
+      return;
+    }
 
     state.value.restoring = true;
 
@@ -224,9 +233,13 @@ export const useBlockSnapshots = () => {
 
       const raw = flatBlocks.reduce<GetBlocksResponse>(
         (acc, block) => {
-          if (block?.name === 'HeaderContainer') acc.HeaderContainer = block;
-          else if (block?.name === 'FooterContainer' || block?.name === 'Footer') acc.Footer = block;
-          else acc.blocks.push(block);
+          if (block?.name === HEADER_CONTAINER_BLOCK_NAME) {
+            acc.HeaderContainer = block;
+          } else if (block?.name === FOOTER_CONTAINER_BLOCK_NAME || block?.name === FOOTER_BLOCK_NAME) {
+            acc.Footer = block;
+          } else {
+            acc.blocks.push(block);
+          }
           return acc;
         },
         { blocks: [] } as GetBlocksResponse,
@@ -235,14 +248,42 @@ export const useBlockSnapshots = () => {
       const assembled = assembleBlocks(raw, type, identifier, true);
       restoreBlocks(assembled);
 
+      state.value.restoredSnapshotId = snapshotId;
       state.value.confirmingId = null;
-      closeDrawer();
       send({ message: getEditorUITranslation('snapshot-restore-success'), type: 'positive' });
     } catch (error) {
       send({ message: getEditorUITranslation('snapshot-restore-error'), type: 'negative' });
       console.error('Failed to restore block snapshot:', error);
     } finally {
       state.value.restoring = false;
+    }
+  };
+
+  const latestSnapshotId = computed(() => {
+    const [latestSnapshot] = [...state.value.snapshots].sort((a, b) => {
+      const timeDifference = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+
+      if (timeDifference !== 0) {
+        return timeDifference;
+      }
+
+      return b.id - a.id;
+    });
+
+    return latestSnapshot?.id ?? null;
+  });
+
+  const activeSnapshotId = computed(() => state.value.restoredSnapshotId ?? latestSnapshotId.value);
+
+  const isActiveSnapshot = (id: number) => activeSnapshotId.value === id;
+
+  const isRestoredSnapshot = (id: number) => state.value.restoredSnapshotId === id;
+
+  const markSnapshotSaved = async () => {
+    state.value.restoredSnapshotId = null;
+
+    if (state.value.drawerOpen) {
+      await fetchSnapshots();
     }
   };
 
@@ -256,9 +297,12 @@ export const useBlockSnapshots = () => {
     dateFrom: computed(() => state.value.dateFrom),
     dateTo: computed(() => state.value.dateTo),
     groupedSnapshots,
+    activeSnapshotId,
     confirming: computed(() => state.value.confirmingId != null),
     confirmingSnapshot,
     entityKey,
+    isActiveSnapshot,
+    isRestoredSnapshot,
     openDrawer,
     closeDrawer,
     toggleDrawer,
@@ -270,6 +314,7 @@ export const useBlockSnapshots = () => {
     requestRestore,
     cancelRestore,
     confirmRestore,
+    markSnapshotSaved,
     resetForCurrentEntity,
   };
 };
