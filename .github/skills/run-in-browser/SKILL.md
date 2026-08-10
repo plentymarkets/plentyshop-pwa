@@ -32,11 +32,13 @@ node .claude/skills/run-in-browser/scripts/browse.mjs <url> [options] [actions..
 ```
 
 Options (before actions):
+
 - `--viewport WxH` — e.g. `--viewport 1280x800` (default). Use a mobile size like `390x844` to check responsive behavior.
 - `--timeout ms` — default 15000.
 - `--headed` — show the actual browser window instead of headless. Only useful when a human is watching; default (headless) is right for autonomous checks.
 
 Actions (run in order given):
+
 - `--wait <selector>` — wait for a selector before continuing
 - `--click <selector>` — click it (Playwright selector syntax, e.g. `button:has-text('Accept All')`)
 - `--fill <selector> <value>` — fill an input
@@ -47,12 +49,15 @@ Actions (run in order given):
 ### Examples
 
 Check the homepage renders and capture a screenshot:
+
 ```bash
 node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/ --screenshot /tmp/check.png
 ```
+
 Then `Read` `/tmp/check.png` to see it.
 
 Dismiss the cookie banner (present on first load of any page) before interacting further:
+
 ```bash
 node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/ \
   --wait "button:has-text('Accept All')" --click "button:has-text('Accept All')" \
@@ -60,6 +65,7 @@ node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/ \
 ```
 
 Check a specific page after a code change, e.g. a product page:
+
 ```bash
 node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/some-product-slug --screenshot /tmp/check.png
 ```
@@ -73,6 +79,7 @@ The script prints, in order: the loaded URL and title, one line per action, then
 - **Failed requests**: `net::ERR_ABORTED` entries are expected and harmless if they happen right after a `--click` that triggers a full page navigation/reload (e.g. accepting the cookie banner reloads the SPA) — those are just in-flight module requests cut off by the reload, not real failures. Treat `ERR_ABORTED` as noise only when it immediately follows a navigating click; other failed-request errors (4xx/5xx, `ERR_CONNECTION_REFUSED`, etc. on API calls) are real and worth investigating.
 
 ## Notes
+
 - The matching `chromium-headless-shell` build is fetched automatically by the root `postinstall` script (`scripts/postinstall.js`) on every `npm install`, so it stays in sync whenever `playwright-core` bumps versions. If the browser is still missing (e.g. `browserType.launch: Executable doesn't exist...`), run `npm install` from the repo root rather than `npx playwright install` — `npx` resolves the latest global `playwright` CLI, which pins a different browser revision than the repo's locally installed `playwright-core` and downloads the wrong build.
 - For anything beyond simple checks (multi-step flows, auth, cart/checkout), extend `scripts/browse.mjs` with more `--eval`/`--click` steps rather than writing a one-off script; keep the CLI shape.
 - This complements, not replaces, the existing Cypress e2e suite (`npm run test:cypress-dev`) — use Cypress for regression tests that should live in the repo, use this skill for ad-hoc "does this look right / what's broken" checks during development.
