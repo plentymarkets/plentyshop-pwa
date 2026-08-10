@@ -20,6 +20,16 @@ const footerBlock = new FooterBlockObject();
 const text_en = 'Living Room';
 const productToSearch = 'headphones';
 
+const interceptFacetWithTotals = (totals: number) => {
+  cy.intercept('/plentysystems/getFacet', (req) => {
+    req.continue((res) => {
+      if (res.body?.data?.pagination) {
+        res.body.data.pagination.totals = totals;
+      }
+    });
+  }).as('getFacet');
+};
+
 describe('Shop Smoke Tests', () => {
   it('global blocks render and persist across navigation', () => {
     cy.visitAndHydrate(paths.home);
@@ -87,5 +97,21 @@ describe('Shop Smoke Tests', () => {
       .acceptTerms()
       .placeOrderButton()
       .displaySuccessPage();
+  });
+
+  it('category pagination sets correct prev/next meta links', () => {
+    cy.visitAndHydrate('/living-room?itemsPerPage=1&page=1');
+
+    productListPage.assertPaginationLinkPage('prev', null).assertPaginationLinkPage('next', 2);
+
+    interceptFacetWithTotals(3);
+    productListPage.goToNextPage();
+
+    productListPage.assertPaginationLinkPage('prev', 1).assertPaginationLinkPage('next', 3);
+
+    interceptFacetWithTotals(3);
+    productListPage.goToNextPage();
+
+    productListPage.assertPaginationLinkPage('prev', 2).assertPaginationLinkPage('next', null);
   });
 });
