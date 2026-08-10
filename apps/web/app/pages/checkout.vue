@@ -100,9 +100,7 @@ const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePayme
 emit('frontend:beginCheckout', cart.value);
 if (import.meta.client) useLogEvent().logOpeningCheckout();
 
-const showGuaranteeNotice = computed(
-  () => useFeatureFlag('shopPwaEnableEu2025-1960', false).value,
-);
+const showGuaranteeNotice = computed(() => useFeatureFlag('shopPwaEnableEu2025-1960', false).value);
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
