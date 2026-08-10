@@ -20,6 +20,7 @@
     <div v-if="preset === 'custom'" class="flex items-center gap-2">
       <input
         type="date"
+        aria-label="From date"
         class="flex-1 text-xs px-2.5 py-1.5 rounded-md border border-editor-border text-editor-text-default"
         data-testid="version-history-date-from"
         :value="dateFrom"
