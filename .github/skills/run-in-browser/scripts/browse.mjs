@@ -35,7 +35,16 @@ while (argv.length) {
   const flag = argv.shift();
   switch (flag) {
     case '--viewport': {
-      const [w, h] = argv.shift().split('x').map(Number);
+      const raw = argv.shift();
+      if (!raw) {
+        console.error('Missing value for --viewport (expected WxH, e.g. 1280x800)');
+        process.exit(1);
+      }
+      const [w, h] = raw.split('x').map(Number);
+      if (!Number.isFinite(w) || !Number.isFinite(h)) {
+        console.error(`Invalid --viewport value: ${raw} (expected WxH, e.g. 1280x800)`);
+        process.exit(1);
+      }
       viewport = { width: w, height: h };
       break;
     }
