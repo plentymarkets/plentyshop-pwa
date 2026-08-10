@@ -106,6 +106,7 @@ export * from './useCategoryData';
 export * from './useCustomAssets';
 export * from './useItemDataTable';
 export * from './useBlockClasses';
+export * from './useBlockSnapshots';
 export * from './useCallisto';
 export * from './useCancellationForm';
 export * from './useLogEvent';
