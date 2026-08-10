@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Minimal browser driver for the run-and-check skill.
+ * Minimal browser driver for the run-in-browser skill.
  * Uses the repo's own playwright-core install — no MCP server, no extra deps.
  *
  * Usage:

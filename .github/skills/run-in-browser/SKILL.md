@@ -1,5 +1,5 @@
 ---
-name: run-and-check
+name: run-in-browser
 description: Start the plentyshop-pwa dev server and drive it with a real browser (via the repo's own playwright-core dependency) to visually verify code changes, reproduce bugs, or debug console/network errors. Use whenever the user asks to "check this in the browser", "see if this works", "debug this on the running app", or wants a screenshot/console output of a page after a code change.
 ---
 
@@ -28,7 +28,7 @@ This runs `turbo run dev`, which starts the `web` app (and `server` app if prese
 Use `scripts/browse.mjs` in this skill folder. It launches Chromium headless via the repo's `playwright-core` install, navigates, runs any actions you pass, and prints console messages, page errors, and failed requests at the end.
 
 ```bash
-node .claude/skills/run-and-check/scripts/browse.mjs <url> [options] [actions...]
+node .claude/skills/run-in-browser/scripts/browse.mjs <url> [options] [actions...]
 ```
 
 Options (before actions):
@@ -48,20 +48,20 @@ Actions (run in order given):
 
 Check the homepage renders and capture a screenshot:
 ```bash
-node .claude/skills/run-and-check/scripts/browse.mjs http://localhost:3000/ --screenshot /tmp/check.png
+node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/ --screenshot /tmp/check.png
 ```
 Then `Read` `/tmp/check.png` to see it.
 
 Dismiss the cookie banner (present on first load of any page) before interacting further:
 ```bash
-node .claude/skills/run-and-check/scripts/browse.mjs http://localhost:3000/ \
+node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/ \
   --wait "button:has-text('Accept All')" --click "button:has-text('Accept All')" \
   --sleep 500 --screenshot /tmp/check.png
 ```
 
 Check a specific page after a code change, e.g. a product page:
 ```bash
-node .claude/skills/run-and-check/scripts/browse.mjs http://localhost:3000/some-product-slug --screenshot /tmp/check.png
+node .claude/skills/run-in-browser/scripts/browse.mjs http://localhost:3000/some-product-slug --screenshot /tmp/check.png
 ```
 
 ## 3. Reading the output
@@ -73,7 +73,6 @@ The script prints, in order: the loaded URL and title, one line per action, then
 - **Failed requests**: `net::ERR_ABORTED` entries are expected and harmless if they happen right after a `--click` that triggers a full page navigation/reload (e.g. accepting the cookie banner reloads the SPA) — those are just in-flight module requests cut off by the reload, not real failures. Treat `ERR_ABORTED` as noise only when it immediately follows a navigating click; other failed-request errors (4xx/5xx, `ERR_CONNECTION_REFUSED`, etc. on API calls) are real and worth investigating.
 
 ## Notes
-
-- This drives Chromium directly via `playwright-core` — the same package already used by `packages/turnstile`'s dependencies — so no `npm install` or MCP server registration is required.
+- The matching `chromium-headless-shell` build is fetched automatically by the root `postinstall` script (`scripts/postinstall.js`) on every `npm install`, so it stays in sync whenever `playwright-core` bumps versions. If the browser is still missing (e.g. `browserType.launch: Executable doesn't exist...`), run `npm install` from the repo root rather than `npx playwright install` — `npx` resolves the latest global `playwright` CLI, which pins a different browser revision than the repo's locally installed `playwright-core` and downloads the wrong build.
 - For anything beyond simple checks (multi-step flows, auth, cart/checkout), extend `scripts/browse.mjs` with more `--eval`/`--click` steps rather than writing a one-off script; keep the CLI shape.
 - This complements, not replaces, the existing Cypress e2e suite (`npm run test:cypress-dev`) — use Cypress for regression tests that should live in the repo, use this skill for ad-hoc "does this look right / what's broken" checks during development.
