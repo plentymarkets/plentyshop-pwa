@@ -101,7 +101,7 @@ emit('frontend:beginCheckout', cart.value);
 if (import.meta.client) useLogEvent().logOpeningCheckout();
 
 const showGuaranteeNotice = computed(
-  () => useFeatureFlag('shopPwaEnableEu2025-1960', false).value && !cart.value.isExportDelivery,
+  () => useFeatureFlag('shopPwaEnableEu2025-1960', false).value,
 );
 
 const checkPayPalPaymentsEligible = async () => {
