@@ -9,10 +9,10 @@
     @update:model-value="cancelRestore"
   >
     <header class="flex items-center justify-between mb-6">
-      <div class="flex items-center text-lg font-bold">{{ getEditorTranslation('title') }}</div>
-      <button class="absolute right-2 top-2 px-4 py-4" @click="cancelRestore">
+      <div id="restore-snapshot-modal" class="flex items-center text-lg font-bold">{{ getEditorTranslation('title') }}</div>
+      <button type="button" class="absolute right-2 top-2 px-4 py-4" aria-label="Close" @click="cancelRestore">
         <SfIconClose />
-      </button>
+      </button
     </header>
     <p class="mb-6 text-sm leading-relaxed text-editor-text-default">
       {{ getEditorTranslation('body-prefix') }}
