@@ -115,5 +115,4 @@ export class ProductListPageObject extends PageObject {
     cy.wait(['@getProduct', '@getReview']);
     return this;
   }
-
 }
