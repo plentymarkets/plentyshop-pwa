@@ -1,5 +1,5 @@
 <template>
-  <img :src="guaranteeNoticeSrc" alt="" class="h-auto w-full" />
+  <img :src="guaranteeNoticeSrc" :alt="t('checkout.guaranteeNotice')" class="h-auto w-full" />
 </template>
 
 <script setup lang="ts">
