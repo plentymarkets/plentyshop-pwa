@@ -36,6 +36,7 @@
           type="button"
           class="px-3 py-1.5 rounded-md border border-editor-border bg-white text-xs font-semibold text-editor-text-default hover:border-editor-button hover:text-editor-button disabled:opacity-50"
           data-testid="version-history-load-more"
+          :aria-label="getEditorTranslation('load-more')"
           :disabled="loadingMore"
           @click="loadMore"
         >
