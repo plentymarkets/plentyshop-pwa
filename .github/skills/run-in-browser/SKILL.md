@@ -28,7 +28,7 @@ This runs `turbo run dev`, which starts the `web` app (and `server` app if prese
 Use `scripts/browse.mjs` in this skill folder. It launches Chromium headless via the repo's `playwright-core` install, navigates, runs any actions you pass, and prints console messages, page errors, and failed requests at the end.
 
 ```bash
-node .claude/skills/run-in-browser/scripts/browse.mjs <url> [options] [actions...]
+node .github/skills/run-in-browser/scripts/browse.mjs <url> [options] [actions...]
 ```
 
 Options (before actions):
