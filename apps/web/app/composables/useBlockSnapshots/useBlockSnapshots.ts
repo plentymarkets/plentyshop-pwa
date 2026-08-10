@@ -205,9 +205,7 @@ export const useBlockSnapshots = () => {
   };
 
   const confirmingSnapshot = computed<BlockSnapshot | undefined>(() =>
-    state.value.confirmingId != null
-      ? state.value.snapshots.find((s) => s.id === state.value.confirmingId)
-      : undefined,
+    state.value.confirmingId != null ? state.value.snapshots.find((s) => s.id === state.value.confirmingId) : undefined,
   );
 
   const confirmRestore = async () => {
@@ -221,7 +219,7 @@ export const useBlockSnapshots = () => {
       const { identifier, type } = resolveEntity();
 
       const payload = JSON.parse(snapshot.payload) as { blocks?: Block[] } | Block[];
-      const flatBlocks: Block[] = Array.isArray(payload) ? payload : payload.blocks ?? [];
+      const flatBlocks: Block[] = Array.isArray(payload) ? payload : (payload.blocks ?? []);
 
       const raw = flatBlocks.reduce<GetBlocksResponse>(
         (acc, block) => {
