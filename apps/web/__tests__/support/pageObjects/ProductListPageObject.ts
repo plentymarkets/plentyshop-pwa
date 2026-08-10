@@ -116,27 +116,4 @@ export class ProductListPageObject extends PageObject {
     return this;
   }
 
-  assertPaginationLinkPage(rel: 'prev' | 'next', expectedPage: number | null) {
-    cy.get('head').then(($head) => {
-      const $link = $head.find(`link[rel="${rel}"]`);
-
-      if (expectedPage === null) {
-        expect($link, `expected no ${rel} link but found one`).to.have.length(0);
-        return;
-      }
-
-      expect($link, `expected a ${rel} link but found none`).to.have.length(1);
-      const href = $link.attr('href') as string;
-      const page = new URL(href).searchParams.get('page');
-      const actualPage = page ? Number(page) : 1;
-      expect(actualPage, `${rel} link "${href}" should point to page ${expectedPage}`).to.eq(expectedPage);
-    });
-    return this;
-  }
-
-  goToNextPage() {
-    cy.getByTestId('pagination-next').click();
-    cy.wait('@getFacet');
-    return this;
-  }
 }

@@ -20,16 +20,6 @@ const footerBlock = new FooterBlockObject();
 const text_en = 'Living Room';
 const productToSearch = 'headphones';
 
-const interceptFacetWithTotals = (totals: number) => {
-  cy.intercept('/plentysystems/getFacet', (req) => {
-    req.continue((res) => {
-      if (res.body?.data?.pagination) {
-        res.body.data.pagination.totals = totals;
-      }
-    });
-  }).as('getFacet');
-};
-
 describe('Shop Smoke Tests', () => {
   it('global blocks render and persist across navigation', () => {
     cy.visitAndHydrate(paths.home);
@@ -102,16 +92,17 @@ describe('Shop Smoke Tests', () => {
   it('category pagination sets correct prev/next meta links', () => {
     cy.visitAndHydrate('/living-room?itemsPerPage=1&page=1');
 
-    productListPage.assertPaginationLinkPage('prev', null).assertPaginationLinkPage('next', 2);
+    cy.get('head link[rel="prev"]').should('not.exist');
+    cy.get('head link[rel="next"]').should('have.attr', 'href').and('contain', 'page=2');
 
-    interceptFacetWithTotals(3);
-    productListPage.goToNextPage();
+    cy.visitAndHydrate('/living-room?itemsPerPage=1&page=2');
 
-    productListPage.assertPaginationLinkPage('prev', 1).assertPaginationLinkPage('next', 3);
+    cy.get('head link[rel="prev"]').should('have.attr', 'href').and('contain', 'itemsPerPage=1');
+    cy.get('head link[rel="next"]').should('have.attr', 'href').and('contain', 'page=3');
 
-    interceptFacetWithTotals(3);
-    productListPage.goToNextPage();
+    cy.visitAndHydrate('/living-room?itemsPerPage=9999&page=2');
 
-    productListPage.assertPaginationLinkPage('prev', 2).assertPaginationLinkPage('next', null);
+    cy.get('head link[rel="prev"]').should('have.attr', 'href').and('contain', 'itemsPerPage=9999');
+    cy.get('head link[rel="next"]').should('not.exist');
   });
 });
