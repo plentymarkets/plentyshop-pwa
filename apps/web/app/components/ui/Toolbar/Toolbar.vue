@@ -13,7 +13,22 @@
       </div>
       <div class="ml-auto flex space-x-2">
         <button
-          class="self-start text-[#062633] px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
+          class="self-start px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
+          :class="drawerOpen ? 'bg-editor-button/10 text-editor-button' : 'text-editor-button'"
+          data-testid="edit-history-button"
+          @click="toggleDrawer"
+        >
+          <NuxtImg
+            :src="drawerOpen ? historyActive : historyBlack"
+            width="16"
+            height="16"
+            class="mr-icon-spacing md:mr-2"
+            alt=""
+          />
+          {{ getEditorTranslation('history') }}
+        </button>
+        <button
+          class="self-start text-editor-button px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
           data-testid="edit-preview-button"
           @click="toggleEdit"
         >
@@ -40,7 +55,7 @@
           :show-arrow="true"
         >
           <button
-            class="self-start bg-[#062633] text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
+            class="self-start bg-editor-button text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
             :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
             :disabled="!isTouched || settingsLoading"
             data-testid="edit-save-button"
@@ -68,6 +83,8 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfTooltip } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
+import historyBlack from '~/assets/icons/paths/history-black.svg';
+import historyActive from '~/assets/icons/paths/history-active.svg';
 import { deepEqual } from '~/utils/jsonHelper';
 
 const previewLabel = 'Switch to Preview mode to see how your site will appear to visitors.';
@@ -83,6 +100,7 @@ const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
 const { assetsIsDirty } = useCustomAssets();
 
 const { save } = useToolbar();
+const { drawerOpen, toggleDrawer, closeDrawer: closeHistoryDrawer } = useBlockSnapshots();
 
 const isTouched = computed(
   () => assetsIsDirty.value || settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value,
@@ -91,6 +109,7 @@ const isTouched = computed(
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
   closeDrawer();
+  closeHistoryDrawer();
   if (isEditing.value) {
     isEditing.value = false;
   }
@@ -111,12 +130,14 @@ watch(
   "en": {
     "save-changes": "Save changes",
     "preview": "Preview",
-    "edit": "Edit"
+    "edit": "Edit",
+    "history": "History"
   },
   "de": {
     "save-changes": "Save changes",
     "preview": "Preview",
-    "edit": "Edit"
+    "edit": "Edit",
+    "history": "History"
   }
 }
 </i18n>
