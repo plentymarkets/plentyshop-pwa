@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center mb-2">
-    <form class="flex flex-col gap-4 p-1 rounded-md w-full @md:w-[400px]" @submit.prevent="sendMail">
+    <form class="flex flex-col gap-4 p-1 rounded-md w-full @md:w-[400px]" @submit.prevent="submitPasswordReset">
       <div class="text-lg font-medium">
         {{ t('authentication.resetPassword.heading') }}
       </div>
@@ -53,9 +53,10 @@ const emits = defineEmits(['change-view-login', 'change-view-register']);
 
 const email = ref('');
 
-const sendMail = async () => {
-  await sendEmail({ email: email.value });
-  send({ message: t('authentication.resetPassword.emailSent'), type: 'positive' });
-  emits('change-view-login');
+const submitPasswordReset = async () => {
+  if (await sendEmail({ email: email.value })) {
+    send({ message: t('authentication.resetPassword.emailSent'), type: 'positive' });
+    emits('change-view-login');
+  }
 };
 </script>
