@@ -46,6 +46,7 @@ export const useBlockSnapshots = () => {
   });
 
   const openDrawer = () => {
+    useSiteConfiguration().closeDrawer();
     state.value.drawerOpen = true;
     fetchSnapshots();
   };
