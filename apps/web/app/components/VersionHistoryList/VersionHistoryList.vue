@@ -25,7 +25,9 @@
           />
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-1.5 min-w-0">
-              <span class="min-w-0 truncate text-sm font-semibold text-editor-text-strong">{{ versionName(snapshot) }}</span>
+              <span class="min-w-0 truncate text-sm font-semibold text-editor-text-strong">{{
+                versionName(snapshot)
+              }}</span>
               <span
                 v-if="isActiveSnapshot(snapshot.id)"
                 class="inline-flex flex-none items-center whitespace-nowrap rounded-full bg-editor-button/10 px-1.5 py-px text-2xs font-bold uppercase text-editor-button"
@@ -97,7 +99,6 @@ const subtitleFor = (snapshot: BlockSnapshot): string => `${entityTypeFor(snapsh
 
 const activeLabel = (id: number): string =>
   isRestoredSnapshot(id) ? getEditorTranslation('restored') : getEditorTranslation('in-use');
-
 </script>
 
 <i18n lang="json">
