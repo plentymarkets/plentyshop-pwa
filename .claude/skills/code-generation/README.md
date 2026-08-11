@@ -105,8 +105,8 @@ useFeatureName/
 For advanced usage, call the script directly:
 
 ```bash
-.github/skills/code-generation/generate.sh component ProductCard
-.github/skills/code-generation/generate.sh composable useCart
+.claude/skills/code-generation/generate.sh component ProductCard
+.claude/skills/code-generation/generate.sh composable useCart
 ```
 
 ## Troubleshooting
