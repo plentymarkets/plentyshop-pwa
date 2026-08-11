@@ -1,6 +1,6 @@
 import type { BlockSnapshot } from '@plentymarkets/shop-api';
 
-export type SnapshotDatePreset = 'all' | '7d' | '30d' | 'custom';
+export type SnapshotDatePreset = 'all' | '1d' | '7d' | '30d' | 'custom';
 
 export interface SnapshotGroup {
   label: string;

@@ -144,6 +144,11 @@ export const useBlockSnapshots = () => {
     let from = '';
     const to = '';
 
+    if (preset === '1d') {
+      const d = new Date(now);
+      d.setDate(d.getDate() - 1);
+      from = toISODate(d);
+    }
     if (preset === '7d') {
       const d = new Date(now);
       d.setDate(d.getDate() - 7);
