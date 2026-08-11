@@ -23,7 +23,7 @@
       class="cursor-pointer"
       select-label=""
       :deselect-label="getEditorTranslation('deselect-label')"
-      :allow-empty="true"
+      :allow-empty="false"
     />
   </div>
 </template>
@@ -40,10 +40,10 @@ const options = computed(() => getSessionLifetimeOptions());
 
 const sessionLifetime = computed({
   get: () => {
-    return options.value.find((o: SettingOption) => o.value === getSetting().toString());
+    return options.value.find((o: SettingOption) => o.value === getSetting().toString()) ?? options.value[0];
   },
   set: (option) => {
-    updateSetting(option?.value ?? '');
+    updateSetting(option?.value ?? options.value[0]?.value ?? '0');
   },
 });
 </script>
