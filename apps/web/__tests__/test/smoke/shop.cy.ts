@@ -88,4 +88,21 @@ describe('Shop Smoke Tests', () => {
       .placeOrderButton()
       .displaySuccessPage();
   });
+
+  it('category pagination sets correct prev/next meta links', () => {
+    cy.visitAndHydrate('/living-room?itemsPerPage=1&page=1');
+
+    cy.get('head link[rel="prev"]').should('not.exist');
+    cy.get('head link[rel="next"]').should('have.attr', 'href').and('contain', 'page=2');
+
+    cy.visitAndHydrate('/living-room?itemsPerPage=1&page=2');
+
+    cy.get('head link[rel="prev"]').should('have.attr', 'href').and('contain', 'itemsPerPage=1');
+    cy.get('head link[rel="next"]').should('have.attr', 'href').and('contain', 'page=3');
+
+    cy.visitAndHydrate('/living-room?itemsPerPage=9999&page=2');
+
+    cy.get('head link[rel="prev"]').should('have.attr', 'href').and('contain', 'itemsPerPage=9999');
+    cy.get('head link[rel="next"]').should('not.exist');
+  });
 });
