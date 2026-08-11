@@ -336,7 +336,8 @@
     },
     "googlePay": {
       "paymentInProgress": "Payment in progress..."
-    }
+    },
+    "guaranteeNotice": "Your legal guarantee rights"
   },
   "customAssets": {
     "assetDeletedSuccessfully": "Asset deleted successfully",
