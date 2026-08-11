@@ -67,6 +67,13 @@ describe('createSiteSettingsLogic', () => {
       expect(logic.getBooleanSetting()).toBe(false);
     });
 
+    it('returns the fallback when the setting is not set', () => {
+      const state = makeState({ initialData: {} });
+      const logic = createSiteSettingsLogic('enabled', state, makeDeps());
+
+      expect(logic.getBooleanSetting(true)).toBe(true);
+    });
+
     it('returns true after updateSetting writes the string "true"', () => {
       const state = makeState({ initialData: { enabled: false } });
       const logic = createSiteSettingsLogic('enabled', state, makeDeps());

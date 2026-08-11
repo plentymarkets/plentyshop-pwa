@@ -17,7 +17,7 @@
   </Teleport>
 
   <div v-if="showGuaranteeNotice" class="w-full flex justify-center mt-4">
-    <button class="cursor-pointer text-center underline hover:no-underline" @click="isOpen = true">
+    <button type="button" class="cursor-pointer text-center underline hover:no-underline" @click="isOpen = true">
       {{ t('checkout.guaranteeNotice') }}
     </button>
   </div>
