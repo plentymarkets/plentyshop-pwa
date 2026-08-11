@@ -41,8 +41,6 @@
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { TableOfContentsItemProps } from './types';
-import { useTableOfContents } from '~/composables/useTableOfContents/useTableOfContents';
-
 const props = defineProps<TableOfContentsItemProps>();
 
 const {

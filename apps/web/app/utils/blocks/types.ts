@@ -1,7 +1,5 @@
 import type { Component } from 'vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 export type BlockLayoutResolvedRule = {
   container: boolean;
   padding: boolean;

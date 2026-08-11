@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { detectCustomCode } from '~/composables/useHtmlEditorMode/helpers/detectCustomCode';
-
 const props = defineProps<{
   content: string;
 }>();

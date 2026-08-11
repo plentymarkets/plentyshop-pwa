@@ -1,5 +1,3 @@
-import { NO_CHANGE, NEVER, ALWAYS } from '~/utils/urlTrailingSlashConstants';
-
 const normalizeSetting = (value: unknown): number => {
   const setting = Number(value);
 

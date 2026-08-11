@@ -13,8 +13,6 @@
 
 <script lang="ts" setup>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3';
-import { getI18nPlaceholderDisplayLabel, getI18nPlaceholderTitle } from '~/utils/i18nPlaceholders';
-
 const props = defineProps(nodeViewProps);
 const tokenLabel = computed(() => getI18nPlaceholderDisplayLabel(props.node.attrs.key, props.node.attrs.label));
 const tokenTitle = computed(() => getI18nPlaceholderTitle(props.node.attrs.key, props.node.attrs.label));

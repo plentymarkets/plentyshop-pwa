@@ -100,7 +100,6 @@
 <script lang="ts" setup>
 import { SfIconClose, SfIconSearch, SfInput, SfModal } from '@storefront-ui/vue';
 import type { LocalizationMessage } from '@plentymarkets/shop-core';
-import type { I18nPlaceholderToken } from '~/composables/useRichTextEditor/types';
 import type { LocalizationKeyEntry } from './types';
 
 const emit = defineEmits<{

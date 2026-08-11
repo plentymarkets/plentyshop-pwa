@@ -77,8 +77,6 @@
 import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
 import { orderGetters } from '@plentymarkets/shop-api';
-import { paths } from '~/utils/paths';
-
 const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();

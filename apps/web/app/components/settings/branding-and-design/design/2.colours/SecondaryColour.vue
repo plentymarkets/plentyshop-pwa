@@ -28,8 +28,6 @@
 </template>
 <script setup lang="ts">
 import { SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
-import { getPaletteFromColor, setColorProperties } from '~/utils/tailwindHelper';
-
 const { updateSetting, getSetting } = useSiteSettings('secondaryColor');
 
 const updateSecondaryColor = (hexColor: string) => {

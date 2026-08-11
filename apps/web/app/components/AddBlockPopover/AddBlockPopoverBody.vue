@@ -16,8 +16,6 @@
 
 <script setup lang="ts">
 import { LAYOUT_PRESETS } from './constants';
-import type { BlockListCategory } from '~/composables/useBlocksList/types';
-
 defineProps<{ isLoading: boolean }>();
 
 const { activeFilters, searchQuery } = useAddBlockPopover();

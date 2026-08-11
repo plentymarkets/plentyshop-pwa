@@ -1,9 +1,3 @@
-import type {
-  UseCustomerOrdersReturn,
-  UseCustomerOrdersState,
-  FetchCustomerOrders,
-} from '~/composables/useCustomerOrders/types';
-
 import type { ApiError, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 /**

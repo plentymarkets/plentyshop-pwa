@@ -105,8 +105,6 @@ import { toTypedSchema } from '@vee-validate/yup';
 import type { ReviewFormProps } from './types';
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
-import { defaults } from '~/composables';
-
 const { reviewItem = null } = defineProps<ReviewFormProps>();
 const { currentProduct } = useProducts();
 const { createProductReview, setProductReview, closeReviewModal, modalType } = useProductReviews(

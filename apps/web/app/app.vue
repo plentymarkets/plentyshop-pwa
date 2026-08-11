@@ -83,7 +83,6 @@
 
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core';
-import { isCssUrl, isJsUrl } from '~/utils/assets';
 import { categoryGetters } from '@plentymarkets/shop-api';
 
 const bodyClass = ref('');

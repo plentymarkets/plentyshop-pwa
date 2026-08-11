@@ -3,9 +3,6 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
-import { isFooterContainerBlock } from '~/utils/blockTemplates/footer/factory';
-
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
   position: 'top',
