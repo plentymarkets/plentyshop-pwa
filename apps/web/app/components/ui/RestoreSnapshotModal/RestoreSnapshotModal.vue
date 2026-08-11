@@ -46,7 +46,6 @@
 
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-import { getSnapshotVersionName } from '~/utils/snapshotLabelHelper';
 
 const { confirming, confirmingSnapshot, restoring, cancelRestore, confirmRestore } = useBlockSnapshots();
 

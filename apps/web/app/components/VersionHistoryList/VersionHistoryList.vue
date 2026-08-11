@@ -71,7 +71,6 @@
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { BlockSnapshot } from '@plentymarkets/shop-api';
-import { getSnapshotVersionName } from '~/utils/snapshotLabelHelper';
 
 const ENTITY_TYPE_LABEL: Record<string, string> = {
   immutable: getEditorTranslation('entity-immutable'),

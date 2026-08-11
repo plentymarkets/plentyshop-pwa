@@ -14,13 +14,13 @@
       <div class="ml-auto flex space-x-2">
         <button
           class="self-start w-8 h-8 rounded-md font-inter font-medium text-sm leading-5 flex items-center justify-center xl:w-auto xl:h-auto xl:px-4 xl:py-2 xl:text-base xl:leading-6"
-          :class="drawerOpen ? 'bg-editor-button/10 text-editor-button' : 'text-editor-button'"
+          :class="historyDrawerOpen ? 'bg-editor-button/10 text-editor-button' : 'text-editor-button'"
           data-testid="edit-history-button"
           :aria-label="getEditorTranslation('history')"
-          @click="toggleDrawer"
+          @click="toggleHistoryDrawer"
         >
           <NuxtImg
-            :src="drawerOpen ? historyActive : historyBlack"
+            :src="historyDrawerOpen ? historyActive : historyBlack"
             width="16"
             height="16"
             class="block xl:mr-2"
@@ -102,7 +102,11 @@ const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
 const { assetsIsDirty } = useCustomAssets();
 
 const { save } = useToolbar();
-const { drawerOpen, toggleDrawer, closeDrawer: closeHistoryDrawer } = useBlockSnapshots();
+const {
+  drawerOpen: historyDrawerOpen,
+  toggleDrawer: toggleHistoryDrawer,
+  closeDrawer: closeHistoryDrawer,
+} = useBlockSnapshots();
 
 const isTouched = computed(
   () => assetsIsDirty.value || settingsIsDirty.value || isEditingEnabled.value || localizationHasChanges.value,
