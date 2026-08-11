@@ -1,6 +1,6 @@
-# AGENTS.md
+# CLAUDE.md
 
-This file provides guidance for LLM coding tools when working with this repository. Run `npm run llm:link all` to link it to provider-specific files (e.g. `CLAUDE.md`, `GEMINI.md`).
+This file provides guidance for LLM coding tools when working with this repository. Run `npm run llm:link all` to link it to provider-specific files (e.g. `AGENTS.md`, `GEMINI.md`).
 
 ## Overview
 

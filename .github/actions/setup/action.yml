@@ -12,3 +12,6 @@ runs:
     - name: Install dependencies
       run: npm ci
       shell: bash
+    - name: Sym link .claude to .github
+      run: npm run llm:link github
+      shell: bash
