@@ -32,7 +32,6 @@
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
-import { getSessionLifetimeOptions } from '~/utils/editorSettings';
 
 const { updateSetting, getSetting } = useSiteSettings('sessionLifetime');
 
@@ -43,7 +42,7 @@ const sessionLifetime = computed({
     return options.value.find((o: SettingOption) => o.value === getSetting().toString()) ?? options.value[0];
   },
   set: (option) => {
-    updateSetting(option?.value ?? options.value[0]?.value ?? '0');
+    updateSetting(option?.value ?? options.value[0]?.value ?? DEFAULT_SESSION_LIFETIME_VALUE);
   },
 });
 </script>
