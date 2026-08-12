@@ -1,7 +1,12 @@
 /* eslint-disable max-nested-callbacks */
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { useBlockSnapshots } from '../useBlockSnapshots';
 import type { Block, BlockSnapshot } from '@plentymarkets/shop-api';
+
+vi.mock('~/utils/blocks/block-helpers', () => ({
+  assembleBlocks: vi.fn((raw) => raw),
+}));
+
+import { useBlockSnapshots } from '../useBlockSnapshots';
 
 const mockRoute = { meta: { identifier: 'index', type: 'immutable' } };
 
@@ -37,10 +42,6 @@ const { useState } = vi.hoisted(() => ({
 
 const { getEditorUITranslation } = vi.hoisted(() => ({
   getEditorUITranslation: vi.fn((key: string) => key),
-}));
-
-vi.mock('~/utils/blocks/block-helpers', () => ({
-  assembleBlocks: vi.fn((raw) => raw),
 }));
 
 mockNuxtImport('useRoute', () => useRoute);
