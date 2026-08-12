@@ -19,13 +19,7 @@
           :aria-label="getEditorTranslation('history')"
           @click="toggleHistoryDrawer"
         >
-          <NuxtImg
-            :src="historyDrawerOpen ? historyActive : historyBlack"
-            width="16"
-            height="16"
-            class="block xl:mr-2"
-            alt=""
-          />
+          <NuxtImg :src="historyBlack" width="16" height="16" class="block xl:mr-2" alt="" />
           <span class="hidden xl:inline">{{ getEditorTranslation('history') }}</span>
         </button>
         <button
@@ -86,7 +80,6 @@ import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfTooltip } from '@stor
 import { editPath } from '~/assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 import historyBlack from '~/assets/icons/paths/history-black.svg';
-import historyActive from '~/assets/icons/paths/history-active.svg';
 
 const previewLabel = 'Switch to Preview mode to see how your site will appear to visitors.';
 const editLabel = 'Switch to Edit mode to modify your page content and layout.';

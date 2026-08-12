@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 overflow-y-auto py-2" data-testid="version-history-list">
+  <div class="flex-1 overflow-y-auto pb-2" data-testid="version-history-list">
     <div v-if="loading" class="py-16 flex justify-center">
       <SfLoaderCircular class="animate-spin w-6 h-6 text-editor-button" />
     </div>
