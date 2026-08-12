@@ -24,6 +24,7 @@ export type PriceCardFieldKey =
   | 'addToWishlist'
   | 'quantityAndAddToCart'
   | 'itemText'
+  | 'guaranteeLabel'
   | 'technicalData';
 
 export type WishlistSize = 'small' | 'large';

@@ -118,6 +118,7 @@
           @change-quantity="debounceQuantity"
         />
       </div>
+      <GuaranteeBlock :product="cartItem.variation" class="mt-4" />
     </div>
 
     <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
