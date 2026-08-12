@@ -49,6 +49,10 @@ export class BlockSnapshotsObject extends PageObject {
     return cy.getByTestId('version-history-date-to');
   }
 
+  get customRangeToggle() {
+    return cy.getByTestId('version-history-custom-range-toggle');
+  }
+
   get restoreButtons() {
     return cy.get('[data-testid^="version-history-restore-"]');
   }
@@ -77,7 +81,7 @@ export class BlockSnapshotsObject extends PageObject {
 
   closeSnapshotDrawer() {
     this.snapshotCloseButton.click();
-    this.snapshotDrawer.should('not.be.visible');
+    this.snapshotDrawer.should('not.exist');
     return this;
   }
 
@@ -87,7 +91,7 @@ export class BlockSnapshotsObject extends PageObject {
   }
 
   checkDrawerNotVisible() {
-    this.snapshotDrawer.should('not.be.visible');
+    this.snapshotDrawer.should('not.exist');
     return this;
   }
 
@@ -137,6 +141,7 @@ export class BlockSnapshotsObject extends PageObject {
   }
 
   setDateFrom(date: string) {
+    this.customRangeToggle.click();
     this.dateFromInput.type(date);
     return this;
   }
@@ -157,7 +162,7 @@ export class BlockSnapshotsObject extends PageObject {
   }
 
   checkRestoreConfirmationNotVisible() {
-    this.confirmRestoreDialog.should('not.be.visible');
+    this.cancelRestoreButton.should('not.exist');
     return this;
   }
 
@@ -187,6 +192,6 @@ export class BlockSnapshotsObject extends PageObject {
   }
 
   getRestoreSuccessNotification() {
-    return cy.get('[role="alert"]:contains("restored")');
+    return cy.getByTestId('notifications').contains('Version restored. Save changes to keep it.');
   }
 }

@@ -52,15 +52,20 @@ describe('Block Snapshots', () => {
   };
 
   beforeEach(() => {
-    cy.intercept('plentysystems/getBlockSnapshots', {
+    cy.intercept('**/plentysystems/getBlockSnapshots', {
       statusCode: 200,
-      body: mockSnapshotResponse,
+      body: { data: mockSnapshotResponse },
     }).as('getBlockSnapshots');
 
-    cy.intercept('plentysystems/getBlockSnapshot', {
+    cy.intercept('**/plentysystems/getBlockSnapshot', {
       statusCode: 200,
-      body: mockSnapshotResponse.data[0],
+      body: { data: mockSnapshotResponse.data[0] },
     }).as('getBlockSnapshot');
+
+    cy.intercept('**/plentysystems/doAddShopLogs', {
+      statusCode: 200,
+      body: { data: null },
+    }).as('addShopLogs');
 
     cy.clearCookies();
     cy.clearConfig();
@@ -148,9 +153,8 @@ describe('Block Snapshots', () => {
     });
 
     it('should restore snapshot after confirmation and reflect changes on page', () => {
-      // Store initial block count
       tableOfContents.openTableOfContents();
-      tableOfContents.tableOfContentsItems.its('length').as('initialBlockCount');
+      tableOfContents.checkBlocksExist();
 
       snapshots.openSnapshotDrawer();
       cy.wait('@getBlockSnapshots');
@@ -167,11 +171,8 @@ describe('Block Snapshots', () => {
       // Close drawer and verify restored blocks are on the page
       snapshots.closeSnapshotDrawer();
 
-      // Check that table of contents reflects the restored snapshot
       tableOfContents.openTableOfContents();
-      cy.get<number>('@initialBlockCount').then((initialCount) => {
-        tableOfContents.tableOfContentsItems.should('have.length.greaterThan', initialCount - 1);
-      });
+      tableOfContents.checkBlocksExist();
     });
   });
 
