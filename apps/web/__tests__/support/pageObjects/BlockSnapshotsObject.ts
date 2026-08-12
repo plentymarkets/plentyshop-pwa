@@ -2,67 +2,67 @@ import { PageObject } from './PageObject';
 
 export class BlockSnapshotsObject extends PageObject {
   get snapshotDrawerButton() {
-    return cy.getByTestId('snapshot-drawer-button');
+    return cy.getByTestId('edit-history-button');
   }
 
   get snapshotDrawer() {
-    return cy.getByTestId('snapshot-drawer');
+    return cy.getByTestId('version-history-drawer');
   }
 
   get snapshotCloseButton() {
-    return cy.getByTestId('snapshot-drawer-close');
+    return cy.getByTestId('version-history-close');
   }
 
   get snapshotItems() {
-    return cy.getByTestId('snapshot-item');
+    return cy.get('[data-testid^="version-history-item-"]');
   }
 
   get snapshotGroups() {
-    return cy.getByTestId('snapshot-group');
+    return cy.getByTestId('version-history-list').find('div[class*="sticky"]');
   }
 
   get snapshotLoadingSpinner() {
-    return cy.getByTestId('snapshot-loading');
+    return cy.getByTestId('version-history-list').find('.animate-spin');
   }
 
   get presetAllButton() {
-    return cy.getByTestId('snapshot-preset-all');
+    return cy.getByTestId('version-history-preset-all');
   }
 
   get preset1dButton() {
-    return cy.getByTestId('snapshot-preset-1d');
+    return cy.getByTestId('version-history-preset-1d');
   }
 
   get preset7dButton() {
-    return cy.getByTestId('snapshot-preset-7d');
+    return cy.getByTestId('version-history-preset-7d');
   }
 
   get preset30dButton() {
-    return cy.getByTestId('snapshot-preset-30d');
+    return cy.getByTestId('version-history-preset-30d');
   }
 
   get dateFromInput() {
-    return cy.getByTestId('snapshot-date-from');
+    return cy.getByTestId('version-history-date-from');
   }
 
   get dateToInput() {
-    return cy.getByTestId('snapshot-date-to');
+    return cy.getByTestId('version-history-date-to');
   }
 
   get restoreButtons() {
-    return cy.getByTestId('snapshot-restore-button');
+    return cy.get('[data-testid^="version-history-restore-"]');
   }
 
   get confirmRestoreButton() {
-    return cy.getByTestId('snapshot-confirm-restore');
+    return cy.getByTestId('restore-snapshot-confirm-button');
   }
 
   get cancelRestoreButton() {
-    return cy.getByTestId('snapshot-cancel-restore');
+    return cy.getByTestId('restore-snapshot-cancel-button');
   }
 
   get confirmRestoreDialog() {
-    return cy.getByTestId('snapshot-confirm-dialog');
+    return cy.getByTestId('restore-snapshot-cancel-button').closest('[role="dialog"]');
   }
 
   getSnapshotItemByIndex(index: number) {
@@ -172,17 +172,21 @@ export class BlockSnapshotsObject extends PageObject {
   }
 
   checkSnapshotRestored() {
-    cy.getByTestId('restore-success-notification').should('be.visible');
+    this.getRestoreSuccessNotification().should('be.visible');
     return this;
   }
 
   checkFirstSnapshotActive() {
-    this.snapshotItems.first().should('have.class', 'snapshot-active');
+    this.snapshotItems.first().should('have.class', 'bg-editor-button/5');
     return this;
   }
 
   checkSnapshotItemText(index: number, text: string) {
     this.snapshotItems.eq(index).should('contain.text', text);
     return this;
+  }
+
+  getRestoreSuccessNotification() {
+    return cy.get('[role="alert"]:contains("restored")');
   }
 }
