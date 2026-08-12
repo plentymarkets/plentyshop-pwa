@@ -41,7 +41,6 @@
 
 <script setup lang="ts">
 import { SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson, SfIconFavorite } from '@storefront-ui/vue';
-import { useCustomer } from '~/composables/useCustomer';
 import type { ActionType } from '~/components/blocks/UtilityBar/types';
 import type { NavbarItem } from './types';
 

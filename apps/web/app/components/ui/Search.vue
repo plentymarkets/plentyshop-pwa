@@ -117,8 +117,6 @@
 <script setup lang="ts">
 import { SfIconCancel, SfIconChevronRight, SfIconSearch, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { onClickOutside, unrefElement } from '@vueuse/core';
-import { debounce } from '~/utils/debounce';
-
 const props = defineProps<{
   close?: () => boolean;
 }>();

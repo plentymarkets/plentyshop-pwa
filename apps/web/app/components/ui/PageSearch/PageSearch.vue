@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts" setup>
-import { flattenPages } from '~/utils/pages';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 

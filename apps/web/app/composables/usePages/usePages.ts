@@ -1,5 +1,3 @@
-import type { CategoryTreeItem, Page } from '~/composables/usePages/types';
-
 export const usePages = async () => {
   const { locale } = useI18n();
   const { data } = useCategoryTree();

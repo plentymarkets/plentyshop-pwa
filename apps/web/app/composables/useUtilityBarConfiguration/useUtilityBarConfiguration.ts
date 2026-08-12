@@ -1,5 +1,4 @@
 import type { UtilityBarProps } from '~/components/blocks/UtilityBar/types';
-import { deepEqual } from '~/utils/jsonHelper';
 import { collectUtilityBarBlocks } from './helpers/collect-utility-bar-blocks';
 
 /**

@@ -195,7 +195,6 @@
 <script lang="ts" setup>
 import { offerGetters } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
-import { paths } from '~/utils/paths';
 import type { OfferPageContentProps } from './types';
 
 const { loading: offerLoading } = useOffer();

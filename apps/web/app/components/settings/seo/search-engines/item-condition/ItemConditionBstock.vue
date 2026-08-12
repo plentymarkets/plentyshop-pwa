@@ -19,8 +19,6 @@
 </template>
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
-import { conditionOptions } from '~/utils/editorSettings';
-
 const { updateSetting, getSetting } = useSiteSettings('itemConditionBStock');
 
 const condition = computed({

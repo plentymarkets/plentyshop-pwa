@@ -1,7 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const TABS_IMAGE = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
 const createTabTextCard = (htmlDescription: string): Block => ({

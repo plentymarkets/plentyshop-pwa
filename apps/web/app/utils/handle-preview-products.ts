@@ -3,8 +3,6 @@ import { fakeFacetCallDE } from './facets/fakeFacetCallDE';
 import { fakeProductEN } from './facets/fakeProductEN';
 import { fakeProductDE } from './facets/fakeProductDE';
 
-import type { UseProductsState } from '~/composables/useProducts/types';
-
 export const handlePreviewProducts = (state: Ref<UseProductsState>, lang: string) => {
   const { isInEditor } = useEditorState();
   if (!isInEditor.value || state.value.data.products.length > 0) return;

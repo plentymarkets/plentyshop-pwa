@@ -1,5 +1,4 @@
 import type { SlideBlock } from '~/components/blocks/structure/Carousel/types';
-import type { UseCarouselState } from '~/composables/useCarousel/types';
 export const useCarousel: UseCarouselReturn = () => {
   const state = useState<UseCarouselState>('useCarousel', () => ({
     data: [],

@@ -85,7 +85,6 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import { paths } from '~/utils/paths';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 

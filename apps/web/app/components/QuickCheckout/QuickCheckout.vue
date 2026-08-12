@@ -127,8 +127,6 @@ import type { QuickCheckoutProps } from './types';
 import type { Product } from '@plentymarkets/shop-api';
 import { cartGetters, productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
-import { paths } from '~/utils/paths';
-
 const props = defineProps<QuickCheckoutProps>();
 
 const { format } = usePriceFormatter();

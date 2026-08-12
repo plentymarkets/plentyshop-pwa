@@ -86,7 +86,6 @@
 
 <script setup lang="ts">
 import { SfIconDelete, SfIconVisibility, SfIconVisibilityOff, SfTooltip } from '@storefront-ui/vue';
-import { getBlockIconSvg } from '~/utils/blocks/block-icons';
 import defaultBlockIcon from '~/assets/icons/paths/block-default-icon.svg';
 import dragIcon from '~/assets/icons/paths/drag.svg';
 import type { TableOfContentsItemContentProps } from './types';

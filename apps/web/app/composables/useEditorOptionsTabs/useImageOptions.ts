@@ -1,5 +1,4 @@
-import type { EditorTarget, FillMode } from '~/composables/useEditorOptionsTabs/types';
-import type { TranslateFn } from '~/composables/useItemDataTable/types';
+import type { FillMode } from '~/composables/useEditorOptionsTabs/types';
 
 export const useImageOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const fillModeOptions = computed(() => [

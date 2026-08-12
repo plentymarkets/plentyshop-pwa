@@ -1,6 +1,4 @@
 import type { MultiGridColumnConfig } from './types';
-import type { PreviewDevice } from '~/composables/useEditorDevice/types';
-
 const resolveDevice = (isInEditorClient: boolean, device: PreviewDevice, breakpoint: string): PreviewDevice => {
   if (isInEditorClient) return device;
   if (breakpoint === 'xs' || breakpoint === 'sm') return 'mobile';

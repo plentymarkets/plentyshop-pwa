@@ -230,8 +230,6 @@ import { productGetters, reviewGetters, productBundleGetters } from '@plentymark
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PriceCardPadding, PriceCardTextBlockItem, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '#paypal/types';
-import { paths } from '~/utils/paths';
-
 const isTextBlock = (item: unknown): item is PriceCardTextBlockItem =>
   typeof item === 'object' && item !== null && (item as PriceCardTextBlockItem).type === 'textBlock';
 

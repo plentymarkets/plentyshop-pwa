@@ -1,5 +1,3 @@
-import type { UseLazyProductImageOptions } from '~/composables/useLazyProductImage/types';
-
 export const useLazyProductImage = (options: UseLazyProductImageOptions) => {
   const imageContainerRef = ref<HTMLElement | null>(null);
   const shouldLoadMainImage = ref(options.priority.value);
