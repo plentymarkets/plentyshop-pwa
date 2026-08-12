@@ -255,6 +255,7 @@ export const useBlockSnapshots = () => {
 
       state.value.restoredSnapshotId = snapshotId;
       state.value.confirmingId = null;
+      useLogEvent().logSnapshotRestore();
       send({ message: getEditorUITranslation('snapshot-restore-success'), type: 'positive' });
     } catch (error) {
       send({ message: getEditorUITranslation('snapshot-restore-error'), type: 'negative' });
