@@ -178,11 +178,14 @@ describe('useBlockSnapshots', () => {
 
     it('sends a notification and logs on error', async () => {
       mockGetBlockSnapshots.mockRejectedValueOnce(new Error('boom'));
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       const { fetchSnapshots } = useBlockSnapshots();
 
       await fetchSnapshots();
 
       expect(mockSend).toHaveBeenCalledWith(expect.objectContaining({ type: 'negative' }));
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      consoleErrorSpy.mockRestore();
     });
   });
 
@@ -240,9 +243,12 @@ describe('useBlockSnapshots', () => {
       await fetchSnapshots();
 
       mockGetBlockSnapshots.mockRejectedValueOnce(new Error('boom'));
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       await loadMore();
 
       expect(mockSend).toHaveBeenCalledWith(expect.objectContaining({ type: 'negative' }));
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      consoleErrorSpy.mockRestore();
     });
   });
 
@@ -416,6 +422,7 @@ describe('useBlockSnapshots', () => {
 
     it('sends a negative notification when restore fails', async () => {
       mockGetBlockSnapshot.mockRejectedValueOnce(new Error('boom'));
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const { fetchSnapshots, requestRestore, confirmRestore } = useBlockSnapshots();
       await fetchSnapshots();
@@ -425,6 +432,8 @@ describe('useBlockSnapshots', () => {
 
       expect(mockSend).toHaveBeenCalledWith(expect.objectContaining({ type: 'negative' }));
       expect(mockRestoreBlocks).not.toHaveBeenCalled();
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      consoleErrorSpy.mockRestore();
     });
   });
 });
