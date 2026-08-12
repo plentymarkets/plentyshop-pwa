@@ -39,34 +39,8 @@ const { getEditorUITranslation } = vi.hoisted(() => ({
   getEditorUITranslation: vi.fn((key: string) => key),
 }));
 
-vi.mock('~/utils/blockTemplates/header', () => ({
-  HEADER_CONTAINER_BLOCK_NAME: 'HeaderContainer',
-  createDefaultHeaderContainerBlock: vi.fn(() => buildBlock('HeaderContainer', 'header')),
-}));
-
-vi.mock('~/utils/blockTemplates/footer', () => ({
-  FOOTER_CONTAINER_BLOCK_NAME: 'FooterContainer',
-  createFooterContainer: vi.fn(() => buildBlock('FooterContainer', 'footer')),
-  isFooterContainerBlock: vi.fn(() => false),
-  isHeaderContainerBlock: vi.fn(() => false),
-  isLegacyFooterBlock: vi.fn(() => false),
-  migrateLegacyFooterToContainer: vi.fn((b) => b),
-}));
-
-vi.mock('~/utils/blockTemplates/homepage/factory', () => ({
-  createHomepage: vi.fn(() => []),
-}));
-
-vi.mock('~/utils/blockTemplates/category/factory', () => ({
-  createCategory: vi.fn(() => []),
-}));
-
-vi.mock('~/utils/blockTemplates/product/factory', () => ({
-  createProduct: vi.fn(() => []),
-}));
-
-vi.mock('~/utils/migrate-blocks', () => ({
-  migrateAllBlocks: vi.fn(),
+vi.mock('~/utils/blocks/block-helpers', () => ({
+  assembleBlocks: vi.fn((raw) => raw),
 }));
 
 mockNuxtImport('useRoute', () => useRoute);
