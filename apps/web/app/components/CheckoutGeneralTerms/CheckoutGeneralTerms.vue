@@ -50,8 +50,6 @@
 
 <script setup lang="ts">
 import { SfCheckbox } from '@storefront-ui/vue';
-import { paths } from '~/utils/paths';
-
 const localePath = useLocalePath();
 
 const { checkboxValue, setCheckboxValue, showErrors } = useAgreementCheckbox('checkoutGeneralTerms');

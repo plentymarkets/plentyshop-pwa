@@ -87,7 +87,6 @@ import { editPath } from '~/assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 import historyBlack from '~/assets/icons/paths/history-black.svg';
 import historyActive from '~/assets/icons/paths/history-active.svg';
-import { deepEqual } from '~/utils/jsonHelper';
 
 const previewLabel = 'Switch to Preview mode to see how your site will appear to visitors.';
 const editLabel = 'Switch to Edit mode to modify your page content and layout.';

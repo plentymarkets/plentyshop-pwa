@@ -51,8 +51,6 @@
 
 <script setup lang="ts">
 import { SfIconAdd, SfIconWarning, SfTooltip } from '@storefront-ui/vue';
-import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
-
 const { blocksLists, pageHasAccessToCategory, getBlocksLists } = useBlocksList();
 
 await getBlocksLists();

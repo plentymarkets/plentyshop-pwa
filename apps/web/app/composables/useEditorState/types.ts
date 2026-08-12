@@ -1,5 +1,3 @@
-import type { PreviewDevice } from '~/composables/useEditorDevice';
-
 /**
  * @description Return type for useEditorState composable
  * Provides semantic state checks and feature flags for editor functionality

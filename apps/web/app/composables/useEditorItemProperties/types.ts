@@ -1,5 +1,4 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
-import type { PropertyPlaceholderToken } from '~/composables/useRichTextEditor/types';
 export type { ItemPropertyGroup, ItemProperty, ItemPropertyLocaleMap } from '@plentymarkets/shop-api';
 
 export interface PropSelection {

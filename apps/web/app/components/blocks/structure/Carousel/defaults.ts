@@ -1,6 +1,4 @@
 /* eslint-disable max-lines */
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   'image-banner': {
     category: 'image-banner',

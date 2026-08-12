@@ -116,8 +116,6 @@ import {
   SfIconArrowUpward,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
-import type { Filters } from '~/composables';
-
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 
 const open = ref(true);

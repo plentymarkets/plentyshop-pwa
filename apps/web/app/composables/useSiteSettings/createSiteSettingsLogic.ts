@@ -32,7 +32,10 @@ export const createSiteSettingsLogic = (
     return value === undefined || value === null ? '' : String(value);
   };
 
-  const getBooleanSetting: GetBooleanSetting = () => getSetting() === 'true';
+  const getBooleanSetting: GetBooleanSetting = (fallback = false) => {
+    const value = getSetting();
+    return value === '' ? fallback : value === 'true';
+  };
 
   const getNumberSetting: GetNumberSetting = (fallback = 0) => {
     const value = getSetting();

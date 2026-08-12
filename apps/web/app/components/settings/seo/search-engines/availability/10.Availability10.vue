@@ -19,8 +19,6 @@
 </template>
 <script setup lang="ts">
 import Multiselect from 'vue-multiselect';
-import { getSeoAvailabilityOptions } from '~/utils/editorSettings';
-
 const { updateSetting, getSetting } = useSiteSettings('seoAvailability10');
 
 const availabilityOptions = computed(() => getSeoAvailabilityOptions());

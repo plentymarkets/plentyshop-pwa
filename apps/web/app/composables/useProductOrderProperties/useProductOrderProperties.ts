@@ -1,9 +1,3 @@
-import type {
-  GetPropertiesPrice,
-  SetProperties,
-  UseProductOrderPropertiesReturn,
-  UseProductOrderPropertiesState,
-} from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { ProductProperty, BasketItemOrderParamsProperty, Product, ApiError } from '@plentymarkets/shop-api';
 

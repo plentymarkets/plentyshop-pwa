@@ -4,14 +4,7 @@ import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { ItemGridContent, ItemGridFieldsVisibility } from '~/components/blocks/ItemGrid/types';
 import type { ImageContent } from '~/components/blocks/Image/types';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
-import { migrateImageContent } from '~/utils/migrate-image-content';
-import { migrateTextCardContent } from '~/utils/migrate-text-editor';
-import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
-import type { OldContent } from '~/utils/migrate-recommended-content/types';
 import type { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
-import { HEADER_BLOCK_NAME } from '~/utils/blocks/block-names';
-
 const TEXT_CONTENT_BLOCKS = new Set(['TextCard', 'Banner', 'ProductRecommendedProducts']);
 
 const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NAME;

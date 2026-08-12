@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { paths } from '~/utils/paths';
 const { headerContainer } = useBlocks();
 const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 

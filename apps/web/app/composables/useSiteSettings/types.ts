@@ -26,7 +26,7 @@ export interface UseSiteSettingsState {
 export type UpdateSetting = (value: string) => void;
 export type SetSettingsInitialData = (settings: Setting[]) => void;
 export type GetSetting = () => string;
-export type GetBooleanSetting = () => boolean;
+export type GetBooleanSetting = (fallback?: boolean) => boolean;
 export type GetNumberSetting = (fallback?: number) => number;
 export type GetJsonSetting = () => string[];
 export type IsDirty = ComputedRef<boolean>;

@@ -3,8 +3,6 @@ import type { NodeViewRenderer } from '@tiptap/core';
 import { VueNodeViewRenderer } from '@tiptap/vue-3';
 import I18nPlaceholderView from '~/components/editor/RichTextEditor/I18nPlaceholderView.vue';
 import type { I18nPlaceholderOptions } from '../types';
-import { getI18nPlaceholderDisplayLabel, getI18nPlaceholderTitle } from '~/utils/i18nPlaceholders';
-
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     i18nPlaceholder: {

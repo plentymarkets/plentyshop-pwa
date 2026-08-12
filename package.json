@@ -43,10 +43,10 @@
     "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert",
     "worktree:spawn": "./scripts/spawn-worktree.sh",
-    "generate:component": "./.github/skills/code-generation/generate.sh component",
-    "generate:composable": "./.github/skills/code-generation/generate.sh composable",
-    "generate:block": "./.github/skills/code-generation/generate.sh component --with-form",
-    "generate:settings": "./.github/skills/code-generation/generate.sh component --with-view --with-toolbar",
+    "generate:component": "./.claude/skills/code-generation/generate.sh component",
+    "generate:composable": "./.claude/skills/code-generation/generate.sh composable",
+    "generate:block": "./.claude/skills/code-generation/generate.sh component --with-form",
+    "generate:settings": "./.claude/skills/code-generation/generate.sh component --with-view --with-toolbar",
     "llm:link": "node ./scripts/llm-link.js"
   },
   "dependencies": {

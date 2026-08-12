@@ -1,6 +1,6 @@
-# AGENTS.md
+# CLAUDE.md
 
-This file provides guidance for LLM coding tools when working with this repository. Run `npm run llm:link all` to link it to provider-specific files (e.g. `CLAUDE.md`, `GEMINI.md`).
+This file provides guidance for LLM coding tools when working with this repository. Run `npm run llm:link all` to link it to provider-specific files (e.g. `AGENTS.md`, `GEMINI.md`).
 
 ## Overview
 
@@ -154,6 +154,7 @@ See `docs/_styleguide/design.guide.md` for additional guidance.
   - A module tightly coupled to one composable lives in that composable's directory; a generic, reusable module lives in `utils/`.
 - **Prefer `@storefront-ui/vue` components** for design consistency (except `SfButton`/`SfLink` — see Enforced constraints). Create additional base components in `components/ui` (shop) or `components/editor` (cms) to promote reuse.
 - **Lean on Nuxt auto-imports.** In templates, prefix component names with their folder (e.g. `UiButton` for `components/ui/Button.vue`). Use `defineAsyncComponent` for heavy components that aren't immediately needed.
+- **Everything exported from `composables/` and `utils/` is auto-imported** (values and types) — don't add explicit `import ... from '~/composables/...'` / `'~/utils/...'`. Verify with `apps/web/.nuxt/types/imports.d.ts` (regenerate via `nuxi prepare` if stale). Exception: keep the import if the name collides with a TS global (e.g. `FillMode` vs `lib.dom.d.ts`) — check before removing.
 
 ### Error Handling
 

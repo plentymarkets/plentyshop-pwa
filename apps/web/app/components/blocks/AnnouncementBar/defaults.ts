@@ -1,8 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const ANNOUNCEMENT_BAR_IMAGE = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement-bar.svg';
 
 const createAnnouncementBar = (text: string): AnnouncementBarProps => ({
