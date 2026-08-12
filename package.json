@@ -50,8 +50,8 @@
     "llm:link": "node ./scripts/llm-link.js"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.178.1",
-    "@plentymarkets/shop-core": "^1.32.0",
+    "@plentymarkets/shop-api": "^0.179.0",
+    "@plentymarkets/shop-core": "^1.33.0",
     "@plentymarkets/shop-module-gtag": "^1.3.0",
     "@plentymarkets/shop-module-mollie": "^1.7.0",
     "@tanstack/vue-virtual": "^3.13.24",
