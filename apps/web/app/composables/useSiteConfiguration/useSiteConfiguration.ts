@@ -1,11 +1,3 @@
-import type {
-  UseSiteConfigurationReturn,
-  UseSiteConfigurationState,
-  LoadGoogleFont,
-  DrawerView,
-  SettingsType,
-  SetActiveSetting,
-} from '~/composables/useSiteConfiguration/types';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**

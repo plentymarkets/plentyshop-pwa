@@ -67,8 +67,6 @@
 
 <script lang="ts" setup>
 import magicWand from '~/assets/icons/paths/magic-wand.svg';
-import type { AiCoreFunctionality } from '~/composables/useAiTextGeneration/types';
-
 const props = defineProps<{
   storageKey?: string;
   coreFunctionality?: AiCoreFunctionality;

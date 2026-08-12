@@ -1,6 +1,4 @@
 import type { Editor } from '@tiptap/core';
-import type { RteBlockType, HeadingLevel } from '~/composables/useRichTextEditor/types';
-
 export const setupRichTextEditorBlocks = (
   editor: Ref<Editor | null> | null,
   focusChain: () => ReturnType<Editor['chain']> | undefined,

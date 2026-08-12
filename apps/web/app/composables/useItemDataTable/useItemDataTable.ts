@@ -11,8 +11,6 @@ import {
   formatVariationProperties,
   getAgeRatingDescriptor,
 } from './helpers/ItemDataHelpers';
-import type { TranslateFn } from '~/composables/useItemDataTable/types';
-
 export function useItemDataTable(productRef: Ref<Product | null>, options?: { t?: TranslateFn }) {
   const { shouldHideZeroValues } = useEditorState();
 

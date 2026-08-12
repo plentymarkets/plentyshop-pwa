@@ -283,7 +283,6 @@ import {
 
 import type { ImageFormProps, ImageTypeKey } from './types';
 import type { ImageContent } from '~/components/blocks/Image/types';
-import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();

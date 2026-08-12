@@ -121,8 +121,6 @@
 
 <script lang="ts" setup>
 import { SfIconStarFilled, SfIconTune, SfIconExpandMore } from '@storefront-ui/vue';
-import type { AiChipSuggestion, AiLength, AiTone } from '~/composables/useAiDraftFlow/types';
-
 const props = defineProps<{
   prompt: string;
   tone: AiTone;

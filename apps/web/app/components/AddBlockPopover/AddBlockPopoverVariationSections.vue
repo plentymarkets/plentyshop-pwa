@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import type { BlockListCategory } from '~/composables/useBlocksList/types';
 import type { VariationSection, FlatVariation } from './types';
 
 const { activeFilters, searchQuery } = useAddBlockPopover();

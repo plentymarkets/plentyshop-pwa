@@ -155,7 +155,6 @@ import { SfInput, SfCheckbox, SfTextarea, SfLoaderCircular, SfIconWarning } from
 import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
-import { paths } from '~/utils/paths';
 import { userGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 

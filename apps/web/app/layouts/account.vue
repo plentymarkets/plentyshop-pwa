@@ -97,8 +97,6 @@ import {
   SfIconFavorite,
 } from '@storefront-ui/vue';
 import type { MyAccountSubsection } from '~/layouts/types';
-import { paths } from '~/utils/paths';
-
 const localePath = useLocalizedPath();
 const viewport = useViewport();
 const router = useRouter();

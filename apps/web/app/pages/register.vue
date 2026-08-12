@@ -295,8 +295,6 @@
 
 <script setup lang="ts">
 import { ErrorMessage } from 'vee-validate';
-import { paths } from '~/utils/paths';
-import { useRegisterForm } from '~/composables/useRegisterForm';
 import { SfInput, SfLoaderCircular, SfCheckbox, SfIconCheck, SfIconClose, SfSelect } from '@storefront-ui/vue';
 import { AddressType } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';

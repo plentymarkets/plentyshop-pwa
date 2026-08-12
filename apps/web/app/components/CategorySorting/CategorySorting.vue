@@ -20,8 +20,6 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 import { useRoute } from 'vue-router';
-import { isPageOfType } from '~/utils/pathHelper';
-
 const props = defineProps<{ selectionModeCompact?: boolean }>();
 const { updateSorting } = useCategoryFilter();
 const { getJsonSetting: availableSortingOptions } = useSiteSettings('availableSortingOptions');

@@ -1,5 +1,3 @@
-import type { BlockListCategory, BlockTemplateVariation } from '~/composables/useBlocksList/types';
-
 export interface PopoverPosition {
   left: number;
   top: number;

@@ -1,4 +1,3 @@
-import type { GooglePayConfig, GooglePayPayPal } from '~/composables/useGooglePay/types';
 import { type Order, paypalGetters } from '@plentymarkets/shop-api';
 
 const loadExternalScript = async () => {

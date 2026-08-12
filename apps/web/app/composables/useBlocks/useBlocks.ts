@@ -1,7 +1,5 @@
 import type { ApiError, Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import type { UseBlocksState, UseBlocksReturn } from './types';
-import { assembleBlocks, isValidHeaderOrder } from '~/utils/blocks/block-helpers';
-
 declare module '#app' {
   interface NuxtApp {
     _settleTimer?: ReturnType<typeof setTimeout> | null;
