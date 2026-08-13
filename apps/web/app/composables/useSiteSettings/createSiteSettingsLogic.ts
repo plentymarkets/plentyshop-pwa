@@ -107,7 +107,8 @@ export const createSiteSettingsLogic = (
       state.value.initialData = { ...state.value.initialData, ...state.value.data };
       return true;
     } catch (error: unknown) {
-      const message = ((error as Record<string, unknown>).message as string) || 'Failed to save settings';
+      const message =
+        error instanceof Error ? error.message : typeof error === 'string' ? error : 'Failed to save settings';
       send({
         message,
         type: 'negative',
