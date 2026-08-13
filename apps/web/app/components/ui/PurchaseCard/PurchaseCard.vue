@@ -124,7 +124,7 @@
               <GraduatedPriceList :count="quantitySelectorValue" :product="product" />
             </template>
             <template v-if="key === 'guaranteeLabel' && configuration?.fields.guaranteeLabel">
-              <GuaranteeBlock :product="product" max-width="30rem" />
+              <GuaranteeBlock :product="product" max-width="20rem" class="m-4" />
             </template>
 
             <template v-if="key === 'quantityAndAddToCart' && configuration?.fields.quantityAndAddToCart">

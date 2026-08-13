@@ -1,5 +1,5 @@
 <template>
-  <div v-if="manufacturer && model" class="relative w-full m-4" :style="{ maxWidth }">
+  <div v-if="manufacturer && model && enableGuarantee" class="relative w-full" :style="{ maxWidth }">
     <button
       v-if="!isOpen"
       aria-expanded="false"
@@ -36,15 +36,15 @@
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
 import type { GuaranteeBlockProps } from '~/components/GuaranteeBlock/types.ts';
-import {productGetters} from "@plentymarkets/shop-api";
+import { productGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<GuaranteeBlockProps>();
-
+const enableGuarantee = useFeatureFlag('shopPwaEnableEu2025-1960', false);
 const isOpen = ref(false);
 
 const manufacturer = computed(() => {
   const manufacturer = productGetters.getManufacturer(props.product);
-  return manufacturer?.externalName ?? manufacturer?.name ?? null;
+  return manufacturer?.externalName ?? null;
 });
 const model = computed(() => props.product.variation?.model);
 </script>

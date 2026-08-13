@@ -117,7 +117,7 @@
         />
         <PayPalPayLaterBanner placement="payment" location="quickCheckout" :amount="totals.total" />
 
-        <GuaranteeBlock :product="product" />
+        <GuaranteeBlock :product="product" class="mt-4" />
       </div>
     </div>
   </UiModal>
