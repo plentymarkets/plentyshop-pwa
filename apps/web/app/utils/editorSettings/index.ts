@@ -30,8 +30,10 @@ export const conditionOptions = [
 
 export const robotsOptions = ['all', 'noindex', 'nofollow', 'noindex, nofollow'];
 
+export const DEFAULT_SESSION_LIFETIME_VALUE = '0';
+
 export const sessionLifetimeOptions = [
-  { key: 'sessionLifetime.untilBrowserClosed', value: '0' },
+  { key: 'sessionLifetime.untilBrowserClosed', value: DEFAULT_SESSION_LIFETIME_VALUE },
   { key: 'sessionLifetime.oneHour', value: '3600' },
   { key: 'sessionLifetime.oneDay', value: '86400' },
   { key: 'sessionLifetime.oneHundredDays', value: '8640000' },

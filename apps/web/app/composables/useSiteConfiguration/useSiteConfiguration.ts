@@ -56,6 +56,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       scheduleCleanDataSync();
     }
 
+    if (view === 'blocksSettings') {
+      useBlockSnapshots().closeDrawer();
+    }
+
     if (block) {
       state.value.blockType = block.name;
       state.value.blockUuid = block.meta.uuid;

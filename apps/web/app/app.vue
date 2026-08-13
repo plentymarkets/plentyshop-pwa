@@ -72,12 +72,19 @@
       v-if="blocksConfigurationDrawerOpen && clientPreview"
       class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
     />
+
+    <component
+      :is="VersionHistoryDrawer"
+      v-if="drawerOpen && clientPreview"
+      class="flex-shrink-0 bg-white font-editor border-l border-gray-300 overflow-y-auto"
+    />
   </div>
   <ClientOnly>
     <component :is="PageModal" v-if="clientPreview" />
     <component :is="UnlinkCategoryModal" v-if="clientPreview" />
     <component :is="ResetProductPageModal" v-if="clientPreview" />
     <component :is="AddBlockPopoverComponent" v-if="clientPreview" />
+    <component :is="RestoreSnapshotModal" v-if="clientPreview" />
   </ClientOnly>
 </template>
 
@@ -89,6 +96,7 @@ const bodyClass = ref('');
 const route = useRoute();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
+const { drawerOpen, entityKey, resetForCurrentEntity } = useBlockSnapshots();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient, isMobilePreview, previewWidth } = useEditorState();
 
@@ -268,6 +276,12 @@ if (import.meta.client) {
       if (clientPreview.value) contentRef.value?.scrollTo({ top: 0 });
     },
   );
+
+  watch(entityKey, () => {
+    if (drawerOpen.value) {
+      resetForCurrentEntity();
+    }
+  });
 }
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
@@ -294,6 +308,12 @@ const ResetProductPageModal = defineAsyncComponent(
   () => import('~/components/ui/ResetProductPageModal/ResetProductPageModal.vue'),
 );
 const AddBlockPopoverComponent = defineAsyncComponent(() => import('~/components/AddBlockPopover/AddBlockPopover.vue'));
+const VersionHistoryDrawer = defineAsyncComponent(
+  () => import('~/components/VersionHistoryDrawer/VersionHistoryDrawer.vue'),
+);
+const RestoreSnapshotModal = defineAsyncComponent(
+  () => import('~/components/ui/RestoreSnapshotModal/RestoreSnapshotModal.vue'),
+);
 </script>
 
 <style lang="scss">

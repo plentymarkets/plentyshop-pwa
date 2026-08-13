@@ -165,6 +165,10 @@ export const useBlocks: UseBlocksReturn = () => {
     state.value.data = deepClone(state.value.cleanData);
   };
 
+  const restoreBlocks = (data: GetBlocksResponse) => {
+    state.value.data = deepClone(data);
+  };
+
   const setDefaultTemplate = (blocks: Block[]) => {
     state.value.defaultTemplateData = blocks;
   };
@@ -186,6 +190,7 @@ export const useBlocks: UseBlocksReturn = () => {
     reorderHeaderBlocks,
     reorderFooterBlocks,
     discardChanges,
+    restoreBlocks,
     setDefaultTemplate,
     scheduleCleanDataSync,
     cancelCleanDataSync,
