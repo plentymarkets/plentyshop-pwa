@@ -50,7 +50,7 @@
     "llm:link": "node ./scripts/llm-link.js"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.179.0",
+    "@plentymarkets/shop-api": "^0.180.0",
     "@plentymarkets/shop-core": "^1.33.0",
     "@plentymarkets/shop-module-gtag": "^1.3.0",
     "@plentymarkets/shop-module-mollie": "^1.7.0",
