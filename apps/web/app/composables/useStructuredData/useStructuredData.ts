@@ -206,7 +206,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
 
     const runtimeConfig = useRuntimeConfig();
     const route = useRoute();
-    const localePath = useLocalePath();
+    const rawLocalePath = useLocalePath();
+    const localePath = (path: string) => decodeLocalizedPathSlashes(rawLocalePath(path), path);
     const isSingleProductUrlSchemeEnabled = useCallisto().isEnabled;
 
     const itemListElement = products.reduce<Array<Record<string, unknown>>>((result, product, index) => {
