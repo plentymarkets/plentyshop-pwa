@@ -141,7 +141,9 @@ export function useEditorItemProperties(): UseEditorItemProperties {
       const { data } = await useSdk().plentysystems.getItemProperties();
       itemPropertyGroups.value = data.map((g) => translateGroup(g, requestedLocale.value));
     } catch (error) {
-      throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+        cause: error,
+      });
     } finally {
       loading.value = false;
     }

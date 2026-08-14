@@ -33,7 +33,7 @@ export const useTranslations: UseTranslationsReturn = () => {
 
       state.value.data = data?.value?.data as string;
     } catch (error) {
-      throw new Error(error as string);
+      throw new Error(error as string, { cause: error });
     } finally {
       state.value.loading = false;
     }
