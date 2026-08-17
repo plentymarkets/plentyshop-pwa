@@ -2601,7 +2601,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GuaranteeLabelProps } from '~/components/GuaranteeLabel/types.ts';
+import type { GuaranteeLabelProps } from '~/components/GuaranteeLabel/types';
 
 defineProps<GuaranteeLabelProps>();
 </script>

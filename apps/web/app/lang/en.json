@@ -339,6 +339,12 @@
     },
     "guaranteeNotice": "Your legal guarantee rights"
   },
+  "guaranteeLabels": {
+    "area": {
+      "close": "Close guarantee details",
+      "open": "Open guarantee details"
+    }
+  },
   "customAssets": {
     "assetDeletedSuccessfully": "Asset deleted successfully",
     "failedToDeleteAsset": "Failed to delete asset",

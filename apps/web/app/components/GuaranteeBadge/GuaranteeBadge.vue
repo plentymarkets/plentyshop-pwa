@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GuaranteeBadgeProps } from '~/components/GuaranteeBadge/types.ts';
+import type { GuaranteeBadgeProps } from '~/components/GuaranteeBadge/types';
 
 defineProps<GuaranteeBadgeProps>();
 </script>
