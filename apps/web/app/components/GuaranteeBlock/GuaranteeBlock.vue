@@ -7,7 +7,7 @@
       type="button"
       @click="isOpen = true"
     >
-      <GuaranteeBadge :guarantee="4" />
+      <GuaranteeBadge guarantee="TBD" />
     </button>
 
     <Transition
@@ -27,7 +27,7 @@
         >
           <SfIconClose size="xs" />
         </button>
-        <GuaranteeLabel :guarantee="4" :manufacturer="manufacturer" :model="model" />
+        <GuaranteeLabel guarantee="TBD" :manufacturer="manufacturer" :model="model" />
       </div>
     </Transition>
   </div>
