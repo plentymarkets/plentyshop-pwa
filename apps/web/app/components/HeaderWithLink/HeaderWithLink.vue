@@ -20,7 +20,7 @@
 import { SfIconArrowBack } from '@storefront-ui/vue';
 import type { HeaderWithLinkProps } from '~/components/HeaderWithLink/types';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const router = useRouter();
 
 const props = defineProps<HeaderWithLinkProps>();

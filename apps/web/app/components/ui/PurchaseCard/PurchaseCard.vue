@@ -177,7 +177,7 @@
                   <i18n-t keypath="shipping.excludedLabel" scope="global">
                     <template #shipping>
                       <UiLink
-                        :href="localePath(paths.shipping)"
+                        :href="resolvePathTrailingSlash(localePath(paths.shipping))"
                         class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                         target="_blank"
                       >

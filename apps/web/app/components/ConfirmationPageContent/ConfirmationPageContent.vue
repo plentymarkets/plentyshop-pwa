@@ -105,7 +105,7 @@ const { order } = defineProps<ConfirmationPageContentProps>();
 const { isOpen: isAuthenticationOpen, toggle: closeAuthentication } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const bankDetails = computed(() => orderGetters.getOrderPaymentBankDetails(order));
 useDynamicPaymentButtons().createOrderLoading.value = false;
 

@@ -134,7 +134,7 @@ import type { NewsletterSubscribeProps } from './types';
 
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const props = defineProps<NewsletterSubscribeProps>();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const turnstileSiteKey = getSetting() ?? '';

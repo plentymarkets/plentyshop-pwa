@@ -36,7 +36,7 @@ import { SfListItem } from '@storefront-ui/vue';
 import { type ProductTag, productGetters, tagGetters } from '@plentymarkets/shop-api';
 import type { BadgesProps } from '~/components/ui/Badges/types';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const { product, useTags = true, useAvailability = false } = defineProps<BadgesProps>();
 

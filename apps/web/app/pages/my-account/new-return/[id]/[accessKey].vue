@@ -56,7 +56,7 @@ defineI18nRoute({
 });
 
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 const { locale } = useI18n();
 definePageMeta({

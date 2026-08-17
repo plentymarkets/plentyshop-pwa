@@ -10,7 +10,7 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
   const { getCountryZipCodeRegex } = useAggregatedCountries();
   const { register, isAuthorized } = useCustomer();
   const router = useRouter();
-  const localePath = useLocalePath();
+  const localePath = useLocalizedPath();
   const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
   const turnstileSiteKey = getSetting() ?? '';
   const runtimeConfig = useRuntimeConfig();

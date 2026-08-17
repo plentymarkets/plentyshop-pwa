@@ -137,7 +137,7 @@ const { locale } = useI18n();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const { send } = useNotification();
 const { loading, subscribe } = useNotifyMe();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const turnstileSiteKey = getSetting() ?? '';
 

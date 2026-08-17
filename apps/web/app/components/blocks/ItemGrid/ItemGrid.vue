@@ -76,7 +76,7 @@ import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
 const { getFacetsFromURL } = useCategoryFilter();
 
 const viewport = useViewport();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
 

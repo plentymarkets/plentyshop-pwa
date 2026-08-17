@@ -16,6 +16,6 @@
 </template>
 
 <script setup lang="ts">
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

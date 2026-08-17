@@ -48,7 +48,7 @@
 import type { DisplayProps } from '~/components/ui/Display/types';
 defineProps<DisplayProps>();
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

@@ -162,7 +162,7 @@ defineI18nRoute({
 });
 
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { locale } = useI18n();
 const { format } = usePriceFormatter();
 const { isOpen } = useDisclosure({ initialValue: true });

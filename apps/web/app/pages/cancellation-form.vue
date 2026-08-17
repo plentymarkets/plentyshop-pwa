@@ -158,7 +158,7 @@ const turnstileLoad = ref(false);
 const { send } = useNotification();
 const { getRobots, setRobotForStaticPage } = useRobots();
 const { setPageMeta } = usePageMeta();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 setPageMeta(t('legal.cancellationForm'), 'page');
 
