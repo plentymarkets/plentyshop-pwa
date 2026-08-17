@@ -251,7 +251,7 @@ describe('createSiteSettingsLogic', () => {
       expect(state.value.loading).toBe(false);
     });
 
-    it('logs the error, keeps loading false, and still resolves true on failure', async () => {
+    it('logs the error and returns false on failure', async () => {
       const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(noop);
       const setConfiguration = vi.fn().mockRejectedValue(new Error('network error'));
       const state = makeState({ data: { useAvif: 'true' } });
@@ -262,7 +262,7 @@ describe('createSiteSettingsLogic', () => {
 
       expect(consoleErrorSpy).toHaveBeenCalled();
       expect(state.value.loading).toBe(false);
-      expect(result).toBe(true);
+      expect(result).toBe(false);
 
       consoleErrorSpy.mockRestore();
     });
