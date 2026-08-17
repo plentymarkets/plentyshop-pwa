@@ -23,6 +23,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
     loading: false,
   }));
   const { applyToUrl: applyTrailingSlashToUrl } = useUrlTrailingSlash();
+  const rawLocalePath = useLocalePath();
+
+  const localePath = (path: string) => decodeLocalizedPathSlashes(rawLocalePath(path), path);
 
   const safeSerializeJsonLd = (value: unknown, space?: number) =>
     JSON.stringify(value, null, space).replaceAll('<', String.raw`\u003C`);
@@ -206,8 +209,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
 
     const runtimeConfig = useRuntimeConfig();
     const route = useRoute();
-    const rawLocalePath = useLocalePath();
-    const localePath = (path: string) => decodeLocalizedPathSlashes(rawLocalePath(path), path);
     const isSingleProductUrlSchemeEnabled = useCallisto().isEnabled;
 
     const itemListElement = products.reduce<Array<Record<string, unknown>>>((result, product, index) => {
@@ -290,7 +291,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
     if (canonical) {
       const runtimeConfig = useRuntimeConfig();
       const route = useRoute();
-      const localePath = useLocalePath();
 
       const canonicalHref =
         productSeoSettingsGetters.getCanonicalHref(canonical) ||
