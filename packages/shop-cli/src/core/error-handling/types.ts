@@ -57,11 +57,7 @@ export interface ErrorDetails {
 }
 
 export type UserFriendlyMessageKey =
-  | 'componentExists'
-  | 'invalidComponentName'
-  | 'invalidComposableName'
-  | 'projectNotFound'
-  | 'noWritePermission';
+  'componentExists' | 'invalidComponentName' | 'invalidComposableName' | 'projectNotFound' | 'noWritePermission';
 
 /**
  * Custom error class for generator-specific errors

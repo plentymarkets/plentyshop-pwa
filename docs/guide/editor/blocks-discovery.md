@@ -57,13 +57,9 @@ A `defaults.ts` may export up to two named functions:
 import type { BlocksList } from '~/composables/useBlocksList/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-export const getBlocksList = (): BlocksList => ({
-  /* … */
-});
+export const getBlocksList = (): BlocksList => ({/* … */});
 
-export const createDefault = (): Block => ({
-  /* … */
-});
+export const createDefault = (): Block => ({/* … */});
 ```
 
 `getBlocksList` returns one or more categories that should appear in the "Add block" catalogue. `createDefault` returns a fresh block instance.

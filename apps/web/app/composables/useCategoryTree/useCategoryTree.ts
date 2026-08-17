@@ -30,7 +30,7 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
       state.value.data = data?.data ?? state.value.data;
       return state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      throw new Error(error as string, { cause: error });
     } finally {
       state.value.loading = false;
     }

@@ -217,7 +217,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         return result;
       }
 
-      let productPath = '';
+      let productPath: string;
 
       if (isSingleProductUrlSchemeEnabled) {
         productPath = localePath(`/${urlPath}/a-${itemId}`);

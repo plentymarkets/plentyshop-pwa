@@ -159,7 +159,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
       state.value.data = getCategoriesResult.data ?? state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      throw new Error(error as string, { cause: error });
     } finally {
       state.value.loadingContent = false;
     }
