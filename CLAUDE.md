@@ -189,10 +189,6 @@ See `docs/_styleguide/design.guide.md` for additional guidance.
 - Add TSDoc comments to all public functions, classes, and complex types.
 - Ensure comments are clear, concise, and provide value beyond what the code itself conveys.
 
-# plentyshop-pwa — Claude Code Context
-
-This file is loaded automatically by Claude Code for every team member. Add project-wide context, conventions, and known gotchas here so AI assistance stays consistent across the team.
-
 ## Known Gotchas
 
 ### nuxt-modules/i18n — silent breaking changes (August 2026)
