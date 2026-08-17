@@ -38,4 +38,40 @@ describe('decodeLocalizedPathSlashes', () => {
       '/de/shirt/a-42#reviews',
     );
   });
+
+  it('should keep both the query string and the hash fragment when decoding', () => {
+    expect(decodeLocalizedPathSlashes('/de/shirt%2Fa-42?color=red#reviews', '/shirt/a-42?color=red#reviews')).toBe(
+      '/de/shirt/a-42?color=red#reviews',
+    );
+  });
+
+  it('should treat a hash placed before a question mark as the start of the fragment', () => {
+    expect(decodeLocalizedPathSlashes('/de/shirt%2Fa-42#tab?x=1', '/shirt/a-42#tab?x=1')).toBe(
+      '/de/shirt/a-42#tab?x=1',
+    );
+  });
+
+  it('should not decode an encoded slash that only appears in the hash fragment', () => {
+    expect(decodeLocalizedPathSlashes('/de/shirt#a%2Fb', '/shirt#a%2Fb')).toBe('/de/shirt#a%2Fb');
+  });
+
+  it('should decode a path that consists only of an encoded slash', () => {
+    expect(decodeLocalizedPathSlashes('%2F', '/')).toBe('/');
+  });
+
+  it('should return an empty resolved path unchanged', () => {
+    expect(decodeLocalizedPathSlashes('', '/shirt/a-42')).toBe('');
+  });
+
+  it('should decode the path when the requested path is empty', () => {
+    expect(decodeLocalizedPathSlashes('/de/shirt%2Fa-42', '')).toBe('/de/shirt/a-42');
+  });
+
+  it('should decode consecutive encoded slashes', () => {
+    expect(decodeLocalizedPathSlashes('/de/shirt%2F%2Fa-42', '/shirt//a-42')).toBe('/de/shirt//a-42');
+  });
+
+  it('should leave other percent encoded characters untouched', () => {
+    expect(decodeLocalizedPathSlashes('/de/my%20shirt%2Fa-42', '/my%20shirt/a-42')).toBe('/de/my%20shirt/a-42');
+  });
 });
