@@ -188,3 +188,21 @@ See `docs/_styleguide/design.guide.md` for additional guidance.
 
 - Add TSDoc comments to all public functions, classes, and complex types.
 - Ensure comments are clear, concise, and provide value beyond what the code itself conveys.
+
+# plentyshop-pwa — Claude Code Context
+
+This file is loaded automatically by Claude Code for every team member. Add project-wide context, conventions, and known gotchas here so AI assistance stays consistent across the team.
+
+## Known Gotchas
+
+### nuxt-modules/i18n — silent breaking changes (August 2026)
+
+A minor i18n update introduced two non-flagged breaking changes. Both are fixed and merged, but flag any new i18n routing regressions before release.
+
+**1. Route resolution by name takes priority (PR [#4104](https://github.com/nuxt-modules/i18n/pull/4104))**
+i18n now resolves routes by name first. When it does, it reconstructs the path internally and can encode special characters (e.g. `-` → `%2F`). Fix: decode the path explicitly after name-based resolution.
+
+**2. Dead default-locale routes now match (PR [#4087](https://github.com/nuxt-modules/i18n/pull/4087))**
+i18n generates `___default` routes for every active locale, including unreachable ones (e.g. a DE default when EN is the real default). The lookup changed from `langSwitch === defaultLanguage` to `hasRoute`, which now captures those dead routes — causing language switches to land on `/` instead of `/de`. Fix: filter dead routes at build time before the lookup runs.
+
+When touching i18n config, route generation, or locale switching, verify both invariants still hold.
