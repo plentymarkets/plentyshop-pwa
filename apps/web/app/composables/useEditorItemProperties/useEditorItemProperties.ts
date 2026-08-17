@@ -20,12 +20,14 @@ const translateGroup = (group: ItemPropertyGroup, locale: string): ApiGroup => (
   position: group.position,
   name: resolveLocaleValue(group.names, locale, `Missing translation for id: ${group.id}`),
   description: resolveLocaleValue(group.descriptions, locale, ''),
-  properties: group.properties.map((p: ItemProperty): ItemPropertyTranslated => ({
-    id: p.id,
-    cast: p.cast,
-    name: resolveLocaleValue(p.names, locale, `Missing translation for id: ${p.id}`),
-    description: resolveLocaleValue(p.descriptions, locale, ''),
-  })),
+  properties: group.properties.map(
+    (p: ItemProperty): ItemPropertyTranslated => ({
+      id: p.id,
+      cast: p.cast,
+      name: resolveLocaleValue(p.names, locale, `Missing translation for id: ${p.id}`),
+      description: resolveLocaleValue(p.descriptions, locale, ''),
+    }),
+  ),
 });
 
 const itemPropertyGroups = ref<ApiGroup[]>([]);

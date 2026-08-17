@@ -9,7 +9,13 @@ export type Address = {
 };
 
 type CardType =
-  'American Express' | 'Maestro' | 'Switch' | 'Visa' | 'Mastercard' | 'Mastercard/Eurocard' | "Diner's Club";
+  | 'American Express'
+  | 'Maestro'
+  | 'Switch'
+  | 'Visa'
+  | 'Mastercard'
+  | 'Mastercard/Eurocard'
+  | "Diner's Club";
 
 export type Card = {
   type?: CardType;

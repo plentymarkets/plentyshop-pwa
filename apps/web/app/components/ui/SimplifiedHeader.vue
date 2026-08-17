@@ -24,7 +24,8 @@ const { getSetting: getPrimaryColor } = useSiteSettings('primaryColor');
 
 const headerBackgroundColor = computed(() => {
   const children = headerContainer.value?.content as
-    Array<{ name: string; content: { color?: { backgroundColor?: string } } }> | undefined;
+    | Array<{ name: string; content: { color?: { backgroundColor?: string } } }>
+    | undefined;
   const utilityBar = children?.find((block) => block.name === 'UtilityBar');
   return utilityBar?.content?.color?.backgroundColor ?? getPrimaryColor();
 });

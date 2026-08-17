@@ -83,7 +83,8 @@ export const removeBlockFromColumn = (parent: Block, targetUuid: string): boolea
   content.splice(idx, 1);
 
   const cfg = parent.configuration as
-    { columnWidths?: number[]; columnWidthsTablet?: number[]; columnWidthsMobile?: number[] } | undefined;
+    | { columnWidths?: number[]; columnWidthsTablet?: number[]; columnWidthsMobile?: number[] }
+    | undefined;
 
   if (cfg && Array.isArray(cfg.columnWidths)) {
     const slot = removed.parent_slot ?? 0;

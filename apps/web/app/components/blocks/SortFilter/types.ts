@@ -1,5 +1,12 @@
 export type SortFilterFieldKey =
-  'category' | 'sortBy' | 'perPage' | 'itemRating' | 'manufacturer' | 'price' | 'availability' | 'customizedFilters';
+  | 'category'
+  | 'sortBy'
+  | 'perPage'
+  | 'itemRating'
+  | 'manufacturer'
+  | 'price'
+  | 'availability'
+  | 'customizedFilters';
 
 export type SortFilterFieldsVisibility = Record<SortFilterFieldKey, boolean>;
 
