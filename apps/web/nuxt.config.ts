@@ -115,6 +115,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
+    '~~/modules/locale-routes',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
