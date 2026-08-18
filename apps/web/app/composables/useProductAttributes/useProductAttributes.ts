@@ -87,8 +87,13 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
    */
   const isValueAvailableInCombinations = (attributeValues: Record<number, number>): boolean => {
     return (
-      state.value.combinations?.some((combination) => combinationMatchesAttributes(combination, attributeValues)) ??
-      false
+      state.value.combinations?.some((combination) => {
+        return Object.entries(attributeValues).every(([attributeId, valueId]) => {
+          return combination.attributes?.some((attribute) => {
+            return attribute.attributeId === Number(attributeId) && attribute.attributeValueId === valueId;
+          });
+        });
+      }) ?? false
     );
   };
 

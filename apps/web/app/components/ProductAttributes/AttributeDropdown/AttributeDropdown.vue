@@ -12,7 +12,12 @@
       size="lg"
       :placeholder="t('form.selectPlaceholder')"
       :invalid="Boolean(errors['selectedValue'])"
-      @update:model-value="(event) => doUpdateValue(Number(event))"
+      @update:model-value="(event) => {
+        doUpdateValue(Number(event));
+        if (event !== '-1') {
+          value = '-1';
+        }
+      }"
     >
       <option :value="-1">{{ t('form.selectPlaceholder') }}</option>
       <option
@@ -64,10 +69,13 @@ registerValidator(validate);
 
 const [selectedValue] = defineField('selectedValue');
 
-const doUpdateValue = (value: number) => {
-  if (value > -1) {
-    updateValue(attribute.attributeId, value);
+const doUpdateValue = (newValue: number) => {
+  if (newValue > -1) {
+    updateValue(attribute.attributeId, newValue);
     selectedValue.value = getValue(attribute.attributeId);
+  } else {
+    updateValue(attribute.attributeId, undefined);
+    selectedValue.value = undefined;
   }
 };
 
