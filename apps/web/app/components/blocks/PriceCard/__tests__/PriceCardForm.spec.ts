@@ -43,6 +43,7 @@ const createContent = (): PriceCardContent => ({
     addToWishlist: false,
     quantityAndAddToCart: false,
     itemText: false,
+    guaranteeLabel: false,
     technicalData: false,
   },
   fieldsOrder: ['itemName', 'price'] as PriceCardOrderItem[],

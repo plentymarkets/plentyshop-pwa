@@ -116,6 +116,8 @@
           @on-approved="isOpen = false"
         />
         <PayPalPayLaterBanner placement="payment" location="quickCheckout" :amount="totals.total" />
+
+        <GuaranteeBlock :product="product" class="mt-4" />
       </div>
     </div>
   </UiModal>
