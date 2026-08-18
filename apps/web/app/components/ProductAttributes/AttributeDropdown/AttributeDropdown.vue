@@ -12,12 +12,14 @@
       size="lg"
       :placeholder="t('form.selectPlaceholder')"
       :invalid="Boolean(errors['selectedValue'])"
-      @update:model-value="(event) => {
-        doUpdateValue(Number(event));
-        if (event !== '-1') {
-          value = '-1';
+      @update:model-value="
+        (event) => {
+          doUpdateValue(Number(event));
+          if (event !== '-1') {
+            value = '-1';
+          }
         }
-      }"
+      "
     >
       <option :value="-1">{{ t('form.selectPlaceholder') }}</option>
       <option
