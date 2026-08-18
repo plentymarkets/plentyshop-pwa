@@ -71,6 +71,7 @@ const createConfiguration = (extraFields: Partial<PriceCardContent> = {}): Price
     addToWishlist: false,
     quantityAndAddToCart: false,
     itemText: false,
+    guaranteeLabel: false,
     technicalData: false,
   },
   fieldsOrder: [] as PriceCardOrderItem[],

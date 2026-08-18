@@ -339,6 +339,12 @@
     },
     "guaranteeNotice": "Ihre gesetzlichen Garantieansprüche"
   },
+  "guaranteeLabels": {
+    "area": {
+      "close": "Garantie Details schließen",
+      "open": "Garantie Details öffnen"
+    }
+  },
   "customAssets": {
     "assetDeletedSuccessfully": "Asset erfolgreich gelöscht",
     "failedToDeleteAsset": "Asset konnte nicht gelöscht werden",
