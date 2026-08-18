@@ -67,8 +67,7 @@
             >
               <pre
                 class="m-0 py-3 pl-3 pr-2 text-right select-none text-gray-500 bg-gray-50 font-mono text-sm leading-5 whitespace-pre"
-                >{{ lineNumbers[asset.uuid] }}</pre
-              >
+                >{{ lineNumbers[asset.uuid] }}</pre>
               <textarea
                 :id="`snippet-${asset.uuid}-overview`"
                 :value="asset.content"

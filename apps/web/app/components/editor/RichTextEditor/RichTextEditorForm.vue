@@ -97,12 +97,10 @@ const contentModel = computed<string>({
   set: (val) => emit('update:modelValue', val),
 });
 
-const editorModeOptions = computed(
-  (): Array<{ value: EditorMode; label: string; testId: string }> => [
-    { value: 'wysiwyg', label: getEditorTranslation('wysiwyg-label'), testId: 'mode-wysiwyg' },
-    { value: 'html', label: getEditorTranslation('html-label'), testId: 'mode-html' },
-  ],
-);
+const editorModeOptions = computed((): Array<{ value: EditorMode; label: string; testId: string }> => [
+  { value: 'wysiwyg', label: getEditorTranslation('wysiwyg-label'), testId: 'mode-wysiwyg' },
+  { value: 'html', label: getEditorTranslation('html-label'), testId: 'mode-html' },
+]);
 
 const { editorMode, htmlDraft, htmlErrors, ariaDescribedBy, switchToHtmlMode, switchToWysiwygMode } = useHtmlEditorMode(
   contentModel,

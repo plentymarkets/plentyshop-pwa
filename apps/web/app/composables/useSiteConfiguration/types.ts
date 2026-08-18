@@ -1,12 +1,6 @@
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 export type DrawerView =
-  | 'blocksList'
-  | 'DesignView'
-  | 'PagesView'
-  | 'blocksSettings'
-  | 'LocalizationView'
-  | 'TableOfContents'
-  | null;
+  'blocksList' | 'DesignView' | 'PagesView' | 'blocksSettings' | 'LocalizationView' | 'TableOfContents' | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 
 export interface UseSiteConfigurationState {
