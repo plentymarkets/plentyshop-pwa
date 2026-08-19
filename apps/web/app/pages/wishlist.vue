@@ -18,7 +18,7 @@ defineI18nRoute({
 definePageMeta({ layout: false });
 const { setPageMeta } = usePageMeta();
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const icon = 'page';
 setPageMeta(t('account.wishlist.heading'), icon);
 

@@ -133,7 +133,7 @@ const props = defineProps<QuickCheckoutProps>();
 
 const { format } = usePriceFormatter();
 const { showNetPrices } = useCart();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { data: cart, lastUpdatedCartItem } = useCart();
 const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();

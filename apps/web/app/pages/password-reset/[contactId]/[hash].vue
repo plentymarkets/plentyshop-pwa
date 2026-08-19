@@ -120,7 +120,7 @@ defineI18nRoute({
 const { resetPassword, loading } = useResetPassword();
 const route = useRoute();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { send } = useNotification();
 const { fetchSession } = useFetchSession();
 const runtimeConfig = useRuntimeConfig();

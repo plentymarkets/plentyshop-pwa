@@ -44,7 +44,7 @@ const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
 setPageMeta(t('authentication.resetPassword.title'), icon);
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const email = ref('hieronim.anonim@gmail.com');
 const NuxtLink = resolveComponent('NuxtLink');

@@ -23,10 +23,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     loading: false,
   }));
   const { applyToUrl: applyTrailingSlashToUrl } = useUrlTrailingSlash();
-  const rawLocalePath = useLocalePath();
-
-  const localePath = (path: string) => decodeLocalizedPathSlashes(rawLocalePath(path), path);
-
+  const localePath = useLocalizedPath();
   const safeSerializeJsonLd = (value: unknown, space?: number) =>
     JSON.stringify(value, null, space).replaceAll('<', String.raw`\u003C`);
 

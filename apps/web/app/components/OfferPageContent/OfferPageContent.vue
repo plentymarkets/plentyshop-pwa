@@ -200,7 +200,7 @@ import type { OfferPageContentProps } from './types';
 const { loading: offerLoading } = useOffer();
 const { send } = useNotification();
 const { locale } = useI18n();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const props = defineProps<OfferPageContentProps>();
 const emit = defineEmits(['accept', 'decline']);
 const openModal = ref(false);

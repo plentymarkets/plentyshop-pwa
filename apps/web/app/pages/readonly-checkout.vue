@@ -110,7 +110,7 @@ defineI18nRoute({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const route = useRoute();
 const { send } = useNotification();
 const { loginAsGuest, user } = useCustomer();

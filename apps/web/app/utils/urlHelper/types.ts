@@ -2,6 +2,6 @@ export type NavigationDependencies = {
   router: ReturnType<typeof useRouter>;
   isAuthorized: boolean;
   i18n: ReturnType<typeof useNuxtApp>['$i18n'];
-  localePath: ReturnType<typeof useLocalePath>;
+  localePath: (path: string) => string;
   navigateTo: typeof navigateTo;
 };

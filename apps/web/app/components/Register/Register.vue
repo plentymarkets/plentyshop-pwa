@@ -165,7 +165,7 @@ import { object, string, boolean } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
 import { userGetters } from '@plentymarkets/shop-api';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const router = useRouter();
 const { register, loading, isAuthorized } = useCustomer();
 const { send } = useNotification();

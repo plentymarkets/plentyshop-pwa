@@ -62,7 +62,7 @@ import { productGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 const { showNetPrices } = useCart();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 const { fetchWishlist, data: products, loading } = useWishlist();

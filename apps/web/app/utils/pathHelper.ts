@@ -15,6 +15,6 @@ export const isToGlobalCategoryTemplate = (to: RouteLocationNormalized) => {
 };
 
 export const getSearchPath = (suggestion: string) => {
-  const localePath = useLocalePath();
+  const localePath = useLocalizedPath();
   return `${localePath(paths.search)}?term=${encodeURIComponent(suggestion)}`;
 };

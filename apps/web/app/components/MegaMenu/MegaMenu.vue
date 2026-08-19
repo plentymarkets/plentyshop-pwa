@@ -236,7 +236,7 @@ const props = defineProps<MegaMenuProps>();
 const NuxtLink = resolveComponent('NuxtLink');
 
 const viewport = useViewport();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { buildCategoryMenuLink } = useLocalization();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();

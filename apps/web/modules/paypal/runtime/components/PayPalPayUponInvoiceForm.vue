@@ -82,7 +82,7 @@ const {
   createPlentyPaymentFromPayPalOrder,
 } = usePayPal();
 const { emit: plentyEmit } = usePlentyEvent();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 const {
   loading,

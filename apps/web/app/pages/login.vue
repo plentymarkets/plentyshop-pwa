@@ -25,7 +25,7 @@ useHead({
 });
 
 const router = useRouter();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const isLogin = ref(true);
 
 const navigateAfterAuth = () => {

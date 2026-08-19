@@ -304,7 +304,7 @@ defineI18nRoute({
 });
 
 const { default: shippingCountries, fetchAggregatedCountries } = useAggregatedCountries();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { loading } = useCustomer();
 const { send: _send } = useNotification();
 const runtimeConfig = useRuntimeConfig();

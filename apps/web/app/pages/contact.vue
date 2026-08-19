@@ -168,7 +168,7 @@ definePageMeta({
 });
 
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const { getSetting: getContactShopEmail } = useSiteSettings('contactShopEmail');
 const { send } = useNotification();

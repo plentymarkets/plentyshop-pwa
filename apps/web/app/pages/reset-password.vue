@@ -26,7 +26,7 @@ defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 definePageMeta({
   layout: false,

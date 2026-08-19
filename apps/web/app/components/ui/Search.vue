@@ -121,7 +121,7 @@ const props = defineProps<{
   close?: () => boolean;
 }>();
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const router = useRouter();
 const route = useRoute();
 const { updateSearchTerm } = useCategoryFilter();

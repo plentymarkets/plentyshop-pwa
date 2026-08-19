@@ -82,7 +82,7 @@ const { send } = useNotification();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
 const { showNetPrices } = useCart();
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const loadingAddToCart = ref(false);
 
 const close = () => {

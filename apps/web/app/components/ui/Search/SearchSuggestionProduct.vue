@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="item.url"
+    :to="localePath(item.url)"
     class="group/card flex flex-col rounded-lg overflow-hidden ring-1 ring-neutral-200 transition-shadow duration-200 ease-out group-hover/card:shadow-card-hover hover:shadow-card-hover !no-underline"
     data-testid="search-suggestion-product"
   >
@@ -35,6 +35,7 @@ import type { SearchSuggestionProductProps } from './types';
 
 const props = defineProps<SearchSuggestionProductProps>();
 const { format } = usePriceFormatter();
+const localePath = useLocalizedPath();
 
 const crossedPrice = computed(() => itemSearchAutocompleteGetters.getCrossedPrice(props.item));
 const hasDifferentPrices = computed(() => itemSearchAutocompleteGetters.hasDifferentPrices(props.item));
