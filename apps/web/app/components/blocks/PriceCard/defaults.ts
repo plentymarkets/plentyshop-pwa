@@ -32,6 +32,7 @@ const blocksList = {
                 addToWishlist: true,
                 quantityAndAddToCart: true,
                 itemText: false,
+                guaranteeLabel: true,
                 technicalData: false,
               },
               fieldsOrder: [
@@ -49,6 +50,7 @@ const blocksList = {
                 'addToWishlist',
                 'quantityAndAddToCart',
                 'itemText',
+                'guaranteeLabel',
                 'technicalData',
               ],
               fieldsDisabled: ['quantityAndAddToCart', 'price', 'itemBundle', 'attributes'],
@@ -88,6 +90,7 @@ const blocksList = {
                 addToWishlist: true,
                 quantityAndAddToCart: true,
                 itemText: false,
+                guaranteeLabel: true,
                 technicalData: false,
               },
               fieldsOrder: [
@@ -105,6 +108,7 @@ const blocksList = {
                 'addToWishlist',
                 'quantityAndAddToCart',
                 'itemText',
+                'guaranteeLabel',
                 'technicalData',
               ],
               fieldsDisabled: ['quantityAndAddToCart', 'price', 'itemBundle', 'attributes'],

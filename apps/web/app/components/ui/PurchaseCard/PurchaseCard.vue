@@ -123,6 +123,9 @@
             <template v-if="key === 'graduatedPrices' && configuration?.fields.graduatedPrices">
               <GraduatedPriceList :count="quantitySelectorValue" :product="product" />
             </template>
+            <template v-if="key === 'guaranteeLabel' && configuration?.fields.guaranteeLabel">
+              <GuaranteeBlock :product="product" max-width="20rem" class="m-4" />
+            </template>
 
             <template v-if="key === 'quantityAndAddToCart' && configuration?.fields.quantityAndAddToCart">
               <UnitContentSelect
@@ -251,6 +254,7 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
       graduatedPrices: true,
       addToWishlist: true,
       quantityAndAddToCart: true,
+      guaranteeLabel: true,
       itemText: false,
       technicalData: false,
     },
@@ -267,6 +271,7 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
       'itemBundle',
       'graduatedPrices',
       'addToWishlist',
+      'guaranteeLabel',
       'quantityAndAddToCart',
       'itemText',
       'technicalData',
