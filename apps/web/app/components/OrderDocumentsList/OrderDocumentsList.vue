@@ -40,6 +40,7 @@ const translations = {
   return_note: t('documents.Return Note'),
   success_confirmation: t('documents.Success Confirmation'),
   reversal_document: t('documents.Reversal Document'),
+  guarantee_notice: t('documents.Guarantee Notice'),
 };
 
 const getTypeName = (type: string) => {

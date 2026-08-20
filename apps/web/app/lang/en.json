@@ -589,7 +589,8 @@
     "Receipt": "Receipt",
     "Return Note": "Return Note",
     "Reversal Document": "Reversal Document",
-    "Success Confirmation": "Success Confirmation"
+    "Success Confirmation": "Success Confirmation",
+    "Guarantee Notice": "Legal guarantee"
   },
   "editMode": {
     "clearJson": "Clear template",

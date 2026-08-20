@@ -589,7 +589,8 @@
     "Receipt": "Kassenbeleg",
     "Return Note": "Rücksendeschein",
     "Reversal Document": "Stornobeleg",
-    "Success Confirmation": "Gelangensbestätigung"
+    "Success Confirmation": "Gelangensbestätigung",
+    "Guarantee Notice": "Gesetzliche Gewährleistung"
   },
   "editMode": {
     "clearJson": "Template löschen",
