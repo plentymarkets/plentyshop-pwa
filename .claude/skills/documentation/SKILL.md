@@ -13,7 +13,7 @@ Write or update Markdown docs in this repo. One run covers the doc itself plus e
 - DO NOT write or modify any source code files (`.ts`, `.vue`, `.js`, etc.)
 - DO NOT guess at technical details — ask if unsure
 - DO NOT write until you have enough information to produce an accurate, complete draft
-- ONLY create or update files inside `docs/`, `README.md`, or `apps/*/README.md`
+- ONLY create or update files inside `docs/`, `README.md`, or `apps/*/README.md` — except the skill's own `references/lessons.md`, which is exempt (it's the skill's housekeeping, not deliverable content)
 
 ## Workflow checklist
 
@@ -100,6 +100,8 @@ Fetch the matching template and writing guide:
 ```
 
 Use it as the structural starting point and the guide for section intent — adapt to the tone read in Phase 1, do not copy template boilerplate verbatim. Write the full document (or updated section) at the approved path and save it.
+
+Landing pages (`index.md`) skip this fetch — there is no template for them; write a short orienting page that links to its child pages, matching sibling `index.md` files.
 
 ## Phase 3: Ripple update
 

@@ -30,7 +30,7 @@ FAIL=0
 echo "Checking changed files are within allowed doc paths..."
 while IFS= read -r file; do
   case "$file" in
-    docs/*|README.md|apps/*/README.md)
+    docs/*|README.md|apps/*/README.md|.claude/skills/documentation/references/lessons.md)
       ;;
     *)
       echo "FAILED: '$file' is outside docs/, README.md, apps/*/README.md" >&2

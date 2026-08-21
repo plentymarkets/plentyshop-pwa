@@ -23,8 +23,11 @@ for readme in apps/*/README.md; do
   [ -f "$readme" ] && ROOTS+=("$readme")
 done
 
-PATTERN="$(printf '%s\n' "$@" | paste -sd'|' -)"
+TERM_ARGS=()
+for term in "$@"; do
+  TERM_ARGS+=(-e "$term")
+done
 
-if ! grep -rniE --include='*.md' -- "$PATTERN" "${ROOTS[@]}"; then
+if ! grep -rniF --include='*.md' "${TERM_ARGS[@]}" -- "${ROOTS[@]}"; then
   echo "No references found for: $*"
 fi
