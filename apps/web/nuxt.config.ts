@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { resolve } from 'node:path';
 import { validateApiUrl } from './app/utils/pathHelper';
 import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
@@ -33,6 +34,13 @@ export default defineNuxtConfig({
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
+      },
+      warmup: {
+        clientFiles: [
+          resolve(__dirname, 'app/composables/useRichTextEditor/useRichTextEditor.ts'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditor.vue'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditorForm.vue'),
+        ],
       },
     },
     plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
