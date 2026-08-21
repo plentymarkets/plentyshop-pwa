@@ -89,6 +89,7 @@ export const useBlockSnapshots = () => {
       const { data } = await useSdk().plentysystems.getBlockSnapshots({
         snapshotableType: type,
         snapshotableId: typeof identifier === 'number' ? identifier : undefined,
+        snapshotableUrl: typeof identifier === 'string' ? identifier : undefined,
         createdFrom: dateFrom || undefined,
         createdTo: dateTo || undefined,
         page: 1,
