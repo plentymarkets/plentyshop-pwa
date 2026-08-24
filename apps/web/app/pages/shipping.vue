@@ -24,8 +24,6 @@ defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
 
-const SHIPPING_PAGE_IDENTIFIER = 'shipping';
-
 definePageMeta({
   pageType: 'static',
   skipBlocksFetch: true,

@@ -33,6 +33,14 @@ mockNuxtImport('useSdk', () => () => ({
 }));
 
 describe('useBlockSnapshots', () => {
+  describe('entity resolution', () => {
+    it('should expose the resolved entity identifier', () => {
+      const composable = useBlockSnapshots();
+
+      expect(composable.identifier.value).toBe(123);
+    });
+  });
+
   describe('initialization', () => {
     it('should initialize with correct default state', () => {
       const composable = useBlockSnapshots();

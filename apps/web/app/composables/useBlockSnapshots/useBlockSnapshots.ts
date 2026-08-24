@@ -49,6 +49,8 @@ export const useBlockSnapshots = () => {
     return `${type}:${identifier}`;
   });
 
+  const identifier = computed(() => resolveEntity().identifier);
+
   const openDrawer = () => {
     useSiteConfiguration().closeDrawer();
     state.value.drawerOpen = true;
@@ -308,6 +310,7 @@ export const useBlockSnapshots = () => {
     confirming: computed(() => state.value.confirmingId != null),
     confirmingSnapshot,
     entityKey,
+    identifier,
     isActiveSnapshot,
     isRestoredSnapshot,
     openDrawer,

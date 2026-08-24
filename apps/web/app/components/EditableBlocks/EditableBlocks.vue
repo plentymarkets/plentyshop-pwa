@@ -89,7 +89,7 @@ const draggableComp = shallowRef<ConcreteComponent | null>(null);
 
 const { isLiveMode, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
-  identifier: 'index',
+  identifier: HOMEPAGE_IDENTIFIER,
   type: 'immutable',
   isRoot: false,
   hasEnabledActions: true,
