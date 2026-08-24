@@ -34,7 +34,7 @@
     "@plentymarkets/tailwind-colors": "^1.0.1",
     "@types/js-beautify": "^1.14.3",
     "@vueuse/core": "^14.3.0",
-    "axios": "^1.18.0",
+    "axios": "^1.19.0",
     "codemirror": "^6.0.2",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
@@ -73,7 +73,7 @@
     "tsx": "^4.21.1",
     "vitepress": "^1.6.4",
     "vitest": "^4.1.10",
-    "vue-tsc": "^3.2.5",
+    "vue-tsc": "^3.3.11",
     "vuepress": "^2.0.0-rc.24",
     "vuetify-nuxt-module": "^0.19.4"
   }
