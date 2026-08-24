@@ -49,6 +49,12 @@ export default defineNuxtConfig({
           resolve(__dirname, 'modules/paypal/runtime/composables/usePayPal/usePayPal.ts'),
           resolve(__dirname, 'app/utils/blocks/block-factories.ts'),
           resolve(__dirname, 'app/components/editor/Localization/EditorLocalizationDrawer.vue'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditorLinkModal.vue'),
+          resolve(__dirname, 'app/components/editor/BlockItemsAccordion/BlockItemsAccordion.vue'),
+          // Not app code: these two run on every page (nuxt-viewport's cookie manager, Nuxt devtools' client
+          // plugin), but their deps aren't reachable from any file we import, so warm them up directly.
+          resolve(__dirname, '../../node_modules/nuxt-viewport/dist/runtime/manager.js'),
+          resolve(__dirname, '../../node_modules/@nuxt/devtools/dist/runtime/vue-devtools-client.js'),
         ],
       },
     },
