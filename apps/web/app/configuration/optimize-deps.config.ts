@@ -31,7 +31,6 @@ export const thirdPartyDeps: string[] = [
   'blaze-slider',
   'codemirror',
   'cookie',
-  'cookiejs',
   'country-flag-icons/string/3x2',
   'dotenv',
   'drift-zoom',
