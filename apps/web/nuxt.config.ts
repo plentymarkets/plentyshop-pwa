@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { resolve } from 'node:path';
 import { validateApiUrl } from './app/utils/pathHelper';
 import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
@@ -33,6 +34,28 @@ export default defineNuxtConfig({
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
+      },
+      warmup: {
+        clientFiles: [
+          resolve(__dirname, 'app/composables/useRichTextEditor/useRichTextEditor.ts'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditor.vue'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditorForm.vue'),
+          resolve(__dirname, 'app/composables/useCustomer/useCustomer.ts'),
+          resolve(__dirname, 'app/components/EditableBlocks/EditableBlocks.vue'),
+          resolve(__dirname, 'app/components/blocks/UtilityBar/UtilityBar.vue'),
+          resolve(__dirname, 'app/components/LanguageSelector/flags.ts'),
+          resolve(__dirname, 'app/components/blocks/structure/Carousel/Carousel.vue'),
+          resolve(__dirname, 'app/utils/tailwindHelper/index.ts'),
+          resolve(__dirname, 'modules/paypal/runtime/composables/usePayPal/usePayPal.ts'),
+          resolve(__dirname, 'app/utils/blocks/block-factories.ts'),
+          resolve(__dirname, 'app/components/editor/Localization/EditorLocalizationDrawer.vue'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditorLinkModal.vue'),
+          resolve(__dirname, 'app/components/editor/BlockItemsAccordion/BlockItemsAccordion.vue'),
+          // Not app code: these two run on every page (nuxt-viewport's cookie manager, Nuxt devtools' client
+          // plugin), but their deps aren't reachable from any file we import, so warm them up directly.
+          resolve(__dirname, '../../node_modules/nuxt-viewport/dist/runtime/manager.js'),
+          resolve(__dirname, '../../node_modules/@nuxt/devtools/dist/runtime/vue-devtools-client.js'),
+        ],
       },
     },
     plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
