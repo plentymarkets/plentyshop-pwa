@@ -6,19 +6,11 @@
         :title="getEditorTranslation('images-group-label')"
         data-testid="slider-image-group-title"
       >
-        <div class="images">
-          <UiImagePicker
-            v-for="type in imageTypes"
-            :key="type"
-            :label="labels[type]"
-            :image="banner.content.image[type]"
-            :placeholder="placeholderImg"
-            :dimensions="imageDimensions[type]"
-            :selected-image-type="type"
-            @add="(payload) => handleImageAddBanner(payload)"
-            @delete="deleteImage(banner.content.image, type)"
-          />
-        </div>
+        <UiResponsiveImagePicker
+          :image="banner.content.image"
+          @add="handleImageAddBanner"
+          @delete="handleImageDeleteBanner"
+        />
 
         <div class="mb-6">
           <label for="banner-brightness" class="block text-sm font-medium mb-4">Brightness</label>
@@ -210,12 +202,16 @@
 import { clamp } from '@storefront-ui/shared';
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { BannerFormProps, BannerProps } from './types';
+import type {
+  ResponsiveImagePickerAddPayload,
+  ResponsiveImagePickerDeletePayload,
+} from '~/components/ui/ResponsiveImagePicker/types';
 
 const { blockUuid } = useSiteConfiguration();
 const { activeSlideIndex } = useCarousel();
 const { allBlocks: data } = useBlocks();
 const { findOrDeleteBlockByUuid } = useBlockManager();
-const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const { imageTypes, deleteImage } = usePickerHelper();
 
 const props = defineProps<BannerFormProps>();
 
@@ -240,9 +236,16 @@ const clampBrightness = (event: Event, type: string) => {
   }
 };
 
-const handleImageAddBanner = ({ image, type }: { image: string; type: string }) => {
-  const { handleImageAdd } = useImageAdd(banner.value?.content?.image);
-  handleImageAdd({ image, type });
+const handleImageAddBanner = ({ image, type, applyToAllSizes }: ResponsiveImagePickerAddPayload) => {
+  const targets = applyToAllSizes ? imageTypes : [type];
+  targets.forEach((sizeType) => {
+    banner.value.content.image[sizeType] = image;
+  });
+};
+
+const handleImageDeleteBanner = ({ type, applyToAllSizes }: ResponsiveImagePickerDeletePayload) => {
+  const targets = applyToAllSizes ? imageTypes : [type];
+  targets.forEach((sizeType) => deleteImage(banner.value.content.image, sizeType));
 };
 const {
   textboxAlignXModel,

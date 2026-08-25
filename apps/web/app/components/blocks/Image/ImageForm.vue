@@ -4,19 +4,7 @@
     :title="getEditorTranslation('images-group-label')"
     data-testid="image-group"
   >
-    <div class="images">
-      <UiImagePicker
-        v-for="type in imageTypes"
-        :key="type"
-        :label="labels[type]"
-        :image="uiImageTextBlock.image[type]"
-        :placeholder="placeholderImg"
-        :dimensions="imageDimensions[type]"
-        :selected-image-type="type"
-        @add="(payload) => handleImageAddWrapper(payload)"
-        @delete="deleteImage(uiImageTextBlock.image, type)"
-      />
-    </div>
+    <UiResponsiveImagePicker :image="uiImageTextBlock.image" @add="handleImageAddWrapper" @delete="handleImageDelete" />
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
@@ -281,11 +269,15 @@ import {
   SfIconInfo,
 } from '@storefront-ui/vue';
 
-import type { ImageFormProps, ImageTypeKey } from './types';
+import type { ImageFormProps } from './types';
 import type { ImageContent } from '~/components/blocks/Image/types';
+import type {
+  ResponsiveImagePickerAddPayload,
+  ResponsiveImagePickerDeletePayload,
+} from '~/components/ui/ResponsiveImagePicker/types';
 import { clamp } from '@storefront-ui/shared';
 
-const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
+const { imageTypes, deleteImage } = usePickerHelper();
 const { allBlocks: data } = useBlocks();
 
 const { blockUuid } = useSiteConfiguration();
@@ -365,10 +357,19 @@ const fillTooltip =
 
 const paddingTooltip = 'Padding is only available in Fit mode.';
 
-const handleImageAddWrapper = ({ image, type }: { image: string; type: string }) => {
-  if (uiImageTextBlock.value.image && ['wideScreen', 'desktop', 'tablet', 'mobile'].includes(type)) {
-    uiImageTextBlock.value.image[type as ImageTypeKey] = image;
+const handleImageAddWrapper = ({ image, type, applyToAllSizes }: ResponsiveImagePickerAddPayload) => {
+  if (!uiImageTextBlock.value.image) {
+    return;
   }
+  const targets = applyToAllSizes ? imageTypes : [type];
+  targets.forEach((sizeType) => {
+    uiImageTextBlock.value.image[sizeType] = image;
+  });
+};
+
+const handleImageDelete = ({ type, applyToAllSizes }: ResponsiveImagePickerDeletePayload) => {
+  const targets = applyToAllSizes ? imageTypes : [type];
+  targets.forEach((sizeType) => deleteImage(uiImageTextBlock.value.image, sizeType));
 };
 
 const clampBrightness = (event: Event, type: string) => {
