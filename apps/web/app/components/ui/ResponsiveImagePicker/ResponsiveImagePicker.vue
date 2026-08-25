@@ -11,6 +11,17 @@
     />
   </div>
 
+  <div
+    v-if="hasMissingSizes"
+    class="flex items-start gap-2 pb-2 text-sm text-neutral-600"
+    role="alert"
+    aria-live="polite"
+    data-testid="mismatched-sizes-hint"
+  >
+    <SfIconWarning class="mt-0.5 shrink-0 text-yellow-500" aria-hidden="true" />
+    <span class="italic">{{ getEditorTranslation('mismatched-sizes-hint') }}</span>
+  </div>
+
   <div class="images">
     <UiImagePicker
       v-if="!configureIndividually"
@@ -40,14 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import { SfSwitch } from '@storefront-ui/vue';
+import { SfSwitch, SfIconWarning } from '@storefront-ui/vue';
 import type {
   ResponsiveImagePickerProps,
   ResponsiveImagePickerAddPayload,
   ResponsiveImagePickerDeletePayload,
 } from './types';
 
-defineProps<ResponsiveImagePickerProps>();
+const props = defineProps<ResponsiveImagePickerProps>();
 const emit = defineEmits<{
   (e: 'add', payload: ResponsiveImagePickerAddPayload): void;
   (e: 'delete', payload: ResponsiveImagePickerDeletePayload): void;
@@ -56,17 +67,31 @@ const emit = defineEmits<{
 const { placeholderImg, labels, imageDimensions, imageTypes } = usePickerHelper();
 
 const configureIndividually = useState('responsive-image-picker-configure-individually', () => false);
+
+const PLACEHOLDER_IMAGE_FILENAME = 'placeholder-image.png';
+
+const isEmptySize = (value?: string) => !value || value.endsWith(PLACEHOLDER_IMAGE_FILENAME);
+
+const hasMissingSizes = computed(() => {
+  if (configureIndividually.value) {
+    return false;
+  }
+  const emptySizesCount = imageTypes.filter((type) => isEmptySize(props.image[type])).length;
+  return emptySizesCount > 0 && emptySizesCount < imageTypes.length;
+});
 </script>
 
 <i18n lang="json">
 {
   "en": {
     "configure-individually-label": "Configure screen sizes individually",
-    "image-label": "Image"
+    "image-label": "Image",
+    "mismatched-sizes-hint": "Some screen sizes still miss an image. Enable individual configuration to review them."
   },
   "de": {
-    "configure-individually-label": "Bildschirmgrößen einzeln konfigurieren",
-    "image-label": "Bild"
+    "configure-individually-label": "Configure screen sizes individually",
+    "image-label": "Image",
+    "mismatched-sizes-hint": "Some screen sizes still miss an image. Enable individual configuration to review them."
   }
 }
 </i18n>
