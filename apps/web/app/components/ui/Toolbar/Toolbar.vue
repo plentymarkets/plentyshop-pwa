@@ -12,6 +12,28 @@
         <UiToolbarDeviceToggle />
       </div>
       <div class="ml-auto flex space-x-2">
+        <SfTooltip :label="getEditorTranslation('undo')" placement="bottom" :show-arrow="true">
+          <button
+            class="text-editor-button w-8 h-8 rounded-md flex items-center justify-center xl:w-auto xl:h-auto xl:px-1 xl:py-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            data-testid="edit-undo-button"
+            :aria-label="getEditorTranslation('undo')"
+            :disabled="!canUndo"
+            @click="undo"
+          >
+            <SfIconUndo />
+          </button>
+        </SfTooltip>
+        <SfTooltip :label="getEditorTranslation('redo')" placement="bottom" :show-arrow="true">
+          <button
+            class="text-editor-button w-8 h-8 rounded-md flex items-center justify-center xl:w-auto xl:h-auto xl:px-1 xl:py-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            data-testid="edit-redo-button"
+            :aria-label="getEditorTranslation('redo')"
+            :disabled="!canRedo"
+            @click="redo"
+          >
+            <SfIconUndo class="-scale-x-100" />
+          </button>
+        </SfTooltip>
         <button
           class="self-start w-8 h-8 rounded-md font-inter font-medium text-sm leading-5 flex items-center justify-center xl:w-auto xl:h-auto xl:px-4 xl:py-2 xl:text-base xl:leading-6"
           :class="historyDrawerOpen ? 'bg-editor-button/10 text-editor-button' : 'text-editor-button'"
@@ -76,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfTooltip } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconUndo, SfTooltip } from '@storefront-ui/vue';
 import { editPath } from '~/assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 import historyBlack from '~/assets/icons/paths/history-black.svg';
@@ -88,6 +110,7 @@ const { hasChanges: localizationHasChanges } = useEditorLocalizationKeys();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { data, cleanData, loading, isSettling } = useBlocks();
+const { canUndo, canRedo, undo, redo } = useBlockHistory();
 
 const { closeDrawer } = useSiteConfiguration();
 const { settingsIsDirty, loading: settingsLoading } = useSiteSettings();
@@ -129,13 +152,17 @@ watch(
     "save-changes": "Save changes",
     "preview": "Preview",
     "edit": "Edit",
-    "history": "History"
+    "history": "History",
+    "undo": "Undo",
+    "redo": "Redo"
   },
   "de": {
     "save-changes": "Save changes",
     "preview": "Preview",
     "edit": "Edit",
-    "history": "History"
+    "history": "History",
+    "undo": "Undo",
+    "redo": "Redo"
   }
 }
 </i18n>
