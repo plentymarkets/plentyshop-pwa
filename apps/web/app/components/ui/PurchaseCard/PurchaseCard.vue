@@ -23,6 +23,15 @@
                 {{ productGetters.getName(product) }}
               </h1>
             </template>
+            <template v-if="key === 'variationNumber' && configuration?.fields.variationNumber">
+              <p
+                v-if="productGetters.getVariationNumber(product)"
+                class="mb-2 typography-text-sm text-neutral-500"
+                data-testid="product-variation-number"
+              >
+                {{ productGetters.getVariationNumber(product) }}
+              </p>
+            </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
                 <Price :crossed-price="crossedPrice" :price="priceWithProperties" />
@@ -242,6 +251,7 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
     fields: {
       itemName: true,
+      variationNumber: false,
       price: true,
       tags: true,
       availability: true,
@@ -260,6 +270,7 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
     },
     fieldsOrder: [
       'itemName',
+      'variationNumber',
       'price',
       'tags',
       'availability',

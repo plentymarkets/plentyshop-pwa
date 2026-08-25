@@ -106,6 +106,18 @@ const migratePriceCardBlock = (block: Block): void => {
     if (!content.fieldsOrder.includes('guaranteeLabel')) {
       content.fieldsOrder.push('guaranteeLabel');
     }
+
+    if (fields['variationNumber'] === undefined) {
+      fields['variationNumber'] = false;
+    }
+    if (!content.fieldsOrder.includes('variationNumber')) {
+      const itemNameIndex = content.fieldsOrder.indexOf('itemName');
+      if (itemNameIndex >= 0) {
+        content.fieldsOrder.splice(itemNameIndex + 1, 0, 'variationNumber');
+      } else {
+        content.fieldsOrder.push('variationNumber');
+      }
+    }
   }
 };
 
