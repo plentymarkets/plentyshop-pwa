@@ -97,6 +97,7 @@ const route = useRoute();
 const { disableActions } = useEditor();
 const { siteConfigurationDrawerOpen, blocksConfigurationDrawerOpen, currentFont } = useSiteConfiguration();
 const { drawerOpen, entityKey, resetForCurrentEntity } = useBlockSnapshots();
+const { resetHistory } = useBlockHistory();
 const { setStaticPageMeta } = useUrlPageMeta();
 const { isInEditorClient, isMobilePreview, previewWidth } = useEditorState();
 
@@ -281,6 +282,10 @@ if (import.meta.client) {
     if (drawerOpen.value) {
       resetForCurrentEntity();
     }
+  });
+
+  watch(entityKey, () => {
+    resetHistory();
   });
 }
 
