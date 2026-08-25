@@ -19,6 +19,7 @@ const blocksList = {
             content: {
               fields: {
                 itemName: true,
+                variationNumber: false,
                 price: true,
                 tags: true,
                 availability: true,
@@ -37,6 +38,7 @@ const blocksList = {
               },
               fieldsOrder: [
                 'itemName',
+                'variationNumber',
                 'price',
                 'tags',
                 'availability',
@@ -77,6 +79,7 @@ const blocksList = {
             content: {
               fields: {
                 itemName: true,
+                variationNumber: false,
                 price: true,
                 tags: true,
                 availability: true,
@@ -95,6 +98,7 @@ const blocksList = {
               },
               fieldsOrder: [
                 'itemName',
+                'variationNumber',
                 'price',
                 'tags',
                 'availability',

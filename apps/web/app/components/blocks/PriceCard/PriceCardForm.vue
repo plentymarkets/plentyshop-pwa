@@ -238,6 +238,7 @@ priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';
 
 const fieldLabels: Record<PriceCardFieldKey, string> = {
   itemName: getEditorTranslation('field-itemName'),
+  variationNumber: getEditorTranslation('field-variationNumber'),
   price: getEditorTranslation('field-price'),
   tags: getEditorTranslation('field-tags'),
   availability: getEditorTranslation('field-availability'),
@@ -326,6 +327,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "padding-label": "Padding (px)",
 
     "field-itemName": "Item name",
+    "field-variationNumber": "Variation number",
     "field-price": "Price",
     "field-tags": "Tags",
     "field-availability": "Availability",
@@ -383,6 +385,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "padding-label": "Padding (px)",
 
     "field-itemName": "Item name",
+    "field-variationNumber": "Variation number",
     "field-price": "Price",
     "field-tags": "Tags",
     "field-availability": "Availability",

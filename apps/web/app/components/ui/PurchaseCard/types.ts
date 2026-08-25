@@ -11,6 +11,7 @@ export type PriceCardOrderItem = PriceCardFieldKey | PriceCardTextBlockItem;
 
 export type PriceCardFieldKey =
   | 'itemName'
+  | 'variationNumber'
   | 'price'
   | 'tags'
   | 'availability'
