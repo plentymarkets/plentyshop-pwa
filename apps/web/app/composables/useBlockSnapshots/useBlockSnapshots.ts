@@ -49,6 +49,8 @@ export const useBlockSnapshots = () => {
     return `${type}:${identifier}`;
   });
 
+  const identifier = computed(() => resolveEntity().identifier);
+
   const openDrawer = () => {
     useSiteConfiguration().closeDrawer();
     state.value.drawerOpen = true;
@@ -89,6 +91,7 @@ export const useBlockSnapshots = () => {
       const { data } = await useSdk().plentysystems.getBlockSnapshots({
         snapshotableType: type,
         snapshotableId: typeof identifier === 'number' ? identifier : undefined,
+        snapshotableUrl: typeof identifier === 'string' ? identifier : undefined,
         createdFrom: dateFrom || undefined,
         createdTo: dateTo || undefined,
         page: 1,
@@ -307,6 +310,7 @@ export const useBlockSnapshots = () => {
     confirming: computed(() => state.value.confirmingId != null),
     confirmingSnapshot,
     entityKey,
+    identifier,
     isActiveSnapshot,
     isRestoredSnapshot,
     openDrawer,

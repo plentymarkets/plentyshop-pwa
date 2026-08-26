@@ -72,8 +72,12 @@
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { BlockSnapshot } from '@plentymarkets/shop-api';
 
+const IMMUTABLE_PAGE_LABEL: Record<string, string> = {
+  [HOMEPAGE_IDENTIFIER]: getEditorTranslation('entity-immutable-homepage'),
+  [SHIPPING_PAGE_IDENTIFIER]: getEditorTranslation('entity-immutable-shipping'),
+};
+
 const ENTITY_TYPE_LABEL: Record<string, string> = {
-  immutable: getEditorTranslation('entity-immutable'),
   category: getEditorTranslation('entity-category'),
   product: getEditorTranslation('entity-product'),
 };
@@ -87,10 +91,15 @@ const {
   loadMore,
   isActiveSnapshot,
   isRestoredSnapshot,
+  identifier,
 } = useBlockSnapshots();
 
-const entityTypeFor = (snapshot: BlockSnapshot): string =>
-  ENTITY_TYPE_LABEL[snapshot.snapshotableType] || snapshot.snapshotableType;
+const entityTypeFor = (snapshot: BlockSnapshot): string => {
+  if (snapshot.snapshotableType === 'immutable') {
+    return IMMUTABLE_PAGE_LABEL[identifier.value] || getEditorTranslation('entity-immutable-page');
+  }
+  return ENTITY_TYPE_LABEL[snapshot.snapshotableType] || snapshot.snapshotableType;
+};
 
 const versionName = (snapshot: BlockSnapshot): string => getSnapshotVersionName(snapshot);
 
@@ -108,7 +117,9 @@ const activeLabel = (id: number): string =>
     "in-use": "In use",
     "no-results": "No versions found in this date range.",
     "load-more": "Load more",
-    "entity-immutable": "Homepage",
+    "entity-immutable-homepage": "Homepage",
+    "entity-immutable-shipping": "Shipping policy",
+    "entity-immutable-page": "Page",
     "entity-category": "Category page",
     "entity-product": "Product page"
   },
@@ -118,7 +129,9 @@ const activeLabel = (id: number): string =>
     "in-use": "In use",
     "no-results": "No versions found in this date range.",
     "load-more": "Load more",
-    "entity-immutable": "Homepage",
+    "entity-immutable-homepage": "Homepage",
+    "entity-immutable-shipping": "Shipping policy",
+    "entity-immutable-page": "Page",
     "entity-category": "Category page",
     "entity-product": "Product page"
   }

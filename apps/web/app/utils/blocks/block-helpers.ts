@@ -37,7 +37,7 @@ const isBlockEmpty = (block: Block | null | undefined): boolean => {
 };
 
 const DEFAULT_PAGE_BLOCKS_MAP: Record<string, (identifier: string | number) => Block[]> = {
-  immutable: () => createHomepage(),
+  immutable: (identifier) => (identifier === HOMEPAGE_IDENTIFIER ? createHomepage() : []),
   category: (identifier) => (typeof identifier === 'number' && identifier > 0 ? [] : createCategory()),
   product: () => createProduct(),
 };
