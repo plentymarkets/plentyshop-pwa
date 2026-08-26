@@ -7,6 +7,38 @@ description: Start the plentyshop-pwa dev server and drive it with a real browse
 
 Start the Nuxt dev server, then drive a real Chromium browser against it to see what actually renders — screenshots, console output, page errors, and failed network requests. No MCP server needed: this repo already depends on `playwright-core` (see root `package.json`), so a plain Node script drives the browser directly.
 
+## 0. Prerequisites Check
+
+Before launching browsers, ensure playwright-core and chromium-headless-shell are available:
+
+```bash
+# Check if playwright-core is installed
+node -e "try { require.resolve('playwright-core'); console.log('✓ playwright-core found'); process.exit(0); } catch(e) { console.log('✗ playwright-core not found'); process.exit(1); }"
+```
+
+If playwright-core is not found, ask the user:
+
+> This skill needs playwright-core to launch browsers. Install it now?
+> 
+> **Option 1**: Yes, install playwright-core and chromium  
+> Runs: `npm install playwright-core && npx playwright install chromium-headless-shell`
+> 
+> **Option 2**: No, skip browser automation
+
+If the user approves, run:
+
+```bash
+npm install playwright-core && npx playwright install chromium-headless-shell
+```
+
+If playwright-core exists but chromium-headless-shell is missing (error: `browserType.launch: Executable doesn't exist...`), install just the browser:
+
+```bash
+npx playwright install chromium-headless-shell
+```
+
+This check ensures the dependencies are only installed when the skill is actually used, not on every `npm install` for all contributors.
+
 ## 1. Start the dev server
 
 From the repo root:
@@ -80,6 +112,6 @@ The script prints, in order: the loaded URL and title, one line per action, then
 
 ## Notes
 
-- The matching `chromium-headless-shell` build is fetched automatically by the root `postinstall` script (`scripts/postinstall.js`) on every `npm install`, so it stays in sync whenever `playwright-core` bumps versions. If the browser is still missing (e.g. `browserType.launch: Executable doesn't exist...`), run `npm install` from the repo root rather than `npx playwright install` — `npx` resolves the latest global `playwright` CLI, which pins a different browser revision than the repo's locally installed `playwright-core` and downloads the wrong build.
+- `chromium-headless-shell` is installed on-demand when this skill runs (see Prerequisites Check above), not automatically on `npm install`. This keeps install times fast for contributors who don't use browser automation. When installed, the browser stays in sync with `playwright-core` versions via `npx playwright install chromium-headless-shell`. Always use `npx` with the repo's local `playwright-core` rather than a global `playwright` CLI — the global version may pin a different browser revision and download the wrong build.
 - For anything beyond simple checks (multi-step flows, auth, cart/checkout), extend `scripts/browse.mjs` with more `--eval`/`--click` steps rather than writing a one-off script; keep the CLI shape.
 - This complements, not replaces, the existing Cypress e2e suite (`npm run test:cypress-dev`) — use Cypress for regression tests that should live in the repo, use this skill for ad-hoc "does this look right / what's broken" checks during development.
