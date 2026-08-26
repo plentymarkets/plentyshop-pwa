@@ -28,13 +28,13 @@ If playwright-core is not found, ask the user:
 If the user approves, run:
 
 ```bash
-npm install playwright-core && npx playwright install chromium-headless-shell
+npm install playwright-core && PLAYWRIGHT_VERSION=$(node -p "const pkg = require('./package.json'); (pkg.dependencies?.['playwright-core'] || pkg.devDependencies?.['playwright-core'] || '').replace(/[\^~]/, '')") && npx playwright@$PLAYWRIGHT_VERSION install chromium-headless-shell
 ```
 
-If playwright-core exists but chromium-headless-shell is missing (error: `browserType.launch: Executable doesn't exist...`), install just the browser:
+If playwright-core exists but chromium-headless-shell is missing (error: `browserType.launch: Executable doesn't exist...`), install just the browser using the matching version:
 
 ```bash
-npx playwright install chromium-headless-shell
+PLAYWRIGHT_VERSION=$(node -p "const pkg = require('./package.json'); (pkg.dependencies?.['playwright-core'] || pkg.devDependencies?.['playwright-core'] || '').replace(/[\^~]/, '')") && npx playwright@$PLAYWRIGHT_VERSION install chromium-headless-shell
 ```
 
 This check ensures the dependencies are only installed when the skill is actually used, not on every `npm install` for all contributors.
@@ -112,6 +112,6 @@ The script prints, in order: the loaded URL and title, one line per action, then
 
 ## Notes
 
-- `chromium-headless-shell` is installed on-demand when this skill runs (see Prerequisites Check above), not automatically on `npm install`. This keeps install times fast for contributors who don't use browser automation. When installed, the browser stays in sync with `playwright-core` versions via `npx playwright install chromium-headless-shell`. Always use `npx` with the repo's local `playwright-core` rather than a global `playwright` CLI — the global version may pin a different browser revision and download the wrong build.
+- `chromium-headless-shell` is installed on-demand when this skill runs (see Prerequisites Check above), not automatically on `npm install`. This keeps install times fast for contributors who don't use browser automation. The browser version is kept in sync with `playwright-core` by extracting the version from `package.json` and using `npx playwright@$PLAYWRIGHT_VERSION install chromium-headless-shell`. This ensures the browser revision matches the playwright-core library version exactly.
 - For anything beyond simple checks (multi-step flows, auth, cart/checkout), extend `scripts/browse.mjs` with more `--eval`/`--click` steps rather than writing a one-off script; keep the CLI shape.
 - This complements, not replaces, the existing Cypress e2e suite (`npm run test:cypress-dev`) — use Cypress for regression tests that should live in the repo, use this skill for ad-hoc "does this look right / what's broken" checks during development.
