@@ -19,10 +19,9 @@ node -e "try { require.resolve('playwright-core'); console.log('✓ playwright-c
 If playwright-core is not found, ask the user:
 
 > This skill needs playwright-core to launch browsers. Install it now?
-> 
-> **Option 1**: Yes, install playwright-core and chromium  
-> Runs: `npm install playwright-core && npx playwright install chromium-headless-shell`
-> 
+>
+> **Option 1**: Yes, install playwright-core and chromium
+>
 > **Option 2**: No, skip browser automation
 
 If the user approves, run:
