@@ -26,7 +26,6 @@ defineI18nRoute({
 
 definePageMeta({
   pageType: 'static',
-  skipBlocksFetch: true,
   isBlockified: true,
   type: 'immutable',
   identifier: SHIPPING_PAGE_IDENTIFIER,
@@ -44,12 +43,9 @@ setBlocksListContext('content');
 const categoryId = computed(() => getNumberSetting());
 
 /**
- * Loads the current shipping page blocks, preferring the ones saved under the page's own
- * identifier and falling back to the legacy blocks saved against the configured shipping
- * category, so shops that started out on the old category-linked flow keep their content.
+ * Loads lagacy category id blocks
  */
 const loadBlocks = async (legacyCategoryId: number) => {
-  await fetchBlocks(SHIPPING_PAGE_IDENTIFIER, 'immutable');
   if (pageBlocks.value.length === 0 && legacyCategoryId > 0) {
     await fetchBlocks(legacyCategoryId, 'category');
   }
