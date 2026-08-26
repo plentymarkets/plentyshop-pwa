@@ -3,6 +3,12 @@ const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/bloc
   import: 'default',
 }) as Record<string, BlockLoader>;
 
+// Packages hoisted to the monorepo root node_modules (npm workspaces)
+const workspaceCustomerBlocks = import.meta.glob(
+  '../../../../../node_modules/*/runtime/components/blocks/**/*.vue',
+  { import: 'default' },
+) as Record<string, BlockLoader>;
+
 const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
 }) as Record<string, BlockLoader>;
@@ -16,13 +22,19 @@ const coreBlockListLoaders = import.meta.glob('@/components/**/blocks/**/default
 
 const customerBlockListLoaders = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts');
 
+// Packages hoisted to the monorepo root node_modules (npm workspaces)
+const workspaceCustomerBlockListLoaders = import.meta.glob(
+  '../../../../../node_modules/*/runtime/components/blocks/**/defaults.ts',
+);
+
 const nuxtModuleBlockListLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts');
 
-const blockListLoadersSources = [
-  ...Object.values(coreBlockListLoaders),
-  ...Object.values(nuxtModuleBlockListLoaders),
-  ...Object.values(customerBlockListLoaders),
-];
+const allBlockListLoaders: Record<string, () => Promise<unknown>> = {
+  ...coreBlockListLoaders,
+  ...nuxtModuleBlockListLoaders,
+  ...customerBlockListLoaders,
+  ...workspaceCustomerBlockListLoaders,
+};
 
 const normalize = (path: string) => {
   const pop = path.split('/').pop();
@@ -35,6 +47,7 @@ export const blockLoaders: Record<string, BlockLoader> = {};
 Object.entries(coreBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(nuxtModuleBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 Object.entries(customerBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
+Object.entries(workspaceCustomerBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
 
 export const getBlockLoader = (name: string) => {
   return blockLoaders[name];
@@ -57,9 +70,25 @@ export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
 };
 
+const extensionIdFromPath = (path: string): string | null => {
+  const match = path.match(/node_modules\/(.+?)\/runtime\//);
+  if (match) return match[1];
+  const moduleMatch = path.match(/modules\/(.+?)\/runtime\//);
+  if (moduleMatch) return moduleMatch[1];
+  return null;
+};
+
 export const resolveBlocksList = async (): Promise<BlocksList> => {
   const result: BlocksList = {};
   const overriddenBlocks = new Set<string>();
+  const featureFlags = useState<Record<string, boolean>>('feature-flags', () => ({}));
+
+  const isDisabled = (path: string): boolean => {
+    const extId = extensionIdFromPath(path);
+    if (!extId) return false;
+    const key = `extension.${extId}.enabled`;
+    return key in featureFlags.value && featureFlags.value[key] === false;
+  };
 
   const nameOf = (variation: BlockTemplateVariation) =>
     variation.template?.en?.name ?? variation.template?.de?.name ?? '';
@@ -83,7 +112,8 @@ export const resolveBlocksList = async (): Promise<BlocksList> => {
     });
   };
 
-  const modules = await Promise.all(blockListLoadersSources.map((loader) => loader() as Promise<DefaultsModule>));
+  const entries = Object.entries(allBlockListLoaders).filter(([path]) => !isDisabled(path));
+  const modules = await Promise.all(entries.map(([, loader]) => loader() as Promise<DefaultsModule>));
 
   modules.forEach((mod) => {
     if (mod.getBlocksList) {
