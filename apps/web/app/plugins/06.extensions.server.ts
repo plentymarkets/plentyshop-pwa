@@ -1,35 +1,34 @@
 import { readFile } from 'node:fs/promises';
 
-
 export type LoadFeatureFlagsDeps = {
   readFile: (path: string, encoding: BufferEncoding) => Promise<string>;
   filePath: string;
   configFlags?: Record<string, unknown>;
 };
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
+const parseDotenv = (content: string): Record<string, unknown> => {
+  const result: Record<string, unknown> = {};
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+
+    const separatorIndex = trimmed.indexOf('=');
+    if (separatorIndex === -1) continue;
+
+    const key = trimmed.slice(0, separatorIndex).trim();
+    const rawValue = trimmed.slice(separatorIndex + 1).trim();
+
+    if (rawValue === 'true') result[key] = true;
+    else if (rawValue === 'false') result[key] = false;
+    else result[key] = rawValue;
+  }
+  return result;
+};
 
 export const loadFeatureFlags = async (deps: LoadFeatureFlagsDeps): Promise<Record<string, unknown>> => {
   try {
-    const parsed: unknown = JSON.parse(await deps.readFile(deps.filePath, 'utf-8'));
-    if (isRecord(parsed)) return parsed;
+    const parsed = parseDotenv(await deps.readFile(deps.filePath, 'utf-8'));
+    if (Object.keys(parsed).length > 0) return parsed;
   } catch {}
   return deps.configFlags ?? {};
 };
-
-
-export default defineNuxtPlugin({
-  name: 'shop-core:feature-flags',
-  enforce: 'pre',
-  async setup() {
-    const runtimeConfig = useRuntimeConfig();
-    const flags = useState<Record<string, unknown>>('extensions', () => ({}));
-    flags.value = await loadFeatureFlags({
-      readFile,
-      filePath: '/etc/plenty/extensions/extensions.env',
-      configFlags: runtimeConfig.public.shopCore.featureFlags,
-    });
-    console.log(flags.value);
-  },
-});
