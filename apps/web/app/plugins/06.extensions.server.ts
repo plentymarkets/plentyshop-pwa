@@ -25,10 +25,25 @@ const parseDotenv = (content: string): Record<string, unknown> => {
   return result;
 };
 
-export const loadFeatureFlags = async (deps: LoadFeatureFlagsDeps): Promise<Record<string, unknown>> => {
+export const loadExtensions = async (deps: LoadFeatureFlagsDeps): Promise<Record<string, unknown>> => {
   try {
     const parsed = parseDotenv(await deps.readFile(deps.filePath, 'utf-8'));
     if (Object.keys(parsed).length > 0) return parsed;
   } catch {}
   return deps.configFlags ?? {};
 };
+
+
+export default defineNuxtPlugin({
+  name: 'extensions',
+  parallel: true,
+  async setup() {
+    const extensions = await loadExtensions({
+      readFile,
+      filePath: '/etc/plenty/extensions/extensions.env',
+      configFlags: {}
+    });
+
+    console.log('extensions', extensions);
+  },
+});
