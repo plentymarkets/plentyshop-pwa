@@ -107,6 +107,10 @@ const contentRef = ref<HTMLElement | null>(null);
 const previewContainerEl = ref<HTMLElement | null>(null);
 provide('previewContainer', previewContainerEl);
 
+ const { $extensions } = useNuxtApp();
+
+ console.log($extensions);
+
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
 const { getSetting: getOgImage } = useSiteSettings('ogImage');
