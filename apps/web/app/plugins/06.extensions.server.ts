@@ -29,7 +29,7 @@ export const loadExtensions = async (deps: LoadFeatureFlagsDeps): Promise<Record
   try {
     const parsed = parseDotenv(await deps.readFile(deps.filePath, 'utf-8'));
     if (Object.keys(parsed).length > 0) return parsed;
-  } catch {}
+  } catch { }
   return deps.configFlags ?? {};
 };
 
@@ -38,15 +38,18 @@ export default defineNuxtPlugin({
   name: 'extensions',
   parallel: true,
   async setup() {
-    const extensions = await loadExtensions({
-      readFile,
-      filePath: '/etc/plenty/extensions/extensions.env',
-      configFlags: {}
-    });
+    const extensions = useState('extensions-state');
+    if (import.meta.server) {
+     extensions.value = await loadExtensions({
+        readFile,
+        filePath: '/etc/plenty/extensions/extensions.env',
+        configFlags: {}
+      });
+      console.log('extensions', extensions);
+    }
 
-    console.log('extensions', extensions);
     return {
-      provide: { extensions } 
+      provide: { extensions }
     }
   },
 });
