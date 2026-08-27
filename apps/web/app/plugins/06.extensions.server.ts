@@ -47,9 +47,6 @@ export default defineNuxtPlugin({
       });
       console.log('extensions', extensions);
     }
-
-    return {
-      provide: { extensions }
-    }
+  
   },
 });

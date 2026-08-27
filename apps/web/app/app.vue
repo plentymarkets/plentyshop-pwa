@@ -107,9 +107,9 @@ const contentRef = ref<HTMLElement | null>(null);
 const previewContainerEl = ref<HTMLElement | null>(null);
 provide('previewContainer', previewContainerEl);
 
- const { $extensions } = useNuxtApp();
+const extensions = useState('extensions-state');
 
- console.log($extensions);
+console.log(extensions.value);
 
 const { getSetting: getFavicon } = useSiteSettings('favicon');
 const { getSetting: getOgTitle } = useSiteSettings('ogTitle');
