@@ -1,5 +1,5 @@
 <template>
-  <div v-if="manufacturer && model && enableGuarantee" class="relative w-full" :style="{ maxWidth }">
+  <div v-if="guarantee && manufacturer && model && enableGuarantee" class="relative w-full" :style="{ maxWidth }">
     <button
       v-if="!isOpen"
       :aria-label="t('guaranteeLabels.area.open')"
@@ -8,7 +8,7 @@
       type="button"
       @click="isOpen = true"
     >
-      <GuaranteeBadge guarantee="TBD" />
+      <GuaranteeBadge :guarantee="guarantee" />
     </button>
 
     <Transition
@@ -28,7 +28,7 @@
         >
           <SfIconClose size="xs" />
         </button>
-        <GuaranteeLabel guarantee="TBD" :manufacturer="manufacturer" :model="model" />
+        <GuaranteeLabel :guarantee="guarantee" :manufacturer="manufacturer" :model="model" />
       </div>
     </Transition>
   </div>
@@ -43,6 +43,7 @@ const props = defineProps<GuaranteeBlockProps>();
 const enableGuarantee = useFeatureFlag('shopPwaEnableEu2025-1960', false);
 const isOpen = ref(false);
 
+const guarantee = computed(() => props.product?.variation?.durabilityYears);
 const manufacturer = computed(() => {
   const manufacturer = productGetters.getManufacturer(props.product);
   return manufacturer?.externalName ?? null;
