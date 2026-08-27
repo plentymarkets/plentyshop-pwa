@@ -4,10 +4,9 @@ const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/bloc
 }) as Record<string, BlockLoader>;
 
 // Packages hoisted to the monorepo root node_modules (npm workspaces)
-const workspaceCustomerBlocks = import.meta.glob(
-  '../../../../../node_modules/*/runtime/components/blocks/**/*.vue',
-  { import: 'default' },
-) as Record<string, BlockLoader>;
+const workspaceCustomerBlocks = import.meta.glob('../../../../../node_modules/*/runtime/components/blocks/**/*.vue', {
+  import: 'default',
+}) as Record<string, BlockLoader>;
 
 const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
@@ -70,12 +69,12 @@ export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
 };
 
-const extensionIdFromPath = (path: string): string | null => {
+const extensionIdFromPath = (path: string): string | undefined => {
   const match = path.match(/node_modules\/(.+?)\/runtime\//);
   if (match) return match[1];
   const moduleMatch = path.match(/modules\/(.+?)\/runtime\//);
   if (moduleMatch) return moduleMatch[1];
-  return null;
+  return undefined;
 };
 
 export const resolveBlocksList = async (): Promise<BlocksList> => {
