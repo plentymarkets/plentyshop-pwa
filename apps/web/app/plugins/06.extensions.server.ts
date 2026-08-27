@@ -27,7 +27,7 @@ export default defineNuxtPlugin({
     const flags = useState<Record<string, unknown>>('extensions', () => ({}));
     flags.value = await loadFeatureFlags({
       readFile,
-      filePath: '/etc/plenty/extensions',
+      filePath: '/etc/plenty/extensions/extensions.env',
       configFlags: runtimeConfig.public.shopCore.featureFlags,
     });
     console.log(flags.value);
