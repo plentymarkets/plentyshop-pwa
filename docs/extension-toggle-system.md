@@ -68,9 +68,9 @@ A JSON file on disk holds boolean flags:
 }
 ```
 
-In production this file lives at `/etc/plenty/feature-flags/flags.json`.
-In development we point to a local copy with the env var `JSON_FEATURE_FLAGS_FILE=./flags.json`
-(i.e. `apps/web/flags.json`).
+In production this file lives at a configured path on the server.
+In development you can point to a local copy by setting the `JSON_FEATURE_FLAGS_FILE` environment
+variable to a path of your choice.
 
 ### The server plugin — `feature-flags.server.ts`
 
