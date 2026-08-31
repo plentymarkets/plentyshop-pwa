@@ -22,8 +22,10 @@ When the user requests code generation, determine:
    - If unsure about correction, ask for confirmation
 
 3. **Optional**: Custom location?
-   - Standard locations: `components/` for components, `composables/` for composables
-   - Use `--output-path` to specify a custom output path
+   - Standard locations: `components/` for components, `composables/` for composables (blocks land under
+     `components/blocks/` automatically when `--with-form` is used)
+   - There is no per-invocation output-path flag; to point the CLI at a different app root entirely, create a
+     `.plentyone/shop-cli.json` config file (see `packages/shop-cli/README.md`)
 
 ## Naming Conventions
 
@@ -50,7 +52,6 @@ npm run generate:settings SettingsName [--options]   # component with --with-vie
 
 | Option               | Description                            | Example                           |
 | -------------------- | -------------------------------------- | --------------------------------- |
-| `--output-path=path` | Custom output location                 | `--output-path=components/blocks` |
 | `--skip-tests`       | Don't generate test files              | `--skip-tests`                    |
 | `--skip-types`       | Don't generate types.ts                | `--skip-types`                    |
 | `--with-form`        | Add \*Form.vue (for CMS editor blocks) | `--with-form`                     |
@@ -72,8 +73,8 @@ npm run generate:block ImageCarousel
 # Settings component (includes --with-view --with-toolbar automatically)
 npm run generate:settings ShippingOptions
 
-# Custom path without tests
-npm run generate:component -- MyWidget --output-path=components/custom --skip-tests
+# Skip tests
+npm run generate:component -- MyWidget --skip-tests
 ```
 
 ## Output Format

@@ -5,6 +5,7 @@
  */
 
 import { PathResolver, type GeneratorAction, type PromptAnswers } from '../index';
+import type { PathOptions } from '../path/types';
 
 /**
  * Fluent builder for creating PlopJS actions
@@ -22,6 +23,7 @@ export class ActionBuilder {
     name: string,
     generatorType: string,
     private readonly pathResolver: PathResolver,
+    private readonly pathOptions?: PathOptions,
   ) {
     this.name = name;
     this.generatorType = generatorType;
@@ -32,8 +34,8 @@ export class ActionBuilder {
   /**
    * Create a new ActionBuilder for a specific generator type
    */
-  static forGenerator(type: string, name: string, pathResolver: PathResolver): ActionBuilder {
-    return new ActionBuilder(name, type, pathResolver);
+  static forGenerator(type: string, name: string, pathResolver: PathResolver, pathOptions?: PathOptions): ActionBuilder {
+    return new ActionBuilder(name, type, pathResolver, pathOptions);
   }
 
   /**
@@ -161,7 +163,7 @@ export class ActionBuilder {
    * Resolve base path using PathResolver
    */
   private resolveBasePath(): string {
-    const result = this.pathResolver.resolve(this.generatorType, this.name);
+    const result = this.pathResolver.resolve(this.generatorType, this.name, this.pathOptions);
     return result.basePath;
   } /**
    * Get default file extension based on generator type

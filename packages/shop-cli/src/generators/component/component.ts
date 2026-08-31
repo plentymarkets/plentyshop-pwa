@@ -20,19 +20,27 @@ class ComponentGenerator extends BaseGenerator {
     return componentPrompts as GeneratorPrompt[];
   }
 
-  private resolveOptions(data: PromptAnswers) {
+  private resolveOptions(data: PromptAnswers): {
+    skipTests: boolean;
+    skipTypes: boolean;
+    withForm: boolean;
+    withView: boolean;
+    withToolbar: boolean;
+  } {
     return {
-      skipTests: data.skipTests ?? process.env.PLENTYSHOP_SKIP_TESTS === 'true',
-      skipTypes: data.skipTypes ?? process.env.PLENTYSHOP_SKIP_TYPES === 'true',
-      withForm: data.withForm ?? process.env.PLENTYSHOP_WITH_FORM === 'true',
-      withView: data.withView ?? process.env.PLENTYSHOP_WITH_VIEW === 'true',
-      withToolbar: data.withToolbar ?? process.env.PLENTYSHOP_WITH_TOOLBAR === 'true',
+      skipTests: Boolean(data.skipTests ?? process.env.PLENTYSHOP_SKIP_TESTS === 'true'),
+      skipTypes: Boolean(data.skipTypes ?? process.env.PLENTYSHOP_SKIP_TYPES === 'true'),
+      withForm: Boolean(data.withForm ?? process.env.PLENTYSHOP_WITH_FORM === 'true'),
+      withView: Boolean(data.withView ?? process.env.PLENTYSHOP_WITH_VIEW === 'true'),
+      withToolbar: Boolean(data.withToolbar ?? process.env.PLENTYSHOP_WITH_TOOLBAR === 'true'),
     };
   }
 
   createActions(data: PromptAnswers): GeneratorAction[] {
     const options = this.resolveOptions(data);
-    const builder = ActionBuilder.forGenerator('component', data.name, this.pathResolver).withData(data).addMainFile();
+    const builder = ActionBuilder.forGenerator('component', data.name, this.pathResolver, { isBlock: options.withForm })
+      .withData(data)
+      .addMainFile();
 
     if (!options.skipTypes) builder.addTypes();
     if (!options.skipTests) builder.addTests();

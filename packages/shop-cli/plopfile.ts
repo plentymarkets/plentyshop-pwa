@@ -27,8 +27,7 @@ export default function (plop: NodePlopAPI): void {
     plop.setPartial(partialName, partialContent);
   }
 
-  const cliFlag = process.env.PLENTYSHOP_OUTPUT_PATH ? { webAppPath: process.env.PLENTYSHOP_OUTPUT_PATH } : undefined;
-  const config = resolveConfig(cliFlag);
+  const config = resolveConfig();
 
   if (!validatePath(projectRoot, config.webAppPath)) {
     console.error(`\nError: Cannot find web app directory at: ${config.webAppPath}`);

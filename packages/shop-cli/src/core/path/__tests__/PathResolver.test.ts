@@ -51,6 +51,19 @@ describe('PathResolver', () => {
 
       expect(result.mainFile).toBe('../../apps/web/app/components/TestComponent/CustomName.jsx');
     });
+
+    it('should insert a blocks/ segment when isBlock is set', () => {
+      const result = pathResolver.resolve('component', 'TestComponent', { isBlock: true });
+
+      expect(result.basePath).toBe('../../apps/web/app/components/blocks/TestComponent');
+      expect(result.mainFile).toBe('../../apps/web/app/components/blocks/TestComponent/{{pascalCase name}}.vue');
+    });
+
+    it('should not insert a blocks/ segment when isBlock is not set', () => {
+      const result = pathResolver.resolve('component', 'TestComponent', {});
+
+      expect(result.basePath).toBe('../../apps/web/app/components/TestComponent');
+    });
   });
 
   describe('Composable Strategy', () => {

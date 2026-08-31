@@ -42,7 +42,6 @@ npm run generate:component -- ProductCard --skip-tests --with-form
 | `--with-form`        | Create \*Form.vue for CMS editor | `--with-form`                     |
 | `--with-view`        | Create View.vue for settings     | `--with-view`                     |
 | `--with-toolbar`     | Create ToolbarTrigger.vue        | `--with-toolbar`                  |
-| `--output-path=path` | Custom output location           | `--output-path=components/blocks` |
 
 ## Examples
 
@@ -57,9 +56,9 @@ npm run generate:component ProductCard
 
 ```bash
 npm run generate:block VideoPlayer
-# Result: apps/web/app/components/VideoPlayer/
+# Result: apps/web/app/components/blocks/VideoPlayer/
 # Includes VideoPlayerForm.vue automatically (--with-form flag)
-# Remember to register in utils/blocks-imports.ts
+# Auto-discovered by the CMS editor via blocks-imports.ts's import.meta.glob - no manual registration needed
 ```
 
 **Settings component:**
@@ -119,12 +118,6 @@ For advanced usage, call the script directly:
 
 - Components must be PascalCase: `ProductCard` ✅ not `product-card` ❌
 - Composables must start with `use`: `useCart` ✅ not `cart` ❌
-
-**"Invalid output path" error:**
-
-- Use relative paths only
-- Must start with allowed prefix (components, composables, pages, etc.)
-- No directory traversal (`..`) allowed
 
 ## CI/CD
 

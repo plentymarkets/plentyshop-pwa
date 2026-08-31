@@ -80,7 +80,7 @@ abstract class BasePathStrategy implements PathStrategy {
  */
 export class ComponentPathStrategy extends BasePathStrategy {
   resolve(name: string, options: PathOptions = {}): PathResult {
-    const basePath = join(this.config.webAppRoot, 'components', name);
+    const basePath = join(this.config.webAppRoot, 'components', ...(options.isBlock ? ['blocks'] : []), name);
     const mainFileName = options.fileName || `{{pascalCase name}}`;
     const extension = options.extension || 'vue';
 

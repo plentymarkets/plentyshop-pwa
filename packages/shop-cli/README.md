@@ -44,17 +44,10 @@ Create `.plentyone/shop-cli.json` in your project root:
 }
 ```
 
-### CLI Flag Override
-
-```bash
-npx plentyshop generate component --web-app-path=src/app
-```
-
 ### Priority Order
 
-1. CLI flags (`--web-app-path`)
-2. Config file (`.plentyone/shop-cli.json`)
-3. Defaults (`apps/web/app`)
+1. Config file (`.plentyone/shop-cli.json`)
+2. Defaults (`apps/web/app`)
 
 ## Available Generators
 

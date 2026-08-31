@@ -83,7 +83,7 @@ No global store. All state lives in composables via Nuxt's `useState()` (SSR-saf
 
 ### Dynamic Blocks
 
-CMS blocks are loaded lazily by name via `getBlockLoader()` from `utils/blocks/blocks-imports.ts`. Any new block component must be registered there.
+CMS blocks are auto-discovered via `import.meta.glob` in `utils/blocks/blocks-imports.ts` — any `.vue`/`defaults.ts` file under a `blocks/` path segment is picked up automatically, no manual registration needed. The requirement is correct placement: block files must live under `components/blocks/<Name>/` (e.g. via `npm run generate:block <Name>`), not just `components/<Name>/`.
 
 ## Code Style
 

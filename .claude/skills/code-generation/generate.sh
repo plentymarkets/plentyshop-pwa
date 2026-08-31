@@ -13,7 +13,6 @@
 #   ./generate.sh component Settings --with-view --with-toolbar
 #
 # Options:
-#   --output-path=path     Custom output path (default: apps/web/app)
 #   --skip-tests           Skip generating test files
 #   --skip-types           Skip generating types.ts file
 #   --with-form            Create additional *Form.vue file (for blocks)

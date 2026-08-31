@@ -13,13 +13,6 @@ const command = process.argv[2];
 if (command === 'generate') {
   const plopfilePath = join(__dirname, '..', 'plopfile.ts');
 
-  // Parse --output-path flag and set environment variable
-  const outputPathFlag = process.argv.find((arg) => arg.startsWith('--output-path='));
-  if (outputPathFlag) {
-    const outputPath = outputPathFlag.split('=')[1];
-    process.env.PLENTYSHOP_OUTPUT_PATH = outputPath;
-  }
-
   // Parse optional file generation flags and set environment variables
   const flagMapping = {
     '--skip-tests': 'PLENTYSHOP_SKIP_TESTS',
@@ -49,7 +42,7 @@ if (command === 'generate') {
   }
 
   // Filter out custom flags from plop args (not plop arguments)
-  const customFlags = ['--output-path=', ...Object.keys(flagMapping)];
+  const customFlags = Object.keys(flagMapping);
   const plopArgs = process.argv.slice(3).filter((arg) => {
     return !customFlags.some((flag) => arg.startsWith(flag));
   });
@@ -78,7 +71,6 @@ Available generators:
   - composable      Generate a new Vue composable
 
 Options:
-  --output-path=<path>  Set custom output path (default: apps/web/app)
   --skip-tests          Skip generating test files
   --skip-types          Skip generating types.ts file
   --with-form           Add *Form.vue file (for CMS editor blocks)
@@ -90,6 +82,9 @@ Examples:
   plentyshop generate component ProductCard --skip-tests
   plentyshop generate component ImageBlock --with-form --skip-tests
   plentyshop generate composable useShoppingCart
-  plentyshop generate component --output-path=apps/web/modules/my-module
+
+To generate into a different app root (e.g. a customer module), create a
+.plentyone/shop-cli.json config file in your project root:
+  { "webAppPath": "apps/web/modules/my-module" }
   `);
 }
