@@ -1,4 +1,5 @@
 import type { BlockLoader, DefaultsModule } from './types';
+
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
 }) as Record<string, BlockLoader>;
@@ -41,12 +42,39 @@ const normalize = (path: string) => {
   return path;
 };
 
+const extensionIdFromPath = (path: string): string | undefined => {
+  const match = path.match(/node_modules\/(.+?)\/runtime\//);
+  if (match) return match[1];
+  const moduleMatch = path.match(/modules\/(.+?)\/runtime\//);
+  if (moduleMatch) return moduleMatch[1];
+  return undefined;
+};
+
 export const blockLoaders: Record<string, BlockLoader> = {};
+export const blockExtensionIds: Record<string, string> = {};
 
 Object.entries(coreBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
-Object.entries(nuxtModuleBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
-Object.entries(customerBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
-Object.entries(workspaceCustomerBlocks).forEach(([path, loader]) => (blockLoaders[normalize(path)] = loader));
+
+Object.entries(nuxtModuleBlocks).forEach(([path, loader]) => {
+  const name = normalize(path);
+  blockLoaders[name] = loader;
+  const extId = extensionIdFromPath(path);
+  if (extId) blockExtensionIds[name] = extId;
+});
+
+Object.entries(customerBlocks).forEach(([path, loader]) => {
+  const name = normalize(path);
+  blockLoaders[name] = loader;
+  const extId = extensionIdFromPath(path);
+  if (extId) blockExtensionIds[name] = extId;
+});
+
+Object.entries(workspaceCustomerBlocks).forEach(([path, loader]) => {
+  const name = normalize(path);
+  blockLoaders[name] = loader;
+  const extId = extensionIdFromPath(path);
+  if (extId) blockExtensionIds[name] = extId;
+});
 
 export const getBlockLoader = (name: string) => {
   return blockLoaders[name];
@@ -55,6 +83,14 @@ export const getBlockLoader = (name: string) => {
 const asyncComponentCache: Record<string, ReturnType<typeof defineAsyncComponent>> = {};
 
 export const getCachedBlockComponent = (name: string) => {
+  const extId = blockExtensionIds[name];
+  if (extId) {
+    const featureFlags = useState<Record<string, boolean>>('feature-flags', () => ({}));
+    if (featureFlags.value[`extension.${extId}.enabled`] === false) {
+      return null;
+    }
+  }
+
   if (asyncComponentCache[name]) return asyncComponentCache[name];
 
   const loader = blockLoaders[name];
@@ -67,14 +103,6 @@ export const getCachedBlockComponent = (name: string) => {
 
 export const getBlockFormLoader = (name: string) => {
   return blockLoaders[name + 'Form'];
-};
-
-const extensionIdFromPath = (path: string): string | undefined => {
-  const match = path.match(/node_modules\/(.+?)\/runtime\//);
-  if (match) return match[1];
-  const moduleMatch = path.match(/modules\/(.+?)\/runtime\//);
-  if (moduleMatch) return moduleMatch[1];
-  return undefined;
 };
 
 export const resolveBlocksList = async (): Promise<BlocksList> => {
