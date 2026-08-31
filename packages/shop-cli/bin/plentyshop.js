@@ -20,6 +20,7 @@ if (command === 'generate') {
     '--with-form': 'PLENTYSHOP_WITH_FORM',
     '--with-view': 'PLENTYSHOP_WITH_VIEW',
     '--with-toolbar': 'PLENTYSHOP_WITH_TOOLBAR',
+    '--dry-run': 'PLENTYSHOP_DRY_RUN',
   };
 
   // Check if any flags are provided (non-interactive mode)
@@ -76,11 +77,13 @@ Options:
   --with-form           Add *Form.vue file (for CMS editor blocks)
   --with-view           Add View.vue file (for settings panels)
   --with-toolbar        Add ToolbarTrigger.vue file (for settings)
+  --dry-run             Preview planned files without writing anything
 
 Examples:
   plentyshop generate component
   plentyshop generate component ProductCard --skip-tests
   plentyshop generate component ImageBlock --with-form --skip-tests
+  plentyshop generate component ProductCard --dry-run
   plentyshop generate composable useShoppingCart
 
 To generate into a different app root (e.g. a customer module), create a

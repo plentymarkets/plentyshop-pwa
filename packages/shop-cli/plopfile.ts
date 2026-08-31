@@ -3,6 +3,7 @@ import { registerDefaultHelpers } from './src/helpers';
 import registerGenerators from './src/generators/index';
 import { PathResolver, resolveConfig, validatePath } from './src/core';
 import { validateProjectStructure } from './src/utils/project-validation';
+import { dryRunManager, createDryRunAction } from './src/utils/dry-run';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +18,14 @@ const projectRoot = path.resolve(cliRoot, '../../');
  */
 export default function (plop: NodePlopAPI): void {
   registerDefaultHelpers(plop, true);
+
+  if (process.env.PLENTYSHOP_DRY_RUN === 'true') {
+    dryRunManager.enableDryRun();
+  } else {
+    dryRunManager.disableDryRun();
+  }
+  plop.setActionType('dry-run-add', createDryRunAction('add'));
+  plop.setActionType('dry-run-summary', () => dryRunManager.getSummary());
 
   const partialsDir = path.join(__dirname, 'templates/partials');
   const partialFiles = fs.readdirSync(partialsDir).filter((file) => file.endsWith('.hbs'));
