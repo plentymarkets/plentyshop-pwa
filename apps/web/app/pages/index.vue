@@ -3,6 +3,9 @@
     <!-- Extension slot: modules can register components here via useExtensionSlot().register().
          Hidden automatically when the extension is disabled — no page refresh needed. -->
     <UiExtensionSlot name="homepage-top" />
+    <!-- Countdown banner injected by plenty-pwa-module-prototype.
+         useCountdown() pauses the timer and hides the banner when the extension is disabled. -->
+    <CountdownBanner />
     <EditableBlocks :identifier="HOMEPAGE_IDENTIFIER" :type="'immutable'" />
   </div>
 </template>
