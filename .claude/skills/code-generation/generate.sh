@@ -10,6 +10,7 @@
 #   ./generate.sh component ProductCard
 #   ./generate.sh composable useShoppingCart --skip-tests
 #   ./generate.sh component ImageBlock --with-form
+#   ./generate.sh block ImageCarousel --category=media --access-control=content,product
 #   ./generate.sh component Settings --with-view --with-toolbar
 #
 # Options:
@@ -62,7 +63,7 @@ done
 
 if [ "$IS_DRY_RUN" = false ]; then
     case "$GENERATOR_TYPE" in
-        component)
+        component | block)
             SEARCH_DIR="apps/web/app/components"
             MAIN_FILE_NAME="${NAME}.vue"
             ;;

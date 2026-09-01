@@ -81,6 +81,7 @@ Usage:
 
 Available generators:
   - component       Generate a new Vue component
+  - block           Generate a CMS block (component --with-form, registered under its own name)
   - composable      Generate a new Vue composable
 
 Options:
@@ -100,6 +101,7 @@ Examples:
   plentyshop generate component ImageBlock --with-form --skip-tests
   plentyshop generate component ProductCard --dry-run
   plentyshop generate component ImageBlock --with-form --category=media --access-control=content,product
+  plentyshop generate block ImageCarousel --category=media --access-control=content,product
   plentyshop generate composable useShoppingCart
 
 To generate into a different app root (e.g. a customer module), create a

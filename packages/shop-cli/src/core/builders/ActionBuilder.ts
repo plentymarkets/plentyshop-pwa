@@ -177,9 +177,6 @@ export class ActionBuilder {
     return [...this.actions];
   }
 
-  /**
-   * `'add'` for a real run, or a dry-run-only type when `--dry-run` is active
-   */
   private actionType(): string {
     return dryRunManager.isDryRun ? DRY_RUN_ADD_ACTION_TYPE : ADD_ACTION_TYPE;
   }
