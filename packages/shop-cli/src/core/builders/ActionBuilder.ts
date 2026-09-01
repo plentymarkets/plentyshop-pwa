@@ -144,6 +144,14 @@ export class ActionBuilder {
   }
 
   /**
+   * The component's resolved base directory (relative to `packages/shop-cli`), for callers that
+   * need to place files in a subdirectory (e.g. `forms/`, `partials/`) rather than at its root.
+   */
+  get resolvedBasePath(): string {
+    return this.basePath;
+  }
+
+  /**
    * Add a file to a custom path (outside the base path)
    */
   addFileToPath(fullPath: string, templateFile: string, customData?: PromptAnswers): this {

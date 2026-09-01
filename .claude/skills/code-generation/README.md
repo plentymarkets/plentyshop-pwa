@@ -35,13 +35,17 @@ npm run generate:component -- ProductCard --skip-tests --with-form
 
 ## Available Flags
 
-| Flag                 | Description                      | Example                           |
-| -------------------- | -------------------------------- | --------------------------------- |
-| `--skip-tests`       | Don't generate test files        | `--skip-tests`                    |
-| `--skip-types`       | Don't generate types.ts          | `--skip-types`                    |
-| `--with-form`        | Create \*Form.vue for CMS editor | `--with-form`                     |
-| `--with-view`        | Create View.vue for settings     | `--with-view`                     |
-| `--with-toolbar`     | Create ToolbarTrigger.vue        | `--with-toolbar`                  |
+| Flag                      | Description                                                               | Example                            |
+| ------------------------- | ------------------------------------------------------------------------- | ---------------------------------- |
+| `--skip-tests`            | Don't generate test files                                                 | `--skip-tests`                     |
+| `--skip-types`            | Don't generate types.ts                                                   | `--skip-types`                     |
+| `--with-form`             | Create \*Form.vue for CMS editor                                          | `--with-form`                      |
+| `--with-view`             | Create View.vue for settings                                              | `--with-view`                      |
+| `--with-toolbar`          | Create ToolbarTrigger.vue                                                 | `--with-toolbar`                   |
+| `--complex-form`          | With `--with-form`: scaffold `forms/`+`partials/` instead of one Form.vue | `--complex-form`                   |
+| `--category=<value>`      | With `--with-form`: the block's CMS editor category                       | `--category=cards`                 |
+| `--access-control=<list>` | With `--with-form`: comma-separated editor contexts                       | `--access-control=content,product` |
+| `--dry-run`               | Preview planned files without writing anything                            | `--dry-run`                        |
 
 ## Examples
 
@@ -55,10 +59,11 @@ npm run generate:component ProductCard
 **Block component for CMS:**
 
 ```bash
-npm run generate:block VideoPlayer
+npm run generate:block -- VideoPlayer --category=media --access-control=content,product
 # Result: apps/web/app/components/blocks/VideoPlayer/
-# Includes VideoPlayerForm.vue automatically (--with-form flag)
+# Includes VideoPlayerForm.vue, defaults.ts, and icon.svg automatically (--with-form flag)
 # Auto-discovered by the CMS editor via blocks-imports.ts's import.meta.glob - no manual registration needed
+# icon.svg is a generic placeholder - replace with a real icon when convenient (not required)
 ```
 
 **Settings component:**
@@ -98,6 +103,22 @@ useFeatureName/
 ├── index.ts
 └── __tests__/useFeatureName.spec.ts
 ```
+
+**Block (`--with-form`):**
+
+```
+BlockName/
+├── BlockName.vue
+├── BlockNameForm.vue
+├── defaults.ts
+├── icon.svg
+├── types.ts
+└── __tests__/BlockName.spec.ts
+```
+
+`--complex-form` replaces the single `BlockNameForm.vue` (orchestrator only) with
+`forms/BlockNameSettingsForm.vue` + `partials/BlockNameSectionEditor.vue` (and matching
+`__tests__/` specs), matching the real `UtilityBar` block's structure.
 
 ## Direct Script Usage
 

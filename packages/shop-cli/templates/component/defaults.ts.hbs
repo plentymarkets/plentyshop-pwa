@@ -1,0 +1,39 @@
+import { v4 as uuid } from 'uuid';
+import type { Block } from '@plentymarkets/shop-api';
+
+// `image` has no live consumer in the CMS editor — the picker uses icon.svg instead (see
+// getBlockIconSvg()). Kept empty only because BlockTemplateVariation.image is still a required
+// field; see docs/_backlog/editor-blocks/01-remove-dead-blockslist-drawer-view.md.
+const BLOCK_IMAGE = '';
+
+const create{{pascalCase name}} = (): Block => ({
+  name: '{{pascalCase name}}',
+  type: 'content',
+  meta: { uuid: uuid() },
+  configuration: {
+    visible: true,
+    layout: {},
+  },
+  content: null,
+});
+
+export const getBlocksList = (): BlocksList => ({
+  {{camelCase name}}: {
+    category: '{{category}}',
+    accessControl: [{{#each accessControl}}'{{this}}'{{#unless @last}}, {{/unless}}{{/each}}],
+    title: '{{pascalCase name}}',
+    blockName: '{{pascalCase name}}',
+    variations: [
+      {
+        title: '{{pascalCase name}}',
+        image: BLOCK_IMAGE,
+        template: {
+          en: create{{pascalCase name}}(),
+          de: create{{pascalCase name}}(),
+        },
+      },
+    ],
+  },
+});
+
+export const createDefault = (): Block => create{{pascalCase name}}();

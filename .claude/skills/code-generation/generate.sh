@@ -28,18 +28,33 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-# Extract generator type and name
+# Extract generator type and name. The name isn't always "$2" — shortcut scripts like
+# generate:block prepend a flag (e.g. "component --with-form"), pushing the name further out.
 GENERATOR_TYPE="$1"
-NAME="$2"
-shift 2
+shift
+NAME=""
+REMAINING_ARGS=()
+for arg in "$@"; do
+    if [ -z "$NAME" ] && [ "${arg#--}" = "$arg" ]; then
+        NAME="$arg"
+    else
+        REMAINING_ARGS+=("$arg")
+    fi
+done
+
+if [ -z "$NAME" ]; then
+    echo "Error: Usage: ./generate.sh <generator-type> <name> [options]" >&2
+    exit 1
+fi
 
 # Pass all remaining arguments (flags) directly to the CLI
-npx plentyshop generate "$GENERATOR_TYPE" "$NAME" "$@"
+# (the "${arr[@]+...}" form avoids an "unbound variable" error under `set -u` when the array is empty)
+npx plentyshop generate "$GENERATOR_TYPE" "$NAME" "${REMAINING_ARGS[@]+"${REMAINING_ARGS[@]}"}"
 
 # Verify the expected output actually landed on disk, independent of the CLI's own exit code —
 # a swallowed validation/action-building error can otherwise report success with zero files.
 IS_DRY_RUN=false
-for arg in "$@"; do
+for arg in "${REMAINING_ARGS[@]+"${REMAINING_ARGS[@]}"}"; do
     if [ "$arg" = "--dry-run" ]; then
         IS_DRY_RUN=true
     fi

@@ -13,6 +13,17 @@ const command = process.argv[2];
 if (command === 'generate') {
   const plopfilePath = join(__dirname, '..', 'plopfile.ts');
 
+  // Parse --category=<value> and --access-control=<comma,separated,list> flags
+  const categoryFlag = process.argv.find((arg) => arg.startsWith('--category='));
+  if (categoryFlag) {
+    process.env.PLENTYSHOP_CATEGORY = categoryFlag.split('=')[1];
+  }
+
+  const accessControlFlag = process.argv.find((arg) => arg.startsWith('--access-control='));
+  if (accessControlFlag) {
+    process.env.PLENTYSHOP_ACCESS_CONTROL = accessControlFlag.split('=')[1];
+  }
+
   // Parse optional file generation flags and set environment variables
   const flagMapping = {
     '--skip-tests': 'PLENTYSHOP_SKIP_TESTS',
@@ -21,6 +32,7 @@ if (command === 'generate') {
     '--with-view': 'PLENTYSHOP_WITH_VIEW',
     '--with-toolbar': 'PLENTYSHOP_WITH_TOOLBAR',
     '--dry-run': 'PLENTYSHOP_DRY_RUN',
+    '--complex-form': 'PLENTYSHOP_COMPLEX_FORM',
   };
 
   // Check if any flags are provided (non-interactive mode)
@@ -43,7 +55,7 @@ if (command === 'generate') {
   }
 
   // Filter out custom flags from plop args (not plop arguments)
-  const customFlags = Object.keys(flagMapping);
+  const customFlags = ['--category=', '--access-control=', ...Object.keys(flagMapping)];
   const plopArgs = process.argv.slice(3).filter((arg) => {
     return !customFlags.some((flag) => arg.startsWith(flag));
   });
@@ -72,18 +84,22 @@ Available generators:
   - composable      Generate a new Vue composable
 
 Options:
-  --skip-tests          Skip generating test files
-  --skip-types          Skip generating types.ts file
-  --with-form           Add *Form.vue file (for CMS editor blocks)
-  --with-view           Add View.vue file (for settings panels)
-  --with-toolbar        Add ToolbarTrigger.vue file (for settings)
-  --dry-run             Preview planned files without writing anything
+  --skip-tests             Skip generating test files
+  --skip-types             Skip generating types.ts file
+  --with-form              Add *Form.vue file (for CMS editor blocks)
+  --with-view              Add View.vue file (for settings panels)
+  --with-toolbar           Add ToolbarTrigger.vue file (for settings)
+  --dry-run                Preview planned files without writing anything
+  --complex-form           With --with-form: scaffold forms/+partials/ instead of one Form.vue
+  --category=<value>       With --with-form: the block's CMS editor category
+  --access-control=<list>  With --with-form: comma-separated contexts (content,productCategory,product)
 
 Examples:
   plentyshop generate component
   plentyshop generate component ProductCard --skip-tests
   plentyshop generate component ImageBlock --with-form --skip-tests
   plentyshop generate component ProductCard --dry-run
+  plentyshop generate component ImageBlock --with-form --category=media --access-control=content,product
   plentyshop generate composable useShoppingCart
 
 To generate into a different app root (e.g. a customer module), create a

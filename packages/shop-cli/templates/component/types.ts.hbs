@@ -1,2 +1,27 @@
+{{#if withForm}}
+import type { Block } from '@plentymarkets/shop-api';
+
+export type {{pascalCase name}}StructureConfiguration = {
+  visible?: boolean;
+  layout?: {
+    exampleSetting?: boolean;
+  };
+};
+
+export type {{pascalCase name}}Props = {
+  name: string;
+  type: string;
+  meta: {
+    uuid: string;
+  };
+  configuration?: {{pascalCase name}}StructureConfiguration;
+  content?: Block[];
+};
+
+export type {{pascalCase name}}FormProps = {
+  uuid?: string;
+};
+{{else}}
 {{> jsdoc description=(concat "Props for " (pascalCase name) " component")}}
 {{> typescript-interface name=(concat (pascalCase name) "Props") properties=props}}
+{{/if}}

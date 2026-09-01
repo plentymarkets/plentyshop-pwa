@@ -50,13 +50,17 @@ npm run generate:settings SettingsName [--options]   # component with --with-vie
 
 ## Available Options
 
-| Option               | Description                            | Example                           |
-| -------------------- | -------------------------------------- | --------------------------------- |
-| `--skip-tests`       | Don't generate test files              | `--skip-tests`                    |
-| `--skip-types`       | Don't generate types.ts                | `--skip-types`                    |
-| `--with-form`        | Add \*Form.vue (for CMS editor blocks) | `--with-form`                     |
-| `--with-view`        | Add View.vue (for settings panels)     | `--with-view`                     |
-| `--with-toolbar`     | Add ToolbarTrigger.vue (for settings)  | `--with-toolbar`                  |
+| Option                    | Description                                                                                 | Example                            |
+| ------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `--skip-tests`            | Don't generate test files                                                                   | `--skip-tests`                     |
+| `--skip-types`            | Don't generate types.ts                                                                     | `--skip-types`                     |
+| `--with-form`             | Add \*Form.vue (for CMS editor blocks)                                                      | `--with-form`                      |
+| `--with-view`             | Add View.vue (for settings panels)                                                          | `--with-view`                      |
+| `--with-toolbar`          | Add ToolbarTrigger.vue (for settings)                                                       | `--with-toolbar`                   |
+| `--complex-form`          | With `--with-form`: scaffold `forms/`+`partials/` instead of one Form.vue                   | `--complex-form`                   |
+| `--category=<value>`      | With `--with-form`: the block's CMS editor category                                         | `--category=cards`                 |
+| `--access-control=<list>` | With `--with-form`: comma-separated editor contexts (`content`,`productCategory`,`product`) | `--access-control=content,product` |
+| `--dry-run`               | Preview planned files without writing anything                                              | `--dry-run`                        |
 
 ## Examples
 
@@ -70,12 +74,26 @@ npm run generate:composable useShoppingCart
 # Block for CMS editor (includes --with-form automatically)
 npm run generate:block ImageCarousel
 
+# Block with an explicit category and editor contexts (otherwise prompted interactively)
+npm run generate:block -- ImageCarousel --category=media --access-control=content,product
+
+# Block with a multi-file form (forms/ + partials/) instead of one Form.vue
+npm run generate:block -- ImageCarousel --complex-form
+
 # Settings component (includes --with-view --with-toolbar automatically)
 npm run generate:settings ShippingOptions
 
 # Skip tests
 npm run generate:component -- MyWidget --skip-tests
 ```
+
+## After Generating a Block
+
+`--with-form` also scaffolds `defaults.ts` (with a non-empty `accessControl`, so the block is
+never accidentally invisible in the CMS editor) and a generic placeholder `icon.svg` used by the
+"Add Block" picker. Replacing `icon.svg` with a real, block-specific icon is a nice-to-have polish
+step — not required. The block works correctly with the placeholder either way, since the picker
+falls back to a plain box when a block has no icon at all.
 
 ## Output Format
 
@@ -119,3 +137,19 @@ useFeatureName/
 ├── index.ts
 └── __tests__/useFeatureName.spec.ts
 ```
+
+**Block (`--with-form`):**
+
+```
+BlockName/
+├── BlockName.vue
+├── BlockNameForm.vue
+├── defaults.ts
+├── icon.svg
+├── types.ts
+└── __tests__/BlockName.spec.ts
+```
+
+**Block with `--complex-form`** replaces the single `BlockNameForm.vue` (orchestrator only) with
+`forms/BlockNameSettingsForm.vue` + `partials/BlockNameSectionEditor.vue` (and matching
+`__tests__/` specs), matching the real `UtilityBar` block's structure.

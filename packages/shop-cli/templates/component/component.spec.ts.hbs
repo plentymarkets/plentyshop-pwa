@@ -4,9 +4,17 @@ import {{pascalCase name}} from '../{{pascalCase name}}.vue';
 import type { {{pascalCase name}}Props } from '../types';
 
 describe('{{pascalCase name}}', () => {
+{{#if withForm}}
+  const defaultProps: {{pascalCase name}}Props = {
+    name: '{{pascalCase name}}',
+    type: 'content',
+    meta: { uuid: 'test-uuid' },
+  };
+{{else}}
   const defaultProps: {{pascalCase name}}Props = {
     // Add default props for testing
   };
+{{/if}}
 
   it('renders correctly', () => {
     const wrapper = mount({{pascalCase name}}, {
