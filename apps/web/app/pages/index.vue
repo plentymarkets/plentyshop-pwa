@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- Extension slot: modules can register components here via useExtensionSlot().register().
+         Hidden automatically when the extension is disabled — no page refresh needed. -->
+    <UiExtensionSlot name="homepage-top" />
     <EditableBlocks :identifier="HOMEPAGE_IDENTIFIER" :type="'immutable'" />
   </div>
 </template>
