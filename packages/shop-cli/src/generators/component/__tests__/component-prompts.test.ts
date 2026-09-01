@@ -17,7 +17,12 @@ const getPrompt = (name: string): PromptConfig => {
   return prompt;
 };
 
-const ENV_KEYS = ['PLENTYSHOP_WITH_FORM', 'PLENTYSHOP_COMPLEX_FORM', 'PLENTYSHOP_CATEGORY', 'PLENTYSHOP_ACCESS_CONTROL'];
+const ENV_KEYS = [
+  'PLENTYSHOP_WITH_FORM',
+  'PLENTYSHOP_COMPLEX_FORM',
+  'PLENTYSHOP_CATEGORY',
+  'PLENTYSHOP_ACCESS_CONTROL',
+];
 
 afterEach(() => {
   for (const key of ENV_KEYS) delete process.env[key];

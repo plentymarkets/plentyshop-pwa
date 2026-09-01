@@ -12,10 +12,7 @@ const getBlockActionsFunction = () => {
   const pathResolver = new PathResolver();
   let name = '';
   let actionsFunction!: (data?: PromptAnswers) => GeneratorAction[];
-  const setGenerator = (
-    generatorName: string,
-    config: { actions: (data?: PromptAnswers) => GeneratorAction[] },
-  ) => {
+  const setGenerator = (generatorName: string, config: { actions: (data?: PromptAnswers) => GeneratorAction[] }) => {
     name = generatorName;
     actionsFunction = config.actions;
   };

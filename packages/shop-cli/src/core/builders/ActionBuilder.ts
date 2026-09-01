@@ -39,7 +39,12 @@ export class ActionBuilder {
   /**
    * Create a new ActionBuilder for a specific generator type
    */
-  static forGenerator(type: string, name: string, pathResolver: PathResolver, pathOptions?: PathOptions): ActionBuilder {
+  static forGenerator(
+    type: string,
+    name: string,
+    pathResolver: PathResolver,
+    pathOptions?: PathOptions,
+  ): ActionBuilder {
     return new ActionBuilder(name, type, pathResolver, pathOptions);
   }
 

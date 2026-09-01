@@ -83,9 +83,9 @@ describe('componentGenerator', () => {
       expect(actions.some((action) => action.path.endsWith('/forms/__tests__/TestBlockSettingsForm.spec.ts'))).toBe(
         true,
       );
-      expect(
-        actions.some((action) => action.path.endsWith('/partials/__tests__/TestBlockSectionEditor.spec.ts')),
-      ).toBe(true);
+      expect(actions.some((action) => action.path.endsWith('/partials/__tests__/TestBlockSectionEditor.spec.ts'))).toBe(
+        true,
+      );
 
       const orchestrator = actions.find((action) => action.path.endsWith('TestBlockForm.vue'));
       expect(orchestrator?.templateFile).toContain('component-form-orchestrator.vue.hbs');

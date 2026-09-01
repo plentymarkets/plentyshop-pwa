@@ -60,7 +60,8 @@ export const componentPrompts = [
     name: 'complexForm',
     message: 'Use a complex multi-file form (forms/ + partials/) instead of a single Form.vue?',
     default: false,
-    when: (answers: Record<string, unknown>) => isWithForm(answers) && process.env.PLENTYSHOP_COMPLEX_FORM === undefined,
+    when: (answers: Record<string, unknown>) =>
+      isWithForm(answers) && process.env.PLENTYSHOP_COMPLEX_FORM === undefined,
   },
   {
     type: 'input',
