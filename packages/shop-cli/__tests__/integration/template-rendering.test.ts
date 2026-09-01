@@ -47,6 +47,25 @@ describe('component-form.vue.hbs', () => {
   });
 });
 
+describe('component-view.vue.hbs', () => {
+  const rendered = () => render('component-view.vue.hbs', { name: 'TestSettings' });
+
+  it('should render real Vue interpolation, not an empty raw-block artifact', () => {
+    expect(rendered()).toContain("{{ getEditorTranslation('title') }}");
+    expect(rendered()).toContain("{{ getEditorTranslation('description') }}");
+    expect(rendered()).not.toContain('<template #setting-title></template>');
+  });
+});
+
+describe('component-toolbar.vue.hbs', () => {
+  it('should import the generic gear icon', () => {
+    const rendered = render('component-toolbar.vue.hbs', { name: 'TestSettings' });
+
+    expect(rendered).toContain("from '~/assets/icons/paths/gear-white.svg'");
+    expect(rendered).toContain("from '~/assets/icons/paths/gear-black.svg'");
+  });
+});
+
 describe('defaults.ts.hbs', () => {
   it('should render a non-empty accessControl array and the block image constant', () => {
     const rendered = render('defaults.ts.hbs', {
