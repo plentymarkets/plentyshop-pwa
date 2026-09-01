@@ -19,11 +19,12 @@ npx @plentymarkets/shop-cli
 ## Quick Start
 
 ```bash
-# Generate code interactively
+# Generate code interactively — "Please choose a generator" lists component, block, and composable
 npx plentyshop generate
 
 # Generate specific types
 npx plentyshop generate component
+npx plentyshop generate block
 npx plentyshop generate composable
 
 # Get help
@@ -54,6 +55,9 @@ Create `.plentyone/shop-cli.json` in your project root:
 ### ✅ Production Ready
 
 - **component** - Generate Vue 3 components with TypeScript, tests, and proper structure
+- **block** - Generate a CMS block (Form.vue, defaults.ts, icon.svg) — same generator as
+  `component --with-form`, registered separately so it appears as its own choice in the
+  interactive picker
 - **composable** - Generate Vue 3 composables with TypeScript, tests, and index files
 
 ## Architecture Overview

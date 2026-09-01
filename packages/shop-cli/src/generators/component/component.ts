@@ -13,16 +13,20 @@ const BLOCK_DEFAULT_ACCESS_CONTROL = ['content'];
 
 /**
  * Component Generator using BaseGenerator pattern
+ *
+ * Exported (not just the default factory function) so `BlockGenerator` (`block.ts`) can extend it
+ * and reuse `createActions()`/template wiring unchanged, overriding only `getPrompts()` and
+ * `resolveOptions()` to always resolve as a block.
  */
-class ComponentGenerator extends BaseGenerator {
-  readonly name = 'component';
-  readonly description = 'Generate a Vue component with TypeScript support';
+export class ComponentGenerator extends BaseGenerator {
+  readonly name: string = 'component';
+  readonly description: string = 'Generate a Vue component with TypeScript support';
 
   getPrompts(): GeneratorPrompt[] {
     return componentPrompts as GeneratorPrompt[];
   }
 
-  private resolveOptions(data: PromptAnswers): {
+  protected resolveOptions(data: PromptAnswers): {
     skipTests: boolean;
     skipTypes: boolean;
     withForm: boolean;

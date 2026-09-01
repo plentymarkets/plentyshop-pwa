@@ -11,7 +11,7 @@ import { validateComponentName, validateNotEmpty } from '../../utils/validation'
 const isWithForm = (answers: Record<string, unknown>): boolean =>
   Boolean(answers.withForm) || process.env.PLENTYSHOP_WITH_FORM === 'true';
 
-const BLOCK_ACCESS_CONTROL_CHOICES = ['content', 'productCategory', 'product'];
+export const BLOCK_ACCESS_CONTROL_CHOICES = ['content', 'productCategory', 'product'];
 
 export const componentPrompts = [
   {
