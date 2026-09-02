@@ -1,0 +1,16 @@
+<template>
+  <div data-testid="{{kebabCase name}}-form" class="sticky h-[80vh] overflow-y-auto">
+    <Blocks{{pascalCase name}}Forms{{pascalCase name}}SettingsForm :uuid="resolvedUuid" />
+    <Blocks{{pascalCase name}}Partials{{pascalCase name}}SectionEditor :uuid="resolvedUuid" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { {{pascalCase name}}FormProps } from './types';
+
+const props = defineProps<{{pascalCase name}}FormProps>();
+
+const { blockUuid } = useSiteConfiguration();
+
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
+</script>
