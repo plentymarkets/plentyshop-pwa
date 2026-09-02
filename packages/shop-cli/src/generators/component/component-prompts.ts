@@ -57,6 +57,13 @@ export const componentPrompts = [
   },
   {
     type: 'confirm',
+    name: 'structure',
+    message: 'Is this a structure/container block that holds other blocks as children (like MultiGrid/Carousel)?',
+    default: false,
+    when: (answers: Record<string, unknown>) => isWithForm(answers) && process.env.PLENTYSHOP_STRUCTURE === undefined,
+  },
+  {
+    type: 'confirm',
     name: 'complexForm',
     message: 'Use a complex multi-file form (forms/ + partials/) instead of a single Form.vue?',
     default: false,

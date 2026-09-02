@@ -33,6 +33,7 @@ if (command === 'generate') {
     '--with-toolbar': 'PLENTYSHOP_WITH_TOOLBAR',
     '--dry-run': 'PLENTYSHOP_DRY_RUN',
     '--complex-form': 'PLENTYSHOP_COMPLEX_FORM',
+    '--structure': 'PLENTYSHOP_STRUCTURE',
   };
 
   // Check if any flags are provided (non-interactive mode)
@@ -92,6 +93,8 @@ Options:
   --with-toolbar           Add ToolbarTrigger.vue file (for settings)
   --dry-run                Preview planned files without writing anything
   --complex-form           With --with-form: scaffold forms/+partials/ instead of one Form.vue
+  --structure              With --with-form: scaffold a structure/container block (content: Block[]
+                            children) instead of a content block (content: settings object)
   --category=<value>       With --with-form: the block's CMS editor category
   --access-control=<list>  With --with-form: comma-separated contexts (content,productCategory,product)
 
@@ -102,6 +105,7 @@ Examples:
   plentyshop generate component ProductCard --dry-run
   plentyshop generate component ImageBlock --with-form --category=media --access-control=content,product
   plentyshop generate block ImageCarousel --category=media --access-control=content,product
+  plentyshop generate block ColumnLayout --structure --category=layout --access-control=content
   plentyshop generate composable useShoppingCart
 
 To generate into a different app root (e.g. a customer module), create a

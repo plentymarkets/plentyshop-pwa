@@ -116,4 +116,22 @@ describe('componentGenerator', () => {
       expect(relativePaths).toMatchSnapshot('component-with-form-complex-form-structure');
     });
   });
+
+  describe('structure blocks (--structure)', () => {
+    it('should pass structure=true through to the defaults.ts and types.ts template data', () => {
+      const actions = getActionsFunction()({ name: 'TestBlock', withForm: true, structure: true, category: 'cards' });
+
+      const defaultsAction = actions.find((action) => action.path.endsWith('/defaults.ts'));
+      const typesAction = actions.find((action) => action.path.endsWith('/types.ts'));
+      expect(defaultsAction?.data?.structure).toBe(true);
+      expect(typesAction?.data?.structure).toBe(true);
+    });
+
+    it('should default structure to false when unset', () => {
+      const actions = getActionsFunction()({ name: 'TestBlock', withForm: true, category: 'cards' });
+
+      const defaultsAction = actions.find((action) => action.path.endsWith('/defaults.ts'));
+      expect(defaultsAction?.data?.structure).toBe(false);
+    });
+  });
 });

@@ -78,6 +78,27 @@ describe('defaults.ts.hbs', () => {
     expect(rendered).toContain('BLOCK_IMAGE');
     expect(rendered).toContain("category: 'cards'");
   });
+
+  it('should scaffold a content block by default: type content, content {}', () => {
+    const rendered = render('defaults.ts.hbs', { name: 'TestBlock', category: 'cards', accessControl: ['content'] });
+
+    expect(rendered).toContain("type: 'content'");
+    expect(rendered).toContain('content: {}');
+    expect(rendered).not.toContain("type: 'structure'");
+  });
+
+  it('should scaffold a structure block when structure is true: type structure, content []', () => {
+    const rendered = render('defaults.ts.hbs', {
+      name: 'TestBlock',
+      category: 'cards',
+      accessControl: ['content'],
+      structure: true,
+    });
+
+    expect(rendered).toContain("type: 'structure'");
+    expect(rendered).toContain('content: []');
+    expect(rendered).not.toContain("type: 'content'");
+  });
 });
 
 describe('icon.svg.hbs', () => {
@@ -103,5 +124,20 @@ describe('types.ts.hbs', () => {
 
     expect(rendered).toContain('export interface TestComponentProps');
     expect(rendered).not.toContain('FormProps');
+  });
+
+  it('should type content as Record<string, unknown> for a content block by default', () => {
+    const rendered = render('types.ts.hbs', { name: 'TestBlock', withForm: true });
+
+    expect(rendered).toContain('content: Record<string, unknown>');
+    expect(rendered).not.toContain("import type { Block } from '@plentymarkets/shop-api'");
+  });
+
+  it('should type content as Block[] and import Block for a structure block', () => {
+    const rendered = render('types.ts.hbs', { name: 'TestBlock', withForm: true, structure: true });
+
+    expect(rendered).toContain("import type { Block } from '@plentymarkets/shop-api'");
+    expect(rendered).toContain('content: Block[]');
+    expect(rendered).not.toContain('content: Record<string, unknown>');
   });
 });

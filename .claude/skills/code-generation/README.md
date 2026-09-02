@@ -35,17 +35,18 @@ npm run generate:component -- ProductCard --skip-tests --with-form
 
 ## Available Flags
 
-| Flag                      | Description                                                               | Example                            |
-| ------------------------- | ------------------------------------------------------------------------- | ---------------------------------- |
-| `--skip-tests`            | Don't generate test files                                                 | `--skip-tests`                     |
-| `--skip-types`            | Don't generate types.ts                                                   | `--skip-types`                     |
-| `--with-form`             | Create \*Form.vue for CMS editor                                          | `--with-form`                      |
-| `--with-view`             | Create View.vue for settings                                              | `--with-view`                      |
-| `--with-toolbar`          | Create ToolbarTrigger.vue                                                 | `--with-toolbar`                   |
-| `--complex-form`          | With `--with-form`: scaffold `forms/`+`partials/` instead of one Form.vue | `--complex-form`                   |
-| `--category=<value>`      | With `--with-form`: the block's CMS editor category                       | `--category=cards`                 |
-| `--access-control=<list>` | With `--with-form`: comma-separated editor contexts                       | `--access-control=content,product` |
-| `--dry-run`               | Preview planned files without writing anything                            | `--dry-run`                        |
+| Flag                      | Description                                                                   | Example                            |
+| ------------------------- | ----------------------------------------------------------------------------- | ---------------------------------- |
+| `--skip-tests`            | Don't generate test files                                                     | `--skip-tests`                     |
+| `--skip-types`            | Don't generate types.ts                                                       | `--skip-types`                     |
+| `--with-form`             | Create \*Form.vue for CMS editor                                              | `--with-form`                      |
+| `--with-view`             | Create View.vue for settings                                                  | `--with-view`                      |
+| `--with-toolbar`          | Create ToolbarTrigger.vue                                                     | `--with-toolbar`                   |
+| `--complex-form`          | With `--with-form`: scaffold `forms/`+`partials/` instead of one Form.vue     | `--complex-form`                   |
+| `--structure`             | With `--with-form`: scaffold a structure/container block, not a content block | `--structure`                      |
+| `--category=<value>`      | With `--with-form`: the block's CMS editor category                           | `--category=cards`                 |
+| `--access-control=<list>` | With `--with-form`: comma-separated editor contexts                           | `--access-control=content,product` |
+| `--dry-run`               | Preview planned files without writing anything                                | `--dry-run`                        |
 
 ## Examples
 
@@ -64,6 +65,17 @@ npm run generate:block -- VideoPlayer --category=media --access-control=content,
 # Includes VideoPlayerForm.vue, defaults.ts, and icon.svg automatically (--with-form flag)
 # Auto-discovered by the CMS editor via blocks-imports.ts's import.meta.glob - no manual registration needed
 # icon.svg is a generic placeholder - replace with a real icon when convenient (not required)
+```
+
+**Content block vs. structure block:** pick `--structure` only when the block is a container that
+holds _other_ blocks as children (like `MultiGrid`/`Carousel`) — it scaffolds `content` as a
+`Block[]` array instead of a settings object, and `type: 'structure'` instead of `'content'`. Most
+blocks are content blocks (the default, no flag needed).
+
+```bash
+npm run generate:block -- ColumnLayout --structure --category=layout
+# defaults.ts: type: 'structure', content: [] (seed with real child Block instances)
+# types.ts: content: Block[]
 ```
 
 **Settings component:**

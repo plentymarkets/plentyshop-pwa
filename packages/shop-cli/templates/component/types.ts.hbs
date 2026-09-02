@@ -1,3 +1,7 @@
+{{#if structure}}
+import type { Block } from '@plentymarkets/shop-api';
+
+{{/if}}
 {{#if withForm}}
 export type {{pascalCase name}}StructureConfiguration = {
   visible?: boolean;
@@ -13,11 +17,15 @@ export type {{pascalCase name}}Props = {
     uuid: string;
   };
   configuration?: {{pascalCase name}}StructureConfiguration;
-  // This scaffold generates a content-type block — content is a settings object you define, same
-  // as e.g. Image's. Building a structure/container block instead (children the CMS user arranges,
-  // like MultiGrid/Carousel under components/blocks/structure/)? Use a real array type there
-  // instead, and set `type` below to `'structure'`.
+{{#if structure}}
+  // Structure/container block — content holds this block's real children, populated by the CMS
+  // user (see MultiGrid/Carousel under components/blocks/structure/ for real examples). Narrow
+  // `Block` to a more specific child type here if this block only ever holds one kind of child.
+  content: Block[];
+{{else}}
+  // Content block — content is a settings object you define, same as e.g. Image's.
   content: Record<string, unknown>;
+{{/if}}
 };
 
 export type {{pascalCase name}}FormProps = {

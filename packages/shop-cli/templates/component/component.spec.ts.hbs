@@ -7,9 +7,9 @@ describe('{{pascalCase name}}', () => {
 {{#if withForm}}
   const defaultProps: {{pascalCase name}}Props = {
     name: '{{pascalCase name}}',
-    type: 'content',
+    type: '{{#if structure}}structure{{else}}content{{/if}}',
     meta: { uuid: 'test-uuid' },
-    content: {},
+    content: {{#if structure}}[]{{else}}{}{{/if}},
   };
 {{else}}
   const defaultProps: {{pascalCase name}}Props = {

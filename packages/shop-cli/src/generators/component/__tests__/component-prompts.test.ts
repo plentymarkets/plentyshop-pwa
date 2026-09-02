@@ -20,6 +20,7 @@ const getPrompt = (name: string): PromptConfig => {
 const ENV_KEYS = [
   'PLENTYSHOP_WITH_FORM',
   'PLENTYSHOP_COMPLEX_FORM',
+  'PLENTYSHOP_STRUCTURE',
   'PLENTYSHOP_CATEGORY',
   'PLENTYSHOP_ACCESS_CONTROL',
 ];
@@ -80,6 +81,24 @@ describe('accessControl prompt', () => {
     process.env.PLENTYSHOP_WITH_FORM = 'true';
     process.env.PLENTYSHOP_ACCESS_CONTROL = 'content';
     expect(accessControl.when?.({})).toBe(false);
+  });
+});
+
+describe('structure prompt', () => {
+  const structure = getPrompt('structure');
+
+  it('should not prompt for a plain component (no withForm)', () => {
+    expect(structure.when?.({ withForm: false })).toBe(false);
+  });
+
+  it('should prompt when withForm answer is true', () => {
+    expect(structure.when?.({ withForm: true })).toBe(true);
+  });
+
+  it('should not prompt when PLENTYSHOP_STRUCTURE is already set', () => {
+    process.env.PLENTYSHOP_WITH_FORM = 'true';
+    process.env.PLENTYSHOP_STRUCTURE = 'true';
+    expect(structure.when?.({})).toBe(false);
   });
 });
 

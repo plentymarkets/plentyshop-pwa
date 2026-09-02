@@ -61,6 +61,16 @@ describe('blockGenerator', () => {
     expect(actions.some((action) => action.path.endsWith('/partials/TestBlockSectionEditor.vue'))).toBe(true);
   });
 
+  it('should pass structure through to the defaults.ts/types.ts template data', () => {
+    const { actionsFunction } = getBlockActionsFunction();
+    const actions = actionsFunction({ name: 'TestBlock', category: 'cards', structure: true });
+
+    const defaultsAction = actions.find((action) => action.path.endsWith('/defaults.ts'));
+    const typesAction = actions.find((action) => action.path.endsWith('/types.ts'));
+    expect(defaultsAction?.data?.structure).toBe(true);
+    expect(typesAction?.data?.structure).toBe(true);
+  });
+
   it('should not add View.vue or ToolbarTrigger.vue — those are for settings panels, not blocks', () => {
     const { actionsFunction } = getBlockActionsFunction();
     const actions = actionsFunction({ name: 'TestBlock', category: 'cards' });

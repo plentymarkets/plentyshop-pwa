@@ -58,6 +58,7 @@ npm run generate:settings SettingsName [--options]   # component with --with-vie
 | `--with-view`             | Add View.vue (for settings panels)                                                          | `--with-view`                      |
 | `--with-toolbar`          | Add ToolbarTrigger.vue (for settings)                                                       | `--with-toolbar`                   |
 | `--complex-form`          | With `--with-form`: scaffold `forms/`+`partials/` instead of one Form.vue                   | `--complex-form`                   |
+| `--structure`             | With `--with-form`: scaffold a structure/container block instead of a content block         | `--structure`                      |
 | `--category=<value>`      | With `--with-form`: the block's CMS editor category                                         | `--category=cards`                 |
 | `--access-control=<list>` | With `--with-form`: comma-separated editor contexts (`content`,`productCategory`,`product`) | `--access-control=content,product` |
 | `--dry-run`               | Preview planned files without writing anything                                              | `--dry-run`                        |
@@ -80,12 +81,31 @@ npm run generate:block -- ImageCarousel --category=media --access-control=conten
 # Block with a multi-file form (forms/ + partials/) instead of one Form.vue
 npm run generate:block -- ImageCarousel --complex-form
 
+# Structure/container block (holds other blocks as children, like MultiGrid/Carousel)
+npm run generate:block -- ColumnLayout --structure --category=layout
+
 # Settings component (includes --with-view --with-toolbar automatically)
 npm run generate:settings ShippingOptions
 
 # Skip tests
 npm run generate:component -- MyWidget --skip-tests
 ```
+
+## Content Blocks vs. Structure Blocks
+
+Every CMS block is one of two shapes — pick based on what the block holds:
+
+- **Content block** (default): `content` is a settings object the block itself renders (text, an
+  image, a button link). Most blocks are this shape (e.g. `Image`, `TextCard`).
+- **Structure block** (`--structure`): `content` is an array of _other_ blocks the CMS user arranges
+  as children (e.g. `MultiGrid`, `Carousel`). Use this only when the block is a container whose job
+  is to lay out other blocks, not to render its own settings.
+
+`--structure` changes `defaults.ts`'s `type` (`'structure'` vs `'content'`) and `content`'s shape
+(`content: []` seeded with real child `Block` instances vs `content: {}`), and `types.ts`'s `content`
+type (`Block[]` vs `Record<string, unknown>`). Placement under a `components/blocks/structure/`
+subdirectory is a convention some real blocks follow, not a requirement — discovery works at any
+depth under `blocks/`.
 
 ## After Generating a Block
 

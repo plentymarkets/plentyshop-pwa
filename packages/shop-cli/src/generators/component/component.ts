@@ -32,6 +32,7 @@ export class ComponentGenerator extends BaseGenerator {
     withForm: boolean;
     withView: boolean;
     withToolbar: boolean;
+    structure: boolean;
     complexForm: boolean;
     category: string;
     accessControl: string[];
@@ -42,6 +43,7 @@ export class ComponentGenerator extends BaseGenerator {
       withForm: Boolean(data.withForm ?? process.env.PLENTYSHOP_WITH_FORM === 'true'),
       withView: Boolean(data.withView ?? process.env.PLENTYSHOP_WITH_VIEW === 'true'),
       withToolbar: Boolean(data.withToolbar ?? process.env.PLENTYSHOP_WITH_TOOLBAR === 'true'),
+      structure: Boolean(data.structure ?? process.env.PLENTYSHOP_STRUCTURE === 'true'),
       complexForm: Boolean(data.complexForm ?? process.env.PLENTYSHOP_COMPLEX_FORM === 'true'),
       category: this.resolveCategory(data),
       accessControl: this.resolveAccessControl(data),
