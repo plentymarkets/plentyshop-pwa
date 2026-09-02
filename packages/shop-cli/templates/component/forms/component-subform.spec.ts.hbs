@@ -1,6 +1,21 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import {{pascalCase name}}SettingsForm from '../{{pascalCase name}}SettingsForm.vue';
+
+const { getEditorTranslationMock } = vi.hoisted(() => ({
+  getEditorTranslationMock: vi.fn((key: string) => key),
+}));
+
+mockNuxtImport('getEditorTranslation', () => getEditorTranslationMock);
+
+const allBlocks = ref([]);
+const blockUuid = ref('test-uuid');
+const findOrDeleteBlockByUuid = vi.fn();
+
+mockNuxtImport('useBlocks', () => () => ({ allBlocks }));
+mockNuxtImport('useSiteConfiguration', () => () => ({ blockUuid }));
+mockNuxtImport('useBlockManager', () => () => ({ findOrDeleteBlockByUuid }));
 
 describe('{{pascalCase name}}SettingsForm', () => {
   it('should render the example setting control', () => {

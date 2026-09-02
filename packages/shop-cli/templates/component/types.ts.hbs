@@ -1,6 +1,4 @@
 {{#if withForm}}
-import type { Block } from '@plentymarkets/shop-api';
-
 export type {{pascalCase name}}StructureConfiguration = {
   visible?: boolean;
   layout?: {
@@ -15,7 +13,11 @@ export type {{pascalCase name}}Props = {
     uuid: string;
   };
   configuration?: {{pascalCase name}}StructureConfiguration;
-  content?: Block[];
+  // This scaffold generates a content-type block — content is a settings object you define, same
+  // as e.g. Image's. Building a structure/container block instead (children the CMS user arranges,
+  // like MultiGrid/Carousel under components/blocks/structure/)? Use a real array type there
+  // instead, and set `type` below to `'structure'`.
+  content: Record<string, unknown>;
 };
 
 export type {{pascalCase name}}FormProps = {

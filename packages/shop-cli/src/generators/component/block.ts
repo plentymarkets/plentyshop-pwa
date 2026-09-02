@@ -21,8 +21,13 @@ class BlockGenerator extends ComponentGenerator {
     return blockPrompts as GeneratorPrompt[];
   }
 
+  /**
+   * Forces `withForm` on and `withView`/`withToolbar` off, regardless of flags/env vars a caller
+   * might have set (e.g. `PLENTYSHOP_WITH_VIEW=true` from an unrelated prior invocation in the
+   * same shell) — View.vue/ToolbarTrigger.vue are for admin settings panels, never CMS blocks.
+   */
   protected resolveOptions(data: PromptAnswers): ReturnType<ComponentGenerator['resolveOptions']> {
-    return { ...super.resolveOptions(data), withForm: true };
+    return { ...super.resolveOptions(data), withForm: true, withView: false, withToolbar: false };
   }
 }
 
