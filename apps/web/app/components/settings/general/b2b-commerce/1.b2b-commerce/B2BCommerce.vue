@@ -62,7 +62,6 @@ const defaultClassOptions = computed({
 const customerClassOptions = computed({
   get: () => {
     const selectedIds: string[] = getJsonSetting('[]') || [];
-    console.log(selectedIds);
     return customerClassesData.value?.filter((option) => selectedIds.includes(option.id)) || [];
   },
   set: (selectedOptions: CustomerClassOption[]) => {
