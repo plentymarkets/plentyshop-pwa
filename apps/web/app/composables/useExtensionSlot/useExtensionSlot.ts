@@ -46,9 +46,9 @@ export const useExtensionSlot = () => {
    * Default behaviour: if the flag key is absent, the extension is considered enabled.
    */
   const getSlotEntries = (slotName: string) => {
-    return computed(() => {
-      const featureFlags = useState<Record<string, boolean>>('feature-flags', () => ({}));
+    const featureFlags = useState<Record<string, boolean>>('feature-flags', () => ({}));
 
+    return computed(() => {
       return (_slots.value[slotName] ?? []).filter(({ extensionId }) => {
         const flagKey = `extension.${extensionId}.enabled`;
         // Absent key → enabled. Only explicit `false` disables.
