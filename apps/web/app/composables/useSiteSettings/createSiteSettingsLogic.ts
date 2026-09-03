@@ -45,13 +45,11 @@ export const createSiteSettingsLogic = (
     return Number.isNaN(parsed) ? fallback : parsed;
   };
 
-  const getJsonSetting: GetJsonSetting = () => {
+  const getJsonSetting: GetJsonSetting = (fallback = '[]') => {
     if (!setting) return [];
     const runtimeSetting = state.value.initialData?.[setting];
-
     const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);
-
-    return JSON.parse((state.value.data?.[setting] as string) ?? defaultSetting);
+    return JSON.parse((state.value.data?.[setting] as string) ?? defaultSetting ?? fallback);
   };
 
   const setInitialData: SetSettingsInitialData = (settings: Setting[]) => {

@@ -23,12 +23,12 @@ export interface UseSiteSettingsState {
   loading: boolean;
 }
 
-export type UpdateSetting = (value: string) => void;
+export type UpdateSetting = (value: string | number) => void;
 export type SetSettingsInitialData = (settings: Setting[]) => void;
 export type GetSetting = () => string;
 export type GetBooleanSetting = (fallback?: boolean) => boolean;
 export type GetNumberSetting = (fallback?: number) => number;
-export type GetJsonSetting = () => string[];
+export type GetJsonSetting = (fallback?: string) => string[];
 export type IsDirty = ComputedRef<boolean>;
 export type DirtyKeys = ComputedRef<string[]>;
 export type SaveSiteSettings = () => Promise<boolean>;
