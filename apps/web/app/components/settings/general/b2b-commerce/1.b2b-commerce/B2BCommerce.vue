@@ -7,17 +7,17 @@
       <UiFormLabel>{{ getEditorTranslation('label-default-b2b-class') }}</UiFormLabel>
     </div>
     <Multiselect
-        v-model="defaultClassOptions"
-        data-testid="b2b-customer-class-select"
-        :options="customerClassesData"
-        :placeholder="getEditorTranslation('placeholder-b2b-classes')"
-        label="name"
-        track-by="id"
-        class="cursor-pointer"
-        select-label=""
-        :deselect-label="getEditorTranslation('deselect-label')"
-        :allow-empty="true"
-        :multiple="false"
+      v-model="defaultClassOptions"
+      data-testid="b2b-customer-class-select"
+      :options="customerClassesData"
+      :placeholder="getEditorTranslation('placeholder-b2b-classes')"
+      label="name"
+      track-by="id"
+      class="cursor-pointer"
+      select-label=""
+      :deselect-label="getEditorTranslation('deselect-label')"
+      :allow-empty="true"
+      :multiple="false"
     />
 
     <div class="flex justify-between mt-4 mb-2">
@@ -44,7 +44,8 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import type { CustomerClassOption } from '../../customer-management/default-B2C-and-guest-customer-class/types';
 
-const { updateSetting: updateDefaultB2BClassId, getNumberSetting: getDefaultB2BClassId } = useSiteSettings('defaultCustomerB2BClassId');
+const { updateSetting: updateDefaultB2BClassId, getNumberSetting: getDefaultB2BClassId } =
+  useSiteSettings('defaultCustomerB2BClassId');
 const { updateSetting, getJsonSetting } = useSiteSettings('allCustomerB2BClassIds');
 
 const { data: customerClassesData } = useCustomerClass();
