@@ -8,7 +8,7 @@
     </div>
     <Multiselect
       v-model="defaultClassOptions"
-      data-testid="b2b-customer-class-select"
+      data-testid="b2b-default-customer-class-select"
       :options="customerClassesData"
       :placeholder="getEditorTranslation('placeholder-b2b-classes')"
       label="name"
