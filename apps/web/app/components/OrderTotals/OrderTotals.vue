@@ -26,6 +26,10 @@
     <p class="font-medium text-base">{{ t('coupon.name') }}:</p>
     <p class="text-right">{{ format(orderGetters.getCouponValue(order.totals)) }}</p>
   </div>
+  <div v-if="orderGetters.getRebateValue(order.totals, showNetPrices) > 0" class="grid grid-cols-2 mt-2">
+    <p class="font-medium text-base">{{ t('order.rebate') }}:</p>
+    <p class="text-right">{{ format(orderGetters.getRebateValue(order.totals, showNetPrices) * -1) }}</p>
+  </div>
   <div v-for="(vat, index) in orderGetters.getOriginalOrderVats(order)" :key="index" class="grid grid-cols-2 mt-2">
     <p class="font-medium text-base">{{ t('orderConfirmation.vat') }} ({{ orderGetters.getOrderVatRate(vat) }}%):</p>
     <p class="text-right">
