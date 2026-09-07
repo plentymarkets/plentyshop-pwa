@@ -26,7 +26,7 @@
     <p class="font-medium text-base">{{ t('coupon.name') }}:</p>
     <p class="text-right">{{ format(orderGetters.getCouponValue(order.totals)) }}</p>
   </div>
-  <div v-if="orderGetters.getRebateValue(order.totals) > 0" class="grid grid-cols-2 mt-2">
+  <div v-if="orderGetters.getRebateValue(order.totals, showNetPrices) > 0" class="grid grid-cols-2 mt-2">
     <p class="font-medium text-base">{{ t('order.rebate') }}:</p>
     <p class="text-right">{{ format(orderGetters.getRebateValue(order.totals, showNetPrices) * -1) }}</p>
   </div>
