@@ -23,7 +23,7 @@ export interface UseSiteSettingsState {
   loading: boolean;
 }
 
-export type UpdateSetting = (value: string) => void;
+export type UpdateSetting = (value: string | number) => void;
 export type SetSettingsInitialData = (settings: Setting[]) => void;
 export type GetSetting = () => string;
 export type GetBooleanSetting = (fallback?: boolean) => boolean;

@@ -904,7 +904,8 @@
     "successHeader": "Vielen Dank für Ihre Bestellung!",
     "successImageAlt": "Bild, das erklärt das die Bestellung erfolgreich war",
     "successMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
-    "successReturnHeader": "Vielen Dank für Ihre Retoure!"
+    "successReturnHeader": "Vielen Dank für Ihre Retoure!",
+    "rebate": "Rabatt"
   },
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",

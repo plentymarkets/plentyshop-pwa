@@ -48,10 +48,12 @@ export const createSiteSettingsLogic = (
   const getJsonSetting: GetJsonSetting = () => {
     if (!setting) return [];
     const runtimeSetting = state.value.initialData?.[setting];
-
     const defaultSetting = typeof runtimeSetting === 'string' ? runtimeSetting : JSON.stringify(runtimeSetting);
-
-    return JSON.parse((state.value.data?.[setting] as string) ?? defaultSetting);
+    try {
+      return JSON.parse((state.value.data?.[setting] as string) ?? defaultSetting);
+    } catch {
+      return [];
+    }
   };
 
   const setInitialData: SetSettingsInitialData = (settings: Setting[]) => {
