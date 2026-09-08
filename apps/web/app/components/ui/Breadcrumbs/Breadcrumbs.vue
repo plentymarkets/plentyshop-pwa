@@ -82,41 +82,45 @@ const toggle = () => {
 
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
-const segments = route.path.split('/').filter(Boolean);
 
-const itemListElement: SchemaListItem[] = [
-  {
-    '@type': 'ListItem',
-    position: 1,
-    item: {
-      '@type': 'WebPage',
-      '@id': '/',
-      name: 'Home',
+const structuredData = computed<WithContext<SchemaBreadcrumbList>>(() => {
+  const segments = route.path.split('/').filter(Boolean);
+
+  const itemListElement: SchemaListItem[] = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'WebPage',
+        '@id': '/',
+        name: 'Home',
+      },
     },
-  },
-];
-segments.forEach((segment, index) => {
-  itemListElement.push({
-    '@type': 'ListItem',
-    position: index + 2,
-    item: {
-      '@type': 'WebPage',
-      '@id': `/${segments.slice(0, index + 1).join('/')}/`,
-      name: segment,
-    },
+  ];
+  segments.forEach((segment, index) => {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: index + 2,
+      item: {
+        '@type': 'WebPage',
+        '@id': `/${segments.slice(0, index + 1).join('/')}/`,
+        name: segment,
+      },
+    });
   });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  };
 });
 
-const structuredData: WithContext<SchemaBreadcrumbList> = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement,
-};
 useHead({
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: safeSerializeJsonLd(structuredData),
+      innerHTML: computed(() => safeSerializeJsonLd(structuredData.value)),
     },
   ],
 });

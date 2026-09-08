@@ -5,37 +5,30 @@ import { UiBreadcrumbs } from '#components';
 const { mockUseHead } = vi.hoisted(() => ({ mockUseHead: vi.fn() }));
 mockNuxtImport('useHead', () => mockUseHead);
 
-const routeRef = { path: '/' };
+const routeRef = reactive({ path: '/' });
 const { useRouteMock } = vi.hoisted(() => ({ useRouteMock: vi.fn(() => routeRef) }));
 mockNuxtImport('useRoute', () => useRouteMock);
-
-const getCapturedJsonLd = (): Record<string, unknown> => {
-  const calls = mockUseHead.mock.calls;
-  for (let i = calls.length - 1; i >= 0; i--) {
-    const call = calls[i];
-    if (!call) continue;
-    const arg = call[0] as { script?: { type: string; innerHTML: string }[] };
-    const script = arg?.script?.find((s) => s.type === 'application/ld+json');
-    if (script) return JSON.parse(script.innerHTML) as Record<string, unknown>;
-  }
-  return {};
-};
-
-const getListItemId = (listItem: Record<string, unknown>): unknown =>
-  (listItem['item'] as Record<string, unknown>)['@id'];
-const getListItemPosition = (listItem: Record<string, unknown>): unknown => listItem['position'];
 
 const getCapturedJsonLdRaw = (): string => {
   const calls = mockUseHead.mock.calls;
   for (let i = calls.length - 1; i >= 0; i--) {
     const call = calls[i];
     if (!call) continue;
-    const arg = call[0] as { script?: { type: string; innerHTML: string }[] };
+    const arg = call[0] as { script?: { type: string; innerHTML: unknown }[] };
     const script = arg?.script?.find((s) => s.type === 'application/ld+json');
-    if (script) return script.innerHTML;
+    if (script) return unref(script.innerHTML) as string;
   }
   return '';
 };
+
+const getCapturedJsonLd = (): Record<string, unknown> => {
+  const raw = getCapturedJsonLdRaw();
+  return raw ? (JSON.parse(raw) as Record<string, unknown>) : {};
+};
+
+const getListItemId = (listItem: Record<string, unknown>): unknown =>
+  (listItem['item'] as Record<string, unknown>)['@id'];
+const getListItemPosition = (listItem: Record<string, unknown>): unknown => listItem['position'];
 
 describe('<Breadcrumbs />', () => {
   beforeEach(() => {
@@ -96,6 +89,25 @@ describe('<Breadcrumbs />', () => {
       const rawJsonLd = getCapturedJsonLdRaw();
 
       expect(rawJsonLd).not.toContain('</script>');
+    });
+
+    it('should update to match the new route after a client-side navigation, without remounting', async () => {
+      routeRef.path = '/women';
+
+      mount(UiBreadcrumbs, { props: { breadcrumbs: [] } });
+
+      expect(getCapturedJsonLd()['itemListElement']).toHaveLength(2);
+
+      routeRef.path = '/women/clothing/dresses';
+      await nextTick();
+
+      const itemListElement = getCapturedJsonLd()['itemListElement'] as Array<Record<string, unknown>>;
+      expect(itemListElement.map(getListItemId)).toEqual([
+        '/',
+        '/women/',
+        '/women/clothing/',
+        '/women/clothing/dresses/',
+      ]);
     });
   });
 });
