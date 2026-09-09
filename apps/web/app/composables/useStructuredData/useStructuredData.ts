@@ -9,6 +9,18 @@ import type {
 } from './types';
 import { productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { Product, CanonicalAlternate } from '@plentymarkets/shop-api';
+import type {
+  WithContext,
+  Organization as SchemaOrganization,
+  Product as SchemaProduct,
+  ItemList as SchemaItemList,
+  ListItem as SchemaListItem,
+  Review as SchemaReview,
+  Offer as SchemaOffer,
+  PriceSpecification as SchemaPriceSpecification,
+  ItemAvailability,
+  OfferItemCondition,
+} from 'schema-dts';
 
 /**
  * @description Composable managing meta data
@@ -24,8 +36,25 @@ export const useStructuredData: useStructuredDataReturn = () => {
   }));
   const { applyToUrl: applyTrailingSlashToUrl } = useUrlTrailingSlash();
   const localePath = useLocalizedPath();
-  const safeSerializeJsonLd = (value: unknown, space?: number) =>
-    JSON.stringify(value, null, space).replaceAll('<', String.raw`\u003C`);
+
+  const buildProductUrl = (product: Product, isSingleProductUrlSchemeEnabled: boolean): string | undefined => {
+    const itemId = productGetters.getItemId(product);
+    const urlPath = productGetters.getUrlPath(product);
+
+    if (!itemId || !urlPath) {
+      return undefined;
+    }
+
+    if (isSingleProductUrlSchemeEnabled) {
+      return localePath(`/${urlPath}/a-${itemId}`);
+    }
+
+    const basePath = `/${urlPath}_${itemId}`;
+    const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product);
+    const variationId = productGetters.getVariationId(product);
+
+    return localePath(shouldAppendVariation && variationId ? `${basePath}_${variationId}` : basePath);
+  };
 
   /**
    * @description Function for Setting Logo Metadata.
@@ -39,7 +68,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = true;
 
     const runtimeConfig = useRuntimeConfig();
-    const structuredData = {
+    const structuredData: WithContext<SchemaOrganization> = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       url: runtimeConfig.public.domain,
@@ -71,6 +100,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = true;
     const { price, crossedPrice } = useProductPrice(product);
     const productId = Number(productGetters.getItemId(product));
+    const runtimeConfig = useRuntimeConfig();
+    const isSingleProductUrlSchemeEnabled = useCallisto().isEnabled;
 
     const { data: productReviews } = useProductReviews(productId);
     const { data: reviewAverage } = useProductReviewAverage(productId);
@@ -79,11 +110,11 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const totalReviews = reviewGetters.getTotalReviews(reviewCounts);
     const averageRating = reviewGetters.getAverageRating(reviewCounts);
 
-    let reviews = null;
+    let reviews: SchemaReview[] | undefined;
     if (reviewAverage.value) {
-      reviews = [];
+      const collectedReviews: SchemaReview[] = [];
       reviewGetters.getReviewItems(productReviews.value).forEach((reviewItem) => {
-        reviews.push({
+        collectedReviews.push({
           '@type': 'Review',
           reviewRating: {
             '@type': 'Rating',
@@ -95,8 +126,53 @@ export const useStructuredData: useStructuredDataReturn = () => {
           },
         });
       });
+      reviews = collectedReviews;
     }
-    const metaObject = {
+    const productPath = buildProductUrl(product, isSingleProductUrlSchemeEnabled);
+
+    const priceSpecification: SchemaPriceSpecification[] = [
+      {
+        '@type': 'UnitPriceSpecification',
+        price: Number(price.value),
+        priceCurrency: productGetters.getSpecialPriceCurrency(product),
+        priceType: 'SalePrice',
+        referenceQuantity: {
+          '@type': 'QuantitativeValue',
+        },
+      },
+    ];
+
+    // crossedPrice reads from prices.default when a special offer is active, otherwise from prices.rrp —
+    // the currency must be read from whichever source it actually came from, not always the RRP's.
+    const specialOffer = productGetters.getSpecialOffer(product);
+    const hasListPrice = crossedPrice.value !== null && crossedPrice.value > price.value;
+    if (hasListPrice) {
+      priceSpecification.push({
+        '@type': 'UnitPriceSpecification',
+        price: Number(crossedPrice.value),
+        priceCurrency: specialOffer
+          ? productGetters.getSpecialPriceCurrency(product)
+          : productGetters.getRegularPriceCurrency(product),
+        priceType: 'ListPrice',
+        referenceQuantity: {
+          '@type': 'QuantitativeValue',
+        },
+      });
+    }
+
+    const priceValidUntil = productSeoSettingsGetters.getPriceValidUntil(product);
+    const offers: SchemaOffer = {
+      '@type': 'Offer',
+      priceCurrency: productGetters.getSpecialPriceCurrency(product),
+      price: Number(price.value),
+      url: productPath ? `${runtimeConfig.public.domain}${productPath}` : undefined,
+      priceSpecification,
+      availability: productSeoSettingsGetters.getMappedAvailability(product) as ItemAvailability,
+      itemCondition: productSeoSettingsGetters.getConditionOfItem(product) as OfferItemCondition,
+      ...(priceValidUntil !== '' && { priceValidUntil }),
+    };
+
+    const metaObject: WithContext<SchemaProduct> = {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: productGetters.getName(product),
@@ -114,25 +190,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
           reviewCount: totalReviews,
         },
       }),
-      offers: {
-        '@type': 'Offer',
-        priceCurrency: productGetters.getSpecialPriceCurrency(product),
-        price: Number(price.value),
-        url: null,
-        priceSpecification: [
-          {
-            '@type': 'UnitPriceSpecification',
-            price: Number(price.value),
-            priceCurrency: productGetters.getSpecialPriceCurrency(product),
-            priceType: 'SalePrice',
-            referenceQuantity: {
-              '@type': 'QuantitativeValue',
-            },
-          },
-        ],
-        availability: productSeoSettingsGetters.getMappedAvailability(product),
-        itemCondition: productSeoSettingsGetters.getConditionOfItem(product),
-      },
+      offers,
       depth: {
         '@type': 'QuantitativeValue',
         value: productGetters.getLengthMM(product),
@@ -149,8 +207,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any;
+    };
 
     const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
     if (manufacturer !== '') metaObject.manufacturer = { '@type': 'Organization', name: manufacturer };
@@ -171,25 +228,13 @@ export const useStructuredData: useStructuredDataReturn = () => {
     if (gtin13 !== '') metaObject.gtin13 = gtin13;
 
     const isbn = productSeoSettingsGetters.getIsbn(product);
-    if (isbn !== '') metaObject.isbn = productSeoSettingsGetters.getIsbn(product);
+    if (isbn !== '') {
+      metaObject.additionalProperty = [{ '@type': 'PropertyValue', name: 'isbn', value: isbn }];
+    }
 
     const mpn = productSeoSettingsGetters.getMpn(product);
     if (mpn !== '') metaObject.mpn = mpn;
 
-    const priceValidUntil = productSeoSettingsGetters.getPriceValidUntil(product);
-    if (priceValidUntil !== '') metaObject.offers.priceValidUntil = priceValidUntil;
-
-    if (product.prices?.rrp) {
-      metaObject.offers.priceSpecification.push({
-        '@type': 'UnitPriceSpecification',
-        price: Number(crossedPrice.value),
-        priceCurrency: productGetters.getRegularPriceCurrency(product),
-        priceType: 'ListPrice',
-        referenceQuantity: {
-          '@type': 'QuantitativeValue',
-        },
-      });
-    }
     useHead({
       script: [
         {
@@ -208,24 +253,11 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const route = useRoute();
     const isSingleProductUrlSchemeEnabled = useCallisto().isEnabled;
 
-    const itemListElement = products.reduce<Array<Record<string, unknown>>>((result, product, index) => {
-      const itemId = productGetters.getItemId(product);
-      const urlPath = productGetters.getUrlPath(product);
+    const itemListElement = products.reduce<SchemaListItem[]>((result, product, index) => {
+      const productPath = buildProductUrl(product, isSingleProductUrlSchemeEnabled);
 
-      if (!itemId || !urlPath) {
+      if (!productPath) {
         return result;
-      }
-
-      let productPath: string;
-
-      if (isSingleProductUrlSchemeEnabled) {
-        productPath = localePath(`/${urlPath}/a-${itemId}`);
-      } else {
-        const basePath = `/${urlPath}_${itemId}`;
-        const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product);
-        const variationId = productGetters.getVariationId(product);
-
-        productPath = localePath(shouldAppendVariation && variationId ? `${basePath}_${variationId}` : basePath);
       }
 
       result.push({
@@ -238,7 +270,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       return result;
     }, []);
 
-    const structuredData = {
+    const structuredData: WithContext<SchemaItemList> = {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
       itemListOrder: 'https://schema.org/ItemListOrderAscending',
