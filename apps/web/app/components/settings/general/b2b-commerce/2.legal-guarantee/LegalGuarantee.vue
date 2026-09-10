@@ -22,10 +22,10 @@ const showGuaranteeNotice = computed({
 <i18n lang="json">
 {
   "en": {
-    "label": "Show guarantee notice on the checkout page"
+    "label": "Show legal guarantee of conformity on checkout page"
   },
   "de": {
-    "label": "Show guarantee notice on the checkout page"
+    "label": "Show legal guarantee of conformity on checkout page"
   }
 }
 </i18n>

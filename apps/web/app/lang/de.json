@@ -337,12 +337,12 @@
     "googlePay": {
       "paymentInProgress": "Zahlung in Bearbeitung..."
     },
-    "guaranteeNotice": "Ihre gesetzlichen Garantieansprüche"
+    "guaranteeNotice": "Ihre gesetzlichen Gewährleistungsrechte"
   },
   "guaranteeLabels": {
     "area": {
-      "close": "Garantie Details schließen",
-      "open": "Garantie Details öffnen"
+      "close": "Details zur Haltbarkeitsgarantie schließen",
+      "open": "Details zur Haltbarkeitsgarantie öffnen"
     }
   },
   "customAssets": {

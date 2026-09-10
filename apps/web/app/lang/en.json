@@ -341,8 +341,8 @@
   },
   "guaranteeLabels": {
     "area": {
-      "close": "Close guarantee details",
-      "open": "Open guarantee details"
+      "close": "Close guarantee of durability details",
+      "open": "Open guarantee of durability details"
     }
   },
   "customAssets": {
