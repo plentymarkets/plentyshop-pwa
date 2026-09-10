@@ -137,7 +137,7 @@
               <span>{{ t('common.labels.asterisk') }}</span>
             </span>
             <span
-              v-if="crossedPrice && differentPrices(price, crossedPrice)"
+              v-if="crossedPrice && differentPrices(price, crossedPrice) && crossedPrice > price"
               class="typography-text-sm text-neutral-500 line-through @md:ml-3 @md:pb-2"
             >
               {{ format(crossedPrice) }}

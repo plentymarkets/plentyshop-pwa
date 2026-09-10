@@ -77,6 +77,18 @@ describe('<Price />', () => {
     expect(occurrences).toBe(1);
   });
 
+  it('should not render the crossed price when it is lower than the price', () => {
+    const wrapper = mount(Price, {
+      props: {
+        price: 20,
+        crossedPrice: 10,
+        displayVatHint: false,
+      },
+    });
+
+    expect(wrapper.text()).not.toContain('10');
+  });
+
   it('should use a custom test id when provided', () => {
     const wrapper = mount(Price, {
       props: {

@@ -18,7 +18,10 @@
         {{ item.label }}
       </div>
       <div class="flex items-baseline gap-2 tabular-nums">
-        <span v-if="crossedPrice && hasDifferentPrices" class="text-xs text-neutral-400 line-through">
+        <span
+          v-if="crossedPrice && hasDifferentPrices && crossedPrice > itemSearchAutocompleteGetters.getPrice(item)"
+          class="text-xs text-neutral-400 line-through"
+        >
           {{ format(crossedPrice) }}
         </span>
         <span class="text-sm font-semibold text-neutral-900">
