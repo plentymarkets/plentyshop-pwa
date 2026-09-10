@@ -84,7 +84,7 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
+    "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@lhci/cli": "^0.15.1",
     "@nuxt/devtools": "3.4.1",
