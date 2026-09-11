@@ -6,6 +6,11 @@ const customer = import.meta.glob('/node_modules/*/runtime/components/settings/*
   import: 'default',
 }) as Record<string, SettingsGroupLoader>;
 
+// Packages hoisted to the monorepo root node_modules (npm workspaces)
+const workspaceCustomer = import.meta.glob('../../../../../node_modules/*/runtime/components/settings/**/*.vue', {
+  import: 'default',
+}) as Record<string, SettingsGroupLoader>;
+
 const nuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/**/*.vue', {
   import: 'default',
 }) as Record<string, SettingsGroupLoader>;
@@ -14,6 +19,10 @@ const core = import.meta.glob('@/components/**/settings/**/*.vue', { import: 'de
   string,
   SettingsGroupLoader
 >;
+
+const extensionIdFromPath = (path: string): string | undefined => {
+  return path.match(/node_modules\/(.+?)\/runtime\//)?.[1] ?? path.match(/modules\/(.+?)\/runtime\//)?.[1];
+};
 
 const stripPrefix = (raw: string): string => raw.replace(/^(\d+)\./, '');
 
@@ -34,10 +43,34 @@ const normalize = (path: string) => {
 };
 
 const modules: Record<string, SettingsGroupLoader> = {};
+const entryExtensionIds: Record<string, string | undefined> = {};
 
 Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loader));
-Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));
-Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader));
+
+Object.entries(nuxtModules).forEach(([path, loader]) => {
+  const key = normalize(path);
+  modules[key] = loader;
+  entryExtensionIds[key] = extensionIdFromPath(path);
+});
+
+Object.entries(customer).forEach(([path, loader]) => {
+  const key = normalize(path);
+  modules[key] = loader;
+  entryExtensionIds[key] = extensionIdFromPath(path);
+});
+
+Object.entries(workspaceCustomer).forEach(([path, loader]) => {
+  const key = normalize(path);
+  modules[key] = loader;
+  entryExtensionIds[key] = extensionIdFromPath(path);
+});
+
+const isDisabled = (key: string): boolean => {
+  const extId = entryExtensionIds[key];
+  if (!extId) return false;
+  const featureFlags = useState<Record<string, boolean>>('feature-flags', () => ({}));
+  return featureFlags.value[`extension.${extId}.enabled`] === false;
+};
 
 export const getSettingsGroups = (activeSetting: string, subCategory: string = '') => {
   const prefix = subCategory ? `${activeSetting}/${subCategory}/` : `${activeSetting}/`;
@@ -45,6 +78,7 @@ export const getSettingsGroups = (activeSetting: string, subCategory: string = '
 
   for (const [path, loader] of Object.entries(modules)) {
     if (!path.includes(prefix)) continue;
+    if (isDisabled(path)) continue;
 
     const afterPrefix = path.split(prefix)[1];
     if (!afterPrefix) continue;
@@ -74,6 +108,7 @@ export const getSubCategories = (activeSetting: string): string[] => {
 
   Object.keys(modules).forEach((path) => {
     if (!path.startsWith(prefix)) return;
+    if (isDisabled(path)) return;
 
     const remainder = path.slice(prefix.length);
 
@@ -89,7 +124,8 @@ export const getSubCategories = (activeSetting: string): string[] => {
 
 export const getViewComponent = (activeSetting: string, subCategory = '') => {
   const key = Object.keys(modules).find(
-    (path) => path.includes(`${activeSetting}/${subCategory}`) && path.endsWith('View'),
+    (path) =>
+      !isDisabled(path) && path.includes(`${activeSetting}/${subCategory}`) && path.endsWith('View'),
   );
 
   return key ? defineAsyncComponent(modules[key] ?? (() => Promise.resolve({}))) : null;
