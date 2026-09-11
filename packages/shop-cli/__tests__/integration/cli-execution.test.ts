@@ -52,8 +52,10 @@ describe('CLI Command Execution', () => {
 
       expect(stdout).toContain('Loading PlentyONE Shop generators');
       expect(stdout).toContain('Component generator loaded successfully!');
+      expect(stdout).toContain('Block generator loaded successfully!');
       expect(stdout).toContain('[PLOP] Please choose a generator');
       expect(stdout).toContain('component - Generate a Vue component');
+      expect(stdout).toContain('block - Generate a CMS block component');
     }, 10000); // 10 second timeout for interactive command
   });
 });

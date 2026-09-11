@@ -82,16 +82,24 @@ export abstract class BaseGenerator {
 
   /**
    * Generate actions with error handling wrapper
+   *
+   * A failed run (missing/invalid data, or an error thrown while building actions) throws
+   * instead of returning an empty array, so plop surfaces a non-zero exit and a clear error
+   * rather than silently reporting success with zero files created.
    */
   private generateWithErrorHandling(data: PromptAnswers | undefined): GeneratorAction[] {
     const result = this.errorHandler.wrapGeneratorExecution(this.name, () => {
       const validatedData = this.ensureData(data);
       if (!validatedData) {
-        return [];
+        throw new Error(`${this.name} generation aborted: invalid or missing input data`);
       }
       return this.createActions(validatedData);
     });
 
-    return result.success ? (result.data as GeneratorAction[]) : [];
+    if (!result.success) {
+      throw new Error(result.error.message);
+    }
+
+    return result.data as GeneratorAction[];
   }
 }

@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`componentGenerator > block scaffolding (--with-form) > should match the expected --with-form --complex-form directory shape > component-with-form-complex-form-structure 1`] = `
+[
+  "components/blocks/TestBlock/TestBlockForm.vue",
+  "components/blocks/TestBlock/__tests__/{{pascalCase name}}.spec.ts",
+  "components/blocks/TestBlock/defaults.ts",
+  "components/blocks/TestBlock/forms/TestBlockSettingsForm.vue",
+  "components/blocks/TestBlock/forms/__tests__/TestBlockSettingsForm.spec.ts",
+  "components/blocks/TestBlock/icon.svg",
+  "components/blocks/TestBlock/partials/TestBlockSectionEditor.vue",
+  "components/blocks/TestBlock/partials/__tests__/TestBlockSectionEditor.spec.ts",
+  "components/blocks/TestBlock/types.ts",
+  "components/blocks/TestBlock/{{pascalCase name}}.vue",
+]
+`;

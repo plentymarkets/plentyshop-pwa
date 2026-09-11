@@ -1,17 +1,15 @@
 <template>
-  <div data-testid="{{kebabCase name}}-form" class="sticky h-[80vh] overflow-y-auto">
-    <EditorFormPanel :title="getEditorTranslation('settings-label')">
-      <div class="py-2 flex items-center justify-between">
-        <UiFormLabel>{{{{raw}}}}{{ getEditorTranslation('example-setting-label') }}{{{{/raw}}}}</UiFormLabel>
-        <SfSwitch v-model="exampleSetting" data-testid="{{kebabCase name}}-example-setting" />
-      </div>
-    </EditorFormPanel>
-  </div>
+  <EditorFormPanel :title="getEditorTranslation('settings-label')">
+    <div class="py-2 flex items-center justify-between">
+      <UiFormLabel>{{{{raw}}}}{{ getEditorTranslation('example-setting-label') }}{{{{/raw}}}}</UiFormLabel>
+      <SfSwitch v-model="exampleSetting" data-testid="{{kebabCase name}}-example-setting" />
+    </div>
+  </EditorFormPanel>
 </template>
 
 <script setup lang="ts">
 import { SfSwitch } from '@storefront-ui/vue';
-import type { {{pascalCase name}}Props, {{pascalCase name}}FormProps } from './types';
+import type { {{pascalCase name}}Props, {{pascalCase name}}FormProps } from '../types';
 
 const props = defineProps<{{pascalCase name}}FormProps>();
 
@@ -29,7 +27,7 @@ const {{camelCase name}}Configuration = computed(() => {{camelCase name}}Structu
 
 const layout = computed(() => {{camelCase name}}Configuration.value.layout);
 
-// Example field — replace with this block's real settings, following the same get/set pattern.
+// Example field — replace with this section's real settings, following the same get/set pattern.
 const exampleSetting = computed<boolean>({
   get: () => layout.value?.exampleSetting ?? false,
   set: (value: boolean) => (layout.value!.exampleSetting = value),
