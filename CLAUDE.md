@@ -85,6 +85,8 @@ No global store. All state lives in composables via Nuxt's `useState()` (SSR-saf
 
 CMS blocks are auto-discovered via `import.meta.glob` in `utils/blocks/blocks-imports.ts` — any `.vue`/`defaults.ts` file under a `blocks/` path segment is picked up automatically, no manual registration needed. The requirement is correct placement: block files must live under `components/blocks/<Name>/` (e.g. via `npm run generate:block <Name>`), not just `components/<Name>/`.
 
+Sibling components inside a `blocks/<Name>/` folder auto-register under a path-prefixed tag (e.g. `ItemData/ItemDataTable.vue` → `<BlocksItemDataTable>`), not their bare filename. Explicitly import them (`import ItemDataTable from './ItemDataTable.vue'`) and use the bare tag, as `CategoryData/FieldsOrder.vue` already does.
+
 ## Code Style
 
 - **No magic string literals in code.** String values with semantic meaning that appear in comparisons or are referenced from multiple places (block names, event names, route keys, status enums, etc.) must live as exported constants in a dedicated module — not hardcoded inline. Re-use the constant everywhere the value is referenced.
