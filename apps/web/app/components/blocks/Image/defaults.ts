@@ -7,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Image',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_preview.png',
         template: {
           en: {
             name: 'Image',

@@ -7,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Forms Preview',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/forms_preview.png',
         template: {
           en: {
             name: 'NewsletterSubscribe',

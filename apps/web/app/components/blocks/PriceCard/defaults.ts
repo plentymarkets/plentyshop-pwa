@@ -7,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Price Card',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_card.svg',
         template: {
           en: {
             name: 'PriceCard',

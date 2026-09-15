@@ -8,7 +8,6 @@ const blocksList = {
     variations: [
       {
         title: 'Image Banner Left',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_left.png',
         template: {
           en: {
             name: 'Carousel',
@@ -188,7 +187,6 @@ const blocksList = {
       },
       {
         title: 'Image Banner Right',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_right.png',
         template: {
           en: {
             name: 'Carousel',
@@ -364,7 +362,6 @@ const blocksList = {
       },
       {
         title: 'Image Banner Center',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_center.png',
         template: {
           en: {
             name: 'Carousel',
