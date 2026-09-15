@@ -17,18 +17,18 @@
             </h2>
           </template>
 
-          <v-table density="comfortable" class="item-info-table">
+          <table class="w-full text-left">
             <tbody>
-              <tr v-for="row in visibleRows" :key="row.key" class="item-info-table__row">
-                <td class="item-info-table__cell item-info-table__label">
+              <tr v-for="row in visibleRows" :key="row.key">
+                <td class="@lg:py-3 py-2 @lg:pr-4 pr-2 align-top text-sm">
                   {{ row.label }}
                 </td>
-                <td class="item-info-table__cell item-info-table__value">
+                <td class="@lg:py-3 py-2 align-top text-sm">
                   {{ row.value }}
                 </td>
               </tr>
             </tbody>
-          </v-table>
+          </table>
         </UiAccordionItem>
       </div>
 
@@ -37,18 +37,18 @@
           {{ title }}
         </h2>
 
-        <v-table density="comfortable" class="item-info-table">
+        <table class="w-full text-left">
           <tbody>
-            <tr v-for="row in visibleRows" :key="row.key" class="item-info-table__row">
-              <td class="item-info-table__cell item-info-table__label">
+            <tr v-for="row in visibleRows" :key="row.key">
+              <td class="@lg:py-3 py-2 @lg:pr-4 pr-2 align-top text-sm">
                 {{ row.label }}
               </td>
-              <td class="item-info-table__cell item-info-table__value">
+              <td class="@lg:py-3 py-2 align-top text-sm">
                 {{ row.value }}
               </td>
             </tr>
           </tbody>
-        </v-table>
+        </table>
       </div>
     </template>
   </div>

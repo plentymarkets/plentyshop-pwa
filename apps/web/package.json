@@ -42,7 +42,6 @@
     "validator": "^13.15.35"
   },
   "devDependencies": {
-    "@mdi/js": "^7.4.47",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/image": "^2.1.0",
     "@nuxt/test-utils": "^4.0.3",
@@ -75,7 +74,6 @@
     "vitepress": "^1.6.4",
     "vitest": "^4.1.10",
     "vue-tsc": "^3.3.11",
-    "vuepress": "^2.0.0-rc.24",
-    "vuetify-nuxt-module": "^0.19.4"
+    "vuepress": "^2.0.0-rc.24"
   }
 }
