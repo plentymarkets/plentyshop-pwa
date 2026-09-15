@@ -5,6 +5,7 @@ import type { PageBlockProps } from './types';
  */
 export const usePageBlockRendering = (props: PageBlockProps) => {
   const attrs = useAttrs();
+  let lazyLoadObserver: IntersectionObserver | null = null;
   const { lazyLoadStates, lazyLoadRefs, shouldLazyLoad, getLazyLoadKey, getLazyLoadConfig, getLazyLoadRef } =
     useBlockManager();
   const { blockUuid } = useSiteConfiguration();
@@ -46,12 +47,13 @@ export const usePageBlockRendering = (props: PageBlockProps) => {
     const uniqueKey = getLazyLoadKey(blockName, props.block.meta.uuid);
 
     if (import.meta.client && lazyLoadRefs.value[uniqueKey] && config) {
-      const observer = new globalThis.IntersectionObserver(
+      lazyLoadObserver = new globalThis.IntersectionObserver(
         (entries) => {
           const entry = entries[0];
           if (entry?.isIntersecting) {
             lazyLoadStates.value[uniqueKey] = true;
-            observer.disconnect();
+            lazyLoadObserver?.disconnect();
+            lazyLoadObserver = null;
           }
         },
         {
@@ -59,7 +61,7 @@ export const usePageBlockRendering = (props: PageBlockProps) => {
           rootMargin: config.rootMargin || '0px 0px 250px 0px',
         },
       );
-      observer.observe(lazyLoadRefs.value[uniqueKey]!);
+      lazyLoadObserver.observe(lazyLoadRefs.value[uniqueKey]!);
     }
   };
 
@@ -67,6 +69,10 @@ export const usePageBlockRendering = (props: PageBlockProps) => {
     if (shouldLazyLoad(props.block.name)) {
       observeLazyLoadSection(props.block.name);
     }
+  });
+
+  onBeforeUnmount(() => {
+    lazyLoadObserver?.disconnect();
   });
 
   return { blockComponent, contentProps, getLazyLoadRef };
