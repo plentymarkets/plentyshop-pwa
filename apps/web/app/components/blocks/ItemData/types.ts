@@ -40,3 +40,13 @@ export interface ItemDataContent {
 
 export type ItemDataFieldLabels = Record<ItemDataFieldKey, string>;
 export type ItemDataFieldValues = Record<ItemDataFieldKey, string>;
+
+export interface ItemDataRow {
+  key: ItemDataFieldKey;
+  label: string;
+  value: string;
+}
+
+export interface ItemDataTableProps {
+  rows: ItemDataRow[];
+}

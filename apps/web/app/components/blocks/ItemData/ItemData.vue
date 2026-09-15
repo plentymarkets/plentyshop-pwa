@@ -17,18 +17,7 @@
             </h2>
           </template>
 
-          <table class="w-full text-left">
-            <tbody>
-              <tr v-for="row in visibleRows" :key="row.key">
-                <td class="@lg:py-3 py-2 @lg:pr-4 pr-2 align-top text-sm">
-                  {{ row.label }}
-                </td>
-                <td class="@lg:py-3 py-2 align-top text-sm">
-                  {{ row.value }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <ItemDataTable :rows="visibleRows" />
         </UiAccordionItem>
       </div>
 
@@ -37,18 +26,7 @@
           {{ title }}
         </h2>
 
-        <table class="w-full text-left">
-          <tbody>
-            <tr v-for="row in visibleRows" :key="row.key">
-              <td class="@lg:py-3 py-2 @lg:pr-4 pr-2 align-top text-sm">
-                {{ row.label }}
-              </td>
-              <td class="@lg:py-3 py-2 align-top text-sm">
-                {{ row.value }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <ItemDataTable :rows="visibleRows" />
       </div>
     </template>
   </div>
@@ -58,6 +36,7 @@
 import type { Product } from '@plentymarkets/shop-api';
 import type { ItemDataContent, ItemDataFieldKey, ItemDataFieldLabels } from './types';
 import { SfIconWarning } from '@storefront-ui/vue';
+import ItemDataTable from './ItemDataTable.vue';
 
 const props = defineProps<{
   content: ItemDataContent;
