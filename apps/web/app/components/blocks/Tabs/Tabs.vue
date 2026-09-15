@@ -32,7 +32,6 @@
           role="tabpanel"
         >
           <slot name="content" :content-block="activeTab" :index="activeTabIndex" />
-          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(activeTab.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </div>
     </div>
@@ -70,7 +69,6 @@
           role="tabpanel"
         >
           <slot name="content" :content-block="activeTab" :index="activeTabIndex" />
-          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(activeTab.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </div>
     </div>
@@ -83,12 +81,6 @@ import type { TabsProps, TabsAlignment, TabStyle } from './types';
 import { getTabLabel } from './helpers';
 
 const props = defineProps<TabsProps>();
-
-const { shouldDisplayPlaceholder } = useBlockManager();
-const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
-
-const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
-const drawerView = computed(() => siteConfigurationDrawerView.value);
 
 const tabStyle = computed<TabStyle>(() => props.configuration?.layout?.tabStyle ?? 'underline');
 const tabsAlignment = computed<TabsAlignment>(() => props.configuration?.layout?.tabsAlignment ?? 'left');

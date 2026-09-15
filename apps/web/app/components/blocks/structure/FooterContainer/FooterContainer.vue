@@ -13,8 +13,6 @@
       :class="{ 'px-4 @md:px-6 pb-10 max-w-screen-3xl mx-auto': contentBlock.name === 'MultiGrid' }"
     >
       <slot name="content" :content-block="contentBlock" />
-
-      <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
     </div>
   </footer>
 </template>
@@ -23,13 +21,6 @@
 import type { FooterContainerProps } from '~/components/blocks/structure/FooterContainer/types';
 
 const props = defineProps<FooterContainerProps>();
-
-const { shouldDisplayPlaceholder } = useBlockManager();
-
-const { siteConfigurationDrawerOpen, siteConfigurationDrawerView } = useSiteConfiguration();
-
-const drawerOpen = computed(() => siteConfigurationDrawerOpen.value);
-const drawerView = computed(() => siteConfigurationDrawerView.value);
 </script>
 
 <style scoped>

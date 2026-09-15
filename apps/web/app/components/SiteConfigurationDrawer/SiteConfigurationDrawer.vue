@@ -23,7 +23,6 @@ const getDrawerView = (view: string) => {
   if (view === 'PagesView') return resolveComponent('PagesView');
   if (view === 'LocalizationView') return resolveComponent('LocalizationView');
   if (view === 'TableOfContents') return resolveComponent('TableOfContents');
-  if (view === 'blocksList') return resolveComponent('EditorBlocksNavigation');
 };
 
 const viewComponent = computed(() => getViewComponent(activeSetting.value, activeSubCategory.value));
