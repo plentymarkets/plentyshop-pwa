@@ -67,7 +67,7 @@ describe('component-toolbar.vue.hbs', () => {
 });
 
 describe('defaults.ts.hbs', () => {
-  it('should render a non-empty accessControl array and the block image constant', () => {
+  it('should render a non-empty accessControl array', () => {
     const rendered = render('defaults.ts.hbs', {
       name: 'TestBlock',
       category: 'cards',
@@ -75,7 +75,6 @@ describe('defaults.ts.hbs', () => {
     });
 
     expect(rendered).toContain("accessControl: ['content', 'product']");
-    expect(rendered).toContain('BLOCK_IMAGE');
     expect(rendered).toContain("category: 'cards'");
   });
 

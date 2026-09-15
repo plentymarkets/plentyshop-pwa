@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import type { Block } from '@plentymarkets/shop-api';
-const TABS_IMAGE = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
 
 const createTabTextCard = (htmlDescription: string): Block => ({
   name: 'TextCard',
@@ -47,7 +46,6 @@ export const getBlocksList = (): BlocksList => ({
     variations: [
       {
         title: 'Tabs',
-        image: TABS_IMAGE,
         template: {
           en: createTabs('<p style="text-align: left;">Add your tab content here.</p>'),
           de: createTabs('<p style="text-align: left;">Fügen Sie hier Ihren Tab-Inhalt hinzu.</p>'),

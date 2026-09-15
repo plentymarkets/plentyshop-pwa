@@ -1,10 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import type { Block } from '@plentymarkets/shop-api';
 
-// `image` has no live consumer in the CMS editor — the picker uses icon.svg instead. Kept as an
-// empty string only because BlockTemplateVariation.image is still a required field.
-const BLOCK_IMAGE = '';
-
 const create{{pascalCase name}} = (): Block => ({
   name: '{{pascalCase name}}',
   type: '{{#if structure}}structure{{else}}content{{/if}}',
@@ -32,7 +28,6 @@ export const getBlocksList = (): BlocksList => ({
     variations: [
       {
         title: '{{pascalCase name}}',
-        image: BLOCK_IMAGE,
         template: {
           en: create{{pascalCase name}}(),
           de: create{{pascalCase name}}(),

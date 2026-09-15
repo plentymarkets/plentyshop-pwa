@@ -16,7 +16,6 @@
       >
         <template #item="{ element: block }">
           <div>
-            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
             <component
               :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
               v-if="shouldShowBlock(block, enabledActions)"
@@ -37,13 +36,11 @@
                 @click="tabletEdit(getIndex(block))"
               />
             </component>
-            <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
           </div>
         </template>
       </component>
       <div v-else class="content">
         <div v-for="block in data" :key="block.meta.uuid">
-          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'top', drawerOpen, drawerView)" />
           <component
             :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
             v-if="shouldShowBlock(block, enabledActions)"
@@ -64,7 +61,6 @@
               @click="tabletEdit(getIndex(block))"
             />
           </component>
-          <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(block.meta.uuid, 'bottom', drawerOpen, drawerView)" />
         </div>
       </div>
     </template>
@@ -136,16 +132,8 @@ const getIndex = (block: Block) => renderedBlocks.value.indexOf(block);
 
 const isContentEmptyInLive = computed(() => data.value.length === 0 && isLiveMode.value);
 
-const {
-  isClicked,
-  clickedBlockIndex,
-  isTablet,
-  tabletEdit,
-  changeBlockPosition,
-  handleDragStart,
-  handleDragEnd,
-  shouldDisplayPlaceholder,
-} = useBlockManager();
+const { isClicked, clickedBlockIndex, isTablet, tabletEdit, changeBlockPosition, handleDragStart, handleDragEnd } =
+  useBlockManager();
 
 const scrollToBlock = (evt: DragEvent) => {
   const footerIndex = pageBlocks.value.findIndex((block: Block) => isFooterContainerBlock(block));
@@ -168,16 +156,9 @@ const scrollToBlock = (evt: DragEvent) => {
   }
 };
 
-const {
-  closeSiteConfigurationDrawer,
-  siteConfigurationDrawerOpen: siteConfigurationDrawerOpenRef,
-  siteConfigurationDrawerView: siteConfigurationDrawerViewRef,
-} = useSiteConfiguration();
+const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
 const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
-
-const drawerOpen = computed<boolean>(() => siteConfigurationDrawerOpenRef.value);
-const drawerView = computed<string | null>(() => siteConfigurationDrawerViewRef.value);
 
 const enabledActions = computed(
   () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,

@@ -7,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Category Sort',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/Sort_by_updated.svg',
         template: {
           en: {
             name: 'Sort',

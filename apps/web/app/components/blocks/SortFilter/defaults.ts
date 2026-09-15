@@ -7,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Category Sort & Filter Vertical',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/sorting_vertical.png',
         template: {
           en: {
             name: 'SortFilter',
