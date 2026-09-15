@@ -87,7 +87,6 @@ export default defineNuxtConfig({
                 '@tiptap/extension-text-style',
               ],
               tiptap: ['@tiptap/'],
-              vuetify: ['vuetify/', '@mdi/js'],
             };
 
             for (const [chunk, packages] of Object.entries(vendorChunks)) {
@@ -145,23 +144,8 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    'vuetify-nuxt-module',
     'nuxt-color-picker',
   ],
-  vuetify: {
-    moduleOptions: {
-      prefixComposables: true,
-      disableVuetifyStyles: true,
-    },
-    vuetifyOptions: {
-      icons: {
-        defaultSet: 'mdi-svg',
-      },
-      theme: {
-        defaultTheme: 'light',
-      },
-    },
-  },
   plentySitemap: {
     locales: (process.env.LANGUAGELIST || 'en,de').split(','),
     defaultLocale: nuxtI18nOptions.defaultLocale,

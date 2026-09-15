@@ -48,7 +48,6 @@ const SKIP_PACKAGES = new Set([
   '@storefront-ui/typography',
   '@vue-storefront/unified-data-model',
   'vee-validate',
-  'vuetify',
   'vitest',
   'rollup',
   'tailwindcss',
