@@ -20,7 +20,8 @@
               :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
               v-if="shouldShowBlock(block, enabledActions)"
             >
-              <PageBlock
+              <component
+                :is="pageBlockComponent"
                 :index="getIndex(block)"
                 :block="block"
                 :enable-actions="enabledActions"
@@ -45,7 +46,8 @@
             :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
             v-if="shouldShowBlock(block, enabledActions)"
           >
-            <PageBlock
+            <component
+              :is="pageBlockComponent"
               :index="getIndex(block)"
               :block="block"
               :enable-actions="enabledActions"
@@ -75,6 +77,8 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { BlockWithLayout, DragEvent, EditableBlocksProps } from './types';
 
 const NarrowContainer = resolveComponent('NarrowContainer');
+const PageBlock = resolveComponent('PageBlock');
+const EditorPageBlock = defineAsyncComponent(() => import('../EditorPageBlock/EditorPageBlock.vue'));
 
 const isNarrowContainer = (block: Block) => {
   const layoutBlock = block as BlockWithLayout;
@@ -163,6 +167,7 @@ const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibil
 const enabledActions = computed(
   () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
+const pageBlockComponent = computed(() => (shouldShowEditorUI.value ? EditorPageBlock : PageBlock));
 
 const loadDraggable = async () => {
   const [mod] = await Promise.all([import('vuedraggable/src/vuedraggable'), import('./draggable.css')]);
