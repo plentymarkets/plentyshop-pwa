@@ -4,7 +4,7 @@
       <button
         ref="aiButtonRef"
         type="button"
-        class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg border py-1.5 text-sm font-extrabold cursor-pointer transition-shadow"
+        class="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg border py-1.5 text-sm font-bold cursor-pointer transition-shadow"
         :class="
           aiActive
             ? 'border-slate-900 bg-slate-900 text-white shadow-md hover:bg-slate-800'

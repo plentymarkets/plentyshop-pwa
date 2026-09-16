@@ -136,6 +136,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/image',
     '@nuxt/test-utils/module',
+    '@nuxtjs/critters',
     '@nuxtjs/i18n',
     '~~/modules/locale-routes',
     '@nuxtjs/tailwindcss',
@@ -179,8 +180,7 @@ export default defineNuxtConfig({
   },
   fonts: {
     defaults: {
-      weights: [300, 400, 500, 700],
-      preload: true,
+      weights: [400, 500, 600, 700],
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
