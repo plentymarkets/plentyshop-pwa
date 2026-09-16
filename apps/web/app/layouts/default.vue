@@ -11,7 +11,7 @@
     <Cookiebar />
     <PreviewMode />
     <UiFooterBlocks />
-    <QuickCheckout v-if="isOpen" :product="product" />
+    <LazyQuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
