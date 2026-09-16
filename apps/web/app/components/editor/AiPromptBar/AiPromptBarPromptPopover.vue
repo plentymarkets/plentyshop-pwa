@@ -107,7 +107,7 @@
       <button
         type="button"
         :disabled="!canGenerate"
-        class="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-4 py-2 text-xs font-extrabold text-white shadow-md cursor-pointer hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-4 py-2 text-xs font-bold text-white shadow-md cursor-pointer hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none"
         data-testid="ai-generate"
         @mousedown.prevent
         @click="$emit('generate')"
