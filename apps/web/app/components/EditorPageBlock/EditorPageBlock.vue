@@ -80,7 +80,7 @@ const props = withDefaults(defineProps<EditorPageBlockProps>(), {
 });
 
 const attrs = useAttrs();
-const EditorPageBlock = getCurrentInstance()!.type;
+const EditorPageBlock = resolveComponent('EditorPageBlock');
 const viewport = useViewport();
 const { isInEditorClient } = useEditorState();
 const { isDragging } = useBlockManager();

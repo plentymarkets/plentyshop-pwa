@@ -21,5 +21,5 @@ withDefaults(defineProps<PageBlockProps>(), {
 });
 
 const attrs = useAttrs();
-const PageBlock = getCurrentInstance()!.type;
+const PageBlock = resolveComponent('PageBlock');
 </script>

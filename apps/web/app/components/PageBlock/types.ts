@@ -20,7 +20,7 @@ export interface EditorPageBlockProps extends PageBlockProps, PageBlockEditorPro
 
 export interface PageBlockContentProps extends PageBlockProps {
   contentAttrs?: Record<string, unknown>;
-  recursiveComponent: Component;
+  recursiveComponent: Component | string;
   recursiveProps?: Record<string, unknown>;
   wrapperClass?: HTMLAttributes['class'];
 }
