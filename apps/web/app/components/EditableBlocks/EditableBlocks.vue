@@ -16,53 +16,13 @@
       >
         <template #item="{ element: block }">
           <div>
-            <component
-              :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
-              v-if="shouldShowBlock(block, enabledActions)"
-            >
-              <component
-                :is="pageBlockComponent"
-                :index="getIndex(block)"
-                :block="block"
-                :enable-actions="enabledActions"
-                :is-clicked="isClicked"
-                :clicked-block-index="clickedBlockIndex"
-                :is-tablet="isTablet"
-                :change-block-position="changeBlockPosition"
-                root
-                :read-only="readOnly"
-                class="group"
-                :class="getBlockClass(block).value"
-                data-testid="block-wrapper"
-                @click="tabletEdit(getIndex(block))"
-              />
-            </component>
+            <BlockItem v-bind="getBlockItemProps(block)" />
           </div>
         </template>
       </component>
       <div v-else class="content">
         <div v-for="block in data" :key="block.meta.uuid">
-          <component
-            :is="isNarrowContainer(block) ? NarrowContainer : 'div'"
-            v-if="shouldShowBlock(block, enabledActions)"
-          >
-            <component
-              :is="pageBlockComponent"
-              :index="getIndex(block)"
-              :block="block"
-              :enable-actions="enabledActions"
-              :is-clicked="isClicked"
-              :clicked-block-index="clickedBlockIndex"
-              :is-tablet="isTablet"
-              :change-block-position="changeBlockPosition"
-              root
-              :read-only="readOnly"
-              class="group"
-              :class="getBlockClass(block).value"
-              data-testid="block-wrapper"
-              @click="tabletEdit(getIndex(block))"
-            />
-          </component>
+          <BlockItem v-bind="getBlockItemProps(block)" />
         </div>
       </div>
     </template>
@@ -74,16 +34,11 @@
 <script lang="ts" setup>
 import type { ConcreteComponent } from 'vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockWithLayout, DragEvent, EditableBlocksProps } from './types';
+import type { DragEvent, EditableBlockItemProps, EditableBlocksProps } from './types';
+import BlockItem from './BlockItem.vue';
 
-const NarrowContainer = resolveComponent('NarrowContainer');
 const PageBlock = resolveComponent('PageBlock');
 const EditorPageBlock = defineAsyncComponent(() => import('../EditorPageBlock/EditorPageBlock.vue'));
-
-const isNarrowContainer = (block: Block) => {
-  const layoutBlock = block as BlockWithLayout;
-  return layoutBlock.content?.layout?.narrowContainer || layoutBlock.layout?.narrowContainer;
-};
 
 const draggableComp = shallowRef<ConcreteComponent | null>(null);
 
@@ -91,7 +46,6 @@ const { isLiveMode, shouldShowEditorUI } = useEditorState();
 const props = withDefaults(defineProps<EditableBlocksProps>(), {
   identifier: HOMEPAGE_IDENTIFIER,
   type: 'immutable',
-  isRoot: false,
   hasEnabledActions: true,
   preventBlocksRequest: false,
   readOnly: false,
@@ -132,7 +86,7 @@ const data = computed({
   },
 });
 
-const getIndex = (block: Block) => renderedBlocks.value.indexOf(block);
+const getIndex = (block: Block) => data.value.indexOf(block);
 
 const isContentEmptyInLive = computed(() => data.value.length === 0 && isLiveMode.value);
 
@@ -162,12 +116,32 @@ const scrollToBlock = (evt: DragEvent) => {
 
 const { closeSiteConfigurationDrawer } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
-const { shouldShowBlock, clearRegistry, isHydrationComplete } = useBlocksVisibility();
+const { clearRegistry, isHydrationComplete } = useBlocksVisibility();
 
 const enabledActions = computed(
   () => shouldShowEditorUI.value && props.hasEnabledActions && !localizationDrawerOpen.value,
 );
 const pageBlockComponent = computed(() => (shouldShowEditorUI.value ? EditorPageBlock : PageBlock));
+const editorPageBlockProps = computed(() =>
+  shouldShowEditorUI.value
+    ? {
+        isClicked: isClicked.value,
+        readOnly: props.readOnly,
+        clickedBlockIndex: clickedBlockIndex.value,
+        isTablet: isTablet.value,
+        changeBlockPosition,
+      }
+    : undefined,
+);
+const getBlockItemProps = (block: Block): EditableBlockItemProps => ({
+  index: getIndex(block),
+  block,
+  enableActions: enabledActions.value,
+  root: true,
+  editorPageBlockProps: editorPageBlockProps.value,
+  pageBlockComponent: pageBlockComponent.value,
+  tabletEdit,
+});
 
 const loadDraggable = async () => {
   const [mod] = await Promise.all([import('vuedraggable/src/vuedraggable'), import('./draggable.css')]);

@@ -7,10 +7,15 @@
     @mouseenter="onBlockHover"
     @mouseleave="onBlockUnhover"
   >
-    <div
-      :id="`block-${index}`"
-      :ref="getLazyLoadRef(props.block.name, props.block.meta.uuid)"
-      :class="[
+    <PageBlockContent
+      :index="index"
+      :block="block"
+      :root="root"
+      :enable-actions="enableActions"
+      :content-attrs="attrs"
+      :recursive-component="EditorPageBlock"
+      :recursive-props="recursiveProps"
+      :wrapper-class="[
         'relative block-wrapper h-full',
         {
           'block-hoverable group/block':
@@ -18,8 +23,11 @@
         },
       ]"
     >
-      <div v-if="showOutline && !isDragging" class="pointer-events-none absolute inset-[-6px] block-selected-outline" />
-      <ClientOnly>
+      <template #before>
+        <div
+          v-if="showOutline && !isDragging"
+          class="pointer-events-none absolute inset-[-6px] block-selected-outline"
+        />
         <EditorAddBlockButton
           :block="block"
           :index="index"
@@ -29,9 +37,7 @@
           :enable-actions="enableActions"
           position="top"
         />
-      </ClientOnly>
 
-      <ClientOnly>
         <UiBlockActions
           v-if="enableActions && clientPreview && root && !isDragging"
           :key="`${block.meta.uuid}`"
@@ -47,29 +53,9 @@
           :read-only="readOnly"
           @change-position="changeBlockPosition"
         />
-      </ClientOnly>
+      </template>
 
-      <component :is="blockComponent" v-if="blockComponent" v-bind="contentProps" :index="index">
-        <template v-if="block.type === 'structure'" #content="slotProps">
-          <EditorPageBlock
-            v-if="shouldShowBlock(slotProps.contentBlock, enableActions)"
-            :index="index"
-            :block="slotProps.contentBlock"
-            :root="false"
-            :is-preview="clientPreview"
-            :enable-actions="enableActions"
-            :is-clicked="isClicked"
-            :clicked-block-index="clickedBlockIndex"
-            :is-tablet="isTablet"
-            :change-block-position="changeBlockPosition"
-            :column-length="slotProps.columnLength"
-            :is-row-hovered="slotProps.isRowHovered"
-            v-bind="slotProps"
-          />
-        </template>
-      </component>
-
-      <ClientOnly>
+      <template #after>
         <EditorAddBlockButton
           :block="block"
           :index="index"
@@ -79,29 +65,37 @@
           :enable-actions="enableActions"
           position="bottom"
         />
-      </ClientOnly>
-    </div>
+      </template>
+    </PageBlockContent>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { PageBlockProps } from '../PageBlock/types';
-import { usePageBlockRendering } from '../PageBlock/usePageBlockRendering';
+import type { EditorPageBlockProps } from '../PageBlock/types';
+import PageBlockContent from '../PageBlock/PageBlockContent.vue';
 
-const props = withDefaults(defineProps<PageBlockProps>(), {
+const props = withDefaults(defineProps<EditorPageBlockProps>(), {
   enableActions: false,
   readOnly: false,
 });
 
+const attrs = useAttrs();
+const EditorPageBlock = getCurrentInstance()!.type;
 const viewport = useViewport();
 const { isInEditorClient } = useEditorState();
 const { isDragging } = useBlockManager();
 const { popoverState } = useAddBlockPopover();
-const { shouldShowBlock } = useBlocksVisibility();
 const { hoveredUuid, highlightedUuid, setHoveredBlock, clearHoveredBlock } = useTableOfContents();
-const { blockComponent, contentProps, getLazyLoadRef } = usePageBlockRendering(props);
 
 const clientPreview = computed(() => isInEditorClient.value && viewport.isGreaterOrEquals('lg'));
+const recursiveProps = computed(() => ({
+  isPreview: clientPreview.value,
+  isClicked: props.isClicked,
+  readOnly: props.readOnly,
+  clickedBlockIndex: props.clickedBlockIndex,
+  isTablet: props.isTablet,
+  changeBlockPosition: props.changeBlockPosition,
+}));
 
 const isPopoverTarget = computed(
   () => clientPreview.value && props.enableActions && popoverState.value?.targetUuid === props.block.meta.uuid,

@@ -1,10 +1,9 @@
-import type { PageBlockProps } from './types';
+import type { PageBlockContentProps } from './types';
 
 /**
  * Provides block component resolution, props, and lazy-loading behavior shared by page block renderers.
  */
-export const usePageBlockRendering = (props: PageBlockProps) => {
-  const attrs = useAttrs();
+export const usePageBlockRendering = (props: PageBlockContentProps) => {
   let lazyLoadObserver: IntersectionObserver | null = null;
   const { lazyLoadStates, lazyLoadRefs, shouldLazyLoad, getLazyLoadKey, getLazyLoadConfig, getLazyLoadRef } =
     useBlockManager();
@@ -20,7 +19,7 @@ export const usePageBlockRendering = (props: PageBlockProps) => {
   const blockIsCurrentlyOpen = computed(() => blockUuid.value === props.block.meta.uuid);
 
   const contentProps = computed(() => {
-    const baseProps = props.root ? { ...props.block } : { ...props.block, ...attrs };
+    const baseProps = props.root ? { ...props.block } : { ...props.block, ...props.contentAttrs };
     const config = getLazyLoadConfig(props.block.name);
 
     if (config) {
