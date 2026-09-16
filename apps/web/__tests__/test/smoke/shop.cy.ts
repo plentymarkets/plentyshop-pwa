@@ -8,6 +8,7 @@ import { ProductListPageObject } from '../../support/pageObjects/ProductListPage
 import { HeaderBlockObject } from '../../support/pageObjects/HeaderBlockObject';
 import { FooterBlockObject } from '../../support/pageObjects/FooterBlockObject';
 import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
+import { assertEditorBlockStylesLoaded } from '../../support/editorBlockStyles';
 
 const cartPage = new CartPageObject();
 const checkoutPage = new CheckoutPageObject();
@@ -25,6 +26,7 @@ const productToSearch = 'headphones';
 describe('Shop Smoke Tests', () => {
   it('global blocks render and persist across navigation', () => {
     cy.visitAndHydrate(paths.home);
+    assertEditorBlockStylesLoaded(false);
 
     // prettier-ignore
     headerBlock

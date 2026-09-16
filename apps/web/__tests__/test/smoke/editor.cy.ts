@@ -4,6 +4,7 @@ import { HeaderBlockObject } from '../../support/pageObjects/HeaderBlockObject';
 import { FooterBlockObject } from '../../support/pageObjects/FooterBlockObject';
 import { TableOfContentsObject } from '../../support/pageObjects/TableOfContentsObject';
 import { ToolbarObject } from '../../support/pageObjects/ToolbarObject';
+import { assertEditorBlockStylesLoaded } from '../../support/editorBlockStyles';
 
 const cookieBar = new CookieBarObject();
 const headerBlock = new HeaderBlockObject();
@@ -18,6 +19,7 @@ describe('Editor Smoke Tests', () => {
     cy.setConfig({ isPreview: true });
     cy.visitAndHydrate(paths.home);
     cookieBar.acceptAll();
+    assertEditorBlockStylesLoaded(true);
 
     // prettier-ignore
     tableOfContents
