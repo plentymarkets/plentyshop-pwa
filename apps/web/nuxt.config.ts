@@ -77,7 +77,13 @@ export default defineNuxtConfig({
             if (id.includes('utils/blocks/blocks-imports')) return 'block-registry';
             if (/[/\\]blocks[/\\].+[/\\]defaults\.ts$/.test(id)) return 'block-registry';
 
+            /*
+             * Keep Floating UI separate because it is shared by the storefront and Tiptap.
+             * Otherwise Rollup can absorb it into a Tiptap chunk, causing pages to
+             * download the entire editor bundle when e.g. the UtilityBar imports @floating-ui/vue.
+             */
             const vendorChunks: Record<string, string[]> = {
+              floatingUi: ['@floating-ui/'],
               tiptapExtensions: [
                 '@tiptap/extension-color',
                 '@tiptap/extension-emoji',
