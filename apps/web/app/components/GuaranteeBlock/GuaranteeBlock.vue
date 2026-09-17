@@ -28,7 +28,7 @@
         >
           <SfIconClose size="xs" />
         </button>
-        <GuaranteeLabel :guarantee="guarantee" :manufacturer="manufacturer" :model="model" />
+        <LazyGuaranteeLabel :guarantee="guarantee" :manufacturer="manufacturer" :model="model" />
       </div>
     </Transition>
   </div>
