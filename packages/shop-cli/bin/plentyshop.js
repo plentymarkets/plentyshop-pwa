@@ -61,12 +61,14 @@ if (command === 'generate') {
     return !customFlags.some((flag) => arg.startsWith(flag));
   });
 
+  const tsxLoaderPath = fileURLToPath(import.meta.resolve('tsx'));
+  const plopPackagePath = fileURLToPath(import.meta.resolve('plop/package.json'));
+  const plopBinPath = join(dirname(plopPackagePath), 'bin', 'plop.js');
+
   const plopProcess = spawn(
-    'npx',
-    ['cross-env', 'NODE_OPTIONS=--import=tsx', 'plop', '--plopfile', plopfilePath, ...plopArgs],
-    {
-      stdio: 'inherit',
-    },
+    process.execPath,
+    ['--import', tsxLoaderPath, plopBinPath, '--plopfile', plopfilePath, ...plopArgs],
+    { stdio: 'inherit' },
   );
 
   plopProcess.on('exit', (code) => {
