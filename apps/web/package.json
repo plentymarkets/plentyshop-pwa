@@ -37,6 +37,7 @@
     "@vueuse/core": "^14.3.0",
     "axios": "^1.19.0",
     "codemirror": "^6.0.2",
+    "embla-carousel-vue": "^8.6.0",
     "js-beautify": "^1.15.4",
     "nuxt-lazy-hydrate": "^1.0.0",
     "uuid": "^14.0.0",

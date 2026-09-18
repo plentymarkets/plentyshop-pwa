@@ -5,27 +5,31 @@
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
     >
-      <Swiper
-        :modules="mainModules"
-        :slides-per-view="1"
-        :loop="false"
-        :keyboard="{ enabled: true }"
-        :thumbs="{ swiper: thumbsSwiper || null }"
-        class="!absolute top-0 left-0 w-full h-full"
-        @swiper="onMainInit"
-        @slide-change="onMainSlideChange"
+      <div
+        ref="mainEmblaRef"
+        class="absolute inset-0 overflow-hidden"
+        tabindex="0"
+        role="group"
+        @keydown.left="scrollPrev"
+        @keydown.right="scrollNext"
       >
-        <SwiperSlide v-for="(image, index) in images" :key="`main-${index}`" class="flex items-center justify-center">
-          <ZoomableImage
-            :images="images"
-            :image="image"
-            :index="index"
-            :active-index="activeIndex"
-            :is-first-image="index === 0"
-            :disable-zoom="shouldEnableEditorFeatures || configuration.thumbnails.enableHoverZoom === false"
-          />
-        </SwiperSlide>
-      </Swiper>
+        <div class="flex h-full touch-pan-y">
+          <div
+            v-for="(image, index) in images"
+            :key="`main-${index}`"
+            class="flex min-w-0 shrink-0 grow-0 basis-full items-center justify-center"
+          >
+            <ZoomableImage
+              :images="images"
+              :image="image"
+              :index="index"
+              :active-index="activeIndex"
+              :is-first-image="index === 0"
+              :disable-zoom="shouldEnableEditorFeatures || configuration.thumbnails.enableHoverZoom === false"
+            />
+          </div>
+        </div>
+      </div>
     </div>
 
     <div
@@ -33,21 +37,16 @@
       :class="['@md:relative', thumbContainerClass, isSide ? '@md:self-stretch' : '@md:w-full']"
     >
       <div class="hidden @md:block @md:relative @md:h-full @md:overflow-hidden">
-        <Swiper
-          :modules="thumbsModules"
-          :direction="thumbsDirection"
-          :slides-per-view="thumbsSlidesPerView"
-          :space-between="4"
-          :free-mode="true"
-          :watch-slides-progress="true"
-          :centered-slides="false"
-          :class="thumbsSwiperClass"
+        <div
+          ref="thumbsContainerRef"
+          :class="thumbsContainerClass"
           :style="isSide ? { height: `${thumbsHeight}px` } : {}"
-          @swiper="onThumbsInit"
         >
-          <SwiperSlide
+          <button
             v-for="(image, index) in images"
             :key="`thumb-${index}`"
+            type="button"
+            :data-gallery-thumbnail="index"
             :class="thumbSlideClass(index)"
             @click="slideTo(index)"
           >
@@ -62,26 +61,20 @@
               :quality="80"
               loading="lazy"
             />
-          </SwiperSlide>
-        </Swiper>
+          </button>
+        </div>
 
         <template v-if="hasMoreImages">
           <button
-            v-if="showNav && mainSwiper"
+            v-if="showNav"
             :disabled="atStart"
             :class="prevThumbBtnClass"
             aria-label="Previous"
-            @click="mainSwiper?.slidePrev()"
+            @click="scrollPrev"
           >
             <SfIconChevronLeft />
           </button>
-          <button
-            v-if="showNav && mainSwiper"
-            :disabled="atEnd"
-            :class="nextThumbBtnClass"
-            aria-label="Next"
-            @click="mainSwiper?.slideNext()"
-          >
+          <button v-if="showNav" :disabled="atEnd" :class="nextThumbBtnClass" aria-label="Next" @click="scrollNext">
             <SfIconChevronRight />
           </button>
         </template>
@@ -103,9 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Thumbs, FreeMode, Keyboard, A11y } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
+import emblaCarouselVue from 'embla-carousel-vue';
 import { SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import { productImageGetters } from '@plentymarkets/shop-api';
 import type { GalleryProps } from '~/components/Gallery/types';
@@ -141,20 +132,20 @@ const galleryGapClass = computed(() => (isSide.value ? '@md:gap-4' : '@md:gap-2'
 const thumbContainerClass = computed(() => [isLeft.value ? '@md:order-first' : '@md:order-last']);
 const hasMoreImages = computed(() => images.value.length > 1);
 
-const thumbsDirection = computed(() => (isSide.value ? 'vertical' : 'horizontal'));
-const thumbsSlidesPerView = computed(() => (isSide.value ? 'auto' : Math.min(images.value.length, 6)));
-const thumbsSwiperClass = computed(() =>
-  isSide.value ? 'hidden md:block md:h-full md:w-[5.5rem]' : 'hidden md:block md:w-full md:min-h-[5.5rem]',
+const thumbsContainerClass = computed(() =>
+  isSide.value
+    ? 'hidden @md:flex @md:h-full @md:w-24 @md:flex-col @md:gap-1 @md:overflow-y-auto'
+    : 'hidden @md:flex @md:w-full @md:min-h-24 @md:gap-1 @md:overflow-x-auto',
 );
 
 const thumbSlideClass = (index: number) =>
   isSide.value
     ? [
-        '!w-[5rem] !h-[5rem] flex items-center justify-center cursor-pointer snap-start',
+        'size-20 shrink-0 flex items-center justify-center cursor-pointer snap-start',
         activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
       ]
     : [
-        '!w-[5rem] !h-[5rem] inline-flex items-center justify-center cursor-pointer snap-start',
+        'size-20 shrink-0 inline-flex items-center justify-center cursor-pointer snap-start',
         activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
       ];
 
@@ -174,33 +165,32 @@ const nextThumbBtnClass = computed(() =>
 
 const mainBox = ref<HTMLElement | null>(null);
 const thumbsHeight = ref(0);
-const mainSwiperRef = ref<SwiperType | null>(null);
-const thumbsSwiperRef = ref<SwiperType | null>(null);
+const thumbsContainerRef = ref<HTMLElement | null>(null);
+const [mainEmblaRef, mainEmblaApi] = emblaCarouselVue({ loop: false, align: 'start' });
 
-const mainSwiper = computed(() => mainSwiperRef.value);
-const thumbsSwiper = computed(() => thumbsSwiperRef.value as SwiperType | null);
+const syncSelectedImage = () => {
+  const api = mainEmblaApi.value;
+  if (!api) {
+    return;
+  }
 
-const mainModules = [Thumbs, Keyboard, A11y];
-const thumbsModules = [FreeMode, Thumbs];
+  const nextIndex = api.selectedScrollSnap();
+  if (nextIndex === activeIndex.value) {
+    return;
+  }
 
-const onMainInit = (swiper: SwiperType) => {
-  mainSwiperRef.value = swiper;
-  activeIndex.value = swiper.realIndex ?? 0;
-};
-
-const onThumbsInit = (swiper: SwiperType) => {
-  thumbsSwiperRef.value = swiper;
-};
-
-const onMainSlideChange = (swiper: SwiperType) => {
-  activeIndex.value = swiper.realIndex ?? 0;
+  activeIndex.value = nextIndex;
+  const activeThumbnail = thumbsContainerRef.value?.querySelector<HTMLElement>(
+    `[data-gallery-thumbnail="${activeIndex.value}"]`,
+  );
+  activeThumbnail?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 };
 
 const slideTo = (index: number) => {
-  activeIndex.value = index;
-  if (mainSwiper.value?.params.loop) mainSwiper.value.slideToLoop(index);
-  else mainSwiper.value?.slideTo(index);
+  mainEmblaApi.value?.scrollTo(index);
 };
+const scrollPrev = () => mainEmblaApi.value?.scrollPrev();
+const scrollNext = () => mainEmblaApi.value?.scrollNext();
 
 const atStart = computed(() => activeIndex.value === 0);
 const atEnd = computed(() => activeIndex.value === images.value.length - 1);
@@ -208,6 +198,30 @@ const atEnd = computed(() => activeIndex.value === images.value.length - 1);
 const carouselProps = computed(() => {
   return hasMoreImages.value ? { role: 'group' } : {};
 });
+
+watch(
+  mainEmblaApi,
+  (api, previousApi) => {
+    previousApi?.off('select', syncSelectedImage);
+    previousApi?.off('reInit', syncSelectedImage);
+    if (!api) {
+      return;
+    }
+
+    api.on('select', syncSelectedImage);
+    api.on('reInit', syncSelectedImage);
+    syncSelectedImage();
+  },
+  { immediate: true },
+);
+
+watch(
+  () => images.value.map((image) => productImageGetters.getImageUrl(image)),
+  async () => {
+    await nextTick();
+    mainEmblaApi.value?.reInit();
+  },
+);
 
 onMounted(() => {
   if (!mainBox.value) return;
@@ -219,6 +233,12 @@ onMounted(() => {
   ro.observe(mainBox.value);
   onBeforeUnmount(() => ro.disconnect());
 });
-</script>
 
-<style src="swiper/css"></style>
+onBeforeUnmount(() => {
+  const api = mainEmblaApi.value;
+  if (api) {
+    api.off('select', syncSelectedImage);
+    api.off('reInit', syncSelectedImage);
+  }
+});
+</script>

@@ -1,97 +1,107 @@
 <template>
   <NuxtErrorBoundary>
-    <Swiper
+    <div
       :id="`carousel-${meta.uuid}`"
-      :key="visibleContent.length"
-      :modules="enableModules ? [Pagination, Navigation] : []"
-      :slides-per-view="1"
+      class="relative w-full max-h-[85vh]"
       v-bind="carouselProps"
       :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
       :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
-      :loop="true"
-      :pagination="paginationConfig"
-      :navigation="navigationConfig"
-      class="!w-full !max-h-[85vh]"
-      @swiper="onSwiperInit"
-      @slide-change="onSlideChange"
+      @keydown.left="scrollPrev"
+      @keydown.right="scrollNext"
     >
-      <SwiperSlide
-        v-for="(block, slideIndex) in visibleContent"
-        :key="slideIndex"
-        :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : null"
-        :aria-label="
-          visibleContent.length > 1
-            ? t('homepage.banner.ariaLabelSlidePosition', { current: slideIndex + 1, total: visibleContent.length })
-            : null
-        "
-        class="!h-auto"
-        v-bind="carouselProps"
-        :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
-      >
-        <slot
-          name="content"
-          :content-block="block"
-          :index="getSlideAdjustedIndex(slideIndex)"
-          :slide-index="slideIndex"
-          :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
-        />
-      </SwiperSlide>
-      <div
-        v-if="enableModules"
-        :class="`swiper-pagination swiper-pagination-${meta.uuid} swiper-pagination-bullets swiper-pagination-horizontal`"
-      />
-    </Swiper>
+      <div ref="emblaRef" class="overflow-hidden">
+        <div class="flex touch-pan-y">
+          <div
+            v-for="(block, slideIndex) in visibleContent"
+            :key="block.meta.uuid"
+            class="min-w-0 shrink-0 grow-0 basis-full"
+            :aria-labelledby="visibleContent.length > 1 ? `carousel_item-${slideIndex}_heading` : undefined"
+            :aria-label="
+              visibleContent.length > 1
+                ? t('homepage.banner.ariaLabelSlidePosition', {
+                    current: slideIndex + 1,
+                    total: visibleContent.length,
+                  })
+                : undefined
+            "
+            v-bind="carouselProps"
+            :aria-roledescription="t('homepage.banner.ariaRoleDescriptionSlide')"
+          >
+            <slot
+              name="content"
+              :content-block="block"
+              :index="getSlideAdjustedIndex(slideIndex)"
+              :slide-index="slideIndex"
+              :lazy-loading="slideIndex > 0 ? 'lazy' : 'eager'"
+            />
+          </div>
+        </div>
+      </div>
 
-    <button
-      v-if="enableModules && handleArrows()"
-      :key="`prev-${meta.uuid}`"
-      type="button"
-      :class="`swiper-button-prev swiper-button-prev-${meta.uuid}`"
-      :aria-controls="`carousel-${meta.uuid}`"
-      :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
-      :style="{
-        color: configuration.controls.color + ' !important',
-        '--swiper-navigation-size': navigationSize,
-        visibility: swiperHeight === 0 ? 'hidden' : 'visible',
-      }"
-    />
-    <button
-      v-if="enableModules && handleArrows()"
-      :key="`next-${meta.uuid}`"
-      type="button"
-      :class="`swiper-button-next swiper-button-next-${meta.uuid}`"
-      :aria-controls="`carousel-${meta.uuid}`"
-      :aria-label="t('homepage.banner.ariaLabelNextSlide')"
-      :style="{
-        color: configuration.controls.color + ' !important',
-        '--swiper-navigation-size': navigationSize,
-        visibility: swiperHeight === 0 ? 'hidden' : 'visible',
-      }"
-    />
+      <template v-if="hasMultipleSlides && configuration.controls.displayArrows !== false && showArrows">
+        <button
+          type="button"
+          class="absolute left-2 top-1/2 z-raised flex size-11 -translate-y-1/2 items-center justify-center text-white drop-shadow"
+          :aria-controls="`carousel-${meta.uuid}`"
+          :aria-label="t('homepage.banner.ariaLabelPreviousSlide')"
+          :style="{ color: configuration.controls.color }"
+          @click="scrollPrev"
+        >
+          <SfIconChevronLeft />
+        </button>
+        <button
+          type="button"
+          class="absolute right-2 top-1/2 z-raised flex size-11 -translate-y-1/2 items-center justify-center text-white drop-shadow"
+          :aria-controls="`carousel-${meta.uuid}`"
+          :aria-label="t('homepage.banner.ariaLabelNextSlide')"
+          :style="{ color: configuration.controls.color }"
+          @click="scrollNext"
+        >
+          <SfIconChevronRight />
+        </button>
+      </template>
+
+      <div
+        v-if="hasMultipleSlides && configuration.controls.color && configuration.controls.displayIndicators !== false"
+        class="absolute inset-x-0 bottom-2 z-raised flex justify-center gap-2"
+      >
+        <button
+          v-for="(_, slideIndex) in visibleContent"
+          :key="`dot-${slideIndex}`"
+          type="button"
+          class="size-2 rounded-full"
+          :class="slideIndex === selectedIndex ? 'opacity-100' : 'opacity-20'"
+          :style="{ backgroundColor: configuration.controls.color }"
+          :aria-label="
+            t('homepage.banner.ariaLabelSlidePosition', {
+              current: slideIndex + 1,
+              total: visibleContent.length,
+            })
+          "
+          @click="scrollTo(slideIndex)"
+        />
+      </div>
+    </div>
   </NuxtErrorBoundary>
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Pagination, Navigation } from 'swiper/modules';
+import emblaCarouselVue from 'embla-carousel-vue';
+import { SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import type { CarouselStructureProps, SlideBlock } from './types';
-import type { Swiper as SwiperType } from 'swiper';
 
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
-const isInternalChange = ref(false);
-
-const swiperHeight = ref(0);
-let resizeObserver: ResizeObserver | null = null;
-
-const navigationSize = computed(() => {
-  const size = Math.min(swiperHeight.value * 0.1, 44);
-  return `${Math.max(size, 20)}px`;
-});
+const viewport = useViewport();
+const showArrows = computed(() => !viewport.isLessThan('md'));
 
 const visibleContent = computed(() => {
   return (content as SlideBlock[]).filter((slide) => slide.configuration?.visible !== false);
 });
+const hasMultipleSlides = computed(() => visibleContent.value.length > 1);
+const emblaOptions = computed(() => ({ loop: hasMultipleSlides.value, align: 'start' as const }));
+const [emblaRef, emblaApi] = emblaCarouselVue(emblaOptions);
+const selectedIndex = ref(0);
 
 const getActualIndex = (visibleIndex: number): number => {
   const contentArray = content as SlideBlock[];
@@ -120,91 +130,59 @@ const getVisibleIndex = (actualIndex: number): number => {
   return visibleIndex;
 };
 
-const handleArrows = () => {
-  const viewport = useViewport();
-  return !viewport.isLessThan('md');
-};
-
-const enableModules = computed(() => visibleContent.value.length > 1);
-let slider: SwiperType | null = null;
-
-const paginationConfig = computed(() => {
-  return enableModules.value && configuration.controls.color && configuration.controls.displayIndicators !== false
-    ? {
-        el: `.swiper-pagination-${meta.uuid}`,
-        clickable: true,
-        bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary-500',
-        renderBullet(index: number, className: string) {
-          return `<span key="dot-${index}" class="${className}" style="background-color: ${configuration.controls.color}!important;"></span>`;
-        },
-      }
-    : false;
-});
-
-const navigationConfig = computed(() => {
-  return enableModules.value
-    ? {
-        nextEl: `.swiper-button-next-${meta.uuid}`,
-        prevEl: `.swiper-button-prev-${meta.uuid}`,
-      }
-    : false;
-});
-
 const carouselProps = computed(() => {
   return content.length > 1 ? { role: 'group' } : {};
 });
 
-const onSwiperInit = async (swiper: SwiperType) => {
-  slider = swiper;
-
-  if (activeSlideIndex.value[meta.uuid] === null) {
-    setIndex(meta.uuid, swiper.realIndex);
-  }
-
-  const el = swiper.el as HTMLElement;
-  resizeObserver?.disconnect();
-  resizeObserver = new ResizeObserver((entries) => {
-    const entry = entries[0];
-    if (entry) swiperHeight.value = entry.contentRect.height;
-  });
-  resizeObserver.observe(el);
-};
-
-onUnmounted(() => resizeObserver?.disconnect());
-
-const reinitializeSwiper = async () => {
-  if (!slider || slider.destroyed) return;
-
-  await nextTick();
-
-  slider.update();
-
-  if (slider.params.navigation && slider.navigation) {
-    slider.navigation.destroy();
-    slider.navigation.init();
-    slider.navigation.update();
-  }
-
-  if (slider.params.pagination && slider.pagination) {
-    slider.pagination.destroy();
-    slider.pagination.init();
-    slider.pagination.update();
-  }
-};
-const onSlideChange = async (swiper: SwiperType) => {
-  const visibleIndex = swiper.realIndex;
-  if (isInternalChange.value) {
-    isInternalChange.value = false;
+const syncSelectedSlide = () => {
+  const api = emblaApi.value;
+  if (!api) {
     return;
   }
 
-  // Convert visible index to actual content index
+  const visibleIndex = api.selectedScrollSnap();
+  selectedIndex.value = visibleIndex;
   const actualIndex = getActualIndex(visibleIndex);
-
   if (actualIndex !== activeSlideIndex.value[meta.uuid]) {
     setIndex(meta.uuid, actualIndex);
   }
 };
+
+const scrollPrev = () => emblaApi.value?.scrollPrev();
+const scrollNext = () => emblaApi.value?.scrollNext();
+const scrollTo = (slideIndex: number) => emblaApi.value?.scrollTo(slideIndex);
+
+watch(
+  emblaApi,
+  (api, previousApi) => {
+    previousApi?.off('select', syncSelectedSlide);
+    previousApi?.off('reInit', syncSelectedSlide);
+    if (!api) {
+      return;
+    }
+
+    api.on('select', syncSelectedSlide);
+    api.on('reInit', syncSelectedSlide);
+    syncSelectedSlide();
+  },
+  { immediate: true },
+);
+
+watch(
+  () => visibleContent.value.map((slide) => slide.meta.uuid),
+  async () => {
+    await nextTick();
+    emblaApi.value?.reInit();
+  },
+);
+
+onBeforeUnmount(() => {
+  const api = emblaApi.value;
+  if (api) {
+    api.off('select', syncSelectedSlide);
+    api.off('reInit', syncSelectedSlide);
+  }
+});
 
 const getSlideAdjustedIndex = (slideIndex: number) => {
   return activeSlideIndex.value[meta.uuid] === slideIndex ? index : index + slideIndex;
@@ -213,41 +191,11 @@ const getSlideAdjustedIndex = (slideIndex: number) => {
 watch(
   () => activeSlideIndex.value[meta.uuid],
   (newIndex) => {
-    if (!slider || slider.destroyed) return;
-
-    // Convert actual content index to visible slide index
     const visibleIndex = getVisibleIndex(newIndex ?? 0);
-
-    if (slider.realIndex !== visibleIndex) {
-      isInternalChange.value = true;
-      if (slider.params.loop) {
-        slider.slideToLoop(visibleIndex);
-      } else {
-        slider.slideTo(visibleIndex);
-      }
+    if (selectedIndex.value !== visibleIndex) {
+      scrollTo(visibleIndex);
     }
   },
   { flush: 'post' },
 );
-watch(
-  () => visibleContent.value.length,
-  async (newLength, oldLength) => {
-    if (oldLength <= 1 && newLength > 1) {
-      await reinitializeSwiper();
-    }
-  },
-);
-watch(
-  () => configuration.controls.color,
-  (newColor, oldColor) => {
-    if (slider && !slider.destroyed && newColor !== oldColor) {
-      slider.pagination.render();
-      slider.pagination.update();
-    }
-  },
-);
 </script>
-
-<style src="./styles/navigation.min.css"></style>
-<style src="./styles/pagination.min.css"></style>
-<style src="./styles/swiper.min.css"></style>
