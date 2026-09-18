@@ -117,3 +117,29 @@ that skill mandates real tests regardless. Where precedent exists, prefer
 splitting by concern into separate spec files (Image/TextCard: one spec per
 prop group — image, text, button, layout) over one large spec asserting
 everything. Mock `useViewport` when testing responsive rendering.
+
+### Testing a structure block's Form.vue
+
+No existing structure block (`Tabs`, `MultiGrid`, `Carousel`,
+`FooterContainer`, `HeaderContainer`) has a `Form.vue` test — that's not a
+precedent to follow either. These forms are thin glue over
+`findOrDeleteBlockByUuid` (from `useBlockManager`) plus real, already
+self-contained `useState`-backed composables (`useBlocks`,
+`useBlockEditStack`, `useFullWidthToggleForConfig`, `useNestedBlockForm`,
+`EditorGridElementsPanel`'s own dependencies) — in the `environment: 'nuxt'`
+vitest setup these all just work as real composables, so mock as little as
+possible:
+
+```ts
+const { restoreBlocks } = useBlocks();
+restoreBlocks({ blocks: [myStructureBlock] } as GetBlocksResponse); // seeds pageBlocks/allBlocks
+const wrapper = mount(MyStructureForm, { props: { uuid: myStructureBlock.meta.uuid } });
+```
+
+Then drive the real DOM (`<select>`, `SfInput`, `SfSwitch` all render as plain
+form elements — no stubbing needed) and assert against the mutated block via
+`useBlockManager().findOrDeleteBlockByUuid(useBlocks().allBlocks.value, uuid)`.
+Note `SfInput`/`SfSwitch` put their `data-testid` directly on the `<input>`
+itself, not on a wrapper — `find('[data-testid="..."]')` needs no `input`
+suffix. This avoids mocking `useBlockManager`/`useBlocks` entirely and tests
+real reactive behavior instead of a stubbed approximation.
