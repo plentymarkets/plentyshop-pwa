@@ -81,3 +81,21 @@ describe('multiGridQuickAddOptions', () => {
     expect(gridOption?.label).toBe('Grid');
   });
 });
+
+describe('detailsListQuickAddOptions', () => {
+  it('should contain 2 options', () => {
+    expect(detailsListQuickAddOptions).toHaveLength(2);
+  });
+
+  it('should have Image and TextCard blocks', () => {
+    expect(detailsListQuickAddOptions.map((option) => option.blockName)).toEqual(['Image', 'TextCard']);
+  });
+
+  it('should have correct categories', () => {
+    expect(detailsListQuickAddOptions.map((option) => option.category)).toEqual(['image', 'text']);
+  });
+
+  it('should all have variationIndex 0', () => {
+    expect(detailsListQuickAddOptions.map((option) => option.variationIndex)).toEqual([0, 0]);
+  });
+});

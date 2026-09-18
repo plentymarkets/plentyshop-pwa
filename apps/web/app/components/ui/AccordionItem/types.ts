@@ -4,4 +4,5 @@ export type AccordionItemProps = {
   summaryClass?: string;
   summaryActiveClass?: string;
   contentPaddingClass?: string;
+  iconPosition?: 'start' | 'end';
 };
