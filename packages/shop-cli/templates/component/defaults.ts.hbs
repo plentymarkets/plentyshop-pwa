@@ -20,7 +20,7 @@ const create{{pascalCase name}} = (): Block => ({
 });
 
 export const getBlocksList = (): BlocksList => ({
-  {{category}}: {
+'{{category}}': {
     category: '{{category}}',
     accessControl: [{{#each accessControl}}'{{this}}'{{#unless @last}}, {{/unless}}{{/each}}],
     title: '{{pascalCase name}}',
