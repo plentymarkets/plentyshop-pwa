@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mock: <BlockName></title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Tokens copied from apps/web/app/configuration/tailwind.config.ts.
+  // primary/secondary below are NOT the real brand colors — those are runtime
+  // CSS variables generated per shop theme (see useGenerateTailwindPalette),
+  // not static values this standalone file can read. Treat primary/secondary
+  // here as generic placeholders for "the design system's accent color slot",
+  // not a color match to verify against.
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontSize: {
+          '2xs': ['0.6875rem', { lineHeight: '1rem' }], // 11px
+          '3xs': ['0.625rem', { lineHeight: '0.875rem' }], // 10px
+          '4xs': ['0.5625rem', { lineHeight: '0.75rem' }], // 9px
+        },
+        spacing: {
+          s: '1.875rem',
+          m: '2.5rem',
+          l: '3.125rem',
+          xl: '3.75rem',
+        },
+        colors: {
+          primary: {
+            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
+            500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+          },
+          secondary: {
+            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8',
+            500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a',
+          },
+        },
+      },
+    },
+  };
+</script>
+</head>
+<body class="bg-white font-sans text-secondary-900">
+
+<!--
+  Two sections below: the rendered block, and its CMS editor form. Both are
+  static approximations from block-spec.md — no framework, no build step.
+  This is the visual reference Implement builds the real .vue/Form.vue
+  against, not a pixel-perfect deliverable.
+-->
+<main class="max-w-screen-lg mx-auto p-m flex flex-col gap-xl">
+
+  <section>
+    <h1 class="text-xs uppercase tracking-wide text-secondary-400 mb-s">Rendered block</h1>
+    <!-- Example content-block region: replace with the actual block's layout -->
+    <div class="flex flex-col gap-s border border-secondary-200 rounded p-m">
+      <h2 class="text-2xl font-semibold">Heading placeholder</h2>
+      <div class="aspect-video bg-secondary-100 flex items-center justify-center text-secondary-400 text-sm">
+        image placeholder
+      </div>
+      <p class="text-secondary-600">Body text placeholder</p>
+      <button class="self-start bg-primary-600 text-white px-4 py-2 rounded text-sm">Button placeholder</button>
+    </div>
+  </section>
+
+  <section>
+    <h1 class="text-xs uppercase tracking-wide text-secondary-400 mb-s">Editor form (<BlockName>Form.vue)</h1>
+    <!--
+      One panel per settings group from block-spec.md (text/image/button/layout/
+      custom). Each field's input below should match the widget chosen for it
+      in the spec — this is a plain-HTML stand-in for that widget, not a claim
+      that the real component looks exactly like this.
+    -->
+    <div class="flex flex-col gap-3 border border-secondary-200 rounded p-m max-w-sm">
+
+      <div class="border border-secondary-200 rounded">
+        <div class="px-3 py-2 bg-secondary-50 text-sm font-medium border-b border-secondary-200">Text</div>
+        <div class="p-3 flex flex-col gap-2">
+          <label class="text-xs text-secondary-500">Heading</label>
+          <input class="border border-secondary-300 rounded px-2 py-1 text-sm" placeholder="text input placeholder" />
+        </div>
+      </div>
+
+      <div class="border border-secondary-200 rounded">
+        <div class="px-3 py-2 bg-secondary-50 text-sm font-medium border-b border-secondary-200">Image</div>
+        <div class="p-3 flex flex-col gap-2">
+          <label class="text-xs text-secondary-500">Image</label>
+          <div class="border border-dashed border-secondary-300 rounded p-3 text-center text-xs text-secondary-400">image picker placeholder</div>
+        </div>
+      </div>
+
+      <div class="border border-secondary-200 rounded">
+        <div class="px-3 py-2 bg-secondary-50 text-sm font-medium border-b border-secondary-200">Layout</div>
+        <div class="p-3 flex items-center justify-between">
+          <label class="text-xs text-secondary-500">Full width</label>
+          <div class="w-8 h-4 bg-secondary-300 rounded-full"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
