@@ -15,8 +15,8 @@ One-line purpose: <what this block shows/does, in plain language>
 
 ## Settings fields
 
-| Field | Group | Type | Widget (component name) | Default | Notes |
-|---|---|---|---|---|---|
+| Field       | Group                           | Type                      | Widget (component name)             | Default         | Notes                  |
+| ----------- | ------------------------------- | ------------------------- | ----------------------------------- | --------------- | ---------------------- |
 | <fieldName> | text/image/button/layout/custom | string/boolean/number/... | <component from list-components.sh> | <default value> | <anything non-obvious> |
 
 <For structure blocks, replace this table with: what shape each child slot takes, and any layout/configuration fields (e.g. columnWidths) instead of settings.>

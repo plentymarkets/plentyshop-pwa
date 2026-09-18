@@ -26,7 +26,7 @@ one-time snapshot.
 Blocks auto-discover via `import.meta.glob` in
 `apps/web/app/utils/blocks/blocks-imports.ts` — no manual registration for a
 plain content or structure block. `apps/web/app/utils/blocks/block-names.ts`
-only hardcodes a handful of *immutable system* blocks (Navigation, Header,
+only hardcodes a handful of _immutable system_ blocks (Navigation, Header,
 Footer, UtilityBar) — do not add a new content block there.
 
 ## defaults.ts
@@ -95,19 +95,19 @@ Pick the widget from whatever `scripts/list-components.sh` (in
 mapping below is how each one is conventionally wired, not a menu to pick
 from freely.
 
-| Field kind | Component | Notes |
-|---|---|---|
-| Short text | `SfInput` | |
-| Boolean toggle | `SfSwitch` | |
-| Numeric grid (e.g. padding) | native `<input type="number">` | one per side |
-| Slider (e.g. brightness) | native `<input type="range">` | |
-| Segmented choice (alignment/variant/fillMode) | `EditorOptionsTabs` | |
-| Color | `EditorColorPicker` + `SfInput` suffix swatch | |
-| Rich text | `EditorRichTextEditorForm` | |
-| Image (per breakpoint) | `UiResponsiveImagePicker` | |
-| Reorderable list | `vuedraggable` (`draggable`) | e.g. ItemData field order |
-| Full-width toggle | `EditorFullWidthToggle` | |
-| Inline help text | `SfTooltip` + `SfIconInfo` | |
+| Field kind                                    | Component                                     | Notes                     |
+| --------------------------------------------- | --------------------------------------------- | ------------------------- |
+| Short text                                    | `SfInput`                                     |                           |
+| Boolean toggle                                | `SfSwitch`                                    |                           |
+| Numeric grid (e.g. padding)                   | native `<input type="number">`                | one per side              |
+| Slider (e.g. brightness)                      | native `<input type="range">`                 |                           |
+| Segmented choice (alignment/variant/fillMode) | `EditorOptionsTabs`                           |                           |
+| Color                                         | `EditorColorPicker` + `SfInput` suffix swatch |                           |
+| Rich text                                     | `EditorRichTextEditorForm`                    |                           |
+| Image (per breakpoint)                        | `UiResponsiveImagePicker`                     |                           |
+| Reorderable list                              | `vuedraggable` (`draggable`)                  | e.g. ItemData field order |
+| Full-width toggle                             | `EditorFullWidthToggle`                       |                           |
+| Inline help text                              | `SfTooltip` + `SfIconInfo`                    |                           |
 
 ## Tests
 

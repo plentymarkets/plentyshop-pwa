@@ -35,7 +35,7 @@ already gave you; only ask about what's still open.
 
 - **Content vs structure**: content = the block renders its own settings
   (text/image/button). Structure = the block is a container whose `content`
-  is an array of *other* blocks the CMS user arranges as children (like
+  is an array of _other_ blocks the CMS user arranges as children (like
   `MultiGrid`/`Carousel`). Most blocks are content. Ask directly if unclear:
   "Does this block hold other blocks as children, or does it render its own
   settings?"
