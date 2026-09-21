@@ -16,8 +16,8 @@ const config = {
           url: process.env.API_ENDPOINT,
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
           experimental: {
-            skipModifyDomain: process.env.MIGRATE_LTS_SESSION === 'true',
-            forwardUserAgent: process.env.MIGRATE_LTS_SESSION === 'true',
+            skipModifyDomain: true,
+            forwardUserAgent: true,
           },
         },
       },
