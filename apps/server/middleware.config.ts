@@ -18,7 +18,7 @@ const config = {
           experimental: {
             skipModifyDomain: true,
             forwardUserAgent: true,
-          }
+          },
         },
       },
       errorHandler: (error: any, req: any, res: any) => {
