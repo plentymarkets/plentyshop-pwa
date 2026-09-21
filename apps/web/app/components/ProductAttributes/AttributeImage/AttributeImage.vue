@@ -19,7 +19,7 @@
         placement="top"
       >
         <div
-          class="p-2 border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
+          class="p-1 w-14 h-14 flex items-center justify-center border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
           :class="{
             'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
             '!border-primary-500 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
@@ -28,6 +28,7 @@
           @click="doUpdateValue(item)"
         >
           <NuxtImg
+            class="max-w-full max-h-full"
             :src="getImagePath(item)"
             :alt="productAttributeGetters.getAttributeValueName(item)"
             loading="lazy"
