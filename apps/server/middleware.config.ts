@@ -16,7 +16,8 @@ const config = {
           url: process.env.API_ENDPOINT,
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
           experimental: {
-            skipModifyDomain: true
+            skipModifyDomain: true,
+            forwardUserAgent: true,
           }
         },
       },

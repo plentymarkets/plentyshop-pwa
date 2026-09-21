@@ -187,6 +187,9 @@ export default defineNuxtConfig({
     apiEndpoint: process.env.API_ENDPOINT,
     configId: Number(process.env.CONFIG_ID) || 1,
     middlewareSSRUrl: 'http://localhost:8181',
+    experimental: {
+      forwardUserAgent: true
+    }
   },
   shopModuleMollie: {
     checkoutUrl: paths.checkout,
