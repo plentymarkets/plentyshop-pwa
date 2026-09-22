@@ -214,6 +214,7 @@ export default {
         l: '3.125rem',
         xl: '3.75rem',
         toolbar: '54px',
+        'icon-spacing': '5px',
       },
       maxHeight: {
         dropdown: 'calc(var(--viewport-height, 100dvh) - 120px)',

@@ -1,6 +1,5 @@
 import type { UseItemTableState, UseItemTableReturn } from './types';
 import type { ApiError, StorageObject } from '@plentymarkets/shop-api';
-import { validateImageFile, getAllowedImageExtensions } from '~/utils/allowedImageFilesHelper';
 import {
   extractFolders,
   createPlaceholderObject,

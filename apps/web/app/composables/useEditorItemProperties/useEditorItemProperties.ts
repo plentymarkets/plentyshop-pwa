@@ -1,5 +1,4 @@
 import type { ApiGroup, ItemPropertyTranslated } from '~/components/blocks/PriceCard/types';
-import type { PropertyPlaceholderToken } from '~/composables/useRichTextEditor/types';
 import type {
   UseEditorItemProperties,
   PropSelection,
@@ -21,14 +20,12 @@ const translateGroup = (group: ItemPropertyGroup, locale: string): ApiGroup => (
   position: group.position,
   name: resolveLocaleValue(group.names, locale, `Missing translation for id: ${group.id}`),
   description: resolveLocaleValue(group.descriptions, locale, ''),
-  properties: group.properties.map(
-    (p: ItemProperty): ItemPropertyTranslated => ({
-      id: p.id,
-      cast: p.cast,
-      name: resolveLocaleValue(p.names, locale, `Missing translation for id: ${p.id}`),
-      description: resolveLocaleValue(p.descriptions, locale, ''),
-    }),
-  ),
+  properties: group.properties.map((p: ItemProperty): ItemPropertyTranslated => ({
+    id: p.id,
+    cast: p.cast,
+    name: resolveLocaleValue(p.names, locale, `Missing translation for id: ${p.id}`),
+    description: resolveLocaleValue(p.descriptions, locale, ''),
+  })),
 });
 
 const itemPropertyGroups = ref<ApiGroup[]>([]);
@@ -144,7 +141,9 @@ export function useEditorItemProperties(): UseEditorItemProperties {
       const { data } = await useSdk().plentysystems.getItemProperties();
       itemPropertyGroups.value = data.map((g) => translateGroup(g, requestedLocale.value));
     } catch (error) {
-      throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Failed to fetch item properties: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+        cause: error,
+      });
     } finally {
       loading.value = false;
     }

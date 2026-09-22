@@ -13,7 +13,7 @@ import { BaseHelperPlugin } from '../../core';
 export class UtilityPlugin extends BaseHelperPlugin {
   readonly name = 'utility';
   readonly description =
-    'General utility helpers (testId, currentDate, currentYear, concat, filePath, importPath, ifEquals, ifNotEmpty)';
+    'General utility helpers (testId, currentDate, currentYear, concat, filePath, importPath, ifEquals, ifNotEmpty, raw)';
   readonly version = '1.0.0';
   readonly helpers = [
     'testId',
@@ -24,12 +24,14 @@ export class UtilityPlugin extends BaseHelperPlugin {
     'importPath',
     'ifEquals',
     'ifNotEmpty',
+    'raw',
   ];
 
   register(plop: NodePlopAPI): void {
     this.registerUtilityHelpers(plop);
     this.registerPathHelpers(plop);
     this.registerConditionalHelpers(plop);
+    this.registerRawHelper(plop);
   }
 
   private registerUtilityHelpers(plop: NodePlopAPI): void {
@@ -85,6 +87,23 @@ export class UtilityPlugin extends BaseHelperPlugin {
         return opts.fn(value);
       }
       return opts.inverse(value);
+    });
+  }
+
+  /**
+   * Registers `raw` as a block helper so `{{{{raw}}}}...{{{{/raw}}}}` emits its contents literally
+   * (e.g. Vue's own `{{ }}` interpolation syntax inside a `.hbs` template). Handlebars' 4-brace raw
+   * block syntax only changes how the parser tokenizes the block — it still calls a block helper
+   * named `raw`, and without one registered it falls through to `blockHelperMissing` (which treats
+   * the bare word "raw" as an unresolved, falsy value and renders nothing).
+   */
+  private registerRawHelper(plop: NodePlopAPI): void {
+    this.safeRegister(plop, 'raw', (...args: unknown[]) => {
+      // {{{{raw}}}}...{{{{/raw}}}} takes no explicit params, so the options hash is the only arg.
+      // Its body is a literal ContentStatement (never evaluated as an expression), so the render
+      // context passed to fn() doesn't affect the output.
+      const options = args[args.length - 1] as { fn: (context: unknown) => string };
+      return options.fn({});
     });
   }
 }

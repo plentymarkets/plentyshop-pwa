@@ -16,7 +16,7 @@ export const useCartTotalChange = () => {
 
   const setInitialCartTotal = async () => {
     const { send } = useNotification();
-    const localePath = useLocalePath();
+    const localePath = useLocalizedPath();
     const paypalOrder = await getOrder(route.query.orderId?.toString() || '');
 
     if (

@@ -27,8 +27,6 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
-import { defaults } from '~/composables';
-
 const props = defineProps<CategoryItemsPerPageProps & { selectionModeCompact?: boolean }>();
 
 const { updateItemsPerPage: updateItemsPerPageFromComposable, getFacetsFromURL } = useCategoryFilter();

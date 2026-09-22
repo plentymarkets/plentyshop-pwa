@@ -3,8 +3,6 @@ import type { NodeViewRenderer } from '@tiptap/core';
 import { VueNodeViewRenderer } from '@tiptap/vue-3';
 import PropertyPlaceholderView from '~/components/editor/RichTextEditor/PropertyPlaceholderView.vue';
 import type { PropertyPlaceholderOptions, PropertyPlaceholderAttrs } from '../types';
-import { getPropertyPlaceholderDisplayLabel } from '~/utils/propertyPlaceholders';
-
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     propertyPlaceholder: {

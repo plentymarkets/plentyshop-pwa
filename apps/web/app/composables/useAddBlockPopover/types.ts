@@ -1,5 +1,3 @@
-import type { BlockPosition } from '~/composables/useBlockManager/types';
-
 export type FilterId = 'layout' | 'content' | 'product' | 'category';
 
 export interface AddBlockPopoverState {

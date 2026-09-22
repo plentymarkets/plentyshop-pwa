@@ -73,8 +73,6 @@
 </template>
 
 <script setup lang="ts">
-import type { RteCommand } from '~/composables/useRichTextEditor/types';
-
 defineProps<{
   cmd: (name: RteCommand) => void;
   isActive: (name: string) => boolean;

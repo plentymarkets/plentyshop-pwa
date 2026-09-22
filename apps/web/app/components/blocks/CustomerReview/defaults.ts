@@ -1,5 +1,3 @@
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   'item-page': {
     category: 'item-page',
@@ -9,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Customer Reviews',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/customer_reviews.svg',
         template: {
           en: {
             name: 'CustomerReview',

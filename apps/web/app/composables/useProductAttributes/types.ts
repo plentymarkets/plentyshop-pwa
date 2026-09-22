@@ -9,7 +9,7 @@ export interface UseProductAttributesState {
 }
 
 export type SetAttribute = (product: Product, preSelectAttributes: boolean) => void;
-export type UpdateValue = (attributeId: number, valueId: number) => void;
+export type UpdateValue = (attributeId: number, valueId: number | undefined) => void;
 export type GetValue = (attributeId: number) => number | undefined;
 export type GetCombination = () => VariationMapProductVariation | null;
 

@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { resolve } from 'node:path';
 import { validateApiUrl } from './app/utils/pathHelper';
 import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
@@ -34,6 +35,28 @@ export default defineNuxtConfig({
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
+      warmup: {
+        clientFiles: [
+          resolve(__dirname, 'app/composables/useRichTextEditor/useRichTextEditor.ts'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditor.vue'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditorForm.vue'),
+          resolve(__dirname, 'app/composables/useCustomer/useCustomer.ts'),
+          resolve(__dirname, 'app/components/EditableBlocks/EditableBlocks.vue'),
+          resolve(__dirname, 'app/components/blocks/UtilityBar/UtilityBar.vue'),
+          resolve(__dirname, 'app/components/LanguageSelector/flags.ts'),
+          resolve(__dirname, 'app/components/blocks/structure/Carousel/Carousel.vue'),
+          resolve(__dirname, 'app/utils/tailwindHelper/index.ts'),
+          resolve(__dirname, 'modules/paypal/runtime/composables/usePayPal/usePayPal.ts'),
+          resolve(__dirname, 'app/utils/blocks/block-factories.ts'),
+          resolve(__dirname, 'app/components/editor/Localization/EditorLocalizationDrawer.vue'),
+          resolve(__dirname, 'app/components/editor/RichTextEditor/RichTextEditorLinkModal.vue'),
+          resolve(__dirname, 'app/components/editor/BlockItemsAccordion/BlockItemsAccordion.vue'),
+          // Not app code: these two run on every page (nuxt-viewport's cookie manager, Nuxt devtools' client
+          // plugin), but their deps aren't reachable from any file we import, so warm them up directly.
+          resolve(__dirname, '../../node_modules/nuxt-viewport/dist/runtime/manager.js'),
+          resolve(__dirname, '../../node_modules/@nuxt/devtools/dist/runtime/vue-devtools-client.js'),
+        ],
+      },
     },
     plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
     resolve: {
@@ -54,7 +77,13 @@ export default defineNuxtConfig({
             if (id.includes('utils/blocks/blocks-imports')) return 'block-registry';
             if (/[/\\]blocks[/\\].+[/\\]defaults\.ts$/.test(id)) return 'block-registry';
 
+            /*
+             * Keep Floating UI separate because it is shared by the storefront and Tiptap.
+             * Otherwise Rollup can absorb it into a Tiptap chunk, causing pages to
+             * download the entire editor bundle when e.g. the UtilityBar imports @floating-ui/vue.
+             */
             const vendorChunks: Record<string, string[]> = {
+              floatingUi: ['@floating-ui/'],
               tiptapExtensions: [
                 '@tiptap/extension-color',
                 '@tiptap/extension-emoji',
@@ -64,7 +93,6 @@ export default defineNuxtConfig({
                 '@tiptap/extension-text-style',
               ],
               tiptap: ['@tiptap/'],
-              vuetify: ['vuetify/', '@mdi/js'],
             };
 
             for (const [chunk, packages] of Object.entries(vendorChunks)) {
@@ -114,30 +142,17 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/image',
     '@nuxt/test-utils/module',
+    '@nuxtjs/critters',
     '@nuxtjs/i18n',
+    '~~/modules/locale-routes',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    'vuetify-nuxt-module',
     'nuxt-color-picker',
   ],
-  vuetify: {
-    moduleOptions: {
-      prefixComposables: true,
-      disableVuetifyStyles: true,
-    },
-    vuetifyOptions: {
-      icons: {
-        defaultSet: 'mdi-svg',
-      },
-      theme: {
-        defaultTheme: 'light',
-      },
-    },
-  },
   plentySitemap: {
     locales: (process.env.LANGUAGELIST || 'en,de').split(','),
     defaultLocale: nuxtI18nOptions.defaultLocale,
@@ -171,8 +186,7 @@ export default defineNuxtConfig({
   },
   fonts: {
     defaults: {
-      weights: [300, 400, 500, 700],
-      preload: true,
+      weights: [400, 500, 600, 700],
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',

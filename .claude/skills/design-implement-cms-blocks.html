@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Design Summary: CMS Block Design-to-Implementation</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --card: #ffffff; --ink: #1a2233; --muted: #5b6678;
+    --line: #e3e7ee; --accent: #2563eb; --accent-soft: #eaf1fe;
+    --skill1: #7c3aed; --skill1-soft: #f3eeff;
+    --skill2: #0d9488; --skill2-soft: #e6f7f5;
+    --check: #d97706; --check-soft: #fef3e2;
+    --high: #16a34a; --med: #d97706; --low: #dc2626; --artifact: #2563eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+         background: var(--bg); color: var(--ink); line-height: 1.55; padding: 40px 24px 80px; }
+  .wrap { max-width: 1060px; margin: 0 auto; }
+  h1 { font-size: 1.9rem; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); margin-bottom: 28px; font-size: 1.02rem; }
+  h2 { font-size: 1.15rem; margin: 40px 0 14px; padding-bottom: 8px;
+       border-bottom: 2px solid var(--line); letter-spacing: -0.01em; }
+  h2 .num { display: inline-flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; border-radius: 8px; background: var(--accent-soft);
+            color: var(--accent); font-size: 0.85rem; margin-right: 10px; vertical-align: -4px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+          padding: 20px 22px; box-shadow: 0 1px 3px rgba(20,30,55,0.05); }
+  .task-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .task-strip .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
+                       color: var(--muted); margin-bottom: 4px; }
+  .task-strip .value { font-weight: 600; font-size: 0.98rem; }
+  .pipeline { display: grid; grid-template-columns: 1fr 56px 1fr; align-items: stretch; }
+  .skill-col { border-radius: 14px; padding: 18px; border: 2px solid; }
+  .skill-col.s1 { border-color: var(--skill1); background: var(--skill1-soft); }
+  .skill-col.s2 { border-color: var(--skill2); background: var(--skill2-soft); }
+  .skill-title { font-weight: 700; font-size: 1.02rem; margin-bottom: 2px; }
+  .skill-col.s1 .skill-title { color: var(--skill1); }
+  .skill-col.s2 .skill-title { color: var(--skill2); }
+  .skill-sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 14px; }
+  .phase { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+           padding: 10px 12px; margin-bottom: 10px; }
+  .phase .p-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .phase .p-name { font-weight: 600; font-size: 0.92rem; }
+  .phase .p-desc { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+  .phase .p-out { font-size: 0.78rem; margin-top: 6px; color: var(--artifact); font-weight: 600; }
+  .phase .p-out::before { content: "out: "; text-transform: uppercase; font-size: 0.68rem; }
+  .badge { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 2px 8px;
+           border-radius: 999px; white-space: nowrap; }
+  .b-high { background: #e7f6ec; color: var(--high); }
+  .b-med  { background: var(--check-soft); color: var(--med); }
+  .b-low  { background: #fdeaea; color: var(--low); }
+  .b-mix  { background: linear-gradient(90deg, #e7f6ec 50%, #fdeaea 50%); color: var(--ink); }
+  .checkpoint { background: var(--check-soft); border: 1.5px dashed var(--check); border-radius: 10px;
+                padding: 9px 12px; margin-bottom: 10px; font-size: 0.85rem; }
+  .cp-tag { font-weight: 700; color: var(--check); font-size: 0.72rem;
+            text-transform: uppercase; letter-spacing: 0.06em; }
+  .conditional { margin-top: 4px; background: #fff; border: 1.5px dashed var(--check);
+                 border-radius: 10px; padding: 9px 12px; font-size: 0.82rem; }
+  .handoff { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .handoff .arrow { font-size: 1.6rem; color: var(--artifact); }
+  .handoff .h-label { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 0.7rem;
+                      font-weight: 700; color: var(--artifact); text-transform: uppercase;
+                      letter-spacing: 0.08em; text-align: center; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; font-size: 0.8rem; color: var(--muted); }
+  .legend span.swatch { display: inline-block; width: 11px; height: 11px; border-radius: 3px;
+                        margin-right: 5px; vertical-align: -1px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { text-align: left; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em;
+       color: var(--muted); padding: 8px 12px; border-bottom: 2px solid var(--line); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .dest { font-weight: 700; white-space: nowrap; }
+  .dest.claude { color: #b45309; } .dest.skillmd { color: var(--accent); }
+  .dest.refs { color: var(--skill1); } .dest.assets { color: var(--skill2); }
+  .dest.scripts { color: #be185d; }
+  code { background: #eef1f6; padding: 1px 6px; border-radius: 5px; font-size: 0.84em; }
+  .ladder { display: flex; flex-direction: column-reverse; max-width: 640px; }
+  .rung { display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+          border: 1px solid var(--line); background: var(--card); }
+  .rung:first-child { border-radius: 0 0 12px 12px; }
+  .rung:last-child { border-radius: 12px 12px 0 0; }
+  .rung + .rung { border-bottom: none; }
+  .rung .strength { font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+                    letter-spacing: 0.06em; width: 86px; flex-shrink: 0; }
+  .rung.r1 .strength { color: var(--muted); } .rung.r2 .strength { color: var(--med); }
+  .rung.r3 .strength { color: var(--high); }
+  .rung .r-body b { font-size: 0.92rem; }
+  .rung .r-body div { font-size: 0.82rem; color: var(--muted); }
+  .struggle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .struggle .s-from { font-weight: 700; color: var(--low); font-size: 0.9rem; }
+  .struggle .s-from::before { content: "STRUGGLE: "; font-size: 0.7rem; letter-spacing: 0.05em; }
+  .struggle .s-arrow { color: var(--muted); margin: 4px 0; font-size: 0.85rem; }
+  .struggle .s-to { font-weight: 600; font-size: 0.9rem; }
+  .struggle .s-detail { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+  .loop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .loop-card .l-what { font-weight: 600; font-size: 0.9rem; }
+  .loop-card .l-arrow { color: var(--accent); margin: 6px 0; font-size: 0.95rem; }
+  .loop-card .l-where { font-size: 0.85rem; }
+  .loop-card .l-note { font-size: 0.79rem; color: var(--muted); margin-top: 6px; }
+  .files-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .file-list { list-style: none; }
+  .file-list li { padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 0.88rem; display: flex; gap: 10px; }
+  .file-list li:last-child { border-bottom: none; }
+  .file-list .why { color: var(--muted); font-size: 0.82rem; }
+  .ftag { flex-shrink: 0; font-size: 0.68rem; font-weight: 700; padding: 2px 7px;
+          border-radius: 5px; height: fit-content; margin-top: 2px; }
+  .ftag.skill { background: var(--accent-soft); color: var(--accent); }
+  .ftag.ref { background: var(--skill1-soft); color: var(--skill1); }
+  .ftag.asset { background: var(--skill2-soft); color: var(--skill2); }
+  .ftag.script { background: #fce7f3; color: #be185d; }
+  .note { background: var(--check-soft); border-left: 4px solid var(--check);
+          border-radius: 8px; padding: 12px 16px; font-size: 0.88rem; margin-top: 14px; }
+  .inferred { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+  @media (max-width: 800px) {
+    .pipeline { grid-template-columns: 1fr; }
+    .handoff { flex-direction: row; padding: 10px 0; }
+    .handoff .h-label { writing-mode: horizontal-tb; transform: none; }
+    .task-strip, .struggle-grid, .loop-grid, .files-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Workflow Design Summary: CMS Block Design-to-Implementation</h1>
+  <p class="subtitle">Turns a design input for one CMS block — a mock, a written spec, or even a one-line request — into a working, tested block component in the PlentyONE Shop PWA codebase.</p>
+</header>
+
+<!-- 1. THE TASK -->
+<h2><span class="num">1</span>The task</h2>
+<div class="task-strip">
+  <div class="card"><div class="label">Unit of work per run</div><div class="value">One CMS block, from whatever design input exists (image, text spec, or one-liner)</div></div>
+  <div class="card"><div class="label">"Done" looks like</div><div class="value">Working block: real code + passing unit tests + lint/typecheck clean — not yet a PR</div></div>
+  <div class="card"><div class="label">State of design docs</div><div class="value">None pre-exist <span class="inferred">(confirmed)</span> — the spec is created fresh, every run, via interview</div></div>
+</div>
+
+<!-- 2. STRUCTURE -->
+<h2><span class="num">2</span>Structure — 2 skills, flow, and freedom</h2>
+<div class="pipeline">
+
+  <div class="skill-col s1">
+    <div class="skill-title">Skill 1: designing-cms-blocks</div>
+    <div class="skill-sub">Interview-driven spec + mock creation. Owns its own context window — open-ended back-and-forth before any code exists.</div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">1 · Interview</span><span class="badge b-high">High</span></div>
+      <div class="p-desc">Extract what's given from the input (image/text/one-liner); ask for whatever's undetermined: content vs structure, category, accessControl, settings fields + grouping, which editor widget per field, simple vs complex form. Runs <code>scripts/list-components.sh</code> for a live list of real available components instead of consulting a hand-maintained catalog.</div>
+    </div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">2 · Write spec</span><span class="badge b-low">Low</span></div>
+      <div class="p-desc">Fill <code>assets/block-spec-template.md</code> with the interview's answers.</div>
+      <div class="p-out">block-spec.md</div>
+    </div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">3 · Build mock</span><span class="badge b-med">Medium</span></div>
+      <div class="p-desc">Single-page static HTML with two sections — the rendered block, and its editor form — from <code>assets/mock-template.html</code> (Tailwind CDN + inline config copying real static design tokens from <code>tailwind.config.ts</code>; primary/secondary are placeholders since real brand colors are runtime CSS vars).</div>
+      <div class="p-out">mock.html</div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="cp-tag">STOP — Checkpoint 1</div>
+      <div>User approves <code>block-spec.md</code> + <code>mock.html</code> together before any code is generated. Approve, not co-build — wrong content/structure or accessControl calls are expensive to unwind after scaffolding.</div>
+    </div>
+  </div>
+
+  <div class="handoff">
+    <div class="arrow">&#8594;</div>
+    <div class="h-label">block-spec.md + mock.html</div>
+  </div>
+
+  <div class="skill-col s2">
+    <div class="skill-title">Skill 2: implementing-cms-blocks</div>
+    <div class="skill-sub">Fresh context. Reads only block-spec.md and mock.html — no memory of the interview.</div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">4 · Scaffold</span><span class="badge b-low">Low</span></div>
+      <div class="p-desc">Run <code>npm run generate:block</code> via the existing <code>code-generation</code> skill, with flags derived from the spec (<code>--structure</code>, <code>--category</code>, <code>--access-control</code>, <code>--complex-form</code>) using a deterministic mapping table in SKILL.md.</div>
+    </div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">5 · Implement</span><span class="badge b-med">Medium</span></div>
+      <div class="p-desc">Fill <code>defaults.ts</code>, <code>types.ts</code>, <code>&lt;Block&gt;.vue</code>, <code>&lt;Block&gt;Form.vue</code>, and a <code>block-layout.config.ts</code> override if needed. <code>mock.html</code> is the visual reference; <code>references/block-conventions.md</code> supplies the real code patterns.</div>
+      <div class="conditional"><span class="cp-tag">Conditional</span> If a widget or pattern not already in <code>references/block-conventions.md</code> is needed, append it there after implementing.</div>
+    </div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">6 · Test</span><span class="badge b-high">High (mandated)</span></div>
+      <div class="p-desc">Write real unit tests for the spec's fields/behavior. Existing blocks (ItemData, Carousel) skip tests — this workflow does not get to copy that.</div>
+    </div>
+
+    <div class="phase">
+      <div class="p-head"><span class="p-name">7 · Verify</span><span class="badge b-low">Low</span></div>
+      <div class="p-desc"><code>npm run lint</code>, <code>npm run typecheck</code>, <code>npm run test</code>. No automated visual diff — <code>mock.html</code> serves Implement only, not Verify.</div>
+    </div>
+
+    <div class="checkpoint">
+      <div class="cp-tag">STOP — Checkpoint 2</div>
+      <div>User reviews verification results (green lint/typecheck/tests) and the finished file list before opening a PR themselves.</div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="swatch" style="background:#e7f6ec;"></span>High freedom — prose/heuristics</span>
+  <span><span class="swatch" style="background:var(--check-soft);"></span>Medium — template-driven</span>
+  <span><span class="swatch" style="background:#fdeaea;"></span>Low — strict template / exact steps</span>
+  <span><span class="swatch" style="background:var(--check-soft);border:1.5px dashed var(--check);"></span>STOP — checkpoint (human in the loop)</span>
+  <span style="color:var(--artifact);font-weight:600;">OUT: output artifact</span>
+</div>
+
+<div class="note"><b>Determinism:</b> Scaffold reuses the existing <code>code-generation</code> skill's <code>generate.sh</code> — no new script needed there. <code>scripts/list-components.sh</code> (intake) enumerates real component names from <code>components/editor</code>, <code>components/ui</code>, and <code>node_modules/@storefront-ui/vue/dist/components</code> — ground truth instead of a maintained catalog that can drift. The spec-field &rarr; CLI-flag mapping is a fixed table in SKILL.md, not model judgment.</div>
+
+<!-- 3. CONTEXT -->
+<h2><span class="num">3</span>Context placement</h2>
+<div class="card" style="padding: 6px 0;">
+  <table>
+    <tr><th>Context item</th><th>Destination</th><th>Why there</th></tr>
+    <tr><td>General Vue/TS/testing conventions</td><td class="dest claude">CLAUDE.md</td><td>Already present project-wide — no addition needed</td></tr>
+    <tr><td>Interview question list, content-vs-structure decision tree, category/accessControl options</td><td class="dest skillmd">SKILL.md (intake)</td><td>Needed every run</td></tr>
+    <tr><td>Spec-field &rarr; CLI-flag mapping</td><td class="dest skillmd">SKILL.md (implementation)</td><td>Needed every run, deterministic</td></tr>
+    <tr><td>Live component discovery (editor/ui/storefront-ui widgets available to pick from)</td><td class="dest scripts">scripts/list-components.sh (intake)</td><td>Run during Interview; ground truth, never goes stale, no feedback loop needed</td></tr>
+    <tr><td>Block code conventions (EditorFormPanel grouping, layout shape, i18n duplication, findOrDeleteBlockByUuid, real widget wiring) — seeded from MultiGrid/ItemData/Image/RichText/UtilityBar</td><td class="dest refs">references/block-conventions.md (implementation)</td><td>Some-runs depth, read during Implement; feedback deposit box</td></tr>
+    <tr><td>Fixed spec structure</td><td class="dest assets">assets/block-spec-template.md (intake)</td><td>Shapes the low-freedom Write Spec step</td></tr>
+    <tr><td>Tailwind CDN + token boilerplate</td><td class="dest assets">assets/mock-template.html (intake)</td><td>Shapes the medium-freedom Build Mock step</td></tr>
+  </table>
+</div>
+
+<!-- 4. ALIGNMENT -->
+<h2><span class="num">4</span>Alignment — struggle points and checkpoints</h2>
+<div class="struggle-grid">
+  <div class="card struggle">
+    <div class="s-from">Over-/under-asking during the interview, or misclassifying content vs structure</div>
+    <div class="s-arrow">fixed by</div>
+    <div class="s-to">block-spec-template.md's fixed section list</div>
+    <div class="s-detail">Every section must be filled; the template drives what's asked, not open-ended judgment.</div>
+  </div>
+  <div class="card struggle">
+    <div class="s-from">mock.html drifting from the real design system</div>
+    <div class="s-arrow">fixed by</div>
+    <div class="s-to">mock-template.html's Tailwind CDN + copied tokens</div>
+    <div class="s-detail">Forces real colors/spacing/type scale instead of arbitrary CSS guesses.</div>
+  </div>
+  <div class="card struggle">
+    <div class="s-from">Implementation drifting from established block conventions (skipped EditorFormPanel grouping, missing en/de duplication)</div>
+    <div class="s-arrow">fixed by</div>
+    <div class="s-to">references/block-conventions.md, mandatory read before writing Form.vue/.vue</div>
+    <div class="s-detail">Forces pattern reuse instead of inventing a new shape per block.</div>
+  </div>
+  <div class="card struggle">
+    <div class="s-from">Tests get skipped or shallow — real precedent (ItemData, Carousel) has none</div>
+    <div class="s-arrow">fixed by</div>
+    <div class="s-to">Test step mandated explicitly in SKILL.md</div>
+    <div class="s-detail">Coverage is required regardless of what neighboring blocks do.</div>
+  </div>
+</div>
+<div class="note"><b>Checkpoints:</b> Checkpoint 1 (end of block-design-intake) — approve <code>block-spec.md</code> + <code>mock.html</code> together, before any code is touched. Checkpoint 2 (end of block-implementation) — review green lint/typecheck/tests + finished file list before the user opens a PR themselves.</div>
+
+<!-- 5. VERIFICATION -->
+<h2><span class="num">5</span>Verification ladder</h2>
+<div class="ladder">
+  <div class="rung r1"><div class="strength">Minimum bar</div>
+    <div class="r-body"><b>Lint + typecheck clean</b><div><code>npm run lint</code>, <code>npm run typecheck</code></div></div></div>
+  <div class="rung r2"><div class="strength">Stronger</div>
+    <div class="r-body"><b>Real unit tests, passing</b><div>Written per the spec's fields/behavior, run via <code>npm run test</code></div></div></div>
+  <div class="rung r3"><div class="strength">Strongest</div>
+    <div class="r-body"><b>None — declined</b><div>Automated visual diff and adversarial review were both considered and dropped; single-block scope doesn't earn the cost.</div></div></div>
+</div>
+<div class="note"><b>Multiple perspectives (agents):</b> No — single block, low blast radius, one pass suffices.</div>
+
+<!-- 6. FEEDBACK -->
+<h2><span class="num">6</span>Feedback — every run improves the next</h2>
+<div class="loop-grid">
+  <div class="card loop-card">
+    <div class="l-what">A new block-code pattern or convention deviation was needed during implementation</div>
+    <div class="l-arrow">written to</div>
+    <div class="l-where"><code>references/block-conventions.md</code></div>
+    <div class="l-note">Keeps future implementations grounded in the current real examples, not a stale survey.</div>
+  </div>
+</div>
+
+<!-- 7. FILES -->
+<h2><span class="num">7</span>Files to generate</h2>
+<div class="files-grid">
+  <div class="card">
+    <div class="skill-title" style="color:var(--skill1); margin-bottom:10px;">block-design-intake</div>
+    <ul class="file-list">
+      <li><span class="ftag skill">SKILL</span><span><b>SKILL.md</b><br><span class="why">Interview checklist, decision trees, checkpoint 1</span></span></li>
+      <li><span class="ftag script">SCRIPT</span><span><b>scripts/list-components.sh</b><br><span class="why">Lists real available components from components/editor, components/ui, and @storefront-ui/vue — replaces a hand-maintained catalog. Tested working.</span></span></li>
+      <li><span class="ftag asset">ASSET</span><span><b>assets/block-spec-template.md</b><br><span class="why">Fixed structure the interview fills in</span></span></li>
+      <li><span class="ftag asset">ASSET</span><span><b>assets/mock-template.html</b><br><span class="why">Tailwind CDN + design-token boilerplate for the visual mock</span></span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="skill-title" style="color:var(--skill2); margin-bottom:10px;">block-implementation</div>
+    <ul class="file-list">
+      <li><span class="ftag skill">SKILL</span><span><b>SKILL.md</b><br><span class="why">Spec&rarr;flag mapping, implement/test/verify checklist, checkpoint 2</span></span></li>
+      <li><span class="ftag ref">REF</span><span><b>references/block-conventions.md</b><br><span class="why">Real code patterns for defaults.ts/types.ts/.vue/Form.vue, seeded from the same block survey</span></span></li>
+    </ul>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

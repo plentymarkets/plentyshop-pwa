@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import type { CategoryCardProps } from '~/components/ui/CategoryCard/types';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 defineProps<CategoryCardProps>();
 </script>

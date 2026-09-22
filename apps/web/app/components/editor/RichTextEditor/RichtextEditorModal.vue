@@ -68,7 +68,6 @@
 
 <script setup lang="ts">
 import type { Editor } from '@tiptap/vue-3';
-import type { RteCommand } from '~/composables/useRichTextEditor/types';
 import { EditorContent } from '@tiptap/vue-3';
 import { SfIconClose } from '@storefront-ui/vue';
 

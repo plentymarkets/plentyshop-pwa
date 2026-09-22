@@ -5,6 +5,12 @@
  */
 
 import { PathResolver, type GeneratorAction, type PromptAnswers } from '../index';
+import type { PathOptions } from '../path/types';
+import { dryRunManager } from '../../utils/dry-run';
+
+/** `'add'` in a real run; a dry-run-only action type when `--dry-run` is active, so real writes are never affected. */
+const ADD_ACTION_TYPE = 'add';
+const DRY_RUN_ADD_ACTION_TYPE = 'dry-run-add';
 
 /**
  * Fluent builder for creating PlopJS actions
@@ -22,6 +28,7 @@ export class ActionBuilder {
     name: string,
     generatorType: string,
     private readonly pathResolver: PathResolver,
+    private readonly pathOptions?: PathOptions,
   ) {
     this.name = name;
     this.generatorType = generatorType;
@@ -32,8 +39,13 @@ export class ActionBuilder {
   /**
    * Create a new ActionBuilder for a specific generator type
    */
-  static forGenerator(type: string, name: string, pathResolver: PathResolver): ActionBuilder {
-    return new ActionBuilder(name, type, pathResolver);
+  static forGenerator(
+    type: string,
+    name: string,
+    pathResolver: PathResolver,
+    pathOptions?: PathOptions,
+  ): ActionBuilder {
+    return new ActionBuilder(name, type, pathResolver, pathOptions);
   }
 
   /**
@@ -60,7 +72,7 @@ export class ActionBuilder {
     } = options;
 
     this.actions.push({
-      type: 'add',
+      type: this.actionType(),
       path: `${this.basePath}/${fileName}`,
       templateFile: `${this.templatePath}/${template}`,
       data: this.data,
@@ -76,7 +88,7 @@ export class ActionBuilder {
     const templateFile = template || `types.ts.hbs`;
 
     this.actions.push({
-      type: 'add',
+      type: this.actionType(),
       path: `${this.basePath}/types.ts`,
       templateFile: `${this.templatePath}/${templateFile}`,
       data: this.data,
@@ -97,7 +109,7 @@ export class ActionBuilder {
     const { template = `${this.generatorType}.spec.ts.hbs`, fileName = this.getTestFileName() } = options;
 
     this.actions.push({
-      type: 'add',
+      type: this.actionType(),
       path: `${this.basePath}/__tests__/${fileName}`,
       templateFile: `${this.templatePath}/${template}`,
       data: this.data,
@@ -113,7 +125,7 @@ export class ActionBuilder {
     const templateFile = template || 'index.ts.hbs';
 
     this.actions.push({
-      type: 'add',
+      type: this.actionType(),
       path: `${this.basePath}/index.ts`,
       templateFile: `${this.templatePath}/${templateFile}`,
       data: this.data,
@@ -127,7 +139,7 @@ export class ActionBuilder {
    */
   addCustomFile(fileName: string, templateFile: string, customData?: PromptAnswers): this {
     this.actions.push({
-      type: 'add',
+      type: this.actionType(),
       path: `${this.basePath}/${fileName}`,
       templateFile: `${this.templatePath}/${templateFile}`,
       data: customData || this.data,
@@ -137,11 +149,19 @@ export class ActionBuilder {
   }
 
   /**
+   * The component's resolved base directory (relative to `packages/shop-cli`), for callers that
+   * need to place files in a subdirectory (e.g. `forms/`, `partials/`) rather than at its root.
+   */
+  get resolvedBasePath(): string {
+    return this.basePath;
+  }
+
+  /**
    * Add a file to a custom path (outside the base path)
    */
   addFileToPath(fullPath: string, templateFile: string, customData?: PromptAnswers): this {
     this.actions.push({
-      type: 'add',
+      type: this.actionType(),
       path: fullPath,
       templateFile: `${this.templatePath}/${templateFile}`,
       data: customData || this.data,
@@ -151,17 +171,26 @@ export class ActionBuilder {
   }
 
   /**
-   * Build and return the final actions array
+   * Build and return the final actions array.
+   * In dry-run mode, appends a final action that prints the planned-operations summary once all
+   * preceding dry-run-add actions have logged themselves.
    */
   build(): GeneratorAction[] {
+    if (dryRunManager.isDryRun) {
+      return [...this.actions, { type: 'dry-run-summary', path: '' }];
+    }
     return [...this.actions];
+  }
+
+  private actionType(): string {
+    return dryRunManager.isDryRun ? DRY_RUN_ADD_ACTION_TYPE : ADD_ACTION_TYPE;
   }
 
   /**
    * Resolve base path using PathResolver
    */
   private resolveBasePath(): string {
-    const result = this.pathResolver.resolve(this.generatorType, this.name);
+    const result = this.pathResolver.resolve(this.generatorType, this.name, this.pathOptions);
     return result.basePath;
   } /**
    * Get default file extension based on generator type

@@ -22,7 +22,7 @@
 import { SfCounter, SfIconCheck, SfListItem } from '@storefront-ui/vue';
 import type { CategoryTreeItemType } from '~/components/CategoryTree/types';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 defineProps<CategoryTreeItemType>();
 </script>

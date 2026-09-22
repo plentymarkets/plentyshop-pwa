@@ -12,14 +12,17 @@
       :aria-label="getEditorTranslation('aria-label')"
       data-testid="{{kebabCase name}}-toolbar-trigger"
     >
-      <SfIconSettings v-if="active" class="text-white" />
-      <SfIconSettings v-else class="text-black" />
+      <NuxtImg v-if="active" width="24" height="24px" :src="gearWhite" />
+      <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
     </button>
   </SfTooltip>
 </template>
 
 <script setup lang="ts">
-import { SfTooltip, SfIconSettings } from '@storefront-ui/vue';
+import { SfTooltip } from '@storefront-ui/vue';
+
+import gearWhite from '~/assets/icons/paths/gear-white.svg';
+import gearBlack from '~/assets/icons/paths/gear-black.svg';
 
 defineProps({
   active: Boolean,

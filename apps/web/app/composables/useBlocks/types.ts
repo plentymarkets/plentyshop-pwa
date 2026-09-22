@@ -27,6 +27,7 @@ export interface UseBlocks {
   reorderHeaderBlocks: (blocks: Block[]) => void;
   reorderFooterBlocks: (blocks: Block[]) => void;
   discardChanges: () => void;
+  restoreBlocks: (data: GetBlocksResponse) => void;
   setDefaultTemplate: (blocks: Block[]) => void;
   scheduleCleanDataSync: () => void;
   cancelCleanDataSync: () => void;

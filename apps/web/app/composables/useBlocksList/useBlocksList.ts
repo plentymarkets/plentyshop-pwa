@@ -32,7 +32,9 @@ export const useBlocksList: UseBlocksListReturn = () => {
     try {
       blocksLists.value = await resolveBlocksList();
     } catch (error) {
-      throw new Error(`Failed to load blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Failed to load blocksLists: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+        cause: error,
+      });
     }
   };
 

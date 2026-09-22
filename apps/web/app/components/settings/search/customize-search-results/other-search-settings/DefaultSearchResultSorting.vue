@@ -25,10 +25,7 @@
 <script setup lang="ts">
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 import Multiselect from 'vue-multiselect';
-import { getMappedOptions } from '~/utils/sortingOptionsHelper';
 import type { SortingOption } from '~/components/settings/category/sorting/category-sorting/types';
-import { isPageOfType } from '~/utils/pathHelper';
-
 const { updateSetting, getSetting } = useSiteSettings('defaultSortingSearch');
 const { updateSorting } = useCategoryFilter();
 

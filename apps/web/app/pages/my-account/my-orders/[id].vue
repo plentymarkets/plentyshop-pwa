@@ -155,7 +155,6 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import { paths } from '~/utils/paths';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -163,7 +162,7 @@ defineI18nRoute({
 });
 
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { locale } = useI18n();
 const { format } = usePriceFormatter();
 const { isOpen } = useDisclosure({ initialValue: true });

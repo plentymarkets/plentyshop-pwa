@@ -1,6 +1,3 @@
-import type { EditorTarget, TextboxJustify, TextboxAlign, AlignOption } from '~/composables/useEditorOptionsTabs/types';
-import type { TranslateFn } from '~/composables/useItemDataTable/types';
-
 export const useTextboxOptions = (getTarget: () => EditorTarget, t: TranslateFn) => {
   const textboxAlignXOptions = computed(
     () =>

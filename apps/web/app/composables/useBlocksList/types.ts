@@ -3,7 +3,6 @@ import type { Block } from '@plentymarkets/shop-api';
 export type BlocksListContext = 'content' | 'productCategory' | 'product' | '';
 
 export interface BlockTemplateVariation {
-  image: string;
   title: string;
   template: {
     en: Block;

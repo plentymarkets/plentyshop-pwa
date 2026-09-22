@@ -174,6 +174,7 @@ export const fakeProductEN = {
     availabilityUpdatedAt: '2018-02-28T11:49:53+01:00',
     externalId: '54321',
     model: 'Testmodel',
+    number: '1000.1',
   },
   filter: {
     isSalable: true,

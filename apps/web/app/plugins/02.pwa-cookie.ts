@@ -1,5 +1,3 @@
-import { resolvePreviewState } from '~/utils/pwaPreview';
-
 /**
  * This plugin checks for the presence of a 'pwa' cookie to determine if the user is in editor or preview mode.
  */

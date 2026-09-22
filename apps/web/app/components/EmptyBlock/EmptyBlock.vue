@@ -9,8 +9,6 @@
 
 <script setup lang="ts">
 import { SfIconAdd } from '@storefront-ui/vue';
-import type { BlockPosition } from '~/composables/useBlockManager/types';
-
 const { openAddBlockPopover } = useAddBlockPopover();
 const { logContentCreateBlock } = useLogEvent();
 

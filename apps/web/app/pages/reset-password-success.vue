@@ -30,7 +30,6 @@
   </NuxtLayout>
 </template>
 <script setup lang="ts">
-import { paths } from '~/utils/paths';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -45,7 +44,7 @@ const { setPageMeta } = usePageMeta();
 
 const icon = 'page';
 setPageMeta(t('authentication.resetPassword.title'), icon);
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const email = ref('hieronim.anonim@gmail.com');
 const NuxtLink = resolveComponent('NuxtLink');

@@ -35,7 +35,7 @@ const { useCallistoMock } = vi.hoisted(() => ({
 }));
 mockNuxtImport('useCallisto', () => useCallistoMock);
 
-const mockProductPrice = { price: ref(10), crossedPrice: ref(0) };
+const mockProductPrice = { price: ref(10), crossedPrice: ref<number | null>(0) };
 const { useProductPrice } = vi.hoisted(() => ({ useProductPrice: vi.fn(() => mockProductPrice) }));
 mockNuxtImport('useProductPrice', () => useProductPrice);
 
@@ -79,6 +79,16 @@ const getCapturedJsonLdRaw = (): string => {
   return '';
 };
 
+const getOffersPriceSpecification = (): Array<Record<string, unknown>> => {
+  const jsonLd = getCapturedJsonLd();
+  const offers = jsonLd['offers'] as Record<string, unknown> | undefined;
+  return (offers?.['priceSpecification'] as Array<Record<string, unknown>>) ?? [];
+};
+
+const isListPrice = (spec: Record<string, unknown>): boolean => spec['priceType'] === 'ListPrice';
+const getListPrice = (specs: Array<Record<string, unknown>>): Record<string, unknown> | undefined =>
+  specs.find(isListPrice);
+
 const getCapturedCanonicalHref = (): string | undefined => {
   const calls = mockUseHead.mock.calls;
 
@@ -108,6 +118,60 @@ describe('useStructuredData', () => {
     routeRef.path = '/search';
     runtimeConfigRef.public.domain = 'https://shop.example.com';
     isSingleProductUrlSchemeEnabled.value = false;
+    mockProductPrice.price.value = 10;
+    mockProductPrice.crossedPrice.value = 0;
+  });
+
+  describe('setProductMetaData — priceSpecification (ListPrice)', () => {
+    it('should omit ListPrice when there is no crossed price', () => {
+      mockProductPrice.price.value = 10;
+      mockProductPrice.crossedPrice.value = null;
+
+      const { setProductMetaData } = useStructuredData();
+      setProductMetaData(buildProduct());
+
+      expect(getOffersPriceSpecification().some(isListPrice)).toBe(false);
+    });
+
+    it('should omit ListPrice when the crossed price is not greater than the current price', () => {
+      mockProductPrice.price.value = 10;
+      mockProductPrice.crossedPrice.value = 10;
+
+      const { setProductMetaData } = useStructuredData();
+      setProductMetaData(buildProduct());
+
+      expect(getOffersPriceSpecification().some(isListPrice)).toBe(false);
+    });
+
+    it('should use the RRP currency for ListPrice when there is no special offer', () => {
+      mockProductPrice.price.value = 10;
+      mockProductPrice.crossedPrice.value = 20;
+      vi.spyOn(productGetters, 'getSpecialOffer').mockReturnValue(null);
+      vi.spyOn(productGetters, 'getSpecialPriceCurrency').mockReturnValue('GBP');
+      vi.spyOn(productGetters, 'getRegularPriceCurrency').mockReturnValue('EUR');
+
+      const { setProductMetaData } = useStructuredData();
+      setProductMetaData(buildProduct());
+
+      const listPrice = getListPrice(getOffersPriceSpecification());
+      expect(listPrice?.['price']).toBe(20);
+      expect(listPrice?.['priceCurrency']).toBe('EUR');
+    });
+
+    it('should use the special-offer/default currency for ListPrice when a special offer is active', () => {
+      mockProductPrice.price.value = 10;
+      mockProductPrice.crossedPrice.value = 20;
+      vi.spyOn(productGetters, 'getSpecialOffer').mockReturnValue(5);
+      vi.spyOn(productGetters, 'getSpecialPriceCurrency').mockReturnValue('GBP');
+      vi.spyOn(productGetters, 'getRegularPriceCurrency').mockReturnValue('EUR');
+
+      const { setProductMetaData } = useStructuredData();
+      setProductMetaData(buildProduct());
+
+      const listPrice = getListPrice(getOffersPriceSpecification());
+      expect(listPrice?.['price']).toBe(20);
+      expect(listPrice?.['priceCurrency']).toBe('GBP');
+    });
   });
 
   describe('setProductMetaData — aggregateRating', () => {

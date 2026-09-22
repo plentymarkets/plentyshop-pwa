@@ -2,5 +2,5 @@ export const useLocalizedPath = () => {
   const rawLocalePath = useLocalePath();
   const { resolvePathTrailingSlash } = useUrlTrailingSlash();
 
-  return (path: string) => resolvePathTrailingSlash(rawLocalePath(path));
+  return (path: string) => resolvePathTrailingSlash(decodeLocalizedPathSlashes(rawLocalePath(path), path));
 };

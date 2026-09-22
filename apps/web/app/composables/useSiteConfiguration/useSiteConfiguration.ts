@@ -1,11 +1,3 @@
-import type {
-  UseSiteConfigurationReturn,
-  UseSiteConfigurationState,
-  LoadGoogleFont,
-  DrawerView,
-  SettingsType,
-  SetActiveSetting,
-} from '~/composables/useSiteConfiguration/types';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
 /**
@@ -62,6 +54,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
     if (view === 'blocksSettings' && block && !isEditingEnabled.value) {
       scheduleCleanDataSync();
+    }
+
+    if (view === 'blocksSettings') {
+      useBlockSnapshots().closeDrawer();
     }
 
     if (block) {

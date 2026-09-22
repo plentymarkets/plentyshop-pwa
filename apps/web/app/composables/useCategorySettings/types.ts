@@ -1,4 +1,3 @@
-import type { DrawerView } from '~/composables/useSiteConfiguration/types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export interface useCategoryConfigurationState {

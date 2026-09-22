@@ -1,5 +1,3 @@
-import type { UseSliderImagePreloadOptions } from '~/composables/useSliderImagePreload/types';
-
 export const useSliderImagePreload = (options: UseSliderImagePreloadOptions) => {
   const sliderRootRef = ref<HTMLElement | null>(null);
   const scrollContainerRef = ref<HTMLElement | null>(null);

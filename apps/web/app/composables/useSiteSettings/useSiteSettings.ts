@@ -1,6 +1,3 @@
-import type { UseSiteSettingsReturn, UseSiteSettingsState } from '~/composables/useSiteSettings/types';
-import { createSiteSettingsLogic } from '~/composables/useSiteSettings/createSiteSettingsLogic';
-
 /**
  * @description Composable for managing site settings.
  * @returns UseSiteSettingsReturn

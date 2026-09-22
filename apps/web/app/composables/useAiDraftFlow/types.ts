@@ -1,5 +1,3 @@
-import type { AiCoreFunctionality } from '~/composables/useAiTextGeneration/types';
-
 export type AiDraftPhase = 'idle' | 'prompt' | 'generating' | 'review';
 export type AiTone = 'Friendly' | 'Formal' | 'Bold';
 export type AiLength = 'Short' | 'Medium' | 'Long';

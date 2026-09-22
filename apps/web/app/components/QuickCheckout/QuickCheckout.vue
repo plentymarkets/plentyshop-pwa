@@ -116,6 +116,8 @@
           @on-approved="isOpen = false"
         />
         <PayPalPayLaterBanner placement="payment" location="quickCheckout" :amount="totals.total" />
+
+        <GuaranteeBlock :product="product" class="mt-4" />
       </div>
     </div>
   </UiModal>
@@ -127,13 +129,11 @@ import type { QuickCheckoutProps } from './types';
 import type { Product } from '@plentymarkets/shop-api';
 import { cartGetters, productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
-import { paths } from '~/utils/paths';
-
 const props = defineProps<QuickCheckoutProps>();
 
 const { format } = usePriceFormatter();
 const { showNetPrices } = useCart();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { data: cart, lastUpdatedCartItem } = useCart();
 const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();

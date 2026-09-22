@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { paths } from '~/utils/paths';
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 

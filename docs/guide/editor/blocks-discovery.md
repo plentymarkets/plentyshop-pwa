@@ -57,13 +57,9 @@ A `defaults.ts` may export up to two named functions:
 import type { BlocksList } from '~/composables/useBlocksList/types';
 import type { Block } from '@plentymarkets/shop-api';
 
-export const getBlocksList = (): BlocksList => ({
-  /* … */
-});
+export const getBlocksList = (): BlocksList => ({/* … */});
 
-export const createDefault = (): Block => ({
-  /* … */
-});
+export const createDefault = (): Block => ({/* … */});
 ```
 
 `getBlocksList` returns one or more categories that should appear in the "Add block" catalogue. `createDefault` returns a fresh block instance.
@@ -76,7 +72,7 @@ Each entry in a `BlocksList` is a category keyed by a stable string:
 | `blockName`     | `string`                   | The block name displayed by the category                                                                         |
 | `category`      | `string`                   | The category slug                                                                                                |
 | `accessControl` | `BlocksListContext[]`      | Which page contexts (`content`, `productCategory`, `product`) may see this category                              |
-| `variations`    | `BlockTemplateVariation[]` | One or more selectable variations, each with an image, title, and per language `template` block                  |
+| `variations`    | `BlockTemplateVariation[]` | One or more selectable variations, each with a title and per language `template` block                           |
 | `override`      | `boolean` (optional)       | Marks this category as an authoritative replacement, see [Catalogue level overrides](#catalogue-level-overrides) |
 
 The `name` field of a variation's `template` block matches the basename of the `.vue` component. This is also the key the override system uses to identify blocks.

@@ -130,12 +130,11 @@ import { SfCheckbox, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
-import { paths } from '~/utils/paths';
 import type { NewsletterSubscribeProps } from './types';
 
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const props = defineProps<NewsletterSubscribeProps>();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 const turnstileSiteKey = getSetting() ?? '';

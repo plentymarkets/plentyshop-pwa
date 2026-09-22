@@ -25,8 +25,6 @@
 <script lang="ts" setup>
 import { SfIconAdd, SfTooltip } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlockPosition } from '~/composables/useBlockManager/types';
-
 const props = defineProps<{
   block: Block;
   index: number;

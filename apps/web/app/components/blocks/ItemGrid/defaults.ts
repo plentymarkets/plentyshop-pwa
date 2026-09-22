@@ -1,5 +1,3 @@
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   'item-category': {
     category: 'item-category',
@@ -9,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Item Category',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_grid.png',
         template: {
           en: {
             name: 'ItemGrid',

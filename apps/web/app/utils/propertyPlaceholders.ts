@@ -1,7 +1,5 @@
 import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import type { Product, VariationProperty } from '@plentymarkets/shop-api';
-import type { PropertyPlaceholderKind } from '~/composables/useRichTextEditor/types';
-
 const SINGLE_BRACE_WRAPPED_TOKEN_REGEX = /^\{([^{}]+)}$/;
 const VALUE_TOKEN_WITH_ID_REGEX = /^\{\{value:(\d+)}}$/i;
 const PROPERTY_PLACEHOLDER_TAG_REGEX = /(<span\b[^>]*data-property-token=(['"])(.*?)\2[^>]*>)([\s\S]*?)(<\/span>)/gi;

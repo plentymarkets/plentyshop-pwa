@@ -39,10 +39,8 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
-import { paths } from '~/utils/paths';
-
 const { showNetPrices } = useCart();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 defineProps<ProductSliderProps>();
 

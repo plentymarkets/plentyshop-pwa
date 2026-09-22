@@ -126,13 +126,9 @@ Because the loader processes core first and then Nuxt modules, and each `.vue` f
                name: 'TextCard', // must match the core block name
                type: 'content',
                meta: { uuid: '00000000-0000-4000-8000-000000000003' },
-               content: {
-                 /* your defaults */
-               },
+               content: {/* your defaults */},
              },
-             de: {
-               /* … */
-             },
+             de: {/* … */},
            },
          },
        ],

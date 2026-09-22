@@ -3,15 +3,9 @@ import type { TextCardContent } from '~/components/blocks/TextCard/types';
 import type { BannerProps } from '~/components/blocks/Banner/types';
 import type { ProductRecommendedProductsContent } from '~/components/blocks/ProductRecommendedProducts/types';
 import type { ItemGridContent, ItemGridFieldsVisibility } from '~/components/blocks/ItemGrid/types';
+import type { PriceCardContent, PriceCardFieldsVisibility } from '~/components/ui/PurchaseCard/types';
 import type { ImageContent } from '~/components/blocks/Image/types';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
-import { migrateImageContent } from '~/utils/migrate-image-content';
-import { migrateTextCardContent } from '~/utils/migrate-text-editor';
-import { migrateRecommendedContent } from '~/utils/migrate-recommended-content';
-import type { OldContent } from '~/utils/migrate-recommended-content/types';
 import type { NewsletterSubscribeContent } from '~/components/blocks/NewsletterSubscribe/types';
-import { HEADER_BLOCK_NAME } from '~/utils/blocks/block-names';
-
 const TEXT_CONTENT_BLOCKS = new Set(['TextCard', 'Banner', 'ProductRecommendedProducts']);
 
 const isHeaderBlock = (block: Block): boolean => block?.name === HEADER_BLOCK_NAME;
@@ -98,6 +92,35 @@ const migrateItemGridBlock = (block: Block): void => {
   }
 };
 
+const migratePriceCardBlock = (block: Block): void => {
+  if (block.name === 'PriceCard' && block.content) {
+    const content = block.content as PriceCardContent;
+    const fields = (content.fields ?? {}) as PriceCardFieldsVisibility;
+
+    content.fields = fields;
+    content.fieldsOrder ??= [];
+
+    if (fields['guaranteeLabel'] === undefined) {
+      fields['guaranteeLabel'] = true;
+    }
+    if (!content.fieldsOrder.includes('guaranteeLabel')) {
+      content.fieldsOrder.push('guaranteeLabel');
+    }
+
+    if (fields['variationNumber'] === undefined) {
+      fields['variationNumber'] = false;
+    }
+    if (!content.fieldsOrder.includes('variationNumber')) {
+      const itemNameIndex = content.fieldsOrder.indexOf('itemName');
+      if (itemNameIndex >= 0) {
+        content.fieldsOrder.splice(itemNameIndex + 1, 0, 'variationNumber');
+      } else {
+        content.fieldsOrder.push('variationNumber');
+      }
+    }
+  }
+};
+
 /**
  * Applies all block content migrations in-place (image, text-card, recommended-products, banner).
  * Call this once after fetching / assembling the full block tree.
@@ -140,6 +163,7 @@ export const migrateAllBlocks = (blocks: Block[]): void => {
       migrateBannerBlock(block);
       migrateTextCardBlock(block);
       migrateItemGridBlock(block);
+      migratePriceCardBlock(block);
 
       if (Array.isArray(block.content)) {
         migrate(block.content);

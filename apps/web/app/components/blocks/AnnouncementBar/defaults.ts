@@ -1,9 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import type { AnnouncementBarProps } from './types';
 import type { Block } from '@plentymarkets/shop-api';
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
-const ANNOUNCEMENT_BAR_IMAGE = 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/announcement-bar.svg';
 
 const createAnnouncementBar = (text: string): AnnouncementBarProps => ({
   name: 'AnnouncementBar',
@@ -44,7 +41,6 @@ export const getBlocksList = (): BlocksList => ({
     variations: [
       {
         title: 'Announcement Bar',
-        image: ANNOUNCEMENT_BAR_IMAGE,
         template: {
           en: createAnnouncementCarousel('This is an example announcement.', 'This is another example announcement.'),
           de: createAnnouncementCarousel(

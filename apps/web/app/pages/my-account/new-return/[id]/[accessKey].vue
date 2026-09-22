@@ -49,8 +49,6 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
-import { useReturnOrder } from '~/composables/useReturnOrder';
-import { paths } from '~/utils/paths';
 import type { Locale } from '#i18n';
 
 defineI18nRoute({
@@ -58,7 +56,7 @@ defineI18nRoute({
 });
 
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 const { locale } = useI18n();
 definePageMeta({

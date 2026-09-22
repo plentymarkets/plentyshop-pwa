@@ -104,8 +104,7 @@ describe('BaseGenerator', () => {
 
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    const emptyResult = actionsFunction(undefined);
-    expect(emptyResult).toEqual([]);
+    expect(() => actionsFunction(undefined)).toThrow();
 
     consoleErrorSpy.mockRestore();
 
@@ -113,5 +112,58 @@ describe('BaseGenerator', () => {
     const actions = actionsFunction(validData);
     expect(actions).toHaveLength(1);
     expect(actions[0].path).toBe('test/TestComponent.txt');
+  });
+
+  it('should throw instead of silently returning an empty array on missing data', () => {
+    const generator = new TestGenerator(pathResolver);
+    const mockPlop = {
+      setGenerator: vi.fn(),
+    };
+
+    generator.register(mockPlop as unknown as Parameters<typeof generator.register>[0]);
+
+    const registeredConfig = mockPlop.setGenerator.mock.calls[0][1];
+    const actionsFunction = registeredConfig.actions;
+
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(() => actionsFunction(undefined)).toThrow(/invalid or missing input data/);
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it('should throw instead of silently returning an empty array when createActions() throws', () => {
+    class ThrowingGenerator extends BaseGenerator {
+      readonly name = 'throwing';
+      readonly description = 'Generator that always fails while building actions';
+
+      getPrompts(): GeneratorPrompt[] {
+        return [];
+      }
+
+      validateInput(): string | true {
+        return true;
+      }
+
+      createActions(): GeneratorAction[] {
+        throw new Error('boom: template rendering failed');
+      }
+    }
+
+    const generator = new ThrowingGenerator(pathResolver);
+    const mockPlop = {
+      setGenerator: vi.fn(),
+    };
+
+    generator.register(mockPlop as unknown as Parameters<typeof generator.register>[0]);
+
+    const registeredConfig = mockPlop.setGenerator.mock.calls[0][1];
+    const actionsFunction = registeredConfig.actions;
+
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(() => actionsFunction({ name: 'TestComponent' })).toThrow(/boom: template rendering failed/);
+
+    consoleErrorSpy.mockRestore();
   });
 });

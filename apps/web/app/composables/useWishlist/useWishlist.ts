@@ -4,17 +4,6 @@ import type {
   AddWishlistItemParams,
   DeleteWishlistItemParams,
 } from '@plentymarkets/shop-api';
-import type {
-  FetchWishlist,
-  UseWishlistReturn,
-  UseWishlistState,
-  DeleteWishlistItem,
-  AddWishlistItem,
-  IsWishlistItem,
-  InteractWithWishlist,
-  SetWishlistItemIds,
-} from '~/composables/useWishlist/types';
-
 /**
  * @description Composable for managing wishlist.
  * @returns UseWishlistReturn

@@ -7,6 +7,7 @@ import { fileOrganizationTypes } from './eslint-rules/file-organization-types.js
 import { noBareTailwindResponsiveInContainer } from './eslint-rules/no-bare-responsive-in-container.js';
 import { noNamedReexportInBarrel } from './eslint-rules/no-named-reexport-in-barrel.js';
 import { enforceZIndexTokens } from './eslint-rules/enforce-z-index-tokens.js';
+import { noUseLocalePath } from './eslint-rules/no-use-locale-path.js';
 
 export default withNuxt(
   {
@@ -36,6 +37,7 @@ export default withNuxt(
           'no-bare-responsive-in-container': noBareTailwindResponsiveInContainer,
           'no-named-reexport-in-barrel': noNamedReexportInBarrel,
           'enforce-z-index-tokens': enforceZIndexTokens,
+          'no-use-locale-path': noUseLocalePath,
         }
       }
     },
@@ -144,6 +146,19 @@ export default withNuxt(
     files: ['app/composables/**/index.ts', 'app/utils/**/index.ts'],
     rules: {
       'custom-rules/no-named-reexport-in-barrel': 'error',
+    },
+  },
+  {
+    files: ['**/*.{ts,vue}'],
+    ignores: [
+      'app/composables/useUrlPageMeta/useUrlPageMeta.ts',
+      'app/composables/useLocalization/useLocalization.ts',
+      'app/composables/useLocalizedPath/useLocalizedPath.ts',
+      'app/components/ui/PurchaseCard/PurchaseCard.vue',
+      'app/components/TextContent/TextContent.vue',
+    ],
+    rules: {
+      'custom-rules/no-use-locale-path': 'error',
     },
   },
 );

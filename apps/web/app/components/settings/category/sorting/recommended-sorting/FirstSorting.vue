@@ -23,8 +23,6 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { getEditorTranslation, sortingCategory } from '~/utils/sortingOptionsHelper';
-
 const { updateSetting, getSetting } = useSiteSettings('recommendedFirstSortingOption');
 
 const sortingOptions = computed(() => sortingCategory);

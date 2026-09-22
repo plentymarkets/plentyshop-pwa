@@ -39,9 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import type { BlockListCategory } from '~/composables/useBlocksList/types';
-import type { FilterId } from '~/composables/useAddBlockPopover/types';
-
 const { searchQuery, activeFilters, toggleFilter } = useAddBlockPopover();
 const { blocksLists, pageHasAccessToCategory } = useBlocksList();
 

@@ -5,12 +5,6 @@ import type {
   OrderReturnsResponse,
   ApiError,
 } from '@plentymarkets/shop-api';
-import type {
-  UseCustomerReturnsReturn,
-  UseCustomerReturnsState,
-  FetchCustomerReturns,
-} from '~/composables/useCustomerReturns/types';
-
 /**
  * @description Composable managing order returns data
  * @returns UseCustomerReturnsReturn

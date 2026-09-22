@@ -163,10 +163,9 @@ import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
-import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';
 import { userGetters } from '@plentymarkets/shop-api';
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const router = useRouter();
 const { register, loading, isAuthorized } = useCustomer();
 const { send } = useNotification();

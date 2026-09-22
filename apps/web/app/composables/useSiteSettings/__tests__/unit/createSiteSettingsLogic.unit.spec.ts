@@ -67,6 +67,13 @@ describe('createSiteSettingsLogic', () => {
       expect(logic.getBooleanSetting()).toBe(false);
     });
 
+    it('returns the fallback when the setting is not set', () => {
+      const state = makeState({ initialData: {} });
+      const logic = createSiteSettingsLogic('enabled', state, makeDeps());
+
+      expect(logic.getBooleanSetting(true)).toBe(true);
+    });
+
     it('returns true after updateSetting writes the string "true"', () => {
       const state = makeState({ initialData: { enabled: false } });
       const logic = createSiteSettingsLogic('enabled', state, makeDeps());
@@ -244,7 +251,7 @@ describe('createSiteSettingsLogic', () => {
       expect(state.value.loading).toBe(false);
     });
 
-    it('logs the error, keeps loading false, and still resolves true on failure', async () => {
+    it('logs the error and returns false on failure', async () => {
       const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(noop);
       const setConfiguration = vi.fn().mockRejectedValue(new Error('network error'));
       const state = makeState({ data: { useAvif: 'true' } });
@@ -255,7 +262,7 @@ describe('createSiteSettingsLogic', () => {
 
       expect(consoleErrorSpy).toHaveBeenCalled();
       expect(state.value.loading).toBe(false);
-      expect(result).toBe(true);
+      expect(result).toBe(false);
 
       consoleErrorSpy.mockRestore();
     });

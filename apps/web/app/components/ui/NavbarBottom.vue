@@ -38,8 +38,6 @@
 
 <script setup lang="ts">
 import { SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson, SfIconFavorite } from '@storefront-ui/vue';
-import { useCustomer } from '~/composables/useCustomer';
-
 const localePath = useLocalizedPath();
 const route = useRoute();
 const { wishlistItemIds } = useWishlist();

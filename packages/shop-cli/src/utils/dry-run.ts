@@ -1,8 +1,8 @@
-import { relative, dirname } from 'path';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { relative, dirname, resolve } from 'path';
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'fs';
 import type { NodePlopAPI } from 'plop';
 import type { GeneratorAnswers } from '../types/confirmation';
-import { pathResolver } from '../core';
+import { pathResolver } from '../core/path/PathResolver';
 import type { Operation } from '../types/dry-run';
 
 /**
@@ -134,43 +134,39 @@ export class DryRunManager {
 export const dryRunManager = new DryRunManager();
 
 interface PlopActionConfig {
-  path: string;
+  path?: string;
   template?: string;
   templateFile?: string;
   [key: string]: unknown;
 }
 
 /**
- * Plop action that respects dry-run mode
+ * Plop action that respects dry-run mode.
+ *
+ * Only registered under a distinct action type (not `'add'`) and only used when dry-run mode is
+ * active — real (non-dry-run) file writes always go through plop's own built-in `add` action, so
+ * this never affects normal generation. Path/content resolution mirrors node-plop's own
+ * `_common-action-utils.js` (`getDestBasePath`/`getPlopfilePath`) so the preview matches exactly
+ * what the real `add` action would do.
  */
 export function createDryRunAction(type: string) {
   return function (answers: GeneratorAnswers, config: PlopActionConfig, plop: NodePlopAPI) {
-    const path = plop.renderString(config.path, answers);
-    const template = config.template || config.templateFile;
+    const destPath = resolve(plop.getDestBasePath(), plop.renderString(config.path ?? '', answers));
+
     let content = '';
-
-    if (template) {
-      if (config.templateFile) {
-        content = plop.renderString(plop.getHelper('fileContents')(config.templateFile), answers);
-      } else {
-        content = plop.renderString(template, answers);
-      }
+    if (config.templateFile) {
+      const absTemplatePath = resolve(plop.getPlopfilePath(), config.templateFile);
+      const rawTemplate = readFileSync(absTemplatePath, 'utf8');
+      content = plop.renderString(rawTemplate, answers);
+    } else if (config.template) {
+      content = plop.renderString(config.template, answers);
     }
 
-    if (dryRunManager.isDryRun) {
-      dryRunManager.logOperation(type, path, content);
-      return `Planned: ${type} ${path}`;
-    }
-
-    if (type === 'add') {
-      if (existsSync(path)) {
-        throw new Error(`File already exists: ${path}`);
-      }
-      mkdirSync(dirname(path), { recursive: true });
-      writeFileSync(path, content, 'utf8');
-      return `Created: ${path}`;
-    }
-
-    return `Unknown action type: ${type}`;
+    // DryRunManager's summary/conflict logic (getSummary/hasConflicts) recognizes the semantic
+    // operation kinds 'create'/'update', not plop's action-type names ('add', 'modify', ...).
+    const summaryType = type === 'add' ? 'create' : type;
+    dryRunManager.logOperation(summaryType, destPath, content);
+    const conflictNote = existsSync(destPath) ? ' (already exists — would conflict)' : '';
+    return `Planned: ${type} ${destPath}${conflictNote}`;
   };
 }

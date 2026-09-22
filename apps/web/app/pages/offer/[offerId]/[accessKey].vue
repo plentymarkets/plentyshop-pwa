@@ -26,7 +26,7 @@ definePageMeta({
 const { data, error, relatedOrder, hasError, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const offerId = route.params.offerId ? route.params.offerId.toString() : '';
 const accessKey = route.params.accessKey ? route.params.accessKey.toString() : '';

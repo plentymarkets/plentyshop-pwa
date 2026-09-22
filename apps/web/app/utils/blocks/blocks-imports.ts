@@ -1,6 +1,4 @@
 import type { BlockLoader, DefaultsModule } from './types';
-import type { BlocksList, BlockTemplateVariation } from '~/composables/useBlocksList/types';
-
 const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
 }) as Record<string, BlockLoader>;

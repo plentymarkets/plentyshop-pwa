@@ -1,5 +1,3 @@
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   text: {
     category: 'text',
@@ -9,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Rich Text',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/rich_text.png',
         template: {
           en: {
             name: 'TextCard',

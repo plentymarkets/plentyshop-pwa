@@ -38,7 +38,7 @@ export const useCategoryManagement: UseCategoryMethodsReturn = () => {
 
       state.value.data = category ?? state.value.data;
     } catch (error) {
-      throw new Error(error as string);
+      throw new Error(error as string, { cause: error });
     } finally {
       state.value.loading = false;
     }

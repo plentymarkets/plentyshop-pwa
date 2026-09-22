@@ -35,6 +35,7 @@ export const thirdPartyDeps: string[] = [
   'dotenv',
   'drift-zoom',
   'js-beautify',
+  'schema-dts',
   'swiper/modules',
   'swiper/vue',
   'uuid',

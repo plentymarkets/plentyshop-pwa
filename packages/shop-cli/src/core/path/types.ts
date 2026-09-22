@@ -16,6 +16,8 @@ export interface PathOptions {
   isDynamic?: boolean;
   /** Custom web app path */
   webAppPath?: string;
+  /** Whether this generation is a CMS block (adds a `blocks/` path segment) */
+  isBlock?: boolean;
 }
 
 /**

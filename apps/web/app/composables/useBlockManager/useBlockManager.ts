@@ -3,9 +3,6 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { BlockPosition, RefCallback, ShowBottomAddInGridOptions } from './types';
 import { v4 as uuid } from 'uuid';
 import type { LazyLoadConfig } from '~/components/PageBlock/types';
-import { isHeaderContainerBlock } from '~/utils/blockTemplates/header/factory';
-import { isFooterContainerBlock } from '~/utils/blockTemplates/footer/factory';
-
 const visiblePlaceholder = ref<{ uuid: string; position: BlockPosition }>({
   uuid: '',
   position: 'top',
@@ -559,20 +556,6 @@ export const useBlockManager = () => {
     return block.type === 'structure' && Array.isArray(block.content) && block.content.length > 0;
   };
 
-  const shouldDisplayPlaceholder = (
-    uuid: string,
-    position: 'top' | 'bottom',
-    drawerOpen: boolean | Ref<boolean>,
-    drawerView: string | null | Ref<string | null>,
-  ): boolean => {
-    return (
-      visiblePlaceholder.value.position === position &&
-      visiblePlaceholder.value.uuid === uuid &&
-      unref(drawerOpen) &&
-      unref(drawerView) === 'blocksList'
-    );
-  };
-
   return {
     currentBlock,
     currentBlockUuid,
@@ -607,6 +590,5 @@ export const useBlockManager = () => {
     showBottomAddInGrid,
     blockExistsOnPage,
     isStructureBlock,
-    shouldDisplayPlaceholder,
   };
 };

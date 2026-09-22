@@ -189,7 +189,7 @@ const {
   changeVisibilityState,
 } = useCookieBar();
 const NuxtLink = resolveComponent('NuxtLink');
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const furtherSettingsOn = ref(false);
 
 const privacyPolicy = computed(() => localePath(paths.privacyPolicy));

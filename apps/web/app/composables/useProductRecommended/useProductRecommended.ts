@@ -1,8 +1,3 @@
-import type {
-  UseProductRecommendedReturn,
-  UseProductRecommendedState,
-  FetchProductRecommended,
-} from '~/composables/useProductRecommended/types';
 import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
 
 /**

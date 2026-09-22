@@ -19,11 +19,21 @@ export const useUpdatePageTemplate = () => {
 
       let identifier: string | number = route.meta.identifier as string | number;
 
-      if (dataProducts.value?.category?.type === 'content' && dataProducts.value.category.id) {
+      if (
+        route.meta.type === 'category' &&
+        dataProducts.value?.category?.type === 'content' &&
+        dataProducts.value.category.id
+      ) {
         identifier = dataProducts.value.category.id;
       }
 
-      return await saveBlocks(identifier, route.meta.type as string, cleanedData);
+      const saved = await saveBlocks(identifier, route.meta.type as string, cleanedData);
+
+      if (saved) {
+        await useBlockSnapshots().markSnapshotSaved();
+      }
+
+      return saved;
     } catch (error) {
       send({
         message: `Failed to update page template: ${error instanceof Error ? error.toString() : String(error)}`,

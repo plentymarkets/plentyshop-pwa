@@ -10,6 +10,7 @@ enum AnalyticsEventName {
   aiGenerateDraft = 'aiGenerateDraft',
   aiKeepDraft = 'aiKeepDraft',
   aiDiscardDraft = 'aiDiscardDraft',
+  snapshotRestore = 'snapshotRestore',
 }
 
 export const useLogEvent = () => {
@@ -112,6 +113,15 @@ export const useLogEvent = () => {
     });
   };
 
+  const logSnapshotRestore = () => {
+    usePlentyLogs({
+      name: AnalyticsEventName.snapshotRestore,
+      loggableType: 'snapshot',
+      loggableId: '',
+      payload: {},
+    });
+  };
+
   return {
     logToCOpened,
     logToCCreateBlock,
@@ -124,5 +134,6 @@ export const useLogEvent = () => {
     logAiGenerateDraft,
     logAiKeepDraft,
     logAiDiscardDraft,
+    logSnapshotRestore,
   };
 };

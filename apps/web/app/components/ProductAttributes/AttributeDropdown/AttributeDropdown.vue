@@ -64,10 +64,13 @@ registerValidator(validate);
 
 const [selectedValue] = defineField('selectedValue');
 
-const doUpdateValue = (value: number) => {
-  if (value > -1) {
-    updateValue(attribute.attributeId, value);
+const doUpdateValue = (newValue: number) => {
+  if (newValue > -1) {
+    updateValue(attribute.attributeId, newValue);
     selectedValue.value = getValue(attribute.attributeId);
+  } else {
+    updateValue(attribute.attributeId, undefined);
+    selectedValue.value = undefined;
   }
 };
 

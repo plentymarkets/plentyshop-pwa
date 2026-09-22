@@ -3,12 +3,17 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { UiProductCard } from '#components';
 import { ProductMock } from '../../../../../__tests__/__mocks__/product.mock';
 
-const { useLazyProductImageMock } = vi.hoisted(() => ({
+const { useLazyProductImageMock, useProductPriceMock } = vi.hoisted(() => ({
   useLazyProductImageMock: vi.fn(),
+  useProductPriceMock: vi.fn(),
 }));
 
 mockNuxtImport('useLazyProductImage', () => {
   return useLazyProductImageMock;
+});
+
+mockNuxtImport('useProductPrice', () => {
+  return useProductPriceMock;
 });
 
 describe('<ProductCard />', () => {
@@ -24,6 +29,12 @@ describe('<ProductCard />', () => {
       onMainImageError: vi.fn(),
       onHoverImageLoad: vi.fn(),
       onHoverImageError: vi.fn(),
+    });
+
+    useProductPriceMock.mockReset();
+    useProductPriceMock.mockReturnValue({
+      price: ref(10),
+      crossedPrice: ref(null),
     });
   });
 
@@ -58,5 +69,35 @@ describe('<ProductCard />', () => {
     });
 
     expect(wrapper.find('[data-testid="image-slot"]').exists()).toBe(false);
+  });
+
+  it('should render the crossed price when it is higher than the price', () => {
+    useProductPriceMock.mockReturnValue({
+      price: ref(10),
+      crossedPrice: ref(20),
+    });
+
+    const wrapper = mount(UiProductCard, {
+      props: {
+        product: ProductMock,
+      },
+    });
+
+    expect(wrapper.text()).toContain('20');
+  });
+
+  it('should not render the crossed price when it is lower than the price', () => {
+    useProductPriceMock.mockReturnValue({
+      price: ref(20),
+      crossedPrice: ref(10),
+    });
+
+    const wrapper = mount(UiProductCard, {
+      props: {
+        product: ProductMock,
+      },
+    });
+
+    expect(wrapper.text()).not.toContain('10');
   });
 });

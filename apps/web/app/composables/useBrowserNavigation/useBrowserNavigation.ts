@@ -4,7 +4,7 @@ export const useBrowserNavigation = () => {
       router: useRouter(),
       isAuthorized: useCustomer().isAuthorized.value,
       i18n: useNuxtApp().$i18n,
-      localePath: useLocalePath(),
+      localePath: useLocalizedPath(),
       navigateTo: navigateTo,
     });
   };

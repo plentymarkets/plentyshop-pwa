@@ -1,0 +1,26 @@
+<template>
+  <EditorFormPanel :title="getEditorTranslation('section-editor-label')">
+    <p class="px-4 py-2 text-sm text-neutral-500">
+      {{{{raw}}}}{{ getEditorTranslation('section-editor-placeholder') }}{{{{/raw}}}}
+    </p>
+  </EditorFormPanel>
+</template>
+
+<script setup lang="ts">
+import type { {{pascalCase name}}FormProps } from '../types';
+
+defineProps<{{pascalCase name}}FormProps>();
+</script>
+
+<i18n lang="json">
+{
+  "en": {
+    "section-editor-label": "Section",
+    "section-editor-placeholder": "Add section-specific fields here."
+  },
+  "de": {
+    "section-editor-label": "Bereich",
+    "section-editor-placeholder": "Fügen Sie hier bereichsspezifische Felder hinzu."
+  }
+}
+</i18n>

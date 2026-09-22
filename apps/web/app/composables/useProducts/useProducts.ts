@@ -1,14 +1,4 @@
 import type { FacetSearchCriteria, Product, Facet } from '@plentymarkets/shop-api';
-import { defaults, type SetCurrentProduct } from '~/composables';
-import type {
-  UseProductsState,
-  FetchProducts,
-  LoadFakeGlobalCategoryData,
-  UseProductsReturn,
-} from '~/composables/useProducts/types';
-import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
-import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
-
 /**
  * @description Composable for managing products.
  * @returns UseProductsReturn

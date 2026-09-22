@@ -29,10 +29,14 @@ export default defineNuxtRouteMiddleware((to) => {
   if (path.includes('akQQ') && path.includes('idQQ')) {
     const match = matchOldConfirmationUrl(path);
     if (match) {
+      const { resolvePathTrailingSlash } = useUrlTrailingSlash();
       const langPrefix = match.lang ? `/${match.lang}` : '';
-      return navigateTo(`${langPrefix}${paths.confirmation}/${match.orderId}/${match.orderAccessKey}`, {
-        redirectCode: 301,
-      });
+      return navigateTo(
+        resolvePathTrailingSlash(`${langPrefix}${paths.confirmation}/${match.orderId}/${match.orderAccessKey}`),
+        {
+          redirectCode: 301,
+        },
+      );
     }
   }
 
@@ -48,7 +52,7 @@ export default defineNuxtRouteMiddleware((to) => {
         return navigateTo(createLocalePath(`${paths.confirmation}/${orderId}/${accessKey}`, lang));
       }
 
-      const localePath = useLocalePath();
+      const localePath = useLocalizedPath();
       return navigateTo(localePath(`${paths.confirmation}/${orderId}/${accessKey}`));
     }
   }

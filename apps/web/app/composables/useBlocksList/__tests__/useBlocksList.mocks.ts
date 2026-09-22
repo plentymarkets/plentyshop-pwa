@@ -46,7 +46,6 @@ export const getMockBlocksList = (): BlocksList => ({
     category: 'banners',
     variations: [
       {
-        image: 'banner.png',
         title: 'Hero Banner',
         template: {
           en: mockExpectedEnglishTemplate,

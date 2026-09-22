@@ -1,0 +1,40 @@
+import { v4 as uuid } from 'uuid';
+import type { Block } from '@plentymarkets/shop-api';
+
+const create{{pascalCase name}} = (): Block => ({
+  name: '{{pascalCase name}}',
+  type: '{{#if structure}}structure{{else}}content{{/if}}',
+  meta: { uuid: uuid() },
+  configuration: {
+    visible: true,
+    layout: {},
+  },
+{{#if structure}}
+  // Seed with this block's real child Block instance(s) (see {{pascalCase name}}Props in ./types)
+  // — an empty array renders no children in the CMS editor until the user adds some.
+  content: [],
+{{else}}
+  // Replace with this block's real default settings (see {{pascalCase name}}Props in ./types).
+  content: {},
+{{/if}}
+});
+
+export const getBlocksList = (): BlocksList => ({
+'{{category}}': {
+    category: '{{category}}',
+    accessControl: [{{#each accessControl}}'{{this}}'{{#unless @last}}, {{/unless}}{{/each}}],
+    title: '{{pascalCase name}}',
+    blockName: '{{pascalCase name}}',
+    variations: [
+      {
+        title: '{{pascalCase name}}',
+        template: {
+          en: create{{pascalCase name}}(),
+          de: create{{pascalCase name}}(),
+        },
+      },
+    ],
+  },
+});
+
+export const createDefault = (): Block => create{{pascalCase name}}();

@@ -1,5 +1,3 @@
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   header: {
     category: 'header',
@@ -9,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Utility Bar Default',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/utility-bar-thumbnail.svg',
         template: {
           en: {
             name: 'UtilityBar',

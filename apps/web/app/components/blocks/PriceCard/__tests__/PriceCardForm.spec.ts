@@ -30,6 +30,7 @@ mockNuxtImport('useEditorOptionsTabs', () => () => ({
 const createContent = (): PriceCardContent => ({
   fields: {
     itemName: true,
+    variationNumber: false,
     price: true,
     tags: false,
     availability: false,
@@ -43,9 +44,10 @@ const createContent = (): PriceCardContent => ({
     addToWishlist: false,
     quantityAndAddToCart: false,
     itemText: false,
+    guaranteeLabel: false,
     technicalData: false,
   },
-  fieldsOrder: ['itemName', 'price'] as PriceCardOrderItem[],
+  fieldsOrder: ['itemName', 'variationNumber', 'price'] as PriceCardOrderItem[],
   fieldsDisabled: [],
   wishlistSize: 'small',
   dropShadow: false,
@@ -140,8 +142,8 @@ describe('PriceCardForm', () => {
 
       await wrapper.getByTestId('actions-add-text-block-button').trigger('click');
 
-      expect(content.fieldsOrder).toHaveLength(3);
-      const added = content.fieldsOrder[2] as PriceCardTextBlockItem;
+      expect(content.fieldsOrder).toHaveLength(4);
+      const added = content.fieldsOrder[3] as PriceCardTextBlockItem;
       expect(added.type).toBe('textBlock');
       expect(added.uuid).toBe('test-uuid-123');
       expect(added.content).toBe('');
@@ -220,7 +222,7 @@ describe('PriceCardForm', () => {
 
       await wrapper.getByTestId('price-card-delete-textblock-tb-uuid-1').trigger('click');
 
-      expect(content.fieldsOrder).toHaveLength(2);
+      expect(content.fieldsOrder).toHaveLength(3);
       expect(findTextBlock(content.fieldsOrder, 'tb-uuid-1')).toBeUndefined();
     });
 
@@ -248,6 +250,21 @@ describe('PriceCardForm', () => {
 
       const textBlock = findTextBlock(content.fieldsOrder, 'tb-uuid-1');
       expect(textBlock?.visible).toBe(false);
+    });
+  });
+
+  describe('variation number field', () => {
+    it('should render the variation number field row', () => {
+      const wrapper = mountForm();
+      expect(wrapper.getByTestId('price-card-field-variationNumber')).toBeTruthy();
+    });
+
+    it('should update fields.variationNumber when the switch is toggled', async () => {
+      const wrapper = mountForm();
+
+      await wrapper.getByTestId('price-card-visible-variationNumber').trigger('click');
+
+      expect(content.fields.variationNumber).toBe(true);
     });
   });
 

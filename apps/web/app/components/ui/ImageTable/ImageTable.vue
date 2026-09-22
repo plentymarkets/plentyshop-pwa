@@ -1,57 +1,111 @@
 <template>
-  <VCard flat>
-    <div class="flex items-center gap-2 mb-5 bg-gray-100 border border-gray-300 rounded pl-2">
-      <SfIconSearch />
-      <v-text-field
+  <div>
+    <div class="mb-4">
+      <SfInput
         v-model="search"
-        density="compact"
-        label="Search file or path..."
-        variant="solo"
-        flat
-        hide-details
-        single-line
-      />
+        data-testid="image-table-search"
+        aria-label="Search file or path..."
+        placeholder="Search file or path..."
+      >
+        <template #prefix>
+          <SfIconSearch />
+        </template>
+      </SfInput>
     </div>
 
     <div v-if="loading" class="flex justify-center items-center min-h-[300px]">
-      <SfLoaderCircular size="2xl" class="text-gray-400" />
+      <SfLoaderCircular size="2xl" class="text-neutral-400" />
     </div>
-    <v-data-table
-      v-else
-      :items="filteredItems"
-      :headers="headers"
-      class="border border-gray-300 rounded-md"
-      no-data-text="No images or folders found"
-    >
-      <template #item="{ item }">
-        <UiImageTableSkeleton v-if="item.storageClass === UPLOADING_CLASS" />
-        <tr v-else :class="item.key === props.selectedKey ? 'bg-[#EFF4F1]' : ''">
-          <td>
-            <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item)">
-              <div class="flex items-center gap-2">
-                <NuxtImg
-                  data-testid="image-table-thumbnail"
-                  :src="item.previewUrl || item.publicUrl"
-                  alt="table thumbnail"
-                  class="w-8 h-8 rounded object-cover"
-                />
-                <span data-testid="image-table-file-name">{{ item.fileName }}</span>
-              </div>
-            </div>
-          </td>
-          <td data-testid="image-table-path">{{ item.path }}</td>
-          <td data-testid="image-table-size">{{ bytesToMB(item.size) }}</td>
-          <td data-testid="image-table-last-modified">{{ formatDate(item.lastModified) }}</td>
-        </tr>
-      </template>
-    </v-data-table>
-  </VCard>
+    <template v-else>
+      <table class="w-full border border-neutral-300 rounded-md text-left">
+        <thead>
+          <tr>
+            <th
+              v-for="header in headers"
+              :key="header.key"
+              scope="col"
+              class="cursor-pointer select-none px-4 py-2 font-medium"
+              @click="toggleSort(header.key)"
+            >
+              <span class="inline-flex items-center gap-1">
+                {{ header.title }}
+                <SfIconArrowUpward v-if="sortKey === header.key && sortDirection === 'asc'" size="sm" />
+                <SfIconArrowDownward v-else-if="sortKey === header.key && sortDirection === 'desc'" size="sm" />
+                <SfIconUnfoldMore v-else size="sm" class="text-neutral-400" />
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-neutral-200">
+          <template v-for="item in pagedItems" :key="item.key">
+            <UiImageTableSkeleton v-if="item.storageClass === UPLOADING_CLASS" />
+            <tr v-else :class="item.key === props.selectedKey ? 'bg-[#EFF4F1]' : ''">
+              <td class="px-4 py-2">
+                <div class="flex flex-col gap-1 cursor-pointer" @click="onRowClick(item)">
+                  <div class="flex items-center gap-2">
+                    <NuxtImg
+                      data-testid="image-table-thumbnail"
+                      :src="item.previewUrl || item.publicUrl"
+                      alt="table thumbnail"
+                      class="w-8 h-8 rounded object-cover"
+                    />
+                    <span data-testid="image-table-file-name">{{ item.fileName }}</span>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-2" data-testid="image-table-path">{{ item.path }}</td>
+              <td class="px-4 py-2" data-testid="image-table-size">{{ bytesToMB(item.size) }}</td>
+              <td class="px-4 py-2" data-testid="image-table-last-modified">{{ formatDate(item.lastModified) }}</td>
+            </tr>
+          </template>
+          <tr v-if="pagedItems.length === 0">
+            <td colspan="4" class="text-center py-6 text-neutral-500">No images or folders found</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flex justify-end items-center gap-2 mt-2">
+        <UiButton
+          size="sm"
+          variant="tertiary"
+          aria-label="Previous page"
+          data-testid="image-table-pagination-previous"
+          :disabled="page <= 1"
+          @click="page--"
+        >
+          <template #prefix>
+            <SfIconChevronLeft />
+          </template>
+        </UiButton>
+        <UiButton
+          size="sm"
+          variant="tertiary"
+          aria-label="Next page"
+          data-testid="image-table-pagination-next"
+          :disabled="page >= totalPages"
+          @click="page++"
+        >
+          <template #suffix>
+            <SfIconChevronRight />
+          </template>
+        </UiButton>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { VCard, VTextField, VDataTable } from 'vuetify/components';
 import type { StorageObject } from '@plentymarkets/shop-api';
-import { SfLoaderCircular, SfIconSearch } from '@storefront-ui/vue';
+import {
+  SfLoaderCircular,
+  SfIconSearch,
+  SfInput,
+  SfIconArrowUpward,
+  SfIconArrowDownward,
+  SfIconUnfoldMore,
+  SfIconChevronLeft,
+  SfIconChevronRight,
+} from '@storefront-ui/vue';
 
 const { data: items, loading, headers, bytesToMB, formatDate, getStorageMetadata } = useItemsTable();
 
@@ -99,6 +153,44 @@ const filteredItems = computed(() => {
     (item) => item.fileName.toLowerCase().includes(s) || item.path.toLowerCase().includes(s),
   );
 });
+
+const sortKey = ref('fileName');
+const sortDirection = ref<'asc' | 'desc'>('asc');
+
+const toggleSort = (key: string) => {
+  if (sortKey.value === key) {
+    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    return;
+  }
+  sortKey.value = key;
+  sortDirection.value = 'asc';
+};
+
+const sortedItems = computed(() => {
+  const direction = sortDirection.value === 'asc' ? 1 : -1;
+  return [...filteredItems.value].sort((a, b) => {
+    if (sortKey.value === 'size') {
+      return (Number(a.size) - Number(b.size)) * direction;
+    }
+    if (sortKey.value === 'lastModified') {
+      return (new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime()) * direction;
+    }
+    if (sortKey.value === 'path') {
+      return a.path.localeCompare(b.path) * direction;
+    }
+    return a.fileName.localeCompare(b.fileName) * direction;
+  });
+});
+
+const PAGE_SIZE = 10;
+const page = ref(1);
+const totalPages = computed(() => Math.max(1, Math.ceil(sortedItems.value.length / PAGE_SIZE)));
+const pagedItems = computed(() => sortedItems.value.slice((page.value - 1) * PAGE_SIZE, page.value * PAGE_SIZE));
+
+watch([search, sortKey, sortDirection], () => {
+  page.value = 1;
+});
+
 const onRowClick = (item: StorageObject) => {
   emit('update:selectedKey', item.key);
   handleRowClick(item);
@@ -125,29 +217,3 @@ const handleRowClick = (item: StorageObject) => {
   });
 };
 </script>
-
-<style>
-.v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td,
-.v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > th {
-  border-bottom: none !important;
-}
-.v-data-table-footer__items-per-page {
-  display: none !important;
-}
-
-.v-data-table-footer__info {
-  display: none !important;
-}
-
-.v-ripple__container {
-  display: none !important;
-}
-
-div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__next > button:active {
-  background-color: gray;
-}
-
-div.v-data-table-footer > div.v-data-table-footer__pagination > nav > ul > li.v-pagination__prev > button:active {
-  background-color: gray;
-}
-</style>

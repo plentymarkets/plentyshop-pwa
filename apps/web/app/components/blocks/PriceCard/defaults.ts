@@ -1,5 +1,3 @@
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   'item-page': {
     category: 'item-page',
@@ -9,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'Price Card',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/item_card.svg',
         template: {
           en: {
             name: 'PriceCard',
@@ -21,6 +18,7 @@ const blocksList = {
             content: {
               fields: {
                 itemName: true,
+                variationNumber: false,
                 price: true,
                 tags: true,
                 availability: true,
@@ -34,10 +32,12 @@ const blocksList = {
                 addToWishlist: true,
                 quantityAndAddToCart: true,
                 itemText: false,
+                guaranteeLabel: true,
                 technicalData: false,
               },
               fieldsOrder: [
                 'itemName',
+                'variationNumber',
                 'price',
                 'tags',
                 'availability',
@@ -51,6 +51,7 @@ const blocksList = {
                 'addToWishlist',
                 'quantityAndAddToCart',
                 'itemText',
+                'guaranteeLabel',
                 'technicalData',
               ],
               fieldsDisabled: ['quantityAndAddToCart', 'price', 'itemBundle', 'attributes'],
@@ -77,6 +78,7 @@ const blocksList = {
             content: {
               fields: {
                 itemName: true,
+                variationNumber: false,
                 price: true,
                 tags: true,
                 availability: true,
@@ -90,10 +92,12 @@ const blocksList = {
                 addToWishlist: true,
                 quantityAndAddToCart: true,
                 itemText: false,
+                guaranteeLabel: true,
                 technicalData: false,
               },
               fieldsOrder: [
                 'itemName',
+                'variationNumber',
                 'price',
                 'tags',
                 'availability',
@@ -107,6 +111,7 @@ const blocksList = {
                 'addToWishlist',
                 'quantityAndAddToCart',
                 'itemText',
+                'guaranteeLabel',
                 'technicalData',
               ],
               fieldsDisabled: ['quantityAndAddToCart', 'price', 'itemBundle', 'attributes'],

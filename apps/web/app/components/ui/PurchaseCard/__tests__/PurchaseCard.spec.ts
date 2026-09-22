@@ -58,6 +58,7 @@ const createTextBlock = (overrides?: Partial<PriceCardTextBlockItem>): PriceCard
 const createConfiguration = (extraFields: Partial<PriceCardContent> = {}): PriceCardContent => ({
   fields: {
     itemName: false,
+    variationNumber: false,
     price: false,
     tags: false,
     availability: false,
@@ -71,6 +72,7 @@ const createConfiguration = (extraFields: Partial<PriceCardContent> = {}): Price
     addToWishlist: false,
     quantityAndAddToCart: false,
     itemText: false,
+    guaranteeLabel: false,
     technicalData: false,
   },
   fieldsOrder: [] as PriceCardOrderItem[],
@@ -200,6 +202,37 @@ describe('<PurchaseCard />', () => {
       });
 
       expect(wrapper.find('[data-uuid="my-text-block"]').exists()).toBe(true);
+    });
+  });
+
+  describe('variation number rendering', () => {
+    it('should render the variation number when the field is enabled', () => {
+      const wrapper = mount(UiPurchaseCard, {
+        props: {
+          product: ProductMock,
+          configuration: createConfiguration({
+            fields: { ...createConfiguration().fields, variationNumber: true },
+            fieldsOrder: ['variationNumber'] as PriceCardOrderItem[],
+          }),
+        },
+        global: { stubs: globalStubs },
+      });
+
+      const rendered = wrapper.find('[data-testid="product-variation-number"]');
+      expect(rendered.exists()).toBe(true);
+      expect(rendered.text()).toBe('1145');
+    });
+
+    it('should not render the variation number when the field is disabled', () => {
+      const wrapper = mount(UiPurchaseCard, {
+        props: {
+          product: ProductMock,
+          configuration: createConfiguration({ fieldsOrder: ['variationNumber'] as PriceCardOrderItem[] }),
+        },
+        global: { stubs: globalStubs },
+      });
+
+      expect(wrapper.find('[data-testid="product-variation-number"]').exists()).toBe(false);
     });
   });
 });

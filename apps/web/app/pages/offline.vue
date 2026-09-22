@@ -123,7 +123,7 @@ defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
 });
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const isOnline = useOnline();
 
 whenever(isOnline, () => navigateTo(localePath(paths.home)), { immediate: true });

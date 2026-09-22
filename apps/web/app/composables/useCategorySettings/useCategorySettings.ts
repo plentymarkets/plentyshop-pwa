@@ -1,4 +1,3 @@
-import type { useCategorySettingsReturn, useCategoryConfigurationState } from '~/composables/useCategorySettings/types';
 import type { CategoryEntry } from '@plentymarkets/shop-api';
 
 export const useCategorySettings: useCategorySettingsReturn = (settingsId = '') => {

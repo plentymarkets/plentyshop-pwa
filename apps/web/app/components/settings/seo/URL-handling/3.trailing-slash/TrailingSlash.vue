@@ -20,8 +20,6 @@
 <script setup lang="ts">
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
-import { NO_CHANGE, NEVER, ALWAYS } from '~/utils/urlTrailingSlashConstants';
-
 const { updateSetting, getSetting } = useSiteSettings('urlTrailingSlash');
 
 const noChangeLabel = getEditorTranslation('no-change-label');

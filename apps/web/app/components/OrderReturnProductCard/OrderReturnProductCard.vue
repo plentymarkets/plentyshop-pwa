@@ -123,8 +123,6 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
-import { debounce } from '~/utils/debounce';
-
 const { format } = usePriceFormatter();
 const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();

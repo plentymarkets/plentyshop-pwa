@@ -11,6 +11,7 @@ export type PriceCardOrderItem = PriceCardFieldKey | PriceCardTextBlockItem;
 
 export type PriceCardFieldKey =
   | 'itemName'
+  | 'variationNumber'
   | 'price'
   | 'tags'
   | 'availability'
@@ -24,6 +25,7 @@ export type PriceCardFieldKey =
   | 'addToWishlist'
   | 'quantityAndAddToCart'
   | 'itemText'
+  | 'guaranteeLabel'
   | 'technicalData';
 
 export type WishlistSize = 'small' | 'large';

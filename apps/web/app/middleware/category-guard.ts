@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   if (!categoryTree.value?.length) return;
 
-  const localePath = useLocalePath();
+  const localePath = useLocalizedPath();
   const { buildCategoryMenuLink } = useLocalization();
   const { isAuthorized } = useCustomer();
 

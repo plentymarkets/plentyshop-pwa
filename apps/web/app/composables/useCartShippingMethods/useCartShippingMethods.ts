@@ -1,13 +1,5 @@
 import type { ShippingProvider, ShippingMethod, ApiError } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-api';
-import type {
-  UseCartShippingMethodsState,
-  UseCartShippingMethodsReturn,
-  GetShippingMethods,
-  SaveShippingMethod,
-  SetSelectedMethod,
-} from '~/composables/useCartShippingMethods/types';
-
 /**
  * @description Composable for managing shipping methods.
  * @example

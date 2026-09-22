@@ -1,10 +1,6 @@
 import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
-
-import { generateBreadcrumbs } from '~/utils/productHelper';
-
 /**
  * @description Composable managing product data
  * @param slug Product slug

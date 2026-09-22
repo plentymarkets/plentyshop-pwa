@@ -1,4 +1,3 @@
-import type { UseMegaMenuReturn, UseMegaMenuState } from '~/composables';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 export const useMegaMenu: UseMegaMenuReturn = () => {

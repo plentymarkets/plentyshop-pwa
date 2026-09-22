@@ -60,13 +60,11 @@ export const useUtilityBarState = (_uuid?: string) => {
   const sections = computed<UtilityBarSection[]>({
     get: () => {
       const order = content.value.sectionOrder?.sections || DEFAULT_SECTION_ORDER;
-      return order.map(
-        (id): UtilityBarSection => ({
-          id,
-          name: `UtilityBar${id.charAt(0).toUpperCase()}${id.slice(1)}`,
-          visible: content.value.sectionVisibility?.[id] !== false,
-        }),
-      );
+      return order.map((id): UtilityBarSection => ({
+        id,
+        name: `UtilityBar${id.charAt(0).toUpperCase()}${id.slice(1)}`,
+        visible: content.value.sectionVisibility?.[id] !== false,
+      }));
     },
     set: (value: UtilityBarSection[]) => {
       const updated = { ...state.value };

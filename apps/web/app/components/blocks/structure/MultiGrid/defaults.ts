@@ -1,5 +1,3 @@
-import type { BlocksList } from '~/composables/useBlocksList/types';
-
 const blocksList = {
   layout: {
     category: 'layout',
@@ -9,7 +7,6 @@ const blocksList = {
     variations: [
       {
         title: 'MultiGrid 6-6',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png',
         template: {
           en: {
             name: 'MultiGrid',
@@ -77,7 +74,6 @@ const blocksList = {
       },
       {
         title: 'MultiGrid 4-4-4',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/three-column-grid.png',
         template: {
           en: {
             name: 'MultiGrid',
@@ -171,7 +167,6 @@ const blocksList = {
     variations: [
       {
         title: 'Image Right Text',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png',
         template: {
           en: {
             name: 'MultiGrid',
@@ -321,7 +316,6 @@ const blocksList = {
       },
       {
         title: 'Image Left Text',
-        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png',
         template: {
           en: {
             name: 'MultiGrid',

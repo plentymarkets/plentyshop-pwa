@@ -8,7 +8,10 @@
       <span>{{ format(props.price) }}</span>
       <span v-if="props.displayVatHint">{{ t('common.labels.asterisk') }}</span>
     </span>
-    <span v-if="props.crossedPrice && differentPrices" class="text-base font-normal text-neutral-500 line-through">
+    <span
+      v-if="props.crossedPrice && differentPrices && props.crossedPrice > props.price"
+      class="text-base font-normal text-neutral-500 line-through"
+    >
       {{ format(props.crossedPrice) }}
     </span>
   </div>

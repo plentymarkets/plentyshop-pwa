@@ -46,7 +46,7 @@ import type { OrderItem } from '@plentymarkets/shop-api';
 
 const emit = defineEmits(['closed', 'previous']);
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { currentReturnOrder, returnData, makeOrderReturn, loading, cleanReturnData } = useReturnOrder();
 const { send } = useNotification();
 

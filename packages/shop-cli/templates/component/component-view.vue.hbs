@@ -1,11 +1,11 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-title>{{curly}} getEditorTranslation('title') {{curly}}</template>
+    <template #setting-title>{{{{raw}}}}{{ getEditorTranslation('title') }}{{{{/raw}}}}</template>
 
     <template #setting-description>
       <div class="flex flex-col px-4 text-sm">
         <p class="pb-2">
-          <span class="align-middle font-bold">{{curly}} getEditorTranslation('description') {{curly}}</span>
+          <span class="align-middle font-bold">{{{{raw}}}}{{ getEditorTranslation('description') }}{{{{/raw}}}}</span>
         </p>
       </div>
     </template>

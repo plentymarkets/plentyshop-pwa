@@ -1,0 +1,48 @@
+<template>
+  <EditorFormPanel :title="getEditorTranslation('settings-label')">
+    <div class="py-2 flex items-center justify-between">
+      <UiFormLabel>{{{{raw}}}}{{ getEditorTranslation('example-setting-label') }}{{{{/raw}}}}</UiFormLabel>
+      <SfSwitch v-model="exampleSetting" data-testid="{{kebabCase name}}-example-setting" />
+    </div>
+  </EditorFormPanel>
+</template>
+
+<script setup lang="ts">
+import { SfSwitch } from '@storefront-ui/vue';
+import type { {{pascalCase name}}Props, {{pascalCase name}}FormProps } from '../types';
+
+const props = defineProps<{{pascalCase name}}FormProps>();
+
+const { blockUuid } = useSiteConfiguration();
+const { allBlocks: data } = useBlocks();
+const { findOrDeleteBlockByUuid } = useBlockManager();
+
+const resolvedUuid = computed(() => props.uuid || blockUuid.value);
+
+const {{camelCase name}}Structure = computed(
+  () => (findOrDeleteBlockByUuid(data.value, resolvedUuid.value) || {}) as {{pascalCase name}}Props,
+);
+
+const {{camelCase name}}Configuration = computed(() => {{camelCase name}}Structure.value.configuration ?? {});
+
+const layout = computed(() => {{camelCase name}}Configuration.value.layout);
+
+// Example field — replace with this section's real settings, following the same get/set pattern.
+const exampleSetting = computed<boolean>({
+  get: () => layout.value?.exampleSetting ?? false,
+  set: (value: boolean) => (layout.value!.exampleSetting = value),
+});
+</script>
+
+<i18n lang="json">
+{
+  "en": {
+    "settings-label": "Settings",
+    "example-setting-label": "Example setting"
+  },
+  "de": {
+    "settings-label": "Einstellungen",
+    "example-setting-label": "Beispieleinstellung"
+  }
+}
+</i18n>

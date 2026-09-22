@@ -37,7 +37,7 @@ import type { ApiError, Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const NuxtLink = resolveComponent('NuxtLink');
 const products = ref<Product[]>([]);
 

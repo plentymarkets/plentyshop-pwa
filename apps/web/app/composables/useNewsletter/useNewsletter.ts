@@ -1,11 +1,4 @@
 import type { ApiError, NewsletterParams } from '@plentymarkets/shop-api';
-import type {
-  UseNewsletterReturn,
-  UseNewsletterState,
-  Subscribe,
-  Unsubscribe,
-} from '~/composables/useNewsletter/types';
-
 /**
  * @description Composable for subscribing/unsubscribing to newsletter.
  * @returns UseNewsletterReturn

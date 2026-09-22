@@ -1,2 +1,37 @@
+{{#if structure}}
+import type { Block } from '@plentymarkets/shop-api';
+
+{{/if}}
+{{#if withForm}}
+export type {{pascalCase name}}StructureConfiguration = {
+  visible?: boolean;
+  layout?: {
+    exampleSetting?: boolean;
+  };
+};
+
+export type {{pascalCase name}}Props = {
+  name: string;
+  type: string;
+  meta: {
+    uuid: string;
+  };
+  configuration?: {{pascalCase name}}StructureConfiguration;
+{{#if structure}}
+  // Structure/container block — content holds this block's real children, populated by the CMS
+  // user (see MultiGrid/Carousel under components/blocks/structure/ for real examples). Narrow
+  // `Block` to a more specific child type here if this block only ever holds one kind of child.
+  content: Block[];
+{{else}}
+  // Content block — content is a settings object you define, same as e.g. Image's.
+  content: Record<string, unknown>;
+{{/if}}
+};
+
+export type {{pascalCase name}}FormProps = {
+  uuid?: string;
+};
+{{else}}
 {{> jsdoc description=(concat "Props for " (pascalCase name) " component")}}
 {{> typescript-interface name=(concat (pascalCase name) "Props") properties=props}}
+{{/if}}

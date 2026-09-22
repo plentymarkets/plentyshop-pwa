@@ -238,6 +238,7 @@ priceCardBlock.value.fields['itemBundle'] = getSetting() !== '1';
 
 const fieldLabels: Record<PriceCardFieldKey, string> = {
   itemName: getEditorTranslation('field-itemName'),
+  variationNumber: getEditorTranslation('field-variationNumber'),
   price: getEditorTranslation('field-price'),
   tags: getEditorTranslation('field-tags'),
   availability: getEditorTranslation('field-availability'),
@@ -251,6 +252,7 @@ const fieldLabels: Record<PriceCardFieldKey, string> = {
   addToWishlist: getEditorTranslation('field-addToWishlist'),
   quantityAndAddToCart: getEditorTranslation('field-quantityAndAddToCart'),
   itemText: getEditorTranslation('field-itemText'),
+  guaranteeLabel: getEditorTranslation('field-guaranteeLabel'),
   technicalData: getEditorTranslation('field-technicalData'),
 };
 
@@ -325,6 +327,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "padding-label": "Padding (px)",
 
     "field-itemName": "Item name",
+    "field-variationNumber": "Variation number",
     "field-price": "Price",
     "field-tags": "Tags",
     "field-availability": "Availability",
@@ -337,6 +340,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "field-graduatedPrices": "Graduated prices",
     "field-addToWishlist": "Add to wishlist",
     "field-quantityAndAddToCart": "Quantity and add to cart",
+    "field-guaranteeLabel": "Guarantee label",
     "field-itemText": "Item text",
     "field-technicalData": "Technical data",
 
@@ -381,6 +385,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "padding-label": "Padding (px)",
 
     "field-itemName": "Item name",
+    "field-variationNumber": "Variation number",
     "field-price": "Price",
     "field-tags": "Tags",
     "field-availability": "Availability",
@@ -393,6 +398,7 @@ const { wishlistSizeModel, wishlistSizeOptions } = useEditorOptionsTabs(
     "field-graduatedPrices": "Graduated prices",
     "field-addToWishlist": "Add to wishlist",
     "field-quantityAndAddToCart": "Quantity and add to cart",
+    "field-guaranteeLabel": "Guarantee label",
     "field-itemText": "Item text",
     "field-technicalData": "Technical data",
 

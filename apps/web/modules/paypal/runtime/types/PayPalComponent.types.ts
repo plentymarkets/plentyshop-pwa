@@ -92,11 +92,7 @@ export type ApplePayPaymentContact = {
 export type ApplePayPaymentMethodType = 'debit' | 'credit' | 'prepaid' | 'store';
 
 export type ApplePayPaymentPassActivationState =
-  | 'activated'
-  | 'requiresActivation'
-  | 'activating'
-  | 'suspended'
-  | 'deactivated';
+  'activated' | 'requiresActivation' | 'activating' | 'suspended' | 'deactivated';
 
 export type ApplePayPaymentPass = {
   primaryAccountIdentifier: string;

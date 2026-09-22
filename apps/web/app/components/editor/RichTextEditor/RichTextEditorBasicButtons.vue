@@ -158,8 +158,6 @@
 </template>
 <script lang="ts" setup>
 import { SfDropdown } from '@storefront-ui/vue';
-import type { RteCommand } from '~/composables/useRichTextEditor/types';
-
 const props = defineProps<{
   cmd: (name: RteCommand) => void;
   isActive: (name: string) => boolean;
