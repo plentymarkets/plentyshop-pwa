@@ -37,18 +37,6 @@ npx plentyshop generate
 
 Both commands accept `--category` and `--access-control` to skip the interactive prompts, and `--complex-form` if the form needs multiple files under `forms/`/`partials/` instead of a single `Form.vue`. See `packages/shop-cli/README.md` for the full flag reference.
 
-::: info Generating into a Nuxt module instead
-Building the block inside a Nuxt module rather than the web app? Point the generator at your module's runtime folder by creating `.plentyone/shop-cli.json` in the repository root:
-
-```json
-{
-  "webAppPath": "apps/web/modules/my-module/runtime"
-}
-```
-
-`npm run generate:block` then scaffolds under `<webAppPath>/components/blocks/<Name>/`, matching the module runtime convention expected by [Add or override a block from a module](/guide/modules/blocks.md). The rest of this guide applies unchanged.
-:::
-
 Either command scaffolds a new folder under `apps/web/app/components/blocks/<Name>/`:
 
 ```
@@ -60,7 +48,6 @@ Callout/
 ├── icon.svg
 └── __tests__/
     ├── Callout.spec.ts
-    └── CalloutForm.spec.ts
 ```
 
 No manual registration step follows. The block loader picks up any `.vue`/`defaults.ts` file under a `blocks/` path segment automatically — see [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for the mechanism.
