@@ -105,7 +105,7 @@ The header and footer are editable here and changes propagate to all pages.
 
 ### Developer adding a new block type
 
-A developer creates a new folder under `components/blocks/` containing the block's `.vue` component and its paired `Form.vue`, a `defaults.ts` that exports the catalogue entry via `getBlocksList()`, and an `icon.svg`. No manual registration is needed, the shop discovers the block by itself from a fixed set of glob patterns. See [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for the full mechanism and how Nuxt modules contribute the same way.
+A developer creates a new folder under `components/blocks/` containing the block's `.vue` component and its paired `Form.vue`, a `defaults.ts` that exports the catalogue entry via `getBlocksList()`, and an `icon.svg`. No manual registration is needed, the shop discovers the block by itself from a fixed set of glob patterns. See [Blocks discovery and overrides](/guide/editor/blocks-discovery.md) for the full mechanism and how Nuxt modules contribute the same way, or [How to create a block](/guide/editor/create-a-block.md) for step-by-step instructions.
 
 ### Content manager building a landing page
 
@@ -116,9 +116,10 @@ Because content categories are blockified, they can use the full blocks editor t
 
 How-to guides
 
-1. [Site settings](/guide/editor/site-settings.md) — How to add custom settings to the editor
-2. [How to add or override a block from a module](/guide/modules/blocks.md)
-3. [Editor overview](/guide/editor/index.md) — Overview of all editor-related guides
+1. [How to create a block](/guide/editor/create-a-block.md) — Step-by-step guide to scaffolding and registering a new block
+2. [Site settings](/guide/editor/site-settings.md) — How to add custom settings to the editor
+3. [How to add or override a block from a module](/guide/modules/blocks.md)
+4. [Editor overview](/guide/editor/index.md) — Overview of all editor-related guides
 
 Linked concepts
 
