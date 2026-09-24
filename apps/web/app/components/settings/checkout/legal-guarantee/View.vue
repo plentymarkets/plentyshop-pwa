@@ -17,11 +17,11 @@
 {
   "en": {
     "label": "Legal guarantee",
-    "description": "Choose how the legal guarantee notice appears during checkout."
+    "description": "Choose how the legal guarantee of conformity appears during checkout."
   },
   "de": {
     "label": "Legal guarantee",
-    "description": "Choose how the legal guarantee notice appears during checkout."
+    "description": "Choose how the legal guarantee of conformity appears during checkout."
   }
 }
 </i18n>

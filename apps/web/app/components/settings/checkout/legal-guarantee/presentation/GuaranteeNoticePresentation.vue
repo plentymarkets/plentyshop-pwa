@@ -31,17 +31,17 @@ const displayMode = computed({
 {
   "en": {
     "label": "Notice presentation",
-    "description": "Choose how customers see the legal guarantee notice during checkout.",
+    "description": "Choose how customers see the legal guarantee of conformity during checkout.",
     "none": "Do not show the notice",
     "modal": "Link that opens a dialog",
     "inline": "Show the notice directly"
   },
   "de": {
-    "label": "Anzeige des Hinweises",
-    "description": "Wähle aus, wie Kunden den Hinweis zur gesetzlichen Gewährleistung im Checkout sehen.",
-    "none": "Hinweis nicht anzeigen",
-    "modal": "Link öffnet ein Dialogfenster",
-    "inline": "Hinweis direkt anzeigen"
+    "label": "Notice presentation",
+    "description": "Choose how customers see the legal guarantee of conformity during checkout.",
+    "none": "Do not show the notice",
+    "modal": "Link that opens a dialog",
+    "inline": "Show the notice directly"
   }
 }
 </i18n>
