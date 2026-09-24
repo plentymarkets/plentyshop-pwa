@@ -53,7 +53,7 @@
             </ClientOnly>
             <ModuleComponentRendering area="checkout.afterBuyButton" />
             <GuaranteeNoticeBanner
-              v-if="showGuaranteeNotice && guaranteeNoticeDisplayMode === GUARANTEE_NOTICE_DISPLAY_MODE.Inline"
+              v-if="isGuaranteeNoticeEnabled && guaranteeNoticeDisplayMode === GUARANTEE_NOTICE_DISPLAY_MODE.Inline"
               class="mt-4"
             />
             <GuaranteeNotice
@@ -109,11 +109,8 @@ if (import.meta.client) useLogEvent().logOpeningCheckout();
 const isGuaranteeNoticeEnabled = useFeatureFlag('shopPwaEnableEu2025-1960', false);
 const { getBooleanSetting: getShowGuaranteeNotice } = useSiteSettings('showGuaranteeNotice');
 const { getSetting: getGuaranteeNoticeDisplayMode } = useSiteSettings(GUARANTEE_NOTICE_DISPLAY_MODE_SETTING);
-const showGuaranteeNotice = computed(() => isGuaranteeNoticeEnabled.value && getShowGuaranteeNotice(true));
 const guaranteeNoticeDisplayMode = computed(() =>
-  getGuaranteeNoticeDisplayMode() === GUARANTEE_NOTICE_DISPLAY_MODE.Inline
-    ? GUARANTEE_NOTICE_DISPLAY_MODE.Inline
-    : GUARANTEE_NOTICE_DISPLAY_MODE.Modal,
+  resolveGuaranteeNoticeDisplayMode(getGuaranteeNoticeDisplayMode(), getShowGuaranteeNotice(true)),
 );
 
 const checkPayPalPaymentsEligible = async () => {

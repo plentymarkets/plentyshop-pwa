@@ -27,10 +27,7 @@ mockNuxtImport('useLogEvent', () => () => ({ logOpeningCheckout: vi.fn() }));
 mockNuxtImport('onNuxtReady', () => () => {});
 mockNuxtImport('callOnce', () => async (callback: () => Promise<void>) => callback());
 
-const noticeStub = {
-  setup: () => ({ visible: useSiteSettings('showGuaranteeNotice').getBooleanSetting(true) }),
-  template: '<div v-if="visible" data-testid="notice-link" />',
-};
+const noticeStub = { template: '<div data-testid="notice-link" />' };
 const bannerStub = { template: '<div data-testid="notice-banner" />' };
 const slotStub = { template: '<div><slot /></div>' };
 const emptyStub = { template: '<div />' };
@@ -113,12 +110,37 @@ describe('checkout guarantee notice', () => {
     expect(wrapper.find('[data-testid="notice-link"]').exists()).toBe(false);
   });
 
-  it('should hide both variants when the visibility setting is disabled', async () => {
-    mode.value = GUARANTEE_NOTICE_DISPLAY_MODE.Inline;
+  it('should preserve the legacy hidden setting when no mode is saved', async () => {
     visible.value = false;
     const wrapper = await mountCheckout();
 
     expect(wrapper.find('[data-testid="notice-banner"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="notice-link"]').exists()).toBe(false);
+  });
+
+  it('should hide both variants when none is selected', async () => {
+    mode.value = GUARANTEE_NOTICE_DISPLAY_MODE.None;
+    const wrapper = await mountCheckout();
+
+    expect(wrapper.find('[data-testid="notice-banner"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="notice-link"]').exists()).toBe(false);
+  });
+
+  it('should honor an explicit modal choice over the legacy hidden setting', async () => {
+    mode.value = GUARANTEE_NOTICE_DISPLAY_MODE.Modal;
+    visible.value = false;
+    const wrapper = await mountCheckout();
+
+    expect(wrapper.find('[data-testid="notice-link"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="notice-banner"]').exists()).toBe(false);
+  });
+
+  it('should honor an explicit inline choice over the legacy hidden setting', async () => {
+    mode.value = GUARANTEE_NOTICE_DISPLAY_MODE.Inline;
+    visible.value = false;
+    const wrapper = await mountCheckout();
+
+    expect(wrapper.find('[data-testid="notice-banner"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="notice-link"]').exists()).toBe(false);
   });
 

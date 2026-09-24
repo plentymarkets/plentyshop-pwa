@@ -8,6 +8,7 @@
       data-testid="guarantee-notice-display-mode"
       class="w-full mt-2"
     >
+      <option :value="GUARANTEE_NOTICE_DISPLAY_MODE.None">{{ getEditorTranslation('none') }}</option>
       <option :value="GUARANTEE_NOTICE_DISPLAY_MODE.Modal">{{ getEditorTranslation('modal') }}</option>
       <option :value="GUARANTEE_NOTICE_DISPLAY_MODE.Inline">{{ getEditorTranslation('inline') }}</option>
     </SfSelect>
@@ -18,12 +19,10 @@
 import { SfSelect } from '@storefront-ui/vue';
 
 const { getSetting, updateSetting } = useSiteSettings(GUARANTEE_NOTICE_DISPLAY_MODE_SETTING);
+const { getBooleanSetting: getLegacyVisibility } = useSiteSettings('showGuaranteeNotice');
 
 const displayMode = computed({
-  get: () =>
-    getSetting() === GUARANTEE_NOTICE_DISPLAY_MODE.Inline
-      ? GUARANTEE_NOTICE_DISPLAY_MODE.Inline
-      : GUARANTEE_NOTICE_DISPLAY_MODE.Modal,
+  get: () => resolveGuaranteeNoticeDisplayMode(getSetting(), getLegacyVisibility(true)),
   set: (value) => updateSetting(value),
 });
 </script>
@@ -33,12 +32,14 @@ const displayMode = computed({
   "en": {
     "label": "Notice presentation",
     "description": "Choose how customers see the legal guarantee notice during checkout.",
+    "none": "Do not show the notice",
     "modal": "Link that opens a dialog",
     "inline": "Show the notice directly"
   },
   "de": {
     "label": "Anzeige des Hinweises",
     "description": "Wähle aus, wie Kunden den Hinweis zur gesetzlichen Gewährleistung im Checkout sehen.",
+    "none": "Hinweis nicht anzeigen",
     "modal": "Link öffnet ein Dialogfenster",
     "inline": "Hinweis direkt anzeigen"
   }

@@ -12,11 +12,15 @@ mockNuxtImport('getEditorTranslation', () => (key: string) => key);
 describe('GuaranteeNoticePresentation', () => {
   const getSetting = vi.fn();
   const updateSetting = vi.fn();
+  const getBooleanSetting = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
     getSetting.mockReturnValue('');
-    useSiteSettingsMock.mockReturnValue({ getSetting, updateSetting });
+    getBooleanSetting.mockReturnValue(true);
+    useSiteSettingsMock.mockImplementation((key: string) =>
+      key === GUARANTEE_NOTICE_DISPLAY_MODE_SETTING ? { getSetting, updateSetting } : { getBooleanSetting },
+    );
   });
 
   it('should default to the link and dialog when no mode is saved', () => {
@@ -43,5 +47,21 @@ describe('GuaranteeNoticePresentation', () => {
     await wrapper.find('select').setValue(GUARANTEE_NOTICE_DISPLAY_MODE.Modal);
 
     expect(updateSetting).toHaveBeenCalledWith(GUARANTEE_NOTICE_DISPLAY_MODE.Modal);
+  });
+
+  it('should default to none when the legacy switch was disabled', () => {
+    getBooleanSetting.mockReturnValue(false);
+
+    const wrapper = mount(GuaranteeNoticePresentation);
+
+    expect(wrapper.find('select').element.value).toBe(GUARANTEE_NOTICE_DISPLAY_MODE.None);
+  });
+
+  it('should save none as the selected display mode', async () => {
+    const wrapper = mount(GuaranteeNoticePresentation);
+
+    await wrapper.find('select').setValue(GUARANTEE_NOTICE_DISPLAY_MODE.None);
+
+    expect(updateSetting).toHaveBeenCalledWith(GUARANTEE_NOTICE_DISPLAY_MODE.None);
   });
 });

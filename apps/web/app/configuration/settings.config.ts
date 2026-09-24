@@ -1,7 +1,4 @@
-import {
-  GUARANTEE_NOTICE_DISPLAY_MODE,
-  GUARANTEE_NOTICE_DISPLAY_MODE_SETTING,
-} from '../utils/checkout/guarantee-notice-display-mode';
+import { GUARANTEE_NOTICE_DISPLAY_MODE_SETTING } from '../utils/checkout/guarantee-notice-display-mode';
 
 export default {
   useAvif: process.env?.IMAGEAVIF === 'true' || process.env?.NUXT_PUBLIC_USE_AVIF === 'true',
@@ -101,8 +98,7 @@ export default {
   iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
   showCustomerWishComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_WISH_COMPONENT === 'true',
   showCustomerReferenceComponent: process.env.NUXT_PUBLIC_SHOW_CUSTOMER_REFERENCE_COMPONENT === 'true',
-  [GUARANTEE_NOTICE_DISPLAY_MODE_SETTING]:
-    process.env.NUXT_PUBLIC_GUARANTEE_NOTICE_DISPLAY_MODE || GUARANTEE_NOTICE_DISPLAY_MODE.Modal,
+  [GUARANTEE_NOTICE_DISPLAY_MODE_SETTING]: process.env.NUXT_PUBLIC_GUARANTEE_NOTICE_DISPLAY_MODE || '',
   bundleItemDisplay: process.env.NUXT_PUBLIC_BUNDLE_ITEM_DISPLAY || '2',
   externalVatCheckInactive: process.env.NUXT_PUBLIC_EXTERNAL_VAT_CHECK_INACTIVE === 'true',
   showNotifyMe: process.env.NUXT_PUBLIC_SHOW_NOTIFY_ME === 'true',
