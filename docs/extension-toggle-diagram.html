@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Extension Toggle System — Architecture</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --core:    #3b5bdb;
+    --pwa:     #0ca678;
+    --module:  #9c36b5;
+    --flag:    #e67700;
+    --bg:      #f8f9fa;
+    --surface: #ffffff;
+    --border:  #dee2e6;
+    --text:    #1a1a2e;
+    --muted:   #6c757d;
+    --radius:  10px;
+    --shadow:  0 2px 12px rgba(0,0,0,.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 24px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ───────────────────────────────────────────────────── */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+  header p {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: .95rem;
+  }
+
+  /* ── Legend ───────────────────────────────────────────────────── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .85rem;
+    font-weight: 500;
+  }
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ── Section wrapper ──────────────────────────────────────────── */
+  section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  section h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section h2 .tag {
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── Mermaid diagrams ─────────────────────────────────────────── */
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  /* ── Three-pattern grid ───────────────────────────────────────── */
+  .patterns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .pattern-card {
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    border: 1.5px solid;
+  }
+  .pattern-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .pattern-card ul {
+    list-style: none;
+    font-size: .85rem;
+    line-height: 1.7;
+    color: #444;
+  }
+  .pattern-card ul li::before {
+    content: '→ ';
+    opacity: .5;
+  }
+  .pattern-card.slot   { border-color: var(--module); background: #f9f0ff; }
+  .pattern-card.page   { border-color: var(--core);   background: #edf2ff; }
+  .pattern-card.override { border-color: var(--pwa); background: #e6fcf5; }
+
+  /* ── Two-layer disable table ──────────────────────────────────── */
+  .tier-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .875rem;
+  }
+  .tier-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+    font-weight: 600;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+  }
+  .tier-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .tier-table tr:last-child td { border-bottom: none; }
+  .tier-table .auto  { color: var(--core); font-weight: 600; }
+  .tier-table .optin { color: var(--module); font-weight: 600; }
+  .badge {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 100px;
+    margin-right: 4px;
+  }
+  .badge.core   { background: #dbe4ff; color: var(--core); }
+  .badge.pwa    { background: #c3fae8; color: #087f5b; }
+  .badge.module { background: #f3d9fa; color: var(--module); }
+
+  /* ── Pros/Cons ────────────────────────────────────────────────── */
+  .proscons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .proscons { grid-template-columns: 1fr; } }
+  .pros, .cons {
+    border-radius: var(--radius);
+    padding: 20px 24px;
+  }
+  .pros { background: #ebfbee; border: 1.5px solid #8ce99a; }
+  .cons { background: #fff5f5; border: 1.5px solid #ffa8a8; }
+  .pros h3 { color: #2b8a3e; margin-bottom: 12px; font-size: .95rem; }
+  .cons h3 { color: #c92a2a; margin-bottom: 12px; font-size: .95rem; }
+  .pros li, .cons li {
+    font-size: .85rem;
+    line-height: 1.7;
+    margin-left: 16px;
+    color: #444;
+  }
+
+  /* ── Flag convention box ──────────────────────────────────────── */
+  .flag-box {
+    background: #fff9db;
+    border: 1.5px solid #ffe066;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-family: 'Menlo', 'Consolas', monospace;
+    font-size: .9rem;
+    margin-top: 0;
+  }
+  .flag-box span { color: var(--flag); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Extension Toggle System</h1>
+  <p>How PlentyONE PWA enables and disables Nuxt extensions at runtime — no rebuild, no restart.</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div> shop-core</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--pwa)"></div> plentyshop-pwa</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--module)"></div> extension module</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--flag)"></div> flags.json (disk)</div>
+</div>
+
+<!-- ── Flag naming convention ──────────────────────────────────── -->
+<section>
+  <h2>Flag naming convention</h2>
+  <div class="flag-box">
+    <span>extension.&lt;extension-id&gt;.enabled</span>
+    &nbsp;→&nbsp;
+    <span>extension.plenty-pwa-module-prototype.enabled: false</span>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted);margin-top:12px;">
+    Absent key = enabled. Only an explicit <code>false</code> disables. Written to and read from
+    <code>flags.json</code> (path set via <code>JSON_FEATURE_FLAGS_FILE</code> env var, same in dev and production).
+  </p>
+</section>
+
+<!-- ── Full system flow ────────────────────────────────────────── -->
+<section>
+  <h2>Full system flow <span class="tag">all repos</span></h2>
+  <div class="mermaid">
+flowchart TD
+    subgraph BT["⚙️  BUILD TIME"]
+        direction LR
+        MF["module.manifest.json\n(apps/web/)"]
+        LE["loadExtensions.ts\nshop-core"]
+        SE["setupExtensions.ts\nshop-core"]
+        RC["runtimeConfig\nbaked into bundle"]
+        PE["pages:extend hook\ntags pages with extensionId"]
+        MF --> LE --> SE --> RC
+        LE --> PE
+    end
+
+    subgraph SSR["🌐  EVERY SSR REQUEST"]
+        direction LR
+        FF["feature-flags\n.server.ts plugin"]
+        ST["useState\n'feature-flags'"]
+        FF -->|"reads flags.json"| ST
+    end
+
+    subgraph CLIENT["🖥️  BROWSER  (reactive)"]
+        direction TB
+        FU["useFeatureFlag()"]
+        EU["useExtensionEnabled()"]
+        EG["extension-guard\nmiddleware"]
+        SL["useExtensionSlot\ngetSlotEntries()"]
+        ST -->|hydrated via SSR payload| FU
+        FU --> EU
+        FU --> EG
+        FU --> SL
+        EG -->|"if disabled → /not-found"| NF["🚫 /not-found"]
+        SL -->|"filters entries"| ESC["&lt;ExtensionSlot /&gt;\nhides component"]
+        EU -->|"v-if / watch"| CMP["component hides\nor timer pauses"]
+    end
+
+    subgraph EDITOR["✏️  EDITOR TOGGLE"]
+        direction LR
+        UI["ModuleToggles.vue\n(SfSwitch)"]
+        UM["useModuleManifest\n.toggleModule()"]
+        PATCH["PATCH /_shop/modules\n(Nitro route)"]
+        DISK["flags.json\non disk"]
+        IMEM["useState\n'feature-flags'\n(in-memory update)"]
+        UI --> UM --> PATCH --> DISK
+        UM -->|"immediate"| IMEM
+        IMEM -->|"reactive cascade"| FU
+    end
+
+    BT -->|"runtimeConfig.shopCoreExtensions\ninjected at build"| SSR
+    BT -->|"extensionId meta\non each page route"| EG
+
+    style BT   fill:#edf2ff,stroke:#3b5bdb,color:#1a1a2e
+    style SSR  fill:#fff9db,stroke:#e67700,color:#1a1a2e
+    style CLIENT fill:#e6fcf5,stroke:#0ca678,color:#1a1a2e
+    style EDITOR fill:#f3d9fa,stroke:#9c36b5,color:#1a1a2e
+  </div>
+</section>
+
+<!-- ── Three patterns ─────────────────────────────────────────── -->
+<section>
+  <h2>Three ways a module can participate</h2>
+  <div class="patterns">
+
+    <div class="pattern-card slot">
+      <h3>Pattern A — Slot injection</h3>
+      <ul>
+        <li>Module calls <code>register()</code> in a plugin at startup</li>
+        <li>PWA places <code>&lt;UiExtensionSlot name="homepage-top" /&gt;</code></li>
+        <li><code>getSlotEntries()</code> filters by feature-flags state</li>
+        <li>Component disappears instantly when toggled off — no refresh</li>
+        <li><strong>Module effort:</strong> one <code>register()</code> call</li>
+      </ul>
+    </div>
+
+    <div class="pattern-card page">
+      <h3>Pattern B — New page</h3>
+      <ul>
+        <li>Module adds route via <code>extendPages</code> (standard Nuxt)</li>
+        <li>shop-core tags the page with <code>extensionId</code> in <code>pages:extend</code></li>
+        <li><code>extension-guard</code> middleware redirects to <code>/not-found</code></li>
+        <li>Page optionally calls <code>showError(404)</code> as SSR guard</li>
+        <li><strong>Module effort:</strong> none for routing — standard <code>pages.push()</code></li>
+      </ul>
+    </div>
+
+    <div class="pattern-card override">
+      <h3>Pattern C — Page override</h3>
+      <ul>
+        <li>Module swaps an existing PWA page file (<code>/checkout</code>, <code>/terms-and-conditions</code>)</li>
+        <li>Original saved as Nuxt alias (<code>#pwa-checkout-original</code>)</li>
+        <li>Replacement uses <code>v-if="isEnabled"</code> to switch between module UI and original</li>
+        <li>Instant switch — <code>v-if</code> reacts to flag change with no refresh</li>
+        <li><strong>Module effort:</strong> set up alias + implement <code>v-if</code> in the page</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Detailed flow: toggle action ───────────────────────────── -->
+<section>
+  <h2>What happens when you flip the toggle <span class="tag">step by step</span></h2>
+  <div class="mermaid">
+sequenceDiagram
+    actor Dev as Editor user
+    participant UI as ModuleToggles.vue
+    participant CM as useModuleManifest
+    participant API as PATCH /_shop/modules
+    participant DISK as flags.json
+    participant MEM as useState('feature-flags')
+    participant SL as useExtensionSlot
+    participant BL as resolveBlocksList()
+
+    Dev->>UI: flips SfSwitch OFF
+    UI->>CM: handleToggle(id, false)
+    CM->>API: $fetch PATCH { id, enabled: false }
+    API->>DISK: write extension.id.enabled = false
+    API-->>CM: { id, enabled: false }
+    CM->>MEM: featureFlags.value[key] = false
+    Note over MEM,SL: Reactive cascade — immediate, same tab
+    MEM-->>SL: getSlotEntries() recomputes
+    SL-->>UI: ExtensionSlot removes component from DOM
+    CM->>BL: getBlocksLists()
+    BL-->>UI: block palette no longer shows extension blocks
+    Note over DISK: Next SSR request reads disk → new users see disabled state
+  </div>
+</section>
+
+<!-- ── Two-tier responsibility table ──────────────────────────── -->
+<section>
+  <h2>Who does what — responsibility tiers</h2>
+  <table class="tier-table">
+    <thead>
+      <tr>
+        <th>Behavior when disabled</th>
+        <th>Tier</th>
+        <th>Owner</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SSR: flags loaded on every request</td>
+        <td class="auto">Automatic</td>
+        <td><span class="badge core">shop-core</span></td>
+        <td><code>feature-flags.server.ts</code></td>
+      </tr>
+      <tr>
+        <td>Client nav to disabled route → <code>/not-found</code></td>
+        <td class="auto">Automatic</td>
+        <td><span class="badge core">shop-core</span></td>
+        <td><code>extension-guard.ts</code></td>
+      </tr>
+      <tr>
+        <td>Extension's blocks hidden from block palette</td>
+        <td class="auto">Automatic</td>
+        <td><span class="badge pwa">PWA</span></td>
+        <td><code>blocks-imports.ts</code></td>
+      </tr>
+      <tr>
+        <td>Toggle UI + flag persistence</td>
+        <td class="auto">Automatic</td>
+        <td><span class="badge pwa">PWA</span></td>
+        <td><code>ModuleToggles.vue</code> + <code>/_shop/modules</code></td>
+      </tr>
+      <tr>
+        <td>Slot-injected component hides reactively</td>
+        <td class="optin">Opt-in</td>
+        <td><span class="badge module">module</span></td>
+        <td><code>slots.ts</code> plugin calls <code>register()</code></td>
+      </tr>
+      <tr>
+        <td>Overridden page falls back to original</td>
+        <td class="optin">Opt-in</td>
+        <td><span class="badge module">module</span></td>
+        <td>Page uses <code>v-if="isEnabled"</code> + alias import</td>
+      </tr>
+      <tr>
+        <td>Timer / side-effect pauses</td>
+        <td class="optin">Opt-in</td>
+        <td><span class="badge module">module</span></td>
+        <td><code>useCountdown.ts</code> watches <code>useExtensionEnabled()</code></td>
+      </tr>
+      <tr>
+        <td>Keyboard shortcut deactivates</td>
+        <td class="optin">Opt-in</td>
+        <td><span class="badge module">module</span></td>
+        <td><code>shortcuts.ts</code> plugin checks <code>enabled.value</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ── Pros / Cons ─────────────────────────────────────────────── -->
+<section>
+  <h2>Pros &amp; Cons</h2>
+  <div class="proscons">
+    <div class="pros">
+      <h3>✓ What works well</h3>
+      <ul>
+        <li>No rebuild or restart required to toggle</li>
+        <li>Reactive in the browser — same tab updates instantly on toggle</li>
+        <li>Route guarding and block filtering are invisible to module authors</li>
+        <li>Extension list is production-safe (baked into server bundle at build time)</li>
+        <li>Single flag file used consistently by all readers/writers</li>
+        <li>Default is always enabled — absent flag never accidentally disables</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h3>✗ Known limitations</h3>
+      <ul>
+        <li>Route guard is client-side only — direct URL to a disabled page still SSR-renders before redirecting (flash)</li>
+        <li>Module is always compiled into the bundle — flag control does not reduce JS payload</li>
+        <li>Slot injection requires PWA to explicitly place <code>&lt;UiExtensionSlot&gt;</code> — modules can't inject into arbitrary locations</li>
+        <li>Page override fallback requires module author to write <code>v-if</code> — no framework enforcement</li>
+        <li>Component-level reactive behavior (timers, banners) must be wired manually per module</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor:       '#dbe4ff',
+      primaryTextColor:   '#1a1a2e',
+      primaryBorderColor: '#3b5bdb',
+      lineColor:          '#868e96',
+      secondaryColor:     '#e6fcf5',
+      tertiaryColor:      '#f3d9fa',
+      background:         '#ffffff',
+      mainBkg:            '#ffffff',
+      nodeBorder:         '#adb5bd',
+      clusterBkg:         '#f8f9fa',
+      titleColor:         '#1a1a2e',
+      edgeLabelBackground:'#ffffff',
+      fontFamily:         '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      fontSize:           '13px',
+    },
+    flowchart: { curve: 'basis', padding: 16 },
+    sequence:  { mirrorActors: false, messageAlign: 'center' },
+  });
+</script>
+</body>
+</html>

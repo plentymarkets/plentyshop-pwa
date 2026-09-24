@@ -49,7 +49,7 @@
       </SfTooltip>
       <component
         :is="trigger.component"
-        v-for="trigger in triggersModules"
+        v-for="trigger in filteredTriggers"
         :key="trigger.slug"
         :active="activeSetting === trigger.slug"
         @click="trigger.slug !== activeSetting && setActiveSetting(trigger.slug)"
@@ -73,6 +73,7 @@ const {
   setActiveSetting,
 } = useSiteConfiguration();
 const { drawerOpen: localizationDrawerOpen } = useEditorLocalizationKeys();
+const filteredTriggers = computed(() => getTriggersModules());
 
 const pagesLabel = 'Page and category management: create, update, and organize your content.';
 const localizationLabel = 'Localization settings: manage languages, translations, and regional preferences.';
