@@ -9,6 +9,21 @@ export interface ModuleOptions {
   particleType: ParticleType;
 }
 
+export const DEFAULT_FLAKE_COUNT = 60;
+export const MIN_FLAKE_COUNT = 0;
+export const MAX_FLAKE_COUNT = 500;
+
+// Rejects Infinity/NaN and out-of-range values (e.g. a bad merchant config)
+// that would otherwise be handed straight to `Array.from({ length })` and
+// either throw or allocate enough particles to freeze the page.
+export const clampFlakeCount = (flakeCount: number): number => {
+  if (!Number.isFinite(flakeCount)) {
+    return DEFAULT_FLAKE_COUNT;
+  }
+
+  return Math.min(MAX_FLAKE_COUNT, Math.max(MIN_FLAKE_COUNT, Math.trunc(flakeCount)));
+};
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'four-seasons',
@@ -31,7 +46,7 @@ export default defineNuxtModule<ModuleOptions>({
     // useSiteSettings() reads/writes site config — see runtime/components/settings/
     // four-seasons/appearance/1.effect/ParticleType.vue for the editable side.
     nuxt.options.runtimeConfig.public.fourSeasonsParticleType = options.particleType;
-    nuxt.options.runtimeConfig.public.fourSeasonsFlakeCount = options.flakeCount;
+    nuxt.options.runtimeConfig.public.fourSeasonsFlakeCount = clampFlakeCount(options.flakeCount);
     nuxt.options.runtimeConfig.public.fourSeasonsColor = options.color;
 
     const resolver = createResolver(import.meta.url);

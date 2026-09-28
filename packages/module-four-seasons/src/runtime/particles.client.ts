@@ -16,6 +16,18 @@ const SUNFLOWER_CENTER_COLOR = '#5b3a1e';
 // leaf, rather than drifting steadily like snow.
 const FLUTTERING_TYPES: ParticleType[] = ['leaves', 'blossom', 'sunflower'];
 
+const DEFAULT_FLAKE_COUNT = 60;
+const MIN_FLAKE_COUNT = 0;
+const MAX_FLAKE_COUNT = 500;
+
+const clampFlakeCount = (flakeCount: number): number => {
+  if (!Number.isFinite(flakeCount)) {
+    return DEFAULT_FLAKE_COUNT;
+  }
+
+  return Math.min(MAX_FLAKE_COUNT, Math.max(MIN_FLAKE_COUNT, Math.trunc(flakeCount)));
+};
+
 interface Particle {
   x: number;
   y: number;
@@ -62,7 +74,7 @@ export default defineNuxtPlugin(() => {
   window.addEventListener('resize', resize);
 
   const particleType = publicConfig.fourSeasonsParticleType ?? 'leaves';
-  const particleCount = publicConfig.fourSeasonsFlakeCount ?? 60;
+  const particleCount = clampFlakeCount(publicConfig.fourSeasonsFlakeCount ?? DEFAULT_FLAKE_COUNT);
   const snowColor = publicConfig.fourSeasonsColor ?? '#ffffff';
   const flutters = FLUTTERING_TYPES.includes(particleType);
 

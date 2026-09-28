@@ -49,7 +49,7 @@ Finally, [Error Handling](/guide/modules/shop-core/error-handling.md) gives you 
 
 ## Publishing to plentyMarketplace
 
-Extensions intended for publishing live under `packages/module/<name>`.
+Extensions intended for publishing live under `packages/<name>`.
 
 To publish a version:
 
