@@ -4,8 +4,8 @@
       v-for="(item, index) in visibleItems"
       :key="item.meta.uuid"
       v-model="openState[item.meta.uuid]"
-      icon-position="start"
-      summary-class="w-full py-3 flex items-center gap-2 select-none"
+      :icon-position="iconPosition"
+      :summary-class="summaryClass"
       :data-testid="`details-list-item-${index}`"
     >
       <template #summary>
@@ -19,13 +19,21 @@
 <script setup lang="ts">
 import type { Block } from '@plentymarkets/shop-api';
 import type { DetailsListProps } from './types';
-import { getDetailsListItemLabel, getDetailsListItemDefaultOpen } from './helpers';
+import { getDetailsListItemLabel, getDetailsListItemDefaultOpen, getDetailsListIconPosition } from './helpers';
 
 const props = defineProps<DetailsListProps>();
 
 const { t } = useI18n();
 
 const visibleItems = computed(() => (props.content ?? []).filter((block) => block.configuration?.visible !== false));
+
+const iconPosition = computed(() => getDetailsListIconPosition(props.configuration));
+
+const summaryClass = computed(() =>
+  iconPosition.value === 'end'
+    ? 'w-full py-3 flex items-center justify-between gap-2 select-none'
+    : 'w-full py-3 flex items-center gap-2 select-none',
+);
 
 const openState = reactive<Record<string, boolean>>({});
 

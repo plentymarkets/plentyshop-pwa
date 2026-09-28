@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import type { Block, GetBlocksResponse } from '@plentymarkets/shop-api';
 import DetailsListForm from '../DetailsListForm.vue';
-import type { DetailsListItemConfiguration } from '../types';
+import type { DetailsListItemConfiguration, DetailsListStructureConfiguration } from '../types';
 
 const buildDetailsListBlock = (uuid: string): Block => ({
   name: 'DetailsList',
@@ -68,5 +68,17 @@ describe('DetailsListForm', () => {
     const block = findOrDeleteBlockByUuid(allBlocks.value, 'item-2') as Block;
 
     expect((block.configuration as DetailsListItemConfiguration).detailsSettings?.defaultOpen).toBe(true);
+  });
+
+  it('should update the caret position when toggled to right', async () => {
+    const wrapper = mountForm('details-list-4');
+
+    await wrapper.find('[data-testid="details-list-caret-position-right"] input').setValue();
+
+    const { allBlocks } = useBlocks();
+    const { findOrDeleteBlockByUuid } = useBlockManager();
+    const block = findOrDeleteBlockByUuid(allBlocks.value, 'details-list-4') as Block;
+
+    expect((block.configuration as DetailsListStructureConfiguration).layout?.caretPosition).toBe('right');
   });
 });

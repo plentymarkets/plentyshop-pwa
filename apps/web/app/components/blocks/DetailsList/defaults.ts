@@ -37,6 +37,7 @@ const createDetailsList = (htmlDescription: string): Block => ({
     visible: true,
     layout: {
       fullWidth: false,
+      caretPosition: 'left',
     },
   },
   content: [createDetailsListItem(htmlDescription)],

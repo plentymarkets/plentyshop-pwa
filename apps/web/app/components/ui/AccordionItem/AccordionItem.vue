@@ -2,7 +2,7 @@
   <SfAccordionItem v-model="internalModelValue" :summary-class="finalSummaryClass" data-testid="accordion-item">
     <template #summary>
       <SfIconChevronLeft
-        v-if="iconPosition === 'start'"
+        v-if="props.iconPosition === 'start'"
         class="shrink-0 text-neutral-500"
         :class="internalModelValue ? 'rotate-90' : '-rotate-90'"
       />
@@ -10,7 +10,7 @@
         <p>{{ summary }}</p>
       </slot>
       <SfIconChevronLeft
-        v-if="iconPosition !== 'start'"
+        v-if="props.iconPosition !== 'start'"
         class="shrink-0 text-neutral-500"
         :class="internalModelValue ? 'rotate-90' : '-rotate-90'"
       />
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<AccordionItemProps>(), {
   contentPaddingClass: 'py-2 px-4',
   iconPosition: 'end',
 });
-const { summary = '', summaryClass = '', summaryActiveClass = '', iconPosition } = props;
+const { summary = '', summaryClass = '', summaryActiveClass = '' } = props;
 const emit = defineEmits(['update:modelValue']);
 
 const internalModelValue = useVModel(props, 'modelValue', emit, { passive: true });

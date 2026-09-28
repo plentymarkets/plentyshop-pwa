@@ -42,6 +42,14 @@
 
       <EditorFormPanel v-model="layoutOpen" :title="getEditorTranslation('layout-label')">
         <EditorFullWidthToggle v-model="isFullWidth" :block-uuid="resolvedUuid" />
+        <div class="py-2">
+          <EditorOptionsTabs
+            v-model="caretPositionModel"
+            :legend="getEditorTranslation('caret-position-label')"
+            test-id-prefix="details-list-caret-position"
+            :options="caretPositionOptions"
+          />
+        </div>
       </EditorFormPanel>
     </div>
 
@@ -54,7 +62,12 @@
 <script setup lang="ts">
 import { SfInput, SfSwitch } from '@storefront-ui/vue';
 import type { Block } from '@plentymarkets/shop-api';
-import type { DetailsListProps, DetailsListFormProps, DetailsListItemConfiguration } from './types';
+import type {
+  DetailsListProps,
+  DetailsListFormProps,
+  DetailsListItemConfiguration,
+  DetailsListCaretPosition,
+} from './types';
 import { getDetailsListItemLabel } from './helpers';
 
 const props = defineProps<DetailsListFormProps>();
@@ -90,6 +103,24 @@ const itemOptions = computed(() =>
 const detailsListConfiguration = computed(() => detailsListStructure.value.configuration ?? {});
 
 const { isFullWidth } = useFullWidthToggleForConfig(detailsListConfiguration);
+
+const caretPositionOptions = computed(() => [
+  { value: 'left' as DetailsListCaretPosition, label: getEditorTranslation('caret-position-left') },
+  { value: 'right' as DetailsListCaretPosition, label: getEditorTranslation('caret-position-right') },
+]);
+
+const caretPositionModel = computed<DetailsListCaretPosition>({
+  get: () => detailsListConfiguration.value.layout?.caretPosition ?? 'left',
+  set: (value: DetailsListCaretPosition) => {
+    if (!detailsListStructure.value.configuration) {
+      detailsListStructure.value.configuration = { visible: true };
+    }
+    if (!detailsListStructure.value.configuration.layout) {
+      detailsListStructure.value.configuration.layout = {};
+    }
+    detailsListStructure.value.configuration.layout.caretPosition = value;
+  },
+});
 
 const selectedItem = computed(() => {
   if (!selectedItemUuid.value) {
@@ -161,7 +192,10 @@ const itemLabelFor = (block: Block) => {
     "select-placeholder": "Please select an item",
     "item-label": "Item",
     "item-label-label": "Item label",
-    "item-default-open-label": "Open by default"
+    "item-default-open-label": "Open by default",
+    "caret-position-label": "Caret position",
+    "caret-position-left": "Left",
+    "caret-position-right": "Right"
   },
   "de": {
     "layout-label": "Layout",
@@ -172,7 +206,10 @@ const itemLabelFor = (block: Block) => {
     "select-placeholder": "Please select an item",
     "item-label": "Item",
     "item-label-label": "Item label",
-    "item-default-open-label": "Open by default"
+    "item-default-open-label": "Open by default",
+    "caret-position-label": "Caret position",
+    "caret-position-left": "Left",
+    "caret-position-right": "Right"
   }
 }
 </i18n>
