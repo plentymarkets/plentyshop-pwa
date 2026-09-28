@@ -210,8 +210,7 @@ export default defineNuxtPlugin(() => {
 
       if (flutters) {
         // Leaves and petals flutter side to side as they fall; snow drifts more steadily.
-        particle.x +=
-          particle.drift + Math.sin(frame * 0.02 + particle.swayPhase) * particle.swayAmplitude;
+        particle.x += particle.drift + Math.sin(frame * 0.02 + particle.swayPhase) * particle.swayAmplitude;
       } else {
         particle.x += particle.drift;
       }
