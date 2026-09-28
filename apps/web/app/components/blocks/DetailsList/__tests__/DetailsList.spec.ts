@@ -67,4 +67,42 @@ describe('DetailsList', () => {
     expect((first!.element as HTMLDetailsElement).open).toBe(true);
     expect((second!.element as HTMLDetailsElement).open).toBe(false);
   });
+
+  it('should render the caret before the label by default', () => {
+    const wrapper = mount(DetailsList, {
+      props: { ...baseProps, content: [buildItem('item-1')] },
+    });
+
+    const summary = wrapper.find('summary');
+    const summaryChildren = Array.from(summary.element.children).map((child) => child.tagName);
+
+    expect(summaryChildren).toEqual(['svg', 'SPAN']);
+  });
+
+  it('should render the caret after the label when caretPosition is "right"', () => {
+    const wrapper = mount(DetailsList, {
+      props: {
+        ...baseProps,
+        configuration: { visible: true, layout: { caretPosition: 'right' } },
+        content: [buildItem('item-1')],
+      },
+    });
+
+    const summary = wrapper.find('summary');
+    const summaryChildren = Array.from(summary.element.children).map((child) => child.tagName);
+
+    expect(summaryChildren).toEqual(['SPAN', 'svg']);
+  });
+
+  it('should push the caret to the far right when caretPosition is "right"', () => {
+    const wrapper = mount(DetailsList, {
+      props: {
+        ...baseProps,
+        configuration: { visible: true, layout: { caretPosition: 'right' } },
+        content: [buildItem('item-1')],
+      },
+    });
+
+    expect(wrapper.find('summary').classes()).toContain('justify-between');
+  });
 });

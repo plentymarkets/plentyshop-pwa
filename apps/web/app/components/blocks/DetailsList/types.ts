@@ -1,7 +1,10 @@
 import type { Block } from '@plentymarkets/shop-api';
 
+export type DetailsListCaretPosition = 'left' | 'right';
+
 export type DetailsListLayout = {
   fullWidth?: boolean;
+  caretPosition?: DetailsListCaretPosition;
 };
 
 export type DetailsListStructureConfiguration = {
