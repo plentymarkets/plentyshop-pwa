@@ -241,14 +241,14 @@ jobs:
           {
             echo "//${NPM_REGISTRY_HOST}/:_auth=${AUTH}"
             echo "//${NPM_REGISTRY_HOST}/:always-auth=true"
-          } >> "$MODULE_PATH/.npmrc"
+          } >> "$HOME/.npmrc"
         env:
           NPM_USERNAME: ${{ secrets.PLENTY_MARKETPLACE_NPM_USERNAME }}
           NPM_PASSWORD: ${{ secrets.PLENTY_MARKETPLACE_NPM_PASSWORD }}
 
       - name: Publish
         working-directory: ${{ env.MODULE_PATH }}
-        run: npm publish --registry "https://${NPM_REGISTRY_HOST}" ${{ inputs.dryRun && '--dry-run' || '' }}
+        run: npm publish --ignore-scripts --registry "https://${NPM_REGISTRY_HOST}" ${{ inputs.dryRun && '--dry-run' || '' }}
 
       - name: Upload npm debug log
         if: failure()
@@ -260,4 +260,4 @@ jobs:
 
       - name: Clean up npm auth
         if: always()
-        run: rm -f "$MODULE_PATH/.npmrc"
+        run: rm -f "$HOME/.npmrc"
