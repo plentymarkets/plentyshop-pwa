@@ -6,8 +6,7 @@ next: false
 # Modules
 
 Modules are a way to extend PlentyONE Shop without modifying a [Theme](/guide/themes/index.md) directly.
-In the future, modules will be available on [plentyMarketplace](https://marketplace.plentymarkets.com/).
-However, distribution is still under construction.
+Modules can be published to [plentyMarketplace](https://marketplace.plentymarkets.com/) so merchants can install them without you maintaining a shop-specific fork — see [Publishing to plentyMarketplace](#publishing-to-plentymarketplace) below.
 
 You may still want to create a module and register them as local modules in your application.
 This makes it easier to [keep your fork or mirror up-to-date](/guide/themes/project-update-strategies.md) by reducing the number of potential merge conflicts.
@@ -47,6 +46,16 @@ The [Cookie Consent](/guide/modules/shop-core/cookie-consent.md) system lets you
 The [Event Bus](/guide/modules/shop-core/event-bus.md) provides decoupled communication across the app through a set of predefined shop events, so modules can react to user actions without direct component dependencies.
 
 Finally, [Error Handling](/guide/modules/shop-core/error-handling.md) gives you a single composable that translates API errors into localised user-facing notifications, keeping error presentation consistent across the shop.
+
+## Publishing to plentyMarketplace
+
+Extensions intended for publishing live under `packages/module/<name>`.
+
+To publish a version:
+
+1. Ask PlentyONE to provision a Verdaccio "supplier" account for your agency, then add its credentials as repository secrets: `PLENTY_MARKETPLACE_NPM_USERNAME`, `PLENTY_MARKETPLACE_NPM_PASSWORD`.
+2. In the `Actions` tab, run the `Publish Module` workflow, entering the folder name under `packages/` you want to publish.
+3. The workflow builds the module, validates it has the required marketplace files, and runs `npm publish` against the registry. The new version lands under review; a PlentyONE reviewer approves it before it becomes publicly installable.
 
 ## Further reading
 
