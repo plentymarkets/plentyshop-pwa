@@ -26,16 +26,16 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Verify module folder exists
-        run: .github/workflows/scripts/publish-module/verify-module-folder.sh
+        run: bash .github/workflows/scripts/publish-module/verify-module-folder.sh
 
       - name: Validate marketplace.json
-        run: .github/workflows/scripts/publish-module/validate-marketplace-json.sh
+        run: bash .github/workflows/scripts/publish-module/validate-marketplace-json.sh
 
       - name: Validate preview images
-        run: .github/workflows/scripts/publish-module/validate-preview-images.sh
+        run: bash .github/workflows/scripts/publish-module/validate-preview-images.sh
 
       - name: Validate meta files
-        run: .github/workflows/scripts/publish-module/validate-meta-files.sh
+        run: bash .github/workflows/scripts/publish-module/validate-meta-files.sh
 
       - name: Setup Node
         uses: ./.github/actions/setup
