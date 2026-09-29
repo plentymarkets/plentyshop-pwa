@@ -2,18 +2,11 @@ import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
 
-// Autumn leaf tones — leaves look wrong in a single flat color, so each leaf
-// picks one of these at random instead of using the configured `color`.
 const LEAF_COLORS = ['#c9772e', '#a13d2a', '#d99a2b', '#8a5a2b', '#b5451b', '#e0b23c'];
-// Cherry blossom tones for the spring 'blossom' particle type.
 const BLOSSOM_COLORS = ['#ffd1dc', '#ffb3c6', '#ff8fab', '#f6a5c0', '#fcdfe8'];
-// Sunflower petal tones for the summer 'sunflower' particle type.
 const SUNFLOWER_COLORS = ['#ffcc00', '#ffb703', '#f4a900', '#e8a33d', '#fdd835'];
-// Dark seed-head color at the center of each sunflower.
 const SUNFLOWER_CENTER_COLOR = '#5b3a1e';
 
-// Particle types that flutter side to side as they fall, like a real petal or
-// leaf, rather than drifting steadily like snow.
 const FLUTTERING_TYPES: ParticleType[] = ['leaves', 'blossom', 'sunflower'];
 
 const DEFAULT_FLAKE_COUNT = 60;
@@ -42,9 +35,6 @@ interface Particle {
 }
 
 export default defineNuxtPlugin(() => {
-  // Flat keys, not a nested object — the editor's ParticleType.vue setting
-  // writes to these same keys via useSiteSettings(), so a live merchant
-  // override is picked up here without a rebuild.
   const publicConfig = useRuntimeConfig().public as {
     fourSeasonsParticleType?: ParticleType;
     fourSeasonsFlakeCount?: number;
@@ -115,8 +105,6 @@ export default defineNuxtPlugin(() => {
     ctx.fill();
   };
 
-  // A pointed, almond-shaped blade with a center vein — reads as a leaf at a
-  // glance, unlike a plain circle or ellipse.
   const drawLeaf = (particle: Particle) => {
     const size = particle.radius * 2.4;
 
@@ -142,7 +130,6 @@ export default defineNuxtPlugin(() => {
     ctx.restore();
   };
 
-  // A single rounded petal shape for the 'blossom' particle type.
   const drawPetal = (particle: Particle) => {
     const size = particle.radius * 2.2;
 
@@ -158,8 +145,6 @@ export default defineNuxtPlugin(() => {
     ctx.restore();
   };
 
-  // A tiny flower: a ring of petals radiating from a dark seed-head center —
-  // reads as a sunflower at a glance, unlike a single flat petal.
   const drawSunflower = (particle: Particle) => {
     const size = particle.radius * 1.8;
     const petalCount = 8;
@@ -209,7 +194,6 @@ export default defineNuxtPlugin(() => {
       particle.rotation += particle.rotationSpeed;
 
       if (flutters) {
-        // Leaves and petals flutter side to side as they fall; snow drifts more steadily.
         particle.x += particle.drift + Math.sin(frame * 0.02 + particle.swayPhase) * particle.swayAmplitude;
       } else {
         particle.x += particle.drift;
