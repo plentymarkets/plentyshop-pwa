@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checks that meta/images has 1-7 preview_*.png files, each a valid PNG under 1 MB.
-# Usage: MODULE_PATH=packages/module/my-extension ./validate-preview-images.sh
+# Usage: MODULE_PATH=packages/module-my-extension ./validate-preview-images.sh
 set -euo pipefail
 
 IMAGES_DIR="$MODULE_PATH/meta/images"
