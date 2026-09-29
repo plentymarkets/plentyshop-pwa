@@ -35,6 +35,7 @@ export default defineNuxtModule<ModuleOptions>({
       return;
     }
 
+    nuxt.options.runtimeConfig.public.fourSeasonsEnabled = options.enabled;
     nuxt.options.runtimeConfig.public.fourSeasonsParticleType = options.particleType;
     nuxt.options.runtimeConfig.public.fourSeasonsFlakeCount = clampFlakeCount(options.flakeCount);
 

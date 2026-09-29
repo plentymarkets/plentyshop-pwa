@@ -15,6 +15,7 @@
   },
   "files": [
     "dist",
+    "runtime",
     "marketplace.json",
     "meta"
   ],

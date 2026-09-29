@@ -30,6 +30,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['~/composables', '~/composables/**', '~/utils/**'],
   },
+  alias: {
+    '@workspace': resolve(__dirname, '..', '..'),
+  },
   vite: {
     server: {
       fs: {
@@ -138,6 +141,7 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
+    '@plentymarkets/four-seasons',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
