@@ -15,6 +15,7 @@
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "npm run turbo:disable-telemetry && turbo run build",
     "build:analyze": "npm run turbo:disable-telemetry && turbo run build:analyze",
+    "build:module": "npm run turbo:disable-telemetry && turbo run build --filter=\"./$MODULE_PATH\"",
     "dev": "npm run turbo:disable-telemetry && turbo run dev",
     "start": "npm run turbo:disable-telemetry && turbo run start",
     "check:optimize-deps": "npm --prefix apps/web run check:optimize-deps",
