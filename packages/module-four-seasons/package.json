@@ -29,7 +29,7 @@
     "@storefront-ui/vue": "*"
   },
   "devDependencies": {
-    "@nuxt/kit": "^3.21.10",
+    "@nuxt/kit": "^4.5.1",
     "rimraf": "^5.0.7",
     "typescript": "5.9.3"
   }
