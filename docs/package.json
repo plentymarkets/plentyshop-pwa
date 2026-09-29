@@ -2,7 +2,7 @@
   "devDependencies": {
     "@stackblitz/sdk": "^1.11.1",
     "husky": "^9.1.7",
-    "mermaid": "^11.16.1",
+    "mermaid": "^11.17.0",
     "prettier": "^3.9.6",
     "vitepress": "^1.6.3",
     "vitepress-plugin-mermaid": "^2.0.17",
