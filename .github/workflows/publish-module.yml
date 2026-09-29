@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       module:
-        description: 'Path under packages/ to the module to publish (e.g. "module/my-extension" or "modules/nice-modules/my-module")'
+        description: 'Path under packages/ to the module to publish (e.g. "module-my-extension" or "modules/nice-modules/my-module")'
         type: string
         required: true
       dryRun:
