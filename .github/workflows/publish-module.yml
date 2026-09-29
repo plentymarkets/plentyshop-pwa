@@ -56,7 +56,9 @@ jobs:
 
       - name: Publish
         working-directory: ${{ env.MODULE_PATH }}
-        run: npm publish --ignore-scripts --registry "https://${NPM_REGISTRY_HOST}" ${{ inputs.dryRun && '--dry-run' || '' }}
+        run: npm publish --ignore-scripts --registry "https://${NPM_REGISTRY_HOST}" $DRY_RUN_FLAG
+        env:
+          DRY_RUN_FLAG: ${{ inputs.dryRun && '--dry-run' || '' }}
 
       - name: Upload npm debug log
         if: failure()
