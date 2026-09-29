@@ -1,0 +1,73 @@
+name: Publish Module
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'Path under packages/ to the module to publish (e.g. "module-my-extension" or "modules/nice-modules/my-module")'
+        type: string
+        required: true
+      dryRun:
+        description: 'Dry run (npm publish --dry-run, no live publish)'
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      MODULE_PATH: packages/${{ inputs.module }}
+      NPM_REGISTRY_HOST: shop-npm-registry.plentyone.com
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Verify module folder exists
+        run: bash .github/workflows/scripts/publish-module/verify-module-folder.sh
+
+      - name: Validate marketplace.json
+        run: bash .github/workflows/scripts/publish-module/validate-marketplace-json.sh
+
+      - name: Validate preview images
+        run: bash .github/workflows/scripts/publish-module/validate-preview-images.sh
+
+      - name: Validate meta files
+        run: bash .github/workflows/scripts/publish-module/validate-meta-files.sh
+
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Build module
+        run: npm run build:module
+
+      - name: Configure npm auth
+        run: |
+          AUTH=$(printf '%s:%s' "$NPM_USERNAME" "$NPM_PASSWORD" | base64)
+          {
+            echo "//${NPM_REGISTRY_HOST}/:_auth=${AUTH}"
+            echo "//${NPM_REGISTRY_HOST}/:always-auth=true"
+          } >> "$HOME/.npmrc"
+        env:
+          NPM_USERNAME: ${{ secrets.PLENTY_MARKETPLACE_NPM_USERNAME }}
+          NPM_PASSWORD: ${{ secrets.PLENTY_MARKETPLACE_NPM_PASSWORD }}
+
+      - name: Publish
+        working-directory: ${{ env.MODULE_PATH }}
+        run: npm publish --ignore-scripts --registry "https://${NPM_REGISTRY_HOST}" $DRY_RUN_FLAG
+        env:
+          DRY_RUN_FLAG: ${{ inputs.dryRun && '--dry-run' || '' }}
+
+      - name: Upload npm debug log
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: npm-debug-log
+          path: /home/runner/.npm/_logs/*-debug-0.log
+          retention-days: 7
+
+      - name: Clean up npm auth
+        if: always()
+        run: rm -f "$HOME/.npmrc"
