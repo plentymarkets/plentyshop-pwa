@@ -1,4 +1,4 @@
-import { defineNuxtPlugin, useIsExtensionActive, useRuntimeConfig } from '#imports';
+import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
 
