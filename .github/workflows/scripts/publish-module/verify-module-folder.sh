@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Verifies MODULE_PATH points to a safe, existing folder under packages/.
-# Usage: MODULE_PATH=packages/module/my-extension ./verify-module-folder.sh
+# Usage: MODULE_PATH=packages/module-my-extension ./verify-module-folder.sh
 set -euo pipefail
 
 MODULE_SUBPATH="${MODULE_PATH#packages/}"
