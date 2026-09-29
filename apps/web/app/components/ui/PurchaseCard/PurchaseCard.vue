@@ -411,10 +411,18 @@ const handleAddToCart = async (quickCheckout = true) => {
     return false;
   }
 
+  const rawSetComponents = productGetters.getSetComponents(props?.product);
+  const setComponents = rawSetComponents.length
+    ? rawSetComponents
+        .filter((component) => component.defaultVariationId !== null)
+        .map((component) => ({ variationId: component.defaultVariationId as number, quantity: 1, basketItemOrderParams: [] }))
+    : undefined;
+
   const addedToCart = await addToCart({
     productId: Number(productGetters.getId(props?.product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
+    setComponents,
   });
 
   if (addedToCart) {
@@ -466,3 +474,4 @@ const scrollToReviews = () => {
   }
 };
 </script>
+
