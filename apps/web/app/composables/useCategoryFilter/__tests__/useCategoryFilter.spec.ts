@@ -66,4 +66,12 @@ describe('useCategoryFilter', () => {
 
     expect(navigateToMock).toHaveBeenCalledWith({ query: expect.not.objectContaining({ page: expect.anything() }) });
   });
+
+  it('should reset page when the sort order is changed', () => {
+    const { updateSorting } = mountComposable();
+
+    updateSorting('price_asc');
+
+    expect(navigateToMock).toHaveBeenCalledWith({ query: expect.not.objectContaining({ page: expect.anything() }) });
+  });
 });

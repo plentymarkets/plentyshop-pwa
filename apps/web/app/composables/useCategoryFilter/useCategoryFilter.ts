@@ -242,6 +242,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
     const query = { ...currentRoute.query };
     if (sort) query.sort = sort;
     else delete query.sort;
+    delete query.page;
     navigateTo({ query });
   };
 
