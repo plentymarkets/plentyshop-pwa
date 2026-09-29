@@ -10,7 +10,7 @@ Add to `apps/web/nuxt.config.ts`:
 modules: [
   '@plentymarkets/four-seasons',
 ],
-fourSeasons: {
+plentymarketsFourSeasons: {
   enabled: true,
   particleType: 'leaves', // or 'snow' | 'blossom' | 'sunflower'
   flakeCount: 60,

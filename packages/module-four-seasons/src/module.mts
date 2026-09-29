@@ -5,7 +5,6 @@ export type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
 export interface ModuleOptions {
   enabled: boolean;
   flakeCount: number;
-  color: string;
   particleType: ParticleType;
 }
 
@@ -29,7 +28,6 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     enabled: true,
     flakeCount: 60,
-    color: '#ffffff',
     particleType: 'leaves',
   },
   setup(options, nuxt) {
@@ -39,7 +37,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.runtimeConfig.public.fourSeasonsParticleType = options.particleType;
     nuxt.options.runtimeConfig.public.fourSeasonsFlakeCount = clampFlakeCount(options.flakeCount);
-    nuxt.options.runtimeConfig.public.fourSeasonsColor = options.color;
 
     const resolver = createResolver(import.meta.url);
     addPlugin(resolver.resolve('./runtime/particles.client'));

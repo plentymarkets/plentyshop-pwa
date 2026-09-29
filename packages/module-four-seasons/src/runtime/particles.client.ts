@@ -2,6 +2,7 @@ import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
 
+const SNOW_COLOR = '#ffffff';
 const LEAF_COLORS = ['#c9772e', '#a13d2a', '#d99a2b', '#8a5a2b', '#b5451b', '#e0b23c'];
 const BLOSSOM_COLORS = ['#ffd1dc', '#ffb3c6', '#ff8fab', '#f6a5c0', '#fcdfe8'];
 const SUNFLOWER_COLORS = ['#ffcc00', '#ffb703', '#f4a900', '#e8a33d', '#fdd835'];
@@ -38,7 +39,6 @@ export default defineNuxtPlugin(() => {
   const publicConfig = useRuntimeConfig().public as {
     fourSeasonsParticleType?: ParticleType;
     fourSeasonsFlakeCount?: number;
-    fourSeasonsColor?: string;
   };
 
   const canvas = document.createElement('canvas');
@@ -65,7 +65,6 @@ export default defineNuxtPlugin(() => {
 
   const particleType = publicConfig.fourSeasonsParticleType ?? 'leaves';
   const particleCount = clampFlakeCount(publicConfig.fourSeasonsFlakeCount ?? DEFAULT_FLAKE_COUNT);
-  const snowColor = publicConfig.fourSeasonsColor ?? '#ffffff';
   const flutters = FLUTTERING_TYPES.includes(particleType);
 
   const randomFrom = (colors: string[]) => colors[Math.floor(Math.random() * colors.length)];
@@ -79,7 +78,7 @@ export default defineNuxtPlugin(() => {
       case 'sunflower':
         return randomFrom(SUNFLOWER_COLORS);
       default:
-        return snowColor;
+        return SNOW_COLOR;
     }
   };
 
