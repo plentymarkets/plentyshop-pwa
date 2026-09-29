@@ -128,5 +128,5 @@ Linked concepts
 3. [Blocks saving](/guide/editor/blocks-saving.md) — How block data is persisted
 4. [Global blocks vs. non-global blocks](/guide/editor/blocks-global-vs-non-global.md) — The distinction between global and page-specific blocks
 5. [Structure vs. content form](/guide/editor/blocks-structure-vs-content.md) — The two block types and how they compose
-6. [Data flow](https://docs.vuestorefront.io/general/basics/data-flow) — General Alokai data flow concept
+6. [Data flow](https://docs.alokai.com/general/basics/data-flow) — General Alokai data flow concept
 7. [Composable-centric data fetching](/guide/themes/composable-centric-data-fetching.md) — How composables manage data in plentyshop PWA
