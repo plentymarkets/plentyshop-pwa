@@ -6,8 +6,8 @@ next: false
 # Modules
 
 Modules are a way to extend PlentyONE Shop without modifying a [Theme](/guide/themes/index.md) directly.
-- In the future, modules will be available on [plentyMarketplace](https://marketplace.plentymarkets.com/).
-- However, distribution is still under construction.
+In the future, modules will be available on [plentyMarketplace](https://marketplace.plentymarkets.com/).
+However, distribution is still under construction.
 
 You may still want to create a module and register them as local modules in your application.
 This makes it easier to [keep your fork or mirror up-to-date](/guide/themes/project-update-strategies.md) by reducing the number of potential merge conflicts.
