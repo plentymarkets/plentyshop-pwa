@@ -23,7 +23,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && rimraf dist/runtime && node -e \"require('fs').cpSync('src/runtime','dist/runtime',{recursive:true})\""
+    "build": "tsc -p tsconfig.json && rimraf dist/runtime && node -e \"require('fs').cpSync('src/runtime','dist/runtime',{recursive:true})\"",
+    "playground:dev": "nuxi dev playground",
+    "playground:build": "nuxi build playground"
   },
   "peerDependencies": {
     "nuxt": "^3.0.0 || ^4.0.0",
