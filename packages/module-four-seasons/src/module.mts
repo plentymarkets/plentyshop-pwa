@@ -24,7 +24,7 @@ export const clampFlakeCount = (flakeCount: number): number => {
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'four-seasons',
-    configKey: 'fourSeasons',
+    configKey: 'plentymarketsFourSeasons',
   },
   defaults: {
     enabled: true,
