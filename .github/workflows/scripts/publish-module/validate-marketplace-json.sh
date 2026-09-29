@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checks that marketplace.json exists and passes marketplace listing requirements.
-# Usage: MODULE_PATH=packages/module/my-extension ./validate-marketplace-json.sh
+# Usage: MODULE_PATH=packages/module-my-extension ./validate-marketplace-json.sh
 set -euo pipefail
 
 MARKETPLACE_JSON="$MODULE_PATH/marketplace.json"
