@@ -59,10 +59,15 @@ describe('useCategoryFilter', () => {
     expect(navigateToMock).toHaveBeenCalledWith({ query: expect.not.objectContaining({ page: expect.anything() }) });
   });
 
-  it('should reset page when a price filter is applied', () => {
+  it.each([
+    ['min only', '10', ''],
+    ['max only', '', '100'],
+    ['min and max', '10', '100'],
+    ['cleared', '', ''],
+  ])('should reset page when the price filter is changed (%s)', (_case, priceMin, priceMax) => {
     const { updatePrices } = mountComposable();
 
-    updatePrices('10', '100');
+    updatePrices(priceMin, priceMax);
 
     expect(navigateToMock).toHaveBeenCalledWith({ query: expect.not.objectContaining({ page: expect.anything() }) });
   });
