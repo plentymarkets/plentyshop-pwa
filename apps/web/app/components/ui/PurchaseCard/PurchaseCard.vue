@@ -325,6 +325,7 @@ const {
 } = useValidatorAggregator('attributes');
 const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
+const { isSet, getCartSetComponents } = useProductSet(computed(() => props.product));
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(props?.product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
@@ -415,6 +416,7 @@ const handleAddToCart = async (quickCheckout = true) => {
     productId: Number(productGetters.getId(props?.product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
+    ...(isSet.value ? { setComponents: getCartSetComponents() } : {}),
   });
 
   if (addedToCart) {
