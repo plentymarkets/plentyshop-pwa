@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Checks required meta files (package.json, icons, docs) exist, and that icons
 # match the expected PNG dimensions.
-# Usage: MODULE_PATH=packages/module/my-extension ./validate-meta-files.sh
+# Usage: MODULE_PATH=packages/module-my-extension ./validate-meta-files.sh
 set -euo pipefail
 
 IMAGES_DIR="$MODULE_PATH/meta/images"
