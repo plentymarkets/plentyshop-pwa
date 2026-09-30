@@ -48,8 +48,6 @@ jobs:
         with:
           license-check: true
           deny-licenses: 'AGPL-1.0-or-later, GPL-1.0-or-later, LGPL-2.0-or-later, NGPL'
-          # We can ignore node-forge for now, because it has BSD-3 as alternative license.
-          allow-dependencies-licenses: 'pkg:npm/node-forge'
           vulnerability-check: false
           comment-summary-in-pr: on-failure
 
