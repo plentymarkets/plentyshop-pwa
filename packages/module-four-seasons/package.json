@@ -26,21 +26,11 @@
     "playground:dev": "nuxi dev playground",
     "playground:build": "nuxi build playground"
   },
-  "peerDependencies": {
-    "nuxt": "^3.0.0 || ^4.0.0",
-    "@storefront-ui/vue": "*"
-  },
-  "peerDependenciesMeta": {
-    "nuxt": {
-      "optional": true
-    },
-    "@storefront-ui/vue": {
-      "optional": true
-    }
-  },
   "devDependencies": {
     "@nuxt/kit": "^4.5.1",
     "@plentymarkets/shop-core": "^1.23.0",
+    "@storefront-ui/vue": "^2.6.3",
+    "nuxt": "^4.5.2",
     "rimraf": "^5.0.7",
     "typescript": "5.9.3"
   }
