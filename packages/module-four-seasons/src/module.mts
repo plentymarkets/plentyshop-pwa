@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit';
+import { defineNuxtModule, addPlugin, createResolver, addComponentsDir, addComponent } from '@nuxt/kit';
 
 export type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
 
@@ -41,5 +41,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     const resolver = createResolver(import.meta.url);
     addPlugin(resolver.resolve('./runtime/particles.client'));
+    addComponentsDir({path: resolver.resolve('runtime/components')});
   },
 });
