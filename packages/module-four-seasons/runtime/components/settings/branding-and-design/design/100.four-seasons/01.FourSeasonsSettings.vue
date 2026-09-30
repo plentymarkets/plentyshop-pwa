@@ -11,7 +11,12 @@
 
     <div>
       <UiFormLabel for="four-seasons-particle-type">{{ getEditorTranslation('particle-type-label') }}</UiFormLabel>
-      <SfSelect id="four-seasons-particle-type" v-model="particleType" data-testid="four-seasons-particle-type" class="w-full mt-2">
+      <SfSelect
+        id="four-seasons-particle-type"
+        v-model="particleType"
+        data-testid="four-seasons-particle-type"
+        class="w-full mt-2"
+      >
         <option value="snow">{{ getEditorTranslation('particle-type-snow') }}</option>
         <option value="blossom">{{ getEditorTranslation('particle-type-blossom') }}</option>
         <option value="sunflower">{{ getEditorTranslation('particle-type-sunflower') }}</option>

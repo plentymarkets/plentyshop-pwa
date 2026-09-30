@@ -223,7 +223,11 @@ export default defineNuxtPlugin(() => {
   };
 
   watch(
-    [() => getEnabled(true), () => getParticleType() || 'leaves', () => clampFlakeCount(getFlakeCount(DEFAULT_FLAKE_COUNT))],
+    [
+      () => getEnabled(true),
+      () => getParticleType() || 'leaves',
+      () => clampFlakeCount(getFlakeCount(DEFAULT_FLAKE_COUNT)),
+    ],
     ([enabled, particleType, particleCount]) => {
       stopEffect?.();
       stopEffect = enabled ? startEffect(particleType as ParticleType, particleCount) : null;

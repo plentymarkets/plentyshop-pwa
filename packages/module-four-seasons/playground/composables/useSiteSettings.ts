@@ -10,7 +10,7 @@ interface PlaygroundSiteSettingsState {
 export const useSiteSettings = (setting?: string) => {
   const state = useState<PlaygroundSiteSettingsState>('playground-site-settings', () => ({ data: {} }));
 
-  const getSetting = () => (setting ? state.value.data[setting] ?? '' : '');
+  const getSetting = () => (setting ? (state.value.data[setting] ?? '') : '');
 
   const getBooleanSetting = (fallback = false) => {
     const value = getSetting();
