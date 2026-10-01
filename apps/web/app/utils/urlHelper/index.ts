@@ -35,7 +35,7 @@ const INTERNAL_HREF_PATTERN = /^\/(?!\/)/;
 const FILE_EXTENSION_PATTERN = /\.[a-zA-Z0-9]+$/;
 
 export const isFileLikeHref = (href: string): boolean => {
-  const [pathname] = href.split(/[?#]/);
+  const pathname = href.split(/[?#]/)[0] ?? '';
   const lastSegment = pathname.slice(pathname.lastIndexOf('/') + 1);
   return FILE_EXTENSION_PATTERN.test(lastSegment);
 };
