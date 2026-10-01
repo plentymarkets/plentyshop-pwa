@@ -67,9 +67,9 @@ import type { OrderTotalsPropsType } from './types';
 
 const props = defineProps<OrderTotalsPropsType>();
 const { formatWithSymbol } = usePriceFormatter();
-const originalTotals = orderGetters.getTotals(props.order);
+const originalTotals = computed(() => orderGetters.getTotals(props.order));
 const currency = orderGetters.getCurrency(props.order);
-const showNetPrices = originalTotals.isNet;
+const showNetPrices = originalTotals.value.isNet;
 
 const format = (value: number) => {
   return formatWithSymbol(value, currency);
