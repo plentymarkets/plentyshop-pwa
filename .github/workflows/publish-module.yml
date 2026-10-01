@@ -49,7 +49,7 @@ jobs:
           {
             echo "//${NPM_REGISTRY_HOST}/:_auth=${AUTH}"
             echo "//${NPM_REGISTRY_HOST}/:always-auth=true"
-          } >> "$HOME/.npmrc"
+          } >> "$MODULE_PATH/.npmrc"
         env:
           NPM_USERNAME: ${{ secrets.PLENTY_MARKETPLACE_NPM_USERNAME }}
           NPM_PASSWORD: ${{ secrets.PLENTY_MARKETPLACE_NPM_PASSWORD }}
