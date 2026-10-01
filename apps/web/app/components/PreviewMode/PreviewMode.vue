@@ -87,6 +87,7 @@ const label = computed(() =>
 const removeLookupCookie: RemoveLookupCookie = (): void => {
   const domain = config.domain.replace('https://', '');
   useCookie(defaults.PREVIEW_COOKIE, { path: '/', domain: domain }).value = null;
+  useCookie(defaults.SHOW_INACTIVE_ITEMS_COOKIE, { path: '/', domain: domain }).value = null;
   bannerIsHidden.value = true;
   window.location.reload();
 };
