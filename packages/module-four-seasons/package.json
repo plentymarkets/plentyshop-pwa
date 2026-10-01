@@ -18,9 +18,6 @@
     "marketplace.json",
     "meta"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "build": "tsc -p tsconfig.json && rimraf dist/runtime && node -e \"require('fs').cpSync('src/runtime','dist/runtime',{recursive:true})\"",
     "playground:dev": "nuxi dev playground",
