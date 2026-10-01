@@ -1,4 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { proxyNuxtApp } from '~/__tests__/utils/mockNuxtApp';
 import { useBlockSnapshots } from '~/composables/useBlockSnapshots/useBlockSnapshots';
 
 mockNuxtImport('useRoute', () => () => ({
@@ -21,16 +22,32 @@ mockNuxtImport('useSiteConfiguration', () => () => ({
   closeDrawer: vi.fn(),
 }));
 
+const { getBlockSnapshots } = vi.hoisted(() => ({
+  getBlockSnapshots: vi.fn().mockResolvedValue({
+    data: {
+      data: [],
+      pagination: { currentPage: 1, lastPage: 1 },
+    },
+  }),
+}));
+
+const { useNuxtApp } = vi.hoisted(() => ({
+  useNuxtApp: vi.fn(),
+}));
+
 mockNuxtImport('useSdk', () => () => ({
   plentysystems: {
-    getBlockSnapshots: vi.fn().mockResolvedValue({
-      data: {
-        data: [],
-        pagination: { currentPage: 1, lastPage: 1 },
-      },
-    }),
+    getBlockSnapshots,
+    getBlockSnapshot: vi.fn().mockResolvedValue({ data: { payload: '{"blocks":[]}' } }),
   },
 }));
+
+mockNuxtImport('useNuxtApp', () => () => proxyNuxtApp((useNuxtApp() ?? {}) as Record<string, unknown>));
+
+const locale = ref('en');
+useNuxtApp.mockReturnValue({
+  $i18n: { locale, te: (key: string) => key, t: (key: string) => key },
+});
 
 describe('useBlockSnapshots', () => {
   describe('entity resolution', () => {
@@ -156,6 +173,67 @@ describe('useBlockSnapshots', () => {
       const composable = useBlockSnapshots();
 
       expect(composable.isRestoredSnapshot(42)).toBe(false);
+    });
+  });
+
+  describe('language switch', () => {
+    afterEach(() => {
+      const composable = useBlockSnapshots();
+      composable.closeDrawer();
+      locale.value = 'en';
+      getBlockSnapshots.mockClear();
+    });
+
+    it('should change entityKey when the locale changes for the same route', async () => {
+      const composable = useBlockSnapshots();
+      const initialKey = composable.entityKey.value;
+
+      locale.value = 'de';
+      await nextTick();
+
+      expect(composable.entityKey.value).not.toBe(initialKey);
+    });
+
+    it('should refetch snapshots when the entity key changes while the drawer is open', async () => {
+      const composable = useBlockSnapshots();
+      composable.openDrawer();
+      getBlockSnapshots.mockClear();
+
+      locale.value = 'de';
+      await nextTick();
+      composable.resetForCurrentEntity();
+
+      expect(getBlockSnapshots).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not refetch snapshots when the entity key changes while the drawer is closed', async () => {
+      const composable = useBlockSnapshots();
+      composable.closeDrawer();
+      getBlockSnapshots.mockClear();
+
+      locale.value = 'de';
+      await nextTick();
+      composable.resetForCurrentEntity();
+
+      expect(getBlockSnapshots).not.toHaveBeenCalled();
+    });
+
+    it('should clear the restored snapshot marker when the entity key changes even while the drawer is closed', async () => {
+      const composable = useBlockSnapshots();
+
+      composable.requestRestore(42);
+      await composable.confirmRestore();
+      expect(composable.isRestoredSnapshot(42)).toBe(true);
+
+      composable.closeDrawer();
+      getBlockSnapshots.mockClear();
+
+      locale.value = 'de';
+      await nextTick();
+      composable.resetForCurrentEntity();
+
+      expect(composable.isRestoredSnapshot(42)).toBe(false);
+      expect(getBlockSnapshots).not.toHaveBeenCalled();
     });
   });
 });
