@@ -71,7 +71,10 @@ export const useBlockSnapshots = () => {
     state.value.confirmingId = null;
     state.value.restoredSnapshotId = null;
     state.value.snapshots = [];
-    fetchSnapshots();
+
+    if (state.value.drawerOpen) {
+      fetchSnapshots();
+    }
   };
 
   const toggleDrawer = () => {
