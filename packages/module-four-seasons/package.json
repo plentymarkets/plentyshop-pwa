@@ -27,10 +27,8 @@
     "playground:build": "nuxi build playground"
   },
   "devDependencies": {
-    "@nuxt/kit": "^4.5.1",
+    "@nuxt/kit": "^3.21.10",
     "@plentymarkets/shop-core": "^1.23.0",
-    "@storefront-ui/vue": "^2.6.3",
-    "nuxt": "^4.5.2",
     "rimraf": "^5.0.7",
     "typescript": "5.9.3"
   }
