@@ -70,4 +70,4 @@ jobs:
 
       - name: Clean up npm auth
         if: always()
-        run: rm -f "$HOME/.npmrc"
+        run: rm -f "$MODULE_PATH/.npmrc"
