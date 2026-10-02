@@ -1,5 +1,5 @@
 import type { BlockLoader, DefaultsModule } from './types';
-const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
+const customerBlocks = import.meta.glob('@workspace/node_modules/{*,@*/*}/runtime/components/blocks/**/*.vue', {
   import: 'default',
 }) as Record<string, BlockLoader>;
 
@@ -14,7 +14,9 @@ const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import:
 
 const coreBlockListLoaders = import.meta.glob('@/components/**/blocks/**/defaults.ts');
 
-const customerBlockListLoaders = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts');
+const customerBlockListLoaders = import.meta.glob(
+  '@workspace/node_modules/{*,@*/*}/runtime/components/blocks/**/defaults.ts',
+);
 
 const nuxtModuleBlockListLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts');
 

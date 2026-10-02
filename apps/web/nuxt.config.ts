@@ -30,6 +30,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['~/composables', '~/composables/**', '~/utils/**'],
   },
+  alias: {
+    '@workspace': resolve(__dirname, '..', '..'),
+  },
   vite: {
     server: {
       fs: {
