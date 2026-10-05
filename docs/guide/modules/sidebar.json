@@ -42,6 +42,10 @@
       {
         "text": "Custom JS & CSS",
         "link": "/guide/modules/custom-js-css.md"
+      },
+      {
+        "text": "Publishing",
+        "link": "/guide/modules/publishing.md"
       }
     ]
   },
