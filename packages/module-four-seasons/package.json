@@ -1,0 +1,32 @@
+{
+  "name": "@plentymarkets/four-seasons",
+  "version": "1.0.0",
+  "description": "Adds an animated falling leaves, snow, or petal overlay to every shop page.",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "main": "./dist/module.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs"
+    },
+    "./runtime/*": {
+      "import": "./dist/runtime/*"
+    }
+  },
+  "files": [
+    "dist",
+    "marketplace.json",
+    "meta"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && rimraf dist/runtime && node -e \"require('fs').cpSync('src/runtime','dist/runtime',{recursive:true})\"",
+    "playground:dev": "nuxi dev playground",
+    "playground:build": "nuxi build playground"
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^4.5.1",
+    "@plentymarkets/shop-core": "^1.23.0",
+    "rimraf": "^5.0.7",
+    "typescript": "5.9.3"
+  }
+}

@@ -279,9 +279,7 @@ if (import.meta.client) {
   );
 
   watch(entityKey, () => {
-    if (drawerOpen.value) {
-      resetForCurrentEntity();
-    }
+    resetForCurrentEntity();
   });
 
   watch(entityKey, () => {
