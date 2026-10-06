@@ -2,7 +2,7 @@ import { paths } from '../../../app/utils/paths';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 import { PaymentStatusScreen } from '../../support/pageObjects/PaymentStatusScreen';
-import { TEST_SYSTEM_DOMAIN } from '~~/cypress.config.ts';
+import { TEST_SYSTEM_DOMAIN } from '../../support/variables.ts';
 
 const checkout = new CheckoutPageObject();
 const myAccount = new MyAccountPageObject();

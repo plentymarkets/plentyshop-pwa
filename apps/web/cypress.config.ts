@@ -1,9 +1,9 @@
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
+import { TEST_SYSTEM_DOMAIN } from './__tests__/support/variables';
 
 dotenv.config();
 
-export const TEST_SYSTEM_DOMAIN = 'https://mevofvd5omld.c01-14.plentymarkets.com';
 const currentApiEndpoint = process.env.API_ENDPOINT;
 
 if (currentApiEndpoint !== TEST_SYSTEM_DOMAIN) {

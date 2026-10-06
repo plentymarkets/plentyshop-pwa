@@ -136,6 +136,9 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
       ],
     });
 
+    patchPrevHead({});
+    patchNextHead({});
+
     useSeoMeta({
       ogUrl: canonicalUrl,
     });
