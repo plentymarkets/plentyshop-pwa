@@ -2,8 +2,8 @@ import { paths } from '../../../app/utils/paths';
 import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
 import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
 import { TEST_SYSTEM_DOMAIN } from '../../support/variables.ts';
-import {CartPageObject} from "../../support/pageObjects/CartPageObject.ts";
-import {ProductListPageObject} from "../..//support/pageObjects/ProductListPageObject.ts";
+import { CartPageObject } from '../../support/pageObjects/CartPageObject.ts';
+import { ProductListPageObject } from '../..//support/pageObjects/ProductListPageObject.ts';
 
 const languageSelect = new LanguageSelectObject();
 const cookieBar = new CookieBarObject();
