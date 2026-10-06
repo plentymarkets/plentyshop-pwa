@@ -8,6 +8,7 @@ const setPreviousAndNextLink = (
   canonicalLink: string,
   patchPrevHead: typeof useHead,
   patchNextHead: typeof useHead,
+  // eslint-disable-next-line max-params
 ) => {
   if (!facetsFromUrl?.itemsPerPage || !facetsFromUrl?.page) {
     patchPrevHead({});
@@ -178,10 +179,14 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     let alternateLocales: { rel: 'alternate'; hreflang: string; href: string }[] = [];
     if (productsCatalog.languageUrls) {
       alternateLocales = Object.keys(productsCatalog.languageUrls).map((key) => {
+        const i18nKey = hreflangLocaleMapperToI18n(key);
         const localizedPath =
           key === `x-default`
-            ? localePath(productsCatalog.languageUrls[key] || '/', $i18n.defaultLocale)
-            : localePath(productsCatalog.languageUrls[key] || '/', key as Locale);
+            ? localePath(
+                productsCatalog.languageUrls[key] || '/',
+                hreflangLocaleMapperToI18n($i18n.defaultLocale) as Locale,
+              )
+            : localePath(productsCatalog.languageUrls[key] || '/', i18nKey as Locale);
 
         return {
           rel: 'alternate' as const,

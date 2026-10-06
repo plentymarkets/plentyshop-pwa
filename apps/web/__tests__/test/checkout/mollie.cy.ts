@@ -2,6 +2,7 @@ import { paths } from '../../../app/utils/paths';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 import { PaymentStatusScreen } from '../../support/pageObjects/PaymentStatusScreen';
+import { TEST_SYSTEM_DOMAIN } from '~~/cypress.config.ts';
 
 const checkout = new CheckoutPageObject();
 const myAccount = new MyAccountPageObject();
@@ -42,7 +43,7 @@ describe('Mollie payment methods', () => {
     cy.window().then((win) => {
       const currentUrl = win.location.href;
       cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
-      win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
+      win.location.href = currentUrl.replace(TEST_SYSTEM_DOMAIN, 'http://localhost:3000');
       cy.wait('@getMolliePaymentStatus');
       cy.wait('@doPlaceOrder');
       cy.wait('@getOrder');
@@ -68,7 +69,7 @@ describe('Mollie payment methods', () => {
     cy.window().then((win) => {
       const currentUrl = win.location.href;
       cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
-      win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
+      win.location.href = currentUrl.replace(TEST_SYSTEM_DOMAIN, 'http://localhost:3000');
       cy.wait('@getMolliePaymentStatus');
       cy.wait('@doPlaceOrder');
       cy.wait('@getOrder');
@@ -92,7 +93,7 @@ describe('Mollie payment methods', () => {
     cy.window().then((win) => {
       const currentUrl = win.location.href;
       cy.intercept('/plentysystems/getMolliePaymentAndUpdateStatus').as('getMolliePaymentStatus');
-      win.location.href = currentUrl.replace('https://mevofvd5omld.c01-14.plentymarkets.com', 'http://localhost:3000');
+      win.location.href = currentUrl.replace(TEST_SYSTEM_DOMAIN, 'http://localhost:3000');
       cy.wait('@getMolliePaymentStatus');
     });
     cy.url().should('include', '/checkout');
