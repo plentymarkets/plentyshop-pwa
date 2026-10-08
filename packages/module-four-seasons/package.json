@@ -23,9 +23,11 @@
     "playground:dev": "nuxi dev playground",
     "playground:build": "nuxi build playground"
   },
+  "dependencies": {
+    "@plentymarkets/shop-core": "^1.42.0"
+  },
   "devDependencies": {
     "@nuxt/kit": "^4.5.1",
-    "@plentymarkets/shop-core": "^1.23.0",
     "rimraf": "^5.0.7",
     "typescript": "5.9.3"
   }

@@ -1,8 +1,8 @@
-import { defineNuxtPlugin, useIsExtensionActive, useSiteSettings, watch } from '#imports';
+import { useSiteSettings, watch, defineExtensionPlugin } from '#imports';
+import extensionConfig from '../extension.config';
+
 
 type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
-
-const EXTENSION_PACKAGE_NAME = '@plentymarkets/four-seasons';
 
 const SNOW_COLOR = '#ffffff';
 const LEAF_COLORS = ['#c9772e', '#a13d2a', '#d99a2b', '#8a5a2b', '#b5451b', '#e0b23c'];
@@ -37,10 +37,7 @@ interface Particle {
   color: string;
 }
 
-export default defineNuxtPlugin(() => {
-  if (!useIsExtensionActive(EXTENSION_PACKAGE_NAME)) {
-    return;
-  }
+export default defineExtensionPlugin(extensionConfig.name, () => {
 
   const { getBooleanSetting: getEnabled } = useSiteSettings('fourSeasonsEnabled');
   const { getSetting: getParticleType } = useSiteSettings('fourSeasonsParticleType');

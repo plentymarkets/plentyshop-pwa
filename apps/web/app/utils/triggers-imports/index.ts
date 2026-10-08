@@ -1,8 +1,11 @@
 import type { TriggerLoader } from './types';
 
-const customerTriggers = import.meta.glob('/node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
-  import: 'default',
-}) as Record<string, TriggerLoader>;
+const customerTriggers = import.meta.glob(
+  '#monorepo-root/node_modules/{*,@*/*}/{dist/,}runtime/components/**/settings/*/*ToolbarTrigger.vue',
+  {
+    import: 'default',
+  },
+) as Record<string, TriggerLoader>;
 
 const nuxtModuleTriggers = import.meta.glob('~~/modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',

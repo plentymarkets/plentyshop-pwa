@@ -40,7 +40,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.fourSeasonsFlakeCount = clampFlakeCount(options.flakeCount);
 
     const resolver = createResolver(import.meta.url);
-    addPlugin(resolver.resolve('./runtime/particles.client'));
-    addComponentsDir({path: resolver.resolve('runtime/components')});
+    addPlugin(resolver.resolve('./runtime/plugins/particles.client'));
+    addComponentsDir({path: resolver.resolve('./runtime/components')});
   },
 });
