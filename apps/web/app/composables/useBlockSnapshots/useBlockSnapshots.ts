@@ -29,6 +29,7 @@ export const useBlockSnapshots = () => {
   }));
 
   const route = useRoute();
+  const { $i18n } = useNuxtApp();
   const { data: dataProducts } = useProducts();
   const { restoreBlocks } = useBlocks();
   const { send } = useNotification();
@@ -46,7 +47,7 @@ export const useBlockSnapshots = () => {
 
   const entityKey = computed(() => {
     const { identifier, type } = resolveEntity();
-    return `${type}:${identifier}`;
+    return `${type}:${identifier}:${$i18n.locale.value}`;
   });
 
   const identifier = computed(() => resolveEntity().identifier);
@@ -70,7 +71,10 @@ export const useBlockSnapshots = () => {
     state.value.confirmingId = null;
     state.value.restoredSnapshotId = null;
     state.value.snapshots = [];
-    fetchSnapshots();
+
+    if (state.value.drawerOpen) {
+      fetchSnapshots();
+    }
   };
 
   const toggleDrawer = () => {

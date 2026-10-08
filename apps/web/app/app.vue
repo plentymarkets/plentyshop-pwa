@@ -279,14 +279,21 @@ if (import.meta.client) {
   );
 
   watch(entityKey, () => {
-    if (drawerOpen.value) {
-      resetForCurrentEntity();
-    }
+    resetForCurrentEntity();
   });
 
   watch(entityKey, () => {
     resetHistory();
   });
+
+  watch(
+    () => route.fullPath,
+    () => {
+      if (route.meta.pageType === 'static') {
+        setStaticPageMeta();
+      }
+    },
+  );
 }
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();

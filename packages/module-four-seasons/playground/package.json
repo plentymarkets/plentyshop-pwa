@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "module-four-seasons-playground",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build"
+  },
+  "dependencies": {
+    "nuxt": "^4.5.2"
+  }
+}

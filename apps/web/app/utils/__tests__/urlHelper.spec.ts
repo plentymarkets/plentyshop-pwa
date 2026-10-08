@@ -121,6 +121,15 @@ describe('isInternalLink', () => {
   it('should return false for an empty string', () => {
     expect(isInternalLink('', makeRouter(1))).toBe(false);
   });
+
+  it('should return false for a file download path with an extension', () => {
+    expect(isInternalLink('/tpl/download/some-file.pdf', makeRouter(1))).toBe(false);
+  });
+
+  it('should return false for a file path with query params or a hash', () => {
+    expect(isInternalLink('/images/photo.jpg?v=2', makeRouter(1))).toBe(false);
+    expect(isInternalLink('/images/photo.jpg#preview', makeRouter(1))).toBe(false);
+  });
 });
 
 describe('localizeHtmlLinks', () => {
@@ -190,5 +199,11 @@ describe('localizeHtmlLinks', () => {
   it('should return the html unchanged when there are no anchor tags', () => {
     const html = '<p>No links here</p>';
     expect(localizeHtmlLinks(html, makeRouter(1), localePath, resolveTrailingSlash)).toBe(html);
+  });
+
+  it('should leave a file download link unchanged, without a trailing slash', () => {
+    const withTrailingSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
+    const html = '<a href="/tpl/download/some-file.pdf" target="blank">Download</a>';
+    expect(localizeHtmlLinks(html, makeRouter(1), localePath, withTrailingSlash)).toBe(html);
   });
 });
