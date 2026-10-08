@@ -1,7 +1,10 @@
 import type { LocaleMessages, Messages } from '~/components/SiteConfigurationView/types';
 
 const localeFilesCustomer = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/runtime/components/settings/**/lang.json',
+  [
+    '/node_modules/*/runtime/components/settings/**/lang.json',
+    '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/lang.json',
+  ],
   {
     eager: true,
     import: 'default',

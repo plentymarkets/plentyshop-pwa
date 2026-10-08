@@ -1,7 +1,10 @@
 import type { TriggerLoader } from './types';
 
 const customerTriggers = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/runtime/components/**/settings/*/*ToolbarTrigger.vue',
+  [
+    '/node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue',
+    '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/**/settings/*/*ToolbarTrigger.vue',
+  ],
   {
     import: 'default',
   },

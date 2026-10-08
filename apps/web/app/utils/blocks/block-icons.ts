@@ -9,7 +9,10 @@ const nuxtModuleBlockIconLoaders = import.meta.glob('~~/modules/*/runtime/compon
 }) as Record<string, () => Promise<string>>;
 
 const customerBlockIconLoaders = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/runtime/components/blocks/**/icon.svg',
+  [
+    '/node_modules/*/runtime/components/blocks/**/icon.svg',
+    '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/icon.svg',
+  ],
   {
     query: '?raw',
     import: 'default',
