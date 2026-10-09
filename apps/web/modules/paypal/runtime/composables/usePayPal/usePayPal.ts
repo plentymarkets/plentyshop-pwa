@@ -160,10 +160,8 @@ export const usePayPal = () => {
       return state.value.paypalScript.script;
     }
 
-    state.value.loadingScripts = {};
     state.value.isReady = false;
-    state.value.paypalScript = null;
-    state.value.loadingScripts[scriptKey] = loadScript(currency, localePayPal, commit)
+    const scriptPromise = loadScript(currency, localePayPal, commit)
       .then(async (paypalScript) => {
         state.value.paypalScript = { script: paypalScript, currency, locale: localePayPal, commit };
         state.value.isReady = true;
@@ -178,10 +176,12 @@ export const usePayPal = () => {
         return paypalScript;
       })
       .finally(() => {
-        delete state.value.loadingScripts.scriptKey;
+        delete state.value.loadingScripts[scriptKey];
       });
 
-    return state.value.loadingScripts[scriptKey];
+    state.value.loadingScripts[scriptKey] = scriptPromise;
+
+    return scriptPromise;
   };
 
   /**

@@ -1,11 +1,13 @@
 <template>
   <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2" />
+  <div>Test 1</div>
 </template>
 
 <script setup lang="ts">
 import type { PayPalPayLaterBannerType } from '../types';
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { PayPalNamespace } from '@paypal/paypal-js';
+import { useDebounceFn } from '@vueuse/core';
 import { usePayPal } from '../composables/usePayPal';
 
 const { data: cart } = useCart();
@@ -17,6 +19,7 @@ const paypalUuid = useId();
 const isTextStyle = ref(textStylePlacements.includes(placement));
 const loadScript = computed(() => payLaterVisibility.getVisibility(location));
 const watchAmount = computed(() => amount);
+let renderSequence = 0;
 
 const renderPayPalMessage = async (script: PayPalNamespace | null) => {
   const isEligible = script
@@ -45,18 +48,24 @@ const renderPayPalMessage = async (script: PayPalNamespace | null) => {
 };
 
 const renderMessage = async () => {
+  const sequence = ++renderSequence;
   await loadConfig();
   if (!loadScript.value) return;
   await getScript(currency.value, commit)
-    .then(async (script) => await renderPayPalMessage(script))
+    .then(async (script) => {
+      if (sequence !== renderSequence) return;
+      await renderPayPalMessage(script);
+    })
     .catch((error) => useHandleError(error));
 };
+
+const debouncedRenderMessage = useDebounceFn(renderMessage, 300);
 
 onNuxtReady(async () => {
   await renderMessage();
 
   watch([currency, watchAmount, loadScript], async () => {
-    await renderMessage();
+    await debouncedRenderMessage();
   });
 });
 </script>
