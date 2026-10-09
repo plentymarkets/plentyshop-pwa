@@ -50,12 +50,6 @@
         :plenty-order-id="order.order.id"
         @on-payed="refetchOrderEvent()"
       />
-      <PayPalPayLaterBanner
-        placement="payment"
-        location="checkoutPage"
-        :amount="orderGetters.getTotal(orderGetters.getTotals(order))"
-        :commit="true"
-      />
     </div>
     <PayPalCreditCardBuyButton
       v-else-if="paymentKey === PayPalCreditCardPaymentKey"
