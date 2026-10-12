@@ -37,7 +37,7 @@ try {
     configFile: 'nuxt.config',
     onUpdate(config) {
       if (config.modules) {
-        config.modules = config.modules.filter((module) => module !== name);
+        config.modules = config.modules.filter((module) => (Array.isArray(module) ? module[0] : module) !== name);
       }
     },
   });

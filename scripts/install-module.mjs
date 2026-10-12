@@ -54,7 +54,7 @@ try {
     configFile: 'nuxt.config',
     onUpdate(config) {
       config.modules ??= [];
-      if (!config.modules.includes(name)) {
+      if (!config.modules.some((module) => (Array.isArray(module) ? module[0] : module) === name)) {
         config.modules.push(name);
       }
     },
