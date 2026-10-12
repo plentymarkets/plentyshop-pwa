@@ -17,6 +17,7 @@
     "build:analyze": "npm run turbo:disable-telemetry && turbo run build:analyze",
     "build:module": "npm run turbo:disable-telemetry && turbo run build --filter=\"./$MODULE_PATH\"",
     "install:module": "node ./scripts/install-module.mjs",
+    "uninstall:module": "node ./scripts/uninstall-module.mjs",
     "dev": "npm run turbo:disable-telemetry && turbo run dev",
     "start": "npm run turbo:disable-telemetry && turbo run start",
     "check:optimize-deps": "npm --prefix apps/web run check:optimize-deps",
