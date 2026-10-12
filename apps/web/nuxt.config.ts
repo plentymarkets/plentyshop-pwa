@@ -70,6 +70,9 @@ export default defineNuxtConfig({
       include: [...thirdPartyDeps, ...localPackageDeps],
     },
     build: {
+      // TODO debug-only: unminified output + sourcemaps for readable stacktraces. Revert after debugging.
+      minify: false,
+      sourcemap: true,
       modulePreload: { polyfill: false },
       rollupOptions: {
         output: {
