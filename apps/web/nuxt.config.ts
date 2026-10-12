@@ -29,6 +29,12 @@ export default defineNuxtConfig({
   },
   imports: {
     dirs: ['~/composables', '~/composables/**', '~/utils/**'],
+    // Nuxt skips node_modules by default, but extension packages (from any agency) ship runtime components
+    // that rely on auto-imports. Re-enable the transform for files matching:
+    //   node_modules/[@scope/]<package>/[<one folder, e.g. dist>/]runtime/...
+    transform: {
+      include: [/node_modules[\\/](?:@[^\\/]+[\\/])?[^\\/]+[\\/](?:[^\\/]+[\\/])?runtime[\\/]/],
+    },
   },
   alias: {
     '@workspace': resolve(__dirname, '..', '..'),
@@ -141,6 +147,7 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
+    '@plentymarkets/four-seasons',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
