@@ -1,9 +1,14 @@
 import type { LocaleMessages, Messages } from '~/components/SiteConfigurationView/types';
 
-const localeFilesCustomer = import.meta.glob('/node_modules/*/runtime/components/settings/**/lang.json', {
+const localeFilesCustomerRoot = import.meta.glob('/node_modules/*/runtime/components/settings/**/lang.json', {
   eager: true,
   import: 'default',
-}) as Messages;
+});
+const localeFilesCustomerWorkspace = import.meta.glob(
+  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/lang.json',
+  { eager: true, import: 'default' },
+);
+const localeFilesCustomer = { ...localeFilesCustomerRoot, ...localeFilesCustomerWorkspace } as Messages;
 const localeFilesNuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/**/lang.json', {
   eager: true,
   import: 'default',
