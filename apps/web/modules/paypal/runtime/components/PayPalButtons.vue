@@ -98,6 +98,31 @@
       <span>{{ t('paypalPayment.methodNotSupported') }}</span>
     </div>
   </template>
+
+  <Teleport to="#app-container" :disabled="!mounted">
+    <UiModal
+      v-if="paymentKey === PayPalPayUponInvoiceKey"
+      v-model="payPalPayUponInvoice"
+      class="h-full w-full @md:w-[600px] @md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalPayUponInvoiceForm
+        :order="order"
+        @confirm-cancel="handlePayUponInvoiceModalClosing"
+        @on-payed="refetchOrderEvent()"
+      />
+    </UiModal>
+    <UiModal
+      v-if="paypalCardDialog"
+      v-model="paypalCardDialog"
+      class="h-full w-full overflow-auto @md:w-[600px] @md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalCreditCardForm :order="order" @confirm-cancel="paypalCardDialog = false" @on-payed="refetchOrderEvent()" />
+    </UiModal>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -159,6 +184,11 @@ const PayPalIsAPM = computed(() => {
 });
 const paypalCardDialog = ref(false);
 const payPalPayUponInvoice = ref(false);
+const mounted = ref(false);
+
+onMounted(() => {
+  mounted.value = true;
+});
 
 const handlePayUponInvoiceModalClosing = () => {
   payPalPayUponInvoice.value = false;
