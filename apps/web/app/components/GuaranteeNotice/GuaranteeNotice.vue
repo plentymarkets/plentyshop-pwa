@@ -18,7 +18,7 @@
 
   <div class="w-full flex justify-center mt-4">
     <button type="button" class="cursor-pointer text-center underline hover:no-underline" @click="isOpen = true">
-      {{ t('checkout.guaranteeNotice') }} 123
+      {{ t('checkout.guaranteeNotice') }} 1234
     </button>
   </div>
 </template>
