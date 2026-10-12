@@ -2,9 +2,14 @@ import type { SettingsGroupLoader } from './types';
 
 // TODO: see if we can use https://github.com/nuxt/nuxt/releases/tag/v3.19.0 to replace the import.meta.glob
 
-const customer = import.meta.glob('/node_modules/*/runtime/components/settings/**/*.vue', {
-  import: 'default',
-}) as Record<string, SettingsGroupLoader>;
+const customerRoot = import.meta.glob('/node_modules/*/runtime/components/settings/**/*.vue', { import: 'default' });
+
+const customerWorkspace = import.meta.glob(
+  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/*.vue',
+  { import: 'default' },
+);
+
+const customer = { ...customerRoot, ...customerWorkspace } as Record<string, SettingsGroupLoader>;
 
 const nuxtModules = import.meta.glob('~~/modules/*/runtime/components/settings/**/*.vue', {
   import: 'default',

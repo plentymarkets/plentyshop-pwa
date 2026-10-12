@@ -1,7 +1,12 @@
 import type { BlockLoader, DefaultsModule } from './types';
-const customerBlocks = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
+const customerBlocksRoot = import.meta.glob('/node_modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
-}) as Record<string, BlockLoader>;
+});
+const customerBlocksWorkspace = import.meta.glob(
+  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/*.vue',
+  { import: 'default' },
+);
+const customerBlocks = { ...customerBlocksRoot, ...customerBlocksWorkspace } as Record<string, BlockLoader>;
 
 const nuxtModuleBlocks = import.meta.glob('~~/modules/*/runtime/components/blocks/**/*.vue', {
   import: 'default',
@@ -14,7 +19,11 @@ const coreBlocks = import.meta.glob('@/components/**/blocks/**/*.vue', { import:
 
 const coreBlockListLoaders = import.meta.glob('@/components/**/blocks/**/defaults.ts');
 
-const customerBlockListLoaders = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts');
+const customerBlockListLoadersRoot = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts');
+const customerBlockListLoadersWorkspace = import.meta.glob(
+  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/defaults.ts',
+);
+const customerBlockListLoaders = { ...customerBlockListLoadersRoot, ...customerBlockListLoadersWorkspace };
 
 const nuxtModuleBlockListLoaders = import.meta.glob('~~/modules/*/runtime/components/blocks/**/defaults.ts');
 
