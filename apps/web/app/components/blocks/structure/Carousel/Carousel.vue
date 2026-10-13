@@ -146,6 +146,7 @@ const navigationConfig = computed(() => {
     ? {
         nextEl: `.swiper-button-next-${meta.uuid}`,
         prevEl: `.swiper-button-prev-${meta.uuid}`,
+        addIcons: false,
       }
     : false;
 });
