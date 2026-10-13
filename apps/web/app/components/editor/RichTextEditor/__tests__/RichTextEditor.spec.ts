@@ -16,7 +16,7 @@ mockNuxtImport('useRichTextEditor', () => useRichTextEditor);
 mockNuxtImport('useBlocksList', () => useBlocksList);
 
 describe('RichTextEditor', () => {
-  it('should select H2 Footer with a 16px default and recognize the saved variant', async () => {
+  it('should select Footer H2 with a 16px default and recognize the saved variant', async () => {
     const onFontSizeChange = vi.fn();
     const onTextSizeChange = vi.fn();
     const wrapper = mount(RichTextEditorBasicButtons, {
@@ -47,7 +47,7 @@ describe('RichTextEditor', () => {
     expect(onFontSizeChange).toHaveBeenCalledWith('h2-footer');
     expect(onTextSizeChange).toHaveBeenCalledWith('1rem');
     await wrapper.setProps({ currentBlockType: 'h2-footer' });
-    expect(wrapper.get('[data-testid="rte-heading-select"]').text()).toBe('H2 Footer');
+    expect(wrapper.get('[data-testid="rte-heading-select"]').text()).toBe('Footer H2');
     expect(wrapper.get('[data-testid="rte-font-size-select"]').text()).toBe('16px');
     expect(
       wrapper.get('[data-testid="rte-heading-option-h2-footer"]').element.parentElement?.getAttribute('aria-selected'),
