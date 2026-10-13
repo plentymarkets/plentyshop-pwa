@@ -18,7 +18,7 @@ Your module also needs the marketplace-specific files covered below: `marketplac
 
 ## Scenarios
 
-### 1. Lay out the required marketplace files
+### Lay out the required marketplace files
 
 ```
 packages/<your-module>/
