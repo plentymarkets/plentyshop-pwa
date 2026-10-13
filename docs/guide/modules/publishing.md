@@ -60,7 +60,7 @@ packages/<your-module>/
 - `categories` must be a non-empty array of category IDs.
 - `keywords` is optional, but if present it must be an array.
 
-Every file under `meta/documents/` must exist and be non-empty, and `support_contact_en.md` must contain a support email address (an `@`).
+Every file under `meta/documents/` must exist and be non-empty, and support files must contain a support email address (an `@`).
 
 ### 2. Trigger the workflow
 
