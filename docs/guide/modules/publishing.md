@@ -57,7 +57,7 @@ packages/<your-module>/
 
 - `marketplaceName` and `shortDescription` must be objects keyed only by `en` and `de`, each a non-empty string.
 - `price` must be a number written with a decimal point (e.g. `0.0` or `10.0`, not a plain integer). It must be either `0.0` (free) or at least `10.0` (paid) — anything between `0` and `10` is rejected.
-- `categories` must be a non-empty array of category IDs.
+- `categories` must be ["4408"]. Other categories may become available in the future.
 - `keywords` is optional, but if present it must be an array.
 
 Every file under `meta/documents/` must exist and be non-empty, and support files must contain a support email address (an `@`).
