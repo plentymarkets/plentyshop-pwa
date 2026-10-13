@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The **Publish Module** workflow (`.github/workflows/publish-module.yml`) packages a module from `packages/` and publishes it to PlentyONE's private npm registry (`shop-npm-registry.plentyone.com`), making it installable from `plentyMarketplace`.
+The **Publish Module** workflow (`.github/workflows/publish-module.yml`) packages a module from `packages/` and publishes it to PlentyONE's private npm registry, making it installable from [the marketplace](https://marketplace.plentyone.com/en).
 
 Before anything is published, the workflow runs validation steps against your module folder. This guide walks through the files each validation expects, how to trigger the workflow, and what to fix if a validation fails.
 
