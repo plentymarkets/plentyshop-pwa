@@ -55,9 +55,33 @@ packages/<your-module>/
 | `shortDescription` | Yes      | Object           | Keyed only by `en` and `de`, each a non-empty string.                                                                                                                |
 | `price`            | Yes      | Number           | Written with a decimal point (e.g. `0.0` or `10.0`, not a plain integer). Must be `0.0` (free) or at least `10.0` (paid). Anything between `0` and `10` is rejected. |
 | `categories`       | Yes      | Array of strings | Must be `["4408"]`. Other categories may become available in the future.                                                                                             |
+| `subscription`     | No       | Array of objects | Offers the module as a subscription. One object per billing option, each with an `interval` and a `price`. See [Subscriptions](#subscriptions-and-free-trial).       |
 | `keywords`         | No       | Array            | If present, must be an array.                                                                                                                                        |
 
 Every file under `meta/documents/` must exist and be non-empty, and support files must contain a support email address (an `@`).
+
+### Subscriptions and free trial
+
+Besides a one-time purchase, you can offer your module as a subscription. Add a `subscription` array to `marketplace.json` with one entry per billing option. Remove the options you don't want to offer, for example to offer monthly billing only. Set the top-level `price` to `0.0` for the base module.
+
+```json
+{
+  "price": 0.0,
+  "subscription": [
+    { "interval": "monthly", "price": 10.0 },
+    { "interval": "quarterly", "price": 30.0 },
+    { "interval": "half-yearly", "price": 60.0 },
+    { "interval": "yearly", "price": 120.0 }
+  ]
+}
+```
+
+| Field      | Description                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------- |
+| `interval` | Billing interval: `monthly`, `quarterly`, `half-yearly`, or `yearly`.                           |
+| `price`    | Price per interval in euros. The PlentyONE docs state that only values above `10.00` are valid. |
+
+A free trial gives users the full functionality of the module for 30 days, once per user. Afterwards they must buy or subscribe to keep using it.
 
 ## 2. Trigger the workflow
 
