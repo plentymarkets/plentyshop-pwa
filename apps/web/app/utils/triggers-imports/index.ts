@@ -1,8 +1,13 @@
 import type { TriggerLoader } from './types';
 
-const customerTriggers = import.meta.glob('/node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
+const customerTriggersRoot = import.meta.glob('/node_modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
-}) as Record<string, TriggerLoader>;
+});
+const customerTriggersWorkspace = import.meta.glob(
+  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/**/settings/*/*ToolbarTrigger.vue',
+  { import: 'default' },
+);
+const customerTriggers = { ...customerTriggersRoot, ...customerTriggersWorkspace } as Record<string, TriggerLoader>;
 
 const nuxtModuleTriggers = import.meta.glob('~~/modules/*/runtime/components/**/settings/*/*ToolbarTrigger.vue', {
   import: 'default',
