@@ -125,6 +125,11 @@ export class CartPageObject extends PageObject {
     return this;
   }
 
+  openCheckout() {
+    cy.getByTestId('checkout-button').click();
+    return this;
+  }
+
   openCartViaQuickCheckout() {
     this.cartButton.click();
     return this;
