@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 describe('Rendering: PayPal components', () => {
-  it('[smoke] Render Cart page after selecting PayPal in the checkout + render PayPal buttons', () => {
+  it('[smoke] should render the cart page and PayPal buttons after selecting PayPal in checkout', () => {
     cy.intercept('/plentysystems/doLogin').as('doLogin');
     cy.intercept('/plentysystems/getSession').as('getSession');
     cy.intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');
