@@ -41,7 +41,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build module
-        run: npm run build:module
+        run: npm run module:build
 
       - name: Configure npm auth
         run: |
