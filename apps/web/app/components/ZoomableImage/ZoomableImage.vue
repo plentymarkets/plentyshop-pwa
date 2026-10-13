@@ -106,6 +106,7 @@ const nuxtImgProps = computed<Record<string, unknown>>(() => ({
   alt: imageAlt,
   title: imageTitle,
   'aria-hidden': activeIndex.value !== index.value,
+  src: imageUrl,
   fit: 'fill',
   class: isMobile.value
     ? { 'object-contain h-full w-full': true, zoomed: isZoomed.value }
