@@ -26,7 +26,8 @@
   margin: 0.85rem 0 0.35rem;
 }
 
-.rte-prose h5 {
+.rte-prose h5,
+.rte-prose h2[data-heading-variant='footer'] {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.2;

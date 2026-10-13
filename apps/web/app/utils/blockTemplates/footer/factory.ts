@@ -23,7 +23,7 @@ export const isLegacyFooterBlock = (block: Block | null | undefined): boolean =>
   !Array.isArray(block.content);
 
 function buildColumnTitleHtml(title: string): string {
-  return `<h2><span style="font-size: 1rem;">${title}</span></h2>`;
+  return `<h2 ${RTE_HEADING_VARIANT_ATTRIBUTE}="${RTE_FOOTER_HEADING_VARIANT}"><span style="font-size: 1rem;">${title}</span></h2>`;
 }
 
 function buildColumnHtml(columnGroup: string, groupLabel: string): string {

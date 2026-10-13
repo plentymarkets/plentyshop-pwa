@@ -15,6 +15,7 @@ import { setupRichTextEditorLinksFormatting } from './helpers/linksFormatting';
 import { stripInlineFontSizesFromHtml } from './helpers/pasteSanitizer';
 import { CustomLink } from './helpers/customLinkExtension';
 import { FontSize } from './helpers/fontSizeExtension';
+import { HeadingVariant } from './helpers/headingExtension';
 import { IconNode } from './helpers/iconExtension';
 import { AtomSelectionDecoration } from './helpers/atomSelectionDecoration';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -37,6 +38,7 @@ export function useRichTextEditor(args: UseRichTextEditorArgs) {
         link: false,
         underline: false,
       }),
+      HeadingVariant,
       Underline,
       CustomLink.configure({
         openOnClick: false,
