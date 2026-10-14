@@ -1,7 +1,6 @@
 import { useSiteSettings, watch, defineExtensionPlugin } from '#imports';
 import extensionConfig from '../extension.config';
 
-
 type ParticleType = 'snow' | 'leaves' | 'blossom' | 'sunflower';
 
 const SNOW_COLOR = '#ffffff';
@@ -38,7 +37,6 @@ interface Particle {
 }
 
 export default defineExtensionPlugin(extensionConfig.name, () => {
-
   const { getBooleanSetting: getEnabled } = useSiteSettings('fourSeasonsEnabled');
   const { getSetting: getParticleType } = useSiteSettings('fourSeasonsParticleType');
   const { getNumberSetting: getFlakeCount } = useSiteSettings('fourSeasonsFlakeCount');
