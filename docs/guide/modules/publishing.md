@@ -95,6 +95,6 @@ Run once with `dryRun` checked before publishing for real — it exercises every
 
 To check the result, open the workflow run and look at the status of each step. If a validation fails, the step's log names the missing or invalid file or field. Fix it, then re-run the workflow with the same inputs.
 
-## 3. After publishing
+## After publishing
 
 Once the module is uploaded, PlentyONE reviews it before it becomes available on the marketplace.
