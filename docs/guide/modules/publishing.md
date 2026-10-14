@@ -83,7 +83,7 @@ Besides a one-time purchase, you can offer your module as a subscription. Add a 
 
 A free trial gives users the full functionality of the module for 30 days, once per user. Afterwards they must buy or subscribe to keep using it.
 
-## 2. Trigger the workflow
+## Trigger the workflow
 
 1. Open the repository's **Actions** tab, select **Publish Module**, then **Run workflow**.
 2. Fill in the inputs:
