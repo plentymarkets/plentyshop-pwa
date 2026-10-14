@@ -1,5 +1,5 @@
 <template>
-  <Teleport to="#app-container">
+  <Teleport to="#app-container" :disabled="!mounted">
     <UiModal v-model="isOpen" tag="section" class="h-full @md:w-[600px] @md:h-fit m-0 p-0 overflow-y-auto">
       <header>
         <UiButton
@@ -27,4 +27,9 @@
 import { SfIconClose } from '@storefront-ui/vue';
 
 const isOpen = ref(false);
+const mounted = ref(false);
+
+onMounted(() => {
+  mounted.value = true;
+});
 </script>

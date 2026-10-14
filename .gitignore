@@ -24,6 +24,11 @@ cache
 dist
 .data
 
+# local module build output
+*.tar
+*.tar.gz
+*.tgz
+
 # testing
 apps/web/coverage/*
 !apps/web/coverage/coverage-summary.json

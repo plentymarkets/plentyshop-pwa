@@ -1,7 +1,4 @@
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
-export interface UseUrlPageMetaState {
-  loading: boolean;
-}
 
 export type StaticPageMeta = () => void;
 export type CategoriesPageMeta = (

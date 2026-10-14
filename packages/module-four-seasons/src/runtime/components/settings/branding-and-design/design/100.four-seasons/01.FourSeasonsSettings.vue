@@ -1,38 +1,45 @@
 <template>
-  <ExtensionBoundary :name="extensionConfig.name">
-    <div class="py-2 space-y-4">
-      <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ getEditorTranslation('enabled-label') }}</UiFormLabel>
-        <SfSwitch v-model="enabled" data-testid="four-seasons-enabled"
-          class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400" />
-      </div>
-
-      <div>
-        <UiFormLabel for="four-seasons-particle-type">{{ getEditorTranslation('particle-type-label') }}</UiFormLabel>
-        <SfSelect id="four-seasons-particle-type" v-model="particleType" data-testid="four-seasons-particle-type"
-          class="w-full mt-2">
-          <option value="snow">{{ getEditorTranslation('particle-type-snow') }}</option>
-          <option value="blossom">{{ getEditorTranslation('particle-type-blossom') }}</option>
-          <option value="sunflower">{{ getEditorTranslation('particle-type-sunflower') }}</option>
-          <option value="leaves">{{ getEditorTranslation('particle-type-leaves') }}</option>
-        </SfSelect>
-      </div>
-
-      <div>
-        <UiFormLabel for="four-seasons-flake-count">{{ getEditorTranslation('flake-count-label') }}</UiFormLabel>
-        <SfInput id="four-seasons-flake-count" v-model="flakeCount" type="number" :min="MIN_FLAKE_COUNT"
-          :max="MAX_FLAKE_COUNT" data-testid="four-seasons-flake-count" />
-      </div>
+  <div class="py-2 space-y-4">
+    <div class="flex justify-between mb-2">
+      <UiFormLabel>{{ getEditorTranslation('enabled-label') }}</UiFormLabel>
+      <SfSwitch
+        v-model="enabled"
+        data-testid="four-seasons-enabled"
+        class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
+      />
     </div>
-    <template #fallback>
-      Four Seasons extension is inactive
-    </template>
-  </ExtensionBoundary>
+
+    <div>
+      <UiFormLabel for="four-seasons-particle-type">{{ getEditorTranslation('particle-type-label') }}</UiFormLabel>
+      <SfSelect
+        id="four-seasons-particle-type"
+        v-model="particleType"
+        data-testid="four-seasons-particle-type"
+        class="w-full mt-2"
+      >
+        <option value="snow">{{ getEditorTranslation('particle-type-snow') }}</option>
+        <option value="blossom">{{ getEditorTranslation('particle-type-blossom') }}</option>
+        <option value="sunflower">{{ getEditorTranslation('particle-type-sunflower') }}</option>
+        <option value="leaves">{{ getEditorTranslation('particle-type-leaves') }}</option>
+      </SfSelect>
+    </div>
+
+    <div>
+      <UiFormLabel for="four-seasons-flake-count">{{ getEditorTranslation('flake-count-label') }}</UiFormLabel>
+      <SfInput
+        id="four-seasons-flake-count"
+        v-model="flakeCount"
+        type="number"
+        :min="MIN_FLAKE_COUNT"
+        :max="MAX_FLAKE_COUNT"
+        data-testid="four-seasons-flake-count"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { SfInput, SfSelect, SfSwitch } from '@storefront-ui/vue';
-import extensionConfig from '../../../../../extension.config';
 
 const MIN_FLAKE_COUNT = 0;
 const MAX_FLAKE_COUNT = 500;
@@ -57,7 +64,8 @@ const flakeCount = computed({
 });
 </script>
 
-<i18n lang="json">{
+<i18n lang="json">
+{
   "en": {
     "enabled-label": "Enable seasonal particle effect",
     "particle-type-label": "Particle type",
@@ -76,4 +84,5 @@ const flakeCount = computed({
     "particle-type-leaves": "Falling leaves",
     "flake-count-label": "Particle count"
   }
-}</i18n>
+}
+</i18n>

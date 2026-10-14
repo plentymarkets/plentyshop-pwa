@@ -86,7 +86,7 @@ export const useLocalization = createSharedComposable(() => {
    * @example getAvailableLocales()
    */
   const getAvailableLocales = () => {
-    const { localeCodes, availableLocales } = useI18n();
+    const { localeCodes, availableLocales } = useNuxtApp().$i18n;
     const config = useRuntimeConfig();
 
     const activeLanguages = new Set(
