@@ -70,13 +70,7 @@ export default defineNuxtConfig({
     plugins: [FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin, FailOnUnmarkedBlockOverridesPlugin],
     resolve: {
       alias: {
-        // cookiejs (via nuxt-viewport) ships a UMD `browser` entry without a default export.
-        // Vite 8 resolves to it and breaks the client bundle; force the ESM build instead.
         cookiejs: 'cookiejs/dist/cookie.esm.js',
-        // npm workspaces hoist installed modules to the monorepo root, outside Vite's project
-        // root (this app's own directory). Module/block/settings discovery globs under
-        // app/utils/ need this alias to reach hoisted `@plentymarkets/*` packages.
-        '#monorepo-root': resolve(__dirname, '../..'),
       },
     },
     optimizeDeps: {
@@ -151,7 +145,6 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
-    '@plentymarkets/four-seasons',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
