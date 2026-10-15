@@ -158,7 +158,9 @@ export class CheckoutPageObject extends PageObject {
 
     cy.visitAndHydrate(paths.checkout);
     if (withWaits) {
-      cy.wait(['@getSession', '@getMollieSettings', '@getShippingProvider', '@getPaymentProviders'], { timeout: 20000 });
+      cy.wait(['@getSession', '@getMollieSettings', '@getShippingProvider', '@getPaymentProviders'], {
+        timeout: 20000,
+      });
     }
     return this;
   }

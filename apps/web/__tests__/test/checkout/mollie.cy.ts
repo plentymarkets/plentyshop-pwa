@@ -60,7 +60,12 @@ describe('Mollie payment methods', () => {
     cy.intercept('/plentysystems/getOrder').as('getOrder');
 
     checkout.checkMolliePayPal().placeOrderButtons.click();
-    cy.wait(['@doAdditionalInformation', '@doPreparePayment', '@doCreateMolliePaymentFromBasket', '@doCreatePlentyPaymentFromMolliePayment']);
+    cy.wait([
+      '@doAdditionalInformation',
+      '@doPreparePayment',
+      '@doCreateMolliePaymentFromBasket',
+      '@doCreatePlentyPaymentFromMolliePayment',
+    ]);
 
     paymentStatus.selectPaid();
     cy.window().then((win) => {
