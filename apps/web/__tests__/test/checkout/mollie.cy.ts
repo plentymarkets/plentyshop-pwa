@@ -16,7 +16,7 @@ beforeEach(() => {
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   myAccount.successLogin();
   cy.wait('@doLogin');
-  checkout.goToCheckoutPath().acceptTerms();
+  checkout.goToCheckoutPath(true).acceptTerms();
 });
 
 describe('Mollie payment methods', () => {
@@ -60,10 +60,12 @@ describe('Mollie payment methods', () => {
     cy.intercept('/plentysystems/getOrder').as('getOrder');
 
     checkout.checkMolliePayPal().placeOrderButtons.click();
-    cy.wait('@doAdditionalInformation');
-    cy.wait('@doPreparePayment');
-    cy.wait('@doCreateMolliePaymentFromBasket');
-    cy.wait('@doCreatePlentyPaymentFromMolliePayment');
+    cy.wait([
+      '@doAdditionalInformation',
+      '@doPreparePayment',
+      '@doCreateMolliePaymentFromBasket',
+      '@doCreatePlentyPaymentFromMolliePayment',
+    ]);
 
     paymentStatus.selectPaid();
     cy.window().then((win) => {

@@ -150,8 +150,18 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  goToCheckoutPath() {
+  goToCheckoutPath(withWaits: boolean = false) {
+    cy.intercept('/plentysystems/getSession').as('getSession');
+    cy.intercept('/plentysystems/getMollieSettings').as('getMollieSettings');
+    cy.intercept('/plentysystems/getShippingProvider').as('getShippingProvider');
+    cy.intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');
+
     cy.visitAndHydrate(paths.checkout);
+    if (withWaits) {
+      cy.wait(['@getSession', '@getMollieSettings', '@getShippingProvider', '@getPaymentProviders'], {
+        timeout: 20000,
+      });
+    }
     return this;
   }
 
@@ -337,15 +347,19 @@ export class CheckoutPageObject extends PageObject {
 
   checkMolliePayPal() {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.intercept('/plentysystems/getSession').as('getSession');
+    cy.intercept('/plentysystems/getShippingProvider').as('getShippingProvider');
     cy.getByTestId('payment-method-6056').check({ force: true });
-    cy.wait('@setPaymentProvider');
+    cy.wait(['@setPaymentProvider', '@getShippingProvider', '@getSession']);
     return this;
   }
 
   checkMollieCreditCard() {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.intercept('/plentysystems/getSession').as('getSession');
+    cy.intercept('/plentysystems/getShippingProvider').as('getShippingProvider');
     cy.getByTestId('payment-method-6046').check({ force: true });
-    cy.wait('@setPaymentProvider');
+    cy.wait(['@setPaymentProvider', '@getShippingProvider', '@getSession']);
     return this;
   }
 
@@ -353,7 +367,7 @@ export class CheckoutPageObject extends PageObject {
     cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
     cy.intercept('/plentysystems/getSession').as('getSession');
     cy.intercept('/plentysystems/getShippingProvider').as('getShippingProvider');
-    cy.getByTestId('payment-method-6001', { timeout: 30000 }).should('exist').check({ force: true });
+    cy.getByTestId('payment-method-6001').should('exist').check({ force: true });
     cy.wait(['@setPaymentProvider', '@getSession', '@getShippingProvider']);
     return this;
   }
