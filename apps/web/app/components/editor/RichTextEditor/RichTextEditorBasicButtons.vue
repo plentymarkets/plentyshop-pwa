@@ -4,7 +4,7 @@
       <SfDropdown v-model="isBlockTypeOpen" placement="bottom-start" @update:model-value="onBlockTypeDropdownToggle">
         <template #trigger>
           <button
-            class="flex h-8 w-[96px] items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
+            class="flex h-8 w-28 items-center justify-between rounded px-2 text-sm font-bold hover:bg-gray-100"
             data-testid="rte-heading-select"
             type="button"
             @click="onBlockTypeTriggerClick"
@@ -30,7 +30,7 @@
 
         <ul
           aria-label="Text style"
-          class="-mt-1 z-popover w-[96px] rounded border border-gray-200 bg-white py-1 shadow-lg"
+          class="-mt-1 z-popover w-28 rounded border border-gray-200 bg-white py-1 shadow-lg"
           data-testid="rte-heading-options"
           role="listbox"
           @click.stop
@@ -184,6 +184,7 @@ const blockTypeOptions = [
   { value: 'h4', label: 'H4' },
   { value: 'h5', label: 'H5' },
   { value: 'h6', label: 'H6' },
+  { value: RTE_FOOTER_BLOCK_TYPE, label: 'Footer H2' },
 ];
 
 const fontSizeOptions = [
@@ -210,6 +211,7 @@ const headingFontSizeMap: Record<string, string> = {
   h4: '1.125rem',
   h5: '1rem',
   h6: '0.875rem',
+  [RTE_FOOTER_BLOCK_TYPE]: '1rem',
 };
 
 const selectedBlockTypeLabel = computed(() => {

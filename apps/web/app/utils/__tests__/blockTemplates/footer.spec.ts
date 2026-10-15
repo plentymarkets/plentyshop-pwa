@@ -4,8 +4,19 @@ import {
   migrateLegacyFooterToContainer,
 } from '~/utils/blockTemplates/footer/factory';
 import type { Block } from '@plentymarkets/shop-api';
+import type { TextCardContent } from '~/components/blocks/TextCard/types';
 
 describe('createFooterContainer', () => {
+  it('should create column titles as h2 headings with the footer variant', () => {
+    const footer = createFooterContainer();
+    const columns = footer.content[0]?.content as Block[];
+
+    for (const column of columns.slice(0, 2)) {
+      const content = column.content as TextCardContent;
+      expect(content.text.htmlDescription).toMatch(/^<h2 data-heading-variant="footer">/);
+    }
+  });
+
   it('should create a FooterContainer block', () => {
     const footer = createFooterContainer();
     expect(footer).toBeDefined();

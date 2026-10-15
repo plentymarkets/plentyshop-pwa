@@ -329,8 +329,8 @@ describe('useRichTextEditor', () => {
   });
 
   it('should return h2 block type when heading level 2 is active', () => {
-    isActiveSpy.mockImplementation((name: string, attrs?: { level?: number }) => {
-      return name === 'heading' && attrs?.level === 2;
+    isActiveSpy.mockImplementation((name: string, attrs?: Record<string, unknown>) => {
+      return name === 'heading' && attrs?.level === 2 && !attrs.variant;
     });
 
     const { modelValue, expanded, textAlign, onUpdateModelValue, onUpdateExpanded } = createRichTextEditorTestArgs();

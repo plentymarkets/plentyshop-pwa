@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import RichTextEditor from '../RichTextEditor.vue';
 import EditorRichTextEditorMenuButton from '../RichTextEditorMenuButton.vue';
+import RichTextEditorBasicButtons from '../RichTextEditorBasicButtons.vue';
 import { createMockUseRichTextEditor } from './test-utils';
 
 const { useRichTextEditor, useBlocksList } = vi.hoisted(() => {
@@ -15,6 +16,45 @@ mockNuxtImport('useRichTextEditor', () => useRichTextEditor);
 mockNuxtImport('useBlocksList', () => useBlocksList);
 
 describe('RichTextEditor', () => {
+  it('should select Footer H2 with a 16px default and recognize the saved variant', async () => {
+    const onFontSizeChange = vi.fn();
+    const onTextSizeChange = vi.fn();
+    const wrapper = mount(RichTextEditorBasicButtons, {
+      props: {
+        cmd: vi.fn(),
+        isActive: () => false,
+        currentBlockType: 'h2',
+        onFontSizeChange,
+        currentFontSize: '',
+        onTextSizeChange,
+        textColor: '',
+        setFontColor: vi.fn(),
+        toggleLink: vi.fn(),
+        insertIcon: vi.fn(),
+        insertEmoji: vi.fn(),
+      },
+      global: {
+        stubs: {
+          SfDropdown: { template: '<div><slot name="trigger" /><slot /></div>' },
+          EditorColorPicker: true,
+          EditorRichTextEditorIconEmojiPicker: true,
+        },
+      },
+    });
+
+    await wrapper.get('[data-testid="rte-heading-option-h2-footer"]').trigger('click');
+
+    expect(onFontSizeChange).toHaveBeenCalledWith('h2-footer');
+    expect(onTextSizeChange).toHaveBeenCalledWith('1rem');
+    await wrapper.setProps({ currentBlockType: 'h2-footer' });
+    expect(wrapper.get('[data-testid="rte-heading-select"]').text()).toBe('Footer H2');
+    expect(wrapper.get('[data-testid="rte-font-size-select"]').text()).toBe('16px');
+    expect(
+      wrapper.get('[data-testid="rte-heading-option-h2-footer"]').element.parentElement?.getAttribute('aria-selected'),
+    ).toBe('true');
+    wrapper.unmount();
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
     useBlocksList.mockReturnValue({ blocksListContext: ref('') });
