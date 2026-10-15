@@ -150,14 +150,16 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  goToCheckoutPath() {
+  goToCheckoutPath(withWaits: boolean = false) {
     cy.intercept('/plentysystems/getSession').as('getSession');
     cy.intercept('/plentysystems/getMollieSettings').as('getMollieSettings');
     cy.intercept('/plentysystems/getShippingProvider').as('getShippingProvider');
     cy.intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');
 
     cy.visitAndHydrate(paths.checkout);
-    cy.wait(['@getSession', '@getMollieSettings', '@getShippingProvider', '@getPaymentProviders'], { timeout: 20000 });
+    if (withWaits) {
+      cy.wait(['@getSession', '@getMollieSettings', '@getShippingProvider', '@getPaymentProviders'], { timeout: 20000 });
+    }
     return this;
   }
 

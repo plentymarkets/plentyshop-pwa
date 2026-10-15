@@ -16,7 +16,7 @@ beforeEach(() => {
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   myAccount.successLogin();
   cy.wait('@doLogin');
-  checkout.goToCheckoutPath().acceptTerms();
+  checkout.goToCheckoutPath(true).acceptTerms();
 });
 
 describe('Mollie payment methods', () => {
