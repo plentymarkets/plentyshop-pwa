@@ -27,7 +27,7 @@ describe('product page route', () => {
 
       expect(namedLocation.name).toBeDefined();
       expect(() => router.resolve(namedLocation)).not.toThrow();
-      expect(router.resolve(namedLocation).fullPath.replace('%2F', '/')).toBe(path);
+      expect(decodeLocalizedPathSlashes(router.resolve(namedLocation).fullPath, path)).toBe(path);
     },
   );
 });
