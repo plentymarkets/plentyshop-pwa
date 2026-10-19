@@ -30,7 +30,7 @@ const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
-const { variationId } = useProductAttributes();
+const { variationId, itemId } = useProductAttributes();
 const { addLastSeen } = useLastSeen();
 let variationWatchHandler: WatchStopHandle | undefined;
 
@@ -149,6 +149,7 @@ const observeRecommendedSection = () => {
 async function handleVariationChange() {
   if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
     try {
+      productParams.id = itemId.value.toString();
       productParams.variationId = variationId.value;
       await fetchProduct(productParams);
       setCurrentProduct(productForEditor.value || ({} as Product));
