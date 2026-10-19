@@ -37,6 +37,7 @@ let variationWatchHandler: WatchStopHandle | undefined;
 definePageMeta({
   layout: false,
   path: '/:slug*:sep(/a-|_):itemId',
+  alias: ['/:sep(a-):itemId'],
   validate: async (route) => {
     return validateProductParams(route.params);
   },
