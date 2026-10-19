@@ -97,7 +97,7 @@ watch(
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
-    if (value !== oldValue && !useCallisto().isEnabled) {
+    if (value !== oldValue) {
       navigateTo({
         path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
         query: route.query,
