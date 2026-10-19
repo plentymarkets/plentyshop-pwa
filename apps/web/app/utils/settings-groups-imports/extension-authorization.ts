@@ -16,21 +16,37 @@ const extensionConfigs = { ...extensionConfigRoot, ...extensionConfigWorkspace, 
 
 const RUNTIME_ROOT_PATTERN = /^(.*\/runtime\/)/;
 
-const extractRuntimeRoot = (path: string): string | null => {
+/**
+ * Extracts the directory prefix up to and including `runtime/` from a glob-matched path, used to
+ * correlate a settings component with the `extension.config.ts` of the package it was loaded from.
+ */
+export const extractRuntimeRoot = (path: string): string | null => {
   const match = path.match(RUNTIME_ROOT_PATTERN);
   return match?.[1] ?? null;
 };
 
-const extensionNameByRuntimeRoot: Record<string, string> = {};
+/**
+ * Builds a lookup of declared extension name by runtime-root directory from a set of
+ * `extension.config.ts` glob results.
+ */
+export const buildExtensionNameByRuntimeRoot = (
+  configs: Record<string, ExtensionConfigModule>,
+): Record<string, string> => {
+  const nameByRuntimeRoot: Record<string, string> = {};
 
-Object.entries(extensionConfigs).forEach(([path, configModule]) => {
-  const runtimeRoot = extractRuntimeRoot(path);
-  const name = configModule.default?.name;
+  Object.entries(configs).forEach(([path, configModule]) => {
+    const runtimeRoot = extractRuntimeRoot(path);
+    const name = configModule.default?.name;
 
-  if (runtimeRoot && name) {
-    extensionNameByRuntimeRoot[runtimeRoot] = name;
-  }
-});
+    if (runtimeRoot && name) {
+      nameByRuntimeRoot[runtimeRoot] = name;
+    }
+  });
+
+  return nameByRuntimeRoot;
+};
+
+const extensionNameByRuntimeRoot = buildExtensionNameByRuntimeRoot(extensionConfigs);
 
 /**
  * Determines whether a settings component glob path belongs to an active extension.
@@ -39,9 +55,12 @@ Object.entries(extensionConfigs).forEach(([path, configModule]) => {
  * modules without an extension config, and agency-local modules under `~~/modules` - is always
  * authorized, since it was never part of the backend-driven extension registry to begin with.
  */
-export const isSettingsPathAuthorized = (path: string): boolean => {
+export const isSettingsPathAuthorized = (
+  path: string,
+  nameByRuntimeRoot: Record<string, string> = extensionNameByRuntimeRoot,
+): boolean => {
   const runtimeRoot = extractRuntimeRoot(path);
-  const extensionName = runtimeRoot ? extensionNameByRuntimeRoot[runtimeRoot] : undefined;
+  const extensionName = runtimeRoot ? nameByRuntimeRoot[runtimeRoot] : undefined;
 
   if (!extensionName) {
     return true;
