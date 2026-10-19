@@ -30,13 +30,14 @@ const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
 const { isAuthorized } = useCustomer();
-const { variationId } = useProductAttributes();
+const { variationId, itemId } = useProductAttributes();
 const { addLastSeen } = useLastSeen();
 let variationWatchHandler: WatchStopHandle | undefined;
 
 definePageMeta({
   layout: false,
   path: '/:slug*:sep(/a-|_):itemId',
+  alias: ['/:sep(a-):itemId'],
   validate: async (route) => {
     return validateProductParams(route.params);
   },
@@ -149,6 +150,7 @@ const observeRecommendedSection = () => {
 async function handleVariationChange() {
   if (Number(productParams.variationId) !== variationId.value && variationId.value > 0) {
     try {
+      productParams.id = itemId.value.toString();
       productParams.variationId = variationId.value;
       await fetchProduct(productParams);
       setCurrentProduct(productForEditor.value || ({} as Product));

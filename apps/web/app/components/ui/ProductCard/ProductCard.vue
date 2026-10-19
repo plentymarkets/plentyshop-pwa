@@ -288,7 +288,8 @@ const productPath = computed(() => {
     return localePath(paths.globalItemDetails);
   }
   if (useCallisto().isEnabled) {
-    return localePath(`/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`);
+    const urlPath = productGetters.getUrlPath(product.value);
+    return localePath(`${urlPath ? `/${urlPath}` : ''}/a-${productGetters.getItemId(product.value)}`);
   }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
   const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product.value);
