@@ -147,6 +147,7 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
+    '@plentymarkets/four-seasons',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
