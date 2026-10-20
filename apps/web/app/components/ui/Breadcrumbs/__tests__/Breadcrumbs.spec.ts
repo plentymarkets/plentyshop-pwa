@@ -5,7 +5,7 @@ import { UiBreadcrumbs } from '#components';
 const { mockUseHead } = vi.hoisted(() => ({ mockUseHead: vi.fn() }));
 mockNuxtImport('useHead', () => mockUseHead);
 
-const routeRef = reactive({ path: '/' });
+const routeRef = reactive({ path: '/', meta: {} });
 const { useRouteMock } = vi.hoisted(() => ({ useRouteMock: vi.fn(() => routeRef) }));
 mockNuxtImport('useRoute', () => useRouteMock);
 
