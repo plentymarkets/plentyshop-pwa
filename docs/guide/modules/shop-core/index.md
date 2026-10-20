@@ -52,9 +52,11 @@ Outdated reference, see our [Google Analytics implementation](https://github.com
 - Utility composables for shop functionality
 - Exposes `useSdk` composable for initializing and accessing the SDK
 - Error handling.
+- Activation checks for licensed extensions
 
 ## Available pages
 
 - [Cookie Consent System](/guide/modules/shop-core/cookie-consent.md)
 - [Event Bus](/guide/modules/shop-core/event-bus.md)
 - [Error handling](/guide/modules/shop-core/error-handling.md)
+- [Extension Activation](/guide/modules/shop-core/extension-activation.md)

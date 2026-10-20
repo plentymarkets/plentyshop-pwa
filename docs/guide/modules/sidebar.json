@@ -64,6 +64,10 @@
       {
         "text": "Error Handling",
         "link": "/guide/modules/shop-core/error-handling.md"
+      },
+      {
+        "text": "Extension Activation",
+        "link": "/guide/modules/shop-core/extension-activation.md"
       }
     ]
   },
