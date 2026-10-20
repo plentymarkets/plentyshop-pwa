@@ -145,7 +145,7 @@ need those.
 ### Checking a different extension — `isExtensionAuthorized`
 
 `isActive()` is shorthand for checking your own extension's name. If you need to check whether
-*another* extension is active — a cross-extension dependency, for example — use the lower-level
+_another_ extension is active — a cross-extension dependency, for example — use the lower-level
 `isExtensionAuthorized` composable directly with that extension's name:
 
 ```ts
