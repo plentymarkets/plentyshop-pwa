@@ -58,10 +58,10 @@ Add a `marketplace.json` at the root of your module:
 ```
 
 | Field              | Required | Notes                                                                  |
-| ------------------ | -------- | ----------------------------------------------------------------------- |
+| ------------------ | -------- | ---------------------------------------------------------------------- |
 | `marketplaceName`  | yes      | Localized object with non-empty `en` and `de` strings, no other langs. |
 | `shortDescription` | yes      | Same localized shape as `marketplaceName`.                             |
-| `price`            | yes      | A float — `0.00` for free, or `10.00` and above for paid.               |
+| `price`            | yes      | A float — `0.00` for free, or `10.00` and above for paid.              |
 | `categories`       | yes      | Non-empty array of marketplace category IDs.                           |
 | `keywords`         | no       | Array, if present.                                                     |
 
