@@ -13,17 +13,22 @@ working reference for all of it.
 
 ## Declare your extension config
 
-Create `extension.config.ts` at the root of your module and declare its name with
-`defineExtensionConfig`:
+Create `extension.config.ts` inside your module's `runtime/` folder, next to its `plugins/`,
+`composables/`, and `components/`, and declare its name with `defineExtensionConfig`:
 
 ```ts
-// my-module/extension.config.ts
+// my-module/runtime/extension.config.ts
 import { defineExtensionConfig } from '#imports';
 
 export default defineExtensionConfig({
   name: '@plentymarkets/four-seasons',
 });
 ```
+
+It belongs inside `runtime/` rather than at the module root because that's the only part of the
+source tree that reaches the published package: `packages/module-four-seasons`'s `package.json`
+only lists `dist`, `marketplace.json`, and `meta` in its `files` array, and its build step copies
+`src/runtime` into `dist/runtime` — a root-level config would never ship.
 
 The `name` must exactly match your module's own package name — the `name` field in its
 `package.json` (`@plentymarkets/four-seasons` in this example). That's the identifier PlentyONE
@@ -44,7 +49,6 @@ sets `meta.name: 'four-seasons'` while its `extension.config.ts` name is the ful
 Add a `marketplace.json` at the root of your module:
 
 ```json
-// my-module/marketplace.json
 {
   "marketplaceName": { "en": "Four Seasons", "de": "Vier Jahreszeiten" },
   "price": 0.0,
@@ -101,9 +105,4 @@ so they're included when the package is published.
 
 ## Publishing
 
-When a module is published through `.github/workflows/publish-module.yml`, `marketplace.json`, the
-preview images, and the `meta/` files are all validated before the package is built and pushed to the
-registry — see the scripts under `.github/workflows/scripts/publish-module/` for the exact checks.
-
-With the config and listing files in place, continue to [Gates](/guide/modules/marketplace/gates.md)
-to gate your module's own code behind the extension config.
+Publishing extensions to plentyMarketplace is coming soon.

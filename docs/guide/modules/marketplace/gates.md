@@ -18,7 +18,7 @@ behind the extension. It skips `setup` entirely when the extension isn't active:
 ```ts
 // my-module/runtime/plugins/some.plugin.ts
 import { defineExtensionPlugin } from '#imports';
-import extensionConfig from '../../extension.config';
+import extensionConfig from '../extension.config';
 
 export default defineExtensionPlugin(extensionConfig.name, (nuxtApp) => {
   // only runs when the extension is active
@@ -49,7 +49,7 @@ re-importing it each time. Use it for early returns anywhere that isn't a full
 
 ```ts
 // my-module/runtime/composables/useSomething.ts
-import extensionConfig from '../../extension.config';
+import extensionConfig from '../extension.config';
 
 export function useSomething() {
   if (!extensionConfig.isActive()) return;
@@ -105,8 +105,9 @@ if (isExtensionAuthorized('@plentymarkets/some-other-extension')) {
 }
 ```
 
-## Editor settings don't need gating
+## Editor settings aren't gated automatically
 
-If your extension adds a [site setting](/guide/editor/site-settings-architecture.md), you don't need
-to gate it with any of the helpers above. Settings for inactive extensions are hidden from the editor's
-settings drawer automatically — add the setting the normal way and licensing is handled for you.
+If your extension adds a [site setting](/guide/editor/site-settings-architecture.md), nothing hides
+it for unlicensed shops on its own — the settings drawer loads and mounts every registered settings
+component regardless of license status. Gate the settings component the same way as any other
+component tree, with `ExtensionBoundary` or a `v-if="extensionConfig.isActive()"`.
