@@ -1,5 +1,7 @@
 ---
-prev: false
+prev:
+  text: Setup
+  link: /guide/modules/marketplace/setup.md
 next: false
 ---
 
@@ -91,23 +93,6 @@ check from above, wrapped in a component so you get slot laziness and a `fallbac
 A plain `v-if="extensionConfig.isActive()"` in your own component works just as well if you don't
 need those.
 
-## Checking a different extension — `isExtensionAuthorized`
+## Editor settings are gated automatically
 
-`isActive()` is shorthand for checking your own extension's name. If you need to check whether
-_another_ extension is active — a cross-extension dependency, for example — use the lower-level
-`isExtensionAuthorized` composable directly with that extension's name:
-
-```ts
-import { isExtensionAuthorized } from '#imports';
-
-if (isExtensionAuthorized('@plentymarkets/some-other-extension')) {
-  // ...
-}
-```
-
-## Editor settings aren't gated automatically
-
-If your extension adds a [site setting](/guide/editor/site-settings-architecture.md), nothing hides
-it for unlicensed shops on its own — the settings drawer loads and mounts every registered settings
-component regardless of license status. Gate the settings component the same way as any other
-component tree, with `ExtensionBoundary` or a `v-if="extensionConfig.isActive()"`.
+If your extension adds a [site setting](/guide/editor/site-settings-architecture.md), it will hide automatically.

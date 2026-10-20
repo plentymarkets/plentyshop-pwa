@@ -1,6 +1,8 @@
 ---
 prev: false
-next: false
+next:
+  text: Setup
+  link: /guide/modules/marketplace/setup.md
 ---
 
 # Marketplace
@@ -17,10 +19,11 @@ the regular [Modules guides](/guide/modules/index.md).
 
 Being a licensed extension changes two things compared to a regular module:
 
-- **Activation is conditional.** PlentyONE tracks which extensions are actually licensed for a
-  given shop, and `@plentymarkets/shop-core` fetches that list once per server request. Your code
-  needs to check it before running — see [Gates](/guide/modules/marketplace/gates.md).
 - **The marketplace needs more than Nuxt module code.** On top of being a valid Nuxt module, an
   extension needs an `extension.config.ts` so the gates above have something to check, plus a
   `marketplace.json` and a `meta/` folder of icons, previews, and docs so it can actually be listed
   — see [Setup](/guide/modules/marketplace/setup.md).
+
+- **Activation is conditional.** PlentyONE tracks which extensions are actually licensed for a
+  given shop, and `@plentymarkets/shop-core` fetches that list once per server request. Your code
+  needs to check it before running — see [Gates](/guide/modules/marketplace/gates.md).

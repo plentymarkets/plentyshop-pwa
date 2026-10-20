@@ -1,6 +1,10 @@
 ---
-prev: false
-next: false
+prev:
+  text: Introduction
+  link: /guide/modules/marketplace/introduction.md
+next:
+  text: Gates
+  link: /guide/modules/marketplace/gates.md
 ---
 
 # Setup
@@ -11,10 +15,26 @@ regular module: an `extension.config.ts` so its own code can gate itself (see
 can be listed on the marketplace at all. [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) in this repository is a
 working reference for all of it.
 
-## Declare your extension config
+## One name, everywhere
+
+Your extension's name ends up written in three places: `package.json`, `extension.config.ts`, and
+your module's own `meta.name`. Keep all three identical — the same scoped string, e.g.
+`@plentymarkets/four-seasons` — so there's never any ambiguity about which package, config, and
+registered Nuxt module belong to the same extension.
+
+### `package.json`
+
+```json
+// my-module/package.json
+{
+  "name": "@plentymarkets/four-seasons"
+}
+```
+
+### `extension.config.ts`
 
 Create `extension.config.ts` inside your module's `runtime/` folder, next to its `plugins/`,
-`composables/`, and `components/`, and declare its name with `defineExtensionConfig`:
+`composables/`, and `components/`, and declare the same name with `defineExtensionConfig`:
 
 ```ts
 // my-module/runtime/extension.config.ts
@@ -30,18 +50,36 @@ source tree that reaches the published package: `packages/module-four-seasons`'s
 only lists `dist`, `marketplace.json`, and `meta` in its `files` array, and its build step copies
 `src/runtime` into `dist/runtime` — a root-level config would never ship.
 
-The `name` must exactly match your module's own package name — the `name` field in its
-`package.json` (`@plentymarkets/four-seasons` in this example). That's the identifier PlentyONE
-licenses the extension under and returns from the backend's extensions list, so it has to match
-exactly. Every other file in your module imports this one config object rather than repeating that
-string.
+This is the identifier PlentyONE licenses the extension under and returns from the backend's
+extensions list, so it has to match `package.json`'s `name` exactly. Every other file in your module
+imports this one config object rather than repeating the string.
 
-::: tip `meta.name` is unrelated
-`defineNuxtModule({ meta: { name: ... } })` in your module's own `module.mts`/`index.ts` is Nuxt
-Kit's own module-registry identity (used for dedupe, HMR, devtools) — it has no bearing on
-licensing and doesn't need to match your package name. `packages/module-four-seasons/src/module.mts`
-sets `meta.name: 'four-seasons'` while its `extension.config.ts` name is the full
-`@plentymarkets/four-seasons`; only the latter is checked against the backend's licensed extensions.
+### `module.mts` / `index.ts`
+
+Your module's own Nuxt entry point also needs the same name, on `meta.name`:
+
+```ts
+// my-module/src/module.mts
+import { defineNuxtModule } from '@nuxt/kit';
+
+export default defineNuxtModule({
+  meta: {
+    name: '@plentymarkets/four-seasons',
+    configKey: 'plentymarketsFourSeasons',
+  },
+  // ...
+});
+```
+
+`configKey` can still be whatever reads best in `nuxt.config.ts` — only `meta.name` needs to match
+the other two.
+
+::: tip Keeping the string in one place
+`defineExtensionConfig` relies on the `#imports` auto-import, which only resolves in runtime files
+processed by Nuxt's Vite build. Your module's own `module.mts`/`index.ts` is loaded directly by Nuxt
+Kit in Node and has no access to `#imports`, so it can't import `extension.config.ts` and has to
+repeat the name as its own literal. Keep the string itself in sync by copying it carefully whenever
+it changes — the two declarations can't share a single source of truth.
 :::
 
 ## Describe it for the marketplace listing
