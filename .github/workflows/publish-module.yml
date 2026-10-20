@@ -54,15 +54,6 @@ jobs:
           NPM_USERNAME: ${{ secrets.PLENTY_MARKETPLACE_NPM_USERNAME }}
           NPM_PASSWORD: ${{ secrets.PLENTY_MARKETPLACE_NPM_PASSWORD }}
 
-      - name: Verify npm auth
-        run: |
-          if [ ! -s "${{ github.workspace }}/.npmrc" ]; then
-            echo "::error::.npmrc was not created or is empty"
-            exit 1
-          fi
-          echo "npmrc line count: $(wc -l < "${{ github.workspace }}/.npmrc")"
-          npm whoami --userconfig "${{ github.workspace }}/.npmrc" --registry "https://${NPM_REGISTRY_HOST}"
-
       - name: Publish
         working-directory: ${{ env.MODULE_PATH }}
         run: npm publish --ignore-scripts --userconfig "${{ github.workspace }}/.npmrc" --registry "https://${NPM_REGISTRY_HOST}" $DRY_RUN_FLAG
