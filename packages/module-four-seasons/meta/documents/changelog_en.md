@@ -2,7 +2,7 @@
 
 ## 1.0.2
 
-- Fixed: maintenance of the gates that guard the active/inactive state of the extension, so the Four Seasons overlay is only shown while the extension is active.
+- Fixed: add required gates that guard the active/inactive state of the extension, so the Four Seasons overlay is only shown while the extension is active.
 
 ## 1.0.1
 

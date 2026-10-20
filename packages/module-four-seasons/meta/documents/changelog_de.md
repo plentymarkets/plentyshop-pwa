@@ -2,7 +2,7 @@
 
 ## 1.0.2
 
-- Behoben: Wartung der Schranken (Gates), die den aktiven/inaktiven Status der Erweiterung steuern, sodass der Vier-Jahreszeiten-Effekt nur angezeigt wird, solange die Erweiterung aktiv ist.
+- Behoben: verpflichtende Prüfung des Aktivierungsstatus hinzugefügt, sodass der Vier-Jahreszeiten-Effekt nur angezeigt wird, solange die Erweiterung aktiv ist.
 
 ## 1.0.1
 
