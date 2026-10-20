@@ -15,7 +15,7 @@ mockNuxtImport('useWishlist', () => useWishlistMock);
 mockNuxtImport('useCart', () => useCartMock);
 mockNuxtImport('useCustomer', () => useCustomerMock);
 mockNuxtImport('useLocalePath', () => () => (path: string) => path);
-mockNuxtImport('useRoute', () => () => ({ path: '/' }));
+mockNuxtImport('useRoute', () => () => ({ path: '/', meta: {} }));
 
 const stubs = {
   NuxtLink: { template: '<a :href="to"><slot /></a>', props: ['to'] },
