@@ -3,65 +3,14 @@ prev: false
 next: false
 ---
 
-# Extension Activation
+# Gates
 
-Not every module installed into a shop is necessarily licensed for that shop. PlentyONE tracks which
-extensions are actually active per shop, and `@plentymarkets/shop-core` fetches that list once per
-server request and exposes it through a small set of helpers. If your module is an **extension**
-(gated behind PlentyONE licensing rather than always-on), it must declare a config with
-`defineExtensionConfig` and use the helpers below to gate its own code — otherwise your module's
-features will run even when the shop isn't licensed for them.
+Once your module has an `extension.config.ts` (see [Setup](/guide/modules/marketplace/setup.md)),
+use the helpers below to gate its code. Your module's code can be reached through a few different
+entry points — a plugin, a composable called from a component, a component mounted directly — and
+each one needs its own check. Pick whichever of the following matches each call site.
 
-::: tip Not building a licensed extension?
-If your module should simply always be active once installed, none of this applies — just follow the
-regular [Modules guides](/guide/modules/index.md).
-:::
-
-## 1. Declare your extension config
-
-Create `extension.config.ts` at the root of your module and declare its name with
-`defineExtensionConfig`:
-
-```ts
-// my-module/extension.config.ts
-import { defineExtensionConfig } from '#imports';
-
-export default defineExtensionConfig({
-  name: '@plentymarkets/four-seasons',
-});
-```
-
-The `name` must exactly match your module's own package name — the `name` field in its
-`package.json` (`@plentymarkets/four-seasons` in this example). That's the same identifier
-PlentyONE licenses the extension under, so it has to match exactly. Every other file in your module
-imports this one config object rather than repeating that string.
-
-`defineExtensionConfig` relies on the `#imports` auto-import, which only resolves in runtime files
-(plugins, components, composables) processed by Nuxt's Vite build. Your module's own `index.ts` — the
-one with `defineNuxtModule`, loaded directly by Nuxt Kit in Node — has no access to `#imports`, so it
-needs the same name written as its own literal:
-
-```ts
-// my-module/index.ts
-import { defineNuxtModule } from '@nuxt/kit';
-
-export default defineNuxtModule({
-  meta: { name: '@plentymarkets/four-seasons' },
-  // ...
-});
-```
-
-So the name is written as a literal in two places — `meta.name` and the `defineExtensionConfig`
-call — rather than one, but every plugin, composable, and component after that reads it from
-`extension.config.ts` instead of repeating the string.
-
-## 2. Gate your code
-
-Your module's code can be reached through a few different entry points — a plugin, a composable
-called from a component, a component mounted directly — and each one needs its own check. Pick
-whichever of the following matches each call site.
-
-### Plugins — `defineExtensionPlugin`
+## Plugins — `defineExtensionPlugin`
 
 Use `defineExtensionPlugin` instead of `defineNuxtPlugin` when a plugin's whole purpose is gated
 behind the extension. It skips `setup` entirely when the extension isn't active:
@@ -91,7 +40,7 @@ export default defineExtensionPlugin(extensionConfig.name, {
 This only gates the plugin's own `setup`. Code reached independently of this plugin still needs one
 of the checks below.
 
-### Composables and utils — `isActive()`
+## Composables and utils — `isActive()`
 
 The config returned by `defineExtensionConfig` carries an `isActive()` method that re-evaluates on
 every call, so it's safe to hold onto the same `extensionConfig` object everywhere rather than
@@ -108,7 +57,7 @@ export function useSomething() {
 }
 ```
 
-### Component trees — `ExtensionBoundary`
+## Component trees — `ExtensionBoundary`
 
 Wrap the subtree in `ExtensionBoundary` instead of checking activity in every component's `setup`.
 Vue slots are lazy, so the `v-if` inside `ExtensionBoundary` prevents the slot content's
@@ -142,7 +91,7 @@ check from above, wrapped in a component so you get slot laziness and a `fallbac
 A plain `v-if="extensionConfig.isActive()"` in your own component works just as well if you don't
 need those.
 
-### Checking a different extension — `isExtensionAuthorized`
+## Checking a different extension — `isExtensionAuthorized`
 
 `isActive()` is shorthand for checking your own extension's name. If you need to check whether
 _another_ extension is active — a cross-extension dependency, for example — use the lower-level

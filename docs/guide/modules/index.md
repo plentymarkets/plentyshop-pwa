@@ -48,7 +48,9 @@ The [Event Bus](/guide/modules/shop-core/event-bus.md) provides decoupled commun
 
 [Error Handling](/guide/modules/shop-core/error-handling.md) gives you a single composable that translates API errors into localised user-facing notifications, keeping error presentation consistent across the shop.
 
-Finally, if your module is a licensed PlentyONE extension rather than an always-on module, [Extension Activation](/guide/modules/shop-core/extension-activation.md) covers the required `defineExtensionConfig` setup and the helpers that gate your plugins, composables, and components behind it.
+## Marketplace
+
+If your module is a licensed [plentyMarketplace](https://marketplace.plentymarkets.com/) extension rather than an always-on module, the [Marketplace](/guide/modules/marketplace/introduction.md) guides cover the required [setup](/guide/modules/marketplace/setup.md) and the [gates](/guide/modules/marketplace/gates.md) that keep your plugins, composables, and components from running when the shop isn't licensed for them.
 
 ## Further reading
 
