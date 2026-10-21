@@ -61,15 +61,10 @@ import { defineNuxtModule } from '@nuxt/kit';
 export default defineNuxtModule({
   meta: {
     name: '@plentymarkets/four-seasons',
-    configKey: 'plentymarketsFourSeasons',
   },
   // ...
 });
 ```
-
-`configKey` can still be whatever reads best in `nuxt.config.ts` — only `meta.name` needs to match
-the other two.
-
 
 ## Describe it for the marketplace listing
 
