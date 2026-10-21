@@ -9,6 +9,7 @@ Once your module has an `extension.config.ts` (see [Setup](/guide/modules/market
 use the helpers below to gate its code. Your module's code can be reached through a few different
 entry points — a plugin, a composable called from a component, a component mounted directly — and
 each one needs its own check. Pick whichever of the following matches each call site.
+If your extension adds a [site setting](/guide/editor/site-settings-architecture.md), it will gate it automatically.
 
 ## Plugins — `defineExtensionPlugin`
 
@@ -88,7 +89,3 @@ An optional `fallback` slot renders instead when the extension is not active:
 check from above, wrapped in a component so you get slot laziness and a `fallback` slot for free.
 A plain `v-if="extensionConfig.isActive()"` in your own component works just as well if you don't
 need those.
-
-## Editor settings are gated automatically
-
-If your extension adds a [site setting](/guide/editor/site-settings-architecture.md), it will hide automatically.
