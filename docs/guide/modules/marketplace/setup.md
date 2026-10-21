@@ -11,7 +11,7 @@ regular module: an `extension.config.ts` so its own code can gate itself (see
 can be listed on the marketplace at all. [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) in this repository is a
 working reference for all of it.
 
-## One name, everywhere
+## Name identifier
 
 Your extension's name ends up written in three places: `package.json`, `extension.config.ts`, and
 your module's own `meta.name`. Keep all three identical — the same scoped string, e.g.
