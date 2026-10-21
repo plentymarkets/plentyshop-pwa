@@ -37,8 +37,6 @@ export default defineExtensionPlugin(extensionConfig.name, {
 });
 ```
 
-This only gates the plugin's own `setup`. Code reached independently of this plugin still needs one
-of the checks below.
 
 ## Composables and utils — `isActive()`
 
