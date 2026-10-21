@@ -8,7 +8,7 @@ next: true
 A module that's licensed and distributed through plentyMarketplace needs two things beyond a
 regular module: an `extension.config.ts` so its own code can gate itself (see
 [Gates](/guide/modules/marketplace/gates.md)), and a `marketplace.json` plus a `meta/` folder so it
-can be listed on the marketplace at all. [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) in this repository is a
+can be listed on the marketplace at all. [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) is a
 working reference for all of it.
 
 ## Name identifier
