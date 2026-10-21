@@ -70,13 +70,6 @@ export default defineNuxtModule({
 `configKey` can still be whatever reads best in `nuxt.config.ts` — only `meta.name` needs to match
 the other two.
 
-::: tip Keeping the string in one place
-`defineExtensionConfig` relies on the `#imports` auto-import, which only resolves in runtime files
-processed by Nuxt's Vite build. Your module's own `module.mts`/`index.ts` is loaded directly by Nuxt
-Kit in Node and has no access to `#imports`, so it can't import `extension.config.ts` and has to
-repeat the name as its own literal. Keep the string itself in sync by copying it carefully whenever
-it changes — the two declarations can't share a single source of truth.
-:::
 
 ## Describe it for the marketplace listing
 
