@@ -8,7 +8,7 @@ next: true
 When a module author wants to release their module on [plentyMarketplace](https://marketplace.plentymarkets.com/),
 what they release is called an **extension**. The two terms aren't interchangeable: every extension
 is a module, but not every module is an extension — only the ones distributed through the
-marketplace and licensed per shop.
+marketplace.
 
 ::: tip Not releasing to the marketplace?
 If your module should simply always be active once installed, none of this applies — just follow
