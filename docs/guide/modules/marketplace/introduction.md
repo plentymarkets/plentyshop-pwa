@@ -22,6 +22,6 @@ Being a licensed extension changes two things compared to a regular module:
   `marketplace.json` and a `meta/` folder of icons, previews, and docs so it can actually be listed
   — see [Setup](/guide/modules/marketplace/setup.md).
 
-- **Activation is conditional.** PlentyONE tracks which extensions are actually licensed for a
+- **Activation is conditional.** PlentyONE tracks which extensions have been activated for a
   given shop, and `@plentymarkets/shop-core` fetches that list once per server request. Your code
   needs to check it before running — see [Gates](/guide/modules/marketplace/gates.md).
