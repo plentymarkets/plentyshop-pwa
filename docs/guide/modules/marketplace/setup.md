@@ -1,10 +1,6 @@
 ---
-prev:
-  text: Introduction
-  link: /guide/modules/marketplace/introduction.md
-next:
-  text: Gates
-  link: /guide/modules/marketplace/gates.md
+prev: true
+next: true
 ---
 
 # Setup
