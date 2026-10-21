@@ -1,7 +1,5 @@
 ---
-prev:
-  text: Setup
-  link: /guide/modules/marketplace/setup.md
+prev: true
 next: false
 ---
 
