@@ -41,10 +41,6 @@ export default defineExtensionConfig({
 });
 ```
 
-It belongs inside `runtime/` rather than at the module root because that's the only part of the
-source tree that reaches the published package: `packages/module-four-seasons`'s `package.json`
-only lists `dist`, `marketplace.json`, and `meta` in its `files` array, and its build step copies
-`src/runtime` into `dist/runtime` — a root-level config would never ship.
 
 This is the identifier PlentyONE licenses the extension under and returns from the backend's
 extensions list, so it has to match `package.json`'s `name` exactly. Every other file in your module
