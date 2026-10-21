@@ -41,7 +41,7 @@ const { navigateTo } = vi.hoisted(() => ({
 }));
 
 const { useRoute } = vi.hoisted(() => ({
-  useRoute: vi.fn(() => ({ path: '/' })),
+  useRoute: vi.fn(() => ({ path: '/', meta: {} })),
 }));
 
 mockNuxtImport('useEditor', () => useEditor);

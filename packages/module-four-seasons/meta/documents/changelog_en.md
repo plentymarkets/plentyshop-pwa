@@ -1,5 +1,9 @@
 # Release Notes for Four Seasons
 
+## 1.0.2
+
+- Fixed: add required gates that guard the active/inactive state of the extension, so the Four Seasons overlay is only shown while the extension is active.
+
 ## 1.0.1
 
 - Fixed: the settings component is now located in `src/runtime`, so the Four Seasons settings are detected and shown in the editor under Branding & Design → Design.

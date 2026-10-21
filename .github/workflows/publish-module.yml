@@ -56,7 +56,7 @@ jobs:
 
       - name: Publish
         working-directory: ${{ env.MODULE_PATH }}
-        run: npm publish --ignore-scripts --registry "https://${NPM_REGISTRY_HOST}" $DRY_RUN_FLAG
+        run: npm publish --ignore-scripts --userconfig "${{ github.workspace }}/.npmrc" --registry "https://${NPM_REGISTRY_HOST}" $DRY_RUN_FLAG
         env:
           DRY_RUN_FLAG: ${{ inputs.dryRun && '--dry-run' || '' }}
 
