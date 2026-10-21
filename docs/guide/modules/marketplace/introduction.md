@@ -17,7 +17,7 @@ the regular [Modules guides](/guide/modules/index.md).
 
 Being a licensed extension changes two things compared to a regular module:
 
-- **The marketplace needs more than Nuxt module code.** On top of being a valid Nuxt module, an
+- **Required meta information.** On top of being a valid Nuxt module, an
   extension needs an `extension.config.ts` so the gates above have something to check, plus a
   `marketplace.json` and a `meta/` folder of icons, previews, and docs so it can actually be listed
   — see [Setup](/guide/modules/marketplace/setup.md).
