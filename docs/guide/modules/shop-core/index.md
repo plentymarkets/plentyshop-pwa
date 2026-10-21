@@ -52,7 +52,7 @@ Outdated reference, see our [Google Analytics implementation](https://github.com
 - Utility composables for shop functionality
 - Exposes `useSdk` composable for initializing and accessing the SDK
 - Error handling.
-- Activation checks for licensed extensions (see [Marketplace](/guide/modules/marketplace/introduction.md))
+- Activation checks for published extensions (see [Marketplace](/guide/modules/marketplace/introduction.md))
 
 ## Available pages
 
