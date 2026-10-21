@@ -38,7 +38,6 @@ export default defineExtensionPlugin(extensionConfig.name, {
 });
 ```
 
-
 ## Composables and utils — `isActive()`
 
 The config returned by `defineExtensionConfig` carries an `isActive()` method that re-evaluates on
