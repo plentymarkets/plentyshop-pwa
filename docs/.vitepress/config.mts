@@ -29,7 +29,7 @@ export default withMermaid({
   ],
   vite: {
     optimizeDeps: {
-      include: ["debug"],
+      include: ["debug", "fastdom", "fastdom/extensions/fastdom-promised.js"],
     },
   },
   markdown: {
