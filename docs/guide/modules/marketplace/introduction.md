@@ -15,7 +15,7 @@ If your module should simply always be active once installed, none of this appli
 the regular [Modules guides](/guide/modules/index.md).
 :::
 
-Being a licensed extension changes two things compared to a regular module:
+Being a published extension changes two things compared to a regular module:
 
 - **Required meta information.** On top of being a valid Nuxt module, an
   extension needs an `extension.config.ts` so the gates above have something to check, plus a
