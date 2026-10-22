@@ -6,7 +6,7 @@ next: true
 # Setup
 
 This guide explains how to prepare a module for distribution through plentyMarketplace. A module
-that's licensed and distributed this way is called an **extension** (see
+that's published and distributed this way is called an **extension** (see
 [Introduction](/guide/modules/marketplace/introduction.md)), and needs two things beyond a regular
 module: an `extension.config.ts` so its own code can gate itself (see
 [Gates](/guide/modules/marketplace/gates.md)), and a `marketplace.json` plus a `meta/` folder so it
