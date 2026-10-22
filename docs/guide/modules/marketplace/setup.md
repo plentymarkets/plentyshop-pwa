@@ -5,12 +5,8 @@ next: true
 
 # Setup
 
-This guide explains how to prepare a module for distribution through plentyMarketplace. A module
-that's published and distributed this way is called an **extension** (see
-[Introduction](/guide/modules/marketplace/introduction.md)), and needs two things beyond a regular
-module: an `extension.config.ts` so its own code can gate itself (see
-[Gates](/guide/modules/marketplace/gates.md)), and a `marketplace.json` plus a `meta/` folder so it
-can be listed on the marketplace at all.
+This guide explains how to prepare a module for distribution through plentyMarketplace.
+A module that's published and distributed this way is called an **extension** (see [Introduction](/guide/modules/marketplace/introduction.md)), and needs two things beyond a regular module: an `extension.config.ts` so its own code can gate itself (see [Gates](/guide/modules/marketplace/gates.md)), and a `marketplace.json` plus a `meta/` folder so it can be listed on the marketplace at all.
 [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons)
 is a working reference for all of it.
 
@@ -23,10 +19,8 @@ Before you set up an extension, ensure you have:
 
 ## Keep the name identifier consistent
 
-Your extension's name ends up written in three places: `package.json`, `extension.config.ts`, and
-your module's own `meta.name`. Keep all three identical — the same scoped string, e.g.
-`@plentymarkets/four-seasons` — so there's never any ambiguity about which package, config, and
-registered Nuxt module belong to the same extension.
+Your extension's name ends up written in three places: `package.json`, `extension.config.ts`, and your module's own `meta.name`.
+Keep all three identical — the same scoped string, e.g. `@plentymarkets/four-seasons` — so there's never any ambiguity about which package, config, and registered Nuxt module belong to the same extension.
 
 1. Declare the name in `package.json`:
 
@@ -37,8 +31,7 @@ registered Nuxt module belong to the same extension.
    }
    ```
 
-2. Create `extension.config.ts` inside your module's `runtime/` folder, next to its `plugins/`,
-   `composables/`, and `components/`, and declare the same name with `defineExtensionConfig`:
+2. Create `extension.config.ts` inside your module's `runtime/` folder, next to its `plugins/`, `composables/`, and `components/`, and declare the same name with `defineExtensionConfig`:
 
    ```ts
    // my-module/runtime/extension.config.ts
@@ -49,9 +42,8 @@ registered Nuxt module belong to the same extension.
    });
    ```
 
-   This is the identifier PlentyONE licenses the extension under and returns from the backend's
-   extensions list, so it has to match `package.json`'s `name` exactly. Every other file in your
-   module imports this one config object rather than repeating the string.
+   This is the identifier PlentyONE licenses the extension under and returns from the backend's extensions list, so it has to match `package.json`'s `name` exactly.
+   Every other file in your module imports this one config object rather than repeating the string.
 
 3. Give your module's own Nuxt entry point the same name, on `meta.name`:
 
@@ -92,8 +84,7 @@ registered Nuxt module belong to the same extension.
    | `categories`       | yes      | Non-empty array of marketplace category IDs.                           |
    | `keywords`         | no       | Array, if present.                                                     |
 
-   There's no identity field here — the module's identity for licensing still comes entirely from
-   `package.json`'s `name`.
+   There's no identity field here — the module's identity for licensing still comes entirely from `package.json`'s `name`.
 
 ## Add the required meta assets
 
@@ -119,12 +110,10 @@ registered Nuxt module belong to the same extension.
          user_guide_de.md
    ```
 
-   The author icons must be exactly square at each fixed size; the plugin icons share the same
-   fixed width but may be shorter than the given height. Every document must exist and be
-   non-empty, and the English support contact file must contain an email address.
+   The author icons must be exactly square at each fixed size; the plugin icons share the same fixed width but may be shorter than the given height.
+   Every document must exist and be non-empty, and the English support contact file must contain an email address.
 
-2. List both `marketplace.json` and `meta` in your module's `package.json` `files` array so
-   they're included when the package is published.
+2. List both `marketplace.json` and `meta` in your module's `package.json` `files` array so they're included when the package is published.
 
 ::: tip Publishing
 Publishing extensions to plentyMarketplace is coming soon.
@@ -132,9 +121,6 @@ Publishing extensions to plentyMarketplace is coming soon.
 
 ## See also
 
-- [Introduction](/guide/modules/marketplace/introduction.md) — what an extension is and when this
-  setup applies.
-- [Gates](/guide/modules/marketplace/gates.md) — gate your code with the `extension.config.ts` you
-  just created.
-- [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) —
-  a working reference implementation.
+- [Introduction](/guide/modules/marketplace/introduction.md) — what an extension is and when this setup applies.
+- [Gates](/guide/modules/marketplace/gates.md) — gate your code with the `extension.config.ts` you just created.
+- [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) — a working reference implementation.
