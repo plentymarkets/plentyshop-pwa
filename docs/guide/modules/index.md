@@ -40,13 +40,17 @@ If your module introduces new UI strings, the [i18n](/guide/modules/i18n.md) gui
 
 The [Shop Core](/guide/modules/shop-core/index.md) module (`@plentymarkets/shop-core`) acts as a shared foundation for all other modules. It exposes composables and infrastructure that modules can rely on instead of reimplementing common concerns, and it serves as the bridge between custom modules and the base application.
 
-Three utilities cover the most frequently needed cross-cutting concerns.
+Four utilities cover the most frequently needed cross-cutting concerns.
 
 The [Cookie Consent](/guide/modules/shop-core/cookie-consent.md) system lets you register new cookies into the shop's consent bar, group them by purpose, and reactively respond to a user's consent decisions — including automatically removing cookies or scripts when consent is revoked.
 
 The [Event Bus](/guide/modules/shop-core/event-bus.md) provides decoupled communication across the app through a set of predefined shop events, so modules can react to user actions without direct component dependencies.
 
-Finally, [Error Handling](/guide/modules/shop-core/error-handling.md) gives you a single composable that translates API errors into localised user-facing notifications, keeping error presentation consistent across the shop.
+[Error Handling](/guide/modules/shop-core/error-handling.md) gives you a single composable that translates API errors into localised user-facing notifications, keeping error presentation consistent across the shop.
+
+## Marketplace
+
+If your module is a licensed [plentyMarketplace](https://marketplace.plentymarkets.com/) extension rather than an always-on module, the [Marketplace](/guide/modules/marketplace/introduction.md) guides cover the required [setup](/guide/modules/marketplace/setup.md) and the [gates](/guide/modules/marketplace/gates.md) that keep your plugins, composables, and components from running when the shop isn't licensed for them.
 
 ## Further reading
 
