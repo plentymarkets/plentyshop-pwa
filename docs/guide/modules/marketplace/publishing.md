@@ -15,6 +15,8 @@ Before anything is published, the workflow runs validation steps against your mo
 
 Your module must be set up as an extension: it needs the `marketplace.json` file, `meta/images/`, and `meta/documents/` described in [Setup](/guide/modules/marketplace/setup.md). The `packages/module-four-seasons` package in this repository is a fixture built specifically to satisfy this workflow's validation — browse it for a complete, working example.
 
+To publish to PlentyONE's private npm registry you need to request credentials from partner management ([partner@plentyone.com](mailto:partner@plentyone.com)).
+
 ## Trigger the workflow
 
 1. Open the repository's **Actions** tab, select **Publish Module**, then **Run workflow**.
