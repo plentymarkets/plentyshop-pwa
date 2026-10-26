@@ -38,7 +38,7 @@ If your module introduces new UI strings, the [i18n](/guide/modules/i18n.md) gui
 
 ### Publishing
 
-Once a module is ready to share, the [Publishing](/guide/modules/publishing.md) guide walks through the files a marketplace listing needs — `marketplace.json`, author and plugin icons, preview images, and localized support/changelog/user-guide documents — and how to run the `publish-module.yml` GitHub Actions workflow that validates and publishes a module to PlentyONE's npm registry.
+Once a module is ready to share, the [Marketplace](/guide/modules/marketplace/introduction.md) guides cover how to set it up as an extension — `marketplace.json`, icons, preview images, and localized documents — and how to [publish it](/guide/modules/marketplace/publishing.md) with the `publish-module.yml` GitHub Actions workflow.
 
 ## Core Utilities
 

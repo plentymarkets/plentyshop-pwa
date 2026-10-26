@@ -76,13 +76,14 @@ Keep all three identical — the same scoped string, e.g. `@plentymarkets/four-s
    }
    ```
 
-   | Field              | Required | Notes                                                                  |
-   | ------------------ | -------- | ---------------------------------------------------------------------- |
-   | `marketplaceName`  | yes      | Localized object with non-empty `en` and `de` strings, no other langs. |
-   | `shortDescription` | yes      | Same localized shape as `marketplaceName`.                             |
-   | `price`            | yes      | A float — `0.00` for free, or `10.00` and above for paid.              |
-   | `categories`       | yes      | Non-empty array of marketplace category IDs.                           |
-   | `keywords`         | no       | Array, if present.                                                     |
+   | Field              | Required | Notes                                                                                                                                   |
+   | ------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+   | `marketplaceName`  | yes      | Localized object with non-empty `en` and `de` strings, no other langs.                                                                  |
+   | `shortDescription` | yes      | Same localized shape as `marketplaceName`.                                                                                              |
+   | `price`            | yes      | A float written with a decimal point (`0.0`, not `0`). Must be `0.0` (free) or at least `10.0` (paid). Anything in between is rejected. |
+   | `categories`       | yes      | Must be `["4408"]`. Other categories may become available in the future.                                                                |
+   | `subscription`     | no       | Array of objects, one per billing option. See [Offer a subscription](#offer-a-subscription).                                            |
+   | `keywords`         | no       | Array, if present.                                                                                                                      |
 
    There's no identity field here — the module's identity for licensing still comes entirely from `package.json`'s `name`.
 
@@ -115,12 +116,36 @@ Keep all three identical — the same scoped string, e.g. `@plentymarkets/four-s
 
 2. List both `marketplace.json` and `meta` in your module's `package.json` `files` array so they're included when the package is published.
 
-::: tip Publishing
-Publishing extensions to plentyMarketplace is coming soon.
-:::
+## Offer a subscription
+
+Besides a one-time purchase, you can offer your extension as a subscription. Add a `subscription` array to `marketplace.json` with one entry per billing option, and remove the options you don't want to offer (for example, to offer monthly billing only). Set the top-level `price` to `0.0` for the base extension.
+
+```json
+{
+  "price": 0.0,
+  "subscription": [
+    { "interval": "monthly", "price": 10.0 },
+    { "interval": "quarterly", "price": 30.0 },
+    { "interval": "half-yearly", "price": 60.0 },
+    { "interval": "yearly", "price": 120.0 }
+  ]
+}
+```
+
+| Field      | Description                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------- |
+| `interval` | Billing interval: `monthly`, `quarterly`, `half-yearly`, or `yearly`.                           |
+| `price`    | Price per interval in euros. The PlentyONE docs state that only values above `10.00` are valid. |
+
+A free trial gives users the full functionality of the extension for 30 days, once per user. Afterwards they must buy or subscribe to keep using it.
+
+## Next step
+
+Once the files are in place, [publish the extension](/guide/modules/marketplace/publishing.md).
 
 ## See also
 
 - [Introduction](/guide/modules/marketplace/introduction.md) — what an extension is and when this setup applies.
+- [Publishing](/guide/modules/marketplace/publishing.md) — validate and publish the extension to the marketplace.
 - [Gates](/guide/modules/marketplace/gates.md) — gate your code with the `extension.config.ts` you just created.
 - [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons) — a working reference implementation.

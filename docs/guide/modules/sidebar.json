@@ -62,6 +62,10 @@
         "link": "/guide/modules/marketplace/setup.md"
       },
       {
+        "text": "Publishing",
+        "link": "/guide/modules/marketplace/publishing.md"
+      },
+      {
         "text": "Gates",
         "link": "/guide/modules/marketplace/gates.md"
       }

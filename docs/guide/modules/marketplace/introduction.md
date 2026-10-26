@@ -18,3 +18,5 @@ Being a published extension changes two things compared to a regular module:
 
 - **Activation is conditional.** PlentyONE tracks which extensions have been activated for a given shop, and `@plentymarkets/shop-core` fetches that list once per server request.
   Your code needs to check it before running — see [Gates](/guide/modules/marketplace/gates.md).
+
+Once the extension is set up, [publish it](/guide/modules/marketplace/publishing.md) to the marketplace.
