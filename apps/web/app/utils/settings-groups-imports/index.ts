@@ -40,9 +40,17 @@ const normalize = (path: string) => {
 
 const modules: Record<string, SettingsGroupLoader> = {};
 
-Object.entries(core).forEach(([path, loader]) => (modules[normalize(path)] = loader));
-Object.entries(nuxtModules).forEach(([path, loader]) => (modules[normalize(path)] = loader));
-Object.entries(customer).forEach(([path, loader]) => (modules[normalize(path)] = loader));
+const registerModules = (entries: Record<string, SettingsGroupLoader>) => {
+  Object.entries(entries).forEach(([path, loader]) => {
+    if (isSettingsPathAuthorized(path)) {
+      modules[normalize(path)] = loader;
+    }
+  });
+};
+
+registerModules(core);
+registerModules(nuxtModules);
+registerModules(customer);
 
 export const getSettingsGroups = (activeSetting: string, subCategory: string = '') => {
   const prefix = subCategory ? `${activeSetting}/${subCategory}/` : `${activeSetting}/`;

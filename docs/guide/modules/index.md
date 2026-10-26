@@ -36,6 +36,10 @@ Because Tailwind's build step only processes classes it discovers at compile tim
 
 If your module introduces new UI strings, the [i18n](/guide/modules/i18n.md) guide explains how to register additional translation files through the `i18n:registerModule` hook so they are merged into the shop's existing locale setup. Existing translations from the main repository are available without any extra configuration.
 
+### Publishing
+
+Once a module is ready to share, the [Publishing](/guide/modules/publishing.md) guide walks through the files a marketplace listing needs — `marketplace.json`, author and plugin icons, preview images, and localized support/changelog/user-guide documents — and how to run the `publish-module.yml` GitHub Actions workflow that validates and publishes a module to PlentyONE's npm registry.
+
 ## Core Utilities
 
 The [Shop Core](/guide/modules/shop-core/index.md) module (`@plentymarkets/shop-core`) acts as a shared foundation for all other modules. It exposes composables and infrastructure that modules can rely on instead of reimplementing common concerns, and it serves as the bridge between custom modules and the base application.
