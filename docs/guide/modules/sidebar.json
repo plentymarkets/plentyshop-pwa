@@ -50,6 +50,28 @@
     ]
   },
   {
+    "text": "Marketplace",
+    "collapsed": true,
+    "items": [
+      {
+        "text": "Introduction",
+        "link": "/guide/modules/marketplace/introduction.md"
+      },
+      {
+        "text": "Setup",
+        "link": "/guide/modules/marketplace/setup.md"
+      },
+      {
+        "text": "Publishing",
+        "link": "/guide/modules/marketplace/publishing.md"
+      },
+      {
+        "text": "Gates",
+        "link": "/guide/modules/marketplace/gates.md"
+      }
+    ]
+  },
+  {
     "text": "Core Utilities",
     "collapsed": true,
     "items": [
