@@ -9,7 +9,7 @@
     "docs"
   ],
   "scripts": {
-    "postinstall": "node ./scripts/postinstall.js",
+    "postinstall": "patch-package && node ./scripts/postinstall.js",
     "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
     "turbo:disable-telemetry": "turbo telemetry disable",
@@ -111,6 +111,7 @@
     "nuxt": "^4.6.2",
     "nuxt-security": "2.6.0",
     "nuxt-viewport": "^2.6.1",
+    "patch-package": "8.0.1",
     "playwright-core": "^1.62.1",
     "prettier": "^3.9.6",
     "rimraf": "^5.0.7",
