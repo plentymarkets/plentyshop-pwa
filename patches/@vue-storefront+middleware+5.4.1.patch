@@ -24,7 +24,6 @@ index abc8906..af98fe6 100644
 +    // eslint-disable-next-line no-unused-vars
 +    app.use((err, req, res, next) => {
 +        if (err instanceof SyntaxError) {
-+            logger$1.error("Malformed JSON request", { url: req.originalUrl, method: req.method });
 +            res.status(400).json({ message: "Invalid request body" });
 +            return;
 +        }
