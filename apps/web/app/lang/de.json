@@ -1298,6 +1298,7 @@
       "additionalAuthRequiredName": "Für diese Bestellung ist eine Bestätigung des verwendeten Nachnamens erforderlich.",
       "assignPaymentFailed": "Die Zahlung konnte nicht zugewiesen werden.",
       "createFailed": "Die Bestellung konnte nicht erstellt werden.",
+      "duplicateOrder": "Der Auftrag wurde bereits angelegt. Bitte überprüfen Sie Ihre E-mails.",
       "loadOrdersFailed": "Die Bestellungen konnten nicht geladen werden.",
       "migrateUnauthorized": "Die Bestellung konnte nicht zu Ihrem Account hinzugefügt werden.",
       "notFound": "Die Bestellung existiert nicht.",

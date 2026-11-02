@@ -1298,6 +1298,7 @@
       "additionalAuthRequiredName": "Confirmation of the last name is required to access this order.",
       "assignPaymentFailed": "The payment could not be assigned to the order.",
       "createFailed": "The order could not be created.",
+      "duplicateOrder": "The order has already been created. Please check your emails.",
       "loadOrdersFailed": "The orders could not be loaded.",
       "migrateUnauthorized": "The order could not be added to your account.",
       "notFound": "The order does not exist.",
