@@ -21,10 +21,6 @@
             <template #prefix>
               <SfRadio
                 v-model="radioModel"
-                :checked="
-                  shippingProviderGetters.getShippingProfileId(cart).toString() ===
-                  shippingProviderGetters.getParcelServicePresetId(method)
-                "
                 :value="shippingProviderGetters.getParcelServicePresetId(method)"
                 class="flex items-center"
               />
@@ -83,7 +79,10 @@ const { data: cart } = useCart();
 const { format } = usePriceFormatter();
 const { selectedMethod } = useCartShippingMethods();
 const { shippingMethods } = useCheckoutPagePaymentAndShipping();
-const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
+const radioModel = computed({
+  get: () => shippingProviderGetters.getShippingProfileId(cart.value),
+  set: (shippingId: string) => updateShippingMethod(shippingId),
+});
 
 const showShippingPrivacy = computed(
   () =>
@@ -97,9 +96,10 @@ const getDeliveryDays = (method: string) => {
 };
 
 const updateShippingMethod = (shippingId: string) => {
-  if (disabled) return;
-  radioModel.value = shippingId;
-  emit('update:shippingMethod', radioModel.value);
+  if (disabled) {
+    return;
+  }
+  emit('update:shippingMethod', shippingId);
 };
 
 const getShippingAmount = (amount: string) => {

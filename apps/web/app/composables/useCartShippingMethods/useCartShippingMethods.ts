@@ -28,6 +28,10 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
   const setShippingMethods = (list: ShippingMethod[], selectedId: number) => {
     state.value.data.list = list;
     setSelectedMethod(selectedId);
+    const { data: cart } = useCart();
+    if (cart.value) {
+      cart.value.shippingProfileId = selectedId;
+    }
   };
 
   /**
