@@ -157,9 +157,6 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
       });
       return data?.data ?? null;
     } catch {
-      // Any upload failure (invalid SVG, DOCTYPE rejected, etc.) shows this fixed, translated message
-      // rather than relaying the backend's text - the SDK's HTTP error pipeline doesn't reliably carry
-      // it through to the browser, so this is the dependable path.
       useNotification().send({
         type: 'negative',
         message: t('storefrontError.orderProperty.fileUploadFailed'),
