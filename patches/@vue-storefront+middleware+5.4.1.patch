@@ -1,0 +1,34 @@
+diff --git a/node_modules/@vue-storefront/middleware/lib/index.cjs.js b/node_modules/@vue-storefront/middleware/lib/index.cjs.js
+index abc8906..af98fe6 100644
+--- a/node_modules/@vue-storefront/middleware/lib/index.cjs.js
++++ b/node_modules/@vue-storefront/middleware/lib/index.cjs.js
+@@ -728,7 +728,13 @@ function prepareArguments(req, res, next) {
+          * when no POST body is provided.
+          */
+         const { body: queryBody = "{}" } = query;
+-        args = JSON.parse(queryBody);
++        try {
++            args = JSON.parse(queryBody);
++        }
++        catch (error) {
++            next(error);
++            return;
++        }
+     }
+     else {
+         args = body;
+@@ -863,6 +869,14 @@ async function createServer(config, options = {}) {
+     app.get("/healthz", (_req, res) => {
+         res.end("ok");
+     });
++    // eslint-disable-next-line no-unused-vars
++    app.use((err, req, res, next) => {
++        if (err instanceof SyntaxError) {
++            res.status(400).json({ message: "Invalid request body" });
++            return;
++        }
++        next(err);
++    });
+     const server = http__default["default"].createServer(app);
+     terminus.createTerminus(server, createTerminusOptions(options.readinessProbes));
+     logger$1.info("Middleware created!");
