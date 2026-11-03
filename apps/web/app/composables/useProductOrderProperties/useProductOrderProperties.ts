@@ -49,7 +49,6 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     data: [],
     loading: false,
   }));
-  const { t } = useI18n();
 
   /**
    * @description Function for set properties from a product property array to the state.
@@ -156,12 +155,18 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
         type: file.type,
       });
       return data?.data ?? null;
-    } catch {
-      useNotification().send({
-        type: 'negative',
-        message: t('storefrontError.orderProperty.fileUploadFailed'),
-        persist: true,
-      });
+    } catch (error) {
+      const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
+
+      if (isSvg) {
+        useNotification().send({
+          type: 'negative',
+          message: t('storefrontError.orderProperty.fileUploadFailed'),
+          persist: true,
+        });
+      } else {
+        useHandleError(error as ApiError);
+      }
     } finally {
       state.value.loading = false;
     }
