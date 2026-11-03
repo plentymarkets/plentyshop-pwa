@@ -1307,6 +1307,9 @@
       "paymentMethodSwitchFailed": "Bei der Änderung der Zahlungsart ist ein Fehler aufgetreten.",
       "paymentMethodSwitchDisabled": "Die Möglichkeit zur Änderung der Zahlungsart ist deaktiviert."
     },
+    "orderProperty": {
+      "fileUploadFailed": "Hochladen fehlgeschlagen. Bitte stellen Sie sicher, dass die SVG-Syntax gültig ist und entfernen Sie etwaige <!DOCTYPE>-Deklarationen, bevor Sie es erneut versuchen."
+    },
     "security": {
       "invalidCsrfToken": "Aus Sicherheitsgründen wurde diese Aktion verweigert. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
       "tooManyRequests": "Es wurden zu viele Anfragen gesendet. Bitte warten Sie einen Moment und versuchen Sie es dann erneut."

@@ -49,6 +49,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     data: [],
     loading: false,
   }));
+  const { t } = useI18n();
 
   /**
    * @description Function for set properties from a product property array to the state.
@@ -155,8 +156,15 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
         type: file.type,
       });
       return data?.data ?? null;
-    } catch (error) {
-      useHandleError(error as ApiError);
+    } catch {
+      // Any upload failure (invalid SVG, DOCTYPE rejected, etc.) shows this fixed, translated message
+      // rather than relaying the backend's text - the SDK's HTTP error pipeline doesn't reliably carry
+      // it through to the browser, so this is the dependable path.
+      useNotification().send({
+        type: 'negative',
+        message: t('storefrontError.orderProperty.fileUploadFailed'),
+        persist: true,
+      });
     } finally {
       state.value.loading = false;
     }

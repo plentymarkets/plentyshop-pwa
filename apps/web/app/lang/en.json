@@ -1307,6 +1307,9 @@
       "paymentMethodSwitchFailed": "The payment method could not be switched. Please try again.",
       "paymentMethodSwitchDisabled": "Switching the payment method is disabled."
     },
+    "orderProperty": {
+      "fileUploadFailed": "Upload failed. Please ensure the SVG syntax is valid and remove any <!DOCTYPE> declarations before trying again."
+    },
     "security": {
       "invalidCsrfToken": "For your security, this action was forbidden. Please try to refresh the page.",
       "tooManyRequests": "Too many actions have been made in a short period of time. Please try again later."
