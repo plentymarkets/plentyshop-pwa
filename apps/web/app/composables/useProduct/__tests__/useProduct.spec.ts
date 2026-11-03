@@ -7,11 +7,6 @@ const productId = ProductMock.item.id.toString();
 const { mockUseHead } = vi.hoisted(() => ({ mockUseHead: vi.fn() }));
 mockNuxtImport('useHead', () => mockUseHead);
 
-mockNuxtImport('useI18n', () => () => ({
-  t: (key: string) => key,
-  locale: ref('en'),
-}));
-
 const siteSettingsValue = ref('');
 const { useSiteSettingsMock } = vi.hoisted(() => ({
   useSiteSettingsMock: vi.fn(() => ({
