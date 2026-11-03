@@ -104,7 +104,7 @@
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
     "eslint-module-utils": "^2.14.0",
-    "happy-dom": "^20.11.6",
+    "happy-dom": "^21.0.4",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^16.4.0",
