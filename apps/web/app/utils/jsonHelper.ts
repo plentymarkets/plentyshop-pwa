@@ -40,7 +40,7 @@ function isObject(value: unknown): value is Record<string, unknown> {
  * @description Recursively overwrites `target` with values from `source`, keeping any property
  * from `target` that is missing on `source` untouched (at every nesting level).
  */
-export const deepMergeExisting = <T extends Record<string, unknown>>(target: T, source: Partial<T>): T => {
+export const deepMergeExisting = <T extends Record<string, unknown>>(target: T, source: DeepPartial<T>): T => {
   const result = { ...target };
 
   for (const key of Object.keys(source) as Array<keyof T>) {
