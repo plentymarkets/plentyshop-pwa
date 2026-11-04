@@ -37,9 +37,13 @@ const isBlockEmpty = (block: Block | null | undefined): boolean => {
 };
 
 const DEFAULT_PAGE_BLOCKS_MAP: Record<string, (identifier: string | number) => Block[]> = {
-  immutable: (identifier) => (identifier === HOMEPAGE_IDENTIFIER ? createHomepage() : []),
-  category: (identifier) => (typeof identifier === 'number' && identifier > 0 ? [] : createCategory()),
-  product: () => createProduct(),
+  immutable: (identifier) =>
+    identifier === HOMEPAGE_IDENTIFIER ? resolveBlockTemplate(HOMEPAGE_TEMPLATE_KIND, createHomepage)() : [],
+  category: (identifier) =>
+    typeof identifier === 'number' && identifier > 0
+      ? []
+      : resolveBlockTemplate(CATEGORY_TEMPLATE_KIND, createCategory)(),
+  product: () => resolveBlockTemplate(PRODUCT_TEMPLATE_KIND, createProduct)(),
 };
 
 const getDefaultPageBlocks = (type: string, identifier: string | number): Block[] =>
@@ -49,7 +53,9 @@ const resolveFooter = (raw: GetBlocksResponse): Block => {
   const rawFooterContainer = raw?.FooterContainer as Block | undefined;
   if (rawFooterContainer && !isBlockEmpty(rawFooterContainer)) return rawFooterContainer;
   if (isLegacyFooterBlock(raw?.Footer) && raw.Footer) return migrateLegacyFooterToContainer(raw.Footer);
-  if (!raw.Footer || isBlockEmpty(raw.Footer)) return createFooterContainer();
+  if (!raw.Footer || isBlockEmpty(raw.Footer)) {
+    return resolveBlockTemplate(FOOTER_TEMPLATE_KIND, createFooterContainer)();
+  }
   return raw.Footer;
 };
 
@@ -111,7 +117,7 @@ export const assembleBlocks = (
   hasSnapshot?: boolean,
 ): GetBlocksResponse => {
   const HeaderContainer = isBlockEmpty(raw?.HeaderContainer)
-    ? createDefaultHeaderContainerBlock()
+    ? resolveBlockTemplate(HEADER_TEMPLATE_KIND, createDefaultHeaderContainerBlock)()
     : raw?.HeaderContainer;
 
   const Footer = resolveFooter(raw);

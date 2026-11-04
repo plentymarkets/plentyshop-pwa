@@ -11,7 +11,7 @@ export const getHomepageTemplate = async (locale: string): Promise<Block[]> => {
 
   if (useCache && cached) return deepClone(cached);
 
-  const blocks = createHomepage();
+  const blocks = resolveBlockTemplate(HOMEPAGE_TEMPLATE_KIND, createHomepage)();
 
   if (useCache) {
     cache.set(locale, blocks);
