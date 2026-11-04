@@ -24,11 +24,6 @@ export default defineNuxtPlugin({
       if (cart.value && data.basket) {
         cart.value = deepMergeExisting(cart.value, data.basket);
       }
-
-      if (selectedPaymentId > 0 && cart.value?.methodOfPaymentId !== selectedPaymentId) {
-        const { send } = useNotification();
-        send({ message: t('billing.methodChanged'), type: 'warning' });
-      }
     });
   },
 });
