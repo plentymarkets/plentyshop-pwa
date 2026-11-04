@@ -156,7 +156,17 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
       });
       return data?.data ?? null;
     } catch (error) {
-      useHandleError(error as ApiError);
+      const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
+
+      if (isSvg) {
+        useNotification().send({
+          type: 'negative',
+          message: t('storefrontError.orderProperty.fileUploadFailed'),
+          persist: true,
+        });
+      } else {
+        useHandleError(error as ApiError);
+      }
     } finally {
       state.value.loading = false;
     }
