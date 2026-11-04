@@ -161,6 +161,7 @@ Linked concepts
 How-to guides
 
 1. [How to add or override a block from a module](/guide/modules/blocks.md)
+2. [How to override default page templates](/guide/editor/override-default-templates.md)
 
 External resources
 

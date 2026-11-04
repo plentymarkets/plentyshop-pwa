@@ -44,7 +44,7 @@ The response contains three top-level properties:
 A helper normalises the API response.
 If any part of the response is missing, smart defaults are used:
 
-- A missing `HeaderContainer`, `Footer`, or empty `blocks` array is replaced with a default provided by the corresponding factory (`utils/blockTemplates/`).
+- A missing `HeaderContainer`, `Footer`, or empty `blocks` array is replaced with a default provided by the corresponding factory (`utils/blockTemplates/`). A Nuxt module can replace these factories, see [How to override default page templates](/guide/editor/override-default-templates.md).
 
 ### State management
 
