@@ -20,8 +20,8 @@ Each template is a factory function. The override must return the same type as t
 | File name     | Return type            | Used when                                                  |
 | ------------- | ---------------------- | ---------------------------------------------------------- |
 | `homepage.ts` | `Block[]`              | The homepage has no saved blocks.                          |
-| `category.ts` | `Block[]`              | An item category has no saved blocks.                      |
-| `product.ts`  | `Block[]`              | A product detail page has no saved blocks.                 |
+| `category.ts` | `Block[]`              | The shared item category layout has no saved blocks.       |
+| `product.ts`  | `Block[]`              | The shared product detail layout has no saved blocks.      |
 | `header.ts`   | `HeaderContainerBlock` | The saved header is missing or empty.                      |
 | `footer.ts`   | `FooterContainerBlock` | The saved footer is missing or empty and has no legacy one |
 
@@ -91,11 +91,13 @@ export default (): FooterContainerBlock => {
 
 ## Verify the override
 
-1. Open a page that has no saved data for the template, such as a category you have never edited.
+1. Open a page that has no saved layout for the template, for example in a shop where the shared category layout has never been saved.
 2. Confirm that the page shows your blocks.
-3. For category and product pages, you can return to the default at any time. In the editor, use "Reset to default" on the page. It deletes the saved entries for that page, so the shop builds it from the template again, now including your override.
+3. If a layout was already saved, reset it to see your override. For category and product pages, use "Reset to default" in the editor, then reload the page. The shop builds the layout from the template again, now including your override.
 
 ::: warning
+Category and product pages use a shared layout, so a reset deletes the saved layout for every page that uses it, not just the page you have open. Merchants lose their customisations for all of those pages. Don't reset on a live shop to test an override.
+
 Only item category pages and product detail pages can be reset. The homepage, header, and footer have no reset, so once a merchant saves them, your override no longer applies to that shop.
 :::
 

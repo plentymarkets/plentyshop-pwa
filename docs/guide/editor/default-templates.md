@@ -6,7 +6,7 @@ A default page template is a factory function that returns the blocks a page sta
 
 ## Background
 
-The editor loads a page's blocks from the PlentyONE system. A new shop, a category that was never edited, or a header that was never saved returns no data. Instead of rendering an empty page, the shop [assembles the response](/guide/editor/blocks-architecture.md) and fills the gaps with the output of a template factory.
+The editor loads a page's blocks from the PlentyONE system. A new shop, a category or product layout that was never saved, or a header that was never saved returns no data. Instead of rendering an empty page, the shop [assembles the response](/guide/editor/blocks-architecture.md) and fills the gaps with the output of a template factory.
 
 Templates were originally hardwired to the core factories. Anyone who wanted a different starting layout had to patch core files. The shop now looks for override files first, so modules and themes can change the starting point without touching core.
 
@@ -17,12 +17,12 @@ A template only runs when the saved data is missing or empty. It never changes a
 | Kind       | Template runs when                                                      | Can be reset in the editor |
 | ---------- | ----------------------------------------------------------------------- | -------------------------- |
 | `homepage` | The homepage has no saved blocks.                                       | No                         |
-| `category` | An item category has no saved blocks.                                   | Yes                        |
-| `product`  | A product detail page has no saved blocks.                              | Yes                        |
+| `category` | The shared item category layout has no saved blocks.                    | Yes                        |
+| `product`  | The shared product detail layout has no saved blocks.                   | Yes                        |
 | `header`   | The saved header is missing or empty.                                   | No                         |
 | `footer`   | The saved footer is missing or empty, and no legacy footer can migrate. | No                         |
 
-"Reset to default" deletes the saved database entries for a page. The next load finds no data, so the template runs again. For the kinds that cannot be reset, an override only affects shops that have not saved that page yet.
+Item category and product detail pages use a shared layout. The template creates that layout, and every page that uses it shows the same blocks. "Reset to default" deletes the saved layout, so it removes the merchant's customisations for all pages that share it, not for a single page. After a reset, the next load finds no data and the template runs again. For the kinds that cannot be reset, an override only affects shops that have not saved that page yet.
 
 ## Where overrides come from
 
