@@ -11,7 +11,7 @@ export const getHeaderContainerTemplate = async (locale: string): Promise<Header
 
   if (useCache && cached) return deepClone(cached);
 
-  const block = createDefaultHeaderContainerBlock();
+  const block = resolveBlockTemplate(HEADER_TEMPLATE_KIND, createDefaultHeaderContainerBlock)();
 
   if (useCache) {
     cache.set(locale, block);

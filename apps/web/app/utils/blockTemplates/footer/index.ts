@@ -11,7 +11,7 @@ export const getFooterTemplate = async (locale: string): Promise<Block> => {
 
   if (useCache && cached) return deepClone(cached);
 
-  const block = createFooterContainer();
+  const block = resolveBlockTemplate(FOOTER_TEMPLATE_KIND, createFooterContainer)();
 
   if (useCache) {
     cache.set(locale, block);
