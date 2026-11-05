@@ -35,3 +35,24 @@ export const deepEqual = (object1: unknown, object2: unknown): boolean => {
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
+
+/**
+ * @description Recursively overwrites `target` with values from `source`, keeping any property
+ * from `target` that is missing on `source` untouched (at every nesting level).
+ */
+export const deepMergeExisting = <T extends Record<string, unknown>>(target: T, source: DeepPartial<T>): T => {
+  const result = { ...target };
+
+  for (const key of Object.keys(source) as Array<keyof T>) {
+    const sourceValue = source[key];
+    const targetValue = result[key];
+
+    if (isObject(sourceValue) && !Array.isArray(sourceValue) && isObject(targetValue) && !Array.isArray(targetValue)) {
+      result[key] = deepMergeExisting(targetValue, sourceValue as Partial<typeof targetValue>) as T[keyof T];
+    } else {
+      result[key] = sourceValue as T[keyof T];
+    }
+  }
+
+  return result;
+};

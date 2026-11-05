@@ -5,7 +5,6 @@ import type {
   CartItemError,
   ApiError,
   Cart,
-  PlentyEvents,
 } from '@plentymarkets/shop-api';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
@@ -233,16 +232,6 @@ export const useCart = () => {
         send({ message: t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
       } else {
         state.value.data = migrateVariationData(state.value.data, data as Cart) ?? state.value.data;
-        // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
-        if (state.value.data?.apiEvents) {
-          // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
-          Object.entries(state.value.data.apiEvents as PlentyEvents).forEach(([event, data]) =>
-            // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
-            emit(`backend:${event}`, data),
-          );
-          // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
-          delete state.value.data.apiEvents;
-        }
       }
       return state.value.data;
     } catch (error) {

@@ -64,12 +64,12 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
   const savePaymentMethod: SavePaymentMethod = async (paymentMethodId: number) => {
     try {
       state.value.loading = true;
-      await useSdk().plentysystems.setPaymentProvider({
+      const { data } = await useSdk().plentysystems.setPaymentProvider({
         paymentId: paymentMethodId,
       });
       const { data: cart } = useCart();
       if (cart.value) {
-        cart.value.methodOfPaymentId = paymentMethodId;
+        cart.value.methodOfPaymentId = data.selected;
       }
     } catch (error) {
       useHandleError(error as ApiError);

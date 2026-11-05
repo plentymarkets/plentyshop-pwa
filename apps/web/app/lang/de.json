@@ -256,7 +256,7 @@
     "addButton": "Rechnungsadresse hinzufügen",
     "description": "Fügen Sie eine Rechnungsadresse hinzu. Sie werden die Rechnung an die oben angegebene E-Mail-Adresse erhalten.",
     "heading": "Rechnungsadresse",
-    "methodChanged": "Die von Ihnen ausgewählte Zahlungsart ist nicht mehr verfügbar."
+    "methodChanged": "Die von Ihnen ausgewählte Zahlungsart ist nicht mehr verfügbar. Es wurde, falls verfügbar, eine alternative Zahlungsart ausgewählt."
   },
   "cart": {
     "empty": "Ihr Warenkorb ist leer",
@@ -1321,6 +1321,9 @@
     },
     "notifyMe": {
       "alreadySubscribed": "Sie haben sich bereits für diesen Artikel registriert"
+    },
+    "checkout": {
+      "shippingProviderNotExisting": "Der ausgewählte Versanddienstleister existiert nicht mehr. Bitte wählen Sie einen anderen Versanddienstleister aus."
     },
     "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },

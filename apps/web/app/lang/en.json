@@ -256,7 +256,7 @@
     "addButton": "Add billing address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
     "heading": "Billing Address",
-    "methodChanged": "The selected payment method is not available anymore."
+    "methodChanged": "The selected payment method is not available anymore. An alternative payment method has been selected, if available."
   },
   "cart": {
     "empty": "Your cart is empty",
@@ -1321,6 +1321,9 @@
     },
     "notifyMe": {
       "alreadySubscribed": "You have already subscribed to this product"
+    },
+    "checkout": {
+      "shippingProviderNotExisting": "The selected shipping provider no longer exists. Please choose a different shipping provider."
     },
     "unknownError": "An unknown error has occurred."
   },

@@ -16,5 +16,13 @@ export default defineNuxtPlugin({
       setShippingMethods(data.checkout.shippingProfileList, data.checkout.shippingProfileId ?? -1);
       setPaymentMethods(data.checkout.paymentDataList, data.checkout.methodOfPaymentId ?? -1);
     });
+
+    onPlentyEvent('backend:AfterBasketChanged', (data) => {
+      const { data: cart } = useCart();
+
+      if (cart.value && data.basket) {
+        cart.value = deepMergeExisting(cart.value, data.basket);
+      }
+    });
   },
 });
