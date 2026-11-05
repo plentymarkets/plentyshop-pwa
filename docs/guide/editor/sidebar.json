@@ -16,6 +16,10 @@
         "link": "/guide/editor/create-a-block.md"
       },
       {
+        "text": "Override default templates",
+        "link": "/guide/editor/override-default-templates.md"
+      },
+      {
         "text": "Control block visibility",
         "link": "/guide/editor/blocks-visibility.md"
       },
@@ -60,6 +64,10 @@
         {
           "text": "Discovery and overrides",
           "link": "/guide/editor/blocks-discovery"
+        },
+        {
+          "text": "Default page templates",
+          "link": "/guide/editor/default-templates"
         }
         ]
       },
