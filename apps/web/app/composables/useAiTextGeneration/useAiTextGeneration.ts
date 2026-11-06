@@ -5,6 +5,35 @@ import type {
   UseAiTextGenerationReturn,
   UseAiTextGenerationState,
 } from './types';
+import {
+  AI_GENERATION_FAILED_MESSAGE,
+  AI_HTML_VALIDATION_FAILED_MESSAGE,
+  AI_MISSING_ITEM_ID_MESSAGE,
+  AI_TEXT_BLOCK_HTML_VALIDATION_FAILED,
+  AI_TEXT_BLOCK_MISSING_ITEM_ID,
+  AI_TEXT_BLOCK_REJECTED,
+} from './constants';
+
+/**
+ * The message for a failure the chatbot explained (the prompt was refused, it needs an item ID, or no valid HTML
+ * came out of it), or null for any other failure. A refusal carries the agent's own reason, which also says what is
+ * missing.
+ */
+const getExplainedErrorMessage = (error: unknown) => {
+  const { key, message } = (error ?? {}) as Partial<ApiError>;
+
+  if (key === AI_TEXT_BLOCK_REJECTED) {
+    return message || AI_GENERATION_FAILED_MESSAGE;
+  }
+  if (key === AI_TEXT_BLOCK_MISSING_ITEM_ID) {
+    return AI_MISSING_ITEM_ID_MESSAGE;
+  }
+  if (key === AI_TEXT_BLOCK_HTML_VALIDATION_FAILED) {
+    return AI_HTML_VALIDATION_FAILED_MESSAGE;
+  }
+
+  return null;
+};
 
 const parseAiTextBlockPayload = (raw: string): AiGenerationResult => {
   const trimmed = (raw ?? '').trim();
@@ -49,10 +78,10 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
     state.value.loading = false;
   };
 
-  const notifyError = (message: string) => {
+  const notifyError = (message: string, persist = false) => {
     state.value.error = message;
     if (message) {
-      useNotification().send({ message, type: 'negative' });
+      useNotification().send({ message, type: 'negative', persist });
     }
   };
 
@@ -74,7 +103,13 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
 
       return result;
     } catch (error: unknown) {
-      const message = (error as Error)?.message ?? 'AI generation failed.';
+      const explained = getExplainedErrorMessage(error);
+      if (explained) {
+        notifyError(explained, true);
+        return { status: 'error', content: explained };
+      }
+
+      const message = (error as Error)?.message ?? AI_GENERATION_FAILED_MESSAGE;
       notifyError(message);
       useHandleError(error as ApiError);
       return { status: 'error', content: message };
