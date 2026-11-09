@@ -16,14 +16,14 @@ import {
 
 /**
  * The message for a failure the chatbot explained (the prompt was refused, it needs an item ID, or no valid HTML
- * came out of it), or null for any other failure. A refusal carries the agent's own reason, which also says what is
- * missing.
+ * came out of it), or null for any other failure. It is always our own message for the code, never the text the AI
+ * wrote.
  */
 const getExplainedErrorMessage = (error: unknown) => {
-  const { key, message } = (error ?? {}) as Partial<ApiError>;
+  const { key } = (error ?? {}) as Partial<ApiError>;
 
   if (key === AI_TEXT_BLOCK_REJECTED) {
-    return message || AI_GENERATION_FAILED_MESSAGE;
+    return AI_GENERATION_FAILED_MESSAGE;
   }
   if (key === AI_TEXT_BLOCK_MISSING_ITEM_ID) {
     return AI_MISSING_ITEM_ID_MESSAGE;
@@ -96,7 +96,7 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
       const result = parseAiTextBlockPayload(data?.text ?? '');
 
       if (result.status === 'error') {
-        notifyError(result.content || 'AI generation failed.');
+        notifyError(AI_GENERATION_FAILED_MESSAGE);
       } else {
         state.value.response = result.content;
       }
