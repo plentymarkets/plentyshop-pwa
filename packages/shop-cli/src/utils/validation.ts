@@ -203,3 +203,23 @@ export function validateGeneratorInput(answers: GeneratorInputAnswers, generator
 
   return errors;
 }
+
+/**
+ * Validates a scoped npm package name for an extension (e.g. `@plentymarkets/four-seasons`).
+ * The same string is used for package.json, extension.config.ts and the Nuxt module's meta.name.
+ */
+export function validateExtensionName(name: unknown): string | true {
+  if (!name || typeof name !== 'string') {
+    return 'Extension name is required';
+  }
+
+  if (name.length > 100) {
+    return 'Extension name should not exceed 100 characters';
+  }
+
+  if (!/^@[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*$/.test(name)) {
+    return 'Extension name must be a scoped lowercase kebab-case name (e.g., @my-company/four-seasons)';
+  }
+
+  return true;
+}

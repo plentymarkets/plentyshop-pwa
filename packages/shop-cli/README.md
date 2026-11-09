@@ -19,13 +19,14 @@ npx @plentymarkets/shop-cli
 ## Quick Start
 
 ```bash
-# Generate code interactively — "Please choose a generator" lists component, block, and composable
+# Generate code interactively — "Please choose a generator" lists component, block, composable, and extension
 npx plentyshop generate
 
 # Generate specific types
 npx plentyshop generate component
 npx plentyshop generate block
 npx plentyshop generate composable
+npx plentyshop generate extension
 
 # Get help
 npx plentyshop --help
@@ -59,6 +60,11 @@ Create `.plentyone/shop-cli.json` in your project root:
   `component --with-form`, registered separately so it appears as its own choice in the
   interactive picker
 - **composable** - Generate Vue 3 composables with TypeScript, tests, and index files
+- **extension** - Interactive wizard that scaffolds a marketplace extension in `packages/module-<name>/`:
+  Nuxt module, `extension.config.ts`, `marketplace.json`, placeholder `meta/` images and documents, and
+  optional gated starter files (plugin, component, composable, playground). Replace the placeholder images
+  and documents before [publishing](https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/guide/modules/marketplace/publishing.md).
+  Supports `--dry-run` to preview the files.
 
 ## Architecture Overview
 
