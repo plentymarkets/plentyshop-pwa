@@ -5,6 +5,35 @@ import type {
   UseAiTextGenerationReturn,
   UseAiTextGenerationState,
 } from './types';
+import {
+  AI_GENERATION_FAILED_MESSAGE,
+  AI_HTML_VALIDATION_FAILED_MESSAGE,
+  AI_MISSING_ITEM_ID_MESSAGE,
+  AI_TEXT_BLOCK_HTML_VALIDATION_FAILED,
+  AI_TEXT_BLOCK_MISSING_ITEM_ID,
+  AI_TEXT_BLOCK_REJECTED,
+} from './constants';
+
+/**
+ * The message for a failure the chatbot explained (the prompt was refused, it needs an item ID, or no valid HTML
+ * came out of it), or null for any other failure. It is always our own message for the code, never the text the AI
+ * wrote.
+ */
+const getExplainedErrorMessage = (error: unknown) => {
+  const { key } = (error ?? {}) as Partial<ApiError>;
+
+  if (key === AI_TEXT_BLOCK_REJECTED) {
+    return AI_GENERATION_FAILED_MESSAGE;
+  }
+  if (key === AI_TEXT_BLOCK_MISSING_ITEM_ID) {
+    return AI_MISSING_ITEM_ID_MESSAGE;
+  }
+  if (key === AI_TEXT_BLOCK_HTML_VALIDATION_FAILED) {
+    return AI_HTML_VALIDATION_FAILED_MESSAGE;
+  }
+
+  return null;
+};
 
 const parseAiTextBlockPayload = (raw: string): AiGenerationResult => {
   const trimmed = (raw ?? '').trim();
@@ -49,10 +78,10 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
     state.value.loading = false;
   };
 
-  const notifyError = (message: string) => {
+  const notifyError = (message: string, persist = false) => {
     state.value.error = message;
     if (message) {
-      useNotification().send({ message, type: 'negative' });
+      useNotification().send({ message, type: 'negative', persist });
     }
   };
 
@@ -67,14 +96,20 @@ export const useAiTextGeneration: UseAiTextGenerationReturn = (storageKey = 'use
       const result = parseAiTextBlockPayload(data?.text ?? '');
 
       if (result.status === 'error') {
-        notifyError(result.content || 'AI generation failed.');
+        notifyError(AI_GENERATION_FAILED_MESSAGE);
       } else {
         state.value.response = result.content;
       }
 
       return result;
     } catch (error: unknown) {
-      const message = (error as Error)?.message ?? 'AI generation failed.';
+      const explained = getExplainedErrorMessage(error);
+      if (explained) {
+        notifyError(explained, true);
+        return { status: 'error', content: explained };
+      }
+
+      const message = (error as Error)?.message ?? AI_GENERATION_FAILED_MESSAGE;
       notifyError(message);
       useHandleError(error as ApiError);
       return { status: 'error', content: message };
