@@ -7,6 +7,6 @@ export const AI_TEXT_BLOCK_HTML_VALIDATION_FAILED = 'HTML_VALIDATION_FAILED';
 
 export const AI_GENERATION_FAILED_MESSAGE = 'AI generation failed.';
 export const AI_MISSING_ITEM_ID_MESSAGE =
-  'Please add the item ID (and, if needed, the variation ID) of the product to your prompt so the AI can use its data.';
+  'Please add the item ID (and, if needed, the variation ID) of the product to your prompt.';
 export const AI_HTML_VALIDATION_FAILED_MESSAGE =
   'The AI could not create a usable text for this request. Please rephrase your prompt and try again.';
