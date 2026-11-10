@@ -2,7 +2,7 @@
 
 plentyShop PWA
 Copyright (c) 2025, PlentyONE GmbH
-Licensed under the BSD 3-Clause License. See LICENSE.md.
+Licensed under the BSD-3-Clause License. See LICENSE.md.
 
 Portions of this software originate from the initial project setup and
 from contributions made up to and including release v1.12.1. These
