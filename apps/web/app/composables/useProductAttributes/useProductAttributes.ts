@@ -25,6 +25,7 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
     combinations: [],
     itemId: 0,
     variationId: 0,
+    unitCombinationId: 0,
   }));
 
   /**
@@ -58,6 +59,11 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
   const getCombination: GetCombination = (): VariationMapProductVariation | null => {
     return (
       state.value.combinations.find((combination) => {
+        if (state.value.unitCombinationId) {
+          if (combination.unitCombinationId !== state.value.unitCombinationId) {
+            return false;
+          }
+        }
         if (combination?.attributes?.length === Object.values(state.value.attributeValues).length) {
           return combination.attributes?.every((attribute) => {
             return state.value.attributeValues[attribute.attributeId] === attribute.attributeValueId;
@@ -75,6 +81,11 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
     combination: VariationMapProductVariation,
     attributeValues: Record<number, number>,
   ): boolean => {
+    if (state.value.unitCombinationId) {
+      if (combination.unitCombinationId !== state.value.unitCombinationId) {
+        return false;
+      }
+    }
     return Object.entries(attributeValues).every(([attributeId, valueId]) => {
       return combination.attributes?.some((attribute) => {
         return attribute.attributeId === Number(attributeId) && attribute.attributeValueId === valueId;
@@ -125,6 +136,7 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
   const setAttribute: SetAttribute = (product: Product, preSelectAttributes = false) => {
     state.value.itemId = product.item.id;
     state.value.variationId = product.variation.id;
+    state.value.unitCombinationId = product.variation.unitCombinationId;
     state.value.attributes = product.variationAttributeMap?.attributes || [];
     state.value.combinations = product.variationAttributeMap?.variations || [];
     state.value.attributeValues = {};
