@@ -60,9 +60,12 @@ Create `.plentyone/shop-cli.json` in your project root:
   `component --with-form`, registered separately so it appears as its own choice in the
   interactive picker
 - **composable** - Generate Vue 3 composables with TypeScript, tests, and index files
-- **extension** - Interactive wizard that scaffolds a marketplace extension in `packages/module-<name>/`:
-  Nuxt module, `extension.config.ts`, `marketplace.json`, placeholder `meta/` images and documents, and
-  optional gated starter files (plugin, component, composable, playground). Replace the placeholder images
+- **extension** - Interactive wizard that scaffolds a marketplace extension in `packages/module-<name>/`.
+  It copies the [`packages/module-hello-world`](../module-hello-world) template (Nuxt module, `extension.config.ts`,
+  gated plugin/component/composable, playground, `marketplace.json`, placeholder `meta/` images and documents) and
+  adjusts names, texts and pricing to your answers. To change what new extensions contain, edit the template —
+  not the generator. Keep the template's name, texts and slug as they are (see `TEMPLATE_VALUES` in
+  `src/generators/extension/constants.ts`); a unit test fails if they drift apart. Replace the placeholder images
   and documents before [publishing](https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/guide/modules/marketplace/publishing.md).
   Supports `--dry-run` to preview the files.
 

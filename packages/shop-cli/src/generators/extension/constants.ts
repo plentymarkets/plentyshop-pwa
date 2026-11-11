@@ -1,30 +1,39 @@
 import type { SubscriptionInterval } from './types';
 
-/** Directory (relative to the repo root) that extensions are generated into. */
+/** Directory (relative to the repo root) that extensions are generated into and the template lives in. */
 export const EXTENSIONS_DIR = 'packages';
 export const EXTENSION_DIR_PREFIX = 'module-';
 
-export const MARKETPLACE_CATEGORY = '4408';
 export const MIN_PAID_PRICE = 10;
-export const SHOP_CORE_VERSION_RANGE = '^1.42.0';
-export const INITIAL_VERSION = '0.1.0';
-export const LICENSE = 'BSD-3-Clause';
 
 export const SUBSCRIPTION_INTERVALS: SubscriptionInterval[] = ['monthly', 'quarterly', 'half-yearly', 'yearly'];
 
-export const AUTHOR_ICON_SIZES = [
-  { name: 'icon_author_xs.png', size: 32 },
-  { name: 'icon_author_sm.png', size: 256 },
-  { name: 'icon_author_md.png', size: 512 },
-];
+/**
+ * The values the hello-world template (`packages/module-hello-world`) was written with.
+ * The generator replaces exactly these strings with the wizard answers, so they must stay in sync
+ * with the template files (a unit test verifies that every value is still present in the template).
+ */
+export const TEMPLATE_VALUES = {
+  name: '@plentymarkets/hello-world',
+  displayNameEn: 'Hello World',
+  displayNameDe: 'Hallo Welt',
+  descriptionEn: 'A minimal example extension that shows how a marketplace extension is structured.',
+  descriptionDe: 'Eine minimale Beispiel-Extension, die den Aufbau einer Marketplace-Extension zeigt.',
+  supportEmail: 'support@example.com',
+} as const;
 
-export const PLUGIN_ICON_SIZES = [
-  { name: 'icon_plugin_xs.png', size: 32 },
-  { name: 'icon_plugin_sm.png', size: 256 },
-  { name: 'icon_plugin_md.png', size: 512 },
-];
+/** Files and folders of the template that are never copied (local build output and tooling caches). */
+export const TEMPLATE_IGNORED_ENTRIES = new Set([
+  'node_modules',
+  'dist',
+  '.nuxt',
+  '.output',
+  '.nitro',
+  '.cache',
+  '.turbo',
+  '.data',
+  '.DS_Store',
+]);
 
-export const PREVIEW_WIDTH = 1280;
-export const PREVIEW_HEIGHT = 720;
-export const PLACEHOLDER_COLOR = [92, 124, 250] as const;
-export const DOCUMENT_LANGUAGES = ['en', 'de'] as const;
+/** File extensions that are copied byte for byte instead of having their placeholders replaced. */
+export const BINARY_FILE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico']);

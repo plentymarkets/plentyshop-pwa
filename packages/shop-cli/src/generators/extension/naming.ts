@@ -21,3 +21,9 @@ export const toCamelCase = (value: string): string => {
 export function getExtensionDirName(name: string): string {
   return `${EXTENSION_DIR_PREFIX}${parseExtensionName(name).slug}`;
 }
+
+/** Nuxt module `configKey` of an extension, e.g. `@acme/four-seasons` -> `acmeFourSeasons`. */
+export function getConfigKey(name: string): string {
+  const { scope, slug } = parseExtensionName(name);
+  return `${toCamelCase(scope)}${toPascalCase(slug)}`;
+}

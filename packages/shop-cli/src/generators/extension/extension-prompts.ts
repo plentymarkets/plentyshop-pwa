@@ -95,15 +95,4 @@ export const extensionPrompts = [
       Array.isArray(answers.subscriptionIntervals) &&
       answers.subscriptionIntervals.includes(interval),
   })),
-  {
-    type: 'checkbox',
-    name: 'starters',
-    message: 'Which starter files should be generated?',
-    choices: [
-      { name: 'Plugin (gated with defineExtensionPlugin)', value: 'plugin', checked: true },
-      { name: 'Component (wrapped in ExtensionBoundary)', value: 'component', checked: true },
-      { name: 'Composable (gated with isActive())', value: 'composable', checked: false },
-      { name: 'Nuxt playground', value: 'playground', checked: true },
-    ],
-  },
 ];

@@ -1,6 +1,7 @@
 /**
  * Extension generator
- * Scaffolds a PlentyONE marketplace extension (Nuxt module + extension.config.ts + marketplace.json + meta assets)
+ * Scaffolds a PlentyONE marketplace extension by copying the hello-world template
+ * (`packages/module-hello-world`) and adjusting names, texts and pricing to the wizard answers.
  */
 
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -10,10 +11,11 @@ import { BaseGenerator } from '../../core';
 import type { GeneratorAction, GeneratorPrompt, PathResolver, PromptAnswers } from '../../core';
 import { dryRunManager } from '../../utils/dry-run';
 import { validateExtensionName } from '../../utils/validation';
-import { EXTENSIONS_DIR, SUBSCRIPTION_INTERVALS } from './constants';
+import { EXTENSIONS_DIR, SUBSCRIPTION_INTERVALS, TEMPLATE_VALUES } from './constants';
 import { extensionPrompts, subscriptionPriceKey } from './extension-prompts';
-import { buildExtensionFiles, getExtensionDirName } from './extension-files';
-import type { ExtensionAnswers, ExtensionStarter, SubscriptionInterval } from './types';
+import { getExtensionDirName } from './naming';
+import { adjustTemplateFiles, readTemplateFiles } from './template';
+import type { ExtensionAnswers, SubscriptionInterval } from './types';
 
 const WRITE_EXTENSION_ACTION = 'write-extension';
 
@@ -37,7 +39,6 @@ export function toExtensionAnswers(data: PromptAnswers): ExtensionAnswers {
     pricing: (data.pricing as ExtensionAnswers['pricing']) ?? 'free',
     price: typeof data.price === 'number' ? data.price : undefined,
     subscriptionPrices,
-    starters: (data.starters as ExtensionStarter[]) ?? [],
   };
 }
 
@@ -59,6 +60,11 @@ class ExtensionGenerator extends BaseGenerator {
       return validation;
     }
 
+    const templateDir = this.getTemplateDir();
+    if (!existsSync(templateDir)) {
+      return `Extension template not found: ${templateDir}`;
+    }
+
     const target = this.getTargetDir(data.name);
     if (existsSync(target)) {
       return `Directory already exists: ${target}`;
@@ -71,12 +77,17 @@ class ExtensionGenerator extends BaseGenerator {
     return join(this.pathResolver.getProjectRoot(), EXTENSIONS_DIR, getExtensionDirName(name));
   }
 
+  /** Directory of the hello-world extension that new extensions are copied from. */
+  getTemplateDir(): string {
+    return this.getTargetDir(TEMPLATE_VALUES.name);
+  }
+
   /** Registers the custom action that writes (or, in dry-run mode, previews) all extension files. */
   override register(plop: NodePlopAPI): void {
     plop.setActionType(WRITE_EXTENSION_ACTION, (answers) => {
       const extension = toExtensionAnswers(answers as PromptAnswers);
       const targetDir = this.getTargetDir(extension.name);
-      const files = buildExtensionFiles(extension);
+      const files = adjustTemplateFiles(readTemplateFiles(this.getTemplateDir()), extension);
 
       for (const file of files) {
         const fullPath = join(targetDir, file.path);
