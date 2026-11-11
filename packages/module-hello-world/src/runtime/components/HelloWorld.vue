@@ -4,6 +4,6 @@ import extensionConfig from '../extension.config';
 
 <template>
   <ExtensionBoundary :name="extensionConfig.name">
-    <div data-testid="hello-world">Hello World</div>
+    <div data-testid="extension-content">Your extension is active.</div>
   </ExtensionBoundary>
 </template>

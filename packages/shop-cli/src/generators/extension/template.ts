@@ -5,6 +5,7 @@ import { getConfigKey, parseExtensionName, toPascalCase } from './naming';
 import type { ExtensionAnswers, ExtensionFile, ExtensionTexts } from './types';
 
 const MARKETPLACE_FILE = 'marketplace.json';
+const VUE_FILE_EXTENSION = '.vue';
 
 /**
  * Formats a price as a JSON float literal. The marketplace requires a decimal point (`0.0`, not `0`),
@@ -85,7 +86,6 @@ function replaceAll(text: string, replacements: Map<string, string>, escape: (va
 }
 
 const escapeJson = (value: string): string => JSON.stringify(value).slice(1, -1);
-const escapeHtml = (value: string): string => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const identity = (value: string): string => value;
 
 /** Escapes inserted answers so they cannot break the syntax of the file type they end up in. */
@@ -93,8 +93,6 @@ function getEscaper(path: string): (value: string) => string {
   switch (extname(path)) {
     case '.json':
       return escapeJson;
-    case '.vue':
-      return escapeHtml;
     default:
       return identity;
   }
@@ -129,7 +127,8 @@ export function adjustTemplateFiles(templateFiles: ExtensionFile[], answers: Ext
 
   return templateFiles.map(({ path, content }) => {
     const adjustedPath = replaceAll(path, replacements, identity);
-    if (typeof content !== 'string') {
+    // Binary files and Vue files are never rewritten: Vue code is not generated, only renamed.
+    if (typeof content !== 'string' || extname(path) === VUE_FILE_EXTENSION) {
       return { path: adjustedPath, content };
     }
 

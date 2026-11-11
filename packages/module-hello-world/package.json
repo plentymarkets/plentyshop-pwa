@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@nuxt/kit": "^4.5.1",
+    "@nuxtjs/i18n": "^10.6.0",
     "rimraf": "^5.0.7",
     "typescript": "5.9.3"
   }

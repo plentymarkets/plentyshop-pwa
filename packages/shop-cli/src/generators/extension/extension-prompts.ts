@@ -9,9 +9,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const required = (label: string) => (input: string) => (input.trim() ? true : `${label} is required`);
 
-const validatePrice = (input: string): string | true => {
+/** Accepts finite numbers of at least the minimum paid price. */
+export const validatePrice = (input: string): string | true => {
   const price = Number(input);
-  if (Number.isNaN(price) || price < MIN_PAID_PRICE) {
+  if (!Number.isFinite(price) || price < MIN_PAID_PRICE) {
     return `Price must be a number of at least ${MIN_PAID_PRICE.toFixed(1)}`;
   }
   return true;

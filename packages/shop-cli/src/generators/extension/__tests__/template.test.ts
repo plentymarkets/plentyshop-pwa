@@ -129,13 +129,20 @@ describe('adjustTemplateFiles', () => {
     );
   });
 
+  it('should not rewrite the content of Vue files', () => {
+    const answers: ExtensionAnswers = { ...baseAnswers, displayNameEn: 'Winter {{ sale }}' };
+    const original = templateFiles.find((file) => file.path === 'src/runtime/components/HelloWorld.vue');
+
+    expect(getFile(answers, 'src/runtime/components/FourSeasons.vue')?.content).toBe(original?.content);
+  });
+
   it('should copy binary files unchanged', () => {
     const original = templateFiles.find((file) => file.path === 'meta/images/icon_author_xs.png');
 
     expect(getFile(baseAnswers, 'meta/images/icon_author_xs.png')?.content).toEqual(original?.content);
   });
 
-  it('should escape answers so they cannot break JSON or Vue files', () => {
+  it('should escape answers so they cannot break JSON files', () => {
     const answers: ExtensionAnswers = {
       ...baseAnswers,
       displayNameEn: 'Snow "&" <Leaves>',
@@ -144,7 +151,6 @@ describe('adjustTemplateFiles', () => {
 
     expect(JSON.parse(getText(answers, 'marketplace.json')).marketplaceName.en).toBe('Snow "&" <Leaves>');
     expect(JSON.parse(getText(answers, 'package.json')).description).toBe('Says "hi"\\now');
-    expect(getText(answers, 'src/runtime/components/FourSeasons.vue')).toContain('Snow "&amp;" &lt;Leaves&gt;');
   });
 
   it('should not replace values that were inserted from the answers', () => {
