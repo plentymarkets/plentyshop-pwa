@@ -15,3 +15,5 @@ We welcome contributions from the community. Please follow these guidelines when
 7. Open a pull request from your branch to the main repository's `main` branch. Take care to open the pull request against the plentymarkets repository, not the Alokai repository upstream.
 8. Create a draft pull request and make sure all checks pass before requesting a review.
 9. Once approved, the pull request will be merged into the `main` branch.
+
+**By submitting a contribution, you agree that it is licensed under the BSD-3-Clause License that applies to this project (see LICENSE.md).**
