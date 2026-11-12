@@ -18,7 +18,7 @@ export const createSiteSettingsLogic = (
   state: Ref<UseSiteSettingsState>,
   deps: UseSiteSettingsDeps,
 ) => {
-  const { sdk, runtimeConfigPublic } = deps;
+  const { sdk, runtimeConfigPublic, settingsConfigKeys } = deps;
   const { send } = useNotification();
 
   const updateSetting: UpdateSetting = (value) => {
@@ -73,17 +73,41 @@ export const createSiteSettingsLogic = (
     }, {});
 
     state.value.initialData = { ...runtimeConfigPublic, ...result };
+    state.value.backendKeys = Object.keys(result);
+    state.value.data = { ...unpersistedDefaults.value, ...state.value.data };
   };
+
+  const unpersistedDefaults = computed(() => {
+    const backendKeys = state.value?.backendKeys ?? [];
+    const currentData = state.value?.data ?? {};
+
+    const hasDefaultValue = (value: unknown) => value !== undefined && value !== null && value !== '';
+
+    return settingsConfigKeys
+      .filter(
+        (key) => !backendKeys.includes(key) && !(key in currentData) && hasDefaultValue(state.value.initialData[key]),
+      )
+      .reduce((acc: Record<string, SettingValue>, key) => {
+        acc[key] = state.value.initialData[key] as SettingValue;
+        return acc;
+      }, {});
+  });
 
   const changedFields = computed(() => {
     const config = state.value?.initialData ?? {};
     const currentData = state.value?.data ?? {};
+    const backendKeys = state.value?.backendKeys ?? [];
 
     if (!currentData || Object.keys(currentData).length === 0) {
       return { entries: [] as Array<[string, unknown]>, keys: [] as string[] };
     }
 
-    const entries = Object.entries(currentData).filter(([key, value]) => !(key in config) || config[key] !== value);
+    // A key counts as changed if its value differs from the backend-confirmed value, or if the
+    // backend has no confirmed value for it at all yet (e.g. a frontend-only default merged in by
+    // unpersistedDefaults) — even though it happens to match initialData's own default value.
+    const entries = Object.entries(currentData).filter(
+      ([key, value]) => !(key in config) || config[key] !== value || !backendKeys.includes(key),
+    );
 
     return {
       entries,
@@ -97,16 +121,17 @@ export const createSiteSettingsLogic = (
   const saveSiteSettings: SaveSiteSettings = async () => {
     try {
       state.value.loading = true;
+      state.value.data = { ...unpersistedDefaults.value, ...state.value.data };
 
-      const settings = [
-        ...Object.entries(state.value.data || {}).map(([key, val]) => ({
-          key,
-          value: typeof val === 'string' ? val : JSON.stringify(val ?? ''),
-        })),
-      ];
+      const settings = changedFields.value.entries.map(([key, val]) => ({
+        key,
+        value: typeof val === 'string' ? val : JSON.stringify(val ?? ''),
+      }));
+
       await sdk.plentysystems.setConfiguration({ settings });
 
       state.value.initialData = { ...state.value.initialData, ...state.value.data };
+      state.value.backendKeys = [...new Set([...state.value.backendKeys, ...Object.keys(state.value.data)])];
       return true;
     } catch (error: unknown) {
       const message =

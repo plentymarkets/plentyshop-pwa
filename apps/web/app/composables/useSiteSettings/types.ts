@@ -11,6 +11,7 @@ export interface UseSiteSettingsDeps {
     };
   };
   runtimeConfigPublic: Record<string, unknown>;
+  settingsConfigKeys: string[];
 }
 
 export interface UseSiteSettingsState {
@@ -21,6 +22,7 @@ export interface UseSiteSettingsState {
     [key: string]: unknown;
   };
   loading: boolean;
+  backendKeys: string[];
 }
 
 export type UpdateSetting = (value: string | number) => void;
