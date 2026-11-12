@@ -48,4 +48,20 @@ describe('useCleanQuery', () => {
     ).toBe('/shoes?tagIds=1&tagIds=2&page=3#top');
     expect(cleanFullPath({ path: '/shoes', query: { utm_source: 'x' }, hash: '' })).toBe('/shoes');
   });
+
+  it('keeps whitelisted bare params', async () => {
+    withWhitelist(['page']);
+    const { useCleanQuery } = await import('../useCleanQuery');
+
+    expect(useCleanQuery().cleanFullPath({ path: '/shoes', query: { page: null, utm_source: null }, hash: '' })).toBe(
+      '/shoes?page',
+    );
+  });
+
+  it('keeps bare params when the whitelist is missing', async () => {
+    withWhitelist([]);
+    const { useCleanQuery } = await import('../useCleanQuery');
+
+    expect(useCleanQuery().cleanFullPath({ path: '/shoes', query: { page: null }, hash: '' })).toBe('/shoes?page');
+  });
 });

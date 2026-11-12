@@ -1,3 +1,4 @@
+import { stringifyQuery } from 'vue-router';
 import type { LocationQuery, RouteLocationNormalizedLoaded } from 'vue-router';
 
 /**
@@ -38,24 +39,17 @@ export const useCleanQuery = () => {
   };
 
   /**
-   * @description Serializes a query object, repeating keys that have multiple values.
+   * @description Serializes a query object like vue-router does: keys with multiple values are repeated
+   * and bare keys (`?page`, parsed as `null`) stay bare.
    * @param query The route query.
    * @returns The query string including the leading `?`, or an empty string if the query is empty.
    * @example
    * ``` ts
-   * buildQueryString({ tagIds: ['1', '2'] }); // '?tagIds=1&tagIds=2'
+   * buildQueryString({ tagIds: ['1', '2'], page: null }); // '?tagIds=1&tagIds=2&page'
    * ```
    */
   const buildQueryString = (query: LocationQuery): string => {
-    const params = new URLSearchParams();
-    for (const [key, value] of Object.entries(query)) {
-      for (const item of Array.isArray(value) ? value : [value]) {
-        if (item !== null && item !== undefined) {
-          params.append(key, item);
-        }
-      }
-    }
-    const queryString = params.toString();
+    const queryString = stringifyQuery(query);
     return queryString ? `?${queryString}` : '';
   };
 
