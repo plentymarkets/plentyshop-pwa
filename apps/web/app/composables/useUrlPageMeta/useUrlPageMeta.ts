@@ -113,14 +113,16 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const localePath = useLocalePath();
     const { defaultLocale } = nuxtApp.$i18n;
     const { getAvailableLocales } = useLocalization();
+    const { cleanFullPath } = useCleanQuery();
+    const cleanedFullPath = cleanFullPath(route);
 
-    const canonicalUrl = applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath)}`);
+    const canonicalUrl = applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(cleanedFullPath)}`);
 
     const alternateLocales = getAvailableLocales().map((locale: Locale) => {
       return {
         rel: 'alternate' as const,
         hreflang: locale,
-        href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath, locale)}`),
+        href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(cleanedFullPath, locale)}`),
       };
     });
 
@@ -130,7 +132,7 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
         {
           rel: 'alternate',
           hreflang: 'x-default',
-          href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(route.fullPath, defaultLocale)}`),
+          href: applyTrailingSlashToUrl(`${runtimeConfig.public.domain}${localePath(cleanedFullPath, defaultLocale)}`),
         },
         ...alternateLocales,
       ],
@@ -165,8 +167,8 @@ export const useUrlPageMeta: UseUrlPageMetaReturn = () => {
     const localePath = useLocalePath();
     const runtimeConfig = useRuntimeConfig();
 
-    const queryString = new URLSearchParams(route.query as Record<string, string>).toString();
-    const querySuffix = queryString ? `?${queryString}` : '';
+    const { cleanQuery, buildQueryString } = useCleanQuery();
+    const querySuffix = buildQueryString(cleanQuery(route.query));
 
     const canonicalLink =
       canonicalOverride && canonicalOverride.trim() !== ''
