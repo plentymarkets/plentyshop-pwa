@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.15.0",
   "private": true,
-  "license": "BSD-3-Clause",
+  "license": "BSD-3-Clause AND MIT",
   "scripts": {
     "build": "tsx ./build/index.ts && nuxt build",
     "dev": "tsx ./build/index.ts && npm run check:optimize-deps && nuxt dev",
