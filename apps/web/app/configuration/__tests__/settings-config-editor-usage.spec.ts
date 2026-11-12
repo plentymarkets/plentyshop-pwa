@@ -58,7 +58,7 @@ const collectKeysWrittenInEditor = (): Set<string> => {
     // A handful of components iterate a local array of setting keys, e.g.
     // `settings.forEach((key) => { const { updateSetting } = useSiteSettings(key); ... })`.
     if (/useSiteSettings\(\s*key\s*\)/.test(source)) {
-      for (const arrayLiteral of source.matchAll(/\[\s*((?:'[a-zA-Z0-9_]+'\s*,?\s*)+)\]/g)) {
+      for (const arrayLiteral of source.matchAll(/\[([^[\]]*)\]/g)) {
         const literalGroup = arrayLiteral[1];
         if (!literalGroup) {
           continue;
