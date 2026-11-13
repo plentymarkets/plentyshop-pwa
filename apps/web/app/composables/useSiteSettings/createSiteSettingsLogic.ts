@@ -123,15 +123,17 @@ export const createSiteSettingsLogic = (
       state.value.loading = true;
       state.value.data = { ...unpersistedDefaults.value, ...state.value.data };
 
-      const settings = changedFields.value.entries.map(([key, val]) => ({
+      const submittedEntries = changedFields.value.entries;
+      const settings = submittedEntries.map(([key, val]) => ({
         key,
         value: typeof val === 'string' ? val : JSON.stringify(val ?? ''),
       }));
 
       await sdk.plentysystems.setConfiguration({ settings });
 
-      state.value.initialData = { ...state.value.initialData, ...state.value.data };
-      state.value.backendKeys = [...new Set([...state.value.backendKeys, ...Object.keys(state.value.data)])];
+      const submittedData = Object.fromEntries(submittedEntries) as Record<string, SettingValue>;
+      state.value.initialData = { ...state.value.initialData, ...submittedData };
+      state.value.backendKeys = [...new Set([...state.value.backendKeys, ...submittedEntries.map(([key]) => key)])];
       return true;
     } catch (error: unknown) {
       const message =
