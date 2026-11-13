@@ -7,6 +7,7 @@ import type { PathResolver } from '../core';
 import componentGenerator from './component';
 import blockGenerator from './component/block';
 import composableGenerator from './composable';
+import extensionGenerator from './extension';
 
 export default function (plop: NodePlopAPI, pathResolver: PathResolver): void {
   console.log('✅ Loading PlentyONE Shop generators...');
@@ -19,4 +20,7 @@ export default function (plop: NodePlopAPI, pathResolver: PathResolver): void {
 
   composableGenerator(plop, pathResolver);
   console.log('⚡ Composables generator loaded successfully!');
+
+  extensionGenerator(plop, pathResolver);
+  console.log('📦 Extension generator loaded successfully!');
 }

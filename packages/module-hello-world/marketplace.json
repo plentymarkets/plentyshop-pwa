@@ -1,0 +1,9 @@
+{
+  "marketplaceName": { "en": "Hello World", "de": "Hallo Welt" },
+  "price": 0.0,
+  "shortDescription": {
+    "en": "A minimal example extension that shows how a marketplace extension is structured.",
+    "de": "Eine minimale Beispiel-Extension, die den Aufbau einer Marketplace-Extension zeigt."
+  },
+  "categories": ["4408"]
+}
