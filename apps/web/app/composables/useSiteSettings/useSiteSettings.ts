@@ -1,3 +1,5 @@
+import settingsConfig from '~/configuration/settings.config';
+
 /**
  * @description Composable for managing site settings.
  * @returns UseSiteSettingsReturn
@@ -11,10 +13,12 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     data: {},
     loading: false,
     initialData: useRuntimeConfig().public || {},
+    backendKeys: [],
   }));
 
   return createSiteSettingsLogic(setting, state, {
     sdk: useSdk(),
     runtimeConfigPublic: useRuntimeConfig().public,
+    settingsConfigKeys: Object.keys(settingsConfig),
   });
 };

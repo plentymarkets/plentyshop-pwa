@@ -14,6 +14,12 @@ const { useSiteSettings } = vi.hoisted(() => ({
   })),
 }));
 
+const { useEditorState } = vi.hoisted(() => ({
+  useEditorState: vi.fn(() => ({
+    isInEditor: ref(true),
+  })),
+}));
+
 const { useSiteConfiguration } = vi.hoisted(() => ({
   useSiteConfiguration: vi.fn(() => ({
     closeDrawer: vi.fn(),
@@ -46,6 +52,7 @@ const { useRoute } = vi.hoisted(() => ({
 
 mockNuxtImport('useEditor', () => useEditor);
 mockNuxtImport('useSiteSettings', () => useSiteSettings);
+mockNuxtImport('useEditorState', () => useEditorState);
 mockNuxtImport('useSiteConfiguration', () => useSiteConfiguration);
 mockNuxtImport('useBlocks', () => useBlocks);
 mockNuxtImport('getEditorUITranslation', () => getEditorUITranslation);
@@ -82,6 +89,10 @@ describe('useEditorUnsavedChangesGuard', () => {
 
     useSiteSettings.mockReturnValue({
       settingsIsDirty,
+    });
+
+    useEditorState.mockReturnValue({
+      isInEditor: ref(true),
     });
 
     useSiteConfiguration.mockReturnValue({
