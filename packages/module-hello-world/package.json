@@ -26,7 +26,7 @@
     "playground:build": "nuxi build playground"
   },
   "dependencies": {
-    "@plentymarkets/shop-core": "^1.42.0"
+    "@plentymarkets/shop-core": "^1.49.0"
   },
   "devDependencies": {
     "@nuxt/kit": "^4.5.1",
