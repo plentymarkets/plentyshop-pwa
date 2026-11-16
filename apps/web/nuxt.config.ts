@@ -162,7 +162,6 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     'nuxt-color-picker',
-    '@plentymarkets/four-seasons',
   ],
   plentySitemap: {
     locales: (process.env.LANGUAGELIST || 'en,de').split(','),
