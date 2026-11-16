@@ -2,7 +2,7 @@
   "name": "@plentymarkets/plentyshop-pwa",
   "version": "1.15.0",
   "private": true,
-  "license": "BSD-3-Clause",
+  "license": "BSD-3-Clause AND MIT",
   "workspaces": [
     "apps/*",
     "packages/shop-cli",

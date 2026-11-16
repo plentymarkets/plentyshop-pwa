@@ -22,6 +22,8 @@
           v-for="unit in productGetters.possibleUnitCombination(product)"
           :key="unit.variationId"
           :value="unit.variationId"
+          :selected="unit.variationId.toString() === selectedUnit"
+          :disabled="!isUnitAvailableForCurrentFlavor(unit.unitCombinationId)"
         >
           {{ unit.unitName }}
         </option>
@@ -39,15 +41,45 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
-const { productParams } = createProductParams(route.params);
 const localePath = useLocalizedPath();
+const { attributeValues } = useProductAttributes();
 
-const selectedUnit = ref(productParams?.variationId?.toString() || '');
+const selectedUnit = computed(() => {
+  const currentUnitCombinationId = props.product.variation?.unitCombinationId;
+  const match = productGetters
+    .possibleUnitCombination(props.product)
+    .find((unit) => unit.unitCombinationId === currentUnitCombinationId);
+
+  return (match?.variationId ?? productGetters.getVariationId(props.product)).toString();
+});
+
+function findVariationForUnitCombination(targetUnitCombinationId: number | undefined) {
+  return props.product.variationAttributeMap?.variations.find((variation) => {
+    if (variation.unitCombinationId !== targetUnitCombinationId) {
+      return false;
+    }
+    return Object.entries(attributeValues.value).every(([attributeId, valueId]) =>
+      variation.attributes?.some(
+        (attribute) => attribute.attributeId === Number(attributeId) && attribute.attributeValueId === valueId,
+      ),
+    );
+  });
+}
+
+function isUnitAvailableForCurrentFlavor(unitCombinationId: number): boolean {
+  return Boolean(findVariationForUnitCombination(unitCombinationId));
+}
 
 function onChange(value: number) {
+  const targetUnitCombinationId = productGetters
+    .possibleUnitCombination(props.product)
+    .find((unit) => unit.variationId === value)?.unitCombinationId;
+
+  const matchingVariation = findVariationForUnitCombination(targetUnitCombinationId);
+
   navigateTo({
     path: localePath(
-      `/${productGetters.getUrlPath(props.product)}_${productGetters.getItemId(props.product)}_${value}`,
+      `/${productGetters.getUrlPath(props.product)}_${productGetters.getItemId(props.product)}_${matchingVariation?.variationId ?? value}`,
     ),
     query: route.query,
   });

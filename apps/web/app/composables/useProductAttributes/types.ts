@@ -6,6 +6,7 @@ export interface UseProductAttributesState {
   combinations: VariationMapProductVariation[];
   itemId: number;
   variationId: number;
+  unitCombinationId?: number;
 }
 
 export type SetAttribute = (product: Product, preSelectAttributes: boolean) => void;

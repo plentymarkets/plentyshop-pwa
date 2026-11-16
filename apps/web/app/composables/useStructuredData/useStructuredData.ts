@@ -275,7 +275,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       '@type': 'ItemList',
       itemListOrder: 'https://schema.org/ItemListOrderAscending',
       numberOfItems: itemListElement.length,
-      url: `${runtimeConfig.public.domain}${localePath(route.fullPath)}`,
+      url: `${runtimeConfig.public.domain}${localePath(useCleanQuery().cleanFullPath(route))}`,
       itemListElement,
     };
 

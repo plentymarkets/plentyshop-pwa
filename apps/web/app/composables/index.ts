@@ -21,6 +21,7 @@ export * from './useAgreementCheckbox';
 export * from './useApplePay';
 export * from './useBlockEditTitle';
 export * from './useBlocksVisibility';
+export * from './useCleanQuery';
 export * from './useUrlPageMeta';
 export * from './useUrlTrailingSlash';
 export * from './useCarousel';

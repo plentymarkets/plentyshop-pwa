@@ -19,6 +19,23 @@ const navigateToRoute = async (path: string) => {
   await useRouter().push(path);
 };
 
+mockNuxtImport('useCleanQuery', () => () => {
+  const allowed = ['page'];
+  const cleanQuery = (query: Record<string, string>) =>
+    Object.fromEntries(Object.entries(query).filter(([key]) => allowed.includes(key)));
+  const buildQueryString = (query: Record<string, string>) => {
+    const queryString = new URLSearchParams(query).toString();
+    return queryString ? `?${queryString}` : '';
+  };
+
+  return {
+    cleanQuery,
+    buildQueryString,
+    cleanFullPath: (route: { path: string; query: Record<string, string> }) =>
+      `${route.path}${buildQueryString(cleanQuery(route.query))}`,
+  };
+});
+
 const { localePathMock } = vi.hoisted(() => ({
   localePathMock: vi.fn((path: string, locale?: string) => (locale && locale !== 'en' ? `/${locale}${path}` : path)),
 }));
@@ -104,6 +121,15 @@ describe('useUrlPageMeta', () => {
 
       const links = getCapturedLinks();
       expect(links.find(isCanonicalLink)?.href).toBe('https://shop.example.com/category');
+    });
+
+    it('should strip params that are not part of the cache key from the canonical link', async () => {
+      await navigateToRoute('/category?utm_source=newsletter&page=2');
+      const { setStaticPageMeta } = useUrlPageMeta();
+      setStaticPageMeta();
+
+      const links = getCapturedLinks();
+      expect(links.find(isCanonicalLink)?.href).toBe('https://shop.example.com/category?page=2');
     });
 
     it('should set ogUrl to the canonical link', () => {

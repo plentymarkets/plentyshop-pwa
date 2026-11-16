@@ -169,7 +169,7 @@ Configuration priority: CLI flags > Config file > Defaults
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](LICENSE.md) for more information.
+Distributed under the BSD-3-Clause License. See [LICENSE.md](LICENSE.md). Portions of this software are subject to an MIT notice. See [NOTICE.md](NOTICE.md).
 
 ## Contributing
 
