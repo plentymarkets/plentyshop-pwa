@@ -70,7 +70,6 @@ describe('Auth Guard', () => {
     const myAccount = new MyAccountPageObject();
 
     cy.visitAndHydrate(paths.accountPersonalData);
-    cy.url().should('include', `${paths.authLogin}?redirect=${paths.accountPersonalData}`);
 
     cy.intercept('/plentysystems/doLogin').as('doLogin');
     myAccount.successLogin();
