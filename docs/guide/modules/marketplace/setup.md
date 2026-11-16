@@ -10,6 +10,11 @@ A module that's published and distributed this way is called an **extension** (s
 [packages/module-four-seasons](https://github.com/plentymarkets/plentyshop-pwa/tree/main/packages/module-four-seasons)
 is a working reference for all of it.
 
+::: tip Scaffold with the CLI
+`npx plentyshop generate extension` runs a wizard that creates all of the files described below in `packages/module-<name>/`, including placeholder images and documents.
+Replace the placeholders before publishing.
+:::
+
 ## Before you start
 
 Before you set up an extension, ensure you have:
