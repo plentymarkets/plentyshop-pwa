@@ -1,0 +1,10 @@
+{
+  "skuToCart": {
+    "title": "Schnellbestellung",
+    "skuLabel": "SKU",
+    "skuPlaceholder": "SKU eingeben",
+    "quantityLabel": "Menge",
+    "addToCart": "Hinzufügen",
+    "addToCartLabel": "Artikel in den Warenkorb legen"
+  }
+}

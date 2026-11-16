@@ -53,10 +53,11 @@
     "llm:link": "node ./scripts/llm-link.js"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.190.0",
-    "@plentymarkets/shop-core": "^1.48.0",
+    "@plentymarkets/shop-api": "^0.191.0",
+    "@plentymarkets/shop-core": "^1.50.0",
     "@plentymarkets/shop-module-gtag": "^1.3.0",
     "@plentymarkets/shop-module-mollie": "^1.8.0",
+    "@plentymarkets/sku-to-cart": "file:plentymarkets-sku-to-cart-0.1.0.tgz",
     "@tanstack/vue-virtual": "^3.13.36",
     "@tiptap/extension-color": "^3.32.0",
     "@tiptap/extension-emoji": "^3.32.0",

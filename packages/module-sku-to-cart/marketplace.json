@@ -1,0 +1,14 @@
+{
+  "marketplaceName": {
+    "en": "Quick Order by SKU",
+    "de": "Schnellbestellung per SKU"
+  },
+  "price": 0.0,
+  "shortDescription": {
+    "en": "Let customers add items to the cart by entering a SKU and quantity.",
+    "de": "Kunden legen Artikel per SKU und Menge direkt in den Warenkorb."
+  },
+  "categories": [
+    "4408"
+  ]
+}

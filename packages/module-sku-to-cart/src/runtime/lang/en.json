@@ -1,0 +1,10 @@
+{
+  "skuToCart": {
+    "title": "Quick order",
+    "skuLabel": "SKU",
+    "skuPlaceholder": "Enter SKU",
+    "quantityLabel": "Quantity",
+    "addToCart": "Add",
+    "addToCartLabel": "Add item to basket"
+  }
+}

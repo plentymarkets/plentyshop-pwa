@@ -1,3 +1,5 @@
+import type { CartItem } from '@plentymarkets/shop-api';
+
 export default defineNuxtPlugin({
   name: 'register-module-events',
   parallel: true,
@@ -22,6 +24,11 @@ export default defineNuxtPlugin({
 
       if (cart.value && data.basket) {
         cart.value = deepMergeExisting(cart.value, data.basket);
+      }
+
+      // Items can be added from outside of useCart, e.g. by an extension, so they are synced as well.
+      if (cart.value && data.basketItems) {
+        cart.value.items = mergeCartItems(cart.value.items, data.basketItems as unknown as CartItem[]);
       }
     });
   },
