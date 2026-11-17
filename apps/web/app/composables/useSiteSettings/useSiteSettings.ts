@@ -16,5 +16,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
   return createSiteSettingsLogic(setting, state, {
     sdk: useSdk(),
     runtimeConfigPublic: useRuntimeConfig().public,
+    e2eOverrides: import.meta.server ? useRequestEvent()?.context.e2eOverrides : undefined,
   });
 };

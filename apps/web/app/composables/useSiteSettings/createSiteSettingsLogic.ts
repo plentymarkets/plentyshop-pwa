@@ -18,7 +18,7 @@ export const createSiteSettingsLogic = (
   state: Ref<UseSiteSettingsState>,
   deps: UseSiteSettingsDeps,
 ) => {
-  const { sdk, runtimeConfigPublic } = deps;
+  const { sdk, runtimeConfigPublic, e2eOverrides } = deps;
   const { send } = useNotification();
 
   const updateSetting: UpdateSetting = (value) => {
@@ -72,7 +72,7 @@ export const createSiteSettingsLogic = (
       return acc;
     }, {});
 
-    state.value.initialData = { ...runtimeConfigPublic, ...result };
+    state.value.initialData = { ...runtimeConfigPublic, ...result, ...e2eOverrides };
   };
 
   const changedFields = computed(() => {
