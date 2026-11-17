@@ -6,6 +6,7 @@ export default defineEventHandler((event) => {
     const overrides = JSON.parse(overrideCookie);
     const config = useRuntimeConfig(event);
     Object.assign(config.public, overrides);
+    event.context.e2eOverrides = overrides;
   } catch {
     console.error('[E2E] Invalid _e2e_config cookie – could not parse JSON:', overrideCookie);
   }

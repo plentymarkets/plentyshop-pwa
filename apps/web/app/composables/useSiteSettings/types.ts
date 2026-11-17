@@ -12,6 +12,7 @@ export interface UseSiteSettingsDeps {
   };
   runtimeConfigPublic: Record<string, unknown>;
   settingsConfigKeys: string[];
+  e2eOverrides?: Record<string, unknown>;
 }
 
 export interface UseSiteSettingsState {

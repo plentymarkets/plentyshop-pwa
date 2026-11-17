@@ -86,6 +86,7 @@ Available generators:
   - component       Generate a new Vue component
   - block           Generate a CMS block (component --with-form, registered under its own name)
   - composable      Generate a new Vue composable
+  - extension       Scaffold a marketplace extension package in packages/ (interactive wizard)
 
 Options:
   --skip-tests             Skip generating test files
@@ -109,6 +110,8 @@ Examples:
   plentyshop generate block ImageCarousel --category=media --access-control=content,product
   plentyshop generate block ColumnLayout --structure --category=layout --access-control=content
   plentyshop generate composable useShoppingCart
+  plentyshop generate extension
+  plentyshop generate extension --dry-run
 
 To generate into a different app root (e.g. a customer module), create a
 .plentyone/shop-cli.json config file in your project root:

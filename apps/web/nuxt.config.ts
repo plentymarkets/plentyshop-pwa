@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     '@workspace': resolve(__dirname, '..', '..'),
   },
   vite: {
+    clearScreen: false,
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts

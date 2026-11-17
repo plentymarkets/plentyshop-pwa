@@ -20,5 +20,6 @@ export const useSiteSettings: UseSiteSettingsReturn = (setting?: string) => {
     sdk: useSdk(),
     runtimeConfigPublic: useRuntimeConfig().public,
     settingsConfigKeys: Object.keys(settingsConfig),
+    e2eOverrides: import.meta.server ? useRequestEvent()?.context.e2eOverrides : undefined,
   });
 };
