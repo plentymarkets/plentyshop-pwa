@@ -22,6 +22,7 @@ const { sku, formKey, loading, setQuantity, submit } = useSkuToCart();
         <form class="flex items-center gap-2 mb-4" @submit.prevent="submit">
           <SfInput
             v-model="sku"
+            :disabled="loading"
             wrapper-class="flex-grow min-w-0"
             :placeholder="t('skuToCart.skuPlaceholder')"
             :aria-label="t('skuToCart.skuLabel')"
