@@ -37,7 +37,7 @@ Address bar:     /shoes?page=2
 Canonical link:  https://shop.example.com/shoes?page=2
 ```
 
-The `useCleanQuery` composable implements this behavior. Your theme can extend it, see [Caching: URL cleaning](/guide/themes/cache-key-query-params.md).
+To keep your theme's own parameters in the address bar, see [Caching: URL cleaning](/guide/themes/cache-key-query-params.md).
 
 ## Related resources
 
