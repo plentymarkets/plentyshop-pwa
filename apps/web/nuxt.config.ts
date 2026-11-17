@@ -148,7 +148,6 @@ export default defineNuxtConfig({
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
-    '@plentymarkets/sku-to-cart',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
