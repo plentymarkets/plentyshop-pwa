@@ -11,6 +11,7 @@ export interface UseSiteSettingsDeps {
     };
   };
   runtimeConfigPublic: Record<string, unknown>;
+  e2eOverrides?: Record<string, unknown>;
 }
 
 export interface UseSiteSettingsState {
