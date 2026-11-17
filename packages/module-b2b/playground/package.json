@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "module-sku-to-cart-playground",
+  "name": "module-b2b-playground",
   "type": "module",
   "scripts": {
     "dev": "nuxi dev",

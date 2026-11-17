@@ -1,5 +1,6 @@
 import { defineExtensionConfig } from '#imports';
 
 export default defineExtensionConfig({
-  name: '@plentymarkets/sku-to-cart',
+  name: '@plentymarkets/b2b',
+  bypassGate: true
 });

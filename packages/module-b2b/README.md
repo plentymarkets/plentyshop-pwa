@@ -1,25 +1,29 @@
-# @plentymarkets/sku-to-cart
+# @plentymarkets/b2b
 
-Let customers add items to the cart by entering a SKU and quantity.
+B2B features for the shop. Each feature has its own settings in the editor under **Settings → General → B2B Commerce**.
+
+## Features
+
+- **SKU to cart** — customers add items to the cart by entering a SKU and quantity.
 
 ## Usage
 
 Add to `apps/web/nuxt.config.ts`:
 
 ```ts
-modules: ['@plentymarkets/sku-to-cart'],
+modules: ['@plentymarkets/b2b'],
 ```
 
-## Configuration
+## SKU to cart
 
 Merchants choose where the form is shown in the editor under **Settings → General → B2B Commerce → Quick Order**:
-above the coupon field, below it, or not at all. The form is also shown under the "cart is empty" text, unless it is
-set to "Do not show".
+above the coupon field, below it, or not at all. The form is also shown under the "cart is empty" text (without the collapsible),
+unless it is set to "Do not show".
 
-The default is set with the module option `position` (`'none' | 'aboveCoupon' | 'belowCoupon'`):
+The default is set with the module option `skuToCart.position` (`'none' | 'aboveCoupon' | 'belowCoupon'`):
 
 ```ts
-plentymarketsSkuToCart: { position: 'belowCoupon' },
+plentymarketsB2b: { skuToCart: { position: 'belowCoupon' } },
 ```
 
 Requires the shop injection areas `cart.aboveCoupon` and `cart.belowCoupon` and `@plentymarkets/shop-api` 0.191.0 or higher.

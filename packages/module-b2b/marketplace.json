@@ -1,0 +1,14 @@
+{
+  "marketplaceName": {
+    "en": "B2B Commerce",
+    "de": "B2B-Commerce"
+  },
+  "price": 0.0,
+  "shortDescription": {
+    "en": "B2B features for the shop, starting with adding items to the cart by SKU and quantity.",
+    "de": "B2B-Funktionen für den Shop, beginnend mit dem Hinzufügen von Artikeln per SKU und Menge zum Warenkorb."
+  },
+  "categories": [
+    "4408"
+  ]
+}

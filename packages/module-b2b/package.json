@@ -1,7 +1,7 @@
 {
-  "name": "@plentymarkets/sku-to-cart",
+  "name": "@plentymarkets/b2b",
   "version": "0.1.0",
-  "description": "Let customers add items to the cart by entering a SKU and quantity.",
+  "description": "B2B features for the shop, such as adding items to the cart by SKU.",
   "license": "BSD-3-Clause",
   "type": "module",
   "main": "./dist/module.mjs",

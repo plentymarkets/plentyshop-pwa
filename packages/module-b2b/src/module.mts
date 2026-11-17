@@ -11,21 +11,25 @@ declare module '@nuxt/schema' {
   }
 }
 
-export interface ModuleOptions {
-  enabled: boolean;
+export interface SkuToCartOptions {
   /** Where the SKU form is shown in the cart, relative to the coupon field. */
   position: SkuToCartPosition;
+}
+
+export interface ModuleOptions {
+  enabled: boolean;
+  skuToCart: SkuToCartOptions;
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     // Must match package.json "name" and runtime/extension.config.ts
-    name: '@plentymarkets/sku-to-cart',
-    configKey: 'plentymarketsSkuToCart',
+    name: '@plentymarkets/b2b',
+    configKey: 'plentymarketsB2b',
   },
   defaults: {
     enabled: true,
-    position: 'aboveCoupon',
+    skuToCart: { position: 'aboveCoupon' },
   },
   moduleDependencies: {
     '@nuxtjs/i18n': { version: '>=9.5.4' },
@@ -39,7 +43,7 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url);
 
     // Default of the site setting. A saved value of the merchant takes precedence.
-    nuxt.options.runtimeConfig.public.skuToCartPosition = options.position;
+    nuxt.options.runtimeConfig.public.skuToCartPosition = options.skuToCart.position;
 
     // The component is rendered through the shop's injection areas, so it has to be registered globally.
     addComponentsDir({
