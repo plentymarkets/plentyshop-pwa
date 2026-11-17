@@ -10,6 +10,20 @@ Add to `apps/web/nuxt.config.ts`:
 modules: ['@plentymarkets/sku-to-cart'],
 ```
 
+## Configuration
+
+Merchants choose where the form is shown in the editor under **Settings → General → B2B Commerce → Quick Order**:
+above the coupon field, below it, or not at all. The form is also shown under the "cart is empty" text, unless it is
+set to "Do not show".
+
+The default is set with the module option `position` (`'none' | 'aboveCoupon' | 'belowCoupon'`):
+
+```ts
+plentymarketsSkuToCart: { position: 'belowCoupon' },
+```
+
+Requires the shop injection areas `cart.aboveCoupon` and `cart.belowCoupon` and `@plentymarkets/shop-api` 0.191.0 or higher.
+
 ## Development
 
 Run once after `npm install` (and again after adding composables or components) to get TypeScript support for `#imports` and auto-imports in `src/runtime/`:

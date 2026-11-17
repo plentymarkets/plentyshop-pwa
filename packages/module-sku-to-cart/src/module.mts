@@ -38,10 +38,16 @@ export default defineNuxtModule<ModuleOptions>({
 
     const resolver = createResolver(import.meta.url);
 
-    nuxt.options.runtimeConfig.public.plentymarketsSkuToCart = { position: options.position };
+    // Default of the site setting. A saved value of the merchant takes precedence.
+    nuxt.options.runtimeConfig.public.skuToCartPosition = options.position;
 
     // The component is rendered through the shop's injection areas, so it has to be registered globally.
-    addComponentsDir({ path: resolver.resolve('./runtime/components'), global: true });
+    addComponentsDir({
+      path: resolver.resolve('./runtime/components'),
+      global: true,
+      // Settings panels are discovered by the shop's editor, not registered as components.
+      ignore: ['settings/**'],
+    });
     addImportsDir(resolver.resolve('./runtime/composables'));
     addPlugin(resolver.resolve('./runtime/plugins/sku-to-cart.plugin'));
 
