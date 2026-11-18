@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { useHandleError, usePlentyEvent, useSdk } from '#imports';
-import type { AfterBasketChanged, ApiError } from '@plentymarkets/shop-api';
+import type { ApiError } from '@plentymarkets/shop-api';
 import extensionConfig from '../extension.config';
 
 const DEFAULT_QUANTITY = 1;
@@ -35,13 +35,7 @@ export function useSkuToCart() {
         sku: requestedSku,
         quantity: quantity.value,
       });
-      const { items = [], ...basket } = cart;
-
-      emit('backend:AfterBasketChanged', {
-        basket,
-        showNetPrices: cart.showNetPrices ?? false,
-        basketItems: items as unknown as AfterBasketChanged['basketItems'],
-      });
+      const { items = [], } = cart;
 
       const item = items.find(
         (cartItem) => cartItem.variation?.variation?.number?.toLowerCase() === requestedSku.toLowerCase(),
