@@ -8,11 +8,13 @@ export const useEditorUnsavedChangesGuard = (options: UseEditorUnsavedChangesGua
 
   const { isEditingEnabled } = useEditor();
   const { settingsIsDirty } = useSiteSettings();
+  const { isInEditor } = useEditorState();
   const { closeDrawer } = useSiteConfiguration();
   const { discardChanges } = useBlocks();
   const confirmMessage = getEditorUITranslation('unsaved-changes-confirm');
 
-  const hasUnsavedChanges = customHasUnsavedChanges || (() => isEditingEnabled.value || settingsIsDirty.value);
+  const hasUnsavedChanges =
+    customHasUnsavedChanges || (() => isEditingEnabled.value || (isInEditor.value && settingsIsDirty.value));
 
   const handleBeforeUnload = (event: Event) => {
     if (!hasUnsavedChanges()) return;
