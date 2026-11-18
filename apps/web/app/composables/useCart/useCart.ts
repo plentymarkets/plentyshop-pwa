@@ -117,9 +117,6 @@ export const useCart = () => {
 
     try {
       const { data } = await useSdk().plentysystems.doAddCartItem(params);
-
-      state.value.data = data ? migrateVariationData(state.value.data, data) : state.value.data;
-
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
 
       if (item) {
@@ -168,8 +165,6 @@ export const useCart = () => {
 
     try {
       const { data } = await useSdk().plentysystems.doAddCartItems(params);
-
-      state.value.data = migrateVariationData(state.value.data, data ?? undefined) ?? state.value.data;
 
       params.forEach((param) => {
         const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
@@ -230,8 +225,6 @@ export const useCart = () => {
         state.value.data.itemQuantity = responseData.availableStock;
 
         send({ message: t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
-      } else {
-        state.value.data = migrateVariationData(state.value.data, data as Cart) ?? state.value.data;
       }
       return state.value.data;
     } catch (error) {
