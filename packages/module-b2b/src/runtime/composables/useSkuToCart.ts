@@ -35,7 +35,7 @@ export function useSkuToCart() {
         sku: requestedSku,
         quantity: quantity.value,
       });
-      const { items = [], } = cart;
+      const { items = [] } = cart;
 
       const item = items.find(
         (cartItem) => cartItem.variation?.variation?.number?.toLowerCase() === requestedSku.toLowerCase(),
