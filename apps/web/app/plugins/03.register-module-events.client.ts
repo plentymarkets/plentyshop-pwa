@@ -1,4 +1,4 @@
-import { CartItem } from '@plentymarkets/shop-api';
+import type { CartItem } from '@plentymarkets/shop-api';
 
 export default defineNuxtPlugin({
   name: 'register-module-events',
