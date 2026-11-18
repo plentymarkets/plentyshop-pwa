@@ -1,4 +1,4 @@
-# CloudFront Caching
+# Caching: Custom pages
 
 ## Introduction
 
@@ -7,6 +7,8 @@ With our [latest release](https://github.com/plentymarkets/plentyshop-pwa/releas
 - Home page
 - Category pages
 - Product pages
+
+For background on how CloudFront works and how the shop treats query parameters, see the [CloudFront caching overview](/guide/themes/cloudfront-caching-overview.md).
 
 ::: warning
 With the introduction of CloudFront caching, it is crucial to never load user-specific data (e.g., cart information, user account details) directly on the server side. Doing so can lead to caching of sensitive information, which may be exposed to other users. Always ensure that user-specific data is loaded on the client side after the page has been rendered to maintain security and privacy. Use hooks like `onNuxtReady` or `onMounted` (or guard execution with `if (import.meta.client)`) to load user-specific data on the client side.
@@ -75,3 +77,8 @@ Inside the browser DevTools, check the Network tab and filter for the document r
 
 - If the page is cached, you will see the header `x-cache: Hit from cloudfront` and `cache-control: public, max-age=30, stale-while-revalidate=900`.
 - If the page is not cached, you will see the header `x-cache: Miss from cloudfront`
+
+## See also
+
+- [CloudFront caching overview](/guide/themes/cloudfront-caching-overview.md)
+- [Caching: URL cleaning](/guide/themes/cache-key-query-params.md)

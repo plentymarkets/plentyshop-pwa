@@ -26,7 +26,7 @@ export default defineNuxtPlugin({
         cart.value = deepMergeExisting(cart.value, data.basket);
       }
 
-      // Items can be added from outside of useCart, e.g. by an extension, so they are synced as well.
+      // Cart items can change if the AfterBasketChanged event is triggered by a backend response.
       if (cart.value && data.basketItems) {
         cart.value.items = mergeCartItems(cart.value.items, data.basketItems as unknown as CartItem[]);
       }

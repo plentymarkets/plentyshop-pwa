@@ -12,8 +12,12 @@
         "link": "/guide/themes/bot-protection.md"
       },
       {
-        "text": "Caching",
+        "text": "Caching: Custom pages",
         "link": "/guide/themes/cloudfront-caching.md"
+      },
+      {
+        "text": "Caching: URL cleaning",
+        "link": "/guide/themes/cache-key-query-params.md"
       },
       {
         "text": "Cookie consent",
@@ -76,6 +80,10 @@
       {
         "text": "Composable-Centric Data Fetching",
         "link": "/guide/themes/composable-centric-data-fetching.md"
+      },
+      {
+        "text": "CloudFront Caching",
+        "link": "/guide/themes/cloudfront-caching-overview.md"
       }
     ]
   }

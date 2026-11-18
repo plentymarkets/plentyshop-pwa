@@ -17,6 +17,18 @@ Your module must be set up as an extension: it needs the `marketplace.json` file
 
 To publish to PlentyONE's private npm registry you need to request credentials from partner management ([partner@plentyone.com](mailto:partner@plentyone.com)).
 
+## Configure GitHub secrets
+
+The workflow reads the registry credentials from two repository secrets. Add them once, before the first run:
+
+1. In your GitHub repository, open **Settings** > **Secrets and variables** > **Actions**.
+2. Select **New repository secret** and create each secret from the table below.
+
+| Secret                            | Value                                                       |
+| --------------------------------- | ----------------------------------------------------------- |
+| `PLENTY_MARKETPLACE_NPM_USERNAME` | The registry username you received from partner management. |
+| `PLENTY_MARKETPLACE_NPM_PASSWORD` | The registry password you received from partner management. |
+
 ## Trigger the workflow
 
 1. Open the repository's **Actions** tab, select **Publish Module**, then **Run workflow**.

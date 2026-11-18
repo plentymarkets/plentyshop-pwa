@@ -10,6 +10,7 @@ const makeState = (overrides: Partial<UseSiteSettingsState> = {}): Ref<UseSiteSe
     data: {},
     loading: false,
     initialData: {},
+    backendKeys: [],
     ...overrides,
   }) as Ref<UseSiteSettingsState>;
 
@@ -20,6 +21,7 @@ const makeDeps = (overrides: Partial<UseSiteSettingsDeps> = {}): UseSiteSettings
     },
   },
   runtimeConfigPublic: {},
+  settingsConfigKeys: [],
   ...overrides,
 });
 
@@ -201,6 +203,45 @@ describe('createSiteSettingsLogic', () => {
 
       expect(state.value.initialData).toEqual({ useWebp: true, useAvif: true });
     });
+
+    it('records which keys were actually returned by the backend', () => {
+      const state = makeState();
+      const deps = makeDeps({ runtimeConfigPublic: { useWebp: true } });
+      const logic = createSiteSettingsLogic('useAvif', state, deps);
+
+      logic.setInitialData([{ key: 'useAvif', originalKey: 'useAvif', value: 'true' }]);
+
+      expect(state.value.backendKeys).toEqual(['useAvif']);
+    });
+
+    it('writes unpersisted frontend defaults into data immediately, without waiting for save', () => {
+      const state = makeState();
+      const deps = makeDeps({
+        runtimeConfigPublic: { useAvif: 'true', defaultSortingOption: 'sorting.price.avg_asc' },
+        settingsConfigKeys: ['useAvif', 'defaultSortingOption'],
+      });
+      const logic = createSiteSettingsLogic('defaultSortingOption', state, deps);
+
+      logic.setInitialData([{ key: 'useAvif', originalKey: 'useAvif', value: 'true' }]);
+
+      expect(state.value.data.defaultSortingOption).toBe('sorting.price.avg_asc');
+      expect(logic.settingsIsDirty.value).toBe(true);
+      expect(logic.dirtyKeys.value).toEqual(['defaultSortingOption']);
+    });
+
+    it('does not mark anything dirty when every setting already has a backend value', () => {
+      const state = makeState();
+      const deps = makeDeps({
+        runtimeConfigPublic: { useAvif: 'true' },
+        settingsConfigKeys: ['useAvif'],
+      });
+      const logic = createSiteSettingsLogic('useAvif', state, deps);
+
+      logic.setInitialData([{ key: 'useAvif', originalKey: 'useAvif', value: 'true' }]);
+
+      expect(state.value.data).toEqual({});
+      expect(logic.settingsIsDirty.value).toBe(false);
+    });
   });
 
   describe('settingsIsDirty / dirtyKeys', () => {
@@ -220,11 +261,19 @@ describe('createSiteSettingsLogic', () => {
       expect(logic.dirtyKeys.value).toEqual(['useAvif']);
     });
 
-    it('is not dirty when the changed value matches the initial value', () => {
-      const state = makeState({ data: { useAvif: false }, initialData: { useAvif: false } });
+    it('is not dirty when the changed value matches a backend-confirmed initial value', () => {
+      const state = makeState({ data: { useAvif: false }, initialData: { useAvif: false }, backendKeys: ['useAvif'] });
       const logic = createSiteSettingsLogic('useAvif', state, makeDeps());
 
       expect(logic.settingsIsDirty.value).toBe(false);
+    });
+
+    it('is dirty when a value matches initialData but the backend has no confirmed value for it yet', () => {
+      const state = makeState({ data: { useAvif: false }, initialData: { useAvif: false }, backendKeys: [] });
+      const logic = createSiteSettingsLogic('useAvif', state, makeDeps());
+
+      expect(logic.settingsIsDirty.value).toBe(true);
+      expect(logic.dirtyKeys.value).toEqual(['useAvif']);
     });
   });
 
@@ -265,6 +314,110 @@ describe('createSiteSettingsLogic', () => {
       expect(result).toBe(false);
 
       consoleErrorSpy.mockRestore();
+    });
+
+    it('also persists settings that only exist as a frontend default and were never saved to the backend', async () => {
+      const setConfiguration = vi.fn().mockResolvedValue({ data: [] });
+      const state = makeState({
+        data: { useAvif: 'true' },
+        initialData: { useAvif: false, defaultSortingOption: 'sorting.price.avg_asc' },
+        backendKeys: ['useAvif'],
+      });
+      const deps = makeDeps({
+        sdk: { plentysystems: { setConfiguration } },
+        settingsConfigKeys: ['useAvif', 'defaultSortingOption'],
+      });
+      const logic = createSiteSettingsLogic('useAvif', state, deps);
+
+      await logic.saveSiteSettings();
+
+      expect(setConfiguration).toHaveBeenCalledWith({
+        settings: [
+          { key: 'defaultSortingOption', value: 'sorting.price.avg_asc' },
+          { key: 'useAvif', value: 'true' },
+        ],
+      });
+      expect(state.value.initialData.defaultSortingOption).toBe('sorting.price.avg_asc');
+    });
+
+    it('does not persist a frontend default that is an empty string', async () => {
+      const setConfiguration = vi.fn().mockResolvedValue({ data: [] });
+      const state = makeState({
+        data: { useAvif: 'true' },
+        initialData: { useAvif: false, contactShopEmail: '' },
+        backendKeys: ['useAvif'],
+      });
+      const deps = makeDeps({
+        sdk: { plentysystems: { setConfiguration } },
+        settingsConfigKeys: ['useAvif', 'contactShopEmail'],
+      });
+      const logic = createSiteSettingsLogic('useAvif', state, deps);
+
+      await logic.saveSiteSettings();
+
+      expect(setConfiguration).toHaveBeenCalledWith({ settings: [{ key: 'useAvif', value: 'true' }] });
+    });
+
+    it('still persists an explicitly edited empty string value', async () => {
+      const setConfiguration = vi.fn().mockResolvedValue({ data: [] });
+      const state = makeState({
+        data: { contactShopEmail: '' },
+        initialData: { contactShopEmail: 'shop@example.com' },
+        backendKeys: ['contactShopEmail'],
+      });
+      const deps = makeDeps({
+        sdk: { plentysystems: { setConfiguration } },
+        settingsConfigKeys: ['contactShopEmail'],
+      });
+      const logic = createSiteSettingsLogic('contactShopEmail', state, deps);
+
+      await logic.saveSiteSettings();
+
+      expect(setConfiguration).toHaveBeenCalledWith({ settings: [{ key: 'contactShopEmail', value: '' }] });
+    });
+
+    it('does not resend a default that the backend already has a value for', async () => {
+      const setConfiguration = vi.fn().mockResolvedValue({ data: [] });
+      const state = makeState({
+        data: { useAvif: 'true' },
+        initialData: { useAvif: false, defaultSortingOption: 'sorting.price.avg_asc' },
+        backendKeys: ['useAvif', 'defaultSortingOption'],
+      });
+      const deps = makeDeps({
+        sdk: { plentysystems: { setConfiguration } },
+        settingsConfigKeys: ['useAvif', 'defaultSortingOption'],
+      });
+      const logic = createSiteSettingsLogic('useAvif', state, deps);
+
+      await logic.saveSiteSettings();
+
+      expect(setConfiguration).toHaveBeenCalledWith({ settings: [{ key: 'useAvif', value: 'true' }] });
+    });
+
+    it('does not resend an auto-merged default again on a second save, and clears dirty state', async () => {
+      const setConfiguration = vi.fn().mockResolvedValue({ data: [] });
+      const state = makeState({
+        initialData: { defaultSortingOption: 'sorting.price.avg_asc' },
+        backendKeys: [],
+      });
+      const deps = makeDeps({
+        sdk: { plentysystems: { setConfiguration } },
+        settingsConfigKeys: ['defaultSortingOption'],
+      });
+      const logic = createSiteSettingsLogic('defaultSortingOption', state, deps);
+
+      // Simulates setInitialData() having already merged the unpersisted default into data.
+      state.value.data = { defaultSortingOption: 'sorting.price.avg_asc' };
+
+      await logic.saveSiteSettings();
+
+      expect(setConfiguration).toHaveBeenCalledTimes(1);
+      expect(logic.settingsIsDirty.value).toBe(false);
+
+      await logic.saveSiteSettings();
+
+      expect(setConfiguration).toHaveBeenCalledTimes(2);
+      expect(setConfiguration).toHaveBeenNthCalledWith(2, { settings: [] });
     });
 
     it('JSON-stringifies non-string values before sending them to the SDK', async () => {
