@@ -1,3 +1,7 @@
-## Email
+## PlentyONE Service Desk
 
-support@plentymarkets.com
+https://help.plentyone.com/
+
+## E-Mail
+
+sales@plentyone.com
