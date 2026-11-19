@@ -21,7 +21,7 @@ const { position } = useSkuToCartPosition();
 <i18n lang="json">
 {
   "en": {
-    "description": "Let customers add items to the cart by entering a SKU and a quantity.",
+    "description": "Let customers add items to the cart by entering an SKU and a quantity.",
     "label": "Show the SKU form",
     "none": "Do not show",
     "above-coupon": "Above the coupon field",
