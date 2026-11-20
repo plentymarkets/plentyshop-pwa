@@ -10,7 +10,11 @@
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
-        <Coupon v-if="viewport.isLessThan('lg')" class="mb-2" />
+        <div v-if="viewport.isLessThan('lg')" class="mb-2">
+          <ModuleComponentRendering area="cart.aboveCoupon" />
+          <Coupon />
+          <ModuleComponentRendering area="cart.belowCoupon" />
+        </div>
       </div>
       <div
         class="relative col-span-5 @md:sticky @md:top-10 h-fit"
@@ -18,7 +22,11 @@
       >
         <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-loader" size="2xl" />
         <OrderSummary :cart="cart">
-          <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />
+          <div v-if="viewport.isGreaterOrEquals('lg')" class="mb-5">
+            <ModuleComponentRendering area="cart.aboveCoupon" />
+            <Coupon />
+            <ModuleComponentRendering area="cart.belowCoupon" />
+          </div>
           <UiButton
             data-testid="checkout-button"
             :tag="NuxtLink"

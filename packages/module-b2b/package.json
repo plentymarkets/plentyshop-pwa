@@ -1,0 +1,39 @@
+{
+  "name": "@plentymarkets/b2b",
+  "version": "1.0.0",
+  "description": "B2B features for the shop, such as adding items to the cart by SKU.",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "main": "./dist/module.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs"
+    },
+    "./runtime/*": {
+      "import": "./dist/runtime/*"
+    }
+  },
+  "files": [
+    "dist",
+    "marketplace.json",
+    "meta"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && rimraf dist/runtime && node -e \"require('fs').cpSync('src/runtime','dist/runtime',{recursive:true})\"",
+    "dev:prepare": "nuxi prepare playground",
+    "typecheck": "vue-tsc --noEmit -p src/runtime/tsconfig.json",
+    "playground:dev": "nuxi dev playground",
+    "playground:build": "nuxi build playground"
+  },
+  "dependencies": {
+    "@plentymarkets/shop-api": "^0.191.0",
+    "@plentymarkets/shop-core": "^1.50.0"
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^4.5.1",
+    "@nuxtjs/i18n": "^10.6.0",
+    "rimraf": "^5.0.7",
+    "typescript": "5.9.3",
+    "vue-tsc": "^3.3.11"
+  }
+}
