@@ -126,6 +126,10 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=86400` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
+    // Unhashed files must be revalidated, otherwise a CDN keeps serving outdated versions after a deployment.
+    '/sw.js': { headers: { 'cache-control': `no-cache` } },
+    '/manifest.webmanifest': { headers: { 'cache-control': `no-cache` } },
+    '/_nuxt/builds/latest.json': { headers: { 'cache-control': `no-cache` } },
     '/favicon.ico': { redirect: { to: '/_nuxt-plenty/favicon.ico', statusCode: 301 } },
   },
   image: {
