@@ -12,6 +12,12 @@ import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from
 import { FailOnUnmarkedBlockOverridesPlugin } from './app/configuration/vite.block-overrides';
 import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
 
+/**
+ * The hosting serves static files with an immutable 1 year `Cache-Control` header that can't be overridden via
+ * `routeRules`. A service worker under a fixed URL would therefore never update, so each build gets a unique filename.
+ */
+const serviceWorkerFilename = `sw-${Date.now().toString(36)}.js`;
+
 export default defineNuxtConfig({
   srcDir: 'app/',
   telemetry: false,
@@ -126,10 +132,6 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=86400` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
-    // Unhashed files must be revalidated, otherwise a CDN keeps serving outdated versions after a deployment.
-    '/sw.js': { headers: { 'cache-control': `no-cache` } },
-    '/manifest.webmanifest': { headers: { 'cache-control': `no-cache` } },
-    '/_nuxt/builds/latest.json': { headers: { 'cache-control': `no-cache` } },
     '/favicon.ico': { redirect: { to: '/_nuxt-plenty/favicon.ico', statusCode: 301 } },
   },
   image: {
@@ -253,6 +255,7 @@ export default defineNuxtConfig({
   },
   pwa: {
     registerType: 'prompt',
+    filename: serviceWorkerFilename,
     workbox: {
       navigateFallback: null,
       globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', '_nuxt-plenty/icons/*'],
