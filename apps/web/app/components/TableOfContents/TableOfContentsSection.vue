@@ -9,16 +9,40 @@
         <component :is="sectionIcons[section.id]" class="w-6 h-6 flex-none text-editor-text-default" />
         <span class="text-sm font-bold tracking-tight">{{ section.label }}</span>
       </div>
-      <button
-        type="button"
-        class="w-7 h-7 rounded-md flex items-center justify-center border border-editor-accent/40 text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
-        :data-testid="`toc-add-${section.id}-inline`"
-        :title="getEditorTranslation('add-to-section', { section: section.label })"
-        :aria-label="getEditorTranslation('add-to-section', { section: section.label })"
-        @click="addAtTopForSection($event, section)"
-      >
-        <SfIconAdd size="xs" />
-      </button>
+      <div class="flex items-center gap-1.5 flex-none">
+        <template v-if="section.id === 'content'">
+          <button
+            type="button"
+            class="w-7 h-7 rounded-md flex items-center justify-center border border-editor-border text-editor-text-default hover:bg-editor-surface transition-colors"
+            data-testid="toc-copy-page-template"
+            :title="getEditorTranslation('copy-page-content')"
+            :aria-label="getEditorTranslation('copy-page-content')"
+            @click="copyPageBlocks"
+          >
+            <CopyIcon class="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            class="w-7 h-7 rounded-md flex items-center justify-center border border-editor-border text-editor-text-default hover:bg-editor-surface transition-colors"
+            data-testid="toc-paste-page-template"
+            :title="getEditorTranslation('paste-page-content')"
+            :aria-label="getEditorTranslation('paste-page-content')"
+            @click="requestPaste"
+          >
+            <PasteIcon class="w-4 h-4" />
+          </button>
+        </template>
+        <button
+          type="button"
+          class="w-7 h-7 rounded-md flex items-center justify-center border border-editor-accent/40 text-editor-accent hover:bg-editor-accent/[4%] transition-colors"
+          :data-testid="`toc-add-${section.id}-inline`"
+          :title="getEditorTranslation('add-to-section', { section: section.label })"
+          :aria-label="getEditorTranslation('add-to-section', { section: section.label })"
+          @click="addAtTopForSection($event, section)"
+        >
+          <SfIconAdd size="xs" />
+        </button>
+      </div>
     </header>
 
     <draggable
@@ -68,11 +92,14 @@ import type { TocSection } from './types';
 import HeaderSectionIcon from './icons/HeaderSectionIcon.vue';
 import ContentSectionIcon from './icons/ContentSectionIcon.vue';
 import FooterSectionIcon from './icons/FooterSectionIcon.vue';
+import CopyIcon from './icons/CopyIcon.vue';
+import PasteIcon from './icons/PasteIcon.vue';
 
 const props = defineProps<{ section: TocSection; isFirst: boolean }>();
 
 const { blockToFlatBlock, addAtTopForSection, addAtBottomForSection, handleSectionDragChange } = useTableOfContents();
 const { handleDragStart, handleDragEnd } = useBlockManager();
+const { copyPageBlocks, requestPaste } = useBlockClipboard();
 
 const sectionIcons = {
   header: HeaderSectionIcon,
@@ -94,11 +121,15 @@ const handleChange = (evt: DragEvent) => handleSectionDragChange(props.section, 
 {
   "en": {
     "empty": "No blocks in this section.",
-    "add-to-section": "Add to {section}"
+    "add-to-section": "Add to {section}",
+    "copy-page-content": "Copy page content",
+    "paste-page-content": "Paste page content"
   },
   "de": {
     "empty": "No blocks in this section.",
-    "add-to-section": "Add to {section}"
+    "add-to-section": "Add to {section}",
+    "copy-page-content": "Copy page content",
+    "paste-page-content": "Paste page content"
   }
 }
 </i18n>

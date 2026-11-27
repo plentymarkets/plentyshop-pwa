@@ -89,5 +89,11 @@
   "snapshot-restore-success": "Version restored. Save changes to keep it.",
   "snapshot-restore-error": "Failed to restore this version.",
   "snapshot-group-today": "Today",
-  "snapshot-group-yesterday": "Yesterday"
+  "snapshot-group-yesterday": "Yesterday",
+  "pageTemplateCopied": "Page content copied. Header and footer are not included.",
+  "pageTemplateCopyError": "The page content couldn't be copied.",
+  "pageTemplateInvalid": "The clipboard doesn't contain a copied page template.",
+  "pageTemplatePasted": "Page content pasted. Save to apply the changes.",
+  "pageTemplatePasteError": "The page content couldn't be pasted. Check the clipboard permission.",
+  "pageTemplateContextUnknown": "The page type couldn't be determined, so the copied blocks can't be checked. Reload the page and try again."
 }

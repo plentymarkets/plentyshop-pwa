@@ -1,5 +1,6 @@
 import type { Block } from '@plentymarkets/shop-api';
 import { v4 as uuidv4 } from 'uuid';
+import { EMPTY_GRID_BLOCK_NAME } from './block-names';
 
 export const createMultiGridBlock = (columnWidths: readonly number[]): Block => ({
   name: 'MultiGrid',
@@ -20,7 +21,7 @@ export const createMultiGridBlock = (columnWidths: readonly number[]): Block => 
 });
 
 export const createEmptyGridBlock = (parentSlot: number) => ({
-  name: 'EmptyGridBlock' as const,
+  name: EMPTY_GRID_BLOCK_NAME,
   type: 'content' as const,
   content: [] as never[],
   meta: { uuid: uuidv4() },

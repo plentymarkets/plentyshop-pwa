@@ -31,6 +31,7 @@
         :is-first="idx === 0"
       />
     </div>
+    <TableOfContentsPasteModal />
   </div>
 </template>
 

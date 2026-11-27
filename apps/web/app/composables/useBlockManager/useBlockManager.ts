@@ -71,7 +71,7 @@ export const useBlockManager = () => {
 
     if (headerContainer.value.meta?.uuid === targetUuid) {
       if (Array.isArray(newBlock.content) && newBlock.content.length) {
-        setUuid(newBlock.content as Block[]);
+        regenerateBlockUuids(newBlock.content as Block[]);
       }
 
       position === 'top' ? headerContent.unshift(newBlock) : headerContent.push(newBlock);
@@ -90,7 +90,7 @@ export const useBlockManager = () => {
     insertBlock({ targetBlock, newBlock, parent, index, position });
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
-      setUuid(newBlock.content as Block[]);
+      regenerateBlockUuids(newBlock.content as Block[]);
     }
   };
 
@@ -110,7 +110,7 @@ export const useBlockManager = () => {
     insertBlock({ targetBlock, newBlock, parent, index, position });
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
-      setUuid(newBlock.content as Block[]);
+      regenerateBlockUuids(newBlock.content as Block[]);
     }
   };
 
@@ -119,7 +119,7 @@ export const useBlockManager = () => {
 
     if (pageBlocks.value.length === 0) {
       if (Array.isArray(newBlock.content) && newBlock.content.length) {
-        setUuid(newBlock.content as Block[]);
+        regenerateBlockUuids(newBlock.content as Block[]);
       }
       updateBlocks([newBlock]);
       openSettingsForNewBlock([newBlock], newBlock);
@@ -131,7 +131,7 @@ export const useBlockManager = () => {
 
     if (isTargetFooter) {
       if (Array.isArray(newBlock.content) && newBlock.content.length) {
-        setUuid(newBlock.content as Block[]);
+        regenerateBlockUuids(newBlock.content as Block[]);
       }
       blocks.push(newBlock);
       openSettingsForNewBlock(blocks, newBlock);
@@ -149,7 +149,7 @@ export const useBlockManager = () => {
     insertBlock({ targetBlock, newBlock, parent, index, position });
 
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
-      setUuid(newBlock.content as Block[]);
+      regenerateBlockUuids(newBlock.content as Block[]);
     }
 
     if (!isHeaderContainerBlock(getRootParent(blocks, newBlock.meta.uuid))) {
@@ -286,7 +286,7 @@ export const useBlockManager = () => {
 
   const insertNextToBlock = (parent: Block[], index: number, newBlock: Block, position: BlockPosition) => {
     if (Array.isArray(newBlock.content) && newBlock.content.length) {
-      setUuid(newBlock.content as Block[]);
+      regenerateBlockUuids(newBlock.content as Block[]);
     }
     const insertIndex = position === 'top' ? index : index + 1;
     parent.splice(insertIndex, 0, newBlock);
@@ -365,15 +365,6 @@ export const useBlockManager = () => {
       }
     }
     return null;
-  };
-
-  const setUuid = (blocks: Block[]) => {
-    for (const block of blocks) {
-      block.meta.uuid = uuid();
-      if (Array.isArray(block.content)) {
-        setUuid(block.content);
-      }
-    }
   };
 
   const findOrDeleteBlockByUuid: (blocks: Block[], targetUuid: string, deleteBlock?: boolean) => Block | null = (
