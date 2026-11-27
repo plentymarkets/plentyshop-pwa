@@ -142,6 +142,17 @@ export default withNuxt(
       'custom-rules/no-bare-responsive-in-container': 'error',
     },
   },
+  // Module pages and layouts replace their app/ counterparts, so they follow the same rules.
+  {
+    files: [
+      'modules/*/runtime/pages/**/*.vue',
+      'modules/*/runtime/layouts/**/*.vue',
+    ],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+      'custom-rules/no-bare-responsive-in-container': 'error',
+    },
+  },
   {
     files: ['app/composables/**/index.ts', 'app/utils/**/index.ts'],
     rules: {
